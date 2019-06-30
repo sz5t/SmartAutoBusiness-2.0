@@ -1,0 +1,49 @@
+<nz-layout>
+  <nz-content>
+    <ng-container *ngIf="layoutObj.rows">
+      <div nz-row [nzGutter]="6" *ngFor="let row of layoutObj.rows">
+
+        <div nz-col *ngFor="let c of row.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
+          [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl" [nzXXl]="c.size.nzXXL">
+
+          <nz-card [ngSwitch]="c.container" [nzTitle]="c.title ? c.title : false">
+            <ng-container *ngSwitchCase="'tabs'" cnLayoutResolverDirective [config]="c.tabs"></ng-container>
+            <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout"></ng-container>
+            <ng-container *ngSwitchDefault>
+              渲染组件
+            </ng-container>
+          </nz-card>
+        </div>
+      </div>
+    </ng-container>
+  </nz-content>
+</nz-layout>
+
+
+
+
+<!-- <cn-layout-resolver [initData]="initData" [layoutId]="layoutId" [permissions]="permissions" [config]="c"
+[tempValue]="tempValue" (updateValue)="valueChange($event)"></cn-layout-resolver> -->
+
+
+<!-- <nz-card *ngIf="c.viewCfg" [nzTitle]="c.title ? cardTitle : false" nzBordered="false"
+[nzBodyStyle]="c.bodyStyle ? c.bodyStyle : { padding: '8px'}">
+<ng-template #cardTitle>
+  <ng-container *ngIf="c.titlePaddingleft">
+    <span style="padding-left: 16px;">{{ c.title }} </span>
+  </ng-container>
+  <ng-container *ngIf="!c.titlePaddingleft">
+    {{ c.title }}
+  </ng-container>
+
+</ng-template>
+<div *ngIf="c.handle && c.handle === 'single'; else: elseTemplate">
+  <ng-container cnLayoutResolverDirective [layoutId]="layoutId" [config]="c" [permissions]="permissions"
+    (updateValue)="valueChange($event)"></ng-container>
+</div>
+<ng-template #elseTemplate>
+  <cn-component-resolver *ngFor="let cfg of c.viewCfg" [layoutId]="layoutId" [permissions]="permissions"
+    [config]="cfg" [initData]="initData" [tempValue]="tempValue" (updateValue)="valueChange($event)">
+  </cn-component-resolver>
+</ng-template>
+</nz-card> -->

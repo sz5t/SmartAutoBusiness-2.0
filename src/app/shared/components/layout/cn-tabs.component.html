@@ -1,0 +1,38 @@
+<nz-tabset [nzType]="tabsObj.tabType ? tabsObj.tabType :'card'" [nzTabPosition]="'top'"
+  [nzSize]="tabsObj.size ? tabsObj.size : 'default'" [nzAnimated]="true">
+  <nz-tab *ngFor="let tab of tabsObj.tabContent" [nzTitle]="header">
+    <ng-container cnLayoutResolverDirective [config]="tab.layout"></ng-container>
+    <ng-template #header>
+      <span><i nz-icon spin type="tag" theme="outline"></i> {{ tab.title }}</span>
+    </ng-template>
+  </nz-tab>
+</nz-tabset>
+
+
+
+
+<!-- <cn-layout-resolver [initData]="initData" [layoutId]="layoutId" [permissions]="permissions" [config]="c"
+[tempValue]="tempValue" (updateValue)="valueChange($event)"></cn-layout-resolver> -->
+
+
+<!-- <nz-card *ngIf="c.viewCfg" [nzTitle]="c.title ? cardTitle : false" nzBordered="false"
+[nzBodyStyle]="c.bodyStyle ? c.bodyStyle : { padding: '8px'}">
+<ng-template #cardTitle>
+  <ng-container *ngIf="c.titlePaddingleft">
+    <span style="padding-left: 16px;">{{ c.title }} </span>
+  </ng-container>
+  <ng-container *ngIf="!c.titlePaddingleft">
+    {{ c.title }}
+  </ng-container>
+
+</ng-template>
+<div *ngIf="c.handle && c.handle === 'single'; else: elseTemplate">
+  <ng-container cnLayoutResolverDirective [layoutId]="layoutId" [config]="c" [permissions]="permissions"
+    (updateValue)="valueChange($event)"></ng-container>
+</div>
+<ng-template #elseTemplate>
+  <cn-component-resolver *ngFor="let cfg of c.viewCfg" [layoutId]="layoutId" [permissions]="permissions"
+    [config]="cfg" [initData]="initData" [tempValue]="tempValue" (updateValue)="valueChange($event)">
+  </cn-component-resolver>
+</ng-template>
+</nz-card> -->

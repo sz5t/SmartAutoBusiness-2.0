@@ -1,4 +1,4 @@
-import { CommonUtils } from './../../utils/common-utils';
+import { CommonUtils } from '../../../core/utils/common-utils';
 import { ActivatedRoute } from '@angular/router';
 import { getISOYear, getISOWeek, getMonth, getDate } from 'date-fns';
 
@@ -124,6 +124,7 @@ export class ParameterResolver {
 }
 
 class BaseParameter {
+  // 构建匹配参数
   public getParameter(dataType, value) {
     let strQ = '';
     if (!value) {
@@ -173,6 +174,8 @@ class BaseParameter {
     }
     return strQ;
   }
+
+  // 获取默认时间(多语言存在问题)
   public getDefaultDate(dataType) {
     let dValue;
     switch (dataType) {
@@ -193,6 +196,9 @@ class BaseParameter {
   }
 }
 
+/**
+ * 构建临时变量参数
+ */
 class TempValueParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -228,6 +234,9 @@ class TempValueParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建固定值参数
+ */
 class ValueParamParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -246,6 +255,9 @@ class ValueParamParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建数据项参数
+ */
 class ItemParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -280,6 +292,9 @@ class ItemParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建组件值参数
+ */
 class ComponentValueParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -316,6 +331,9 @@ class ComponentValueParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建唯一标识参数
+ */
 class GUIDParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -330,6 +348,9 @@ class GUIDParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建勾选项参数
+ */
 class CheckedParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -344,6 +365,9 @@ class CheckedParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建选中项参数
+ */
 class SelectedParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -364,6 +388,9 @@ class SelectedParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建勾选ID项
+ */
 class CheckedIdParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -381,6 +408,9 @@ class CheckedIdParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建勾选表格行数据参数
+ */
 class CheckedRowParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -400,6 +430,9 @@ class CheckedRowParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建选中行数据参数
+ */
 class SelectedRowParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -412,6 +445,9 @@ class SelectedRowParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建初始化参数
+ */
 class InitValueParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -447,6 +483,9 @@ class InitValueParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建缓存参数
+ */
 class CacheValueParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -464,6 +503,9 @@ class CacheValueParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建及联参数
+ */
 class CascadeValueParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -483,6 +525,9 @@ class CascadeValueParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建返回值参数
+ */
 class ReturnValueParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();
@@ -495,6 +540,9 @@ class ReturnValueParameter extends BaseParameter implements IParameter {
   }
 }
 
+/**
+ * 构建路由参数
+ */
 class RouterParameter extends BaseParameter implements IParameter {
   constructor(private _result: any, private _param, private _model) {
     super();

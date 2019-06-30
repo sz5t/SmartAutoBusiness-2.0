@@ -18,8 +18,8 @@
           "i18n": "menu.layout",
           "icon": "anticon-dashboard",
           "children": [{
-            "text": "拖拽布局",
-            "link": "/dashboard/v1",
+            "text": "布局 1",
+            "link": "/template/demo",
             "i18n": "menu.layout.drop"
           }]
         },

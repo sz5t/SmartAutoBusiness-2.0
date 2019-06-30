@@ -1,4 +1,6 @@
-import { NgModule } from '@angular/core';
+import { CnTabsComponent } from './components/layout/cn-tabs.component';
+import { CnLayoutComponent } from './components/layout/cn-layout.component';
+import { NgModule, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -16,13 +18,21 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { CountdownModule } from 'ngx-countdown';
 import { UEditorModule } from 'ngx-ueditor';
 import { NgxTinymceModule } from 'ngx-tinymce';
+import { CnLayoutResolverDirective } from './resolver/layout/layout-resolver.directive';
+import { CnCustomLayoutComponent } from './components/layout/cn-custom-layout.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
 
 // #region your componets & directives
-const COMPONENTS = [];
-const DIRECTIVES = [];
+const COMPONENTS = [
+  CnLayoutComponent,
+  CnTabsComponent,
+  CnCustomLayoutComponent
+];
+const DIRECTIVES = [
+  CnLayoutResolverDirective
+];
 // #endregion
 
 @NgModule({
@@ -62,5 +72,8 @@ const DIRECTIVES = [];
     ...COMPONENTS,
     ...DIRECTIVES,
   ],
+  entryComponents: [
+    ...COMPONENTS
+  ]
 })
-export class SharedModule {}
+export class SharedModule { }

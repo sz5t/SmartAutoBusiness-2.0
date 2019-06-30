@@ -42,7 +42,8 @@ const routes: Routes = [
       { path: 'pro', loadChildren: './pro/pro.module#ProModule' },
       // Exception
       { path: 'exception', loadChildren: './exception/exception.module#ExceptionModule' },
-    ],
+      { path: 'template', loadChildren: './template/template.module#TemplateModule' }
+    ]
   },
   // 全屏布局
   {
@@ -50,6 +51,7 @@ const routes: Routes = [
     component: LayoutFullScreenComponent,
     children: [{ path: '', loadChildren: './data-v/data-v.module#DataVModule' }],
   },
+
   // passport
   {
     path: 'passport',
@@ -93,4 +95,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class RouteRoutingModule {}
+export class RouteRoutingModule { }
