@@ -205,37 +205,6 @@ export class CnCustomLayoutComponent implements OnInit, AfterViewInit {
     ];
 
   }
-
-  /**
- * open 收缩布局设置
- */
-  public open() {
-
-    this.customLayout_form = JSON.parse(JSON.stringify(this.customLayout));
-    this.size_isVisible = true;
-
-  }
-
-  /**
-   * size_handleCancel
-   */
-  public size_handleCancel() {
-    this.size_isVisible = false;
-  }
-  /**
-   * size_handleOk
-   */
-  public size_handleOk() {
-    this.size_isVisible = false;
-
-    // 更改布局状态
-    this.customLayout = JSON.parse(JSON.stringify(this.customLayout_form));
-    this.config.customLayout = this.customLayout;
-    this.initcustomLayout();
-  }
-
-
-
   /**
    * 更新布局区域
    */

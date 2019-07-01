@@ -1,6 +1,6 @@
 <!-- west 左  east 右  center 中间  North  上  South  下-->
 
-<nz-card nzTitle="自定义收缩" [nzExtra]="extraTemplate">
+<!-- <nz-card nzTitle="自定义收缩" [nzExtra]="extraTemplate"> -->
   <div style="display: flex;">
     <!-- customlayout -->
     <ng-container *ngFor="let cl of customLayout">
@@ -64,7 +64,7 @@
       </div>
     </ng-container>
   </div>
-</nz-card>
+<!-- </nz-card> -->
 <ng-template #extraTemplate>
 
   <button nz-button [nzSize]="'small'" nzTitle="收缩布局设置" nz-tooltip (click)="open()">
@@ -79,36 +79,4 @@
 
 
 
-<nz-modal [(nzVisible)]="size_isVisible" nzTitle="收缩布局设置" (nzOnCancel)="size_handleCancel($event)"
-  (nzOnOk)="size_handleOk($event)">
-  <nz-row>
-    <nz-col nzSpan="6">
-      收缩布局区域:
-    </nz-col>
-    <nz-col nzSpan="18">
-      <nz-checkbox-group [(ngModel)]="checkOptionsOne.layoutState" (ngModelChange)="updateSingleChecked()">
-      </nz-checkbox-group>
-    </nz-col>
-  </nz-row>
-  <nz-row>
-    <nz-col nzSpan="24">
-      <nz-tabset>
-        <nz-tab *ngFor="let tab of customlayout_form" [nzTitle]="tab.title" [nzDisabled]="tab.hidden">
-          <nz-row>
-            <nz-col nzSpan="6">
-              <code>&lt;宽度:</code>
-            </nz-col>
-            <nz-col nzSpan="12">
-              <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="tab.span"></nz-slider>
-            </nz-col>
-            <div nz-col nzSpan="6">
-              <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="tab.span">
-              </nz-input-number>
-            </div>
-          </nz-row>
-        </nz-tab>
-      </nz-tabset>
-    </nz-col>
-  </nz-row>
 
-</nz-modal>
