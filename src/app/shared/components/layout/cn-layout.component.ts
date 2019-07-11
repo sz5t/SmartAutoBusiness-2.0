@@ -15,6 +15,6 @@ export class CnLayoutComponent implements OnInit {
     }
 
     public ngOnInit() {
-        console.log(this.layoutObj);
+        // console.log(this.layoutObj);
     }
 }

@@ -1,3 +1,6 @@
+import { ApiService, ApiServiceConfiguration } from './core/services/api/api-service';
+import { BSN_RELATIVE_MESSAGE_SENDER, BSN_RELATIVE_MESSAGE_RECEIVER, BSN_RELATIVE_MESSAGE_BEHAVIOR_SENDER, BSN_RELATIVE_MESSAGE_BEHAVIOR_RECEIVER, BSN_COMPONENT_SERVICES } from './core/relations/bsn-relatives';
+import { Subject } from 'rxjs';
 // tslint:disable: no-duplicate-imports
 import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -78,6 +81,8 @@ export function StartupServiceFactory(startupService: StartupService) {
 }
 const APPINIT_PROVIDES = [
   StartupService,
+  ApiService,
+  ApiServiceConfiguration,
   {
     provide: APP_INITIALIZER,
     useFactory: StartupServiceFactory,
@@ -85,6 +90,31 @@ const APPINIT_PROVIDES = [
     multi: true,
   },
 ];
+
+const RELATIONS_PROVIDERS = [
+  {
+    provide: BSN_RELATIVE_MESSAGE_SENDER,
+    useValue: new Subject<BsnRelativesMessageModel>()
+  },
+  {
+    provide: BSN_RELATIVE_MESSAGE_RECEIVER,
+    useValue: new Subject<BsnRelativesMessageModel>()
+  },
+  {
+    provide: BSN_RELATIVE_MESSAGE_BEHAVIOR_SENDER,
+    useValue: new Subject<BsnRelativesMessageModel>()
+  },
+  {
+    provide: BSN_RELATIVE_MESSAGE_BEHAVIOR_RECEIVER,
+    useValue: new Subject<BsnRelativesMessageModel>()
+  },
+  {
+    provide: BSN_COMPONENT_SERVICES,
+    // tslint:disable-next-line: no-use-before-declare
+    useClass: ComponentServiceProvider
+  }
+]
+
 // #endregion
 
 import { DelonModule } from './delon.module';
@@ -93,6 +123,8 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
+import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 
 @NgModule({
   declarations: [AppComponent],
@@ -109,7 +141,13 @@ import { LayoutModule } from './layout/layout.module';
     ...GLOBAL_THIRD_MODULES,
     ...FORM_MODULES,
   ],
-  providers: [...LANG_PROVIDES, ...INTERCEPTOR_PROVIDES, ...I18NSERVICE_PROVIDES, ...APPINIT_PROVIDES],
+  providers: [
+    ...LANG_PROVIDES,
+    ...INTERCEPTOR_PROVIDES,
+    ...I18NSERVICE_PROVIDES,
+    ...APPINIT_PROVIDES,
+    ...RELATIONS_PROVIDERS
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

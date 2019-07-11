@@ -1,14 +1,15 @@
 import { CacheService } from '@delon/cache';
-import { Injectable } from '@angular/core';
-import { TokenService } from '@delon/auth';
+import { Injectable, Inject } from '@angular/core';
+import { TokenService, DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { _HttpClient, AlainThemeConfig } from '@delon/theme';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import { BeforeOperationResolver } from '@shared/resolver/beforeOperation/before-operation.resolver';
 // import { Http, XHRBackend, Headers, Request, RequestMethod, RequestOptionsArgs, ResponseOptionsArgs, ConnectionBackend, RequestOptions } from '@angular/common/http';
 @Injectable()
 export class ApiServiceConfiguration {
-  constructor(private _tokenService: TokenService) { }
+  constructor(@Inject(DA_SERVICE_TOKEN) private _tokenService: TokenService) { }
 
   // tslint:disable-next-line: no-object-literal-type-assertion
   private defaultError500 = {
@@ -157,7 +158,7 @@ export class ApiServiceConfiguration {
 export class ApiService extends _HttpClient {
   protected configuration: ApiServiceConfiguration;
   constructor(
-    private _tokenService: TokenService,
+    @Inject(DA_SERVICE_TOKEN) private _tokenService: TokenService,
     private clientHttp: HttpClient,
     private cacheService: CacheService,
     _configuration: ApiServiceConfiguration
@@ -243,8 +244,12 @@ export class ApiService extends _HttpClient {
    * @param options 资源选项
    */
   private normalizeRequestOptions(options: any): ApiOptions {
-    if (!options.headers) {
+    if (!options) {
+      options = { headers: HttpHeaders };
       options.headers = new HttpHeaders();
+    }
+    if (!options.headers) {
+      options.header = new HttpHeaders();
     }
 
     options.headers.append("Pragma", "no-cache");

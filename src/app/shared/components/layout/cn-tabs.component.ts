@@ -15,6 +15,6 @@ export class CnTabsComponent implements OnInit {
     }
 
     public ngOnInit() {
-        console.log(this.tabsObj);
+        // console.log(this.tabsObj);
     }
 }

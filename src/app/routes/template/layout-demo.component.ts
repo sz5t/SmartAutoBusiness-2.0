@@ -1,4 +1,13 @@
+import { BusinessObjectBase } from './../../shared/business/business-object.base';
+import { BSN_COMPONENT_SERVICES } from './../../core/relations/bsn-relatives';
+import { CnComponentBase } from './../../shared/components/cn-component.base';
+import { ApiService } from './../../core/services/api/api-service';
+import { BeforeOperationResolver } from './../../shared/resolver/beforeOperation/before-operation.resolver';
 import { Component, Input, OnInit, Output, EventEmitter, Inject, TemplateRef, ViewChild } from '@angular/core';
+import { NzModalComponent, NzModalService, NzMessageService } from 'ng-zorro-antd';
+import { Observable } from 'rxjs';
+import { reduce } from 'rxjs/internal/operators/reduce';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -31,7 +40,7 @@ import { Component, Input, OnInit, Output, EventEmitter, Inject, TemplateRef, Vi
         `
     ]
 })
-export class LayoutDemoComponent implements OnInit {
+export class LayoutDemoComponent extends CnComponentBase implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "layout",
@@ -452,11 +461,203 @@ export class LayoutDemoComponent implements OnInit {
             }
         }]
     };
-    constructor() {
 
+    public beforeOperation = [
+        {
+            "name": "D_addRow",
+            "status": [
+                {
+                    "conditions": [
+                        [
+                            {
+                                "name": "_recordstatus",
+                                "value": 1,
+                                "checkType": "value"
+                            },
+                            {
+                                "name": "_recods",
+                                "value": 1,
+                                "checkType": "value"
+                            }
+                        ],
+                        [
+                            {
+                                "name": "_recordstatus",
+                                "value": 2,
+                                "checkType": "value"
+                            },
+                            {
+                                "name": "_recods",
+                                "value": 3,
+                                "checkType": "value"
+                            }
+                        ]
+                    ],
+                    "action": {
+                        "type": "warning",
+                        "message": "在当前状态下，无法新增",
+                        "execute": "prevent"
+                    }
+                },
+                {
+                    "conditions": [
+                        [
+                            {
+                                "name": "_resourcesreceiveid1",
+                                "value": "undefinded",
+                                "checkType": "value"
+                            }
+                        ]
+                    ],
+                    "action": {
+                        "type": "info",
+                        "message": "主表未选中数据，无法新增！",
+                        "execute": "prevent"
+                    }
+                },
+                {
+                    "conditions": [
+                        [
+                            {
+                                "tempValue": "_createUserId",
+                                "cacheValue": "accountId",
+                                "checkType": "innerValue"
+                            }
+                            // {
+                            //     "ajaxConfig": {
+                            //         "url": "https://jsonplaceholder.typicode.com/users",
+                            //         "ajaxType": "GET",
+                            //         "params": []
+                            //     },
+                            //     "checkType": "executeAjax"
+                            // }
+                        ]
+                    ],
+                    "action": {
+                        "type": "info",
+                        "message": "对他人创建的数据只有浏览权限，没有编辑权限",
+                        "execute": "prevent"
+                    }
+                }
+            ]
+        }
+    ];
+
+    public dataConfig = {
+        entity: 'CaseDemo',
+        properties: [
+            {
+                name: 'id',
+                field: 'caseName',
+                text: 'entity.case.name',
+                value: '1',
+                dataType: 'string'
+            },
+            {
+                name: 'caseName',
+                field: 'caseName',
+                text: 'entity.case.name',
+                value: 'zhangsan',
+                dataType: 'string'
+            }
+        ],
+        children: [
+            {
+                entity: 'group',
+                properties: [
+                    {
+                        name: 'id',
+                        field: 'groupName',
+                        text: 'entity.group.name',
+                        value: '1',
+                        dataType: 'string'
+                    },
+                    {
+                        name: 'groupName',
+                        field: 'groupName',
+                        text: 'entity.group.name',
+                        value: 'jigoudsdsss',
+                        dataType: 'string'
+                    },
+                    {
+                        name: 'groupText',
+                        field: 'groupText',
+                        text: 'entity.group.text',
+                        value: 'groutText',
+                        dataType: 'string'
+                    }
+                ]
+            },
+            {
+                entity: 'role',
+                properties: [
+                    {
+                        name: 'id',
+                        field: 'groupName',
+                        text: 'entity.group.name',
+                        value: '1',
+                        dataType: 'string'
+                    },
+                    {
+                        name: 'roleName',
+                        field: 'roleName',
+                        text: 'entity.role.name',
+                        value: 'juese',
+                        dataType: 'string'
+                    }
+                ]
+            }
+        ]
+    }
+
+    testResult: Observable<any>;
+
+    constructor(
+        @Inject(BSN_COMPONENT_SERVICES) private _componentServices: ComponentServiceProvider,
+    ) {
+        super(_componentServices);
     }
 
     public ngOnInit() {
 
+
+    }
+
+    public click() {
+        this.load();
+    }
+
+    private load() {
+        const beforeOperation = new BeforeOperationResolver(this.beforeOperation,
+            {
+
+            },
+            {
+                accountId: 'user1'
+            },
+            {
+                _createUserId: 'user1'
+            }, this._componentServices.apiService, this._componentServices.modalService, this._componentServices.msgService);
+        beforeOperation.operationItemData = {
+            _recordstatus: 2,
+            _recods: 3,
+            _resourcesreceiveid1: "undefined",
+            _createUserId: '1'
+        }
+        this.testResult = beforeOperation.buildStatusObservableByStatusCfg({ name: 'D_addRow' }).pipe(reduce((a, b) => a || b));
+
+        const s = new BusinessObjectBase();
+        // console.log(s.resolver(s.dataConfig));
+        const t = s.resolver(this.dataConfig);
+        t.addProperty('caseText', '123456');
+        t.editProperty('caseText', '67890');
+        // t.removeProperty('caseText');
+
+        t.addChildren('group', { groupName: '2', id: '2' })
+        t.addChildren('group', [{ groupName: '3', id: '3' }, { groupName: '4', id: '4' }]);
+
+        t.orderChange({ groupName: '2', id: '2' }, { groupName: '4', id: '4' }, 'group');
+
+        console.log(t);
     }
 }

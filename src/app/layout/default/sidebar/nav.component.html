@@ -1,0 +1,135 @@
+<!-- <ul class="ad-nav">
+  <ng-container *ngFor="let group of list">
+    <ng-template [ngIf]="group._hidden !== true">
+      <li class="ad-nav__item ad-nav__group-title" *ngIf="group.group"> <span>{{ group.text }}</span> </li>
+      <ng-container *ngFor="let child1 of group.children">
+        <li *ngIf="child1._hidden !== true" routerLinkActive="ad-nav__selected"
+          [routerLinkActiveOptions]="{exact: child1.linkExact}" class="ad-nav__item"
+          [class.ad-nav__open]="child1._open">
+           <a *ngIf="child1._type === 1" (click)="onSelect(child1)" [routerLink]="child1.link"
+            [target]="child1.target"> <i *ngIf="!settings.layout.collapsed" nz-icon class="{{ child1.icon }}"></i>
+            <nz-tooltip *ngIf="settings.layout.collapsed" nzPlacement="right" [nzTitle]="child1.text"> <span nz-tooltip>
+                <i nz-icon class="{{ child1.icon }}"></i> </span> </nz-tooltip> <span>{{ child1.text }}</span>
+          </a>  <a *ngIf="child1._type === 2" href="{{ child1.externalLink }}"
+            target="{{child1.target}}" data-type="external"> <i *ngIf="!settings.layout.collapsed" nz-icon
+              class="{{ child1.icon }}"></i>
+            <nz-tooltip *ngIf="settings.layout.collapsed" nzPlacement="right" [nzTitle]="child1.text"> <span nz-tooltip>
+                <i nz-icon class="{{ child1.icon }}"></i> </span> </nz-tooltip> <span>{{ child1.text }}</span>
+          </a> <a *ngIf="child1._type === 3" class="ad-nav__sub-title"
+            (click)="toggleOpen(child1)" (mouseenter)="showSubMenu($event, child1)"> <i nz-icon
+              class="{{ child1.icon }}"></i> <span>{{ child1.text }}</span> <span class="ad-nav__sub-arrow"></span> </a>
+         
+          <div *ngIf="child1.badge" title="{{child1.badge}}" class="badge badge-{{child1.badge_status}}"
+            [class.badge-dot]="child1.badge_dot"> <em>{{child1.badge}}</em> </div> 
+          <ul *ngIf="child1._type === 3" class="ad-nav ad-nav__sub ad-nav__depth{{child1._depth}}">
+            <ng-container *ngFor="let child2 of child1.children">
+              <li *ngIf="child2._hidden !== true" routerLinkActive="ad-nav__selected"
+                [routerLinkActiveOptions]="{exact: child2.linkExact}" class="ad-nav__item"
+                [class.ad-nav__open]="child2._open">
+                 <a *ngIf="child2._type === 1" (click)="onSelect(child2)" [routerLink]="child2.link"
+                  [target]="child2.target">{{ child2.text }}</a> <a *ngIf="child2._type === 2"
+                  href="{{ child2.externalLink }}" target="{{ child2.target }}"
+                  data-type="external">{{ child2.text }}</a> <a *ngIf="child2._type === 3"
+                  class="ad-nav__sub-title" (click)="toggleOpen(child2)"> {{ child2.text }} <span
+                    class="ad-nav__sub-arrow"></span> </a>
+                <div *ngIf="child2.badge" title="{{child2.badge}}" class="badge badge-{{child2.badge_status}}"
+                  [class.badge-dot]="child2.badge_dot"> <em>{{child2.badge}}</em> </div> 
+                <ul *ngIf="child2._type === 3" class="ad-nav ad-nav__sub ad-nav__depth{{child2._depth}}">
+                  <ng-container *ngFor="let child3 of child2.children">
+                    <li *ngIf="child3._hidden !== true" routerLinkActive="ad-nav__selected"
+                      [routerLinkActiveOptions]="{exact: child3.linkExact}" class="ad-nav__item"
+                      [class.ad-nav__open]="child3._open">
+                       <a *ngIf="child3._type === 1" (click)="onSelect(child3)" [routerLink]="child3.link"
+                        [target]="child3.target">{{ child3.text }}</a> <a
+                        *ngIf="child3._type === 2" href="{{ child3.externalLink }}" target="{{ child3.target }}"
+                        data-type="external">{{ child3.text }}</a> 
+                      <div *ngIf="child3.badge" title="{{child3.badge}}" class="badge badge-{{child3.badge_status}}"
+                        [class.badge-dot]="child3.badge_dot"> <em>{{child3.badge}}</em> </div>
+                    </li>
+                  </ng-container>
+                </ul>
+              </li>
+            </ng-container>
+          </ul>
+        </li>
+      </ng-container>
+    </ng-template>
+  </ng-container>
+</ul> -->
+
+
+<!-- <ul nz-menu nzMode="inline">
+  <li nz-submenu nzTitle="group.text" nzIcon="group.icon" *ngFor="let group of list">
+    <ul>
+      <ng-container *ngFor="let child of group.children">
+        <li nz-submenu nzTitle="child.text" nzIcon="child.icon"
+          *ngIf="child.children && child.children.length > 0;else menuItemTmp">
+          <ul>
+            <li nz-menu-item (click)="onSelect()" *ngFor="let child2 of child.children">
+              <div *ngIf="child2.badge" title="{{child2.badge}}" class="badge badge-{{child2.badge_status}}"
+                [class.badge-dot]="child2.badge_dot"> <em>{{child2.badge}}</em> </div>
+            </li>
+          </ul>
+        </li>
+        <ng-template #menuItemTmp>
+          <li nz-menu-item (click)="onSelect()">{{child.text}}
+            <div *ngIf="child.badge" title="{{child.badge}}" class="badge badge-{{child.badge_status}}"
+              [class.badge-dot]="child.badge_dot"> <em>{{child.badge}}</em> </div>
+          </li>
+        </ng-template>
+      </ng-container>
+
+    </ul>
+  </li>
+</ul> -->
+<ul nz-menu nzMode="inline" [nzInlineCollapsed]="layoutCollapsed">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: list }"></ng-container>
+  <ng-template #menuTpl let-menus>
+    <ng-container *ngFor="let menu of menus">
+      <li nz-submenu [nzPaddingLeft]="menu.level * 24"
+        *ngIf="menu.children && menu.children.length > 0; else menuItemTpl">
+        <span title>
+          <i nz-icon [nzType]="menu.icon.value" *ngIf="menu.icon"></i>
+          <span>{{ menu.text }}</span>
+        </span>
+        <ul>
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"></ng-container>
+        </ul>
+      </li>
+      <ng-template #menuItemTpl>
+
+        <li nz-menu-item [nzPaddingLeft]="menu.level > 3 ? menu.level * 24 : (menu.level * 24) + 12"
+          (click)="onClick(menu)">
+          <span title>
+            <i nz-icon [nzType]="menu.icon.value" *ngIf="menu.icon" [theme]="'outline'"></i>
+            <span>{{ menu.text }}</span>
+          </span>
+        </li>
+      </ng-template>
+    </ng-container>
+  </ng-template>
+</ul>
+
+<!-- <ul nz-menu nzMode="inline" style="width: 240px">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: list }"></ng-container>
+  <ng-template #menuTpl let-menus>
+    <ng-container *ngFor="let menu of menus">
+      <li nz-menu-item [nzPaddingLeft]="menu.level * 24" *ngIf="!menu.children">
+        <span title>
+          <i nz-icon spin type="menu.icon" *ngIf="menu.icon"></i>
+          <span>{{menu.text}}</span>
+        </span>
+      </li>
+      <li nz-submenu [nzOpen]="true" [nzPaddingLeft]="menu.level * 24" *ngIf="menu.children">
+        <span title>
+          <i nz-icon spin type="menu.icon" *ngIf="menu.icon"></i>
+          <span>{{menu.text}}</span>
+        </span>
+        <ul>
+          <ng-container *ngTemplateOutlet="menuTpl; context:{$implicit: menu.children}"></ng-container>
+        </ul>
+      </li>
+
+    </ng-container>
+  </ng-template> 
+</ul> -->

@@ -30,6 +30,7 @@ export class CnCustomLayoutComponent implements OnInit, AfterViewInit {
       { label: '左侧布局', value: 'west', checked: true },
       { label: '中间布局', value: 'center', checked: true },
       { label: '右侧布局', value: 'east', checked: false }
+
     ]
   };
 
@@ -60,11 +61,11 @@ export class CnCustomLayoutComponent implements OnInit, AfterViewInit {
       });
     });
     // this.checkOptionsOne
-    console.log('Custom->ngOnInit', this.config);
+    // console.log('Custom->ngOnInit', this.config);
   }
 
   public ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
+    // console.log('ngAfterViewInit');
     this.initCustomLayout();
   }
 

@@ -1,0 +1,50 @@
+{
+  "app": {
+    "name": "Alain",
+    "description": "Ng-zorro admin panel front-end framework"
+  },
+  "user": {
+    "name": "Admin",
+    "avatar": "./assets/tmp/img/avatar.jpg",
+    "email": "cipchk@qq.com"
+  },
+  "menu": [{
+    "text": "DEMO",
+    "i18n": "menu.demo",
+    "group": true,
+    "hideInBreadcrumb": true,
+    "level": 1,
+    "children": [{
+        "text": "布局 Demo",
+        "i18n": "menu.layout",
+        "icon": "anticon-dashboard",
+        "level": 2,
+        "children": [{
+          "text": "布局 1",
+          "link": "/template/demo",
+          "i18n": "menu.layout.drop",
+          "level": 3
+        }]
+      },
+      {
+        "text": "组件 Demo",
+        "i18n": "menu.components",
+        "icon": "anticon-dashboard",
+        "level": 2,
+        "children": [{
+            "text": "表格",
+            "link": "/dashboard/v1",
+            "i18n": "menu.component.table",
+            "level": 3
+          },
+          {
+            "text": "表单",
+            "link": "/dashboard/analysis",
+            "i18n": "menu.component.form",
+            "level": 3
+          }
+        ]
+      }
+    ]
+  }]
+}
