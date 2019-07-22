@@ -32,77 +32,77 @@ export class ParameterResolver {
     return result;
   }
 
-  private tempValue(result, param, model) {
+  private static tempValue(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new TempValueParameter(result, param, model).buildParameter();
   }
 
-  private value(result, param, model) {
+  private static value(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new ValueParamParameter(result, param, model).buildParameter();
   }
 
-  private GUID(result, param, model) {
+  private static GUID(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new GUIDParameter(result, param, model).buildParameter();
   }
 
-  private item(result, param, model) {
+  private static item(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new ItemParameter(result, param, model).buildParameter();
   }
 
-  private componentValue(result, param, model) {
+  private static componentValue(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new ComponentValueParameter(result, param, model).buildParameter();
   }
 
-  private checkedRow(result, param, model) {
+  private static checkedRow(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new CheckedRowParameter(result, param, model).buildParameter();
   }
 
-  private selectedRow(result, param, model) {
+  private static selectedRow(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new SelectedRowParameter(result, param, model).buildParameter();
   }
 
-  private checked(result, param, model) {
+  private static checked(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new CheckedParameter(result, param, model).buildParameter();
   }
 
-  private selected(result, param, model) {
+  private static selected(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new SelectedParameter(result, param, model).buildParameter();
   }
 
-  private checkedId(result, param, model) {
+  private static checkedId(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new CheckedIdParameter(result, param, model).buildParameter();
   }
 
-  private cacheValue(result, param, model) {
+  private static cacheValue(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new CacheValueParameter(result, param, model).buildParameter();
   }
 
-  private initValue(result, param, model) {
+  private static initValue(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new InitValueParameter(result, param, model).buildParameter();
   }
 
-  private cascadeValue(result, param, model) {
+  private static cascadeValue(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new CascadeValueParameter(result, param, model).buildParameter();
   }
 
-  private returnValue(result, param, model) {
+  private static returnValue(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new ReturnValueParameter(result, param, model).buildParameter();
   }
 
-  private defaultWeek(result, param, model) {
+  private static defaultWeek(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new ItemParameter(result, param, model).buildParameter();
   }
@@ -117,7 +117,7 @@ export class ParameterResolver {
   //     return new ItemParameter(result, param, model).buildParameter();
   //   }
 
-  private router(result, param, model) {
+  private static router(result, param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new RouterParameter(result, param, model).buildParameter();
   }

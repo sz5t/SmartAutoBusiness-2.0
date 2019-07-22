@@ -24,13 +24,17 @@ export const BSN_RELATIVE_MESSAGE_BEHAVIOR_RECEIVER = new InjectionToken<string>
  */
 export const BSN_COMPONENT_SERVICES = new InjectionToken<string>('BSN_COMPONENT_SERVICES');
 
+
+export const BSN_RELATION_SUBJECT = new InjectionToken<string>('BSN_RELATION_SUBJECT');
+
+export const BSN_RELATION_TRIGGER = new InjectionToken<string>('BSN_RELATION_TRIGGER');
 /**
- * 
+ * 业务消息模型
  */
 export class BsnRelativesMessageModel {
     constructor(
-        public _model: string,
-        public _viewId: string,
+        public trigger: { triggerType: string, trigger: string },
+        public viewId: string,
         public options?: any
     ) { }
 }

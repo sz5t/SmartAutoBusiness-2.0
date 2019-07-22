@@ -125,6 +125,10 @@ export class CnLayoutResolverDirective implements OnInit, OnDestroy {
                 break;
             case 'tabs':
                 containerObj.tabs = containerCfg.tabs;
+                break;
+            case 'component':
+                containerObj.component = containerCfg.component;
+                break;
         }
     }
 

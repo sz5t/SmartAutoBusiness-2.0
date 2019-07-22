@@ -1,6 +1,6 @@
 import { ApiService, ApiServiceConfiguration } from './core/services/api/api-service';
-import { BSN_RELATIVE_MESSAGE_SENDER, BSN_RELATIVE_MESSAGE_RECEIVER, BSN_RELATIVE_MESSAGE_BEHAVIOR_SENDER, BSN_RELATIVE_MESSAGE_BEHAVIOR_RECEIVER, BSN_COMPONENT_SERVICES } from './core/relations/bsn-relatives';
-import { Subject } from 'rxjs';
+import { BSN_RELATIVE_MESSAGE_SENDER, BSN_RELATIVE_MESSAGE_RECEIVER, BSN_RELATIVE_MESSAGE_BEHAVIOR_SENDER, BSN_RELATIVE_MESSAGE_BEHAVIOR_RECEIVER, BSN_COMPONENT_SERVICES, BSN_RELATION_TRIGGER, BSN_RELATION_SUBJECT } from './core/relations/bsn-relatives';
+import { Subject, BehaviorSubject } from 'rxjs';
 // tslint:disable: no-duplicate-imports
 import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -92,6 +92,14 @@ const APPINIT_PROVIDES = [
 ];
 
 const RELATIONS_PROVIDERS = [
+  {
+    provide: BSN_RELATION_TRIGGER,
+    useValue: new Subject<BsnRelativesMessageModel>()
+  },
+  {
+    provide: BSN_RELATION_SUBJECT,
+    useValue: new Subject<BsnRelativesMessageModel>()
+  },
   {
     provide: BSN_RELATIVE_MESSAGE_SENDER,
     useValue: new Subject<BsnRelativesMessageModel>()

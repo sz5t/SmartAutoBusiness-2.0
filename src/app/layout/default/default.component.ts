@@ -71,7 +71,6 @@ export class LayoutDefaultComponent implements OnInit, AfterViewInit, OnDestroy 
       [`alain-default__fixed`]: layout.fixed,
       [`alain-default__collapsed`]: layout.collapsed,
     });
-    console.log('default', layout.collapsed);
     this.layoutCollapsed = layout.collapsed;
 
     doc.body.classList[layout.colorWeak ? 'add' : 'remove']('color-weak');

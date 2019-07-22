@@ -11,6 +11,6 @@ export class SidebarComponent implements OnInit {
   public layoutCollapsed;
   constructor(public settings: SettingsService) { }
   ngOnInit() {
-    console.log('sidebar', this.layoutCollapsed);
+    
   }
 }

@@ -14,6 +14,7 @@ import { NzMessageService, NzNotificationService } from 'ng-zorro-antd';
 import { _HttpClient } from '@delon/theme';
 import { environment } from '@env/environment';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { CacheService } from '@delon/cache';
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -38,7 +39,7 @@ const CODEMESSAGE = {
  */
 @Injectable()
 export class DefaultInterceptor implements HttpInterceptor {
-  constructor(private injector: Injector) {}
+  constructor(private injector: Injector, private cacheService: CacheService) { }
 
   private get notification(): NzNotificationService {
     return this.injector.get(NzNotificationService);
@@ -111,7 +112,11 @@ export class DefaultInterceptor implements HttpInterceptor {
     // 统一加上服务端前缀
     let url = req.url;
     if (!url.startsWith('https://') && !url.startsWith('http://')) {
-      url = environment.SERVER_URL + url;
+      if (!url.startsWith('assets')) {
+        url = environment.SERVER_URL + url;
+      } else {
+        url = environment.LOCAL_URL + url;
+      }
     }
 
     const newReq = req.clone({ url });
@@ -124,5 +129,17 @@ export class DefaultInterceptor implements HttpInterceptor {
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err)),
     );
+  }
+
+  _buildURL() {
+    let url;
+    const currentConfig: any = this.cacheService.getNone("currentConfig");
+    if (!currentConfig) {
+      // url = SystemResource.localResource.url;
+      url = environment.SERVER_URL;
+    } else {
+      url = currentConfig.Server;
+    }
+    return url;
   }
 }

@@ -121,32 +121,6 @@ export class BeforeOperationResolver implements InnerValue {
         return conditions_subscribe$;
     }
 
-    private buildConditionObservable(conditions, action) {
-        const condition_source$ = from(conditions)
-        const condition_subscribe$ = condition_source$.pipe(
-            mergeMap(val => this.buildOperation(val))
-        )
-        const that = this;
-        condition_subscribe$.subscribe(val => {
-            // val.then(result => {
-            //     if (result) {
-            //         console.log('value: ' + result);
-            //         that.beforeOperationMessage(action, result);
-            //     }
-            // })
-        });
-        return condition_subscribe$;
-    }
-
-    private buildObservables(items) {
-        const items_sources$ = from(items);
-        const items_subscribe$ = items_sources$.pipe(
-            mergeMap(val => this.buildOperation(val))
-        )
-        items_subscribe$.subscribe(val => console.log('value: ' + val));
-        return items_sources$;
-    }
-
     private async buildOperation(items) {
         const operationResult = [];
         for (const item of items) {
@@ -293,12 +267,18 @@ export class BeforeOperationResolver implements InnerValue {
         return result;
     }
 
+    /**
+     * (未完成)
+     * 根据异步获取数据的结果与需要验证的数据进行比较,返回是否验证通过
+     * 需要根据具体业务规则定义如何进行结果的判断,目前只针对于返回结果数据的等值匹配
+     * @param statusItem 
+     */
     private async matchAjaxValueCondition(statusItem) {
         let result = false;
         const url = this.buildUrl(statusItem.ajaxConfig.url);
         const params = this.buildParameter(statusItem.ajaxConfig.params, this.operationItemData);
-        const response = await this._apiService[statusItem.ajaxConfig.ajaxType](url, params);
-        if (response.isSuccess) {
+        const response = await this._apiService[statusItem.ajaxConfig.ajaxType](url, params).toPromise();
+        if (response.success) {
             if (statusItem.name) {
                 if (Array.isArray(response.data)) {
                     result = response.data.every(s => this.operationItemData[statusItem.name] === s[statusItem.valueName]);
@@ -318,228 +298,20 @@ export class BeforeOperationResolver implements InnerValue {
         return result;
     }
 
+    /**
+     * (未完成)
+     * 执行用户自定义的API,并根据API的返回结果,返回是否通过验证
+     * @returns boolean
+     */
     private async executeAjaxCondition(statusItem) {
         const url = this.buildUrl(statusItem.ajaxConfig.url);
         const params = this.buildParameter(statusItem.ajaxConfig.params, this.operationItemData);
         // 需要处理异步调用之后的返回结果
-        const result = await this._apiService[API_SERVICE_METHOD[statusItem.ajaxConfig.ajaxType]](url, params);
-
-        return result;
+        // 需要根据后期API执行完成的返回结构,进行统一的处理
+        const result = await this._apiService[API_SERVICE_METHOD[statusItem.ajaxConfig.ajaxType]](url, params).toPromise();
+        return result.success;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /**
-     * 创建具体的检查单元
-     * @param conditions 
-     */
-    private buildObservable(conditions, action) {
-        const checkConditionItems = [];
-
-
-        for (const item of conditions) {
-            // 选中行的解析处理
-            let promiseFunc;
-            switch (item.checkType) {
-                case 'value':
-                    checkConditionItems.push(this.asyncMatchValueCondition(item));
-                    break;
-                case 'regexp':
-                    promiseFunc = of(this.matchRegexpCondition(item));
-                    break;
-                case 'tempValue':
-                    promiseFunc = of(this.matchTempValueCondition(item));
-                    break;
-                case 'initValue':
-                    promiseFunc = of(this.matchInitValueCondition(item));
-                    break;
-                case 'cacheValue':
-                    promiseFunc = of(this.matchCacheValueCondition(item));
-                    break;
-                case 'innerValue':
-                    checkConditionItems.push(this.asyncInnerValueCondition(item))
-                    break;
-                case 'executeAjax':
-                    // 预留前置异步操作
-                    promiseFunc = fromPromise(this.executeAjaxCondition(item));
-                    break;
-                case 'ajaxValue':
-                    // 预留前置异步校验
-                    promiseFunc = fromPromise(this.matchAjaxValueCondition(item));
-                    break;
-            }
-        }
-
-        forkJoin(checkConditionItems).subscribe(results => {
-            results.forEach(r => console.log('result', r));
-        })
-
-        // const that = this;
-        // const promiseResult$ = from(checkConditionItems);
-        // const ts = promiseResult$.pipe(
-        //     every(res => {
-        //         that.handleOperationAction(res, action);
-        //         return res === true;
-        //     })
-        // );
-        // ts.subscribe(val => console.log('inner subscribe:' + val));
-        // return ts;
-    }
-
-
-
-    /**
-     * 操作选中行前置判断
-     * @option  {type, name, actionName, ajaxConfig}
-     */
-    public beforeItemDataOperation(option) {
-        let result = false;
-        if (this._beforeOperationMap.has(option.name)) {
-            const op_status = this._beforeOperationMap.get(option.name);
-            for (let i = 0, len = op_status.length; i < len; i++) {
-                const conditionResult = this.handleOperationConditions(
-                    op_status[i].conditions
-                );
-                const actionResult = this.handleOperationAction(
-                    conditionResult,
-                    op_status[i].action
-                );
-                if (actionResult) {
-                    result = true;
-                    break;
-                }
-                result = actionResult;
-            }
-        }
-        return result;
-    }
-
-    /**
-     * 操作勾选行前置判断
-     * @param option
-     */
-    public beforeItemsDataOperation(option) {
-        let result = false;
-        if (this._beforeOperationMap.has(option.name)) {
-            const op_status = this._beforeOperationMap.get(option.name);
-            for (let i = 0, len = op_status.length; i < len; i++) {
-                const conditionResult = this.handleCheckedRowsOperationConditions(
-                    op_status[i].conditions
-                );
-                const actionResult = this.handleOperationAction(
-                    conditionResult,
-                    op_status[i].action
-                );
-                if (actionResult) {
-                    result = true;
-                    // 跳出循环
-                    break;
-                }
-                result = actionResult;
-            }
-        }
-        return result;
-    }
-
-    /**
-     * 处理选中前置操作条件
-     * @param conditions
-     */
-    private handleOperationConditions(conditions) {
-        const orResult = [];
-        conditions.forEach(elements => {
-            // 解析‘与’的关系条件
-            const andResults = [];
-            elements.forEach(item => {
-                let andResult = true;
-                // 选中行的解析处理
-                switch (item.checkType) {
-                    case 'value':
-                        andResult = this.matchValueCondition(item);
-                        break;
-                    case 'regexp':
-                        andResult = this.matchRegexpCondition(item);
-                        break;
-                    case 'tempValue':
-                        andResult = this.matchTempValueCondition(item);
-                        break;
-                    case 'initValue':
-                        andResult = this.matchInitValueCondition(item);
-                        break;
-                    case 'cacheValue':
-                        andResult = this.matchCacheValueCondition(item);
-                        break;
-                    case 'innerValue':
-                        andResult = this.innerValueCondition(item);
-                        break;
-                    case 'executeAjax':
-                        // 预留前置异步操作
-                        // andResult = this.executeAjaxCondition(item);
-                        break;
-                    case 'ajaxValue':
-                        // 预留前置异步校验
-                        // andResult = this.matchAjaxValueCondition(item);
-                        break;
-                }
-                andResults.push(andResult);
-            });
-            const and = andResults.every(s => s === true);
-            orResult.push(and);
-            // 解析’或‘的关系条件
-        });
-
-        return orResult.some(s => s === true);
-    }
-
-    /**
-     * 值匹配验证
-     * @param dataItem 待比较数据
-     * @param statusItem 匹配条件对象
-     */
-    private matchValueCondition(statusItem) {
-        let result = false;
-        if (this.operationItemData) {
-            if (this.operationItemData.hasOwnProperty(statusItem.name)) {
-                result =
-                    this.operationItemData[statusItem.name] ===
-                    statusItem.value;
-            } else {
-                result = true;
-            }
-
-        }
-        console.log('value Check:', result);
-        return result;
-    }
-
-    /**
-     * 正则表达匹配验证
-     * @param dataItem 待比较数据
-     * @param statusItem 匹配条件对象
-     */
-    private matchRegexpCondition(statusItem) {
-        let result = false;
-        if (this.operationItemData) {
-            const reg = new RegExp(
-                statusItem.value ? statusItem.value : ''
-            );
-            result = reg.test(this.operationItemData[statusItem.name]);
-        }
-        return result;
-    }
 
     private innerValueCondition(statusItem) {
         // 判断与固定值做验证还是与当前行数据验证
@@ -572,85 +344,46 @@ export class BeforeOperationResolver implements InnerValue {
 
     }
 
-    private matchTempValueCondition(statusItem) {
-        // 判断与固定值做验证还是与当前行数据验证
-        let result = false;
-        if (statusItem.name) {
-            result =
-                this.operationItemData[statusItem.name] !==
-                this.tempValue[statusItem.valueName];
-        } else {
-            const reg = new RegExp(statusItem.value);
-            result = reg.test(this.tempValue[statusItem.valueName]);
-            //   if (this.tempValue[statusItem['valueName']] === statusItem['value']) {
-            //     result = true;
-            //   }
-        }
-        return result;
-    }
-
-    private matchInitValueCondition(statusItem) {
-        let result = false;
-        if (statusItem.name) {
-            result =
-                this.operationItemData[statusItem.name] !==
-                this.initValue[statusItem.valueName];
-        } else {
-            const reg = new RegExp(statusItem.value);
-            result = reg.test(this.initValue[statusItem.valueName]);
-        }
-        return result;
-    }
-
-    private matchCacheValueCondition(statusItem) {
-        let result = false;
-        if (statusItem.name) {
-            result =
-                this.operationItemData[statusItem.name] !==
-                this.cacheValue[statusItem.valueName];
-        } else {
-            const reg = new RegExp(statusItem.value);
-            result = reg.test(this.cacheValue[statusItem.valueName]);
-        }
-        return result;
-    }
-
     /**
      * 处理勾选前置操作条件
      * @param conditions
      */
-    private handleCheckedRowsOperationConditions(conditions) {
+    private async handleCheckedRowsOperationConditions(conditions) {
         const orResult = [];
-        conditions.forEach(elements => {
+        conditions.forEach(async elements => {
             // 解析‘与’的关系条件
             const andResults = [];
-            elements.forEach(item => {
-                let andResult = true;
+            elements.forEach(async item => {
                 // 选中行的解析处理
                 switch (item.checkType) {
                     case 'value':
-                        andResult = this.matchCheckedValueCondition(item);
+                        const checkedValueResult = await this.matchCheckedValueCondition(item);
+                        andResults.push(checkedValueResult);
                         break;
                     case 'regexp':
-                        andResult = this.matchCheckedRegexpCondition(item);
+                        const matchCheckedRegexpResult = await this.matchCheckedRegexpCondition(item);
+                        andResults.push(matchCheckedRegexpResult);
                         break;
                     case 'tempValue':
-                        andResult = this.matchCheckedTempValueCondition(item);
+                        const matchCheckedTempValueResult = await this.matchCheckedTempValueCondition(item);
+                        andResults.push(matchCheckedTempValueResult);
                         break;
                     case 'initValue':
-                        andResult = this.matchCheckedInitValueCondition(item);
+                        const matchCheckedInitValueResult = await this.matchCheckedInitValueCondition(item);
+                        andResults.push(matchCheckedInitValueResult);
                         break;
                     case 'cacheValue':
-                        andResult = this.matchCheckedCacheValueCondition(item);
+                        const matchCheckedCacheValueResult = await this.matchCheckedCacheValueCondition(item);
+                        andResults.push(matchCheckedCacheValueResult);
                         break;
                     case 'innerValue':
-                        andResult = this.innerValueCondition(item);
+                        const innerValueResult = await this.innerValueCondition(item);
+                        andResults.push(innerValueResult);
                         break;
                 }
-                andResults.push(andResult);
             });
             // 解析’或‘的关系条件
-            const and = andResults.every(s => s === true);
+            const and = await andResults.every(s => s === true);
             orResult.push(and);
         });
         return orResult.some(s => s === true);
@@ -660,18 +393,18 @@ export class BeforeOperationResolver implements InnerValue {
      * 匹配勾选的缓存数据
      * @param statusItem
      */
-    private matchCheckedCacheValueCondition(statusItem) {
+    private async matchCheckedCacheValueCondition(statusItem) {
         let result = false;
         if (this.operationItemsData) {
             if (statusItem.name) {
-                result = this.operationItemsData.some(
+                result = await this.operationItemsData.some(
                     row =>
                         row[statusItem.name] !==
                         this.cacheValue[statusItem.valueName]
                 );
             } else {
                 const reg = new RegExp(statusItem.value);
-                result = reg.test(this.cacheValue[statusItem.valueName]);
+                result = await reg.test(this.cacheValue[statusItem.valueName]);
             }
         }
         return result;
@@ -681,18 +414,18 @@ export class BeforeOperationResolver implements InnerValue {
      * 匹配勾选的缓存数据
      * @param statusItem
      */
-    private matchCheckedTempValueCondition(statusItem) {
+    private async matchCheckedTempValueCondition(statusItem) {
         let result = false;
         if (this.operationItemsData) {
             if (statusItem.name) {
-                result = this.operationItemsData.some(
+                result = await this.operationItemsData.some(
                     row =>
                         row[statusItem.name] !==
                         this.tempValue[statusItem.valueName]
                 );
             } else {
                 const reg = new RegExp(statusItem.value);
-                result = reg.test(this.tempValue[statusItem.valueName]);
+                result = await reg.test(this.tempValue[statusItem.valueName]);
             }
         }
         return result;
@@ -702,18 +435,18 @@ export class BeforeOperationResolver implements InnerValue {
      * 匹配勾选的缓存数据
      * @param statusItem
      */
-    private matchCheckedInitValueCondition(statusItem) {
+    private async matchCheckedInitValueCondition(statusItem) {
         let result = false;
         if (this.operationItemsData) {
             if (statusItem.name) {
-                result = this.operationItemsData.some(
+                result = await this.operationItemsData.some(
                     row =>
                         row[statusItem.name] !==
                         this.initValue[statusItem.valueName]
                 );
             } else {
                 const reg = new RegExp(statusItem.value);
-                result = reg.test(this.initValue[statusItem.valueName]);
+                result = await reg.test(this.initValue[statusItem.valueName]);
             }
         }
         return result;
@@ -724,10 +457,10 @@ export class BeforeOperationResolver implements InnerValue {
      * @param checkedRows
      * @param statusItem
      */
-    private matchCheckedValueCondition(statusItem) {
+    private async matchCheckedValueCondition(statusItem) {
         let result = false;
         if (this.operationItemsData.length > 0) {
-            result = this.operationItemsData.some(
+            result = await this.operationItemsData.some(
                 row => row[statusItem.name] === statusItem.value
             );
         }
@@ -739,14 +472,14 @@ export class BeforeOperationResolver implements InnerValue {
      * @param checkedRows
      * @param statusItem
      */
-    private matchCheckedRegexpCondition(statusItem) {
+    private async matchCheckedRegexpCondition(statusItem) {
         let result = false;
         if (this.operationItemsData.length > 0) {
             const reg = new RegExp(statusItem.value ? statusItem.value : '');
-            const txt = reg.test(
+            const txt = await reg.test(
                 this.operationItemsData[0][statusItem.name]
             );
-            result = this.operationItemsData.some(row =>
+            result = await this.operationItemsData.some(row =>
                 reg.test(row[statusItem.name])
             );
         }

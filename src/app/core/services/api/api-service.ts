@@ -2,7 +2,7 @@ import { CacheService } from '@delon/cache';
 import { Injectable, Inject } from '@angular/core';
 import { TokenService, DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { _HttpClient, AlainThemeConfig } from '@delon/theme';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { BeforeOperationResolver } from '@shared/resolver/beforeOperation/before-operation.resolver';
@@ -144,12 +144,12 @@ export class ApiServiceConfiguration {
       this.handleAbpResponse(response);
       // tslint:disable-next-line: deprecation
       // 重写抛出异常
-      return Observable.throw(JSON.stringify(response.message));
+      return throwError(JSON.stringify(response.message));
     } else {
       this.handleErrorResponse(response);
       // tslint:disable-next-line: deprecation
       // 重写抛出异常
-      return Observable.throw(`HTTP error ${error.status} , ${JSON.stringify(response.message)}`);
+      return throwError(`HTTP error ${error.status} , ${JSON.stringify(response.message)}`);
     }
   }
 }
@@ -175,7 +175,7 @@ export class ApiService extends _HttpClient {
    */
   public getRequest(_url: string, _method: string, _options?: ApiOptions) {
     this.normalizeRequestOptions(_options);
-    return super.request<ApiResponse>(_method, _url, _options as any)
+    return super.request<any>(_method, _url, _options as any)
       .pipe(
         map(response => this.configuration.handleResponse(response)),
         catchError(error => this.configuration.handleError(error)));
@@ -249,7 +249,7 @@ export class ApiService extends _HttpClient {
       options.headers = new HttpHeaders();
     }
     if (!options.headers) {
-      options.header = new HttpHeaders();
+      options.headers = new HttpHeaders();
     }
 
     options.headers.append("Pragma", "no-cache");
@@ -310,6 +310,12 @@ export class ApiOptions {
   reportProgress?: boolean;
   responseType?: 'json';
   withCredentials?: boolean;
+  // 模块id
+  // 模块名称
+  // 组件id
+  // 组件名称
+  // 操作id
+  // 操作名称
 }
 
 export class IErrorInfo {

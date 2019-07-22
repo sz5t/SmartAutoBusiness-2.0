@@ -1,3 +1,5 @@
+import { CnComponentResolverDirective } from './resolver/component/component-resolver.directive';
+import { CnDataTableComponent } from './components/data_table/cn-data-table.component';
 import { CnTabsComponent } from './components/layout/cn-tabs.component';
 import { CnLayoutComponent } from './components/layout/cn-layout.component';
 import { NgModule, Component } from '@angular/core';
@@ -20,6 +22,7 @@ import { UEditorModule } from 'ngx-ueditor';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { CnLayoutResolverDirective } from './resolver/layout/layout-resolver.directive';
 import { CnCustomLayoutComponent } from './components/layout/cn-custom-layout.component';
+import { CnToolbarComponent } from './components/toolbar/cn-toolbar.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -28,10 +31,13 @@ const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTiny
 const COMPONENTS = [
   CnLayoutComponent,
   CnTabsComponent,
-  CnCustomLayoutComponent
+  CnCustomLayoutComponent,
+  CnDataTableComponent,
+  CnToolbarComponent
 ];
 const DIRECTIVES = [
-  CnLayoutResolverDirective
+  CnLayoutResolverDirective,
+  CnComponentResolverDirective
 ];
 // #endregion
 

@@ -1,0 +1,30 @@
+<div class="table-operations">
+  <span *ngFor="let toolbar of toolbarConfig">
+    <span class="toolbarGroup" *ngIf="toolbar.group">
+      <nz-button-group>
+        <button [nzSize]="size ? size : 'default'" [nzType]="btn.type ? btn.type : 'default'" nz-button
+          *ngFor="let btn of toolbar.group" (click)="toolbarAction(btn, toolbar.targetViewId)" [attr.disabled]="btn.disabled">
+          <i nz-icon *ngIf="btn.icon" [type]="btn.icon" [theme]="btn.theme ? btn.theme : 'outline'"></i>
+          {{btn.text}}
+        </button>
+      </nz-button-group>
+    </span>
+    <span class="toolbarGroup" *ngIf="toolbar.dropdown">
+      <nz-dropdown *ngFor="let btn of toolbar.dropdown">
+        <button nz-button nz-dropdown>
+          <strong>
+            <i nz-icon type="down" theme="outline"></i> {{btn.text}}
+          </strong>
+        </button>
+        <ul nz-menu>
+          <li nz-menu-item (click)="toolbarAction(b)" *ngFor="let b of btn.buttons">
+            <strong>
+              <a [attr.disabled]="b.disabled"> <i nz-icon type="btn.icon"
+                  [theme]="btn.theme ? btn.theme : 'outline'"></i>{{b.text}}</a>
+            </strong>
+          </li>
+        </ul>
+      </nz-dropdown>
+    </span>
+  </span>
+</div>

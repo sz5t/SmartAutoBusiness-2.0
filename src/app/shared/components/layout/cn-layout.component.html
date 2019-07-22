@@ -9,8 +9,7 @@
           <nz-card [ngSwitch]="c.container" [nzTitle]="c.title ? c.title : false">
             <ng-container *ngSwitchCase="'tabs'" cnLayoutResolverDirective [config]="c.tabs"></ng-container>
             <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout"></ng-container>
-            <ng-container *ngSwitchDefault>
-              渲染组件
+            <ng-container *ngSwitchCase="'component'" cnComponentResolverDirective [config]="c.component">
             </ng-container>
           </nz-card>
         </div>

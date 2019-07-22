@@ -2,7 +2,7 @@ import { BSN_RELATIVE_MESSAGE_SENDER, BSN_RELATIVE_MESSAGE_RECEIVER, BSN_RELATIV
 import { ActivatedRoute } from '@angular/router';
 import { CacheService } from '@delon/cache';
 import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
-import { Subject, BehaviorSubject, Observable } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { ApiService } from '@core/services/api/api-service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Inject } from '@angular/core';
@@ -21,6 +21,50 @@ export interface ICommonOperations {
 }
 
 export class CnComponentBase {
+    private _initValue: any;
+    public get initValue(): any {
+        return this._initValue ? this._initValue : {};
+    }
+    public set initValue(value: any) {
+        this._initValue = value;
+    }
+    private _tempValue: any;
+    public get tempValue(): any {
+        return this._tempValue ? this._tempValue : {};
+    }
+    public set tempValue(value: any) {
+        this._tempValue = value;
+    }
+    private _cacheValue: any;
+    public get cacheValue(): any {
+        return this._cacheValue ? this._cacheValue : {};
+    }
+    public set cacheValue(value: any) {
+        this._cacheValue = value;
+    }
+    private _routerValue: any;
+    public get routerValue(): any {
+        return this._routerValue ? this._routerValue : {};
+    }
+    public set routerValue(value: any) {
+        this._routerValue = value;
+    }
+
+    private _subscription$: Subscription;
+    public get subscription$(): Subscription {
+        return this._subscription$;
+    }
+    public set subscription$(value: Subscription) {
+        this._subscription$ = value;
+    }
+
+    private _trigger_subscription$: Subscription;
+    public get trigger_subscription$(): Subscription {
+        return this._trigger_subscription$;
+    }
+    public set trigger_subscription$(value: Subscription) {
+        this._trigger_subscription$ = value;
+    }
 
     constructor(private _componentService: ComponentServiceProvider) { }
 
@@ -70,21 +114,46 @@ export class CnComponentBase {
      * 注销接收者与发送者
      */
     public unsubscribeRelation() {
-        if (this._componentService.commonRelationReceiver) {
-            this._componentService.commonRelationReceiver.unsubscribe();
+        if (this.subscription$) {
+            this.subscription$.unsubscribe();
         }
-        if (this._componentService.commonRelationSender) {
-            this._componentService.commonRelationSender.unsubscribe();
-        }
-        if (this._componentService.behavoirRelationReceiver) {
-            this._componentService.behavoirRelationReceiver.unsubscribe();
-        }
-        if (this._componentService.behavoirRelationSender) {
-            this._componentService.behavoirRelationSender.unsubscribe();
+        if (this.trigger_subscription$) {
+            this.trigger_subscription$.unsubscribe();
         }
     }
 
     // #endregion
+
+
+    public before(target, method, advice) {
+        const original = target[method];
+        target[method] = (args) => {
+            const result = advice(args);
+            if (result) {
+                original.apply(target, args);
+            }
+        };
+        return target;
+    }
+
+    public after(target, method, advice) {
+        const original = target[method];
+        target[method] = (args) => {
+            original.apply(target, args);
+            advice(args);
+        };
+        return target;
+    }
+
+    public around(target, method, advice) {
+        const original = target[method];
+        target[method] = (args) => {
+            advice(args);
+            original.apply(target, args);
+            advice(args);
+        };
+        return target;
+    }
 
 
 }
