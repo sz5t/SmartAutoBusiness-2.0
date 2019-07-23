@@ -1,0 +1,34 @@
+
+
+
+  <nz-card [nzTitle]=" titleTemplate" style="width:100%;border: 1px solid rgb(29, 238, 193); height: 100%;" [nzBodyStyle]="bodystyle" [nzExtra]="extraTemplate">
+
+    <nz-tabset [nzType]="'card'" >
+        <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
+          <ng-template #titleTemplate>
+            <div>
+              {{ tab.title }}
+              <i nz-icon type="close" (click)="closeTab(tab.id)" class="ant-tabs-close-x"></i>
+            </div>
+          </ng-template>
+          <cfg-layout  [config]="tab.layout"></cfg-layout>
+        </nz-tab>
+      </nz-tabset>
+</nz-card>
+<ng-template #titleTemplate>
+    <span>{{config.title}}</span>
+</ng-template>
+<ng-template #extraTemplate>
+    <!-- -->
+    <button id="dragCol" nz-button [nzSize]="'small'" nzTitle="移动tabs" nz-tooltip style="background-color:lightgreen" >
+        <i nz-icon type="drag"></i>
+    </button>
+    <button nz-button [nzSize]="'small'" nzTitle="设置tabs" nz-tooltip style="background-color:lightgreen">
+        <i nz-icon type="setting"></i>
+    </button>
+    <button nz-button [nzSize]="'small'" nzTitle="删除tabs" nz-tooltip (click)="delTabs()" style="background-color:lightgreen">
+        <i nz-icon type="delete"></i>
+    </button>
+    <button nz-button  [nzSize]="'small'"  nzTitle="添加tab" nz-tooltip nzShape="circle"  (click)="newTab()" style="background-color:lightgreen">    <i nz-icon type="plus" ></i></button>
+
+</ng-template>

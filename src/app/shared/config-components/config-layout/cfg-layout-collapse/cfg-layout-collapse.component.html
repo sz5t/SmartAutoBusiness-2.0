@@ -1,0 +1,25 @@
+<!-- <ng-template #extraTpl>
+  <i nz-icon nzType="setting"></i>
+</ng-template> -->
+<nz-card nzTitle="折叠面板" style="width:100%; border: 1px solid darkolivegreen " [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
+  <nz-collapse>
+    <nz-collapse-panel *ngFor="let panel of panels" [nzHeader]="panel.title" [nzActive]="panel.active" [nzDisabled]="panel.disabled">
+      <!-- [nzExtra]="extraTpl" -->
+      <cfg-layout  [config]="panel.layout"></cfg-layout>
+    </nz-collapse-panel>
+  </nz-collapse>
+</nz-card>
+<ng-template #extraTemplate>
+  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="移动折叠面板" nz-tooltip style="background-color:darkolivegreen">
+    <i nz-icon type="drag"></i>
+  </button>
+  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置折叠面板" nz-tooltip style="background-color:darkolivegreen">
+    <i nz-icon type="setting"></i>
+  </button>
+  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="删除折叠面板" nz-tooltip (click)="deleteCollapse()" style="background-color:darkolivegreen">
+    <i nz-icon type="delete"></i>
+  </button>
+  <button nz-button [nzSize]="'small'" nzTitle="添加面板" nz-tooltip nzShape="circle" (click)="addCollapsePanel()" style="background-color:darkolivegreen">
+    <i nz-icon type="plus"></i>
+  </button>
+</ng-template>

@@ -1,0 +1,106 @@
+<!-- west 左  east 右  center 中间  North  上  South  下-->
+
+<nz-card nzTitle="自定义收缩" [nzExtra]="extraTemplate">
+  <div style="display: flex;">
+    <!-- customlayout -->
+    <ng-container *ngFor="let cl of customlayout">
+      <div #west *ngIf="cl.layoutType==='west'"   [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}" >
+        <nz-card [nzTitle]="title['west']" [nzExtra]="westTemplate"  [ngStyle]=" {'height': '100%'} ">
+          <ng-container *ngIf="isCollapsed['west']" [ngStyle]="isCollapsed['west'] ? { }: {'display': 'none'} ">
+            <h3 class="liutitle">{{contenttitle['west']}}</h3>
+          </ng-container>
+          <div  [ngStyle]="!isCollapsed['west'] ? { }: {'display': 'none'} ">
+            <cfg-layout  [config]="cl.layout"></cfg-layout>
+          </div>
+
+        </nz-card>
+        <ng-template #westTemplate>
+          <ng-container *ngIf="!isCollapsed['west']  ">
+            <a>
+              <i nz-icon type="double-left" (click)="ss('west')" nzTitle="收缩" nz-tooltip></i>
+            </a>
+          </ng-container>
+          <ng-container *ngIf="isCollapsed['west']">
+            <a>
+              <i nz-icon type="double-right" (click)="zk('west')" nzTitle="展开" nz-tooltip></i>
+            </a>
+          </ng-container>
+        </ng-template>
+      </div>
+      <div #center *ngIf="cl.layoutType==='center' "   [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}"  >
+        <nz-card [nzTitle]="title['center']" [ngStyle]=" {'height': '100%'} ">
+            <cfg-layout  [config]="cl.layout"></cfg-layout>
+        </nz-card>
+
+      </div>
+      <div #east *ngIf="cl.layoutType==='east' "   [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}">
+        <nz-card [nzTitle]="title['east']" [nzExtra]="eastTemplate" [ngStyle]=" {'height': '100%'} ">
+          <ng-container *ngIf="isCollapsed['east']">
+            <h3 class="cfgtitle">{{contenttitle['east']}}</h3>
+          </ng-container>
+          <div *ngIf="!isCollapsed['east']"  >
+            <cfg-layout  [config]="cl.layout"></cfg-layout>
+          </div>
+
+        </nz-card>
+        <ng-template #eastTemplate>
+          <ng-container *ngIf="!isCollapsed['east']">
+            <a>
+              <i nz-icon type="double-right" (click)="ss('east')" nzTitle="收缩" nz-tooltip></i>
+            </a>
+          </ng-container>
+          <ng-container *ngIf="isCollapsed['east']">
+            <a>
+              <i nz-icon type="double-left" (click)="zk('east')" nzTitle="展开" nz-tooltip></i>
+            </a>
+          </ng-container>
+        </ng-template>
+      </div>
+    </ng-container>
+  </div>
+</nz-card>
+<ng-template #extraTemplate>
+
+  <button nz-button [nzSize]="'small'" nzTitle="收缩布局设置" nz-tooltip (click)="open()">
+    <i nz-icon type="diff"></i>
+  </button>
+  <ng-container *ngIf="configType">
+    <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="保存json" (click)="SaveJson()" nz-tooltip>
+      <i nz-icon type="download"></i>保存json</button>
+  </ng-container>
+
+</ng-template>
+
+
+
+<nz-modal [(nzVisible)]="size_isVisible" nzTitle="收缩布局设置" (nzOnCancel)="size_handleCancel($event)" (nzOnOk)="size_handleOk($event)">
+    <nz-row>
+        <nz-col nzSpan="6">
+            收缩布局区域:
+        </nz-col>
+        <nz-col nzSpan="18">
+            <nz-checkbox-group [(ngModel)]="checkOptionsOne.layoutState" (ngModelChange)="updateSingleChecked()"></nz-checkbox-group>
+        </nz-col>
+      </nz-row>
+      <nz-row>
+          <nz-col nzSpan="24">
+              <nz-tabset>
+                  <nz-tab *ngFor="let tab of customlayout_form" [nzTitle]="tab.title" [nzDisabled]="tab.hidden">
+                      <nz-row>
+                          <nz-col nzSpan="6">
+                                  <code>&lt;宽度:</code>
+                          </nz-col>
+                          <nz-col nzSpan="12">
+                              <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="tab.span"></nz-slider>
+                          </nz-col>
+                          <div nz-col nzSpan="6">
+                              <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="tab.span"></nz-input-number>
+                          </div>
+                      </nz-row>
+                    </nz-tab>
+                </nz-tabset>
+          </nz-col>
+      </nz-row>
+
+</nz-modal>
+
