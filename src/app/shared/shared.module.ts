@@ -23,6 +23,20 @@ import { NgxTinymceModule } from 'ngx-tinymce';
 import { CnLayoutResolverDirective } from './resolver/layout/layout-resolver.directive';
 import { CnCustomLayoutComponent } from './components/layout/cn-custom-layout.component';
 import { CnToolbarComponent } from './components/toolbar/cn-toolbar.component';
+import { CfgCustomLayoutComponent } from '@shared/config-components/config-layout/cfg-custom-layout/cfg-custom-layout.component';
+import { CfgLayoutCardComponent } from '@shared/config-components/config-layout/cfg-layout-card/cfg-layout-card.component';
+import { CfgLayoutComponent } from '@shared/config-components/config-layout/cfg-layout/cfg-layout.component';
+import { CfgLayoutColComponent } from '@shared/config-components/config-layout/cfg-layout-col/cfg-layout-col.component';
+import { CfgLayoutCollapseComponent } from '@shared/config-components/config-layout/cfg-layout-collapse/cfg-layout-collapse.component';
+import { CfgLayoutRowComponent } from '@shared/config-components/config-layout/cfg-layout-row/cfg-layout-row.component';
+import { CfgLayoutTabsComponent } from '@shared/config-components/config-layout/cfg-layout-tabs/cfg-layout-tabs.component';
+import { CfgFormItemComponent } from '@shared/config-components/config-form-layout/cfg-form-item/cfg-form-item.component';
+import { CfgFormLayoutComponent } from '@shared/config-components/config-form-layout/cfg-form-layout/cfg-form-layout.component';
+import { CfgFormLayoutColComponent } from '@shared/config-components/config-form-layout/cfg-form-layout-col/cfg-form-layout-col.component';
+import { CfgFormLayoutRowComponent } from '@shared/config-components/config-form-layout/cfg-form-layout-row/cfg-form-layout-row.component';
+import { CfgFormInputComponent } from '@shared/config-components/config-form-layout/cfg-form-component/cfg-form-input/cfg-form-input.component';
+import { CfgFormSelectComponent } from '@shared/config-components/config-form-layout/cfg-form-component/cfg-form-select/cfg-form-select.component';
+import { CfgFormItemContentDirective } from '@shared/config-components/config-form-layout/cfg-form-item-content.directive';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -33,11 +47,28 @@ const COMPONENTS = [
   CnTabsComponent,
   CnCustomLayoutComponent,
   CnDataTableComponent,
-  CnToolbarComponent
+  CnToolbarComponent,
+  // --设计组件--
+  CfgCustomLayoutComponent,
+  CfgLayoutComponent,
+  CfgLayoutCardComponent,
+  CfgLayoutColComponent,
+  CfgLayoutCollapseComponent,
+  CfgLayoutRowComponent,
+  CfgLayoutTabsComponent,
+
+  CfgFormItemComponent,
+  CfgFormLayoutComponent,
+  CfgFormLayoutColComponent,
+  CfgFormLayoutRowComponent,
+  CfgFormInputComponent,
+  CfgFormSelectComponent
+  // ------设计组件-----
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
-  CnComponentResolverDirective
+  CnComponentResolverDirective,
+  CfgFormItemContentDirective
 ];
 // #endregion
 

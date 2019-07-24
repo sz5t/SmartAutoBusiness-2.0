@@ -23,7 +23,10 @@ export class CnLayoutResolverDirective implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        const configObj = this.resolver(this.config);
+        let configObj ;
+        if(this.config) {
+            configObj =  this.resolver(this.config);
+        }
         if (configObj) {
             switch (configObj.container) {
                 case 'rows':

@@ -1,0 +1,26 @@
+<nz-card [nzTitle]="config.title" style="width:100%;" [nzExtra]="extraTemplate">
+
+    <ng-container *ngIf="layoutType">
+            <ng-container *ngFor="let r of rows">
+                    <cfg-layout-row [config]="r" (updateValue)="valueChangeRow($event)"></cfg-layout-row>
+                </ng-container>
+    </ng-container>
+    <ng-container *ngIf="!layoutType">
+            <cfg-custom-layout [config]="config" ></cfg-custom-layout>
+    </ng-container>
+
+</nz-card>
+<ng-template #extraTemplate>
+    <nz-switch [(ngModel)]="layoutType"   (ngModelChange)="layoutTypeChange($event)" nzCheckedChildren="行列" nzUnCheckedChildren="收缩" style="margin-right: 7px;"></nz-switch>
+
+    <ng-container *ngIf="layoutType">
+        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="添加行" (click)="addRow()" nz-tooltip>
+            <i nz-icon type="plus"></i>添加行</button>
+    </ng-container>
+
+    <ng-container *ngIf="configType">
+        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="保存json" (click)="SaveJson()" nz-tooltip>
+            <i nz-icon type="download"></i>保存json</button>
+    </ng-container>
+
+</ng-template>
