@@ -15,7 +15,8 @@ export class CfgLayoutColComponent implements OnInit {
     id: '',
     type: 'tabs',
     title: '标签页布局',
-    tabConent: [
+    container: "tabContent",
+    tabContent: [
 
     ]
   };
@@ -24,7 +25,8 @@ export class CfgLayoutColComponent implements OnInit {
     id: '',
     type: 'collapse',
     title: '折叠面板布局',
-    collapseConent: [
+    container: "collapseContent",
+    collapseContent: [
 
     ]
   };
@@ -48,7 +50,7 @@ export class CfgLayoutColComponent implements OnInit {
    * delCol 删除列
    */
   public delCol() {
-    console.log('删除当前列！');
+    // console.log('删除当前列！');
     const back = {
       operation: 'delete',
       data: {
@@ -64,9 +66,9 @@ export class CfgLayoutColComponent implements OnInit {
   public addRow() {
 
 
-    if (this.config.layoutContain === '' || this.config.layoutContain === 'rows') {
-      console.log('**列内添加行**');
-      this.config.layoutContain = 'rows'
+    if (this.config.container === '' || this.config.container === 'rows') {
+      // console.log('**列内添加行**');
+      this.config.container = 'rows'
       const fieldIdentity = this.uuID(6);
       const row = {
         cols: []
@@ -75,9 +77,9 @@ export class CfgLayoutColComponent implements OnInit {
       row['type'] = 'row';
       this.rows.push(row);
       this.config['rows'] = this.rows;
-      this.config.layoutContain = 'rows';
+      this.config.container = 'rows';
     } else {
-      console.log('**列内添加行不允许,条件不满足**');
+      // console.log('**列内添加行不允许,条件不满足**');
     }
 
 
@@ -87,11 +89,11 @@ export class CfgLayoutColComponent implements OnInit {
    * addTabs 添加页签
    */
   public addTabs() {
-    if (this.config.layoutContain === '') {
-      this.config.layoutContain = 'tabs';
+    if (this.config.container === '') {
+      this.config.container = 'tabs';
       this.config['tabs'] = this.tabs;
     } else {
-      console.log('**列内添加tabs不允许,条件不满足**');
+      // console.log('**列内添加tabs不允许,条件不满足**');
     }
   }
 
@@ -99,11 +101,11 @@ export class CfgLayoutColComponent implements OnInit {
    * addCollapse 新增折叠面板
    */
   public addCollapse() {
-    if (this.config.layoutContain === '') {
-      this.config.layoutContain = 'collapse';
+    if (this.config.container === '') {
+      this.config.container = 'collapse';
       this.config['collapse'] = this.collapse;
     } else {
-      console.log('**列内添加Collapse折叠面板不允许,条件不满足**');
+      // console.log('**列内添加Collapse折叠面板不允许,条件不满足**');
     }
   }
   /**
@@ -122,7 +124,7 @@ export class CfgLayoutColComponent implements OnInit {
 
   //   // 如果鼠标按下位置是图片位置  创建元素
   //   if (btn.target.id === 'dragCol') {
-  //     console.log('鼠标按下移动事件:', btn);
+  //     // console.log('鼠标按下移动事件:', btn);
   //   //  this.CheckContentType(btn.target.currentSrc, x, y);
   //     this.isDown = true
   //   }
@@ -131,7 +133,7 @@ export class CfgLayoutColComponent implements OnInit {
   // @HostListener('mousemove', ['$event']) public onMousemove(btn: any) {
   //   // 判断该元素是否被点击了
   //   if (this.isDown) {
-  //     console.log('鼠标移动事件', btn)
+  //     // console.log('鼠标移动事件', btn)
   //     // 鼠标移动时创建的元素移动
   //    // this.r2.setStyle(this.div, 'top', (btn.y - 100) + 'px');
   //    // this.r2.setStyle(this.div, 'left', (btn.x - 100) + 'px');
@@ -139,11 +141,11 @@ export class CfgLayoutColComponent implements OnInit {
   // }
   // @HostListener('document:mouseup', ['$event']) public mymouseup(btn: any) { // 鼠标抬起事件
   //   // 鼠标抬起时删除添加的元素
-  //   console.log('鼠标抬起:', btn);
+  //   // console.log('鼠标抬起:', btn);
 
   //   if (this.isDown) {
   //     // const data = btn.dataTransfer.getData('Text');
-  //     // console.log('鼠标抬起+++:', data);
+  //     // // console.log('鼠标抬起+++:', data);
   //     this.isDown = false
   //    // this.r2.removeChild(this.el.nativeElement, this.div);
   //   }
@@ -162,7 +164,7 @@ export class CfgLayoutColComponent implements OnInit {
 
   public valueChangeRow(col?) {
 
-    console.log('行操作返回信息', col, this.rows);
+    // console.log('行操作返回信息', col, this.rows);
 
     if (col) {
       if (col['operation'] === 'delete') {
@@ -173,21 +175,21 @@ export class CfgLayoutColComponent implements OnInit {
             deleteIndex = i;
           }
         }
-        console.log('行删除前', this.rows.length, deleteIndex);
+        // console.log('行删除前', this.rows.length, deleteIndex);
         this.rows.splice(deleteIndex, 1);
         if (this.rows.length === 0) {
-          this.config.layoutContain = '';
+          this.config.container = '';
         }
         //  this.cols = this.cols.slice(deleteIndex + 1);
-        console.log('删除结束后', this.rows);
+        // console.log('删除结束后', this.rows);
       }
       if (col['operation'] === 'deleteTabs') {
         this.config.tabs = {};
-        this.config.layoutContain = '';
+        this.config.container = '';
       }
       if (col['operation'] === 'deleteCollapse') {
         this.config.collapse = {};
-        this.config.layoutContain = '';
+        this.config.container = '';
       }
     }
     this.config['rows'] = this.rows;
@@ -208,17 +210,17 @@ export class CfgLayoutColComponent implements OnInit {
   public f_ondragstart(e?, d?) {
     // this.d_row = d;
     e.dataTransfer.setData('test', this.config.id);
-    console.log('拖动行', e, d);
+    // console.log('拖动行', e, d);
     const ss = e.dataTransfer.getData('test');
-    console.log('拖动行临时值', ss);
+    // console.log('拖动行临时值', ss);
   }
 
 
   public f_ondrop(e?, d?) {
     e.preventDefault();
-    console.log('拖动行ondrop', e, d);
+    // console.log('拖动行ondrop', e, d);
     const ss = e.dataTransfer.getData('test');
-    console.log('拖动行ondrop临时值', ss);
+    // console.log('拖动行ondrop临时值', ss);
     // const c_config = this.c_data;
     // const index = c_config.findIndex(
     //     item => item.field === this.d_row['field']

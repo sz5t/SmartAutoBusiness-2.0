@@ -9,7 +9,8 @@ import { CommonUtils } from '@core/utils/common-utils';
 export class CfgLayoutComponent implements OnInit {
   @Input() public config;
   @Output() public updateValue = new EventEmitter();
-
+  @Output() public updateLayoutValue = new EventEmitter();
+  
   public layoutType = true;
 
   public configType = true;
@@ -21,8 +22,8 @@ export class CfgLayoutComponent implements OnInit {
 
   public ngOnInit() {
     // const ss = cfgConfig();
-    // console.log('===>>>', ss,  ss.localResourceUrl);
-    console.log('布局ngOnInit');
+    // // console.log('===>>>', ss,  ss.localResourceUrl);
+    // console.log('布局ngOnInit',this.config);
     const fieldIdentity = CommonUtils.uuID(6);
     const title = '布局' + fieldIdentity;
     if (!this.config) {
@@ -30,16 +31,16 @@ export class CfgLayoutComponent implements OnInit {
         id: fieldIdentity,
         type: 'layout',
         title: title,
-        layoutContain: 'rows',
+        container: 'rows',
         rows: this.rows,
         customlayout: this.customlayout
       }
     } else {
-      if (this.config . layoutContain) {
-        if (this.config . layoutContain === 'rows') {
-          this. layoutType = true;
+      if (this.config.container) {
+        if (this.config.container === 'rows') {
+          this.layoutType = true;
         } else {
-          this. layoutType = false;
+          this.layoutType = false;
         }
       }
       this.configType = false;
@@ -62,14 +63,15 @@ export class CfgLayoutComponent implements OnInit {
     };
     row['id'] = fieldIdentity;
     row['type'] = 'row';
-    console.log('新增行信息', row);
+    row['container'] = 'cols';
+    // console.log('新增行信息', row);
     this.rows.push(row);
-    console.log('当前所有行：', this.rows);
+    // console.log('当前所有行：', this.rows);
   }
 
   public valueChangeRow(col?) {
 
-    console.log('行操作返回信息', col, this.rows);
+    // console.log('行操作返回信息', col, this.rows);
 
     if (col) {
       if (col['operation'] === 'delete') {
@@ -80,10 +82,10 @@ export class CfgLayoutComponent implements OnInit {
             deleteIndex = i;
           }
         }
-        console.log('行删除前', this.rows.length, deleteIndex);
+        // console.log('行删除前', this.rows.length, deleteIndex);
         this.rows.splice(deleteIndex, 1);
         //  this.cols = this.cols.slice(deleteIndex + 1);
-        console.log('删除结束后', this.rows);
+        // console.log('删除结束后', this.rows);
       }
       if (col['operation'] === 'update') {
         // 计算出位置
@@ -100,7 +102,14 @@ export class CfgLayoutComponent implements OnInit {
   }
 
   public SaveJson() {
-    console.log('当前布局json：', this.config, JSON.stringify(this.config));
+     console.log('当前布局json字符串：',  JSON.stringify(this.config));
+    const back = {
+      operation: 'json',
+      data: {
+        config:  this.config
+      }
+    }
+    this.updateLayoutValue.emit( back);
   }
 
   public uuID(w) {
@@ -119,9 +128,9 @@ export class CfgLayoutComponent implements OnInit {
    */
   public layoutTypeChange(v?) {
     if (v) {
-      this.config . layoutContain = 'rows';
+      this.config.container = 'rows';
     } else {
-      this.config . layoutContain = 'customlayout';
+      this.config.container = 'customlayout';
     }
 
   }

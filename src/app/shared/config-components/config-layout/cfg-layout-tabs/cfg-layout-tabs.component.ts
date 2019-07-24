@@ -14,7 +14,7 @@ export class CfgLayoutTabsComponent implements OnInit {
   constructor() { }
 
   public ngOnInit() {
-    this.tabs = this.config['tabConent'] ;
+    this.tabs = this.config['tabContent'] ;
   }
 
 
@@ -37,11 +37,14 @@ export class CfgLayoutTabsComponent implements OnInit {
       id: fieldIdentity,
       type: 'tab',
       title: titletab,
+      container: "layout",
       layout: {
         id: fieldIdentity,
         type: 'layout',
         title: title,
-        rows: []
+        rows: [],
+        customlayout: [],
+        container: 'rows'
       }
 
     }
@@ -52,7 +55,7 @@ export class CfgLayoutTabsComponent implements OnInit {
    * delTabs 删除当前布局标签页
    */
   public delTabs() {
-    console.log('删除当前布局标签页！');
+    // console.log('删除当前布局标签页！');
     const back = {
       operation: 'deleteTabs',
       data: {

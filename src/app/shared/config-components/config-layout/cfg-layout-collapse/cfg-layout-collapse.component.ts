@@ -15,9 +15,9 @@ export class CfgLayoutCollapseComponent implements OnInit {
   constructor() { }
 
   public ngOnInit() {
-    this.panels = this.config['collapseConent'] ;
+    this.panels = this.config['collapseContent'] ;
 
-    console.log('Collapsed****:' , this.config);
+    // console.log('Collapsed****:' , this.config);
   }
 
 
@@ -25,7 +25,7 @@ export class CfgLayoutCollapseComponent implements OnInit {
    * deleteCollapse 删除折叠面板
    */
   public deleteCollapse() {
-    console.log('删除当前布局标签页！');
+    // console.log('删除当前布局标签页！');
     const back = {
       operation: 'deleteCollapse',
       data: {
@@ -49,11 +49,14 @@ export class CfgLayoutCollapseComponent implements OnInit {
       title: titletab,
       active: true,
       disabled: false,
+      container: "layout",
       layout: {
         id: fieldIdentity,
         type: 'layout',
         title: title,
-        rows: []
+        rows: [],
+        customlayout: [],
+        container: 'rows'
       }
 
     }

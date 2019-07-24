@@ -13,7 +13,7 @@ export class CfgLayoutRowComponent implements OnInit {
   constructor() { }
 
   public ngOnInit() {
-    console.log('列信息', this.config);
+    // console.log('列信息', this.config);
     // #efefef
     if (this.config.cols) {
       if (this.config.cols.length < 1) {
@@ -36,7 +36,7 @@ export class CfgLayoutRowComponent implements OnInit {
       type: 'col',
       title: title,
       span: 24,
-      layoutContain: '',
+      container:'',
       size: {
         nzXs: 24,
         nzSm: 24,
@@ -46,7 +46,7 @@ export class CfgLayoutRowComponent implements OnInit {
         nzXXl: 24
       }
     }
-    console.log('新增列信息', col);
+    // console.log('新增列信息', col);
     this.config.cols.push(col);
   }
 
@@ -54,7 +54,7 @@ export class CfgLayoutRowComponent implements OnInit {
    * deleteRow
    */
   public deleteRow() {
-    console.log('删除当前行！');
+    // console.log('删除当前行！');
     const back = {
       operation: 'delete',
       data: {
@@ -70,7 +70,7 @@ export class CfgLayoutRowComponent implements OnInit {
    */
   public valueChangeCol(col?) {
 
-    console.log('列操作返回信息', col, this.config.cols);
+    // console.log('列操作返回信息', col, this.config.cols);
 
     if (col) {
       if (col['operation'] === 'delete') {
@@ -83,7 +83,7 @@ export class CfgLayoutRowComponent implements OnInit {
         }
         this.config.cols.splice(deleteIndex, 1);
         //  this.config.cols = this.config.cols.slice(deleteIndex + 1);
-        console.log('删除结束后', this.config.cols);
+        // console.log('删除结束后', this.config.cols);
       }
     }
     const back = {

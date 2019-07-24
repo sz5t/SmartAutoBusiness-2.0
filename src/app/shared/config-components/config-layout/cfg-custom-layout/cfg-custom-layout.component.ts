@@ -60,11 +60,11 @@ export class CfgCustomLayoutComponent implements OnInit, AfterViewInit {
       });
     });
     // this.checkOptionsOne
-    console.log('Custom->ngOnInit', this.config);
+    // console.log('Custom->ngOnInit', this.config);
   }
 
   public ngAfterViewInit(): void {
-    console.log('ngAfterViewInit');
+    // console.log('ngAfterViewInit');
     this.initCustomLayout();
   }
 
@@ -166,11 +166,14 @@ export class CfgCustomLayoutComponent implements OnInit, AfterViewInit {
         layoutType: 'west',
         hidden: false,
         span: '1',
+        container: 'layout',
         layout: {
           id: CommonUtils.uuID(8),
           type: 'layout',
           title: '布局',
-          rows: []
+          rows: [],
+          customlayout: [],
+          container: 'rows'
         }
       },
       {
@@ -180,11 +183,14 @@ export class CfgCustomLayoutComponent implements OnInit, AfterViewInit {
         layoutType: 'center',
         hidden: false,
         span: '2',
+        container: 'layout',
         layout: {
           id: CommonUtils.uuID(8),
           type: 'layout',
           title: '布局',
-          rows: []
+          rows: [],
+          customlayout: [],
+          container: 'rows'
         }
       },
       {
@@ -193,12 +199,15 @@ export class CfgCustomLayoutComponent implements OnInit, AfterViewInit {
         title: '右侧布局',
         layoutType: 'east',
         hidden: true,
+        container: 'layout',
         span: '1',
         layout: {
           id: CommonUtils.uuID(8),
           type: 'layout',
           title: '布局',
-          rows: []
+          rows: [],
+          customlayout: [],
+          container: 'rows'
         }
       }
 

@@ -1,20 +1,20 @@
 <nz-card [nzTitle]=" titleTemplate" style="width:100%;border: 1px solid #2fa4e7; height: 100%;" [nzExtra]="extraTemplate"
     [nzBodyStyle]="bodystyle" (drop)="f_ondrop($event,config)" (dragover)="f_ondragover($event,config)">
-    <ng-container *ngIf="!config.layoutContain">
+    <ng-container *ngIf="!config.container">
         <p>当前列内可填充具体组件内容</p>
     </ng-container>
-    <ng-container *ngIf="config.layoutContain==='rows'">
+    <ng-container *ngIf="config.container==='rows'">
         <ng-container *ngFor="let r of rows">
             <cfg-layout-row [config]="r" (updateValue)="valueChangeRow($event)"></cfg-layout-row>
         </ng-container>
     </ng-container>
-    <ng-container *ngIf="config.layoutContain==='tabs'">
+    <ng-container *ngIf="config.container==='tabs'">
         <cfg-layout-tabs [config]="tabs" (updateValue)="valueChangeRow($event)"></cfg-layout-tabs>
     </ng-container>
-    <ng-container *ngIf="config.layoutContain==='collapse'">
+    <ng-container *ngIf="config.container==='collapse'">
         <cfg-layout-collapse  [config]="collapse" (updateValue)="valueChangeRow($event)"></cfg-layout-collapse>
     </ng-container>
-    <ng-container *ngIf="config.layoutContain==='component'">
+    <ng-container *ngIf="config.container==='component'">
         <p>组件内容</p>
     </ng-container>
 
