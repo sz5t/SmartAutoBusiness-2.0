@@ -33,7 +33,7 @@ export const BSN_RELATION_TRIGGER = new InjectionToken<string>('BSN_RELATION_TRI
  */
 export class BsnRelativesMessageModel {
     constructor(
-        public trigger: { triggerType: string, trigger: string },
+        public trigger: any,
         public viewId: string,
         public options?: any
     ) { }

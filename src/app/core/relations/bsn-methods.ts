@@ -1,4 +1,5 @@
-import { IDataGridTrigger } from './bsn-status';
+import { IDataGridTrigger } from './bsn-trigger/data-grid.trigger.interface';
+
 export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     // state
     ADD_ROW: 'addRow',

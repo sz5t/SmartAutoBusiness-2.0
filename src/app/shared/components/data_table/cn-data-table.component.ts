@@ -1,3 +1,4 @@
+import { CN_DATA_GRID_PROPERTY } from './../../../core/relations/bsn-property/data-grid.property.interface';
 import { CN_DATA_GRID_METHOD } from '@core/relations/bsn-methods';
 import { BSN_COMPONENT_SERVICES, BsnRelativesMessageModel, BSN_RELATION_SUBJECT } from './../../../core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
@@ -20,6 +21,7 @@ import { TriggerResolver } from '@shared/resolver/trigger/trigger.resolver';
 import { filter } from 'rxjs/operators';
 import { Subscription, Subject, BehaviorSubject } from 'rxjs';
 import { CommonUtils } from '@core/utils/common-utils';
+import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -58,7 +60,8 @@ import { CommonUtils } from '@core/utils/common-utils';
     ]
 })
 export class CnDataTableComponent extends CnComponentBase
-    implements OnInit, AfterViewInit, OnDestroy {
+    implements OnInit, AfterViewInit, OnDestroy, IDataGridProperty {
+
     @Input()
     public config; // dataTables 的配置参数
     @Input()
@@ -78,6 +81,8 @@ export class CnDataTableComponent extends CnComponentBase
      */
     public COMPONENT_METHODS = CN_DATA_GRID_METHOD;
 
+    public COMPONENT_PROPERTY = CN_DATA_GRID_PROPERTY;
+
 
     public loading = false;
     public pageIndex = 1;
@@ -89,6 +94,11 @@ export class CnDataTableComponent extends CnComponentBase
     public indeterminate = false;
     public _sortName;
     public _sortOrder;
+
+    public ROWS_ADDED: any = [];
+    public ROWS_EDITED: any = [];
+    public ROW_SELECTED: any = {};
+    public ROWS_CHECKED: any = [];
 
     private _selectedRow;
     private _rowsData;

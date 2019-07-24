@@ -12,6 +12,8 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { from } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -122,246 +124,6 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         }
     }
 
-    toolbar = [
-        {
-            "targetViewId": "",
-            "group": [
-                {
-                    "name": "M_refresh",
-                    "text": "刷新",
-                    "triggerType": "BEHAVIOR",
-                    "trigger": "REFRESH",
-                    "icon": "reload",
-                    "color": "text-primary"
-                },
-                {
-                    "name": "M_addRow",
-                    "text": "新增",
-                    "triggerType": "STATE",
-                    "trigger": "NEW",
-                    "icon": "plus",
-                    "color": "text-primary"
-                },
-                {
-                    "name": "M_updateRow",
-                    "text": "修改",
-                    "triggerType": "STATE",
-                    "trigger": "EDIT",
-                    "icon": "edit",
-                    "color": "text-success"
-                },
-                {
-                    "name": "M_deleteRow",
-                    "text": "删除",
-                    "icon": "delete",
-                    "color": "text-red-light",
-                    "triggerType": "OPERATION",
-                    "trigger": "EXECUTE_CHECKED",
-                    "ajaxConfig": [
-                        {
-                            "url": "common/DeleteResourcesMalfunction",
-                            "ajaxType": "post",
-                            "title": "提示",
-                            "message": "确定要删除该故障记录吗？删除后对应明细信息也全选删除！",
-                            "params": [
-                                {
-                                    "name": "Id",
-                                    "valueName": "Id",
-                                    "type": "checkedRow"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "M_saveRow",
-                    "text": "保存",
-                    "icon": "save",
-                    "color": "text-primary",
-                    "ajaxConfig": [
-                        {
-                            "action": "EXECUTE_SAVE_ROW",
-                            "url": "common/WmsResourcesmalfunction",
-                            "ajaxType": "post",
-                            "params": [
-                                {
-                                    "name": "datatype",
-                                    "type": "value",
-                                    "value": 1
-                                },
-                                {
-                                    "name": "malfunctiondate",
-                                    "type": "componentValue",
-                                    "valueName": "malfunctiondate"
-                                },
-                                {
-                                    "name": "register",
-                                    "type": "cacheValue",
-                                    "valueName": "accountId"
-                                },
-                                {
-                                    "name": "registerdate",
-                                    "type": "componentValue",
-                                    "valueName": "registerdate",
-                                    "value": "_currentDate"
-                                },
-                                {
-                                    "name": "recordstatus",
-                                    "type": "value",
-                                    "valueName": "",
-                                    "value": 1
-                                },
-                                {
-                                    "name": "securitylevel",
-                                    "type": "componentValue",
-                                    "valueName": "securitylevel"
-                                },
-                                {
-                                    "name": "sortcode",
-                                    "type": "componentValue",
-                                    "valueName": "sortcode"
-                                },
-                                {
-                                    "name": "deleteflag",
-                                    "type": "componentValue",
-                                    "valueName": "deleteflag"
-                                },
-                                {
-                                    "name": "remark",
-                                    "type": "componentValue",
-                                    "valueName": "remark"
-                                }
-                            ]
-                        },
-                        {
-                            "action": "EXECUTE_EDIT_ROW",
-                            "url": "common/WmsResourcesmalfunction",
-                            "ajaxType": "put",
-                            "params": [
-                                {
-                                    "name": "Id",
-                                    "type": "componentValue",
-                                    "valueName": "Id",
-                                    "value": ""
-                                },
-                                {
-                                    "name": "malfunctiondate",
-                                    "type": "componentValue",
-                                    "valueName": "malfunctiondate"
-                                },
-                                {
-                                    "name": "register",
-                                    "type": "cacheValue",
-                                    "valueName": "accountId"
-                                },
-                                {
-                                    "name": "registerdate",
-                                    "type": "componentValue",
-                                    "valueName": "registerdate"
-                                },
-                                {
-                                    "name": "recordstatus",
-                                    "type": "value",
-                                    "valueName": "",
-                                    "value": 1
-                                },
-                                {
-                                    "name": "securitylevel",
-                                    "type": "componentValue",
-                                    "valueName": "securitylevel"
-                                },
-                                {
-                                    "name": "sortcode",
-                                    "type": "componentValue",
-                                    "valueName": "sortcode"
-                                },
-                                {
-                                    "name": "deleteflag",
-                                    "type": "componentValue",
-                                    "valueName": "deleteflag"
-                                },
-                                {
-                                    "name": "remark",
-                                    "type": "componentValue",
-                                    "valueName": "remark"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "name": "M_cancelrow",
-                    "text": "取消",
-                    "action": "CANCEL",
-                    "icon": "rollback",
-                    "color": "text-grey-darker"
-                }
-            ]
-        },
-        {
-            "targetViewId": "",
-            "group": [
-                {
-                    "name": "M_addSearchRow",
-                    "text": "查询",
-                    "action": "SEARCH",
-                    "actionType": "addSearchRow",
-                    "actionName": "addSearchRow",
-                    "icon": "search",
-                    "color": "text-primary"
-                },
-                {
-                    "name": "M_cancelSearchRow",
-                    "text": "取消查询",
-                    "icon": "rollback",
-                    "action": "SEARCH",
-                    "actionType": "cancelSearchRow",
-                    "actionName": "cancelSearchRow",
-                    "color": "text-grey-darker"
-                }
-            ]
-        },
-        {
-            "targetViewId": "",
-            "group": [
-                {
-                    "name": "M_ResourcesMalfunction",
-                    "text": "故障确认",
-                    "icon": "setting",
-                    "color": "text-primary",
-                    "ajaxConfig": [
-                        {
-                            "action": "EXECUTE_CHECKED_ID",
-                            "url": "common/UpdateResourcesMalfunction",
-                            "ajaxType": "post",
-                            "title": "提示",
-                            "message": "确定要进行【故障】登记吗？对应的计量器具状态变更为暂时不可用状态。",
-                            "outputParams": [
-                                {
-                                    "name": "Message",
-                                    "dataType": "message"
-                                }
-                            ],
-                            "params": [
-                                {
-                                    "name": "Ids",
-                                    "valueName": "Id",
-                                    "type": "checkedId"
-                                },
-                                {
-                                    "name": "Message",
-                                    "type": "value",
-                                    "value": "output",
-                                    "valueName": ""
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    ];
-
     public toolbarAction(btn, targetViewId) {
         // 按钮区分具体的,状态(STATE)、行为(BEHAVIOR)、动作(ACTION)、操作(OPERATION),跳转(LINK)
         // 状态: 新增(NEW)、编辑(EDIT)、只读(READ_ONLY)
@@ -375,6 +137,9 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
 
         if (!this.toolbarsIsLoading[btn.name]) {
             // 根据触发类型发送不同类型的具体消息内容
+            const btn_source$ = from(btn.execute);
+            btn_source$.pipe(map(exeCfg => this.sendBtnMessage(exeCfg, targetViewId))).subscribe().unsubscribe();
+
             const triggerObj = {
                 triggerType: btn.triggerType,
                 trigger: btn.trigger
@@ -426,6 +191,106 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             }
             this.toolbarsIsLoading[btn.name] = true;
         }
+    }
+
+    private sendBtnMessage(cfg, targetViewId) {
+        const triggerObj = {
+            triggerType: cfg.triggerType,
+            trigger: cfg.trigger
+        }
+        switch (cfg.triggerType) {
+            // 状态触发
+            case BSN_TRIGGER_TYPE.STATE:
+                const stateMsg = new BsnRelativesMessageModel(
+                    triggerObj,
+                    targetViewId
+                );
+                this._cpmtService.commonRelationTrigger.next(stateMsg);
+                break;
+            // 行为触发
+            case BSN_TRIGGER_TYPE.BEHAVIOR:
+                const behaviorMsg = new BsnRelativesMessageModel(
+                    triggerObj,
+                    targetViewId
+                )
+                this._cpmtService.commonRelationTrigger.next(behaviorMsg);
+                break;
+            // 动作触发
+            case BSN_TRIGGER_TYPE.ACTION:
+                const actionMsg = new BsnRelativesMessageModel(
+                    triggerObj,
+                    targetViewId,
+                    {}
+                );
+                this._cpmtService.commonRelationTrigger.next(actionMsg);
+                break;
+            // 操作触发
+            case BSN_TRIGGER_TYPE.OPERATION:
+                // 获取ajax操作配置
+                // 获取条件状配置
+                // 获取前置条件配置
+                const options = {};
+                options['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
+                options['beforeOperation'] = this.findBeforeOperationConfig(cfg.stateId);
+                options['condition'] = this.findConditionConfig(cfg.conditionId);
+                const operationMsg = new BsnRelativesMessageModel(
+                    triggerObj,
+                    targetViewId,
+                    options // 异步操作配置
+                )
+                this._cpmtService.commonRelationTrigger.next(operationMsg);
+                break;
+            // 链接跳转触发
+            case BSN_TRIGGER_TYPE.LINK:
+                const linkOptions = {};
+                linkOptions['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
+                linkOptions['beforeOperation'] = this.findBeforeOperationConfig(cfg.stateId);
+                linkOptions['condition'] = this.findConditionConfig(cfg.conditionId);
+                const linkMsg = new BsnRelativesMessageModel(
+                    triggerObj,
+                    targetViewId,
+                    linkOptions // 页面跳转配置
+                )
+                this._cpmtService.commonRelationTrigger.next(linkMsg);
+                break;
+        }
+    }
+
+
+    private findAjaxConfig(ajaxId) {
+        let ajaxConfig;
+        if (this.config.ajaxConfig && Array(this.config.ajaxConfig) && this.config.ajaxConfig.length > 0) {
+            const c = this.config.ajaxConfig.filter(cfg => cfg.id === ajaxId);
+            if (c && c.length > 0) {
+                ajaxConfig = c[0];
+            }
+
+
+        }
+        return ajaxConfig;
+    }
+
+    private findBeforeOperationConfig(stateId) {
+        let beforeConfig;
+        if (this.config.beforeTrigger && Array(this.config.beforeTrigger) && this.config.beforeTrigger.length > 0) {
+            const b = this.config.beforeTrigger.filter(cfg => cfg.id === stateId);
+            if (b && b.length > 0) {
+                beforeConfig = b[0];
+            }
+
+        }
+        return beforeConfig;
+    }
+
+    public findConditionConfig(conditionId) {
+        let conditionConfig;
+        if (this.config.condition && Array(this.config.condition) && this.config.condition.length > 0) {
+            const c = this.config.condition.filter(cfg => cfg.id === conditionId);
+            if (c && c.length > 0) {
+                conditionConfig = c[0];
+            }
+        }
+        return conditionConfig;
     }
 
     public ngOnDestroy() {

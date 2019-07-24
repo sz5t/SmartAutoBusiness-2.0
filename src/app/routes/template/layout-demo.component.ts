@@ -68,6 +68,176 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             "id": "toolbar_001",
                             "component": "cnToolbar",
                             "size": "default",
+                            "condition": [
+                                {
+                                    "id": "add_state_1",
+                                    "state": [
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_CHECKED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": "gt"
+                                                },
+                                                {
+                                                    "type": "element",
+                                                    "name": "name",
+                                                    "matchValue": "1",
+                                                    "match": "eq",
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "edit_state_1",
+                                    "state": [
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_CHECKED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": "gt"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "add_save_1",
+                                    "state": [
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_CHECKED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": "gt"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_ADDED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": "gt"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "edit_save_1",
+                                    "state": [
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_EDITED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": ">"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_CHECKED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": "gt"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+
+                            ],
+                            "ajaxConfig": [
+                                {
+                                    "id": "add_save_1",
+                                    "url": "information/test2",
+                                    "urlType": "inner",
+                                    "ajaxType": "post",
+                                    "params": [
+                                        {
+                                            "name": "state",
+                                            "type": "value",
+                                            "value": "DVM"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+
+                                    ]
+                                },
+                                {
+                                    "id": "edit_save_1",
+                                    "url": "information/test2",
+                                    "urlType": "inner",
+                                    "ajaxType": "post",
+                                    "params": [
+                                        {
+                                            "name": "state",
+                                            "type": "value",
+                                            "value": "DVM"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+
+                                    ]
+                                }
+                            ],
+                            "beforeTrigger": [
+
+                            ],
+                            "afterTrigger": [
+                                {
+                                    "id": "",
+                                    "senderId": "view_01",
+                                    "sendData": [
+                                        {
+                                            "beforeSend": [],
+                                            "reveicerId": "",
+                                            "receiverTriggerType": "BEHAVIOR",
+                                            "receiverTrigger": "REFRESH_AS_CHILD",
+                                            "params": [
+                                                {
+                                                    "name": "parent_id",
+                                                    "type": "item",
+                                                    "valueName": "id"
+                                                },
+                                                {
+                                                    "name": "parent_name",
+                                                    "type": "item",
+                                                    "valueName": "name"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
                             "toolbar": [
                                 {
                                     "targetViewId": "view_01",
@@ -75,47 +245,52 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                         {
                                             "id": "M_refresh",
                                             "text": "刷新",
-                                            "triggerType": "BEHAVIOR",
-                                            "trigger": "REFRESH",
                                             "icon": "reload",
-                                            "color": "text-primary"
+                                            "color": "text-primary",
+                                            "execute": [
+                                                {
+                                                    "triggerType": "BEHAVIOR",
+                                                    "trigger": "REFRESH"
+                                                }
+                                            ]
                                         },
                                         {
                                             "id": "M_addRow",
                                             "text": "新增",
-                                            "triggerType": "STATE",
-                                            "trigger": "ADD_ROW",
                                             "icon": "plus",
-                                            "color": "text-primary"
+                                            "color": "text-primary",
+                                            "execute": [
+                                                {
+                                                    "triggerType": "STATE",
+                                                    "trigger": "ADD_ROW",
+                                                    "conditionId": "add_state_1"
+                                                }
+                                            ]
                                         },
                                         {
                                             "id": "M_updateRow",
                                             "text": "修改",
-                                            "triggerType": "STATE",
-                                            "trigger": "EDIT_ROW",
                                             "icon": "edit",
-                                            "color": "text-success"
+                                            "color": "text-success",
+                                            "execute": [
+                                                {
+                                                    "triggerType": "STATE",
+                                                    "trigger": "EDIT_ROW",
+                                                    "conditionId": "edit_state_1"
+                                                }
+                                            ]
                                         },
                                         {
                                             "id": "M_deleteRow",
                                             "text": "删除",
                                             "icon": "delete",
                                             "color": "text-red-light",
-                                            "triggerType": "OPERATION",
-                                            "trigger": "EXECUTE_CHECKED_ROWS_IDS",
-                                            "ajaxConfig": [
+                                            "execute": [
                                                 {
-                                                    "url": "common/DeleteResourcesMalfunction",
-                                                    "ajaxType": "post",
-                                                    "title": "提示",
-                                                    "message": "确定要删除该故障记录吗？删除后对应明细信息也全选删除！",
-                                                    "params": [
-                                                        {
-                                                            "name": "Id",
-                                                            "valueName": "Id",
-                                                            "type": "checkedRow"
-                                                        }
-                                                    ]
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                    "conditionId": "delete_operation_1",
+                                                    "ajaxId": "delete_row_1"
                                                 }
                                             ]
                                         },
@@ -124,76 +299,22 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "text": "保存",
                                             "icon": "save",
                                             "color": "text-primary",
-                                            "triggerType": "OPERATION",
-                                            "trigger": "SAVE_ROW",
-                                            "beforeTrigger": [
-
-                                            ],
-                                            "ajaxConfig": {
-                                                "post": {
-                                                    "url": "information/test2",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "post",
-                                                    "params": [
-                                                        {
-                                                            "name": "state",
-                                                            "type": "value",
-                                                            "value": "DVM"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-
-                                                    ]
-                                                },
-                                                "put": {
-                                                    "url": "information/test2",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "post",
-                                                    "params": [
-                                                        {
-                                                            "name": "state",
-                                                            "type": "value",
-                                                            "value": "DVM"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-
-                                                    ]
-                                                }
-                                            },
-                                            "afterTrigger": [
+                                            "execute": [
                                                 {
-                                                    "id": "",
-                                                    "senderId": "view_01",
-                                                    "sendData": [
-                                                        {
-                                                            "beforeSend": [],
-                                                            "reveicerId": "",
-                                                            "receiverTriggerType": "BEHAVIOR",
-                                                            "receiverTrigger": "REFRESH_AS_CHILD",
-                                                            "params": [
-                                                                {
-                                                                    "name": "parent_id",
-                                                                    "type": "item",
-                                                                    "valueName": "id"
-                                                                },
-                                                                {
-                                                                    "name": "parent_name",
-                                                                    "type": "item",
-                                                                    "valueName": "name"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "SAVE_ROW",
+                                                    "ajaxId": "add_save_1",
+                                                    "stateId": "add_save_1",
+                                                    "conditionId": "add_save_1"
+                                                },
+                                                {
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "EDIT_ROW",
+                                                    "stateId": "edit_save_1",
+                                                    "ajaxId": "edit_save_1",
+                                                    "conditionId": "edit_save_1"
                                                 }
                                             ]
-
                                         },
                                         {
                                             "id": "M_cancelrow",
@@ -235,40 +356,69 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "name": "M_ResourcesMalfunction",
                                             "text": "故障确认",
                                             "icon": "setting",
-                                            "color": "text-primary",
-                                            "ajaxConfig": [
-                                                {
-                                                    "action": "EXECUTE_CHECKED_ID",
-                                                    "url": "common/UpdateResourcesMalfunction",
-                                                    "ajaxType": "post",
-                                                    "title": "提示",
-                                                    "message": "确定要进行【故障】登记吗？对应的计量器具状态变更为暂时不可用状态。",
-                                                    "outputParams": [
-                                                        {
-                                                            "name": "Message",
-                                                            "dataType": "message"
-                                                        }
-                                                    ],
-                                                    "params": [
-                                                        {
-                                                            "name": "Ids",
-                                                            "valueName": "Id",
-                                                            "type": "checkedId"
-                                                        },
-                                                        {
-                                                            "name": "Message",
-                                                            "type": "value",
-                                                            "value": "output",
-                                                            "valueName": ""
-                                                        }
-                                                    ]
-                                                }
-                                            ]
+                                            "color": "text-primary"
                                         }
                                     ]
                                 }
                             ]
-                        }
+                        },
+                        "beforeOperation": [
+                            {
+                                "id": "view_001_before_add",
+                                "name": "M_addRow",
+                                "status": [
+                                    {
+                                        "conditions": [
+                                            [
+                                                {
+                                                    "name": "_recordstatus",
+                                                    "value": 1,
+                                                    "checkType": "value"
+                                                },
+                                                {
+                                                    "name": "_recods",
+                                                    "value": 1,
+                                                    "checkType": "value"
+                                                }
+                                            ],
+                                            [
+                                                {
+                                                    "name": "_recordstatus",
+                                                    "value": 2,
+                                                    "checkType": "value"
+                                                },
+                                                {
+                                                    "name": "_recods",
+                                                    "value": 3,
+                                                    "checkType": "value"
+                                                }
+                                            ]
+                                        ],
+                                        "action": {
+                                            "type": "warning",
+                                            "message": "在当前状态下，无法新增",
+                                            "execute": "prevent"
+                                        }
+                                    },
+                                    {
+                                        "conditions": [
+                                            [
+                                                {
+                                                    "name": "_resourcesreceiveid1",
+                                                    "value": "undefinded",
+                                                    "checkType": "value"
+                                                }
+                                            ]
+                                        ],
+                                        "action": {
+                                            "type": "info",
+                                            "message": "主表未选中数据，无法新增！",
+                                            "execute": "prevent"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
                     }
                     , {
                         "id": "r5zDHB",
@@ -396,88 +546,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                                         //     ]
                                                         // }
                                                     ]
-                                                },
-                                                "beforeOperation": [
-                                                    {
-                                                        "id": "view_001_before_add",
-                                                        "name": "M_addRow",
-                                                        "status": [
-                                                            {
-                                                                "conditions": [
-                                                                    [
-                                                                        {
-                                                                            "name": "_recordstatus",
-                                                                            "value": 1,
-                                                                            "checkType": "value"
-                                                                        },
-                                                                        {
-                                                                            "name": "_recods",
-                                                                            "value": 1,
-                                                                            "checkType": "value"
-                                                                        }
-                                                                    ],
-                                                                    [
-                                                                        {
-                                                                            "name": "_recordstatus",
-                                                                            "value": 2,
-                                                                            "checkType": "value"
-                                                                        },
-                                                                        {
-                                                                            "name": "_recods",
-                                                                            "value": 3,
-                                                                            "checkType": "value"
-                                                                        }
-                                                                    ]
-                                                                ],
-                                                                "action": {
-                                                                    "type": "warning",
-                                                                    "message": "在当前状态下，无法新增",
-                                                                    "execute": "prevent"
-                                                                }
-                                                            },
-                                                            {
-                                                                "conditions": [
-                                                                    [
-                                                                        {
-                                                                            "name": "_resourcesreceiveid1",
-                                                                            "value": "undefinded",
-                                                                            "checkType": "value"
-                                                                        }
-                                                                    ]
-                                                                ],
-                                                                "action": {
-                                                                    "type": "info",
-                                                                    "message": "主表未选中数据，无法新增！",
-                                                                    "execute": "prevent"
-                                                                }
-                                                            },
-                                                            {
-                                                                conditions: [
-                                                                    [
-                                                                        {
-                                                                            "tempValue": "_createUserId",
-                                                                            "cacheValue": "accountId",
-                                                                            "checkType": "innerValue"
-                                                                        }
-                                                                        // {
-                                                                        //     "ajaxConfig": {
-                                                                        //         "url": "https://jsonplaceholder.typicode.com/users",
-                                                                        //         "ajaxType": "GET",
-                                                                        //         "params": []
-                                                                        //     },
-                                                                        //     "checkType": "executeAjax"
-                                                                        // }
-                                                                    ]
-                                                                ],
-                                                                action: {
-                                                                    type: "info",
-                                                                    message: "对他人创建的数据只有浏览权限，没有编辑权限",
-                                                                    execute: "prevent"
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
+                                                }
                                             }
                                         }, {
                                             id: "r5zDHB1-2-2",
