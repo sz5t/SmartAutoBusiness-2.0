@@ -7,10 +7,11 @@ import { CommonUtils } from '@core/utils/common-utils';
   styleUrls: ['./cfg-layout.component.css']
 })
 export class CfgLayoutComponent implements OnInit {
-  @Input() public config;
+  @Input() public config;      // 配置信息
+  @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
   @Output() public updateLayoutValue = new EventEmitter();
-  
+
   public layoutType = true;
 
   public configType = true;
@@ -21,6 +22,14 @@ export class CfgLayoutComponent implements OnInit {
   constructor() { }
 
   public ngOnInit() {
+
+    // 控制设计步骤下的设计操作
+    if (this.designStatus) {
+
+    } else {
+
+    }
+
     // const ss = cfgConfig();
     // // console.log('===>>>', ss,  ss.localResourceUrl);
     // console.log('布局ngOnInit',this.config);
@@ -102,14 +111,14 @@ export class CfgLayoutComponent implements OnInit {
   }
 
   public SaveJson() {
-     console.log('当前布局json字符串：',  JSON.stringify(this.config));
+    console.log('当前布局json字符串：', JSON.stringify(this.config));
     const back = {
       operation: 'json',
       data: {
-        config:  this.config
+        config: this.config
       }
     }
-    this.updateLayoutValue.emit( back);
+    this.updateLayoutValue.emit(back);
   }
 
   public uuID(w) {

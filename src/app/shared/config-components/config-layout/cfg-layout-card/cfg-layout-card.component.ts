@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'cfg-layout-card,[cfg-layout-card]',
@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cfg-layout-card.component.css']
 })
 export class CfgLayoutCardComponent implements OnInit {
-
+  @Input() public designStatus;  // 设计状态
   constructor() { }
 
   ngOnInit() {

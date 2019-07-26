@@ -8,6 +8,7 @@ import { CommonUtils } from '@core/utils/common-utils';
 })
 export class CfgLayoutCollapseComponent implements OnInit {
   @Input() public config;
+  @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
   public isCollapsed = false;
   public panels = [

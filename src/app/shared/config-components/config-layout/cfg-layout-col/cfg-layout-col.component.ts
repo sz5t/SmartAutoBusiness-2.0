@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@a
 })
 export class CfgLayoutColComponent implements OnInit {
   @Input() public config;
+  @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
   public bodystyle = { 'background-color': 'rgba(47, 164, 231, 0.15)' };
   public rows = [
@@ -34,10 +35,10 @@ export class CfgLayoutColComponent implements OnInit {
   public is_drag = true;
 
   public value1 = 24;
+  public attribute_isVisible = false; // 属性设置弹出标识
+  public attribute_config;
+  public titlestate = true;
 
-
-
-  public size_isVisible = false;
   constructor() { }
 
   public ngOnInit() {
@@ -45,6 +46,11 @@ export class CfgLayoutColComponent implements OnInit {
     if (this.config['rows']) {
       this.rows = this.config['rows'];
     }
+    if (this.config['container']) {
+      this[this.config['container']] = this.config[this.config['container']];
+    }
+
+     this.attribute_config = JSON.parse(JSON.stringify(this.config));
   }
   /**
    * delCol 删除列
@@ -71,7 +77,8 @@ export class CfgLayoutColComponent implements OnInit {
       this.config.container = 'rows'
       const fieldIdentity = this.uuID(6);
       const row = {
-        cols: []
+        cols: [],
+        container: "cols"
       };
       row['id'] = fieldIdentity;
       row['type'] = 'row';
@@ -270,28 +277,48 @@ export class CfgLayoutColComponent implements OnInit {
   }
 
 
-/**
- * open
- */
-public open() {
 
-  this.size_isVisible = true;
 
-}
 
-/**
- * size_handleCancel
- */
-public size_handleCancel() {
-  this.size_isVisible = false;
-}
-/**
- * size_handleOk
- */
-public size_handleOk() {
-  this.size_isVisible = false;
-}
+  /**
+   * openAttribute
+   */
+  public openAttribute() {
 
+    this.attribute_config = JSON.parse(JSON.stringify(this.config));
+    if (this.attribute_config.titlestate ===1) {
+      this.titlestate = true;
+    } else {
+      this.titlestate = false;
+    }
+    this.attribute_isVisible = true;
+
+  }
+  /**
+   * attribute_handleCancel
+   */
+  public attribute_handleCancel() {
+    this.attribute_isVisible = false;
+  }
+  /**
+   * attribute_handleOk
+   */
+  public attribute_handleOk() {
+    this.config.title = this.attribute_config.title;
+    this.config.titlestate = this.attribute_config.titlestate;
+    this.config.span = this.attribute_config.span;
+    this.config.size = this.attribute_config.size;
+    this.attribute_isVisible = false;
+  }
+
+  public titlestateChange(v?) {
+    if (v) {
+      this.attribute_config.titlestate = 1;
+    } else {
+      this.attribute_config.titlestate = 0;
+    }
+
+  }
 
 
 }
