@@ -1,15 +1,37 @@
+<nz-card *ngIf="!designStatus" nzTitle="行" style="width:100%; border: 1px solid #999999" [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</nz-card>
+<ng-template #extraTemplate>
+    <ng-container *ngIf="designStatus">
 
-  <nz-card nzTitle="行" style="width:100%; border: 1px solid #999999" [nzExtra]="extraTemplate"  [nzBodyStyle] = "bodystyle">
-      <div   nz-row [nzGutter]="6">
-          <div nz-col *ngFor="let c of config.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
-          [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl">
-          <cfg-layout-col   [config]="c"    (updateValue)="valueChangeCol($event)"></cfg-layout-col>
+    </ng-container>
+    <ng-container *ngIf="!designStatus">
+        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="移动行" nz-tooltip>
+            <i nz-icon type="drag"></i>
+        </button>
+        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置行" nz-tooltip>
+            <i nz-icon type="setting"></i>
+        </button>
+        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="删除行" nz-tooltip (click)="deleteRow()">
+            <i nz-icon type="delete"></i>
+        </button>
+        <button nz-button [nzSize]="'small'" nzTitle="添加列" nz-tooltip nzShape="circle" (click)="addCol()">
+            <i nz-icon type="plus"></i>
+        </button>
+    </ng-container>
+
+</ng-template>
+<!-- 内容 -->
+<ng-template #content>
+    <div nz-row [nzGutter]="6">
+        <div nz-col *ngFor="let c of config.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs" [nzMd]="c.size.nzMd"
+            [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl">
+            <cfg-layout-col [config]="c" [designStatus]="designStatus" (updateValue)="valueChangeCol($event)"></cfg-layout-col>
         </div>
-      </div>
-  </nz-card>
-  <ng-template #extraTemplate>
-      <button nz-button  [nzSize]="'small'" nzType="primary" nzTitle="移动行" nz-tooltip>  <i nz-icon type="drag"></i></button>
-      <button nz-button  [nzSize]="'small'" nzType="primary" nzTitle="设置行" nz-tooltip> <i nz-icon type="setting" ></i></button>
-      <button nz-button  [nzSize]="'small'" nzType="primary" nzTitle="删除行" nz-tooltip  (click)="deleteRow()">  <i nz-icon type="delete" ></i></button>
-      <button nz-button  [nzSize]="'small'"  nzTitle="添加列" nz-tooltip nzShape="circle"  (click)="addCol()">    <i nz-icon type="plus" ></i></button>
-  </ng-template>
+    </div>
+</ng-template>
+<!-- 不包卡片 -->
+
+<div *ngIf="designStatus">
+        <ng-container  *ngTemplateOutlet="content"></ng-container>
+</div>

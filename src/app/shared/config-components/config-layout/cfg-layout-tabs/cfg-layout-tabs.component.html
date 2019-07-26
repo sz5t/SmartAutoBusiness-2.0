@@ -1,20 +1,25 @@
 
 
 
-  <nz-card [nzTitle]=" titleTemplate" style="width:100%;border: 1px solid rgb(29, 238, 193); height: 100%;" [nzBodyStyle]="bodystyle" [nzExtra]="extraTemplate">
+  <nz-card *ngIf="!designStatus" [nzTitle]=" titleTemplate" style="width:100%;border: 1px solid rgb(29, 238, 193); height: 100%;" [nzBodyStyle]="bodystyle" [nzExtra]="extraTemplate">
 
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</nz-card>
+
+<ng-template #content>
     <nz-tabset [nzType]="'card'" >
         <nz-tab *ngFor="let tab of tabs" [nzTitle]="titleTemplate">
           <ng-template #titleTemplate>
             <div>
               {{ tab.title }}
-              <i nz-icon type="close" (click)="closeTab(tab.id)" class="ant-tabs-close-x"></i>
+             
+              <i *ngIf="!designStatus" nz-icon type="close" (click)="closeTab(tab.id)" class="ant-tabs-close-x"></i>
             </div>
           </ng-template>
-          <cfg-layout  [config]="tab.layout"></cfg-layout>
+          <cfg-layout  [config]="tab.layout"  [designStatus]="designStatus" ></cfg-layout>
         </nz-tab>
       </nz-tabset>
-</nz-card>
+</ng-template>
 <ng-template #titleTemplate>
     <span>{{config.title}}</span>
 </ng-template>
@@ -32,3 +37,8 @@
     <button nz-button  [nzSize]="'small'"  nzTitle="添加tab" nz-tooltip nzShape="circle"  (click)="newTab()" style="background-color:lightgreen">    <i nz-icon type="plus" ></i></button>
 
 </ng-template>
+<!-- 不包卡片 -->
+
+<div *ngIf="designStatus">
+    <ng-container  *ngTemplateOutlet="content"></ng-container>
+</div>

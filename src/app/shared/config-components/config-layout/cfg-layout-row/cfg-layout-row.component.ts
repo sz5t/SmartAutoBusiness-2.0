@@ -7,6 +7,7 @@ import { CommonUtils } from '@core/utils/common-utils';
 })
 export class CfgLayoutRowComponent implements OnInit {
   @Input() public config;
+  @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
 
   public bodystyle = { 'background-color': '#efefef' };
@@ -34,6 +35,7 @@ export class CfgLayoutRowComponent implements OnInit {
       id: fieldIdentity,
       col: 'cc',
       type: 'col',
+      titlestate:1,
       title: title,
       span: 24,
       container:'',

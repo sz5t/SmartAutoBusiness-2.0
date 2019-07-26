@@ -1,22 +1,25 @@
-<nz-card [nzTitle]=" titleTemplate" style="width:100%;border: 1px solid #2fa4e7; height: 100%;" [nzExtra]="extraTemplate"
+<nz-card [nzTitle]="titleTemplate" style="width:100%;border: 1px solid #2fa4e7; height: 100%;" [nzExtra]="extraTemplate"
     [nzBodyStyle]="bodystyle" (drop)="f_ondrop($event,config)" (dragover)="f_ondragover($event,config)">
     <ng-container *ngIf="!config.container">
         <p>当前列内可填充具体组件内容</p>
+        <cfg-layout-item [config]="config"></cfg-layout-item>
     </ng-container>
     <ng-container *ngIf="config.container==='rows'">
         <ng-container *ngFor="let r of rows">
-            <cfg-layout-row [config]="r" (updateValue)="valueChangeRow($event)"></cfg-layout-row>
+            <cfg-layout-row [config]="r" [designStatus]="designStatus" (updateValue)="valueChangeRow($event)"></cfg-layout-row>
         </ng-container>
     </ng-container>
     <ng-container *ngIf="config.container==='tabs'">
-        <cfg-layout-tabs [config]="tabs" (updateValue)="valueChangeRow($event)"></cfg-layout-tabs>
+        <cfg-layout-tabs [config]="tabs" [designStatus]="designStatus" (updateValue)="valueChangeRow($event)"></cfg-layout-tabs>
     </ng-container>
     <ng-container *ngIf="config.container==='collapse'">
-        <cfg-layout-collapse  [config]="collapse" (updateValue)="valueChangeRow($event)"></cfg-layout-collapse>
+        <cfg-layout-collapse [config]="collapse" [designStatus]="designStatus" (updateValue)="valueChangeRow($event)"></cfg-layout-collapse>
     </ng-container>
     <ng-container *ngIf="config.container==='component'">
-        <p>组件内容</p>
+        <!-- <p>组件内容</p> -->
+        <cfg-layout-item [config]="config"></cfg-layout-item>
     </ng-container>
+
 
 </nz-card>
 <ng-template #titleTemplate>
@@ -24,115 +27,144 @@
 </ng-template>
 <ng-template #extraTemplate>
     <!-- -->
-    <button id="dragCol" nz-button [nzSize]="'small'" nzTitle="移动列" nz-tooltip [draggable]="is_drag" (dragstart)="f_ondragstart($event,config)"
-        (click)="dragCol()">
-        <i nz-icon type="drag"></i>
-    </button>
-    <button nz-button [nzSize]="'small'" nzTitle="列的栅格宽度设置" nz-tooltip (click)="open()">
-        <i nz-icon type="diff"></i>
-    </button>
-    <button nz-button [nzSize]="'small'" nzTitle="设置列" nz-tooltip >
-        <i nz-icon type="setting"></i>
-    </button>
-    <button nz-button [nzSize]="'small'" nzTitle="删除列" nz-tooltip (click)="delCol()">
-        <i nz-icon type="delete"></i>
-    </button>
-    <nz-dropdown>
-        <button [nzSize]="'small'" nzType="primary" nz-button nzShape="circle" nz-dropdown>
-            <i nz-icon type="plus"></i>
+    <ng-container *ngIf="designStatus">
+
+    </ng-container>
+    <ng-container *ngIf="!designStatus">
+        <button id="dragCol" nz-button [nzSize]="'small'" nzTitle="移动列" nz-tooltip [draggable]="is_drag" (dragstart)="f_ondragstart($event,config)"
+            (click)="dragCol()">
+            <i nz-icon type="drag"></i>
         </button>
-        <ul nz-menu>
-            <li nz-menu-item>
-                <a (click)="addRow()">新增行</a>
-            </li>
-            <li nz-menu-item>
-                <a (click)="addTabs()">新增tabs</a>
-            </li>
-            <li nz-menu-item>
-                <a (click)="addCollapse()">新增折叠面板</a>
-            </li>
-        </ul>
-    </nz-dropdown>
+        <!-- <button nz-button [nzSize]="'small'" nzTitle="列的栅格宽度设置" nz-tooltip (click)="open()">
+            <i nz-icon type="diff"></i>
+        </button> -->
+        <button nz-button [nzSize]="'small'" nzTitle="设置列" (click)="openAttribute()" nz-tooltip>
+            <i nz-icon type="setting"></i>
+        </button>
+        <button nz-button [nzSize]="'small'" nzTitle="删除列" nz-tooltip (click)="delCol()">
+            <i nz-icon type="delete"></i>
+        </button>
+        <nz-dropdown>
+            <button [nzSize]="'small'" nzType="primary" nz-button nzShape="circle" nz-dropdown>
+                <i nz-icon type="plus"></i>
+            </button>
+            <ul nz-menu>
+                <li nz-menu-item>
+                    <a (click)="addRow()">新增行</a>
+                </li>
+                <li nz-menu-item>
+                    <a (click)="addTabs()">新增tabs</a>
+                </li>
+                <li nz-menu-item>
+                    <a (click)="addCollapse()">新增折叠面板</a>
+                </li>
+            </ul>
+        </nz-dropdown>
+    </ng-container>
+
 
 </ng-template>
 
+<nz-modal [(nzVisible)]="attribute_isVisible" nzTitle="列属性设置" (nzOnCancel)="attribute_handleCancel($event)" (nzOnOk)="attribute_handleOk($event)">
 
-<nz-modal [(nzVisible)]="size_isVisible" nzTitle="栅格宽度设置" (nzOnCancel)="size_handleCancel($event)" (nzOnOk)="size_handleOk($event)">
-    <nz-row>
-        <nz-col nzSpan="6">
-                栅格占位格数nzSpan:
-        </nz-col>
-        <nz-col nzSpan="12">
-            <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="config.span"></nz-slider>
-        </nz-col>
-        <div nz-col nzSpan="6">
-            <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="config.span"></nz-input-number>
-        </div>
-    </nz-row>
-    <nz-row>
-        <nz-col nzSpan="6">
-                <code>&lt;576px nzXs:</code>
-        </nz-col>
-        <nz-col nzSpan="12">
-            <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="config.size.nzXs"></nz-slider>
-        </nz-col>
-        <div nz-col nzSpan="6">
-            <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="config.size.nzXs"></nz-input-number>
-        </div>
-    </nz-row>
-    <nz-row>
-        <nz-col nzSpan="6">
-                <code>≥576px nzSm:</code>
-        </nz-col>
-        <nz-col nzSpan="12">
-            <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="config.size.nzSm"></nz-slider>
-        </nz-col>
-        <div nz-col nzSpan="6">
-            <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="config.size.nzSm"></nz-input-number>
-        </div>
-    </nz-row>
-    <nz-row>
-        <nz-col nzSpan="6">
-                <code>≥768px nzMd:</code>
-        </nz-col>
-        <nz-col nzSpan="12">
-            <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="config.size.nzMd"></nz-slider>
-        </nz-col>
-        <div nz-col nzSpan="6">
-            <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="config.size.nzMd"></nz-input-number>
-        </div>
-    </nz-row>
-    <nz-row>
-        <nz-col nzSpan="6">
-                <code>≥992px  nzLg:</code>
-        </nz-col>
-        <nz-col nzSpan="12">
-            <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="config.size.nzLg"></nz-slider>
-        </nz-col>
-        <div nz-col nzSpan="6">
-            <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="config.size.nzLg"></nz-input-number>
-        </div>
-    </nz-row>
-    <nz-row>
-        <nz-col nzSpan="6">
-                <code>≥1200px  ngXl:</code>
-        </nz-col>
-        <nz-col nzSpan="12">
-            <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="config.size.ngXl"></nz-slider>
-        </nz-col>
-        <div nz-col nzSpan="6">
-            <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="config.size.ngXl"></nz-input-number>
-        </div>
-    </nz-row>
-    <nz-row>
-            <nz-col nzSpan="6">
+    <nz-tabset>
+        <nz-tab nzTitle="标题设置">
+            <nz-row>
+                <nz-col nzSpan="6">
+                    是否显示标题:
+                </nz-col>
+                <div nz-col nzSpan="6">
+                    <nz-switch [(ngModel)]="titlestate"  (ngModelChange)="titlestateChange($event)" nzCheckedChildren="显示标题" nzUnCheckedChildren="隐藏标题"></nz-switch>
+
+                </div>
+                <nz-col nzSpan="4">
+                    标题:
+                </nz-col>
+                <div nz-col nzSpan="8">
+                    <input nz-input placeholder="标题" [(ngModel)]="attribute_config.title" />
+                </div>
+            </nz-row>
+        </nz-tab>
+        <nz-tab nzTitle="栅格宽度设置">
+            <nz-row>
+                <nz-col nzSpan="6">
+                    栅格占位格数nzSpan:
+                </nz-col>
+                <nz-col nzSpan="12">
+                    <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="attribute_config.span"></nz-slider>
+                </nz-col>
+                <div nz-col nzSpan="6">
+                    <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="attribute_config.span"></nz-input-number>
+                </div>
+            </nz-row>
+            <nz-row>
+                <nz-col nzSpan="6">
+                    <code>&lt;576px nzXs:</code>
+                </nz-col>
+                <nz-col nzSpan="12">
+                    <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="attribute_config.size.nzXs"></nz-slider>
+                </nz-col>
+                <div nz-col nzSpan="6">
+                    <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="attribute_config.size.nzXs"></nz-input-number>
+                </div>
+            </nz-row>
+            <nz-row>
+                <nz-col nzSpan="6">
+                    <code>≥576px nzSm:</code>
+                </nz-col>
+                <nz-col nzSpan="12">
+                    <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="attribute_config.size.nzSm"></nz-slider>
+                </nz-col>
+                <div nz-col nzSpan="6">
+                    <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="attribute_config.size.nzSm"></nz-input-number>
+                </div>
+            </nz-row>
+            <nz-row>
+                <nz-col nzSpan="6">
+                    <code>≥768px nzMd:</code>
+                </nz-col>
+                <nz-col nzSpan="12">
+                    <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="attribute_config.size.nzMd"></nz-slider>
+                </nz-col>
+                <div nz-col nzSpan="6">
+                    <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="attribute_config.size.nzMd"></nz-input-number>
+                </div>
+            </nz-row>
+            <nz-row>
+                <nz-col nzSpan="6">
+                    <code>≥992px  nzLg:</code>
+                </nz-col>
+                <nz-col nzSpan="12">
+                    <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="attribute_config.size.nzLg"></nz-slider>
+                </nz-col>
+                <div nz-col nzSpan="6">
+                    <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="attribute_config.size.nzLg"></nz-input-number>
+                </div>
+            </nz-row>
+            <nz-row>
+                <nz-col nzSpan="6">
+                    <code>≥1200px  ngXl:</code>
+                </nz-col>
+                <nz-col nzSpan="12">
+                    <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="attribute_config.size.ngXl"></nz-slider>
+                </nz-col>
+                <div nz-col nzSpan="6">
+                    <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="attribute_config.size.ngXl"></nz-input-number>
+                </div>
+            </nz-row>
+            <nz-row>
+                <nz-col nzSpan="6">
                     <code>≥1600px nzXXl:</code>
-            </nz-col>
-            <nz-col nzSpan="12">
-                <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="config.size.nzXXl"></nz-slider>
-            </nz-col>
-            <div nz-col nzSpan="6">
-                <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="config.size.nzXXl"></nz-input-number>
-            </div>
-        </nz-row>
+                </nz-col>
+                <nz-col nzSpan="12">
+                    <nz-slider [nzMin]="1" [nzMax]="24" [(ngModel)]="attribute_config.size.nzXXl"></nz-slider>
+                </nz-col>
+                <div nz-col nzSpan="6">
+                    <nz-input-number [nzMin]="1" [nzMax]="24" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="attribute_config.size.nzXXl"></nz-input-number>
+                </div>
+            </nz-row>
+        </nz-tab>
+
+    </nz-tabset>
+
 </nz-modal>

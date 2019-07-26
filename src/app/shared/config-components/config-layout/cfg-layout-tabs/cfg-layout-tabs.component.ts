@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonUtils } from '@core/utils/common-utils';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'cfg-layout-tabs,[cfg-layout-tabs]',
@@ -8,24 +9,35 @@ import { CommonUtils } from '@core/utils/common-utils';
 })
 export class CfgLayoutTabsComponent implements OnInit {
   @Input() public config;
+  @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
   public bodystyle = { 'background-color': 'lightgreen' };
   public tabs = [];
-  constructor() { }
+  constructor(private modalService: NzModalService) { }
 
   public ngOnInit() {
-    this.tabs = this.config['tabContent'] ;
+    console.log('CfgLayoutTabsComponent->tabContent', this.config);
+    this.tabs = this.config['tabContent'];
   }
 
 
   public closeTab(tab: string): void {
-    let deleteIndex;
-    for (let i = 0; i < this.tabs.length; i++) {
-      if (this.tabs[i]['id'] === tab) {
-        deleteIndex = i;
-      }
-    }
-    this.tabs.splice(deleteIndex, 1);
+    this.modalService.confirm({
+      nzTitle: '提示',
+      nzContent: '确定要删除tab页签？',
+      nzOkText: '确定',
+      nzCancelText: '取消',
+      nzOnOk:  ()=>{
+        let deleteIndex;
+        for (let i = 0; i < this.tabs.length; i++) {
+          if (this.tabs[i]['id'] === tab) {
+            deleteIndex = i;
+          }
+        }
+        this.tabs.splice(deleteIndex, 1);
+       }
+    });
+
   }
 
   public newTab(): void {

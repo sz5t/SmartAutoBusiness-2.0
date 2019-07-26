@@ -9,6 +9,7 @@ import { CommonUtils } from '@core/utils/common-utils';
 export class CfgCustomLayoutComponent implements OnInit, AfterViewInit {
 
   @Input() public config;
+  @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
 
   @ViewChild('s1') public s1: ElementRef<any>;

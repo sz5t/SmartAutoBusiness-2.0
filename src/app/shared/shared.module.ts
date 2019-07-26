@@ -37,6 +37,13 @@ import { CfgFormLayoutRowComponent } from '@shared/config-components/config-form
 import { CfgFormInputComponent } from '@shared/config-components/config-form-layout/cfg-form-component/cfg-form-input/cfg-form-input.component';
 import { CfgFormSelectComponent } from '@shared/config-components/config-form-layout/cfg-form-component/cfg-form-select/cfg-form-select.component';
 import { CfgFormItemContentDirective } from '@shared/config-components/config-form-layout/cfg-form-item-content.directive';
+import { CfgLayoutItemComponent } from '@shared/config-components/config-layout/cfg-layout-item/cfg-layout-item.component';
+import { CfgLayoutItemContentDirective } from '@shared/config-components/config-layout/cfg-layout-item-content.directive';
+import { CfgDataTableComponent } from './config-components/config-layout/cfg-layout-component/cfg-data-table/cfg-data-table.component';
+import { CfgTreeComponent } from './config-components/config-layout/cfg-layout-component/cfg-tree/cfg-tree.component';
+import { CfgFormComponent } from './config-components/config-layout/cfg-layout-component/cfg-form/cfg-form.component';
+import { CfgCalendarComponent } from './config-components/config-layout/cfg-layout-component/cfg-calendar/cfg-calendar.component';
+import { CfgCarouselComponent } from './config-components/config-layout/cfg-layout-component/cfg-carousel/cfg-carousel.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -56,6 +63,12 @@ const COMPONENTS = [
   CfgLayoutCollapseComponent,
   CfgLayoutRowComponent,
   CfgLayoutTabsComponent,
+  CfgLayoutItemComponent,
+  CfgDataTableComponent,
+  CfgTreeComponent,
+  CfgFormComponent,
+  CfgCalendarComponent,
+  CfgCarouselComponent,
 
   CfgFormItemComponent,
   CfgFormLayoutComponent,
@@ -68,7 +81,8 @@ const COMPONENTS = [
 const DIRECTIVES = [
   CnLayoutResolverDirective,
   CnComponentResolverDirective,
-  CfgFormItemContentDirective
+  CfgFormItemContentDirective,
+  CfgLayoutItemContentDirective
 ];
 // #endregion
 
@@ -89,7 +103,7 @@ const DIRECTIVES = [
   declarations: [
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES,
+    ...DIRECTIVES
   ],
   exports: [
     CommonModule,
