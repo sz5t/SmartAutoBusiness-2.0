@@ -140,55 +140,57 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             const btn_source$ = from(btn.execute);
             btn_source$.pipe(map(exeCfg => this.sendBtnMessage(exeCfg, targetViewId))).subscribe().unsubscribe();
 
-            const triggerObj = {
-                triggerType: btn.triggerType,
-                trigger: btn.trigger
-            }
-            switch (btn.triggerType) {
-                // 状态触发
-                case BSN_TRIGGER_TYPE.STATE:
-                    const stateMsg = new BsnRelativesMessageModel(
-                        triggerObj,
-                        targetViewId
-                    );
-                    this._cpmtService.commonRelationTrigger.next(stateMsg);
-                    break;
-                // 行为触发
-                case BSN_TRIGGER_TYPE.BEHAVIOR:
-                    const behaviorMsg = new BsnRelativesMessageModel(
-                        triggerObj,
-                        targetViewId
-                    )
-                    this._cpmtService.commonRelationTrigger.next(behaviorMsg);
-                    break;
-                // 动作触发
-                case BSN_TRIGGER_TYPE.ACTION:
-                    const actionMsg = new BsnRelativesMessageModel(
-                        triggerObj,
-                        targetViewId,
-                        {}
-                    );
-                    this._cpmtService.commonRelationTrigger.next(actionMsg);
-                    break;
-                // 操作触发
-                case BSN_TRIGGER_TYPE.OPERATION:
-                    const operationMsg = new BsnRelativesMessageModel(
-                        triggerObj,
-                        targetViewId,
-                        btn.ajaxConfig // 异步操作配置
-                    )
-                    this._cpmtService.commonRelationTrigger.next(operationMsg);
-                    break;
-                // 链接跳转触发
-                case BSN_TRIGGER_TYPE.LINK:
-                    const linkMsg = new BsnRelativesMessageModel(
-                        triggerObj,
-                        targetViewId,
-                        btn.link // 页面跳转配置
-                    )
-                    this._cpmtService.commonRelationTrigger.next(linkMsg);
-                    break;
-            }
+            // const triggerObj = {
+            //     triggerType: btn.triggerType,
+            //     trigger: btn.trigger
+            // }
+            // switch (btn.triggerType) {
+            //     // 状态触发
+            //     case BSN_TRIGGER_TYPE.STATE:
+            //         const stateMsg = new BsnRelativesMessageModel(
+            //             triggerObj,
+            //             targetViewId
+            //         );
+            //         this._cpmtService.commonRelationTrigger.next(stateMsg);
+            //         break;
+            //     // 行为触发
+            //     case BSN_TRIGGER_TYPE.BEHAVIOR:
+            //         const behaviorMsg = new BsnRelativesMessageModel(
+            //             triggerObj,
+            //             targetViewId
+            //         )
+            //         this._cpmtService.commonRelationTrigger.next(behaviorMsg);
+            //         break;
+            //     // 动作触发
+            //     case BSN_TRIGGER_TYPE.ACTION:
+            //         const actionMsg = new BsnRelativesMessageModel(
+            //             triggerObj,
+            //             targetViewId,
+            //             {}
+            //         );
+            //         this._cpmtService.commonRelationTrigger.next(actionMsg);
+            //         break;
+            //     // 操作触发
+            //     case BSN_TRIGGER_TYPE.OPERATION:
+            //         // 为ajaxConfig配置及联
+            //         const ajaxCascade = {}
+            //         const operationMsg = new BsnRelativesMessageModel(
+            //             triggerObj,
+            //             targetViewId,
+            //             btn.ajaxConfig // 异步操作配置
+            //         )
+            //         this._cpmtService.commonRelationTrigger.next(operationMsg);
+            //         break;
+            //     // 链接跳转触发
+            //     case BSN_TRIGGER_TYPE.LINK:
+            //         const linkMsg = new BsnRelativesMessageModel(
+            //             triggerObj,
+            //             targetViewId,
+            //             btn.link // 页面跳转配置
+            //         )
+            //         this._cpmtService.commonRelationTrigger.next(linkMsg);
+            //         break;
+            // }
             this.toolbarsIsLoading[btn.name] = true;
         }
     }
@@ -260,15 +262,26 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     private findAjaxConfig(ajaxId) {
         let ajaxConfig;
         if (this.config.ajaxConfig && Array(this.config.ajaxConfig) && this.config.ajaxConfig.length > 0) {
-            const c = this.config.ajaxConfig.filter(cfg => cfg.id === ajaxId);
-            if (c && c.length > 0) {
-                ajaxConfig = c[0];
+            const c = this.config.ajaxConfig.find(cfg => cfg.id === ajaxId);
+            if (c) {
+                ajaxConfig = c;
+                if (ajaxConfig.result) {
+                    for (const r of ajaxConfig.result) {
+                        // 查找结果对应的消息配置
+                        if (this.config.cascade.messageSender) {
+                            const senderConfig = this.config.cascade.messageSender.find(sender => sender.id === r.senderId);
+                            if (senderConfig) {
+                                r['senderCfg'] = senderConfig;
+                            }
+                        }
+                    }
+                }
             }
-
-
         }
         return ajaxConfig;
     }
+
+
 
     private findBeforeOperationConfig(stateId) {
         let beforeConfig;

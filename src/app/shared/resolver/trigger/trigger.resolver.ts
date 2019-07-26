@@ -183,7 +183,6 @@ export class TriggerResolver {
         for (const cfg of condCfg.state) {
             switch (cfg.type) {
                 case 'component':
-                    debugger;
                     const componentResult = this.checkComponentProperty(cfg);
                     result.push(componentResult);
                     break;

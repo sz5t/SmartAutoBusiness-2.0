@@ -95,10 +95,10 @@ export class CnDataTableComponent extends CnComponentBase
     public _sortName;
     public _sortOrder;
 
-    public ROWS_ADDED: any = [];
-    public ROWS_EDITED: any = [];
-    public ROW_SELECTED: any = {};
-    public ROWS_CHECKED: any = [];
+    public ROWS_ADDED: any = [1];
+    public ROWS_EDITED: any = [1];
+    public ROW_SELECTED: any = { name: '1' };
+    public ROWS_CHECKED: any = [1];
 
     private _selectedRow;
     private _rowsData;
@@ -214,6 +214,7 @@ export class CnDataTableComponent extends CnComponentBase
         this.componentService.apiService.getRequest(url, method, { params })
             .toPromise()
             .then(result => {
+
                 console.log(result);
             }).catch(res => {
                 console.log(res);
@@ -354,8 +355,59 @@ export class CnDataTableComponent extends CnComponentBase
      * 保存编辑行
      * @param options ajaxConfig
      */
-    public saveRow(options) {
-        console.log(this.config.id + '-------------save row', options);
+    public saveRow(ajaxConfig) {
+        console.log(this.config.id + '-------------save row', ajaxConfig);
+        // 构建业务对象
+        // 执行异步操作
+        // this.componentService.apiService.doPost();
+        const url = ajaxConfig.url;
+        const params = this.buildParameters(ajaxConfig.params);
+        this.componentService.apiService[ajaxConfig.ajaxType](url, params).subscribe(response => {
+            // success 0:全部错误,1:全部正确,2:部分错误
+            debugger;
+            if (response.data) {
+                const successCfg = ajaxConfig.result.find(res => res.name === 'data');
+                // 弹出提示框
+                if (successCfg.senderCfg) {
+                    new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
+                }
+            }
+            if (response.validation) {
+                const validationCfg = ajaxConfig.result.find(res => res.name === 'validation');
+                if (validationCfg) {
+                    new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
+                }
+            }
+            if (response.error) {
+                const errorCfg = ajaxConfig.result.find(res => res.name === 'error');
+                if (errorCfg) {
+                    new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
+                }
+            }
+            // switch (response.success) {
+            //     case 0:
+            //         const successCfg = ajaxConfig.result.find(res => res.name === 'data');
+            //         // 弹出提示信息
+
+            //         // 发送消息
+            //         if (successCfg.senderCfg) {
+            //             new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
+            //         }
+            //         // 发送消息
+            //         break;
+            //     case 1:
+            //             const validationCfg = ajaxConfig.result.find(res => res.name === 'validation');
+            //         break;
+            //     case 2:
+            //             const errorCfg = ajaxConfig.result.find(res => res.name === 'error');
+            //         break;
+
+            // }
+        })
+        // 处理data结果
+        // 处理message结果
+        // 处理validation结果
+        // 发送后续操作消息
 
     }
 

@@ -22,6 +22,14 @@ export class RelationResolver {
     }
 
     /**
+     * 组件内部消息发送
+     */
+    public resolveInnerSender(senderCfg: any) {
+        // tslint:disable-next-line: no-use-before-declare
+        new ComponentSenderResolver(this._componentInstance).sendMessage(senderCfg);
+    }
+
+    /**
      * 解析消息发送器
      * @param messageSenderCfg 
      */

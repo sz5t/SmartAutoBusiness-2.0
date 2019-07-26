@@ -12,6 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { default as ngLang } from '@angular/common/locales/zh';
 import { NZ_I18N, zh_CN as zorroLang } from 'ng-zorro-antd';
 import { DELON_LOCALE, zh_CN as delonLang } from '@delon/theme';
+import * as MOCKDATA from '../../_mock';
+const MOCKMODULE = !environment.production ? [DelonMockModule.forRoot({ data: MOCKDATA })] : [];
 const LANG = {
   abbr: 'zh',
   ng: ngLang,
@@ -133,6 +135,8 @@ import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
 import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { environment } from '@env/environment';
+import { DelonMockModule } from '@delon/mock';
 
 @NgModule({
   declarations: [AppComponent],
@@ -148,6 +152,7 @@ import { ComponentServiceProvider } from '@core/services/component/component-ser
     ...I18NSERVICE_MODULES,
     ...GLOBAL_THIRD_MODULES,
     ...FORM_MODULES,
+    ...MOCKMODULE
   ],
   providers: [
     ...LANG_PROVIDES,

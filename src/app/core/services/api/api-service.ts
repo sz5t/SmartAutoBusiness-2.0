@@ -91,8 +91,8 @@ export class ApiServiceConfiguration {
       if (ajaxResponse.targetUrl) {
         this.handleTargetUrl(ajaxResponse.targetUrl);
       } else {
-        if (!ajaxResponse.message) {
-          ajaxResponse.message = this.defaultError500;
+        if (!ajaxResponse.error) {
+          ajaxResponse.error = this.defaultError500;
         }
         // 日志记录
         // 显示消息
@@ -144,12 +144,12 @@ export class ApiServiceConfiguration {
       this.handleAbpResponse(response);
       // tslint:disable-next-line: deprecation
       // 重写抛出异常
-      return throwError(JSON.stringify(response.message));
+      return throwError(JSON.stringify(response.error));
     } else {
       this.handleErrorResponse(response);
       // tslint:disable-next-line: deprecation
       // 重写抛出异常
-      return throwError(`HTTP error ${error.status} , ${JSON.stringify(response.message)}`);
+      return throwError(`HTTP error ${error.status} , ${JSON.stringify(response.error)}`);
     }
   }
 }
@@ -252,11 +252,12 @@ export class ApiService extends _HttpClient {
       options.headers = new HttpHeaders();
     }
 
+    // options.headers.append();
     options.headers.append("Pragma", "no-cache");
     options.headers.append("Cache-Control", "no-cache");
     options.headers.append("Expires", "Sat, 01 Jan 2000 00:00:00 GMT");
     this.addAcceptLanguageHeader(options);
-    this.addAuthorizationHeader(options);
+    // this.addAuthorizationHeader(options);
     this.addXRequestWithHeader(options);
     // 目前限定json格式,如需扩展则需要重新设计
     this.addJsonResponseType(options);
@@ -329,12 +330,12 @@ export class IValidationInfo extends IErrorInfo { }
 export class IMessageInfo extends IErrorInfo { }
 
 export class ApiResponse {
-  private _success: boolean;
+  private _success: number;
   private _data: any | any[];
   private _status: number;
   private _targetUrl?: string;
   private _validation?: IValidationInfo | IValidationInfo[];
-  private _message?: IMessageInfo | IMessageInfo[];
+  private _error?: IMessageInfo | IMessageInfo[];
 
   public get success() {
     return this._success;
@@ -375,12 +376,12 @@ export class ApiResponse {
     this._validation = value;
   }
 
-  public get message() {
-    return this._message;
+  public get error() {
+    return this._error;
   }
 
-  public set message(value) {
-    this._message = value;
+  public set error(value) {
+    this._error = value;
   }
 
 }

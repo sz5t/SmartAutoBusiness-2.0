@@ -68,6 +68,37 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             "id": "toolbar_001",
                             "component": "cnToolbar",
                             "size": "default",
+                            "cascade": {
+                                "messageSender": [
+                                    {
+                                        "id": "toolbar_01",
+                                        "senderId": "view_01",
+                                        "triggerType": "OPERATION",
+                                        "trigger": "EXECUTE_CHECKED_ROWS",
+                                        "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": [],
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "BEHAVIOR",
+                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                "params": [
+                                                    {
+                                                        "name": "parent_id",
+                                                        "type": "item",
+                                                        "valueName": "id"
+                                                    },
+                                                    {
+                                                        "name": "parent_name",
+                                                        "type": "item",
+                                                        "valueName": "name"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
                             "condition": [
                                 {
                                     "id": "add_state_1",
@@ -149,7 +180,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                                     "type": "property",
                                                     "name": "length",
                                                     "matchValue": 0,
-                                                    "match": ">"
+                                                    "match": "gt"
                                                 }
                                             ]
                                         },
@@ -186,14 +217,27 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "toolbar_01"
+                                        },
+                                        {
+                                            "name": "validation",
+                                            "senderId": "toolbar_01"
+                                        },
+                                        {
+                                            "name": "error",
+                                            "senderId": "toolbar_01"
+                                        }
                                     ]
                                 },
                                 {
                                     "id": "edit_save_1",
                                     "url": "information/test2",
                                     "urlType": "inner",
-                                    "ajaxType": "post",
+                                    "ajaxType": "put",
                                     "params": [
                                         {
                                             "name": "state",
@@ -361,64 +405,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                     ]
                                 }
                             ]
-                        },
-                        "beforeOperation": [
-                            {
-                                "id": "view_001_before_add",
-                                "name": "M_addRow",
-                                "status": [
-                                    {
-                                        "conditions": [
-                                            [
-                                                {
-                                                    "name": "_recordstatus",
-                                                    "value": 1,
-                                                    "checkType": "value"
-                                                },
-                                                {
-                                                    "name": "_recods",
-                                                    "value": 1,
-                                                    "checkType": "value"
-                                                }
-                                            ],
-                                            [
-                                                {
-                                                    "name": "_recordstatus",
-                                                    "value": 2,
-                                                    "checkType": "value"
-                                                },
-                                                {
-                                                    "name": "_recods",
-                                                    "value": 3,
-                                                    "checkType": "value"
-                                                }
-                                            ]
-                                        ],
-                                        "action": {
-                                            "type": "warning",
-                                            "message": "在当前状态下，无法新增",
-                                            "execute": "prevent"
-                                        }
-                                    },
-                                    {
-                                        "conditions": [
-                                            [
-                                                {
-                                                    "name": "_resourcesreceiveid1",
-                                                    "value": "undefinded",
-                                                    "checkType": "value"
-                                                }
-                                            ]
-                                        ],
-                                        "action": {
-                                            "type": "info",
-                                            "message": "主表未选中数据，无法新增！",
-                                            "execute": "prevent"
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
+                        }
                     }
                     , {
                         "id": "r5zDHB",
