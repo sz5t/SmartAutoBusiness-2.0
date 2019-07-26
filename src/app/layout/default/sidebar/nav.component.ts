@@ -52,7 +52,7 @@ export class NavComponent implements OnInit, OnDestroy {
     // this.genFloatingContainer();
     this.change$ = this._menuService.change.subscribe(res => {
       this.list = res;
-      this._cd.detectChanges();
+      // this._cd.detectChanges();
     });
     this.installUnderPad();
   }

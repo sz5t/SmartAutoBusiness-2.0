@@ -14,13 +14,7 @@
         <nz-form-item>
           <nz-form-label nzFor="status">使用状态</nz-form-label>
           <nz-form-control>
-            <nz-select
-              [(ngModel)]="q.status"
-              name="status"
-              id="status"
-              [nzPlaceHolder]="'请选择'"
-              [nzShowSearch]="true"
-            >
+            <nz-select [(ngModel)]="q.status" name="status" id="status" [nzPlaceHolder]="'请选择'" [nzShowSearch]="true">
               <nz-option *ngFor="let i of status; let idx = index" [nzLabel]="i.text" [nzValue]="idx"></nz-option>
             </nz-select>
           </nz-form-control>
@@ -76,16 +70,16 @@
   </button>
   <ng-container *ngIf="selectedRows.length > 0">
     <button nz-button>批量操作</button>
-    <nz-dropdown [nzPlacement]="'bottomLeft'">
-      <button nz-button nz-dropdown>
-        更多操作
-        <i nz-icon nzType="down"></i>
-      </button>
+    <button nz-button nz-dropdown [nzDropdownMenu]="batchMenu" nzPlacement="bottomLeft">
+      更多操作
+      <i nz-icon nzType="down"></i>
+    </button>
+    <nz-dropdown-menu #batchMenu="nzDropdownMenu">
       <ul nz-menu>
         <li nz-menu-item (click)="remove()">删除</li>
         <li nz-menu-item (click)="approval()">批量审批</li>
       </ul>
-    </nz-dropdown>
+    </nz-dropdown-menu>
   </ng-container>
   <div class="my-md">
     <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
