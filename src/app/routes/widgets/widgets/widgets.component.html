@@ -90,13 +90,8 @@
         <div nz-col [nzSpan]="12" class="border-right-1 border-bottom-1">
           <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'">
             <div nz-col [nzSpan]="12" class="text-center">
-              <g2-mini-bar
-                height="35"
-                color="#999"
-                borderWidth="3"
-                [padding]="[36, 30, 30, 30]"
-                [data]="smallData"
-              ></g2-mini-bar>
+              <g2-mini-bar height="35" color="#999" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="smallData">
+              </g2-mini-bar>
             </div>
             <div nz-col [nzSpan]="12" class="py-md">
               <h4 class="h4">10k</h4>
@@ -107,13 +102,8 @@
         <div nz-col [nzSpan]="12" class="border-bottom-1">
           <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'">
             <div nz-col [nzSpan]="12" class="text-center">
-              <g2-mini-bar
-                height="35"
-                color="#999"
-                borderWidth="3"
-                [padding]="[36, 30, 30, 30]"
-                [data]="smallData"
-              ></g2-mini-bar>
+              <g2-mini-bar height="35" color="#999" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="smallData">
+              </g2-mini-bar>
             </div>
             <div nz-col [nzSpan]="12" class="py-md">
               <h4 class="h4">100%</h4>
@@ -126,13 +116,8 @@
         <div nz-col [nzSpan]="12" class="border-right-1">
           <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'">
             <div nz-col [nzSpan]="12" class="text-center">
-              <g2-mini-bar
-                height="35"
-                color="#999"
-                borderWidth="3"
-                [padding]="[36, 30, 30, 30]"
-                [data]="smallData"
-              ></g2-mini-bar>
+              <g2-mini-bar height="35" color="#999" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="smallData">
+              </g2-mini-bar>
             </div>
             <div nz-col [nzSpan]="12" class="py-md">
               <h4 class="h4">150</h4>
@@ -143,13 +128,8 @@
         <div nz-col [nzSpan]="12">
           <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'">
             <div nz-col [nzSpan]="12" class="text-center">
-              <g2-mini-bar
-                height="35"
-                color="#999"
-                borderWidth="3"
-                [padding]="[36, 30, 30, 30]"
-                [data]="smallData"
-              ></g2-mini-bar>
+              <g2-mini-bar height="35" color="#999" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="smallData">
+              </g2-mini-bar>
             </div>
             <div nz-col [nzSpan]="12" class="py-md">
               <h4 class="h4">10</h4>
@@ -683,28 +663,16 @@
         你觉得这篇文章如何：
       </div>
       <div nz-col [nzSpan]="8" class="text-right">
-        <nz-popconfirm
-          [(nzVisible)]="like"
-          [nzPlacement]="'top'"
-          [nzTitle]="'喜欢就开启此内容提醒吧！'"
-          [nzOkText]="'立即开启'"
-          [nzCancelText]="'下次再说'"
-          (nzOnConfirm)="msg.success('开启提醒')"
-          (nzOnCancel)="msg.error('取消提醒')"
-          style="display:inline-block; padding-top:15px;"
-        >
+        <nz-popconfirm [(nzVisible)]="like" [nzPlacement]="'top'" [nzTitle]="'喜欢就开启此内容提醒吧！'" [nzOkText]="'立即开启'"
+          [nzCancelText]="'下次再说'" (nzOnConfirm)="msg.success('开启提醒')" (nzOnCancel)="msg.error('取消提醒')"
+          style="display:inline-block; padding-top:15px;">
           <span nz-popconfirm></span>
         </nz-popconfirm>
         <span class="pr-lg">
           <i nz-icon nzType="like" class="display-3 point" [class.text-primary]="like" (click)="like = !like"></i> 赞
         </span>
-        <i
-          nz-icon
-          nzType="dislike"
-          class="display-3 point"
-          [class.text-primary]="dislike"
-          (click)="dislike = !dislike"
-        ></i>
+        <i nz-icon nzType="dislike" class="display-3 point" [class.text-primary]="dislike"
+          (click)="dislike = !dislike"></i>
         踩
       </div>
     </div>
@@ -741,21 +709,11 @@
         <div class="h5 pb-sm text-white">Monthly incomes</div>
         <g2-mini-area color="#fff" height="46" [data]="data"></g2-mini-area>
       </div>
-      <div
-        nz-row
-        [nzType]="'flex'"
-        [nzJustify]="'center'"
-        [nzAlign]="'middle'"
-        class="bg-grey-darker py-sm text-center"
-      >
+      <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'"
+        class="bg-grey-darker py-sm text-center">
         <div nz-col [nzSpan]="16">
-          <g2-mini-bar
-            height="35"
-            color="#fff"
-            borderWidth="3"
-            [padding]="[36, 30, 30, 30]"
-            [data]="data"
-          ></g2-mini-bar>
+          <g2-mini-bar height="35" color="#fff" borderWidth="3" [padding]="[36, 30, 30, 30]" [data]="data">
+          </g2-mini-bar>
         </div>
         <div nz-col [nzSpan]="8">
           <div class="text-white">+150</div>
@@ -815,14 +773,8 @@
         Recent Posts
         <small class="text-sm font-weight-normal">Venenatis portauam Inceptos ameteiam</small>
       </ng-template>
-      <div
-        nz-row
-        [nzType]="'flex'"
-        [nzJustify]="'center'"
-        [nzAlign]="'middle'"
-        class="py-sm bg-grey-lighter-h point"
-        *ngFor="let item of todoData"
-      >
+      <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'" class="py-sm bg-grey-lighter-h point"
+        *ngFor="let item of todoData">
         <div nz-col [nzSpan]="4" class="text-center">
           <nz-avatar [nzSrc]="'./assets/tmp/img/' + item.avatar + '.png'"></nz-avatar>
         </div>
@@ -835,14 +787,8 @@
   </div>
   <div nz-col nzXs="24" nzMd="12">
     <nz-card nzTitle="Todo lists" class="ant-card__body-nopadding">
-      <div
-        nz-row
-        [nzType]="'flex'"
-        [nzJustify]="'center'"
-        [nzAlign]="'middle'"
-        class="py-sm bg-grey-lighter-h point"
-        *ngFor="let item of todoData"
-      >
+      <div nz-row [nzType]="'flex'" [nzJustify]="'center'" [nzAlign]="'middle'" class="py-sm bg-grey-lighter-h point"
+        *ngFor="let item of todoData">
         <div nz-col [nzSpan]="4" class="text-center">
           <nz-avatar [nzSrc]="'./assets/tmp/img/' + item.avatar + '.png'"></nz-avatar>
         </div>
@@ -851,14 +797,15 @@
           <div [class.text-deleted]="item.completed">{{ item.content }}</div>
         </div>
         <div nz-col [nzSpan]="2" class="text-right pr-md">
-          <nz-dropdown [nzPlacement]="'topRight'">
-            <i nz-dropdown nz-icon nzType="ellipsis" class="rotate-90"></i>
+          <i nz-dropdown [nzDropdownMenu]="menuTpl" nzPlacement="topRight" nz-icon nzType="ellipsis"
+            class="rotate-90"></i>
+          <nz-dropdown-menu #menuTpl="nzDropdownMenu">
             <ul nz-menu>
               <li nz-menu-item *ngIf="item.completed" (click)="item.completed = false">Active</li>
               <li nz-menu-item *ngIf="!item.completed" (click)="item.completed = true">Completed</li>
               <li nz-menu-item (click)="todoData.splice(todoData.indexOf(item), 1)">Delted</li>
             </ul>
-          </nz-dropdown>
+          </nz-dropdown-menu>
         </div>
       </div>
     </nz-card>

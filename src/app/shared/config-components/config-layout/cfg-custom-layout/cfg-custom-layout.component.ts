@@ -12,11 +12,11 @@ export class CfgCustomLayoutComponent implements OnInit, AfterViewInit {
   @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
 
-  @ViewChild('s1') public s1: ElementRef<any>;
+  @ViewChild('s1', { static: false }) public s1: ElementRef<any>;
 
-  @ViewChild('west') public west: ElementRef<any>;
-  @ViewChild('center') public center: ElementRef<any>;
-  @ViewChild('east') public east: ElementRef<any>;
+  @ViewChild('west', { static: false }) public west: ElementRef<any>;
+  @ViewChild('center', { static: false }) public center: ElementRef<any>;
+  @ViewChild('east', { static: false }) public east: ElementRef<any>;
 
   // 测试收缩展开
   public isCollapsed = { west: false, east: false };

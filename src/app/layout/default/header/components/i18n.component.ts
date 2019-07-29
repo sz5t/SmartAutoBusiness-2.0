@@ -8,13 +8,20 @@ import { I18NService } from '@core';
 @Component({
   selector: 'header-i18n',
   template: `
-    <nz-dropdown nzPlacement="bottomRight">
-      <div *ngIf="showLangText" nz-dropdown>
-        <i nz-icon nzType="global"></i>
-        {{ 'menu.lang' | translate }}
-        <i nz-icon nzType="down"></i>
-      </div>
-      <i *ngIf="!showLangText" nz-dropdown nz-icon nzType="global"></i>
+    <div *ngIf="showLangText" nz-dropdown [nzDropdownMenu]="langMenu" nzPlacement="bottomRight">
+      <i nz-icon nzType="global"></i>
+      {{ 'menu.lang' | translate }}
+      <i nz-icon nzType="down"></i>
+    </div>
+    <i
+      *ngIf="!showLangText"
+      nz-dropdown
+      [nzDropdownMenu]="langMenu"
+      nzPlacement="bottomRight"
+      nz-icon
+      nzType="global"
+    ></i>
+    <nz-dropdown-menu #langMenu="nzDropdownMenu">
       <ul nz-menu>
         <li
           nz-menu-item
@@ -26,7 +33,7 @@ import { I18NService } from '@core';
           {{ item.text }}
         </li>
       </ul>
-    </nz-dropdown>
+    </nz-dropdown-menu>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -46,7 +53,7 @@ export class HeaderI18nComponent {
     private settings: SettingsService,
     @Inject(ALAIN_I18N_TOKEN) private i18n: I18NService,
     @Inject(DOCUMENT) private doc: any,
-  ) {}
+  ) { }
 
   change(lang: string) {
     const spinEl = this.doc.createElement('div');

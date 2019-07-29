@@ -1,3 +1,4 @@
+import { DelonACLModule } from '@delon/acl';
 /**
  * 进一步对基础模块的导入提炼
  * 有关模块注册指导原则请参考：https://github.com/ng-alain/ng-alain/issues/180
@@ -74,7 +75,7 @@ const GLOBAL_CONFIG_PROVIDES = [
 // #endregion
 
 @NgModule({
-  imports: [AlainThemeModule.forRoot(), ...MOCK_MODULES],
+  imports: [AlainThemeModule.forRoot(), ...MOCK_MODULES, DelonACLModule.forRoot()],
 })
 export class DelonModule {
   constructor(@Optional() @SkipSelf() parentModule: DelonModule) {

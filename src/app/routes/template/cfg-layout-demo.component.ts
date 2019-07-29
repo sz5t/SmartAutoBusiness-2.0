@@ -55,7 +55,7 @@ export class CfgLayoutDemoComponent implements OnInit {
 
   public isCollapsed = false;
 
-  @ViewChild('child1') child1: CfgLayoutComponent;
+  @ViewChild('child1', { static: true }) child1: CfgLayoutComponent;
   constructor() { }
 
   ngOnInit() {
