@@ -1,13 +1,8 @@
 <!-- <ng-template #extraTpl>
   <i nz-icon nzType="setting"></i>
 </ng-template> -->
-<nz-card nzTitle="折叠面板" style="width:100%; border: 1px solid darkolivegreen " [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
-  <nz-collapse>
-    <nz-collapse-panel *ngFor="let panel of panels" [nzHeader]="panel.title" [nzActive]="panel.active" [nzDisabled]="panel.disabled">
-      <!-- [nzExtra]="extraTpl" -->
-      <cfg-layout  [config]="panel.layout"  [designStatus]="designStatus" ></cfg-layout>
-    </nz-collapse-panel>
-  </nz-collapse>
+<nz-card *ngIf="!designStatus" nzTitle="折叠面板" style="width:100%; border: 1px solid darkolivegreen " [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
 </nz-card>
 <ng-template #extraTemplate>
   <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="移动折叠面板" nz-tooltip style="background-color:darkolivegreen">
@@ -23,3 +18,18 @@
     <i nz-icon type="plus"></i>
   </button>
 </ng-template>
+
+
+<ng-template #content>
+    <nz-collapse>
+        <nz-collapse-panel *ngFor="let panel of panels" [nzHeader]="panel.title" [nzActive]="panel.active" [nzDisabled]="panel.disabled">
+          <!-- [nzExtra]="extraTpl" -->
+          <cfg-layout  [config]="panel.layout"  [designStatus]="designStatus" ></cfg-layout>
+        </nz-collapse-panel>
+      </nz-collapse>
+</ng-template>
+<!-- 不包卡片 -->
+
+<div *ngIf="designStatus">
+    <ng-container  *ngTemplateOutlet="content"></ng-container>
+</div>
