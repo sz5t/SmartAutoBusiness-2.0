@@ -246,22 +246,33 @@ export class ApiService extends _HttpClient {
   private normalizeRequestOptions(options: any): ApiOptions {
     if (!options) {
       options = { headers: HttpHeaders };
-      options.headers = new HttpHeaders();
+      options.headers = new HttpHeaders()
+        .set("_log", '{"clientType":"PC","type":"test"}')
+        // .set("Pragma", "no-cache")
+        // .set("Cache-Control", "no-cache")
+        // .set("Expires", "Sat, 01 Jan 2000 00:00:00 GMT")
+        .set("x-Requested-With", "XMLHttpRequest")
+      // .set();
     }
     if (!options.headers) {
-      options.headers = new HttpHeaders();
+      options.headers = new HttpHeaders()
+        .set("_log", '{"clientType":"PC","type":"test"}')
+        // .set("Pragma", "no-cache")
+        // .set("Cache-Control", "no-cache")
+        // .set("Expires", "Sat, 01 Jan 2000 00:00:00 GMT")
+        .set("x-Requested-With", "XMLHttpRequest");
     }
 
     // options.headers.append();
-    options.headers.append("Pragma", "no-cache");
-    options.headers.append("Cache-Control", "no-cache");
-    options.headers.append("Expires", "Sat, 01 Jan 2000 00:00:00 GMT");
-    this.addAcceptLanguageHeader(options);
-    // this.addAuthorizationHeader(options);
-    this.addXRequestWithHeader(options);
-    // 目前限定json格式,如需扩展则需要重新设计
-    this.addJsonResponseType(options);
-
+    // options.headers.append("_log", '{"clientType":"PC","type":"test"}');
+    // options.headers.append("Pragma", "no-cache");
+    // options.headers.append("Cache-Control", "no-cache");
+    // options.headers.append("Expires", "Sat, 01 Jan 2000 00:00:00 GMT");
+    // this.addAcceptLanguageHeader(options);
+    // // this.addAuthorizationHeader(options);
+    // this.addXRequestWithHeader(options);
+    // // 目前限定json格式,如需扩展则需要重新设计
+    // this.addJsonResponseType(options);
     return options;
   }
 

@@ -6,6 +6,7 @@
         <div nz-col *ngFor="let c of row.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
           [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl" [nzXXl]="c.size.nzXXL">
 
+
           <nz-card [ngSwitch]="c.container" [nzTitle]="c.title ? c.title : false">
             <ng-container *ngSwitchCase="'tabs'" cnLayoutResolverDirective [config]="c.tabs"></ng-container>
             <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout"></ng-container>

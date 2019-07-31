@@ -1,5 +1,52 @@
-<h1>CnDataTable</h1>
+<!-- <h1>CnDataTable</h1>
 <div nz-button-group>
   <button nz-button (click)="selectRow($event)">Click SelectRow</button>
   <button nz-button (click)="executeCheckedRows($event)">Click ChechedRows</button>
-</div>
+</div>-->
+
+<nz-table #dataTable [nzLoading]="isLoading" [nzShowSizeChanger]="config.isShowSizeChanger"
+  [nzFrontPagination]="config.isFrontPagination" [nzShowPagination]="config.isPagination" [nzTotal]="total"
+  [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+  (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="config.pageSizeOptions" [nzData]="dataList"
+  [nzShowTotal]="showTotal" [nzBordered]="config.isBordered" [nzSize]="config.size" [nzTitle]="title">
+  <thead (nzSortChange)="sort($event)" nzSingleSort="true">
+    <tr>
+      <th nzShowCheckbox="true" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
+        (nzCheckedChange)="checkAll($event)"></th>
+      <ng-template ngFor let-header [ngForOf]="tableColumns">
+        <th *ngIf="!header.hidden" nzShowSort [nzSortKey]="header.field">
+          {{ header.title }}
+        </th>
+      </ng-template>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let rowData of dataTable.data" (click)="selectRow(rowData, $event)"
+      [ngClass]="{'selectedRow':mapOfSelectedId[rowData[KEY_ID]]}">
+      <td nzShowCheckbox="true" [(nzChecked)]="mapOfCheckedId[rowData[KEY_ID]]"
+        (nzCheckedChange)="dataCheckedStatusChange()"></td>
+      <ng-template ngFor let-colData [ngForOf]="tableColumns">
+        <td *ngIf="!colData.hidden">{{ rowData[colData.field] }}</td>
+      </ng-template>
+    </tr>
+  </tbody>
+  <tfoot>
+    <ng-template #showTotal style="text-align: left">
+      <span>
+        已选中
+        <span class="count" nz-text>
+          <code>{{ checkedNumber }}</code>
+        </span>
+        条记录
+      </span>
+      共
+      <span class="count" nz-text>
+        <code>{{ total }}</code>
+      </span>
+      条记录
+    </ng-template>
+  </tfoot>
+</nz-table>
+<ng-template #title>
+  <i nz-icon [nzType]="config.titleIcon" nzTheme="outline"></i> {{config.title}}
+</ng-template>

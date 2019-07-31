@@ -18,8 +18,8 @@ import { CnComponentBase } from '../cn-component.base';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
 import { TriggerResolver } from '@shared/resolver/trigger/trigger.resolver';
-import { filter } from 'rxjs/operators';
-import { Subscription, Subject, BehaviorSubject } from 'rxjs';
+import { filter, concatMap, mergeMap } from 'rxjs/operators';
+import { Subscription, Subject, BehaviorSubject, merge, Observable } from 'rxjs';
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
 // const component: { [type: string]: Type<any> } = {
@@ -33,31 +33,7 @@ import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.proper
     // tslint:disable-next-line:component-selector
     selector: 'cn-data-table,[cn-data-table]',
     templateUrl: './cn-data-table.component.html',
-    styles: [
-        `
-            .table-operations {
-                margin-bottom: 8px;
-            }
-
-            .table-operations > button {
-                margin-right: 8px;
-            }
-
-            .selectedRow {
-                color: #fff;
-                font-weight:600;
-                background-color: rgb(100, 149, 222);
-            }
-            .text-center {
-                text-align: center;
-            }
-            ,
-            .text-right {
-                text-align: right;
-            }
-
-        `
-    ]
+    styleUrls: [`cn-data-table.component.less`]
 })
 export class CnDataTableComponent extends CnComponentBase
     implements OnInit, AfterViewInit, OnDestroy, IDataGridProperty {
@@ -67,9 +43,8 @@ export class CnDataTableComponent extends CnComponentBase
     @Input()
     public permissions = [];
     @Input()
-    public dataList = []; // 表格数据集合
+    public dataList = [];
     @Output() public updateValue = new EventEmitter();
-
     /**
      * 组件名称
      * 所有组件实现此属性 
@@ -83,22 +58,34 @@ export class CnDataTableComponent extends CnComponentBase
 
     public COMPONENT_PROPERTY = CN_DATA_GRID_PROPERTY;
 
+    public tableColumns = [];
 
+
+
+
+    public isLoading = false;
     public loading = false;
     public pageIndex = 1;
     public pageSize = 10;
-    public total = 1;
+    public total = 0;
     public focusIds;
 
-    public allChecked = false;
+    public isAllChecked = false;
     public indeterminate = false;
-    public _sortName;
-    public _sortOrder;
+    public mapOfCheckedId: { [key: string]: boolean } = {};
+    public mapOfSelectedId: { [key: string]: boolean } = {};
+    public mapOfDataState: { [key: string]: { checked: boolean, selected: boolean, state: string, data: any } };
+    public checkedNumber = 0;
 
-    public ROWS_ADDED: any = [1];
-    public ROWS_EDITED: any = [1];
-    public ROW_SELECTED: any = { name: '1' };
-    public ROWS_CHECKED: any = [1];
+    public KEY_ID: string;
+
+    public _sortName;
+    public _sortValue;
+
+    public ROWS_ADDED: any[] = [];
+    public ROWS_EDITED: any[] = [];
+    public ROW_SELECTED: any = {};
+    public ROWS_CHECKED: any[] = [];
 
     private _selectedRow;
     private _rowsData;
@@ -131,6 +118,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public ngOnInit() {
+        this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
         this._selectedRow = {
             id: '1-001',
             name: '单行数据'
@@ -143,6 +131,9 @@ export class CnDataTableComponent extends CnComponentBase
             { id: '1-003', name: '第三行' },
             { id: '1-004', name: '第四行' }
         ]
+
+        // tslint:disable-next-line:no-unused-expression
+        this._buildColumns(this.config.columns);
         // 解析及联配置
         this.resolveRelations();
 
@@ -196,29 +187,55 @@ export class CnDataTableComponent extends CnComponentBase
 
     }
 
+    /**
+     * 构建表格列集合
+     * @param columns 
+     */
+    private _buildColumns(columns) {
+        if (Array.isArray(columns) && columns.length > 0) {
+            this.tableColumns = columns;
+        }
+
+    }
+
     public load() {
-        console.log(this.config.id + '-------------CnDataTable On Loading');
-        // console.log(this.config.id + 'current tempValue ', this.tempValue);
-        // console.log(this.config.id + 'current initValue ', this.initValue);
+        this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
         const params = {
-            ...this.buildParameters(this.config.loadingConfig.params),
-            // ...this._buildPaging(),
+            // ...this.buildParameters(this.config.loadingConfig.params),
+            ...this._buildPaging(),
             // ...this._buildFilter(this.config.ajaxConfig.filter),
             // ...this._buildSort(),
             // ...this._buildColumnFilter(),
             // ...this._buildFocusId(),
             // ...this._buildSearch()
         };
-        this.componentService.apiService.getRequest(url, method, { params })
-            .toPromise()
-            .then(result => {
 
-                console.log(result);
-            }).catch(res => {
-                console.log(res);
-            })
+        this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
+            if (response.data && response.data.resultDatas.length > 0) {
+                response.data.resultDatas.map((d, index) => {
+                    d['disabled'] = false;
+                    // 默认勾选第一条记录
+                    this.mapOfCheckedId[d[this.KEY_ID]] = index === 0 ? true : false;
+                    // tslint:disable-next-line:no-unused-expression
+                    index === 0 && this.ROWS_CHECKED.push(d);
+                    // 默认选中第一条数据
+                    this.mapOfSelectedId[d[this.KEY_ID]] = index === 0 ? true : false;
+                    // tslint:disable-next-line:no-unused-expression
+                    index === 0 && (this.ROW_SELECTED = d);
+                });
+            }
+
+            this.dataList = response.data.resultDatas;
+            this.total = response.data.totalCount;
+
+            // 更新
+            this.dataCheckedStatusChange();
+            this.isLoading = false;
+        }, error => {
+            console.log(error);
+        });
     }
 
     /**
@@ -261,9 +278,9 @@ export class CnDataTableComponent extends CnComponentBase
      */
     private _buildPaging() {
         const params = {};
-        if (this.config.pagination) {
-            params['_page'] = this.pageIndex;
-            params['_rows'] = this.pageSize;
+        if (this.config.isPagination) {
+            params['pageNum'] = this.pageIndex;
+            params['pageSize'] = this.pageSize;
         }
         return params;
     }
@@ -284,8 +301,8 @@ export class CnDataTableComponent extends CnComponentBase
     private _buildSort() {
         const sortObj = {};
         // if (this._sortName && this._sortType) {
-        if (this._sortName && this._sortOrder) {
-            sortObj['_sort'] = this._sortName + this._sortOrder;
+        if (this._sortName && this._sortValue) {
+            sortObj['_sort'] = this._sortName + this._sortValue;
             // sortObj['_order'] = sortObj['_order'] ? 'DESC' : 'ASC';
         }
         return sortObj;
@@ -364,7 +381,6 @@ export class CnDataTableComponent extends CnComponentBase
         const params = this.buildParameters(ajaxConfig.params);
         this.componentService.apiService[ajaxConfig.ajaxType](url, params).subscribe(response => {
             // success 0:全部错误,1:全部正确,2:部分错误
-            debugger;
             if (response.data) {
                 const successCfg = ajaxConfig.result.find(res => res.name === 'data');
                 // 弹出提示框
@@ -415,9 +431,24 @@ export class CnDataTableComponent extends CnComponentBase
         console.log(this.config.id + '-------------cancel  row');
     }
 
-    public selectRow() {
-        console.log(this.config.id + '-------------select row');
+    public selectRow(rowData, $event?) {
+        if ($event) {
+            const src = $event.srcElement || $event.target;
+            if (src.type === 'checkbox') {
+                return;
+            }
+            $event.stopPropagation();
+        }
 
+        // 选中当前行
+        this.dataList.map(row => {
+            this.mapOfSelectedId[row[this.KEY_ID]] = false;
+        });
+        this.mapOfSelectedId[rowData[this.KEY_ID]] = true;
+
+        // 勾选/取消当前行勾选状态
+        this.mapOfCheckedId[rowData[this.KEY_ID]] = !this.mapOfCheckedId[rowData[this.KEY_ID]];
+        this.dataCheckedStatusChange();
 
     }
 
@@ -492,6 +523,54 @@ export class CnDataTableComponent extends CnComponentBase
 
     public showBatchDialog() {
 
+    }
+
+    /**
+     * 全选
+     */
+    public checkAll($value: boolean): void {
+        //
+        this.dataList
+            .filter(item => !item.disabled)
+            .map(item =>
+                this.mapOfCheckedId[item[this.KEY_ID]] = $value
+            );
+        this.dataCheckedStatusChange();
+
+    }
+
+    /**
+     * 更新数据选中状态的CheckBox
+     */
+    public dataCheckedStatusChange() {
+        this.isAllChecked = this.dataList
+            .filter(item => !item.disabled)
+            .every(item => this.mapOfCheckedId[item[this.KEY_ID]]);
+
+        this.indeterminate = this.dataList
+            .filter(item => !item.disabled)
+            .some(item => this.mapOfCheckedId[item[this.KEY_ID]]) && !this.isAllChecked;
+
+        this.checkedNumber = this.dataList.filter(item => this.mapOfCheckedId[item[this.KEY_ID]]).length;
+    }
+
+    /**
+     * 列排序
+     * @param $sort {key:string, value: string} 
+     */
+    sort($sort: { key: string, value: string }): void {
+        this._sortName = $sort.key;
+        this._sortValue = $sort.value;
+        this.load();
+    }
+
+    searchData(reset: boolean = false) {
+        if (reset) {
+            this.pageIndex = 1;
+        }
+        this.isAllChecked = false;
+        this.indeterminate = false;
+        this.load();
     }
 
 }

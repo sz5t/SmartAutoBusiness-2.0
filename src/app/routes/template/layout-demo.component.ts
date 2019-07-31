@@ -434,45 +434,78 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "id": "r5zDHB1-2-1",
                                             "col": "cc",
                                             "type": "col",
-                                            "title": "111",
-                                            "span": 12,
+                                            "title": "",
+                                            "span": 24,
                                             "container": "component",
                                             "size": {
-                                                "nzXs": 12,
-                                                "nzSm": 12,
-                                                "nzMd": 12,
-                                                "nzLg": 12,
-                                                "ngXl": 12,
-                                                "nzXXl": 12
+                                                "nzXs": 24,
+                                                "nzSm": 24,
+                                                "nzMd": 24,
+                                                "nzLg": 24,
+                                                "ngXl": 24,
+                                                "nzXXl": 24
                                             },
                                             "component": {
                                                 "id": "view_01",
-                                                "title": "view_01",
+                                                "title": "主表",
+                                                "titleIcon": "right-circle",
                                                 "component": "cnDataTable",
-                                                "keyId": "id",
-                                                "size": "size",
-                                                "pagination": true,
+                                                "keyId": "ID",
+                                                "size": "middle",
+                                                "isBordered": true,
+                                                "isFrontPagination": false,
+                                                "isPagination": true,
+                                                "isShowSizeChanger": true,
                                                 "showTotal": true,
                                                 "pageSize": 10,
                                                 "showCheckBox": true,
                                                 "pageSizeOptions": [10, 20, 50, 100],
                                                 "loadingOnInit": true,
                                                 "loadingConfig": {
-                                                    "url": "information/testList",
+                                                    "url": "information/page",
                                                     "method": "get",
                                                     "params": [
-                                                        {
-                                                            "name": "state",
-                                                            "type": "value",
-                                                            "value": "DVM"
-                                                        }
+
                                                     ],
                                                     "filter": [
 
                                                     ]
                                                 },
                                                 "columns": [
-
+                                                    {
+                                                        "title": "id",
+                                                        "field": "ID",
+                                                        "hidden": true,
+                                                        "showFilter": false,
+                                                        "showSort": false,
+                                                        "isShowExpand": false,
+                                                        "style": {}
+                                                    },
+                                                    {
+                                                        "title": "code",
+                                                        "field": "CODE",
+                                                        "hidden": false,
+                                                        "showFilter": false,
+                                                        "showSort": false,
+                                                        "style": {}
+                                                    },
+                                                    {
+                                                        "title": "message",
+                                                        "field": "MESSAGE",
+                                                        "hidden": false,
+                                                        "showFilter": false,
+                                                        "showSort": false,
+                                                        "style": {}
+                                                    },
+                                                    {
+                                                        "title": "language",
+                                                        "field": "LANGUAGE",
+                                                        "hidden": false,
+                                                        "showFilter": false,
+                                                        "showSort": false,
+                                                        "isExpand": true,
+                                                        "style": {}
+                                                    }
                                                 ],
                                                 "cascade": {
                                                     "messageSender": [
@@ -1080,65 +1113,147 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
 
     public dataConfig = {
         entity: 'CaseDemo',
+        targetViewId: '',
+        type: 'array',
         properties: [
             {
                 name: 'id',
-                field: 'caseName',
-                text: 'entity.case.name',
+                field: 'id',
+                text: 'entity.data.name',
                 value: '1',
                 dataType: 'string'
             },
             {
-                name: 'caseName',
-                field: 'caseName',
-                text: 'entity.case.name',
-                value: 'zhangsan',
+                name: 'code',
+                field: 'code',
+                text: 'entity.data.code',
+                value: '',
+                dataType: 'string'
+            },
+            {
+                name: 'language',
+                field: 'language',
+                text: 'entity.data.language',
+                value: '',
+                dataType: 'string'
+            },
+            {
+                name: 'message',
+                field: 'message',
+                text: 'entity.data.message',
+                value: '',
                 dataType: 'string'
             }
         ],
         children: [
             {
-                entity: 'group',
+                entity: 'validation',
+                targetViewId: '',
+                type: 'array',
                 properties: [
                     {
-                        name: 'id',
-                        field: 'groupName',
-                        text: 'entity.group.name',
-                        value: '1',
+                        name: 'code',
+                        field: 'code',
+                        text: 'entity.data.code',
+                        value: '',
                         dataType: 'string'
                     },
                     {
-                        name: 'groupName',
-                        field: 'groupName',
-                        text: 'entity.group.name',
-                        value: 'jigoudsdsss',
-                        dataType: 'string'
-                    },
+                        name: 'msg',
+                        field: 'message',
+                        text: 'entity.data.message',
+                        value: '',
+                    }
+                ],
+                children: [
                     {
-                        name: 'groupText',
-                        field: 'groupText',
-                        text: 'entity.group.text',
-                        value: 'groutText',
-                        dataType: 'string'
+                        entity: 'data',
+                        targetViewId: '',
+                        properties: [
+                            {
+                                name: 'id',
+                                field: 'id',
+                                text: 'entity.data.name',
+                                value: '1',
+                                dataType: 'string'
+                            },
+                            {
+                                name: 'code',
+                                field: 'code',
+                                text: 'entity.data.code',
+                                value: '',
+                                dataType: 'string'
+                            },
+                            {
+                                name: 'language',
+                                field: 'language',
+                                text: 'entity.data.language',
+                                value: '',
+                                dataType: 'string'
+                            },
+                            {
+                                name: 'message',
+                                field: 'message',
+                                text: 'entity.data.message',
+                                value: '',
+                                dataType: 'string'
+                            }
+                        ]
                     }
                 ]
             },
             {
-                entity: 'role',
+                entity: 'error',
+                targetViewId: '',
                 properties: [
                     {
-                        name: 'id',
-                        field: 'groupName',
-                        text: 'entity.group.name',
-                        value: '1',
+                        name: 'code',
+                        field: 'code',
+                        text: 'entity.data.code',
+                        value: '',
                         dataType: 'string'
                     },
                     {
-                        name: 'roleName',
-                        field: 'roleName',
-                        text: 'entity.role.name',
-                        value: 'juese',
-                        dataType: 'string'
+                        name: 'msg',
+                        field: 'message',
+                        text: 'entity.data.message',
+                        value: '',
+                    }
+                ],
+                children: [
+                    {
+                        entity: 'data',
+                        targetViewId: '',
+                        properties: [
+                            {
+                                name: 'id',
+                                field: 'id',
+                                text: 'entity.data.name',
+                                value: '1',
+                                dataType: 'string'
+                            },
+                            {
+                                name: 'code',
+                                field: 'code',
+                                text: 'entity.data.code',
+                                value: '',
+                                dataType: 'string'
+                            },
+                            {
+                                name: 'language',
+                                field: 'language',
+                                text: 'entity.data.language',
+                                value: '',
+                                dataType: 'string'
+                            },
+                            {
+                                name: 'message',
+                                field: 'message',
+                                text: 'entity.data.message',
+                                value: '',
+                                dataType: 'string'
+                            }
+                        ]
                     }
                 ]
             }
@@ -1188,10 +1303,9 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
         t.editProperty('caseText', '67890');
         // t.removeProperty('caseText');
 
-        t.addChildren('group', { groupName: '2', id: '2' })
-        t.addChildren('group', [{ groupName: '3', id: '3' }, { groupName: '4', id: '4' }]);
-
-        t.orderChange({ groupName: '2', id: '2' }, { groupName: '4', id: '4' }, 'group');
+        t.addChildren('validation', { code: '2', msg: '2', data: {} });
+        t.addChildren('error', [{ code: '3', msg: '3', data: {} }, { code: '4', msg: '4', data: {} }]);
+        // t.orderChange({ groupName: '2', id: '2' }, { groupName: '4', id: '4' }, 'group');
 
         console.log(t);
     }

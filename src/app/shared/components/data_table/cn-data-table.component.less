@@ -1,0 +1,37 @@
+@import '../../../../styles/theme.less';
+
+.selectedRow {
+  background-color: @primary-2;
+  color: #000;
+}
+
+.count {
+  color: @primary-color;
+  font-weight: 600;
+}
+
+:ng-host {
+  ::nb-deep {
+    .table-operations {
+      margin-bottom: 8px;
+    }
+
+    .table-operations>button {
+      margin-right: 8px;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-right {
+      text-align: right;
+    }
+
+    table {
+      overflow: scroll;
+    }
+
+
+  }
+}
