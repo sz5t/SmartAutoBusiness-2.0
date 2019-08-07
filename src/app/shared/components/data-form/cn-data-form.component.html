@@ -1,0 +1,18 @@
+<div style=" background-color: #fff">
+
+  <form nz-form [formGroup]="validateForm" style="max-width: 600px;">
+    <div nz-row [nzGutter]="24" *ngFor="let r of config.formLayout.rows">
+      <div nz-col [nzSpan]="c.span" *ngFor="let c of r.cols">
+        <nz-form-item>
+            <ng-container CnFormItemDirective  [formGroup]="validateForm" [formCascade]="formCascade[c.control.id]" [config]="formControlObj[c.control.id]"  (updateValue)="valueChange($event)"> </ng-container> 
+        </nz-form-item>
+      </div>
+    </div>
+    <nz-form-item>
+      <nz-form-control [nzSpan]="8" [nzOffset]="8">
+        <button nz-button nzType="primary"  (click)="SaveJson()" >提交</button>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+</div>

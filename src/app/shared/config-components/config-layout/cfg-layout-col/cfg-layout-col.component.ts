@@ -1,4 +1,6 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, Inject } from '@angular/core';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 
 @Component({
   selector: 'cfg-layout-col,[cfg-layout-col]',
@@ -39,7 +41,8 @@ export class CfgLayoutColComponent implements OnInit {
   public attribute_config;
   public titlestate = true;
 
-  constructor() { }
+  constructor(   @Inject(BSN_COMPONENT_SERVICES)
+  public componentService: ComponentServiceProvider) { }
 
   public ngOnInit() {
     // background: #afd5ea;

@@ -80,7 +80,7 @@ export class CfgFormLayoutComponent implements OnInit {
   }
 
   public SaveJson() {
-    console.log('当前布局json：', this.config);
+    console.log('当前布局json：', this.config, JSON.stringify(this.config));
   }
 
   public uuID(w) {

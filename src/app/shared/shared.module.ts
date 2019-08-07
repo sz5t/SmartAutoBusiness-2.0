@@ -44,6 +44,11 @@ import { CfgTreeComponent } from './config-components/config-layout/cfg-layout-c
 import { CfgFormComponent } from './config-components/config-layout/cfg-layout-component/cfg-form/cfg-form.component';
 import { CfgCalendarComponent } from './config-components/config-layout/cfg-layout-component/cfg-calendar/cfg-calendar.component';
 import { CfgCarouselComponent } from './config-components/config-layout/cfg-layout-component/cfg-carousel/cfg-carousel.component';
+import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
+import { CnFormItemDirective } from '@shared/components/data-form/cn-form-item.directive';
+import { CnFormInputComponent } from './components/data-form/cn-form-items/cn-form-input/cn-form-input.component';
+import { CnFormSelectComponent } from './components/data-form/cn-form-items/cn-form-select/cn-form-select.component';
+import { CnFormLabelComponent } from './components/data-form/cn-form-items/cn-form-label/cn-form-label.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -75,14 +80,20 @@ const COMPONENTS = [
   CfgFormLayoutColComponent,
   CfgFormLayoutRowComponent,
   CfgFormInputComponent,
-  CfgFormSelectComponent
+  CfgFormSelectComponent,
+
+  CnDataFormComponent,
+  CnFormInputComponent,
+  CnFormSelectComponent,
+  CnFormLabelComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
   CnComponentResolverDirective,
   CfgFormItemContentDirective,
-  CfgLayoutItemContentDirective
+  CfgLayoutItemContentDirective,
+  CnFormItemDirective
 ];
 // #endregion
 

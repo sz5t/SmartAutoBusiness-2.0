@@ -50,6 +50,16 @@ export class CnComponentBase {
         this._routerValue = value;
     }
 
+    private _cascadeValue: any;
+    public get cascadeValue(): any {
+        return this._cascadeValue ? this._cascadeValue : {};
+    }
+    public set cascadeValue(value: any) {
+        this._cascadeValue = value;
+    }
+
+    
+
     private _subscription$: Subscription;
     public get subscription$(): Subscription {
         return this._subscription$;
