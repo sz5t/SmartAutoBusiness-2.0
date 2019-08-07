@@ -1,3 +1,4 @@
+import { ButtonOperationResolver } from './../../resolver/buttonOperation/buttonOperation.resolver';
 import { CN_DATA_GRID_PROPERTY } from './../../../core/relations/bsn-property/data-grid.property.interface';
 import { CN_DATA_GRID_METHOD } from '@core/relations/bsn-methods';
 import { BSN_COMPONENT_SERVICES, BsnRelativesMessageModel, BSN_RELATION_SUBJECT } from './../../../core/relations/bsn-relatives';
@@ -60,7 +61,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     public tableColumns = [];
 
-
+    public spanCount = 0;
 
 
     public isLoading = false;
@@ -72,9 +73,18 @@ export class CnDataTableComponent extends CnComponentBase
 
     public isAllChecked = false;
     public indeterminate = false;
-    public mapOfCheckedId: { [key: string]: boolean } = {};
-    public mapOfSelectedId: { [key: string]: boolean } = {};
-    public mapOfDataState: { [key: string]: { checked: boolean, selected: boolean, state: string, data: any } };
+    // public mapOfCheckedId: { [key: string]: boolean } = {};
+    // public mapOfSelectedId: { [key: string]: boolean } = {};
+    public mapOfDataState: {
+        [key: string]: {
+            dislabled: boolean,
+            checked: boolean,
+            selected: boolean,
+            state: string,
+            data: any,
+            actions?: any[]
+        }
+    } = {};
     public checkedNumber = 0;
 
     public KEY_ID: string;
@@ -86,6 +96,8 @@ export class CnDataTableComponent extends CnComponentBase
     public ROWS_EDITED: any[] = [];
     public ROW_SELECTED: any = {};
     public ROWS_CHECKED: any[] = [];
+
+    public operationRow: any;
 
     private _selectedRow;
     private _rowsData;
@@ -118,22 +130,15 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public ngOnInit() {
+        // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
-        this._selectedRow = {
-            id: '1-001',
-            name: '单行数据'
-        }
 
+        // 初始化默认分页大小
+        this.config.pageSize && (this.pageSize = this.config.pageSize);
 
-        this._rowsData = [
-            { id: '1-001', name: '第一行' },
-            { id: '1-002', name: '第二行' },
-            { id: '1-003', name: '第三行' },
-            { id: '1-004', name: '第四行' }
-        ]
-
-        // tslint:disable-next-line:no-unused-expression
+        // 构建表格列及列标题
         this._buildColumns(this.config.columns);
+
         // 解析及联配置
         this.resolveRelations();
 
@@ -193,7 +198,30 @@ export class CnDataTableComponent extends CnComponentBase
      */
     private _buildColumns(columns) {
         if (Array.isArray(columns) && columns.length > 0) {
-            this.tableColumns = columns;
+            const colObjs = columns.filter(item => item.type === 'field');
+            const actionCfgs = columns.filter(item => item.type === 'action');
+            if (actionCfgs && actionCfgs.length > 0) {
+                actionCfgs.map(cfg => {
+                    const colActions = [];
+                    cfg.actionIds.map(actionId => {
+                        const act = this.config.rowActions.find(action => actionId === action.id);
+                        if (act) {
+                            colActions.push(act);
+                        }
+                    });
+                    if (colActions.length > 0) {
+                        cfg['action'] = colActions;
+                    }
+
+                })
+            }
+
+            if (colObjs && colObjs.length > 0) {
+                this.tableColumns.push(...colObjs);
+            }
+            if (actionCfgs && actionCfgs.length > 0) {
+                this.tableColumns.push(...actionCfgs);
+            }
         }
 
     }
@@ -215,24 +243,31 @@ export class CnDataTableComponent extends CnComponentBase
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
             if (response.data && response.data.resultDatas.length > 0) {
                 response.data.resultDatas.map((d, index) => {
-                    d['disabled'] = false;
-                    // 默认勾选第一条记录
-                    this.mapOfCheckedId[d[this.KEY_ID]] = index === 0 ? true : false;
-                    // tslint:disable-next-line:no-unused-expression
-                    index === 0 && this.ROWS_CHECKED.push(d);
-                    // 默认选中第一条数据
-                    this.mapOfSelectedId[d[this.KEY_ID]] = index === 0 ? true : false;
-                    // tslint:disable-next-line:no-unused-expression
+                    const orginAction = this.tableColumns.find(c => c.type === 'action');
+                    const copyAction = [];
+                    if (orginAction) {
+                        const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action));
+                        copyAction.push(...actions);
+                    }
+                    this.mapOfDataState[d[this.KEY_ID]] = {
+                        dislabled: false,
+                        checked: false, // index === 0 ? true : false,
+                        selected: false, // index === 0 ? true : false,
+                        state: 'text',
+                        data: d,
+                        actions: copyAction
+                    };
                     index === 0 && (this.ROW_SELECTED = d);
                 });
+
+                this.dataList = response.data.resultDatas;
+                this.total = response.data.count;
+                // 更新
+                // this.dataCheckedStatusChange();
+                // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
+                this.setSelectRow(this.ROW_SELECTED);
+                this.isLoading = false;
             }
-
-            this.dataList = response.data.resultDatas;
-            this.total = response.data.totalCount;
-
-            // 更新
-            this.dataCheckedStatusChange();
-            this.isLoading = false;
         }, error => {
             console.log(error);
         });
@@ -365,7 +400,16 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public editRow() {
-        console.log(this.config.id + '-------------edit row');
+        console.log('edit-row arguments', arguments);
+        // console.log(this.config.id + '-------------edit row');
+        if (this.ROWS_CHECKED.length > 0) {
+            this.ROWS_CHECKED.map(rowData => {
+                // this.rowAction(sdf, rowData);
+            })
+
+        }
+        // 
+        // this.rowAction()
     }
 
     /**
@@ -431,7 +475,8 @@ export class CnDataTableComponent extends CnComponentBase
         console.log(this.config.id + '-------------cancel  row');
     }
 
-    public selectRow(rowData, $event?) {
+    public setSelectRow(rowData?, $event?) {
+        console.log(this.config.id, arguments);
         if ($event) {
             const src = $event.srcElement || $event.target;
             if (src.type === 'checkbox') {
@@ -440,16 +485,27 @@ export class CnDataTableComponent extends CnComponentBase
             $event.stopPropagation();
         }
 
+        // if (!rowData) {
+        //     rowData = this.ROW_SELECTED;
+        // }
+
         // 选中当前行
         this.dataList.map(row => {
-            this.mapOfSelectedId[row[this.KEY_ID]] = false;
+            this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
         });
-        this.mapOfSelectedId[rowData[this.KEY_ID]] = true;
+
+        this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
 
         // 勾选/取消当前行勾选状态
-        this.mapOfCheckedId[rowData[this.KEY_ID]] = !this.mapOfCheckedId[rowData[this.KEY_ID]];
+        this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
         this.dataCheckedStatusChange();
+    }
 
+    public selectRow(rowData) {
+
+
+        console.log(this.config.id + '-----------' + rowData, arguments);
+        // this.ROW_SELECTED = rowData;
     }
 
 
@@ -531,9 +587,9 @@ export class CnDataTableComponent extends CnComponentBase
     public checkAll($value: boolean): void {
         //
         this.dataList
-            .filter(item => !item.disabled)
+            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
             .map(item =>
-                this.mapOfCheckedId[item[this.KEY_ID]] = $value
+                this.mapOfDataState[item[this.KEY_ID]]['checked'] = $value
             );
         this.dataCheckedStatusChange();
 
@@ -544,14 +600,19 @@ export class CnDataTableComponent extends CnComponentBase
      */
     public dataCheckedStatusChange() {
         this.isAllChecked = this.dataList
-            .filter(item => !item.disabled)
-            .every(item => this.mapOfCheckedId[item[this.KEY_ID]]);
+            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+            .every(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
 
         this.indeterminate = this.dataList
-            .filter(item => !item.disabled)
-            .some(item => this.mapOfCheckedId[item[this.KEY_ID]]) && !this.isAllChecked;
+            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+            .some(item => this.mapOfDataState[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
 
-        this.checkedNumber = this.dataList.filter(item => this.mapOfCheckedId[item[this.KEY_ID]]).length;
+        this.checkedNumber = this.dataList.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
+
+        // 更新当前选中数据集合
+        this.ROWS_CHECKED = this.dataList
+            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+            .filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
     }
 
     /**
@@ -571,6 +632,20 @@ export class CnDataTableComponent extends CnComponentBase
         this.isAllChecked = false;
         this.indeterminate = false;
         this.load();
+    }
+
+    /**
+     * 
+     * @param actionCfg 当前操作按钮的配置
+     * @param rowData 当前数据航
+     * @param $event 
+     */
+    rowAction(actionCfg, rowData, $event?) {
+        const dataOfState = this.mapOfDataState[rowData[this.KEY_ID]];
+        $event && $event.stopPropagation();
+        const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
+        trigger.toolbarAction(actionCfg, this.config.id);
+        $event && $event.preventDefault();
     }
 
 }

@@ -99,6 +99,7 @@ export class SenderResolver {
  * 组件消息发送解析器
  */
 export class ComponentSenderResolver {
+    debugger;
     constructor(private _componentInstance: any) { }
     resolve(cfg: any) {
         switch (cfg.triggerType) {

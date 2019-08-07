@@ -151,13 +151,15 @@ export class TriggerResolver {
         // 该功能不由组件实现
 
         // 执行操作, 该功能不由组件实现
-        const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
-        this._componentInstance[method](this._triggerMsg.options.ajaxConfig);
+        if (this._triggerMsg.options.ajaxConfig) {
+            const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
+            this._componentInstance[method](this._triggerMsg.options.ajaxConfig);
+        }
+
         // this._componentInstance[CN_DATA_GRID_METHOD[this._triggerMsg.trigger.trigger]](this._triggerMsg.options);
     }
 
     handleActionType() {
-
         const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
         this._componentInstance[method]();
         // this._componentInstance[CN_DATA_GRID_METHOD[this._triggerMsg.trigger.trigger]]();
@@ -179,6 +181,9 @@ export class TriggerResolver {
     }
 
     private conditionValidator(condCfg): boolean {
+        if (!condCfg) {
+            return true;
+        }
         const result = [];
         for (const cfg of condCfg.state) {
             switch (cfg.type) {

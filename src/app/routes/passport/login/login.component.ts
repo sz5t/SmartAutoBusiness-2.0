@@ -115,7 +115,6 @@ export class UserLoginComponent implements OnDestroy {
         password: this.password.value,
       })
       .subscribe((res: any) => {
-        debugger;
         if (res.msg !== 'ok') {
           this.error = res.msg;
           return;

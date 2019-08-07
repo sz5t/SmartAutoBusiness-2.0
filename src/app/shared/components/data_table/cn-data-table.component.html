@@ -4,29 +4,137 @@
   <button nz-button (click)="executeCheckedRows($event)">Click ChechedRows</button>
 </div>-->
 
-<nz-table #dataTable [nzLoading]="isLoading" [nzShowSizeChanger]="config.isShowSizeChanger"
-  [nzFrontPagination]="config.isFrontPagination" [nzShowPagination]="config.isPagination" [nzTotal]="total"
-  [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
-  (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="config.pageSizeOptions" [nzData]="dataList"
-  [nzShowTotal]="showTotal" [nzBordered]="config.isBordered" [nzSize]="config.size" [nzTitle]="title">
+<nz-table
+  #dataTable
+  [nzLoading]="isLoading"
+  [nzShowSizeChanger]="config.isShowSizeChanger"
+  [nzFrontPagination]="config.isFrontPagination"
+  [nzShowPagination]="config.isPagination"
+  [nzTotal]="total"
+  [(nzPageIndex)]="pageIndex"
+  [(nzPageSize)]="pageSize"
+  (nzPageIndexChange)="searchData()"
+  (nzPageSizeChange)="searchData(true)"
+  [nzPageSizeOptions]="config.pageSizeOptions"
+  [nzData]="dataList"
+  [nzShowTotal]="showTotal"
+  [nzBordered]="config.isBordered"
+  [nzSize]="config.size"
+  [nzTitle]="config.title ? title : null"
+  [nzScroll]="config.scroll ? config.scroll : null"
+  [nzWidthConfig]="config.spanWidthConfig ? config.spanWidthConfig : null"
+>
   <thead (nzSortChange)="sort($event)" nzSingleSort="true">
-    <tr>
-      <th nzShowCheckbox="true" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
-        (nzCheckedChange)="checkAll($event)"></th>
-      <ng-template ngFor let-header [ngForOf]="tableColumns">
-        <th *ngIf="!header.hidden" nzShowSort [nzSortKey]="header.field">
-          {{ header.title }}
-        </th>
-      </ng-template>
-    </tr>
+    <!-- 夸列表头 -->
+    <ng-template ngFor let-spans let-i="index" [ngForOf]="config.spanHeader" *ngIf="config.spanHeader; else normalHeader">
+      <tr>
+        <th
+          *ngIf="i === 0"
+          attr.rowspan="{{ config.spanHeader.length }}"
+          [nzWidth]="'50px'"
+          [nzShowCheckbox]="true"
+          [(nzChecked)]="isAllChecked"
+          [nzIndeterminate]="indeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th>
+        <ng-template ngFor let-span [ngForOf]="spans">
+          <ng-container [ngSwitch]="span.spanType">
+            <th *ngSwitchCase="'row'" attr.rowspan="{{ span.span }}">{{ span.title }}</th>
+            <th *ngSwitchCase="'col'" attr.colspan="{{ span.span }}">{{ span.title }}</th>
+            <th *ngSwitchDefault>{{ span.title }}</th>
+          </ng-container>
+        </ng-template>
+      </tr>
+    </ng-template>
+    <!-- 夸列表头 -->
+
+    <!-- 常规表头 -->
+    <ng-template #normalHeader>
+      <tr>
+        <th
+          nzWidth="50px"
+          nzShowCheckbox="true"
+          [(nzChecked)]="isAllChecked"
+          [nzIndeterminate]="indeterminate"
+          (nzCheckedChange)="checkAll($event)"
+        ></th>
+        <ng-template ngFor let-header [ngForOf]="tableColumns">
+          <th [nzWidth]="header.width" *ngIf="!header.hidden" nzShowSort [nzSortKey]="header.field">
+            {{ header.title }}
+          </th>
+        </ng-template>
+      </tr>
+    </ng-template>
+    <!-- 常规表头 -->
   </thead>
   <tbody>
-    <tr *ngFor="let rowData of dataTable.data" (click)="selectRow(rowData, $event)"
-      [ngClass]="{'selectedRow':mapOfSelectedId[rowData[KEY_ID]]}">
-      <td nzShowCheckbox="true" [(nzChecked)]="mapOfCheckedId[rowData[KEY_ID]]"
-        (nzCheckedChange)="dataCheckedStatusChange()"></td>
-      <ng-template ngFor let-colData [ngForOf]="tableColumns">
-        <td *ngIf="!colData.hidden">{{ rowData[colData.field] }}</td>
+    <tr
+      *ngFor="let rowData of dataTable.data"
+      (click)="setSelectRow(rowData, $event)"
+      [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]]['selected'] }"
+    >
+      <td
+        nzShowCheckbox="true"
+        [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']"
+        (nzCheckedChange)="dataCheckedStatusChange()"
+      ></td>
+      <ng-template ngFor let-col [ngForOf]="tableColumns">
+        <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
+          <ng-container *ngSwitchCase="'field'">
+            <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['state'] === 'edit'; else rowTextTemplate">
+              <td><input type="text" nz-input [(ngModel)]="mapOfDataState[rowData[KEY_ID]]['data'][col.field]" /></td>
+            </ng-container>
+            <ng-template #rowTextTemplate>
+              <td>{{ rowData[col.field] }}</td>
+            </ng-template>
+          </ng-container>
+          <ng-container *ngSwitchCase="'action'">
+            <!-- <td>
+              <ng-template ngFor let-act [ngForOf]="col.action">
+                <ng-container [ngSwitch]="act.type">
+                  <ng-container *ngSwitchCase="'link'">
+                    <a *ngIf="!act.hidden" (click)="rowAction(act, rowData, $event)"><i nz-icon [nzType]="act.icon"
+                        nzTheme="outline"></i>
+                      {{ act.text }}</a>
+                    <nz-divider nzType="vertical" *ngIf="!act.hidden"></nz-divider>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'button'">
+                    <button (click)="rowAction(act, rowData, $event)" nz-button nzSize="act.size"
+                      [nzType]="act.color ? act.color : 'default'">
+                      <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                    </button>
+                  </ng-container>
+                </ng-container>
+              </ng-template>
+            </td> -->
+            <td>
+              <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
+                <!-- <ng-template ngFor let-act [ngForOf]="acts.action">
+                 
+                </ng-template> -->
+
+                <ng-container [ngSwitch]="act.type">
+                  <ng-container *ngSwitchCase="'link'">
+                    <a *ngIf="!act.hidden" (click)="rowAction(act, rowData, $event)"
+                      ><i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}</a
+                    >
+                    <nz-divider nzType="vertical" *ngIf="!act.hidden"></nz-divider>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'button'">
+                    <button
+                      (click)="rowAction(act, rowData, $event)"
+                      nz-button
+                      nzSize="act.size"
+                      [nzType]="act.color ? act.color : 'default'"
+                    >
+                      <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                    </button>
+                  </ng-container>
+                </ng-container>
+              </ng-template>
+            </td>
+          </ng-container>
+        </ng-container>
       </ng-template>
     </tr>
   </tbody>
@@ -47,6 +155,4 @@
     </ng-template>
   </tfoot>
 </nz-table>
-<ng-template #title>
-  <i nz-icon [nzType]="config.titleIcon" nzTheme="outline"></i> {{config.title}}
-</ng-template>
+<ng-template #title> <i nz-icon [nzType]="config.titleIcon" nzTheme="outline"></i> {{ config.title }} </ng-template>

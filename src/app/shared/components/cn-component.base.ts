@@ -127,7 +127,7 @@ export class CnComponentBase {
 
     public before(target, method, advice) {
         const original = target[method];
-        target[method] = (args) => {
+        target[method] = (...args) => {
             const result = advice(args);
             if (result) {
                 original.apply(target, args);
@@ -138,7 +138,7 @@ export class CnComponentBase {
 
     public after(target, method, advice) {
         const original = target[method];
-        target[method] = (args) => {
+        target[method] = (...args) => {
             original.apply(target, args);
             advice(args);
         };
@@ -147,7 +147,7 @@ export class CnComponentBase {
 
     public around(target, method, advice) {
         const original = target[method];
-        target[method] = (args) => {
+        target[method] = (...args) => {
             advice(args);
             original.apply(target, args);
             advice(args);

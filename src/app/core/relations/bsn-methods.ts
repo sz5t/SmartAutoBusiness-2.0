@@ -24,6 +24,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     IMPORT: 'import',
     DOWNLOAD: 'download',
     SELECT_ROW: 'selectRow',
+    SET_SELECT_ROW: 'setSelectRow',
     CHECK_ROW: 'checkRow',
     REFRESH_AS_CHILD: 'load',
 
