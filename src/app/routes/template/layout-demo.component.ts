@@ -8,6 +8,7 @@ import { NzModalComponent, NzModalService, NzMessageService } from 'ng-zorro-ant
 import { Observable } from 'rxjs';
 import { reduce } from 'rxjs/internal/operators/reduce';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -291,6 +292,8 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "text": "刷新",
                                             "icon": "reload",
                                             "color": "text-primary",
+                                            "hidden": false,
+                                            "disabled": false,
                                             "execute": [
                                                 {
                                                     "triggerType": "BEHAVIOR",
@@ -303,6 +306,8 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "text": "新增",
                                             "icon": "plus",
                                             "color": "text-primary",
+                                            "hidden": false,
+                                            "disabled": false,
                                             "execute": [
                                                 {
                                                     "triggerType": "STATE",
@@ -316,19 +321,38 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "text": "修改",
                                             "icon": "edit",
                                             "color": "text-success",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "state": "edit",
                                             "execute": [
                                                 {
                                                     "triggerType": "STATE",
                                                     "trigger": "EDIT_ROW",
-                                                    "conditionId": "edit_state_1"
+                                                    // "conditionId": "edit_state_1"
                                                 }
-                                            ]
+                                            ],
+                                            "toggle": {
+                                                "type": "state",
+                                                "toggleProperty": "hidden",
+                                                "values": [
+                                                    {
+                                                        "name": "edit",
+                                                        "value": true
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "value": false
+                                                    }
+                                                ]
+                                            }
                                         },
                                         {
                                             "id": "M_deleteRow",
                                             "text": "删除",
                                             "icon": "delete",
                                             "color": "text-red-light",
+                                            "hidden": false,
+                                            "disabled": false,
                                             "execute": [
                                                 {
                                                     "triggerType": "OPERATION",
@@ -343,6 +367,8 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "text": "保存",
                                             "icon": "save",
                                             "color": "text-primary",
+                                            "hidden": true,
+                                            "disabled": false,
                                             "execute": [
                                                 {
                                                     "triggerType": "OPERATION",
@@ -358,7 +384,21 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                                     "ajaxId": "edit_save_1",
                                                     "conditionId": "edit_save_1"
                                                 }
-                                            ]
+                                            ],
+                                            "toggle": {
+                                                "type": "state",
+                                                "toggleProperty": "hidden",
+                                                "values": [
+                                                    {
+                                                        "name": "edit",
+                                                        "value": false
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "value": true
+                                                    }
+                                                ]
+                                            }
                                         },
                                         {
                                             "id": "M_cancelrow",
@@ -366,7 +406,29 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "triggerType": "STATE",
                                             "trigger": "CANCEL",
                                             "icon": "rollback",
-                                            "color": "text-grey-darker"
+                                            "color": "text-grey-darker",
+                                            "hidden": true,
+                                            "disabled": null,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "STATE",
+                                                    "trigger": "CANCEL"
+                                                }
+                                            ],
+                                            "toggle": {
+                                                "type": "state",
+                                                "toggleProperty": "hidden",
+                                                "values": [
+                                                    {
+                                                        "name": "edit",
+                                                        "value": false
+                                                    },
+                                                    {
+                                                        "name": "text",
+                                                        "value": true
+                                                    }
+                                                ]
+                                            }
                                         }
                                     ]
                                 },
@@ -380,7 +442,15 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "trigger": "SEARCH_ROW",
                                             "actionName": "addSearchRow",
                                             "icon": "search",
-                                            "color": "text-primary"
+                                            "color": "text-primary",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "STATE",
+                                                    "trigger": "SEARCH_ROW"
+                                                }
+                                            ]
                                         },
                                         {
                                             "name": "M_cancelSearchRow",
@@ -389,18 +459,15 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "triggerType": "STATE",
                                             "trigger": "CANCEL_SEARCH_ROW",
                                             "actionName": "cancelSearchRow",
-                                            "color": "text-grey-darker"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "targetViewId": "view_02",
-                                    "group": [
-                                        {
-                                            "name": "M_ResourcesMalfunction",
-                                            "text": "故障确认",
-                                            "icon": "setting",
-                                            "color": "text-primary"
+                                            "color": "text-grey-darker",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "STATE",
+                                                    "trigger": "SEARCH_ROW"
+                                                }
+                                            ],
                                         }
                                     ]
                                 }
@@ -451,16 +518,22 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                                 "titleIcon": "right-circle",
                                                 "component": "cnDataTable",
                                                 "keyId": "ID",
-                                                "size": "middle",
+                                                "size": "default",
                                                 "isBordered": true,
                                                 "isFrontPagination": false,
                                                 "isPagination": true,
                                                 "isShowSizeChanger": true,
                                                 "showTotal": true,
-                                                "pageSize": 10,
+                                                "pageSize": 5,
                                                 "showCheckBox": true,
                                                 "pageSizeOptions": [10, 20, 50, 100],
                                                 "loadingOnInit": true,
+                                                // "scroll": {
+                                                //     "y": "300px"
+                                                // },
+                                                "spanWidthConfig": [
+                                                    '50px', '100px', '200px', '200px', '200px'
+                                                ],
                                                 "loadingConfig": {
                                                     "url": "information/page",
                                                     "method": "get",
@@ -471,46 +544,91 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
 
                                                     ]
                                                 },
+                                                "spanHeader": [
+                                                    [
+                                                        {
+                                                            "title": "CODE",
+                                                            "spanType": "row",
+                                                            "span": 3
+                                                        },
+                                                        {
+                                                            "title": "INFO",
+                                                            "spanType": "col",
+                                                            "span": 2
+                                                        },
+                                                        {
+                                                            "title": "ACTION",
+                                                            "spanType": "row",
+                                                            "span": 3
+                                                        }
+                                                    ],
+                                                    [
+                                                        {
+                                                            "title": "MESSAGE",
+                                                        },
+                                                        {
+                                                            "title": "LANGUAGE",
+                                                        }
+
+
+                                                    ]
+                                                ],
                                                 "columns": [
                                                     {
                                                         "title": "id",
+                                                        "type": "field",
                                                         "field": "ID",
                                                         "hidden": true,
                                                         "showFilter": false,
                                                         "showSort": false,
                                                         "isShowExpand": false,
+                                                        "width": "50px",
                                                         "style": {}
                                                     },
                                                     {
                                                         "title": "code",
+                                                        "type": "field",
                                                         "field": "CODE",
                                                         "hidden": false,
                                                         "showFilter": false,
                                                         "showSort": false,
-                                                        "style": {}
+                                                        "width": "50px",
+                                                        "style": {},
                                                     },
                                                     {
                                                         "title": "message",
+                                                        "type": "field",
                                                         "field": "MESSAGE",
                                                         "hidden": false,
                                                         "showFilter": false,
                                                         "showSort": false,
+                                                        "width": "150px",
                                                         "style": {}
                                                     },
                                                     {
                                                         "title": "language",
+                                                        "type": "field",
                                                         "field": "LANGUAGE",
                                                         "hidden": false,
                                                         "showFilter": false,
                                                         "showSort": false,
                                                         "isExpand": true,
+                                                        "width": "400px",
                                                         "style": {}
+                                                    },
+                                                    {
+                                                        "title": "ACTION",
+                                                        "type": "action",
+                                                        "width": "150px",
+                                                        "actionIds": [
+                                                            "grid_edit", "grid_cancel", "grid_save", "grid_delete"
+                                                        ]
                                                     }
                                                 ],
                                                 "cascade": {
                                                     "messageSender": [
                                                         {
-                                                            "id": "",
+                                                            "id": "grid_sender_01",
                                                             "senderId": "view_01",
                                                             "triggerType": "OPERATION",
                                                             "trigger": "EXECUTE_CHECKED_ROWS",
@@ -536,55 +654,424 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                                                 }
                                                             ]
                                                         },
-                                                        // {
-                                                        //     "id": "",
-                                                        //     "senderId": "view_01",
-                                                        //     "triggerType": "BEHAVIOR",
-                                                        //     "trigger": "SELECT_ROW",
-                                                        //     "triggerMoment": "before",
-                                                        //     "sendData": [
-                                                        //         {
-                                                        //             "beforeSend": [],
-                                                        //             "reveicerId": "",
-                                                        //             "data": {
-                                                        //                 "name": "REFRESH",
-                                                        //                 "type": "BEHAVIOR",
-                                                        //                 "params": [
-                                                        //                     {
-                                                        //                         "name": "accountId",
-                                                        //                         "type": "initValue",
-                                                        //                         "valueName": "accountId"
-                                                        //                     },
-                                                        //                     {
-                                                        //                         "name": "userId",
-                                                        //                         "type": "cacheValue",
-                                                        //                         "valueName": "_createUserId"
-                                                        //                     }
-                                                        //                 ]
-                                                        //             }
-                                                        //         }
-                                                        //     ]
-                                                        // }
+                                                        {
+                                                            "id": "grid_sender_02",
+                                                            "senderId": "view_01",
+                                                            "triggerType": "BEHAVIOR",
+                                                            "trigger": "SELECT_ROW",
+                                                            "triggerMoment": "after",
+                                                            "sendData": [
+                                                                {
+                                                                    "beforeSend": [],
+                                                                    "reveicerId": "",
+                                                                    "receiverTriggerType": "BEHAVIOR",
+                                                                    "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                    "data": {
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "accountId",
+                                                                                "type": "initValue",
+                                                                                "valueName": "accountId"
+                                                                            },
+                                                                            {
+                                                                                "name": "userId",
+                                                                                "type": "cacheValue",
+                                                                                "valueName": "_createUserId"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "id": "grid_sender_03",
+                                                            "senderId": "view_01",
+                                                            "triggerType": "BEHAVIOR",
+                                                            "trigger": "SET_SELECT_ROW",
+                                                            "triggerMoment": "after",
+                                                            "sendData": [
+                                                                {
+                                                                    "beforeSend": [],
+                                                                    "reveicerId": "",
+                                                                    "receiverTriggerType": "BEHAVIOR",
+                                                                    "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                    "data": {
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "accountId",
+                                                                                "type": "initValue",
+                                                                                "valueName": "accountId"
+                                                                            },
+                                                                            {
+                                                                                "name": "userId",
+                                                                                "type": "cacheValue",
+                                                                                "valueName": "_createUserId"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
                                                     ]
-                                                }
+                                                },
+                                                "rowActions": [
+                                                    {
+                                                        "id": "grid_edit",
+                                                        "group": "1",
+                                                        "text": "编辑",
+                                                        "icon": "edit",
+                                                        "color": "text-primary",
+                                                        "type": "link",
+                                                        "size": "small",
+                                                        "hidden": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "EDIT_ROW",
+                                                                // "ajaxId": "add_save_1",
+                                                                // "stateId": "add_save_1",
+                                                                // "conditionId": "add_save_1"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "grid_cancel",
+                                                        "group": "2",
+                                                        "text": "取消",
+                                                        "icon": "rollback",
+                                                        "color": "text-primary",
+                                                        "type": "link",
+                                                        "size": "small",
+                                                        "hidden": true,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "CANCEL",
+                                                                "toggle": "1",
+                                                                // "ajaxId": "add_save_1",
+                                                                // "stateId": "add_save_1",
+                                                                // "conditionId": "add_save_1"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": true
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "grid_save",
+                                                        "group": "2",
+                                                        "text": "保存",
+                                                        "icon": "save",
+                                                        "color": "text-primary",
+                                                        "type": "link",
+                                                        "size": "small",
+                                                        "hidden": true,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "SAVE_ROW",
+                                                                "ajaxId": "add_save_1",
+                                                                "toggle": "1",
+                                                                // "stateId": "add_save_1",
+                                                                // "conditionId": "add_save_1"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": true
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "grid_delete",
+                                                        "text": "删除",
+                                                        "icon": "delete",
+                                                        "type": "link",
+                                                        "color": "primary",
+                                                        "size": "small",
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "EXECUTE_SELECTED_ROW",
+                                                                // "conditionId": "delete_operation_1",
+                                                                // "ajaxId": "delete_row_1"
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "condition": [
+                                                    {
+                                                        "id": "add_state_1",
+                                                        "state": [
+                                                            {
+                                                                "type": "component",
+                                                                "valueName": "ROWS_CHECKED",
+                                                                "expression": [
+                                                                    {
+                                                                        "type": "property",
+                                                                        "name": "length",
+                                                                        "matchValue": 0,
+                                                                        "match": "gt"
+                                                                    },
+                                                                    {
+                                                                        "type": "element",
+                                                                        "name": "name",
+                                                                        "matchValue": "1",
+                                                                        "match": "eq",
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "edit_state_1",
+                                                        "state": [
+                                                            {
+                                                                "type": "component",
+                                                                "valueName": "ROWS_CHECKED",
+                                                                "expression": [
+                                                                    {
+                                                                        "type": "property",
+                                                                        "name": "length",
+                                                                        "matchValue": 0,
+                                                                        "match": "gt"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "add_save_1",
+                                                        "state": [
+                                                            {
+                                                                "type": "component",
+                                                                "valueName": "ROWS_CHECKED",
+                                                                "expression": [
+                                                                    {
+                                                                        "type": "property",
+                                                                        "name": "length",
+                                                                        "matchValue": 0,
+                                                                        "match": "gt"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "component",
+                                                                "valueName": "ROWS_ADDED",
+                                                                "expression": [
+                                                                    {
+                                                                        "type": "property",
+                                                                        "name": "length",
+                                                                        "matchValue": 0,
+                                                                        "match": "gt"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "edit_save_1",
+                                                        "state": [
+                                                            {
+                                                                "type": "component",
+                                                                "valueName": "ROWS_EDITED",
+                                                                "expression": [
+                                                                    {
+                                                                        "type": "property",
+                                                                        "name": "length",
+                                                                        "matchValue": 0,
+                                                                        "match": "gt"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "component",
+                                                                "valueName": "ROWS_CHECKED",
+                                                                "expression": [
+                                                                    {
+                                                                        "type": "property",
+                                                                        "name": "length",
+                                                                        "matchValue": 0,
+                                                                        "match": "gt"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+
+                                                ],
+                                                "ajaxConfig": [
+                                                    {
+                                                        "id": "add_save_1",
+                                                        "url": "information/test2",
+                                                        "urlType": "inner",
+                                                        "ajaxType": "post",
+                                                        "params": [
+                                                            {
+                                                                "name": "state",
+                                                                "type": "value",
+                                                                "value": "DVM"
+                                                            },
+                                                            {
+                                                                "name": "LANGUAGE",
+                                                                "type": "value",
+                                                                "value": "scs"
+                                                            },
+                                                            {
+                                                                "name": "CODE",
+                                                                "type": "value",
+                                                                "value": "scs.code"
+                                                            },
+                                                            {
+                                                                "name": "MESSAGE",
+                                                                "type": "value",
+                                                                "value": "scs.message"
+                                                            },
+                                                            {
+                                                                "name": "RN",
+                                                                "type": "value",
+                                                                "value": 100
+                                                            }
+                                                        ],
+                                                        "outputParameters": [
+
+                                                        ],
+                                                        "result": [
+                                                            {
+                                                                "name": "data",
+                                                                "showMessageWithNext": 0,
+                                                                "message": "message.ajax.state.success",
+                                                                "senderId": "grid_sender_01"
+                                                            },
+                                                            // {
+                                                            //     "name": "validation",
+                                                            //     "senderId": "grid_sender_02"
+                                                            // },
+                                                            // {
+                                                            //     "name": "error",
+                                                            //     "senderId": "grid_sender_03"
+                                                            // }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "edit_save_1",
+                                                        "url": "information/test2",
+                                                        "urlType": "inner",
+                                                        "ajaxType": "put",
+                                                        "params": [
+                                                            {
+                                                                "name": "LANGUAGE",
+                                                                "type": "value",
+                                                                "value": "scs"
+                                                            },
+                                                            {
+                                                                "name": "CODE",
+                                                                "type": "value",
+                                                                "value": "scs.code"
+                                                            },
+                                                            {
+                                                                "name": "MESSAGE",
+                                                                "type": "value",
+                                                                "value": "scs.message"
+                                                            },
+                                                            {
+                                                                "name": "RN",
+                                                                "type": "value",
+                                                                "value": 100
+                                                            }
+                                                        ],
+                                                        "outputParameters": [
+
+                                                        ],
+                                                        "result": [
+
+                                                        ]
+                                                    }
+                                                ],
+                                                "beforeTrigger": [
+
+                                                ],
+                                                "afterTrigger": [
+                                                    {
+                                                        "id": "",
+                                                        "senderId": "view_01",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": [],
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "BEHAVIOR",
+                                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "parent_id",
+                                                                        "type": "item",
+                                                                        "valueName": "id"
+                                                                    },
+                                                                    {
+                                                                        "name": "parent_name",
+                                                                        "type": "item",
+                                                                        "valueName": "name"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+
                                             }
-                                        }, {
-                                            id: "r5zDHB1-2-2",
-                                            col: "cc",
-                                            type: "col",
-                                            title: "222",
-                                            span: 12,
-                                            container: "layout",
-                                            size: {
-                                                "nzXs": 12,
-                                                "nzSm": 12,
-                                                "nzMd": 12,
-                                                "nzLg": 12,
-                                                "ngXl": 12,
-                                                "nzXXl": 12
-                                            },
-                                            layout: {}
-                                        }
+
+                                        },
+                                        // {
+                                        //     id: "r5zDHB1-2-2",
+                                        //     col: "cc",
+                                        //     type: "col",
+                                        //     title: "222",
+                                        //     span: 12,
+                                        //     container: "layout",
+                                        //     size: {
+                                        //         "nzXs": 12,
+                                        //         "nzSm": 12,
+                                        //         "nzMd": 12,
+                                        //         "nzLg": 12,
+                                        //         "ngXl": 12,
+                                        //         "nzXXl": 12
+                                        //     },
+                                        //     layout: {}
+                                        // }
                                     ]
                                 }
                             ]
@@ -605,36 +1092,137 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             "nzXXl": 24
                         },
                         component: {
-                            id: "view_02",
-                            title: "view_02",
-                            component: "cnDataTable",
-                            keyId: "",
-                            size: "size",
-                            pagination: true,
-                            showTotal: true,
-                            pageSize: 10,
-                            showCheckBox: true,
-                            pageSizeOptions: [10, 20, 50, 100],
-                            loadingOnInit: false,
-                            loadingConfig: {
-                                "url": "information/testList",
+                            "id": "view_02",
+                            "title": "主表",
+                            "titleIcon": "right-circle",
+                            "component": "cnDataTable",
+                            "keyId": "ID",
+                            "size": "middle",
+                            "isBordered": false,
+                            "isFrontPagination": false,
+                            "isPagination": true,
+                            "isShowSizeChanger": true,
+                            "showTotal": true,
+                            "pageSize": 5,
+                            "showCheckBox": true,
+                            "pageSizeOptions": [10, 20, 50, 100],
+                            "loadingOnInit": false,
+                            "loadingConfig": {
+                                "url": "information/page",
                                 "method": "get",
                                 "params": [
-                                    {
-                                        "name": "state",
-                                        "type": "value",
-                                        "value": "D"
-                                    }
+
                                 ],
                                 "filter": [
 
                                 ]
                             },
-                            columns: [
-
+                            "columns": [
+                                {
+                                    "title": "id",
+                                    "type": "field",
+                                    "field": "ID",
+                                    "hidden": true,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "isShowExpand": false,
+                                    "width": "50px",
+                                    "style": {}
+                                },
+                                {
+                                    "title": "code",
+                                    "type": "field",
+                                    "field": "CODE",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "50px",
+                                    "style": {},
+                                },
+                                {
+                                    "title": "message",
+                                    "type": "field",
+                                    "field": "MESSAGE",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "150px",
+                                    "style": {}
+                                },
+                                {
+                                    "title": "language",
+                                    "type": "field",
+                                    "field": "LANGUAGE",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "isExpand": true,
+                                    "width": "400px",
+                                    "style": {}
+                                },
+                                {
+                                    "title": "ACTION",
+                                    "type": "action",
+                                    "width": "150px",
+                                    "actionIds": [
+                                        "grid_edit", "grid_save", "grid_delete"
+                                    ]
+                                }
                             ],
-                            cascade: {
-                                messageReceiver: [
+                            "rowActions": [
+                                {
+                                    "id": "grid_edit",
+                                    "text": "编辑",
+                                    "icon": "save",
+                                    "color": "text-primary",
+                                    "type": "link",
+                                    "size": "small",
+                                    "execute": [
+                                        {
+                                            "triggerType": "STATE",
+                                            "trigger": "EDIT_ROW",
+                                            // "ajaxId": "add_save_1",
+                                            // "stateId": "add_save_1",
+                                            // "conditionId": "add_save_1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "grid_save",
+                                    "text": "保存",
+                                    "icon": "save",
+                                    "color": "text-primary",
+                                    "type": "link",
+                                    "size": "small",
+                                    "execute": [
+                                        {
+                                            "triggerType": "OPERATION",
+                                            "trigger": "SAVE_ROW",
+                                            "ajaxId": "add_save_1",
+                                            // "stateId": "add_save_1",
+                                            // "conditionId": "add_save_1"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "grid_delete",
+                                    "text": "删除",
+                                    "icon": "delete",
+                                    "type": "link",
+                                    "color": "primary",
+                                    "size": "small",
+                                    "execute": [
+                                        {
+                                            "triggerType": "OPERATION",
+                                            "trigger": "EXECUTE_SELECTED_ROW",
+                                            // "conditionId": "delete_operation_1",
+                                            // "ajaxId": "delete_row_1"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "cascade": {
+                                "messageReceiver": [
                                     {
                                         id: "",
                                         senderId: "view_01",
@@ -776,7 +1364,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                         col: "cc",
                         type: "col",
                         title: "列r5zDHB1-1",
-                        span: 12,
+                        span: 24,
                         container: "layout",
                         size: {
                             "nzXs": 12,
