@@ -5,8 +5,9 @@ import { SharedModule } from '@shared';
 import { TemplateRoutingModule } from './template-routing.module';
 import { CfgLayoutDemoComponent } from './cfg-layout-demo.component';
 import { CfgFormDemoComponent } from './cfg-form-demo.component';
+import { DataTableDemoComponent } from './data-table-demo.component';
 
-const COMPONENTS = [LayoutDemoComponent,CfgLayoutDemoComponent, CfgFormDemoComponent];
+const COMPONENTS = [LayoutDemoComponent, CfgLayoutDemoComponent, CfgFormDemoComponent, DataTableDemoComponent];
 
 const COMPONENTS_NOROUNT = [];
 

@@ -33,7 +33,7 @@
         "level": 2,
         "children": [{
             "text": "表格",
-            "link": "/dashboard/v1",
+            "link": "/template/dataTableDemo",
             "i18n": "menu.component.table",
             "level": 3
           },

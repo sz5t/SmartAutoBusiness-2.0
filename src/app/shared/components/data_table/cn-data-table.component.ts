@@ -1,3 +1,4 @@
+import { createNewHosts } from '@angularclass/hmr';
 import { ButtonOperationResolver } from './../../resolver/buttonOperation/buttonOperation.resolver';
 import { CN_DATA_GRID_PROPERTY } from './../../../core/relations/bsn-property/data-grid.property.interface';
 import { CN_DATA_GRID_METHOD } from '@core/relations/bsn-methods';
@@ -231,7 +232,7 @@ export class CnDataTableComponent extends CnComponentBase
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
         const params = {
-            // ...this.buildParameters(this.config.loadingConfig.params),
+            ...this.buildParameters(this.config.loadingConfig.params),
             ...this._buildPaging(),
             // ...this._buildFilter(this.config.ajaxConfig.filter),
             // ...this._buildSort(),
@@ -243,19 +244,14 @@ export class CnDataTableComponent extends CnComponentBase
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
             if (response.data && response.data.resultDatas.length > 0) {
                 response.data.resultDatas.map((d, index) => {
-                    const orginAction = this.tableColumns.find(c => c.type === 'action');
-                    const copyAction = [];
-                    if (orginAction) {
-                        const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action));
-                        copyAction.push(...actions);
-                    }
+
                     this.mapOfDataState[d[this.KEY_ID]] = {
                         dislabled: false,
                         checked: false, // index === 0 ? true : false,
                         selected: false, // index === 0 ? true : false,
                         state: 'text',
                         data: d,
-                        actions: copyAction
+                        actions: this.getRowActions('text')
                     };
                     index === 0 && (this.ROW_SELECTED = d);
                 });
@@ -394,9 +390,36 @@ export class CnDataTableComponent extends CnComponentBase
 
 
 
+    private createNewRowData() {
+        const newData = {}
+        this.config.columns.map(col => {
+            newData[col.field] = null
+        });
+        return newData;
+    }
 
     public addRow() {
         console.log(this.config.id + '-------------add row');
+        // 创建空数据对象
+        const newId = CommonUtils.uuID(6);
+        const newData = this.createNewRowData();
+        newData[this.KEY_ID] = newId;
+
+        // 新增数据加入原始列表,才能够动态新增一行编辑数据
+        this.dataList = [newData, ...this.dataList];
+
+        // 组装状态数据
+        this.mapOfDataState[newId] = {
+            data: newData,
+            dislabled: false,
+            checked: true, // index === 0 ? true : false,
+            selected: false, // index === 0 ? true : false,
+            state: 'new',
+            actions: this.getRowActions('new')
+        }
+
+
+        // 更新状态
     }
 
     public editRow() {
@@ -476,18 +499,16 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public setSelectRow(rowData?, $event?) {
-        console.log(this.config.id, arguments);
         if ($event) {
             const src = $event.srcElement || $event.target;
-            if (src.type === 'checkbox') {
-                return;
+            if (src.type !== undefined) {
+                return false;
             }
             $event.stopPropagation();
+            $event.preventDefault();
         }
 
-        // if (!rowData) {
-        //     rowData = this.ROW_SELECTED;
-        // }
+        this.ROW_SELECTED = rowData;
 
         // 选中当前行
         this.dataList.map(row => {
@@ -499,6 +520,7 @@ export class CnDataTableComponent extends CnComponentBase
         // 勾选/取消当前行勾选状态
         this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
         this.dataCheckedStatusChange();
+        return true;
     }
 
     public selectRow(rowData) {
@@ -521,8 +543,8 @@ export class CnDataTableComponent extends CnComponentBase
         return ParameterResolver.resolve({
             params: paramsCfg,
             tempValue: this.tempValue,
-            componentValue: this._rowsData,
-            item: this._selectedRow,
+            componentValue: this.ROWS_ADDED,
+            item: this.ROW_SELECTED,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             router: this.routerValue
@@ -646,6 +668,16 @@ export class CnDataTableComponent extends CnComponentBase
         const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
         trigger.toolbarAction(actionCfg, this.config.id);
         $event && $event.preventDefault();
+    }
+
+    getRowActions(state): any[] {
+        const orginAction = this.tableColumns.find(c => c.type === 'action');
+        const copyAction = [];
+        if (orginAction) {
+            const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => c.state === state)));
+            copyAction.push(...actions);
+        }
+        return copyAction;
     }
 
 }

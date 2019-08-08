@@ -1,3 +1,4 @@
+import { DataTableDemoComponent } from './data-table-demo.component';
 import { LayoutDemoComponent } from './layout-demo.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -9,6 +10,7 @@ const routes: Routes = [
   { path: 'demo', component: LayoutDemoComponent },
   { path: 'cfglayoutdemo', component: CfgLayoutDemoComponent },
   { path: 'cfgformdemo', component: CfgFormDemoComponent },
+  { path: 'dataTableDemo', component: DataTableDemoComponent },
 
 ];
 

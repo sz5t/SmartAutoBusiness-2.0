@@ -1,8 +1,8 @@
-import { BusinessObjectBase } from './../../shared/business/business-object.base';
-import { BSN_COMPONENT_SERVICES } from './../../core/relations/bsn-relatives';
-import { CnComponentBase } from './../../shared/components/cn-component.base';
-import { ApiService } from './../../core/services/api/api-service';
-import { BeforeOperationResolver } from './../../shared/resolver/beforeOperation/before-operation.resolver';
+import { BusinessObjectBase } from '../../shared/business/business-object.base';
+import { BSN_COMPONENT_SERVICES } from '../../core/relations/bsn-relatives';
+import { CnComponentBase } from '../../shared/components/cn-component.base';
+import { ApiService } from '../../core/services/api/api-service';
+import { BeforeOperationResolver } from '../../shared/resolver/beforeOperation/before-operation.resolver';
 import { Component, Input, OnInit, Output, EventEmitter, Inject, TemplateRef, ViewChild } from '@angular/core';
 import { NzModalComponent, NzModalService, NzMessageService } from 'ng-zorro-antd';
 import { Observable } from 'rxjs';
@@ -12,8 +12,8 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'cn-layout-resolver',
-    templateUrl: './layout-demo.component.html',
+    selector: 'data-table-demo',
+    templateUrl: './data-table-demo.component.html',
     styles: [
         `
             :host ::ng-deep .ant-card-head {
@@ -41,7 +41,7 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
         `
     ]
 })
-export class LayoutDemoComponent extends CnComponentBase implements OnInit {
+export class DataTableDemoComponent extends CnComponentBase implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "layout",
@@ -512,7 +512,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                 '50px', '100px', '200px', '200px', '200px'
                             ],
                             "loadingConfig": {
-                                "url": "information/page",
+                                "url": "province/page",
                                 "method": "get",
                                 "params": [
 
@@ -521,35 +521,6 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
 
                                 ]
                             },
-                            "spanHeader": [
-                                [
-                                    {
-                                        "title": "CODE",
-                                        "spanType": "row",
-                                        "span": 3
-                                    },
-                                    {
-                                        "title": "INFO",
-                                        "spanType": "col",
-                                        "span": 2
-                                    },
-                                    {
-                                        "title": "ACTION",
-                                        "spanType": "row",
-                                        "span": 3
-                                    }
-                                ],
-                                [
-                                    {
-                                        "title": "MESSAGE",
-                                    },
-                                    {
-                                        "title": "LANGUAGE",
-                                    }
-
-
-                                ]
-                            ],
                             "columns": [
                                 {
                                     "title": "id",
@@ -563,9 +534,9 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                     "style": {}
                                 },
                                 {
-                                    "title": "code",
+                                    "title": "PROVINCE_NAME",
                                     "type": "field",
-                                    "field": "CODE",
+                                    "field": "PROVINCENAME",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
@@ -573,26 +544,66 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                     "style": {},
                                 },
                                 {
-                                    "title": "message",
+                                    "title": "POPULATIONSIZE",
                                     "type": "field",
-                                    "field": "MESSAGE",
+                                    "field": "POPULATIONSIZE",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "150px",
-                                    "style": {}
+                                    "width": "50px",
+                                    "style": {},
                                 },
                                 {
-                                    "title": "language",
+                                    "title": "DIRECTLYUNDER",
                                     "type": "field",
-                                    "field": "LANGUAGE",
+                                    "field": "DIRECTLYUNDER",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "isExpand": true,
-                                    "width": "400px",
-                                    "style": {}
+                                    "width": "50px",
+                                    "style": {},
                                 },
+                                {
+                                    "title": "AREACODE",
+                                    "type": "field",
+                                    "field": "AREACODE",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "50px",
+                                    "style": {},
+                                },
+                                {
+                                    "title": "CREATEDATE",
+                                    "type": "field",
+                                    "field": "CREATEDATE",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "50px",
+                                    "style": {},
+                                },
+                                // {
+                                //     "title": "message",
+                                //     "type": "field",
+                                //     "field": "MESSAGE",
+                                //     "hidden": false,
+                                //     "showFilter": false,
+                                //     "showSort": false,
+                                //     "width": "150px",
+                                //     "style": {}
+                                // },
+                                // {
+                                //     "title": "language",
+                                //     "type": "field",
+                                //     "field": "LANGUAGE",
+                                //     "hidden": false,
+                                //     "showFilter": false,
+                                //     "showSort": false,
+                                //     "isExpand": true,
+                                //     "width": "400px",
+                                //     "style": {}
+                                // },
                                 {
                                     "title": "ACTION",
                                     "type": "action",
@@ -605,63 +616,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             "cascade": {
                                 "messageSender": [
                                     {
-                                        "id": "grid_sender_01",
-                                        "senderId": "view_01",
-                                        "triggerType": "OPERATION",
-                                        "trigger": "EXECUTE_CHECKED_ROWS",
-                                        "triggerMoment": "after",
-                                        "sendData": [
-                                            {
-                                                "beforeSend": [],
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "BEHAVIOR",
-                                                "receiverTrigger": "REFRESH_AS_CHILD",
-                                                "params": [
-                                                    {
-                                                        "name": "parent_id",
-                                                        "type": "item",
-                                                        "valueName": "id"
-                                                    },
-                                                    {
-                                                        "name": "parent_name",
-                                                        "type": "item",
-                                                        "valueName": "name"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
                                         "id": "grid_sender_02",
-                                        "senderId": "view_01",
-                                        "triggerType": "BEHAVIOR",
-                                        "trigger": "SELECT_ROW",
-                                        "triggerMoment": "after",
-                                        "sendData": [
-                                            {
-                                                "beforeSend": [],
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "BEHAVIOR",
-                                                "receiverTrigger": "REFRESH_AS_CHILD",
-                                                "data": {
-                                                    "params": [
-                                                        {
-                                                            "name": "accountId",
-                                                            "type": "initValue",
-                                                            "valueName": "accountId"
-                                                        },
-                                                        {
-                                                            "name": "userId",
-                                                            "type": "cacheValue",
-                                                            "valueName": "_createUserId"
-                                                        }
-                                                    ]
-                                                }
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "grid_sender_03",
                                         "senderId": "view_01",
                                         "triggerType": "BEHAVIOR",
                                         "trigger": "SET_SELECT_ROW",
@@ -675,14 +630,9 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                                 "data": {
                                                     "params": [
                                                         {
-                                                            "name": "accountId",
-                                                            "type": "initValue",
-                                                            "valueName": "accountId"
-                                                        },
-                                                        {
-                                                            "name": "userId",
-                                                            "type": "cacheValue",
-                                                            "valueName": "_createUserId"
+                                                            "name": "_PID",
+                                                            "type": "item",
+                                                            "valueName": "ID"
                                                         }
                                                     ]
                                                 }
@@ -980,35 +930,15 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             ],
                             "ajaxConfig": [
                                 {
-                                    "id": "add_save_1",
-                                    "url": "information/test2",
+                                    "id": "province_save_1",
+                                    "url": "province/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "state",
-                                            "type": "value",
-                                            "value": "DVM"
-                                        },
-                                        {
-                                            "name": "LANGUAGE",
-                                            "type": "value",
-                                            "value": "scs"
-                                        },
-                                        {
-                                            "name": "CODE",
-                                            "type": "value",
-                                            "value": "scs.code"
-                                        },
-                                        {
-                                            "name": "MESSAGE",
-                                            "type": "value",
-                                            "value": "scs.message"
-                                        },
-                                        {
-                                            "name": "RN",
-                                            "type": "value",
-                                            "value": 100
+                                            "name": "PROVINCENAME",
+                                            "type": "componentValue",
+                                            "value": "PROVINCENAME"
                                         }
                                     ],
                                     "outputParameters": [
@@ -1032,30 +962,39 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_save_1",
-                                    "url": "information/test2",
+                                    "id": "province_edit_1",
+                                    "url": "province/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
-                                            "name": "LANGUAGE",
-                                            "type": "value",
-                                            "value": "scs"
+                                            "name": "PROVINCENAME",
+                                            "type": "componentValue",
+                                            "value": "PROVINCENAME"
                                         },
                                         {
-                                            "name": "CODE",
-                                            "type": "value",
-                                            "value": "scs.code"
-                                        },
+                                            "name": "ID",
+                                            "type": "componentValue",
+                                            "value": "ID"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+
+                                    ]
+                                },
+                                {
+                                    "id": "province_delete_1",
+                                    "url": "province/delete",
+                                    "urlType": "inner",
+                                    "ajaxType": "delete",
+                                    "params": [
                                         {
-                                            "name": "MESSAGE",
-                                            "type": "value",
-                                            "value": "scs.message"
-                                        },
-                                        {
-                                            "name": "RN",
-                                            "type": "value",
-                                            "value": 100
+                                            "name": "ids",
+                                            "type": "CHECKED_ROWS_ID",
+                                            "value": "_ids"
                                         }
                                     ],
                                     "outputParameters": [
@@ -1098,13 +1037,13 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
 
                         }
                     }, {
-                        id: "r5zDHB2-1",
-                        col: "cc",
-                        type: "col",
-                        title: "",
-                        span: 24,
-                        container: "component",
-                        size: {
+                        "id": "r5zDHB2-1",
+                        "col": "cc",
+                        "type": "col",
+                        "title": "",
+                        "span": 24,
+                        "container": "component",
+                        "size": {
                             "nzXs": 24,
                             "nzSm": 24,
                             "nzMd": 24,
@@ -1112,7 +1051,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             "nzXl": 24,
                             "nzXXl": 24
                         },
-                        component: {
+                        "component": {
                             "id": "view_02",
                             "title": "主表",
                             "titleIcon": "right-circle",
@@ -1129,10 +1068,14 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             "pageSizeOptions": [10, 20, 50, 100],
                             "loadingOnInit": false,
                             "loadingConfig": {
-                                "url": "information/page",
+                                "url": "city/page",
                                 "method": "get",
                                 "params": [
-
+                                    {
+                                        "name": "PID",
+                                        "type": "tempValue",
+                                        "valueName": "_PID"
+                                    }
                                 ],
                                 "filter": [
 
@@ -1151,36 +1094,87 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                     "style": {}
                                 },
                                 {
-                                    "title": "code",
+                                    "title": "id",
                                     "type": "field",
-                                    "field": "CODE",
-                                    "hidden": false,
+                                    "field": "PID",
+                                    "hidden": true,
                                     "showFilter": false,
                                     "showSort": false,
+                                    "isShowExpand": false,
                                     "width": "50px",
-                                    "style": {},
+                                    "style": {}
                                 },
                                 {
-                                    "title": "message",
+                                    "title": "CITY_NAME",
                                     "type": "field",
-                                    "field": "MESSAGE",
+                                    "field": "CITYNAME",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
                                     "width": "150px",
-                                    "style": {}
+                                    "style": {},
                                 },
                                 {
-                                    "title": "language",
+                                    "title": "ZIPCODE",
                                     "type": "field",
-                                    "field": "LANGUAGE",
+                                    "field": "ZIPCODE",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "isExpand": true,
-                                    "width": "400px",
-                                    "style": {}
+                                    "width": "150px",
+                                    "style": {},
                                 },
+                                {
+                                    "title": "POPULATIONSIZE",
+                                    "type": "field",
+                                    "field": "POPULATIONSIZE",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "150px",
+                                    "style": {},
+                                },
+                                {
+                                    "title": "DIRECTLYUNDER",
+                                    "type": "field",
+                                    "field": "DIRECTLYUNDER",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "150px",
+                                    "style": {},
+                                },
+                                {
+                                    "title": "CREATEDATE",
+                                    "type": "field",
+                                    "field": "CREATEDATE",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "150px",
+                                    "style": {},
+                                },
+                                // {
+                                //     "title": "message",
+                                //     "type": "field",
+                                //     "field": "MESSAGE",
+                                //     "hidden": false,
+                                //     "showFilter": false,
+                                //     "showSort": false,
+                                //     "width": "150px",
+                                //     "style": {}
+                                // },
+                                // {
+                                //     "title": "language",
+                                //     "type": "field",
+                                //     "field": "LANGUAGE",
+                                //     "hidden": false,
+                                //     "showFilter": false,
+                                //     "showSort": false,
+                                //     "isExpand": true,
+                                //     "width": "400px",
+                                //     "style": {}
+                                // },
                                 {
                                     "title": "ACTION",
                                     "type": "action",
@@ -1192,7 +1186,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             ],
                             "rowActions": [
                                 {
-                                    "id": "grid_edit",
+                                    "id": "city_edit",
                                     "text": "编辑",
                                     "icon": "save",
                                     "color": "text-primary",
@@ -1201,15 +1195,12 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                     "execute": [
                                         {
                                             "triggerType": "STATE",
-                                            "trigger": "EDIT_ROW",
-                                            // "ajaxId": "add_save_1",
-                                            // "stateId": "add_save_1",
-                                            // "conditionId": "add_save_1"
+                                            "trigger": "EDIT_ROW"
                                         }
                                     ]
                                 },
                                 {
-                                    "id": "grid_save",
+                                    "id": "city_save",
                                     "text": "保存",
                                     "icon": "save",
                                     "color": "text-primary",
@@ -1219,7 +1210,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                         {
                                             "triggerType": "OPERATION",
                                             "trigger": "SAVE_ROW",
-                                            "ajaxId": "add_save_1",
+                                            "ajaxId": "city_save_1",
                                             // "stateId": "add_save_1",
                                             // "conditionId": "add_save_1"
                                         }
@@ -1237,7 +1228,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                             "triggerType": "OPERATION",
                                             "trigger": "EXECUTE_SELECTED_ROW",
                                             // "conditionId": "delete_operation_1",
-                                            // "ajaxId": "delete_row_1"
+                                            "ajaxId": "city_delete_1"
                                         }
                                     ]
                                 }
@@ -1245,384 +1236,140 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                             "cascade": {
                                 "messageReceiver": [
                                     {
-                                        id: "",
-                                        senderId: "view_01",
-                                        receiveData: [
+                                        "id": "",
+                                        "senderId": "view_01",
+                                        "receiveData": [
                                             {
-                                                beforeReceive: [],
-                                                triggerType: "BEHAVIOR",
-                                                trigger: "REFRESH_AS_CHILD",
-                                                params: [
+                                                "beforeReceive": [],
+                                                "triggerType": "BEHAVIOR",
+                                                "trigger": "REFRESH_AS_CHILD",
+                                                "params": [
                                                     {
-                                                        pname: "parent_id",
-                                                        cname: "_parent_id",
-                                                        valueTo: "tempValue"
+                                                        "pname": "parent_id",
+                                                        "cname": "_parent_id",
+                                                        "valueTo": "tempValue"
                                                     },
                                                     {
-                                                        pname: "parent_name",
-                                                        cname: "_parent_name",
-                                                        valueTo: "tempValue"
+                                                        "pname": "parent_name",
+                                                        "cname": "_parent_name",
+                                                        "valueTo": "tempValue"
                                                     }
                                                 ]
                                             },
                                             {
-                                                beforeReceive: [],
-                                                triggerType: "BEHAVIOR",
-                                                trigger: "REFRESH",
-                                                params: [
+                                                "beforeReceive": [],
+                                                "triggerType": "BEHAVIOR",
+                                                "trigger": "REFRESH",
+                                                "params": [
                                                     {
-                                                        pname: "parent_id",
-                                                        cname: "__accountId",
-                                                        valueTo: "initValue"
+                                                        "pname": "parent_id",
+                                                        "cname": "__accountId",
+                                                        "valueTo": "initValue"
                                                     },
                                                     {
-                                                        pname: "parent_name",
-                                                        cname: "__userId",
-                                                        valueTo: "initValue"
+                                                        "pname": "parent_name",
+                                                        "cname": "__userId",
+                                                        "valueTo": "initValue"
                                                     }
                                                 ]
                                             }
                                         ]
                                     }
                                 ]
-                            }
-                        }
-                    }],
-                id: "3vlDRq",
-                type: "row"
-            },
-            {
-                cols: [
-                    {
-                        id: "yBBeRX",
-                        col: "cc",
-                        type: "col",
-                        title: "列yBBeRX",
-                        span: 12,
-                        container: "tabs",
-                        size: {
-                            "nzXs": 12,
-                            "nzSm": 12,
-                            "nzMd": 12,
-                            "nzLg": 12,
-                            "nzXl": 12,
-                            "nzXXl": 12
-                        },
-                        tabs: {
-                            id: "",
-                            type: "tabs",
-                            title: "标签页布局",
-                            container: "tabContent",
-                            tabContent: [
+                            },
+                            "ajaxConfig": [
                                 {
-                                    id: "icU1pr",
-                                    type: "tab",
-                                    title: "标签u7kPRm",
-                                    container: "layout",
-                                    layout: {
-                                        id: "icU1pr",
-                                        type: "layout",
-                                        title: "布局icU1pr",
-                                        container: "rows",
-                                        rows: [{
-                                            cols: [{
-                                                "id": "nRhLot",
-                                                "col": "cc",
-                                                "type": "col",
-                                                "title": "列nRhLot",
-                                                "span": 24,
-                                                "container": "",
-                                                "size": {
-                                                    "nzXs": 24,
-                                                    "nzSm": 24,
-                                                    "nzMd": 24,
-                                                    "nzLg": 24,
-                                                    "nzXl": 24,
-                                                    "nzXXl": 24
-                                                }
-                                            }],
-                                            id: "gvF35B",
-                                            type: "row"
-                                        }]
-                                    }
-                                }, {
-                                    id: "wixilN",
-                                    type: "tab",
-                                    title: "标签llC6Ub",
-                                    container: "layout",
-                                    layout: {
-                                        id: "wixilN",
-                                        type: "layout",
-                                        title: "布局wixilN",
-                                        container: "rows",
-                                        rows: [{
-                                            cols: [{
-                                                "id": "nNNVng",
-                                                "col": "cc",
-                                                "type": "col",
-                                                "title": "列nNNVng",
-                                                "span": 24,
-                                                "container": "layout",
-                                                "size": {
-                                                    "nzXs": 24,
-                                                    "nzSm": 24,
-                                                    "nzMd": 24,
-                                                    "nzLg": 24,
-                                                    "nzXl": 24,
-                                                    "nzXXl": 24
-                                                },
-                                                "layout": {}
-                                            }],
-                                            id: "zByIiZ",
-                                            type: "row"
-                                        }]
-                                    }
-                                }]
-                        }
-                    },
-                    {
-                        id: "r5zDHB",
-                        col: "cc",
-                        type: "col",
-                        title: "列r5zDHB1-1",
-                        span: 24,
-                        container: "layout",
-                        size: {
-                            "nzXs": 12,
-                            "nzSm": 12,
-                            "nzMd": 12,
-                            "nzLg": 12,
-                            "nzXl": 12,
-                            "nzXXl": 12
-                        }, layout: {
-                            id: "r5zDHB1-2",
-                            col: "cc",
-                            type: "layout",
-                            title: "列r5zDHB",
-                            container: "rows",
-                            rows: [
-                                {
-                                    cols: [
+                                    "id": "city_save_1",
+                                    "url": "city/insert",
+                                    "urlType": "inner",
+                                    "ajaxType": "post",
+                                    "params": [
                                         {
-                                            id: "r5zDHB1-2-2",
-                                            col: "cc",
-                                            type: "col",
-                                            title: "222",
-                                            span: 24,
-                                            container: "layout",
-                                            size: {
-                                                "nzXs": 24,
-                                                "nzSm": 24,
-                                                "nzMd": 24,
-                                                "nzLg": 24,
-                                                "nzXl": 24,
-                                                "nzXXl": 24
-                                            },
-                                            layout: {}
+                                            "name": "CITYNAME",
+                                            "type": "componentValue",
+                                            "value": "CITYNAME"
                                         },
                                         {
-                                            id: "r5zDHB1-2-1",
-                                            col: "cc",
-                                            type: "col",
-                                            title: "111",
-                                            span: 24,
-                                            container: "layout",
-                                            size: {
-                                                "nzXs": 24,
-                                                "nzSm": 24,
-                                                "nzMd": 24,
-                                                "nzLg": 24,
-                                                "nzXl": 24,
-                                                "nzXXl": 24
-                                            },
-                                            layout: {}
+                                            "name": "PID",
+                                            "type": "componentValue",
+                                            "value": "PID"
                                         }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "grid_sender_01"
+                                        },
+                                        // {
+                                        //     "name": "validation",
+                                        //     "senderId": "grid_sender_02"
+                                        // },
+                                        // {
+                                        //     "name": "error",
+                                        //     "senderId": "grid_sender_03"
+                                        // }
+                                    ]
+                                },
+                                {
+                                    "id": "city_save_1",
+                                    "url": "city/update",
+                                    "urlType": "inner",
+                                    "ajaxType": "put",
+                                    "params": [
+                                        {
+                                            "name": "CITYNAME",
+                                            "type": "componentValue",
+                                            "value": "CITYNAME"
+                                        },
+                                        {
+                                            "name": "ID",
+                                            "type": "componentValue",
+                                            "value": "ID"
+                                        },
+                                        {
+                                            "name": "PID",
+                                            "type": "componentValue",
+                                            "value": "PID"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+
+                                    ]
+                                },
+                                {
+                                    "id": "city_delete_1",
+                                    "url": "province/delete",
+                                    "urlType": "inner",
+                                    "ajaxType": "delete",
+                                    "params": [
+                                        {
+                                            "name": "ids",
+                                            "type": "CHECKED_ROWS_ID",
+                                            "value": "_ids"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+
                                     ]
                                 }
-                            ]
+                            ],
                         }
-                    }
-                ],
+                    }],
                 id: "3vlDRq",
                 type: "row"
             }
-        ],
-        customLayout: [{
-            id: "zh7DKEr3",
-            type: "customLayout",
-            title: "左侧布局",
-            layoutType: "west",
-            hidden: false,
-            span: "1",
-            container: "layout",
-            layout: {
-                id: "rT4miZtE",
-                type: "layout",
-                title: "布局",
-                container: "rows",
-                rows: [{
-                    cols: [{
-                        id: "0rUTSi",
-                        col: "cc",
-                        type: "col",
-                        title: "列0rUTSi",
-                        span: 24,
-                        container: "layout",
-                        size: {
-                            nzXs: 24,
-                            nzSm: 24,
-                            nzMd: 24,
-                            nzLg: 24,
-                            nzXl: 24,
-                            nzXXl: 24
-                        },
-                        layout: {}
-                    }],
-                    id: "mfyPGP",
-                    type: "row"
-                }]
-            }
-        }, {
-            id: "OVl4EgIq",
-            type: "customLayout",
-            title: "中间布局",
-            layoutType: "center",
-            hidden: false,
-            span: "2",
-            container: "layout",
-            layout: {
-                id: "NjZSnNJP",
-                type: "layout",
-                title: "布局",
-                container: "rows",
-                rows: [{
-                    cols: [{
-                        id: "yBBeRX",
-                        col: "cc",
-                        type: "col",
-                        title: "列yBBeRX",
-                        span: 24,
-                        container: "tabs",
-                        size: {
-                            nzXs: 24,
-                            nzSm: 24,
-                            nzMd: 24,
-                            nzLg: 24,
-                            nzXl: 24,
-                            nzXXl: 24
-                        },
-                        tabs: {
-                            id: "",
-                            type: "tabs",
-                            title: "标签页布局",
-                            container: "tabContent",
-                            tabContent: [{
-                                id: "icU1pr",
-                                type: "tab",
-                                title: "标签u7kPRm",
-                                container: "layout",
-                                layout: {
-                                    id: "icU1pr",
-                                    type: "layout",
-                                    title: "布局icU1pr",
-                                    container: "rows",
-                                    rows: [{
-                                        cols: [{
-                                            id: "nRhLot",
-                                            col: "cc",
-                                            type: "col",
-                                            title: "列nRhLot",
-                                            span: 24,
-                                            container: "layout",
-                                            size: {
-                                                "nzXs": 24,
-                                                "nzSm": 24,
-                                                "nzMd": 24,
-                                                "nzLg": 24,
-                                                "nzXl": 24,
-                                                "nzXXl": 24
-                                            },
-                                            layout: {}
-                                        }],
-                                        id: "gvF35B",
-                                        type: "row"
-                                    }]
-                                }
-                            }, {
-                                id: "wixilN",
-                                type: "tab",
-                                title: "标签llC6Ub",
-                                container: "layout",
-                                layout: {
-                                    id: "wixilN",
-                                    type: "layout",
-                                    title: "布局wixilN",
-                                    container: "rows",
-                                    rows: [{
-                                        cols: [{
-                                            id: "nNNVng",
-                                            col: "cc",
-                                            type: "col",
-                                            title: "列nNNVng",
-                                            span: 24,
-                                            container: "layout",
-                                            size: {
-                                                "nzXs": 24,
-                                                "nzSm": 24,
-                                                "nzMd": 24,
-                                                "nzLg": 24,
-                                                "nzXl": 24,
-                                                "nzXXl": 24
-                                            },
-                                            layout: {}
-                                        }],
-                                        id: "zByIiZ",
-                                        type: "row"
-                                    }]
-                                }
-                            }]
-                        }
-                    }],
-                    id: "dPMuaH",
-                    type: "row"
-                }]
-            }
-        }, {
-            id: "KHdMtYyn",
-            type: "customLayout",
-            title: "右侧布局",
-            layoutType: "east",
-            hidden: true,
-            span: "1",
-            container: "layout",
-            layout: {
-                id: "e9LRuIMO",
-                type: "layout",
-                title: "布局",
-                container: "rows",
-                rows: [{
-                    cols: [{
-                        id: "odfGLU",
-                        col: "cc",
-                        type: "col",
-                        title: "列odfGLU",
-                        span: 24,
-                        container: "layout",
-                        size: {
-                            nzXs: 24,
-                            nzSm: 24,
-                            nzMd: 24,
-                            nzLg: 24,
-                            nzXl: 24,
-                            nzXXl: 24
-                        },
-                        layout: {}
-                    }],
-                    id: "r8N8t8",
-                    type: "row"
-                }]
-            }
-        }]
+        ]
     };
 
     public beforeOperation = [
