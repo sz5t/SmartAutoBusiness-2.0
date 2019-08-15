@@ -121,10 +121,15 @@ export class TriggerResolver {
 
     handleStateType() {
         // 前置条件判断
-
+        if (!this.conditionValidator(this._triggerMsg.options.condition)) {
+            return false;
+        }
         // 执行组件具体方法
         const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
-        this._componentInstance[method]();
+        if (method) {
+            this._componentInstance[method](this._triggerMsg.options);
+        }
+
     }
 
     handleBehaviorType() {
@@ -136,7 +141,6 @@ export class TriggerResolver {
     }
 
     handleOperationType() {
-        console.log('trigger----', this._triggerMsg);
         // 前置条件 state
 
         // 执行判断 condition
@@ -153,7 +157,7 @@ export class TriggerResolver {
         // 执行操作, 该功能不由组件实现
         if (this._triggerMsg.options.ajaxConfig) {
             const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
-            this._componentInstance[method](this._triggerMsg.options.ajaxConfig);
+            this._componentInstance[method](this._triggerMsg.options);
         }
 
         // this._componentInstance[CN_DATA_GRID_METHOD[this._triggerMsg.trigger.trigger]](this._triggerMsg.options);

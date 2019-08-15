@@ -17,4 +17,29 @@ export class CommonUtils {
     // 判断对象是否是字符串
     return Object.prototype.toString.call(obj) === '[object String]';
   }
+
+  /**
+   * 数据类型转换
+   * @param value 
+   * @param dataType 
+   */
+  public static getResultByDataType(value, dataType): any {
+    if (value) {
+      switch (dataType) {
+        case 'string':
+          return value.toString();
+        case 'int':
+          return Number.parseInt(value, 10);
+        case 'float':
+          return Number.parseFloat(value);
+        case 'date':
+          return new Date(value).toDateString();
+        case 'datetime':
+          return new Date(value).toTimeString();
+      }
+    } else {
+      return value;
+    }
+
+  }
 }

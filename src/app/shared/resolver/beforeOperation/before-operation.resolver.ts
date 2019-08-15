@@ -339,7 +339,6 @@ export class BeforeOperationResolver implements InnerValue {
             result = iniValue !== tmpValue;
         }
 
-        console.log('inner value:', result)
         return result;
 
     }

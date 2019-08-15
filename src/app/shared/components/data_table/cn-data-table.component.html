@@ -52,11 +52,11 @@
         <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
           <ng-container *ngSwitchCase="'field'">
             <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
-              <td *ngSwitchCase="'new'"><input type="text" nz-input
+              <td *ngSwitchCase="'new'"><input type="text" nz-input nzSize="default"
                   [(ngModel)]="mapOfDataState[rowData[KEY_ID]]['data'][col.field]" /></td>
               <td *ngSwitchCase="'edit'"><input type="text" nz-input
                   [(ngModel)]="mapOfDataState[rowData[KEY_ID]]['data'][col.field]" /></td>
-              <td *ngSwitchDefault>{{ rowData[col.field] }}</td>
+              <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
 
             </ng-container>
             <!-- <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['state'] === 'edit'; else rowTextTemplate">

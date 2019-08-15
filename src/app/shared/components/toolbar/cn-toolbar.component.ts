@@ -1,3 +1,5 @@
+import { IToolbarTrigger } from './../../../core/relations/bsn-trigger/toolbar.trigger.interface';
+import { CN_TOOLBAR_METHOD } from './../../../core/relations/bsn-methods';
 import { ButtonOperationResolver } from './../../resolver/buttonOperation/buttonOperation.resolver';
 import { BSN_TRIGGER_TYPE } from './../../../core/relations/bsn-status';
 import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
@@ -13,8 +15,9 @@ import {
     ViewEncapsulation
 } from '@angular/core';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
-import { from } from 'rxjs';
+import { from, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -48,29 +51,35 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     public _cascadeState;
     public toolbars;
     public toolbarsIsLoading = [];
+
+
+    private _sender_source$: Subject<any>;
+    private _receiver_source$: Subject<any>;
+    private _trigger_source$: Subject<any>;
+
+    private _receiver_subscription$: Subscription;
+    private _sender_subscription$: Subscription;
+    private _trigger_receiver_subscription$: Subscription;
+
+    public COMPONENT_METHODS = CN_TOOLBAR_METHOD;
+
     constructor(
         @Inject(BSN_COMPONENT_SERVICES)
-        private _cpmtService: ComponentServiceProvider
+        public componentService: ComponentServiceProvider
     ) {
-        super(_cpmtService);
+        super(componentService);
     }
 
     public ngOnInit() {
 
         this.toolbarConfig = this.config.toolbar;
-        // this.toolbarConfig.map(group => {
-        //     group.group.map(btn => {
-        //         btn['state'] = 'text'
-        //     });
-        // });
-        // if (Array.isArray(this.config)) {
-        //     this.toolbars = this.config;
-        // } else if (this.config) {
-        //     if (this.config.hasOwnProperty('toolbar')) {
-        //         this.toolbars = this.config.toolbar;
-        //     }
-        // }
-        // this.getPermissions();
+
+        if (this.config.cascade && this.config.cascade.messageReceiver) {
+            // 解析消息接受配置,并注册消息接收对象
+            this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+            this._receiver_subscription$ = this._receiver_source$.subscribe();
+        }
+
     }
 
     public getPermissions() {
@@ -157,16 +166,53 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             }
             const state = '';
 
-            const btnResolver = new ButtonOperationResolver(this._cpmtService, this.config, dataOfState);
+            const btnResolver = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
             btnResolver.toolbarAction(btn, targetViewId);
-
             this.toolbarsIsLoading[btn.name] = true;
         }
     }
 
+    public stateToText(option) {
+        const actions = this.toolbarConfig.find(t => t.targetViewId === option.targetViewId);
+        const dataOfState = { 'state': 'text', 'actions': actions.group }
+        const btnResolver = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
+        const btn = { execute: [{ trigger: 'EXECUTE_NONE', triggerType: 'STATE' }] }
+        btnResolver.toolbarAction(btn, option.targetViewId);
 
+
+    }
+
+    public stateToEdit(option) {
+        const actions = this.toolbarConfig.find(t => t.targetViewId === option.targetViewId);
+        const dataOfState = { 'state': 'edit', 'actions': actions.group }
+        const btnResolver = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
+        const btn = { execute: [{ trigger: 'EXECUTE_NONE_EDIT', triggerType: 'STATE' }] }
+        btnResolver.toolbarAction(btn, option.targetViewId);
+    }
+
+    public executeNone() {
+
+    }
+
+    public executeNoneEdit() {
+
+    }
 
     public ngOnDestroy() {
+        // 释放级联对象
         this.unsubscribeRelation();
+        // 释放及联接受对象
+        if (this._receiver_subscription$) {
+            this._receiver_subscription$.unsubscribe();
+        }
+
+        if (this._sender_subscription$) {
+            this._sender_subscription$.unsubscribe();
+        }
+
+        // 释放触发器对象
+        if (this._trigger_receiver_subscription$) {
+            this._trigger_receiver_subscription$.unsubscribe();
+        }
     }
 }

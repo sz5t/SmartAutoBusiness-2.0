@@ -3,7 +3,11 @@ export interface IDataGridTrigger {
     ADD_ROW: string,
     ADD_CHILD_ROW: string,
     EDIT_ROW: string,
-    CANCEL: string,
+    EDIT_ROWS: string,
+    CANCEL_NEW_ROW: string,
+    CANCEL_NEW_ROWS: string,
+    CANCEL_EDIT_ROW: string,
+    CANCEL_EDIT_ROWS: string,
     SEARCH_ROW: string,
     CANCEL_SEARCH_ROW: string,
 
@@ -27,6 +31,7 @@ export interface IDataGridTrigger {
     LINK_TO: string,
 
     SAVE_ROW: string,
+    SAVE_ROWS: string
     DELETE_ROW: string,
     EXECUTE_SELECTED_ROW: string,
     EXECUTE_CHECKED_ROWS: string,
@@ -41,7 +46,11 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     ADD_ROW: 'ADD_ROW',
     ADD_CHILD_ROW: 'ADD_CHILD_ROW',
     EDIT_ROW: 'EDIT_ROW',
-    CANCEL: 'CANCEL',
+    EDIT_ROWS: 'EDIT_ROWS',
+    CANCEL_EDIT_ROW: 'CANCEL_EDIT_ROW',
+    CANCEL_EDIT_ROWS: 'CANCEL_EDIT_ROWS',
+    CANCEL_NEW_ROW: 'CANCEL_NEW_ROW',
+    CANCEL_NEW_ROWS: 'CANCEL_NEW_ROWS',
     SEARCH_ROW: 'SEARCH_ROW',
     CANCEL_SEARCH_ROW: 'CANCEL_SEARCH_ROW',
 
@@ -68,6 +77,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
 
     // operation
     SAVE_ROW: 'SAVE_ROW',
+    SAVE_ROWS: 'SAVE_ROWS',
     DELETE_ROW: 'DELETE_ROW',
     EXECUTE_SELECTED_ROW: 'EXECUTE_SELECTED_ROW',
     EXECUTE_CHECKED_ROWS: 'EXECUTE_CHECKED_ROWS',

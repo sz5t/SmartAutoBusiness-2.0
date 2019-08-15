@@ -1,4 +1,5 @@
-import { createNewHosts } from '@angularclass/hmr';
+import { BSN_TOOLBAR_TRIGGER } from './../../../core/relations/bsn-trigger/toolbar.trigger.interface';
+import { BSN_DATAGRID_TRIGGER } from './../../../core/relations/bsn-trigger/data-grid.trigger.interface';
 import { ButtonOperationResolver } from './../../resolver/buttonOperation/buttonOperation.resolver';
 import { CN_DATA_GRID_PROPERTY } from './../../../core/relations/bsn-property/data-grid.property.interface';
 import { CN_DATA_GRID_METHOD } from '@core/relations/bsn-methods';
@@ -19,11 +20,11 @@ import {
 import { CnComponentBase } from '../cn-component.base';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
-import { TriggerResolver } from '@shared/resolver/trigger/trigger.resolver';
 import { filter, concatMap, mergeMap } from 'rxjs/operators';
 import { Subscription, Subject, BehaviorSubject, merge, Observable } from 'rxjs';
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
+import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -78,11 +79,12 @@ export class CnDataTableComponent extends CnComponentBase
     // public mapOfSelectedId: { [key: string]: boolean } = {};
     public mapOfDataState: {
         [key: string]: {
-            dislabled: boolean,
+            disabled: boolean,
             checked: boolean,
             selected: boolean,
             state: string,
             data: any,
+            originData: any,
             actions?: any[]
         }
     } = {};
@@ -95,8 +97,9 @@ export class CnDataTableComponent extends CnComponentBase
 
     public ROWS_ADDED: any[] = [];
     public ROWS_EDITED: any[] = [];
-    public ROW_SELECTED: any = {};
+    public ROW_SELECTED: any;
     public ROWS_CHECKED: any[] = [];
+    public COMPONENT_VALUE: any[] = [];
 
     public operationRow: any;
 
@@ -178,14 +181,14 @@ export class CnDataTableComponent extends CnComponentBase
         if (this.config.cascade && this.config.cascade.messageSender) {
             if (!this._sender_source$) {
                 // 解析组件发送消息配置,并注册消息发送对象
-                this._sender_source$ = new RelationResolver(this).resolve(this.config.cascade);
+                this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
                 this._sender_subscription$ = this._sender_source$.subscribe();
             }
 
         }
         if (this.config.cascade && this.config.cascade.messageReceiver) {
             // 解析消息接受配置,并注册消息接收对象
-            this._receiver_source$ = new RelationResolver(this).resolve(this.config.cascade);
+            this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
             this._receiver_subscription$ = this._receiver_source$.subscribe();
         }
 
@@ -242,26 +245,28 @@ export class CnDataTableComponent extends CnComponentBase
         };
 
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
-            if (response.data && response.data.resultDatas.length > 0) {
+            if (response && response.data && response.data.resultDatas) {
                 response.data.resultDatas.map((d, index) => {
 
                     this.mapOfDataState[d[this.KEY_ID]] = {
-                        dislabled: false,
+                        disabled: false,
                         checked: false, // index === 0 ? true : false,
                         selected: false, // index === 0 ? true : false,
                         state: 'text',
                         data: d,
+                        originData: { ...d },
                         actions: this.getRowActions('text')
                     };
                     index === 0 && (this.ROW_SELECTED = d);
                 });
-
                 this.dataList = response.data.resultDatas;
                 this.total = response.data.count;
                 // 更新
                 // this.dataCheckedStatusChange();
                 // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
                 this.setSelectRow(this.ROW_SELECTED);
+                this.isLoading = false;
+            } else {
                 this.isLoading = false;
             }
         }, error => {
@@ -375,7 +380,7 @@ export class CnDataTableComponent extends CnComponentBase
     public _buildSearch() {
         let search = {};
         if (this._search_row) {
-            const searchData = JSON.parse(JSON.stringify(this._search_row));
+            const searchData = JSON.parse(JSON.stringify(this._search_row)); 4
             delete searchData.key;
             delete searchData.checked;
             delete searchData.row_status;
@@ -411,47 +416,129 @@ export class CnDataTableComponent extends CnComponentBase
         // 组装状态数据
         this.mapOfDataState[newId] = {
             data: newData,
-            dislabled: false,
+            originData: { ...newData },
+            disabled: false,
             checked: true, // index === 0 ? true : false,
             selected: false, // index === 0 ? true : false,
             state: 'new',
             actions: this.getRowActions('new')
         }
 
+        this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
 
         // 更新状态
     }
 
-    public editRow() {
-        console.log('edit-row arguments', arguments);
-        // console.log(this.config.id + '-------------edit row');
-        if (this.ROWS_CHECKED.length > 0) {
-            this.ROWS_CHECKED.map(rowData => {
-                // this.rowAction(sdf, rowData);
-            })
-
-        }
-        // 
-        // this.rowAction()
+    private removeEditRow(item) {
+        this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
     }
 
-    /**
-     * 保存编辑行
-     * @param options ajaxConfig
-     */
-    public saveRow(ajaxConfig) {
-        console.log(this.config.id + '-------------save row', ajaxConfig);
-        // 构建业务对象
-        // 执行异步操作
-        // this.componentService.apiService.doPost();
+    private addEditRows(item) {
+        const index = this.ROWS_EDITED.findIndex(r => r[this.KEY_ID] === item[this.KEY_ID]);
+        if (index < 0) {
+            this.ROWS_EDITED = [item, ...this.ROWS_EDITED];
+        }
+    }
+
+    public editRows(option) {
+        this.ROWS_CHECKED.map(
+            item => {
+                this.addEditRows(item);
+                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+                trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.EDIT_ROW }, this.config.id);
+            }
+        )
+    }
+
+    public editRow(option) {
+        if (option.data) {
+            this.addEditRows(option.data.data);
+        }
+        return true;
+    }
+
+    // 取消添加的新行 数据  
+    public cancelNewRow(option) {
+        if (option.data) {
+            this.removeNewRow(option.data.data);
+        }
+    }
+
+    public cancelNewRows(option) {
+        this.ROWS_ADDED.map(
+            item => {
+                this.removeNewRow(item);
+                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+                trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+
+            }
+        )
+        return true;
+    }
+
+    private removeNewRow(item) {
+        this.dataList = this.dataList.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
+        this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
+        delete this.mapOfDataState[item[this.KEY_ID]];
+    }
+
+    public cancelEditRows(option) {
+        this.ROWS_CHECKED.map(
+            item => {
+                this.removeEditRow(item);
+                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+                trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+
+            }
+        )
+        return true;
+    }
+
+    public cancelEditRow(option) {
+        if (option.data) {
+            const itemId = option.data.data[this.KEY_ID];
+            if (itemId) {
+                this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== itemId);
+            }
+        }
+
+        console.log('-------------', this.ROWS_ADDED, this.ROWS_EDITED)
+        // 调用方法之前,判断传递的验证配置,解析后是否能够继续进行后续操作
+        // return true 表示通过验证, return false 表示未通过,无法继续后续操作
+
+        return true;
+    }
+
+    private _getComponentValueByHttpMethod(method): any[] {
+        switch (method) {
+            case 'post':
+                return this.ROWS_ADDED;
+            case 'put':
+                return this.ROWS_EDITED;
+            case 'proc':
+                return [...this.ROWS_ADDED, ...this.ROWS_EDITED];
+        }
+    }
+
+    public saveRow(option) {
+        const ajaxConfig = option.ajaxConfig;
+        const rowData = option.data.data;
         const url = ajaxConfig.url;
-        const params = this.buildParameters(ajaxConfig.params);
-        this.componentService.apiService[ajaxConfig.ajaxType](url, params).subscribe(response => {
+        const paramData = ParameterResolver.resolve({
+            params: ajaxConfig.params,
+            tempValue: this.tempValue,
+            componentValue: rowData,
+            item: this.ROW_SELECTED,
+            initValue: this.initValue,
+            cacheValue: this.cacheValue,
+            router: this.routerValue
+        });
+        this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).subscribe(response => {
             // success 0:全部错误,1:全部正确,2:部分错误
             if (response.data) {
                 const successCfg = ajaxConfig.result.find(res => res.name === 'data');
                 // 弹出提示框
-                if (successCfg.senderCfg) {
+                if (successCfg) {
                     new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
                 }
             }
@@ -467,25 +554,63 @@ export class CnDataTableComponent extends CnComponentBase
                     new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
                 }
             }
-            // switch (response.success) {
-            //     case 0:
-            //         const successCfg = ajaxConfig.result.find(res => res.name === 'data');
-            //         // 弹出提示信息
 
-            //         // 发送消息
-            //         if (successCfg.senderCfg) {
-            //             new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
-            //         }
-            //         // 发送消息
-            //         break;
-            //     case 1:
-            //             const validationCfg = ajaxConfig.result.find(res => res.name === 'validation');
-            //         break;
-            //     case 2:
-            //             const errorCfg = ajaxConfig.result.find(res => res.name === 'error');
-            //         break;
+            this.load();
+        });
 
-            // }
+    }
+
+    /**
+     * 保存编辑行
+     * @param options ajaxConfig
+     */
+    public saveRows(option) {
+
+        console.log(this.config.id + '-------------save row');
+        const ajaxConfig = option.ajaxConfig;
+        // 构建业务对象
+        // 执行异步操作
+        // this.componentService.apiService.doPost();
+        const url = ajaxConfig.url;
+        const paramsData = [];
+        this.COMPONENT_VALUE = this._getComponentValueByHttpMethod(ajaxConfig.ajaxType);
+        this.COMPONENT_VALUE.map(cmptValue => {
+            const d = ParameterResolver.resolve({
+                params: ajaxConfig.params,
+                tempValue: this.tempValue,
+                componentValue: cmptValue,
+                item: this.ROW_SELECTED,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue
+            });
+            if (d) {
+                paramsData.push(d);
+            }
+        })
+        // const params = this.buildParameters(ajaxConfig.params);
+        this.componentService.apiService[ajaxConfig.ajaxType](url, paramsData).subscribe(response => {
+            // success 0:全部错误,1:全部正确,2:部分错误
+            if (response.data) {
+                const successCfg = ajaxConfig.result.find(res => res.name === 'data');
+                // 弹出提示框
+                if (successCfg) {
+                    new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
+                }
+            }
+            if (response.validation) {
+                const validationCfg = ajaxConfig.result.find(res => res.name === 'validation');
+                if (validationCfg) {
+                    new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
+                }
+            }
+            if (response.error) {
+                const errorCfg = ajaxConfig.result.find(res => res.name === 'error');
+                if (errorCfg) {
+                    new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
+                }
+            }
+            this.load();
         })
         // 处理data结果
         // 处理message结果
@@ -494,11 +619,10 @@ export class CnDataTableComponent extends CnComponentBase
 
     }
 
-    public cancelRow() {
-        console.log(this.config.id + '-------------cancel  row');
-    }
-
     public setSelectRow(rowData?, $event?) {
+        if (!rowData) {
+            return false;
+        }
         if ($event) {
             const src = $event.srcElement || $event.target;
             if (src.type !== undefined) {
@@ -543,7 +667,7 @@ export class CnDataTableComponent extends CnComponentBase
         return ParameterResolver.resolve({
             params: paramsCfg,
             tempValue: this.tempValue,
-            componentValue: this.ROWS_ADDED,
+            componentValue: this.COMPONENT_VALUE,
             item: this.ROW_SELECTED,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
@@ -659,7 +783,7 @@ export class CnDataTableComponent extends CnComponentBase
     /**
      * 
      * @param actionCfg 当前操作按钮的配置
-     * @param rowData 当前数据航
+     * @param rowData 当前数据行
      * @param $event 
      */
     rowAction(actionCfg, rowData, $event?) {

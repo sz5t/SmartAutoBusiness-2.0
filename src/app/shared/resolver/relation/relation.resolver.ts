@@ -31,20 +31,40 @@ export class RelationResolver {
 
     /**
      * 解析消息发送器
-     * @param messageSenderCfg 
+     * @param config 
      */
-    public resolveSender(messageSenderCfg) {
+    public resolveSender(config): any {
+        // 组装操作判断条件
+        config.cascade.messageSender.map(sender => {
+            sender.sendData.map(sendData => {
+                // 操作判断
+                if (sendData.conditionId) {
+                    const condition = config.condition.find(c => c.id === sendData.conditionId);
+                    if (condition) {
+                        sendData['condition'] = condition;
+                    }
+                }
+                // 前置条件
+                if (sendData.beforeTriggerId) {
+                    const beforeOperation = config.beforeTrigger.find(b => b.id === sendData.beforeTriggerId);
+                    if (beforeOperation) {
+                        sendData['beforeOperation'] = beforeOperation;
+                    }
+                }
+            });
+        });
         // tslint:disable-next-line: no-use-before-declare
-        return new SenderResolver(this._componentInstance).resolve(messageSenderCfg);
+        return new SenderResolver(this._componentInstance).resolve(config.cascade.messageSender);
     }
 
     /**
      * 解析消息接受器
      * @param messageReceiverCfg 
      */
-    public resolveReceiver(messageReceiverCfg) {
+    public resolveReceiver(config): any {
+        // 查找前置条件
         // tslint:disable-next-line: no-use-before-declare
-        return new ReceiverResolver(this._componentInstance).resolve(messageReceiverCfg);
+        return new ReceiverResolver(this._componentInstance).resolve(config.cascade.messageReceiver);
     }
 
     /**
@@ -99,7 +119,49 @@ export class SenderResolver {
  * 组件消息发送解析器
  */
 export class ComponentSenderResolver {
-    debugger;
+    private _beforeTriggerCfg;
+    public get beforeTriggerCfg() {
+        return this._beforeTriggerCfg;
+    }
+    public set beforeTriggerCfg(value) {
+        this._beforeTriggerCfg = value;
+    }
+    private _afterTriggerCfg;
+    public get afterTriggerCfg() {
+        return this._afterTriggerCfg;
+    }
+    public set afterTriggerCfg(value) {
+        this._afterTriggerCfg = value;
+    }
+    private _conditionCfg;
+    public get conditionCfg() {
+        return this._conditionCfg;
+    }
+    public set conditionCfg(value) {
+        this._conditionCfg = value;
+    }
+    private _ajaxCfg;
+    public get ajaxCfg() {
+        return this._ajaxCfg;
+    }
+    public set ajaxCfg(value) {
+        this._ajaxCfg = value;
+    }
+    private _cascade;
+    public get cascade() {
+        return this._cascade;
+    }
+    public set cascade(value) {
+        this._cascade = value;
+    }
+
+    private _currentData;
+    public get currentData() {
+        return this._currentData;
+    }
+    public set currentData(value) {
+        this._currentData = value;
+    }
     constructor(private _componentInstance: any) { }
     resolve(cfg: any) {
         switch (cfg.triggerType) {
@@ -123,7 +185,6 @@ export class ComponentSenderResolver {
 
     handleStateType(cfg: any) {
         // 前置条件判断
-        // this.sendMessage(cfg);
         this._componentInstance[cfg.triggerMoment](
             this._componentInstance,
             this._componentInstance.COMPONENT_METHODS[cfg.trigger],
@@ -149,7 +210,10 @@ export class ComponentSenderResolver {
         // 前置条件判断
 
         // 执行操作, 该功能不由组件实现
-        // this.sendMessage(cfg);
+        // this.sendMessage(cfg);        
+        if (!this.conditionValidator(cfg.condition)) {
+            return false;
+        }
         this._componentInstance[cfg.triggerMoment](
             this._componentInstance,
             this._componentInstance.COMPONENT_METHODS[cfg.trigger],
@@ -193,6 +257,10 @@ export class ComponentSenderResolver {
      */
     sendMessage(cfg) {
         for (const c of cfg.sendData) {
+            // 根据前置条件判断,是否能够发送消息
+            if (!this.conditionValidator(c.condition)) {
+                return false;
+            }
             const options = this.getOptionParamsObj(c.params);
             this._componentInstance.componentService.commonRelationSubject.next(
                 new BsnRelativesMessageModel(
@@ -213,6 +281,105 @@ export class ComponentSenderResolver {
      */
     getOptionParamsObj(paramsCfg) {
         return this._componentInstance.buildParameters(paramsCfg);
+    }
+
+    private conditionValidator(condCfg): boolean {
+        if (!condCfg) {
+            return true;
+        }
+        const result = [];
+        for (const cfg of condCfg.state) {
+            switch (cfg.type) {
+                case 'component':
+                    const componentResult = this.checkComponentProperty(cfg);
+                    result.push(componentResult);
+                    break;
+            }
+        }
+        return result.findIndex(res => !res) < 0;
+    }
+
+    private checkComponentProperty(expCfg) {
+        // 判断取值的类型
+        const allCheckResult = [];
+        switch (expCfg.type) {
+            case 'component':
+                const componentValue = this._componentInstance[this._componentInstance.COMPONENT_PROPERTY[expCfg.valueName]];
+                for (const exp of expCfg.expression) {
+                    switch (exp.type) {
+                        case 'property':
+                            const valueCompareObj = this.buildMatchObject(componentValue, exp);
+                            const valueMatchResult = this.matchResolve(valueCompareObj, exp.match);
+                            allCheckResult.push(valueMatchResult);
+                            break;
+                        case 'element':
+                            const elementResult = [];
+                            for (const element of componentValue) {
+                                const elementCompareObj = this.buildMatchObject(element, exp);
+                                elementResult.push(this.matchResolve(elementCompareObj, exp.match));
+                            }
+                            const elementMatchResult = elementResult.findIndex(res => !res) < 0;
+                            allCheckResult.push(elementMatchResult);
+                    }
+                }
+                break;
+        }
+        return allCheckResult.findIndex(res => !res) < 0;
+    }
+
+    private buildMatchObject(componentValue, expCfg) {
+        const value = componentValue[expCfg.name];
+        const matchValue = expCfg.matchValue;
+        const matchValueFrom = expCfg.matchValueFrom;
+        const matchValueTo = expCfg.matchValueTo;
+        return {
+            'value': value,
+            'matchValue': matchValue,
+            'matchValueFrom': matchValueFrom,
+            'matchValueTo': matchValueTo
+        }
+    }
+
+
+    private matchResolve(compareValue, expression) {
+        switch (expression) {
+            case 'eq': // =
+                return compareValue.value === compareValue.matchValue;
+            case 'neq': // !=
+                return compareValue.value !== compareValue.matchValue;
+            case 'ctn': // like
+                return compareValue.matchValue.indexOf(compareValue.value) > 0;
+            case 'nctn': // not like
+                return compareValue.matchValue.indexOf(compareValue.value) <= 0;
+            case 'in': // in  如果是input 是这样取值，其他则是多选取值
+                let in_result = true;
+                if (Array.isArray(compareValue.matchValue) && compareValue.matchValue.length > 0) {
+                    in_result = compareValue.matchValue.findIndex(compareValue.value) > 0;
+                }
+                return in_result;
+            case 'nin': // not in  如果是input 是这样取值，其他则是多选取值
+                let nin_result = true;
+                if (Array.isArray(compareValue.matchValue) && compareValue.matchValue.length > 0) {
+                    nin_result = compareValue.matchValue.findIndex(compareValue.value) <= 0;
+                }
+                return nin_result;
+            case 'btn': // between
+                return (compareValue.matchValueFrom <= compareValue.value)
+                    && (compareValue.matchValueTo >= compareValue.value);
+            case 'ge': // >=
+                return compareValue.value >= compareValue.matchValue;
+            case 'gt': // >
+                return compareValue.value > compareValue.matchValue;
+            case 'le': // <=
+                return compareValue.value <= compareValue.matchValue;
+            case 'lt': // <
+                return compareValue.value < compareValue.matchValue;
+            default:
+            case 'regexp': // 正在表达式匹配
+                const regexp = new RegExp(compareValue.matchValue);
+                return regexp.test(compareValue.value);
+
+        }
     }
 }
 
@@ -238,7 +405,6 @@ export class ComponentReceiverResolver {
             data => {
                 // 判断发送组件与接受组件是否一致
                 if (data.viewId === cfg.senderId) {
-                    console.log('relative message', data);
                     // 判断发送触发器与接受触发起是否一致
                     // new TriggerResolver(
                     //     data,

@@ -1,3 +1,4 @@
+import { BSN_TOOLBAR_TRIGGER } from './../../../core/relations/bsn-trigger/toolbar.trigger.interface';
 import { BSN_DATAGRID_TRIGGER } from './../../../core/relations/bsn-trigger/data-grid.trigger.interface';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { from } from 'rxjs';
@@ -52,7 +53,7 @@ export class ButtonOperationResolver {
     public set currentData(value) {
         this._currentData = value;
     }
-    constructor(private _cpmtService: ComponentServiceProvider, private config, private data?) {
+    constructor(private componentService: ComponentServiceProvider, private config, private data?) {
         config.ajaxConfig && (this.ajaxCfg = config.ajaxConfig);
         config.beforeTrigger && (this.beforeTriggerCfg = config.beforeTrigger);
         config.afterTrigger && (this.afterTriggerCfg = config.afterTrigger);
@@ -83,22 +84,32 @@ export class ButtonOperationResolver {
             // 状态触发
             case BSN_TRIGGER_TYPE.STATE:
                 if (this.currentData) {
-                    this.setDataState(cfg.trigger, this.currentData)
+                    this.setDataState(cfg.trigger, this.currentData);
                     this.setToggle(this.currentData);
                 }
+                const state_options = {};
+                state_options['beforeOperation'] = this.findBeforeOperationConfig(cfg.stateId);
+                state_options['condition'] = this.findConditionConfig(cfg.conditionId);
+                state_options['btnCfg'] = btn;
+                state_options['data'] = this.currentData;
                 const stateMsg = new BsnRelativesMessageModel(
                     triggerObj,
-                    targetViewId
+                    targetViewId,
+                    state_options
                 );
-                this._cpmtService.commonRelationTrigger.next(stateMsg);
+                this.componentService.commonRelationTrigger.next(stateMsg);
                 break;
             // 行为触发
             case BSN_TRIGGER_TYPE.BEHAVIOR:
+                if (this.currentData) {
+                    this.setDataState(cfg.trigger, this.currentData);
+                    this.setToggle(this.currentData);
+                }
                 const behaviorMsg = new BsnRelativesMessageModel(
                     triggerObj,
                     targetViewId
                 )
-                this._cpmtService.commonRelationTrigger.next(behaviorMsg);
+                this.componentService.commonRelationTrigger.next(behaviorMsg);
                 break;
             // 动作触发
             case BSN_TRIGGER_TYPE.ACTION:
@@ -107,7 +118,7 @@ export class ButtonOperationResolver {
                     targetViewId,
                     {}
                 );
-                this._cpmtService.commonRelationTrigger.next(actionMsg);
+                this.componentService.commonRelationTrigger.next(actionMsg);
                 break;
             // 操作触发
             case BSN_TRIGGER_TYPE.OPERATION:
@@ -118,12 +129,13 @@ export class ButtonOperationResolver {
                 options['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
                 options['beforeOperation'] = this.findBeforeOperationConfig(cfg.stateId);
                 options['condition'] = this.findConditionConfig(cfg.conditionId);
+                options['data'] = this.currentData;
                 const operationMsg = new BsnRelativesMessageModel(
                     triggerObj,
                     targetViewId,
                     options // 异步操作配置
                 )
-                this._cpmtService.commonRelationTrigger.next(operationMsg);
+                this.componentService.commonRelationTrigger.next(operationMsg);
                 break;
             // 链接跳转触发
             case BSN_TRIGGER_TYPE.LINK:
@@ -136,7 +148,7 @@ export class ButtonOperationResolver {
                     targetViewId,
                     linkOptions // 页面跳转配置
                 )
-                this._cpmtService.commonRelationTrigger.next(linkMsg);
+                this.componentService.commonRelationTrigger.next(linkMsg);
                 break;
         }
     }
@@ -145,15 +157,45 @@ export class ButtonOperationResolver {
         switch (state) {
             case BSN_DATAGRID_TRIGGER.EDIT_ROW:
                 dataOfState.state = 'edit';
+                // sendMsg.isSend = false;
                 break;
-            case BSN_DATAGRID_TRIGGER.CANCEL:
+            case BSN_DATAGRID_TRIGGER.EDIT_ROWS:
+                dataOfState.state = 'edit';
+                // sendMsg.isSend = false;
+                break;
+            case BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW:
                 dataOfState.state = 'text';
+                // sendMsg.isSend = true
+                break;
+            case BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROWS:
+                dataOfState.state = 'text';
+                // sendMsg.isSend = true
+                break;
+            case BSN_DATAGRID_TRIGGER.ADD_ROW:
+                dataOfState.state = 'new';
+                // sendMsg.isSend = true
+                break;
+            case BSN_DATAGRID_TRIGGER.CANCEL_NEW_ROW:
+                dataOfState.state = 'deleted';
+                // sendMsg.isSend = true;
+                break;
+            case BSN_DATAGRID_TRIGGER.CANCEL_NEW_ROWS:
+                dataOfState.state = 'text';
+                break;
+            case BSN_TOOLBAR_TRIGGER.STATE_TO_TEXT:
+                dataOfState.state = 'text';
+                break;
+            case BSN_TOOLBAR_TRIGGER.EXECUTE_NONE:
+                dataOfState.state = 'text';
+                break;
+            case BSN_DATAGRID_TRIGGER.REFRESH:
+                dataOfState.state = 'text';
+                break;
         }
     }
 
     // 
     private setToggle(dataOfState) {
-        console.log(dataOfState);
         if (Array.isArray(dataOfState.actions) && dataOfState.actions.length > 0) {
             // 状态切换
             // 查找当前数据对应的操作状态

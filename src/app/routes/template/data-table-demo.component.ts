@@ -79,7 +79,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                         "triggerMoment": "after",
                                         "sendData": [
                                             {
-                                                "beforeSend": [],
+                                                "beforeSend": {},
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "BEHAVIOR",
                                                 "receiverTrigger": "REFRESH_AS_CHILD",
@@ -98,6 +98,29 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             }
                                         ]
                                     }
+                                ],
+                                "messageReceiver": [
+                                    {
+                                        "id": "s_001",
+                                        "senderId": "view_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "STATE",
+                                                "trigger": "STATE_TO_TEXT"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_002",
+                                        "senderId": "view_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "STATE",
+                                                "trigger": "STATE_TO_EDIT"
+                                            }
+                                        ]
+                                    }
+
                                 ]
                             },
                             "condition": [
@@ -198,20 +221,61 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             ]
                                         }
                                     ]
+                                },
+                                {
+                                    "id": "cancel_edit_rows_2",
+                                    "state": [
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_EDITED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": "gt"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
-
                             ],
                             "ajaxConfig": [
                                 {
-                                    "id": "add_save_1",
-                                    "url": "information/test2",
+                                    "id": "add_provinces_1",
+                                    "url": "province/insertMany",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "state",
-                                            "type": "value",
-                                            "value": "DVM"
+                                            "name": "provinceName",
+                                            "type": "componentValue",
+                                            "valueName": "provinceName",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "areaCode",
+                                            "type": "componentValue",
+                                            "valueName": "areaCode",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
@@ -236,14 +300,45 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "edit_save_1",
-                                    "url": "information/test2",
+                                    "url": "province/updateMany",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
-                                            "name": "state",
-                                            "type": "value",
-                                            "value": "DVM"
+                                            "name": "id",
+                                            "type": "componentValue",
+                                            "valueName": "id",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "provinceName",
+                                            "type": "componentValue",
+                                            "valueName": "provinceName",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "areaCode",
+                                            "type": "componentValue",
+                                            "valueName": "areaCode",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
@@ -323,11 +418,11 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             "color": "text-success",
                                             "hidden": false,
                                             "disabled": false,
-                                            "state": "edit",
+                                            "state": "text",
                                             "execute": [
                                                 {
                                                     "triggerType": "STATE",
-                                                    "trigger": "EDIT_ROW",
+                                                    "trigger": "EDIT_ROWS",
                                                     // "conditionId": "edit_state_1"
                                                 }
                                             ],
@@ -372,17 +467,17 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             "execute": [
                                                 {
                                                     "triggerType": "OPERATION",
-                                                    "trigger": "SAVE_ROW",
-                                                    "ajaxId": "add_save_1",
-                                                    "stateId": "add_save_1",
-                                                    "conditionId": "add_save_1"
+                                                    "trigger": "SAVE_ROWS",
+                                                    "ajaxId": "add_provinces_1",
+                                                    // "stateId": "add_save_1",
+                                                    // "conditionId": "add_save_1"
                                                 },
                                                 {
                                                     "triggerType": "OPERATION",
-                                                    "trigger": "EDIT_ROW",
-                                                    "stateId": "edit_save_1",
+                                                    "trigger": "SAVE_ROWS",
                                                     "ajaxId": "edit_save_1",
-                                                    "conditionId": "edit_save_1"
+                                                    // "stateId": "edit_save_1",
+                                                    // "conditionId": "edit_save_1"
                                                 }
                                             ],
                                             "toggle": {
@@ -396,15 +491,18 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                                     {
                                                         "name": "text",
                                                         "value": true
+                                                    },
+                                                    {
+                                                        "name": "new",
+                                                        "value": false
                                                     }
                                                 ]
                                             }
                                         },
                                         {
                                             "id": "M_cancelrow",
-                                            "text": "取消",
-                                            "triggerType": "STATE",
-                                            "trigger": "CANCEL",
+                                            "text": "取消1",
+                                            "state": "edit",
                                             "icon": "rollback",
                                             "color": "text-grey-darker",
                                             "hidden": true,
@@ -412,7 +510,12 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             "execute": [
                                                 {
                                                     "triggerType": "STATE",
-                                                    "trigger": "CANCEL"
+                                                    "trigger": "CANCEL_EDIT_ROWS",
+                                                    "conditionId": "cancel_edit_rows_2"
+                                                },
+                                                {
+                                                    "triggerType": "STATE",
+                                                    "trigger": "CANCEL_NEW_ROWS"
                                                 }
                                             ],
                                             "toggle": {
@@ -426,6 +529,10 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                                     {
                                                         "name": "text",
                                                         "value": true
+                                                    },
+                                                    {
+                                                        "name": "new",
+                                                        "value": false
                                                     }
                                                 ]
                                             }
@@ -494,7 +601,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                             "title": "主表",
                             "titleIcon": "right-circle",
                             "component": "cnDataTable",
-                            "keyId": "ID",
+                            "keyId": "id",
                             "size": "middle",
                             "isBordered": true,
                             "isFrontPagination": false,
@@ -523,9 +630,9 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                             },
                             "columns": [
                                 {
-                                    "title": "id",
+                                    "title": "ID",
                                     "type": "field",
-                                    "field": "ID",
+                                    "field": "id",
                                     "hidden": true,
                                     "showFilter": false,
                                     "showSort": false,
@@ -536,7 +643,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 {
                                     "title": "PROVINCE_NAME",
                                     "type": "field",
-                                    "field": "PROVINCENAME",
+                                    "field": "provinceName",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
@@ -546,41 +653,41 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 {
                                     "title": "POPULATIONSIZE",
                                     "type": "field",
-                                    "field": "POPULATIONSIZE",
+                                    "field": "populationSize",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "50px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 {
                                     "title": "DIRECTLYUNDER",
                                     "type": "field",
-                                    "field": "DIRECTLYUNDER",
+                                    "field": "directlyUnder",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "50px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 {
                                     "title": "AREACODE",
                                     "type": "field",
-                                    "field": "AREACODE",
+                                    "field": "areaCode",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "50px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 {
                                     "title": "CREATEDATE",
                                     "type": "field",
-                                    "field": "CREATEDATE",
+                                    "field": "createDate",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "50px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 // {
@@ -607,7 +714,6 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 {
                                     "title": "ACTION",
                                     "type": "action",
-                                    "width": "150px",
                                     "actionIds": [
                                         "grid_edit", "grid_cancel", "grid_save", "grid_delete", "grid_new", "grid_new_cancel"
                                     ]
@@ -623,19 +729,82 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                         "triggerMoment": "after",
                                         "sendData": [
                                             {
-                                                "beforeSend": [],
+                                                "beforeSend": {},
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "BEHAVIOR",
                                                 "receiverTrigger": "REFRESH_AS_CHILD",
-                                                "data": {
-                                                    "params": [
-                                                        {
-                                                            "name": "_PID",
-                                                            "type": "item",
-                                                            "valueName": "ID"
-                                                        }
-                                                    ]
-                                                }
+                                                "params": [
+                                                    {
+                                                        "name": "_PID",
+                                                        "type": "item",
+                                                        "valueName": "id"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "grid_sender_03",
+                                        "senderId": "view_01",
+                                        "triggerType": "STATE",
+                                        "trigger": "CANCEL_EDIT_ROW",
+                                        "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "STATE",
+                                                "receiverTrigger": "STATE_TO_TEXT",
+                                                "conditionId": "cancel_edit_1",
+                                                "params": [
+                                                    {
+                                                        "name": "targetViewId",
+                                                        "value": "view_01",
+                                                        "type": "value"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "grid_sender_04",
+                                        "senderId": "view_01",
+                                        "triggerType": "STATE",
+                                        "trigger": "CANCEL_NEW_ROW",
+                                        "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "STATE",
+                                                "receiverTrigger": "STATE_TO_TEXT",
+                                                "conditionId": "cancel_edit_2",
+                                                "params": [
+                                                    {
+                                                        "name": "targetViewId",
+                                                        "value": "view_01",
+                                                        "type": "value"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "grid_sender_05",
+                                        "senderId": "view_01",
+                                        "triggerType": "STATE",
+                                        "trigger": "EDIT_ROW",
+                                        "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "STATE",
+                                                "receiverTrigger": "STATE_TO_EDIT",
+                                                "params": [
+                                                    {
+                                                        "name": "targetViewId",
+                                                        "value": "view_01",
+                                                        "type": "value"
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
@@ -653,9 +822,9 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "hidden": false,
                                     "execute": [
                                         {
-                                            "triggerType": "STATE",
-                                            "trigger": "EDIT_ROW",
-                                            // "ajaxId": "add_save_1",
+                                            "triggerType": "OPERATION",
+                                            "trigger": "SAVE_ROW",
+                                            "ajaxId": "province_save_1",
                                             // "stateId": "add_save_1",
                                             // "conditionId": "add_save_1"
                                         }
@@ -679,7 +848,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "id": "grid_new_cancel",
                                     "state": "new",
                                     "text": "取消",
-                                    "icon": "delete",
+                                    "icon": "rollback",
                                     "color": "text-primary",
                                     "type": "link",
                                     "size": "small",
@@ -687,7 +856,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "execute": [
                                         {
                                             "triggerType": "STATE",
-                                            "trigger": "EDIT_ROW",
+                                            "trigger": "CANCEL_NEW_ROW",
                                             // "ajaxId": "add_save_1",
                                             // "stateId": "add_save_1",
                                             // "conditionId": "add_save_1"
@@ -753,11 +922,10 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "execute": [
                                         {
                                             "triggerType": "STATE",
-                                            "trigger": "CANCEL",
-                                            "toggle": "1",
+                                            "trigger": "CANCEL_EDIT_ROW",
                                             // "ajaxId": "add_save_1",
                                             // "stateId": "add_save_1",
-                                            // "conditionId": "add_save_1"
+                                            // "conditionId": "cancel_edit_1"
                                         }
                                     ],
                                     "toggle": {
@@ -788,8 +956,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                         {
                                             "triggerType": "OPERATION",
                                             "trigger": "SAVE_ROW",
-                                            "ajaxId": "add_save_1",
-                                            "toggle": "1",
+                                            "ajaxId": "province_edit_1",
                                             // "stateId": "add_save_1",
                                             // "conditionId": "add_save_1"
                                         }
@@ -925,20 +1092,79 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             ]
                                         }
                                     ]
+                                },
+                                {
+                                    "id": "cancel_edit_1",
+                                    "state": [
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_EDITED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": "eq"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "cancel_edit_2",
+                                    "state": [
+                                        {
+                                            "type": "component",
+                                            "valueName": "ROWS_ADDED",
+                                            "expression": [
+                                                {
+                                                    "type": "property",
+                                                    "name": "length",
+                                                    "matchValue": 0,
+                                                    "match": "eq"
+                                                }
+                                            ]
+                                        }
+                                    ]
                                 }
 
                             ],
                             "ajaxConfig": [
                                 {
                                     "id": "province_save_1",
-                                    "url": "province/insert",
+                                    "url": "province/insert ",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "PROVINCENAME",
+                                            "name": "provinceName",
                                             "type": "componentValue",
-                                            "value": "PROVINCENAME"
+                                            "valueName": "provinceName",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize",
+                                            "dataType": "number"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder",
+                                            "dataType": "number"
+                                        },
+                                        {
+                                            "name": "areaCode",
+                                            "type": "componentValue",
+                                            "valueName": "areaCode",
+                                            "dataType": "number"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
@@ -968,14 +1194,40 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "ajaxType": "put",
                                     "params": [
                                         {
-                                            "name": "PROVINCENAME",
+                                            "name": "provinceName",
                                             "type": "componentValue",
-                                            "value": "PROVINCENAME"
+                                            "valueName": "provinceName",
+                                            "dataType": "string"
                                         },
                                         {
-                                            "name": "ID",
+                                            "name": "populationSize",
                                             "type": "componentValue",
-                                            "value": "ID"
+                                            "valueName": "populationSize",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "areaCode",
+                                            "type": "componentValue",
+                                            "valueName": "areaCode",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "id",
+                                            "type": "componentValue",
+                                            "valueName": "id",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
@@ -1036,7 +1288,8 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                             ]
 
                         }
-                    }, {
+                    },
+                    {
                         "id": "r5zDHB2-1",
                         "col": "cc",
                         "type": "col",
@@ -1053,10 +1306,10 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                         },
                         "component": {
                             "id": "view_02",
-                            "title": "主表",
+                            "title": "子表",
                             "titleIcon": "right-circle",
                             "component": "cnDataTable",
-                            "keyId": "ID",
+                            "keyId": "id",
                             "size": "middle",
                             "isBordered": true,
                             "isFrontPagination": false,
@@ -1068,11 +1321,11 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                             "pageSizeOptions": [10, 20, 50, 100],
                             "loadingOnInit": false,
                             "loadingConfig": {
-                                "url": "city/page",
+                                "url": "information/selectCityByProvinceIdPage",
                                 "method": "get",
                                 "params": [
                                     {
-                                        "name": "PID",
+                                        "name": "pid",
                                         "type": "tempValue",
                                         "valueName": "_PID"
                                     }
@@ -1085,7 +1338,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 {
                                     "title": "id",
                                     "type": "field",
-                                    "field": "ID",
+                                    "field": "id",
                                     "hidden": true,
                                     "showFilter": false,
                                     "showSort": false,
@@ -1096,7 +1349,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 {
                                     "title": "id",
                                     "type": "field",
-                                    "field": "PID",
+                                    "field": "pId",
                                     "hidden": true,
                                     "showFilter": false,
                                     "showSort": false,
@@ -1107,51 +1360,51 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 {
                                     "title": "CITY_NAME",
                                     "type": "field",
-                                    "field": "CITYNAME",
+                                    "field": "cityName",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "150px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 {
                                     "title": "ZIPCODE",
                                     "type": "field",
-                                    "field": "ZIPCODE",
+                                    "field": "zipCode",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "150px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 {
                                     "title": "POPULATIONSIZE",
                                     "type": "field",
-                                    "field": "POPULATIONSIZE",
+                                    "field": "populationSize",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "150px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 {
                                     "title": "DIRECTLYUNDER",
                                     "type": "field",
-                                    "field": "DIRECTLYUNDER",
+                                    "field": "directlyUnder",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "150px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 {
                                     "title": "CREATEDATE",
                                     "type": "field",
-                                    "field": "CREATEDATE",
+                                    "field": "createDate",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "150px",
+                                    "width": "100px",
                                     "style": {},
                                 },
                                 // {
@@ -1180,32 +1433,50 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "type": "action",
                                     "width": "150px",
                                     "actionIds": [
-                                        "grid_edit", "grid_save", "grid_delete"
+                                        "city_edit", "city_save", "city_cancel", "city_delete"
                                     ]
                                 }
                             ],
                             "rowActions": [
                                 {
                                     "id": "city_edit",
+                                    "state": "text",
                                     "text": "编辑",
                                     "icon": "save",
                                     "color": "text-primary",
                                     "type": "link",
                                     "size": "small",
+                                    "hidden": false,
                                     "execute": [
                                         {
                                             "triggerType": "STATE",
                                             "trigger": "EDIT_ROW"
                                         }
-                                    ]
+                                    ],
+                                    "toggle": {
+                                        "type": "state",
+                                        "toggleProperty": "hidden",
+                                        "values": [
+                                            {
+                                                "name": "edit",
+                                                "value": true
+                                            },
+                                            {
+                                                "name": "text",
+                                                "value": false
+                                            }
+                                        ]
+                                    }
                                 },
                                 {
                                     "id": "city_save",
                                     "text": "保存",
+                                    "state": "text",
                                     "icon": "save",
                                     "color": "text-primary",
                                     "type": "link",
                                     "size": "small",
+                                    "hidden": true,
                                     "execute": [
                                         {
                                             "triggerType": "OPERATION",
@@ -1214,15 +1485,61 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             // "stateId": "add_save_1",
                                             // "conditionId": "add_save_1"
                                         }
-                                    ]
+                                    ],
+                                    "toggle": {
+                                        "type": "state",
+                                        "toggleProperty": "hidden",
+                                        "values": [
+                                            {
+                                                "name": "edit",
+                                                "value": false
+                                            },
+                                            {
+                                                "name": "text",
+                                                "value": true
+                                            }
+                                        ]
+                                    }
                                 },
                                 {
-                                    "id": "grid_delete",
+                                    "id": "city_cancel",
+                                    "state": "text",
+                                    "text": "取消",
+                                    "icon": "rollback",
+                                    "color": "text-primary",
+                                    "type": "link",
+                                    "size": "small",
+                                    "hidden": true,
+                                    "execute": [
+                                        {
+                                            "triggerType": "STATE",
+                                            "trigger": "CANCEL_EDIT_ROW"
+                                        }
+                                    ],
+                                    "toggle": {
+                                        "type": "state",
+                                        "toggleProperty": "hidden",
+                                        "values": [
+                                            {
+                                                "name": "edit",
+                                                "value": false
+                                            },
+                                            {
+                                                "name": "text",
+                                                "value": true
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "id": "city_delete",
                                     "text": "删除",
+                                    "state": "text",
                                     "icon": "delete",
                                     "type": "link",
                                     "color": "primary",
                                     "size": "small",
+                                    "hidden": false,
                                     "execute": [
                                         {
                                             "triggerType": "OPERATION",
@@ -1245,13 +1562,8 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "trigger": "REFRESH_AS_CHILD",
                                                 "params": [
                                                     {
-                                                        "pname": "parent_id",
-                                                        "cname": "_parent_id",
-                                                        "valueTo": "tempValue"
-                                                    },
-                                                    {
-                                                        "pname": "parent_name",
-                                                        "cname": "_parent_name",
+                                                        "pname": "_PID",
+                                                        "cname": "_PID",
                                                         "valueTo": "tempValue"
                                                     }
                                                 ]
@@ -1285,14 +1597,34 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "CITYNAME",
+                                            "name": "cityName",
                                             "type": "componentValue",
-                                            "value": "CITYNAME"
+                                            "value": "cityName"
                                         },
                                         {
-                                            "name": "PID",
+                                            "name": "zipCode",
                                             "type": "componentValue",
-                                            "value": "PID"
+                                            "value": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "value": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "value": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "value": "createDate"
+                                        },
+                                        {
+                                            "name": "pid",
+                                            "type": "componentValue",
+                                            "value": "pid"
                                         }
                                     ],
                                     "outputParameters": [
@@ -1322,19 +1654,39 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "ajaxType": "put",
                                     "params": [
                                         {
-                                            "name": "CITYNAME",
+                                            "name": "cityName",
                                             "type": "componentValue",
-                                            "value": "CITYNAME"
+                                            "value": "cityName"
                                         },
                                         {
-                                            "name": "ID",
+                                            "name": "zipCode",
                                             "type": "componentValue",
-                                            "value": "ID"
+                                            "value": "zipCode"
                                         },
                                         {
-                                            "name": "PID",
+                                            "name": "populationSize",
                                             "type": "componentValue",
-                                            "value": "PID"
+                                            "value": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "value": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "value": "createDate"
+                                        },
+                                        {
+                                            "name": "pid",
+                                            "type": "componentValue",
+                                            "value": "pid"
+                                        },
+                                        {
+                                            "name": "id",
+                                            "type": "componentValue",
+                                            "value": "id"
                                         }
                                     ],
                                     "outputParameters": [

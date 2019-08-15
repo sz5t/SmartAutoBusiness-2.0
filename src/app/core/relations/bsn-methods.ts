@@ -1,12 +1,17 @@
 import { IDataGridTrigger } from './bsn-trigger/data-grid.trigger.interface';
+import { IToolbarTrigger } from './bsn-trigger/toolbar.trigger.interface';
 
 export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     // state
     ADD_ROW: 'addRow',
     ADD_CHILD_ROW: 'addChildRow',
     EDIT_ROW: 'editRow',
+    EDIT_ROWS: 'editRows',
     DELETE_ROW: 'deleteRow',
-    CANCEL: 'cancelRow',
+    CANCEL_NEW_ROW: 'cancelNewRow',
+    CANCEL_NEW_ROWS: 'cancelNewRows',
+    CANCEL_EDIT_ROW: 'cancelEditRow',
+    CANCEL_EDIT_ROWS: 'cancelEditRows',
     SEARCH_ROW: 'searchRow',
     CANCEL_SEARCH_ROW: 'cancelSearchRow',
 
@@ -34,7 +39,15 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
 
     // operation
     SAVE_ROW: 'saveRow',
+    SAVE_ROWS: 'saveRows',
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
     EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds'
+}
+
+export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
+    STATE_TO_TEXT: 'stateToText',
+    STATE_TO_EDIT: 'stateToEdit',
+    EXECUTE_NONE: 'executeNone',
+    EXECUTE_NONE_EDIT: 'executeNoneEdit'
 }
