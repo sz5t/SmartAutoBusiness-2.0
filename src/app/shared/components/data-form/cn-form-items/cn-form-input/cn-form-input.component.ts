@@ -11,7 +11,7 @@ export class CnFormInputComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
   constructor() { }
-
+  value;
   ngOnInit() {
     // console.log('input=>:', this.config,this.formGroup);
   }
@@ -21,8 +21,13 @@ export class CnFormInputComponent implements OnInit {
    * valueChange
    */
   public valueChange(v?) {
-    console.log('input 值变化', v);
-    
+    //  console.log('input 值变化', v,this.formGroup);
+    // tslint:disable-next-line:forin
+    for (const key in this.formGroup.controls) {
+      this.formGroup.controls[key].markAsPristine();
+      this.formGroup.controls[key].updateValueAndValidity();
+    }
   }
-
+  public cascadeAnalysis(c?) {
+  }
 }

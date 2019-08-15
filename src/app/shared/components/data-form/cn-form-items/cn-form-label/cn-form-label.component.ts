@@ -11,7 +11,7 @@ export class CnFormLabelComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
 
-  public value;
+  public value:any;
   constructor() { }
 
   ngOnInit() {
@@ -21,8 +21,13 @@ export class CnFormLabelComponent implements OnInit {
    * valueChange
    */
   public valueChange(v?) {
-    console.log('label 值变化', v);
-    
+    this.value = v;
+    // console.log('label 值变化', v);
+    const backValue = { name: this.config.field, value: v, id: this.config.config.id };
+    // this.updateValue.emit(backValue);
+  }
+
+  public cascadeAnalysis(c?) {
   }
 
 }

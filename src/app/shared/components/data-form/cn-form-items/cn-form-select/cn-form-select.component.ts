@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { CnComponentBase } from '@shared/components/cn-component.base';
@@ -18,6 +18,7 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit {
   public selectOptions = [];
   public selectItems = [];
   public cascadeOptions:any;
+  public myControl;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
@@ -25,7 +26,9 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit {
 
   ngOnInit() {
     // console.log('select 初始化ngOnInit=>当前表单的值',this.formGroup.value , this.config);
+    this.myControl = this.formGroup.get(this.config.field);
 
+     // console.log('select required',this.myControl);
 
     if (this.config.loadingConfig) {
       this.load();
@@ -43,6 +46,14 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit {
    * valueChange
    */
   public valueChange(v?) {
+    // tslint:disable-next-line:forin
+   // for (const i in this.formGroup.controls) {
+     // this.formGroup.controls[i].markAsDirty();
+     // this.formGroup.controls[i].updateValueAndValidity();
+      // this.formGroup.get('inputname2')!.setValidators(Validators.required);
+      // this.formGroup.get('inputname2')!.markAsDirty();
+      // this.formGroup.get('inputname2')!.updateValueAndValidity();
+    // }
 
     const backValue = { name: this.config.field, value: v, id: this.config.config.id };
     const index = this.selectItems.findIndex(item => item[this.config['valueName']] === v);

@@ -121,10 +121,15 @@ export class TriggerResolver {
 
     handleStateType() {
         // 前置条件判断
-
         // 执行组件具体方法
-        const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
-        this._componentInstance[method]();
+        if (this._triggerMsg.options) {
+            const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
+            this._componentInstance[method](this._triggerMsg.options);
+        } else {
+            const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
+            this._componentInstance[method]();
+        }
+
     }
 
     handleBehaviorType() {

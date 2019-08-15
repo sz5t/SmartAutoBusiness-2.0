@@ -1,39 +1,75 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, Input, OnDestroy, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { CommonUtils } from '@core/utils/common-utils';
+import { IDataFormProperty, CN_DATA_FORM_PROPERTY } from '@core/relations/bsn-property/data-form.property.interface';
+import { CN_DATA_FORM_METHOD } from '@core/relations/bsn-methods';
+import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'cn-data-form',
   templateUrl: './cn-data-form.component.html',
   styleUrls: ['./cn-data-form.component.less'],
-  changeDetection: ChangeDetectionStrategy.Default
+ // changeDetection: ChangeDetectionStrategy.Default
 })
-export class CnDataFormComponent extends CnComponentBase implements OnInit {
+export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDestroy,OnChanges, IDataFormProperty,AfterViewInit {
+
+ 
+
   @Input() public config;
   validateForm: FormGroup;
   controlArray: any[] = [];
-
+  value;
   formControlObj: any = {};
   ajaxConfigObj: any = {};
   formValue: any = {}; // 表单值
   formCascade = {}; // 级联信息
-  formState; // 表单的状态=》新增、修改、展示
   fromFieldPermissions;  // 表单字段权限
   //  字段权限 于状态有关，insert、update、text 3大状态下 某个小组件的状态，
   // 有一套dufault 配置，用户权限加载后合并当前 字段权限，再处理一次，以每个control 控制
+  /**
+   * 组件名称
+   * 所有组件实现此属性 
+   */
+  public COMPONENT_NAME = "CnDataForm";
+  /**
+   * 组件操作对外名称
+   * 所有组件实现此属性
+   */
+  public COMPONENT_METHODS = CN_DATA_FORM_METHOD;
+
+  public COMPONENT_PROPERTY = CN_DATA_FORM_PROPERTY;
+  public FORM_VALUE: any = {}; // 当前表单组件值
+  public FORM_STATE: any;  // 表单的状态=》新增、修改、展示
+  private _sender_source$: Subject<any>;
+  private _receiver_source$: Subject<any>;
+  private _trigger_source$: Subject<any>;
+
+  private _receiver_subscription$: Subscription;
+  private _sender_subscription$: Subscription;
+  private _trigger_receiver_subscription$: Subscription;
+
   constructor(private fb: FormBuilder, @Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
   }
 
   ngOnInit() {
-    this.validateForm = this.fb.group({});
+    // 动态构建表单的初始默认值, 校验规则
+    // this.validateForm = this.fb.group({
+    //   code: ['liu', [Validators.required]],
+    //   inputname2: [null, [Validators.required]],
+    //   inputname5: ['', [Validators.required]],
+
+    // });
+     this.validateForm = this.fb.group({});
+
     // 生成Controls
-    this.createControls();
+    this.createControls( this.validateForm);
     // 生成表单的异步请求  ajaxConfigObj 对象
     this.config.ajaxConfig.forEach(ajax => {
       this.ajaxConfigObj[ajax.id] = ajax;
@@ -55,9 +91,10 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
       this.formControlObj[Control.id] = Control;
     });
     // 初始化表单状态
-    this.formStateChange(this.config.state);
+    this. formStateChange(this.config.state);
 
-
+    // 解析及联配置
+    this.resolveRelations();
     // => 正则校验
     /*     this.validateForm = this.fb.group({
           userName: ['', [Validators.required], [this.userNameAsyncValidator]],
@@ -71,64 +108,117 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
     this.load();
   }
 
-  // 表单布局配置
-  // 表单-表单域布局，文本组件分割布局
+  ngAfterViewInit(): void {
+    console.log('*******ngAfterViewInit********');
+    this.load();
+  }
 
-
+  ngOnChanges(changes: SimpleChanges) {
+    if(this.validateForm){
+      console.log('form 变化', this.validateForm);
+    }
+  }
   /**
    * Controls 生成（根据配置信息生成Controls）
    */
-  private createControls() {
+  private createControls(f) {
+   // const controls = Object.keys(this.validateForm.controls);
+    // controls.forEach(control => this.validateForm.removeControl(control));
+
     this.config.formControls.forEach(Control => {
       if (Control.text && Control.editor) {
-        if (Control.text.field === Control.text.field) {
-          this.validateForm.addControl(`${Control.field}`, new FormControl());
+        if (Control.text.field === Control.editor.field) {
+          f.addControl(`${Control.field}`, new FormControl());
           this.formValue[Control.field] = null;
         }
         else {
-          this.validateForm.addControl(`${Control.text.field}`, new FormControl());
+         f.addControl(`${Control.text.field}`, new FormControl());
           this.formValue[Control.text.field] = null;
-          this.validateForm.addControl(`${Control.text.field}`, new FormControl());
-          this.formValue[Control.text.field] = null;
+          f.addControl(`${Control.editor.field}`, new FormControl());
+          this.formValue[Control.editor.field] = null;
         }
       }
       else {
         if (Control.text) {
-          this.validateForm.addControl(`${Control.text.field}`, new FormControl());
+          f.addControl(`${Control.text.field}`, new FormControl());
           this.formValue[Control.text.field] = null;
         }
-        if (Control.text) {
-          this.validateForm.addControl(`${Control.text.field}`, new FormControl());
-          this.formValue[Control.text.field] = null;
+        if (Control.editor) {
+          f.addControl(`${Control.editor.field}`, new FormControl());
+          this.formValue[Control.editor.field] = null;
         }
       }
       this.formCascade[Control.id] = {};
     });
   }
+
+  public createGroup() {
+    const controls = [];
+    const group = this.fb.group({});
+    // this.
+    controls.forEach(control => {
+      group.addControl(control.name, this.createControl(control));
+    });
+    return group;
+  }
+
+  public createControl(control) {
+    const { disabled, value } = control;
+    const validations = this.getValidations(control.validations);
+    return this.fb.control({ disabled, value }, validations);
+  }
+
+
+  /**
+   * 生成 校验规则
+   */
+  public getValidations(validations) {
+    const validation = [];
+    validations &&
+      validations.forEach(valid => {
+        if (valid.validator === 'required' || valid.validator === 'email') {
+          validation.push(Validators[valid.validator]);
+        } else if (
+          valid.validator === 'minLength' ||
+          valid.validator === 'maxLength'
+        ) {
+          validation.push(Validators[valid.validator](valid.length));
+        } else if (valid.validator === 'pattern') {
+          validation.push(Validators[valid.validator](valid.pattern));
+        }
+      });
+    return validation;
+  }
+
   /**
    * Controls 状态生成（根据配置信息生成Controls 的状态）
    * @param state 
    */
   private ControlsPermissions(state?) {
+    // const ob = JSON.parse(JSON.stringify( this.formControlObj));
     this.config.formControlsPermissions.forEach(items => {
+     //  debugger;
       if (items.formState === state) {
         items.Controls.forEach(Control => {
           this.formControlObj[Control.id].state = Control.state;
           // 读写等操作 未处理
+          // 将 Control 的其他行为也写入
         });
 
       }
     });
+    console.log('ControlsPermissions', this.formControlObj);
   }
-/**
- * formStateChange  表单状态切换=》 编辑状态、新增状态、浏览状态
- * 状态切换时，可根据权限控制 formControls 的字段读写权限
- * @param state 
- */
+  /**
+   * formStateChange  表单状态切换=》 编辑状态、新增状态、浏览状态
+   * 状态切换时，可根据权限控制 formControls 的字段读写权限
+   * @param state 
+   */
   public formStateChange(state?) {
-    this.formState = state; // insert  update   text  新增、修改、查看 3种状态切换
+     // insert  update   text  新增、修改、查看 3种状态切换
+    this. FORM_STATE =  state;
     // 新增状态可填写默认值，其他状态无默认值
-    this.ControlsPermissions(this.formState);
+    this.ControlsPermissions(this. FORM_STATE);
   }
 
   /**
@@ -143,7 +233,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
    * SaveJson
    */
   public SaveJson() {
-    console.log('提交表单', this.validateForm.value);
+    console.log('提交表单', this.validateForm.valid,this.validateForm.value);
   }
 
   public buildParameters(paramsCfg) {
@@ -157,6 +247,13 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
     });
   }
 
+  public submitForm(): void {
+    // tslint:disable-next-line:forin
+    for (const i in this.validateForm.controls) {
+      this.validateForm.controls[i].markAsDirty();
+      this.validateForm.controls[i].updateValueAndValidity();
+    }
+  }
   /**
    * load 自加载
    */
@@ -184,9 +281,48 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
       console.log(error);
     });
 
-
+    this.formValue['code'] ="11110010"
+    this.validateForm.setValue(this.formValue);
+    console.log('****loadliu*****');
   }
 
+  /**
+   *  解析级联消息
+   */
+  private resolveRelations() {
+    if (this.config.cascade && this.config.cascade.messageSender) {
+      if (!this._sender_source$) {
+        // 解析组件发送消息配置,并注册消息发送对象
+        this._sender_source$ = new RelationResolver(this).resolve(this.config.cascade);
+        this._sender_subscription$ = this._sender_source$.subscribe();
+      }
+
+    }
+    if (this.config.cascade && this.config.cascade.messageReceiver) {
+      // 解析消息接受配置,并注册消息接收对象
+      this._receiver_source$ = new RelationResolver(this).resolve(this.config.cascade);
+      this._receiver_subscription$ = this._receiver_source$.subscribe();
+    }
+    this._trigger_source$ = new RelationResolver(this).resolve();
+
+  }
+  public ngOnDestroy() {
+    // 释放级联对象
+    this.unsubscribeRelation();
+    // 释放及联接受对象
+    if (this._receiver_subscription$) {
+      this._receiver_subscription$.unsubscribe();
+    }
+
+    if (this._sender_subscription$) {
+      this._sender_subscription$.unsubscribe();
+    }
+
+    // 释放触发器对象
+    if (this._trigger_receiver_subscription$) {
+      this._trigger_receiver_subscription$.unsubscribe();
+    }
+  }
 
 
   /**
@@ -195,11 +331,10 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
    * 考虑，如何解决1.0的问题，控制级联状态的分割，级联参数的优先级
    */
   public valueChange(v?) {
+    console.log('===valueChange==',v);
     if (!this.formCascade) {
       this.formCascade = {};
     }
-
-
 
     // 1. 循环发出对象
 
@@ -308,7 +443,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
 
         });
         this.formCascade[cascadeObj.controlId] = JSON.parse(JSON.stringify(this.formCascade[cascadeObj.controlId]));
-        console.log('==表单内值变化反馈==', this.formCascade);
+       // console.log('==表单内值变化反馈==', this.formCascade);
       });
 
 
@@ -316,6 +451,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
 
     });
 
+    // tslint:disable-next-line:forin liu 自定义
+    // for (const key in this.validateForm.controls) {
+    //   this.validateForm.controls[key].markAsPristine();
+    //   this.validateForm.controls[key].updateValueAndValidity();
+    // }
   }
 
 
@@ -339,7 +479,80 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit {
    */
 
 
+  public getCurrentComponentId() {
+    return this.config.id;
+}
 
+  public addForm(v?) {
+    this.createControls( this.validateForm);
+    this.formStateChange('insert');
+    console.log(this.config.id + '-------------addForm',v);
+  }
+  public editForm(v?) {
+    this.validateForm = this.fb.group({});
+    this.createControls( this.validateForm);
+    this.formStateChange('update');
+   //  this.validateForm.setValue( this.validateForm.value);
+    console.log(this.config.id + '-------------editForm',v, this.validateForm.value);
+  }
+  public cancel(v?) {
+    debugger;
+    const ss = JSON.parse(JSON.stringify(this.validateForm.value));
+    console.log(this.config.id + '-------------cancel【开始】------------') ;
+
+    this.validateForm = this.fb.group({});
+    this.createControls(this.validateForm);
+    // this.validateForm.setValue(ss,{onlySelf:false,emitEvent:true});
+   this.value = ss;
+    this.formStateChange('text');
+
+   // this.validateForm.setValue(this.validateForm.value);
+   // this.load();
+    console.log(this.config.id + '-------------cancel【结束】',v, this.validateForm.value) ;
+    // setTimeout(() => this.setValue('code','liu'), 1000);
+   // setTimeout(() => this.validateForm.setValue(ss), 1000);
+   // this.setValue('code','liu');
+  }
+
+/**
+ * 执行sql
+ * @param ajaxConfig 
+ */
+  public execute(ajaxConfig) {
+      console.log(this.config.id + '-------------执行sql', ajaxConfig);
+      // 构建业务对象
+      // 执行异步操作
+      // this.componentService.apiService.doPost();
+      const url = ajaxConfig.url;
+      const params = this.buildParameters(ajaxConfig.params);
+      this.componentService.apiService[ajaxConfig.ajaxType](url, params).subscribe(response => {
+          // success 0:全部错误,1:全部正确,2:部分错误
+          if (response.data) {
+              const successCfg = ajaxConfig.result.find(res => res.name === 'data');
+              // 弹出提示框
+              if (successCfg.senderCfg) {
+                  new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
+              }
+          }
+          if (response.validation) {
+              const validationCfg = ajaxConfig.result.find(res => res.name === 'validation');
+              if (validationCfg) {
+                  new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
+              }
+          }
+          if (response.error) {
+              const errorCfg = ajaxConfig.result.find(res => res.name === 'error');
+              if (errorCfg) {
+                  new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
+              }
+          }
+      })
+
+  }
+
+/**
+ * 状态更改-》直接修改配置
+ */
 
 
 }

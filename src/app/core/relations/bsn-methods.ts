@@ -1,4 +1,5 @@
 import { IDataGridTrigger } from './bsn-trigger/data-grid.trigger.interface';
+import { IDataFormTrigger } from '@core/relations/bsn-trigger/data-form.trigger.interface';
 
 export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     // state
@@ -37,4 +38,11 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
     EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds'
+}
+export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
+    // state
+    ADD_FORM: 'addForm',
+    EDIT_FORM: 'editForm',
+    CANCEL: 'cancel',
+    EXECUTE:'execute'
 }

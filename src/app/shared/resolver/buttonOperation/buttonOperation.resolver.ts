@@ -52,6 +52,14 @@ export class ButtonOperationResolver {
     public set currentData(value) {
         this._currentData = value;
     }
+    private _builtinCfg;
+    public get builtinCfg() {
+        return this._builtinCfg;
+    }
+    public set builtinCfg(value) {
+        this._builtinCfg = value;
+    }
+    
     constructor(private _cpmtService: ComponentServiceProvider, private config, private data?) {
         config.ajaxConfig && (this.ajaxCfg = config.ajaxConfig);
         config.beforeTrigger && (this.beforeTriggerCfg = config.beforeTrigger);
@@ -59,6 +67,7 @@ export class ButtonOperationResolver {
         config.condition && (this.conditionCfg = config.condition);
         config.cascade && (this.cascade = config.cascade);
         data && (this.currentData = data);
+        config.builtinConfig && (this.builtinCfg = config.builtinConfig);
     }
     public toolbarAction(btn, targetViewId) {
         // 按钮区分具体的,状态(STATE)、行为(BEHAVIOR)、动作(ACTION)、操作(OPERATION),跳转(LINK)
@@ -67,7 +76,6 @@ export class ButtonOperationResolver {
         // 操作: 新增保存、更新保存、删除、行选中、行勾选...
         // 动作: 
         // 跳转: 判断跳转(LINK_TO)、直接跳转(LINK)
-
 
         // 根据触发类型发送不同类型的具体消息内容
         const btn_source$ = from(btn.execute);
@@ -86,9 +94,16 @@ export class ButtonOperationResolver {
                     this.setDataState(cfg.trigger, this.currentData)
                     this.setToggle(this.currentData);
                 }
+                
+                const stateOptions = {};
+                if(cfg.builtinId){
+                    const _builtinConfig = this.findbuiltinConfig(cfg.builtinId);
+                    _builtinConfig && (stateOptions['builtinConfig'] =_builtinConfig);
+                }
                 const stateMsg = new BsnRelativesMessageModel(
                     triggerObj,
-                    targetViewId
+                    targetViewId,
+                    stateOptions
                 );
                 this._cpmtService.commonRelationTrigger.next(stateMsg);
                 break;
@@ -211,6 +226,16 @@ export class ButtonOperationResolver {
         return ajaxConfig;
     }
 
+    private findbuiltinConfig(builtinId) {
+        let builtinConfig;
+        if (this.builtinCfg && Array(this.builtinCfg) && this.builtinCfg.length > 0) {
+            const c = this.builtinCfg.filter(cfg => cfg.id === builtinId);
+            if (c && c.length > 0) {
+                builtinConfig =c[0];
+            }
+        }
+        return builtinConfig;
+    }
 
 
     private findBeforeOperationConfig(stateId) {
