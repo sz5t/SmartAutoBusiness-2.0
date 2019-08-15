@@ -315,6 +315,7 @@ export class LayoutDemoComponent extends CnComponentBase implements OnInit {
                                                     // "conditionId": "add_state_1"
                                                 }
                                             ]
+                                          
                                         },
                                         {
                                             "id": "M_updateRow",

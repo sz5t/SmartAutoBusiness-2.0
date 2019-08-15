@@ -49,5 +49,6 @@ export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
     STATE_TO_TEXT: 'stateToText',
     STATE_TO_EDIT: 'stateToEdit',
     EXECUTE_NONE: 'executeNone',
-    EXECUTE_NONE_EDIT: 'executeNoneEdit'
+    EXECUTE_NONE_EDIT: 'executeNoneEdit',
+    EXECUTE:'execute'    
 }

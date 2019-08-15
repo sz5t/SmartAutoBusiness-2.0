@@ -1,13 +1,36 @@
 <div style=" background-color: #fff">
 
-  <form nz-form [formGroup]="validateForm" style="max-width: 600px;">
+  <form nz-form [formGroup]="validateForm" style="max-width: 600px;" (ngSubmit)="submitForm()">
     <div nz-row [nzGutter]="24" *ngFor="let r of config.formLayout.rows">
       <div nz-col [nzSpan]="c.span" *ngFor="let c of r.cols">
+            <ng-container CnFormItemDirective  [formGroup]="validateForm" [value]="value" [formCascade]="formCascade[c.control.id]" [config]="formControlObj[c.control.id]" [formState] ="FORM_STATE"  (updateValue)="valueChange($event)"> </ng-container> 
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="24" >
+      <div nz-col nzSpan="24">
         <nz-form-item>
-            <ng-container CnFormItemDirective  [formGroup]="validateForm" [formCascade]="formCascade[c.control.id]" [config]="formControlObj[c.control.id]"  (updateValue)="valueChange($event)"> </ng-container> 
+          <nz-form-label [nzSpan]="5">Mix</nz-form-label>
+          <nz-form-control nzHasFeedback [nzSpan]="12" [nzErrorTip]="combineTpl">
+            <input
+              nz-input
+              formControlName="inputname5"
+              [ngModel]="'MaxLength is 12 and MinLength is 6'"
+              name="mix"
+              minlength="6"
+              maxlength="12"
+              required
+            />
+            <ng-template #combineTpl let-control>
+              <ng-container *ngIf="control.hasError('maxlength')">MaxLength is 12</ng-container>
+              <ng-container *ngIf="control.hasError('minlength')">MinLength is 6</ng-container>
+              <ng-container *ngIf="control.hasError('required')">Input is required</ng-container>
+            </ng-template>
+          </nz-form-control>
         </nz-form-item>
       </div>
     </div>
+   
     <nz-form-item>
       <nz-form-control [nzSpan]="8" [nzOffset]="8">
         <button nz-button nzType="primary"  (click)="SaveJson()" >提交</button>

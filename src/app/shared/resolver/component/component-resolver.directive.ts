@@ -8,10 +8,12 @@ import { LayoutBase, LayoutSize } from '../layout/layout.base';
 import { LayoutRow } from '../layout/layout.row';
 import { LayoutColumn } from '../layout/layout.column';
 import { LayoutTabs } from '../layout/layout.tabs';
+import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
-    cnToolbar: CnToolbarComponent
+    cnToolbar: CnToolbarComponent,
+    form: CnDataFormComponent
 };
 
 @Directive({
