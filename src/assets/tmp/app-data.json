@@ -8,22 +8,19 @@
     "avatar": "./assets/tmp/img/avatar.jpg",
     "email": "cipchk@qq.com"
   },
-  "menu": [
-    {
+  "menu": [{
       "text": "DEMO",
       "i18n": "menu.demo",
       "group": true,
       "hideInBreadcrumb": true,
       "level": 1,
       "icon": "book",
-      "children": [
-        {
+      "children": [{
           "text": "布局 Demo",
           "i18n": "menu.layout",
           "icon": "build",
           "level": 2,
-          "children": [
-            {
+          "children": [{
               "text": "布局 拖拽",
               "link": "/template/cfglayoutdemo",
               "i18n": "menu.layout.drop",
@@ -48,10 +45,9 @@
           "i18n": "menu.components",
           "icon": "appstore",
           "level": 2,
-          "children": [
-            {
+          "children": [{
               "text": "表格",
-              "link": "/dashboard/v1",
+              "link": "/template/dataTableDemo",
               "i18n": "menu.component.table",
               "level": 3
             },
@@ -72,14 +68,12 @@
       "group": true,
       "hideInBreadcrumb": true,
       "icon": "home",
-      "children": [
-        {
+      "children": [{
           "level": 2,
           "text": "仪表盘",
           "i18n": "menu.dashboard",
           "icon": "dashboard",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "仪表盘V1",
               "link": "/dashboard/v1",
@@ -122,14 +116,12 @@
       "group": true,
       "hideInBreadcrumb": true,
       "icon": "star",
-      "children": [
-        {
+      "children": [{
           "level": 2,
           "text": "样式",
           "i18n": "menu.style",
           "icon": "block",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "Typography",
               "link": "/style/typography",
@@ -154,8 +146,7 @@
           "text": "Delon",
           "i18n": "menu.delon",
           "icon": "loading",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "Dynamic Form",
               "link": "/delon/form",
@@ -234,15 +225,13 @@
       "group": true,
       "hideInBreadcrumb": true,
       "icon": "gold",
-      "children": [
-        {
+      "children": [{
           "level": 2,
           "text": "Form Page",
           "i18n": "menu.form",
           "link": "/pro/form",
           "icon": "loading",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "Basic Form",
               "link": "/pro/form/basic-form",
@@ -267,8 +256,7 @@
           "text": "List",
           "i18n": "menu.list",
           "icon": "loading",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "Table List",
               "link": "/pro/list/table-list",
@@ -290,8 +278,7 @@
               "level": 3,
               "text": "Search List",
               "i18n": "menu.list.searchlist",
-              "children": [
-                {
+              "children": [{
                   "level": 4,
                   "link": "/pro/list/articles",
                   "i18n": "menu.list.searchlist.articles"
@@ -315,8 +302,7 @@
           "text": "Profile",
           "i18n": "menu.profile",
           "icon": "loading",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "Basic",
               "link": "/pro/profile/basic",
@@ -335,8 +321,7 @@
           "text": "Result",
           "i18n": "menu.result",
           "icon": "unordered-list",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "Success",
               "link": "/pro/result/success",
@@ -356,8 +341,7 @@
           "i18n": "menu.exception",
           "link": "/",
           "icon": "unordered-list",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "403",
               "link": "/exception/403",
@@ -385,8 +369,7 @@
           "text": "Account",
           "i18n": "menu.account",
           "icon": "unordered-list",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "center",
               "link": "/pro/account/center",
@@ -409,21 +392,18 @@
       "group": true,
       "hideInBreadcrumb": true,
       "icon": "menu",
-      "children": [
-        {
+      "children": [{
           "level": 2,
           "text": "Report",
           "i18n": "menu.report",
           "icon": "unordered-list",
-          "children": [
-            {
-              "level": 3,
-              "text": "Relation",
-              "link": "/data-v/relation",
-              "i18n": "menu.report.relation",
-              "reuse": false
-            }
-          ]
+          "children": [{
+            "level": 3,
+            "text": "Relation",
+            "link": "/data-v/relation",
+            "i18n": "menu.report.relation",
+            "reuse": false
+          }]
         },
         {
           "level": 2,
@@ -431,8 +411,7 @@
           "i18n": "menu.extras",
           "link": "/extras",
           "icon": "unordered-list",
-          "children": [
-            {
+          "children": [{
               "level": 3,
               "text": "Help Center",
               "link": "/extras/helpcenter",

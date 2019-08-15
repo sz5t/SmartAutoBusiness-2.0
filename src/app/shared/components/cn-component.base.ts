@@ -58,7 +58,7 @@ export class CnComponentBase {
         this._cascadeValue = value;
     }
 
-    
+
 
     private _subscription$: Subscription;
     public get subscription$(): Subscription {
@@ -149,8 +149,8 @@ export class CnComponentBase {
     public after(target, method, advice) {
         const original = target[method];
         target[method] = (...args) => {
-            original.apply(target, args);
-            advice(args);
+            original.apply(target, args) && advice(args);
+
         };
         return target;
     }
