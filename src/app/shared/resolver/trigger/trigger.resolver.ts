@@ -125,12 +125,11 @@ export class TriggerResolver {
             return false;
         }
         // 执行组件具体方法
+        const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
         if (this._triggerMsg.options) {
-            const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
-            this._componentInstance[method](this._triggerMsg.options);
+            method && this._componentInstance[method](this._triggerMsg.options);
         } else {
-            const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
-            this._componentInstance[method]();
+            method && this._componentInstance[method]();
         }
 
     }
