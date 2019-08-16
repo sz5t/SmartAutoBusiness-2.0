@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Inject, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
@@ -10,7 +10,8 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
   templateUrl: './cn-form-select.component.html',
   styleUrls: ['./cn-form-select.component.less']
 })
-export class CnFormSelectComponent extends CnComponentBase implements OnInit {
+export class CnFormSelectComponent extends CnComponentBase implements OnInit,AfterViewInit {
+
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
@@ -27,25 +28,25 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit {
   ngOnInit() {
     // console.log('select 初始化ngOnInit=>当前表单的值',this.formGroup.value , this.config);
     this.myControl = this.formGroup.get(this.config.field);
-
      // console.log('select required',this.myControl);
+  }
 
+   ngAfterViewInit() {
+    // console.log('ngAfterViewInit ==>' , this.config.field);
     if (this.config.loadingConfig) {
-      this.load();
+      // this.load();
     } else {
       if (this.config.options) {
         this.selectOptions = this.config.options;
         this.selectItems = this.config.options;
       }
     }
-
-
   }
 
   /**
    * valueChange
    */
-  public valueChange(v?) {
+  public async valueChange(v?) {
     // tslint:disable-next-line:forin
    // for (const i in this.formGroup.controls) {
      // this.formGroup.controls[i].markAsDirty();
@@ -56,11 +57,18 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit {
     // }
 
     const backValue = { name: this.config.field, value: v, id: this.config.config.id };
+    if( this.selectItems.length<1){
+      await  this.load();
+    }
     const index = this.selectItems.findIndex(item => item[this.config['valueName']] === v);
+    const myControl = this.formGroup.get(this.config.field);
     if (index > -1) {
       backValue['dataItem'] = this.selectItems[index];
+    } else {
+    //  if(v)
+        // myControl.setValue(null, { emitEvent: true });
     }
-    // console.log('select 值变化', v, backValue, index);
+     console.log('select 值变化', v, this.config.field ,  this.selectItems);
     this.updateValue.emit(backValue);
   }
 
@@ -80,7 +88,9 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit {
   /**
    * load 自加载
    */
-  public load() {
+  public async load() {
+    // 【参数不全是否阻止加载！】
+    // 对后续业务判断有影响
   //  console.log('===select 自加载====>load');
     const url = this.config.loadingConfig['ajaxConfig'].url;
     const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
@@ -88,33 +98,56 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit {
       ...this.buildParameters(this.config.loadingConfig['ajaxConfig'].params)
     };
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
-    this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
-      if (response.data && response.data.length > 0) {
-        const data_form = response.data;
-        this.selectItems = data_form;
-        const newOptions = [];
-        // 下拉选项赋值
-        data_form.forEach(element => {
-          newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
-        });
-        this.selectOptions = newOptions;
-     //   console.log('下拉选择的最终数据集===》', this.selectOptions);
-        // for (const item in this.formValue) {
-        //   if (data_form.hasOwnProperty(item)) {
-        //     this.formValue[item] = data_form[item];
-        //   }
-        // }
+    const response = await  this.componentService.apiService.getRequest(url, method, { params }).toPromise();
+    console.log('--da---'+this.config.field,response);
+    if (response.data && response.data.length > 0) {
+      const data_form = response.data;
+      this.selectItems = data_form;
+      const newOptions = [];
+      // 下拉选项赋值
+      data_form.forEach(element => {
+        newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
+      });
+      this.selectOptions = newOptions;
+   //   console.log('下拉选择的最终数据集===》', this.selectOptions);
+      // for (const item in this.formValue) {
+      //   if (data_form.hasOwnProperty(item)) {
+      //     this.formValue[item] = data_form[item];
+      //   }
+      // }
 
-      }
-      else{
-        this.selectItems = [];
-        this.selectOptions  =[];
-      }
+    }
+    else{
+      this.selectItems = [];
+      this.selectOptions  =[];
+    }
+    // this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
+    //   if (response.data && response.data.length > 0) {
+    //     const data_form = response.data;
+    //     this.selectItems = data_form;
+    //     const newOptions = [];
+    //     // 下拉选项赋值
+    //     data_form.forEach(element => {
+    //       newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
+    //     });
+    //     this.selectOptions = newOptions;
+    //  //   console.log('下拉选择的最终数据集===》', this.selectOptions);
+    //     // for (const item in this.formValue) {
+    //     //   if (data_form.hasOwnProperty(item)) {
+    //     //     this.formValue[item] = data_form[item];
+    //     //   }
+    //     // }
+
+    //   }
+    //   else{
+    //     this.selectItems = [];
+    //     this.selectOptions  =[];
+    //   }
 
 
-    }, error => {
-      console.log(error);
-    });
+    // }, error => {
+    //   console.log(error);
+    // });
 
 
   }

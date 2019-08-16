@@ -29,6 +29,55 @@ export class CfgFormItemComponent implements OnInit {
     this.compont = ss;
     this.config.layoutContain = this.compont;
     this.config['controls'] = { type: ss };
+
+    //  【配置信息的生成】
+    // 配置信息分两部分，一部分，在表单布局内标识，一部分是在control 里具体详细配置
+    // 布局最小记录为contorl 标识的占位，其下分两部分，text、editor 方便组件状态切换，展示切换
+    // 默认均为 insert 下取默认值，update下 只读加载值，text 只读加载值
+    // 生成control 的内置参数，外部引用配置，独立生成，构建关联关系
+    
+    const c= {
+      id: '001',
+      "hidden": true, // 字段是否隐藏
+      "title": '测试字段1',  // lable 信息
+      "titleConfig":{  // 展示文本的信息
+        required: true
+      },
+      "field": "code",  // fromcontrol name  默认的字段
+      "labelSize": {
+        "span": 8,
+        "nzXs": { span: 7, offset: 1 },
+        "nzSm": { span: 7, offset: 1 },
+        "nzMd": { span: 7, offset: 1 },
+        "nzLg": { span: 7, offset: 1 },
+        "ngXl": { span: 7, offset: 1 },
+        "nzXXl": { span: 7, offset: 1 }
+      },  // 
+      "controlSize": {
+        "span": 16,
+        "nzXs": 16,
+        "nzSm": 16,
+        "nzMd": 16,
+        "nzLg": 16,
+        "ngXl": 16,
+        "nzXXl": 16
+      },
+      "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
+      "text": { // 文本展示字段
+        "type": 'input', // 什么组件展示文本 
+        "field": 'code',   // 字段
+      },
+      "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+        "type": "input",
+        "field": "code",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+        "placeholder": "请输入",
+        "validate": {  // 校验
+
+        }
+      }
+    }
+
+
   }
   public f_ondragover(e?, d?) {
     // 进入，就设置可以拖放进来（设置不执行默认：【默认的是不可以拖动进来】）

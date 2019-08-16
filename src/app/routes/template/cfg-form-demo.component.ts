@@ -1264,7 +1264,7 @@ export class CfgFormDemoComponent implements OnInit {
                     "placeholder": "请输入",
                     options: [
                       { label: '好人', value: '1' },
-                      { label: '坏人', value: '0' }
+                      { label: '坏人', value: '2' }
                     ],
                     "validate": {  // 校验
 
@@ -1478,42 +1478,7 @@ export class CfgFormDemoComponent implements OnInit {
                       ]
                     }
                   ]
-                },
-                {
-                  "type": '值变化',
-                  "controlId": '003',
-                  "name": 'inputname3',
-                  "CascadeObjects": [
-                    {
-                      "controlId": '004',
-                      "cascadeName": 'inputname4',
-                      "cascadeItems": [  // 根据值执行
-                        {
-                          "type": 'default',  // conditions   default  满足条件执行或者默认都执行
-                          "caseValue": {    // 条件描述 （触发级联的前置条件，如果不设置，则是满足）
-                            "type": 'selectObjectValue',
-                            "valueName": 'num',
-                            "regular": '^0$'
-                          },
-                          "content": {  // 应答体描述
-                            "type": 'message', // 应答类型（异步、消息、赋值、隐藏、显示...）
-                            "data": {
-                              "option": [
-                                {
-                                  "messageType": 'warning',
-                                  "type": 'selectObjectValue',
-                                  "valueName": 'msg'
-                                }
-                              ]
-                            }
-                          }
-                        }
-
-                      ]
-                    }
-                  ]
                 }
-
               ]
             }
           }],

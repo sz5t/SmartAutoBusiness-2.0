@@ -90,7 +90,8 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
     }
     if (changes.hasOwnProperty('formState')) {
       if (!changes['formState'].firstChange) {
-        console.log('****formState******',this.config.field, this.formState, this.config, JSON.stringify(this.formGroup.value));
+        console.log('****formState******',this.config.field, this.value,this.formState);
+       // console.log('****formState******',this.config.field, this.value,this.formState, this.config, JSON.stringify(this.formGroup.value));
         let _config
         if (this.config.state === 'text') {
           _config = JSON.parse(JSON.stringify(this.config.text)); 
@@ -122,6 +123,7 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
             this.setValue(event);
           });
         }
+       // if(this.config.field ==='inputname4')
         this.formGroup.setValue(this.value);
       }
     }

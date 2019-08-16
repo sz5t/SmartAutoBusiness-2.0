@@ -6,9 +6,9 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataFormProperty, CN_DATA_FORM_PROPERTY } from '@core/relations/bsn-property/data-form.property.interface';
-import { CN_DATA_FORM_METHOD } from '@core/relations/bsn-methods';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
 import { Subject, Subscription } from 'rxjs';
+import { CN_DATA_FORM_METHOD } from '@core/relations/bsn-methods/bsn-form-methods';
 
 @Component({
   selector: 'cn-data-form',
@@ -233,6 +233,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * SaveJson
    */
   public SaveJson() {
+    // this.validateForm.valid  表单校验状态  是否提供，写在前置条件中，判断是否通过校验
     console.log('提交表单', this.validateForm.valid,this.validateForm.value);
   }
 
@@ -280,10 +281,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     }, error => {
       console.log(error);
     });
-
-    this.formValue['code'] ="11110010"
-    this.validateForm.setValue(this.formValue);
-    console.log('****loadliu*****');
   }
 
   /**
@@ -384,7 +381,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ..._cascadeValue };
             }
             cascadeResult[cascadeObj.cascadeName]['exec'] = 'ajax';
-            this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+           // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
           }
           if (item.content.type === 'setOptions') {
             // 小组件静态数据集 , 目前静态数据，支持 多字段
@@ -484,24 +481,28 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 }
 
   public addForm(v?) {
+    this.validateForm = this.fb.group({});
     this.createControls( this.validateForm);
+    this.value =  this.formValue;
     this.formStateChange('insert');
     console.log(this.config.id + '-------------addForm',v);
   }
   public editForm(v?) {
-    this.validateForm = this.fb.group({});
-    this.createControls( this.validateForm);
+    const ss = JSON.parse(JSON.stringify(this.validateForm.value));
+    // this.validateForm = this.fb.group({});
+   // this.createControls( this.validateForm);
+    this.value = ss;
     this.formStateChange('update');
    //  this.validateForm.setValue( this.validateForm.value);
     console.log(this.config.id + '-------------editForm',v, this.validateForm.value);
   }
   public cancel(v?) {
-    debugger;
+    // debugger;
     const ss = JSON.parse(JSON.stringify(this.validateForm.value));
     console.log(this.config.id + '-------------cancel【开始】------------') ;
 
-    this.validateForm = this.fb.group({});
-    this.createControls(this.validateForm);
+   // this.validateForm = this.fb.group({});
+   // this.createControls(this.validateForm);
     // this.validateForm.setValue(ss,{onlySelf:false,emitEvent:true});
    this.value = ss;
     this.formStateChange('text');
