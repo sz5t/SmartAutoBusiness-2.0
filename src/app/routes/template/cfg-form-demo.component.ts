@@ -3009,6 +3009,7 @@ export class CfgFormDemoComponent implements OnInit {
                       "color": "text-primary",
                       "hidden": false,
                       "disabled": false,
+                      "state": "new",
                       "execute": [
                         {
                           "triggerType": "STATE",
@@ -3017,7 +3018,30 @@ export class CfgFormDemoComponent implements OnInit {
                           "builtinId": "add_state_1"
 
                         }
-                      ]
+                      ],
+                      "toggle": {
+                        "type": "state",
+                        "toggleProperty": "hidden",
+                        "values": [
+                          {
+                            "name": "edit",
+                            "value": true
+                          },
+                          {
+                            "name": "text",
+                            "value": false
+                          },
+                          {
+                            "name": "cancel",
+                            "value": false
+                          },
+                          {
+                            "name": "new",
+                            "value": true
+                          },
+                          
+                        ]
+                      }
                     },
                     {
                       "id": "M_updateRow",
@@ -3026,7 +3050,7 @@ export class CfgFormDemoComponent implements OnInit {
                       "color": "text-success",
                       "hidden": false,
                       "disabled": false,
-                     // "state": "edit",
+                      "state": "edit",
                       "execute": [
                         {
                           "triggerType": "STATE",
@@ -3043,7 +3067,15 @@ export class CfgFormDemoComponent implements OnInit {
                             "value": true
                           },
                           {
+                            "name": "new",
+                            "value": true
+                          },
+                          {
                             "name": "text",
+                            "value": false
+                          },
+                          {
+                            "name": "cancel",
                             "value": false
                           }
                         ]
@@ -3073,6 +3105,7 @@ export class CfgFormDemoComponent implements OnInit {
                           "afterId": "edit_save_1"
                         }
                       ],
+                   
                       "toggle": {
                         "type": "state",
                         "toggleProperty": "hidden",
@@ -3082,7 +3115,15 @@ export class CfgFormDemoComponent implements OnInit {
                             "value": false
                           },
                           {
+                            "name": "new",
+                            "value": false
+                          },
+                          {
                             "name": "text",
+                            "value": true
+                          },
+                          {
+                            "name": "cancel",
                             "value": true
                           }
                         ]
@@ -3103,6 +3144,7 @@ export class CfgFormDemoComponent implements OnInit {
                           "trigger": "CANCEL"
                         }
                       ],
+                      "state": "cancel",
                       "toggle": {
                         "type": "state",
                         "toggleProperty": "hidden",
@@ -3112,7 +3154,15 @@ export class CfgFormDemoComponent implements OnInit {
                             "value": false
                           },
                           {
+                            "name": "new",
+                            "value": false
+                          },
+                          {
                             "name": "text",
+                            "value": true
+                          },
+                          {
+                            "name": "cancel",
                             "value": true
                           }
                         ]

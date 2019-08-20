@@ -511,6 +511,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // this.createControls( this.validateForm);
     this.value = ss;
     this.formStateChange('update');
+    this.load();
     //  this.validateForm.setValue( this.validateForm.value);
     console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
   }
@@ -526,7 +527,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     this.formStateChange('text');
 
     // this.validateForm.setValue(this.validateForm.value);
-    // this.load();
+     this.load();
     console.log(this.config.id + '-------------cancel【结束】', v, this.validateForm.value);
     // setTimeout(() => this.setValue('code','liu'), 1000);
     // setTimeout(() => this.validateForm.setValue(ss), 1000);

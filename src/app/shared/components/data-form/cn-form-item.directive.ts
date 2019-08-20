@@ -17,7 +17,7 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
   @Input() formGroup: FormGroup;
   @Input() public formCascade;
   @Input() public formState;
-  @Input() public value;
+ // @Input() public value;
 
   @Output() public updateValue = new EventEmitter();
   public component: ComponentRef<any>;
@@ -124,7 +124,7 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
           });
         }
        // if(this.config.field ==='inputname4')
-        this.formGroup.setValue(this.value);
+       // this.formGroup.setValue(this.value);
       }
     }
 
