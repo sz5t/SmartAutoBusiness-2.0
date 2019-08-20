@@ -554,7 +554,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       if (response.data) {
         const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
         // 弹出提示框
-        if (successCfg.senderCfg) {
+        if (successCfg) {
           new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
         }
       }
@@ -594,7 +594,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       if (response.data) {
         const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
         // 弹出提示框
-        if (successCfg.senderCfg) {
+        if (successCfg) {
           new SenderResolver(this).resolve(successCfg.senderCfg);
         }
         back = true;
