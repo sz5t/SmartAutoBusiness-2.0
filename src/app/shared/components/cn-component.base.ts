@@ -5,7 +5,7 @@ import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
 import { Subject, BehaviorSubject, Observable, Subscription, config } from 'rxjs';
 import { ApiService } from '@core/services/api/api-service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
-import { Inject } from '@angular/core';
+import { Inject, Optional, Type } from '@angular/core';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 
 export interface InnerValue {
@@ -169,13 +169,21 @@ export class CnComponentBase {
         const confirmOptional = {
             nzTitle: confirmCfg.title ? confirmCfg.title : '',
             nzContent: confirmCfg.content ? confirmCfg.content : '',
-            nzOnOK: () => {
+            nzCancelText: confirmCfg.cancelText ? confirmCfg.cancelText : 'cancel',
+            nzOkText: confirmCfg.okText ? confirmCfg.okText : 'OK',
+            nzOnOk: () => {
                 if (callback) {
                     callback();
                 }
             }
+
         }
         this._componentService.modalService.confirm(confirmOptional);
+    }
+
+    public dialog(option) {
+        console.log(option);
+
     }
 
     public createMessage() {

@@ -1,3 +1,4 @@
+import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
 import { BSN_TOOLBAR_TRIGGER } from './../../../core/relations/bsn-trigger/toolbar.trigger.interface';
 import { BSN_DATAGRID_TRIGGER } from './../../../core/relations/bsn-trigger/data-grid.trigger.interface';
 import { ButtonOperationResolver } from './../../resolver/buttonOperation/buttonOperation.resolver';
@@ -767,13 +768,67 @@ export class CnDataTableComponent extends CnComponentBase
      * @param option 确认参数 
      */
     public showConfirm(option: any) {
-        console.log(option);
-        this.confirm(option, () => { })
+        this.confirm(option.dialog, () => { this.executeCurrentRow(option) })
 
     }
 
-    public showDialog() {
+    public showDialog(option: any) {
+        let dialog;
+        // 根据按钮类型初始化表单状态
+        const dialogCfg = option.dialog;
+        dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
 
+        // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
+        // if(isEditForm) {
+
+        // }
+        if (option.changeValue) {
+            const d = ParameterResolver.resolve({
+                params: option.changeValue.params,
+                tempValue: this.tempValue,
+                // componentValue: cmptValue,
+                item: this.ROW_SELECTED,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue
+            });
+            option.changeValue.params.map(param => {
+                if (param.type === 'value') {
+                    // 类型为value是不需要进行任何值的解析和变化
+                } else {
+                    if (d[param.name]) {
+                        param['value'] = d[param.name];
+                    }
+                }
+            });
+        }
+
+        const dialogOptional = {
+            nzTitle: dialogCfg.title ? dialogCfg.title : '',
+            nzContent: CnDataFormComponent,
+            nzComponentParams: {
+                config: dialogCfg.form,
+                changeValue: option.changeValue ? option.changeValue.params : []
+            },
+            nzFooter: [
+                {
+                    label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
+                    onClick: componentInstance => {
+
+                    }
+                },
+                {
+                    label: dialogCfg.okText ? dialogCfg.okText : 'OK',
+                    onClick: componentInstance => {
+                        (async () => {
+                            const result = await componentInstance.executeModal(option);
+                            dialog && dialog.close()
+                        })();
+                    }
+                }
+            ]
+        }
+        dialog = this.componentService.modalService.create(dialogOptional);
     }
 
     public showWindow() {

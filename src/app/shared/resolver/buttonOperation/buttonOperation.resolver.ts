@@ -69,6 +69,14 @@ export class ButtonOperationResolver {
         this._dialogCfg = value;
     }
 
+    private _changeValueCfg;
+    public get changeValueCfg() {
+        return this._changeValueCfg;
+    }
+    public set changeValueCfg(value) {
+        this._changeValueCfg = value;
+    }
+
     constructor(private componentService: ComponentServiceProvider, private config, private data?) {
         config.ajaxConfig && (this.ajaxCfg = config.ajaxConfig);
         config.beforeTrigger && (this.beforeTriggerCfg = config.beforeTrigger);
@@ -77,7 +85,8 @@ export class ButtonOperationResolver {
         config.cascade && (this.cascade = config.cascade);
         data && (this.currentData = data);
         config.builtinConfig && (this.builtinCfg = config.builtinConfig);
-        config.dialog && (this.dialogCfg = config.dialog)
+        config.dialog && (this.dialogCfg = config.dialog);
+        config.changeValue && (this.changeValueCfg = config.changeValue);
     }
     public toolbarAction(btn, targetViewId) {
         // 按钮区分具体的,状态(STATE)、行为(BEHAVIOR)、动作(ACTION)、操作(OPERATION),跳转(LINK)
@@ -135,9 +144,12 @@ export class ButtonOperationResolver {
             // 动作触发
             case BSN_TRIGGER_TYPE.ACTION:
                 const action_options = {};
-                action_options['confirm'] = this.findConfirmConfig(cfg.dialogId);
+                action_options['dialog'] = this.findConfirmConfig(cfg.dialogId);
                 action_options['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
                 action_options['conditionId'] = this.findConditionConfig(cfg.conditionId);
+                action_options['data'] = this.currentData;
+                action_options['btnCfg'] = btn;
+                action_options['changeValue'] = this.findChangeValueConfig(cfg.changeValueId);
                 const actionMsg = new BsnRelativesMessageModel(
                     triggerObj,
                     targetViewId,
@@ -322,5 +334,16 @@ export class ButtonOperationResolver {
             }
         }
         return confirmConfig;
+    }
+
+    private findChangeValueConfig(changeValueId) {
+        let changeValueConfig;
+        if (this.changeValueCfg && Array(this.changeValueCfg) && this.changeValueCfg.length > 0) {
+            const c = this.changeValueCfg.find(cfg => cfg.id === changeValueId);
+            if (c) {
+                changeValueConfig = c;
+            }
+        }
+        return changeValueConfig;
     }
 }
