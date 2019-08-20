@@ -6,7 +6,7 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataFormProperty, CN_DATA_FORM_PROPERTY } from '@core/relations/bsn-property/data-form.property.interface';
-import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
+import { RelationResolver, SenderResolver } from '@shared/resolver/relation/relation.resolver';
 import { Subject, Subscription, Observable, Observer } from 'rxjs';
 import { CN_DATA_FORM_METHOD } from '@core/relations/bsn-methods/bsn-form-methods';
 import { CustomValidator } from '@shared/components/data-form/form-validator/CustomValidator';
@@ -573,6 +573,54 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     })
 
   }
+
+
+
+  public async executeModal(execConfig) {
+
+    this.validate(); // 这个方法通过配置来调用
+    console.log('  this.FORM_VALID', this.FORM_VALID);
+    console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
+    // 构建业务对象
+    // 执行异步操作
+    // this.componentService.apiService.doPost();
+    const url = execConfig.ajaxConfig.url;
+    const params = this.buildParameters(execConfig.ajaxConfig.params);
+    console.log(this.config.id + '-------------执行sql params:', params);
+    let back  = false;
+     const response =  await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
+
+      // success 0:全部错误,1:全部正确,2:部分错误
+      if (response.data) {
+        const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
+        // 弹出提示框
+        if (successCfg.senderCfg) {
+          new SenderResolver(this).resolve(successCfg.senderCfg);
+        }
+        back = true;
+      }
+      if (response.validation) {
+        const validationCfg = execConfig.ajaxConfig.result.find(res => res.name === 'validation');
+        if (validationCfg) {
+          new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
+        }
+        back = false;
+      }
+      if (response.error) {
+        const errorCfg = execConfig.ajaxConfig.result.find(res => res.name === 'error');
+        if (errorCfg) {
+          new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
+        }
+        back = false;
+      }
+
+      return     back;
+
+
+  }
+
+
+  //       return new SenderResolver(this._componentInstance).resolve(config.cascade.messageSender);
 
   /**
    * 状态更改-》直接修改配置

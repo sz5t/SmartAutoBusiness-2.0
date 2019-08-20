@@ -49,6 +49,7 @@ import { CnFormItemDirective } from '@shared/components/data-form/cn-form-item.d
 import { CnFormInputComponent } from './components/data-form/cn-form-items/cn-form-input/cn-form-input.component';
 import { CnFormSelectComponent } from './components/data-form/cn-form-items/cn-form-select/cn-form-select.component';
 import { CnFormLabelComponent } from './components/data-form/cn-form-items/cn-form-label/cn-form-label.component';
+import { CnFormSelectMultipleComponent } from './components/data-form/cn-form-items/cn-form-select-multiple/cn-form-select-multiple.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -85,7 +86,8 @@ const COMPONENTS = [
   CnDataFormComponent,
   CnFormInputComponent,
   CnFormSelectComponent,
-  CnFormLabelComponent
+  CnFormLabelComponent,
+  CnFormSelectMultipleComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -114,7 +116,7 @@ const DIRECTIVES = [
   declarations: [
     // your components
     ...COMPONENTS,
-    ...DIRECTIVES
+    ...DIRECTIVES,
   ],
   exports: [
     CommonModule,

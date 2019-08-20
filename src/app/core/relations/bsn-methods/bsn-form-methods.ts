@@ -8,5 +8,6 @@ export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
     CANCEL: 'cancel',
     EXECUTE:'execute',
     REFRESH_AS_CHILD: 'load',
-    VALIDATE: 'validate'
+    VALIDATE: 'validate',
+    EXECUTE_MODAL:'executeModal'
 }
