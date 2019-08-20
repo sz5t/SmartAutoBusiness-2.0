@@ -22,6 +22,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
 
   @Input() public config;
+  @Input() public changeValue;
   validateForm: FormGroup;
   controlArray: any[] = [];
   value;
@@ -59,6 +60,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   public componentService: ComponentServiceProvider) {
     super(componentService);
     this.tempValue = {};
+    this.initValue = {};
   }
 
   ngOnInit() {
@@ -69,6 +71,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     //   inputname5: ['', [Validators.required]],
 
     // });
+    this.setChangeValue(this.changeValue);
     this.validateForm = this.fb.group({});
 
     // 生成Controls
@@ -220,6 +223,27 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     this.ControlsPermissions(this.FORM_STATE);
   }
 
+  /**
+   * setChangeValue 接受 初始变量值
+   */
+  public setChangeValue(ChangeValues?) {
+   // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+    if (ChangeValues && ChangeValues.length > 0) {
+      ChangeValues.forEach(cv => {
+        for (const p of cv) {
+          switch (p.valueTo) {
+            case 'tempValue':
+              this.tempValue[p.name] = p.value;
+              break;
+            case 'initValue':
+              this.initValue[p.name] = p.value;
+              break;
+          }
+        }
+      });
+    }
+
+  }
   /**
    * 表单设计理念=》 1.0中编辑字段不能灵活切换
    * 2.0设计=》字段展示编辑可自由切换不同字段
@@ -527,7 +551,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     this.formStateChange('text');
 
     // this.validateForm.setValue(this.validateForm.value);
-     this.load();
+    this.load();
     console.log(this.config.id + '-------------cancel【结束】', v, this.validateForm.value);
     // setTimeout(() => this.setValue('code','liu'), 1000);
     // setTimeout(() => this.validateForm.setValue(ss), 1000);
@@ -587,34 +611,34 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     const url = execConfig.ajaxConfig.url;
     const params = this.buildParameters(execConfig.ajaxConfig.params);
     console.log(this.config.id + '-------------执行sql params:', params);
-    let back  = false;
-     const response =  await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
+    let back = false;
+    const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
 
-      // success 0:全部错误,1:全部正确,2:部分错误
-      if (response.data) {
-        const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
-        // 弹出提示框
-        if (successCfg) {
-          new SenderResolver(this).resolve(successCfg.senderCfg);
-        }
-        back = true;
+    // success 0:全部错误,1:全部正确,2:部分错误
+    if (response.data) {
+      const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
+      // 弹出提示框
+      if (successCfg) {
+        new SenderResolver(this).resolve(successCfg.senderCfg);
       }
-      if (response.validation) {
-        const validationCfg = execConfig.ajaxConfig.result.find(res => res.name === 'validation');
-        if (validationCfg) {
-          new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
-        }
-        back = false;
+      back = true;
+    }
+    if (response.validation) {
+      const validationCfg = execConfig.ajaxConfig.result.find(res => res.name === 'validation');
+      if (validationCfg) {
+        new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
       }
-      if (response.error) {
-        const errorCfg = execConfig.ajaxConfig.result.find(res => res.name === 'error');
-        if (errorCfg) {
-          new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
-        }
-        back = false;
+      back = false;
+    }
+    if (response.error) {
+      const errorCfg = execConfig.ajaxConfig.result.find(res => res.name === 'error');
+      if (errorCfg) {
+        new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
       }
+      back = false;
+    }
 
-      return     back;
+    return back;
 
 
   }
@@ -645,11 +669,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     console.log('repeat2==>', control);
     let dd = {};
 
-        if (!control.value) {
-          dd = { error: true, required: true };
-        } else if (control.value === '中国香港2') {
-          dd = { repeat1: true };
-        }
+    if (!control.value) {
+      dd = { error: true, required: true };
+    } else if (control.value === '中国香港2') {
+      dd = { repeat1: true };
+    }
 
 
     return dd;
@@ -674,16 +698,16 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
   userNameAsyncValidator = (control: FormControl) =>
     new Observable((observer: Observer<ValidationErrors | null>) => {
-    //  setTimeout(() => {
-        if (control.value === '中国香港1') {
-          // you have to return `{error: true}` to mark it as an error event
-          console.log('validating>>>>>>>>>>');
-          observer.next({ error: true, userNameAsyncValidator: true });
-        } else {
-          observer.next(null);
-        }
-        observer.complete();
-    //  }, 1000);
+      //  setTimeout(() => {
+      if (control.value === '中国香港1') {
+        // you have to return `{error: true}` to mark it as an error event
+        console.log('validating>>>>>>>>>>');
+        observer.next({ error: true, userNameAsyncValidator: true });
+      } else {
+        observer.next(null);
+      }
+      observer.complete();
+      //  }, 1000);
     });
 
 
