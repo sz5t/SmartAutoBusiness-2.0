@@ -1,6 +1,7 @@
 export interface IDataFormProperty {
     FORM_VALUE: any;
     FORM_STATE:any;
+    FORM_VALID:any;
 
 }
 
@@ -8,5 +9,6 @@ export interface IDataFormProperty {
 export const CN_DATA_FORM_PROPERTY: IDataFormProperty = {
 
     FORM_VALUE: 'FORM_VALUE',
-    FORM_STATE: 'FORM_STATE'
+    FORM_STATE: 'FORM_STATE',
+    FORM_VALID:'FORM_VALID'
 }

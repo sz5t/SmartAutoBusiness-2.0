@@ -6,5 +6,7 @@ export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
     ADD_FORM: 'addForm',
     EDIT_FORM: 'editForm',
     CANCEL: 'cancel',
-    EXECUTE:'execute'
+    EXECUTE:'execute',
+    REFRESH_AS_CHILD: 'load',
+    VALIDATE: 'validate'
 }

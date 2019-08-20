@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy, Input, OnDestroy, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
@@ -7,18 +7,19 @@ import { CnComponentBase } from '@shared/components/cn-component.base';
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataFormProperty, CN_DATA_FORM_PROPERTY } from '@core/relations/bsn-property/data-form.property.interface';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, Observable, Observer } from 'rxjs';
 import { CN_DATA_FORM_METHOD } from '@core/relations/bsn-methods/bsn-form-methods';
+import { CustomValidator } from '@shared/components/data-form/form-validator/CustomValidator';
 
 @Component({
   selector: 'cn-data-form',
   templateUrl: './cn-data-form.component.html',
   styleUrls: ['./cn-data-form.component.less'],
- // changeDetection: ChangeDetectionStrategy.Default
+  // changeDetection: ChangeDetectionStrategy.Default
 })
-export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDestroy,OnChanges, IDataFormProperty,AfterViewInit {
+export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDestroy, OnChanges, IDataFormProperty, AfterViewInit {
 
- 
+
 
   @Input() public config;
   validateForm: FormGroup;
@@ -45,6 +46,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   public COMPONENT_PROPERTY = CN_DATA_FORM_PROPERTY;
   public FORM_VALUE: any = {}; // 当前表单组件值
   public FORM_STATE: any;  // 表单的状态=》新增、修改、展示
+  public FORM_VALID: any;
   private _sender_source$: Subject<any>;
   private _receiver_source$: Subject<any>;
   private _trigger_source$: Subject<any>;
@@ -56,6 +58,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   constructor(private fb: FormBuilder, @Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
+    this.tempValue = {};
   }
 
   ngOnInit() {
@@ -66,10 +69,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     //   inputname5: ['', [Validators.required]],
 
     // });
-     this.validateForm = this.fb.group({});
+    this.validateForm = this.fb.group({});
 
     // 生成Controls
-    this.createControls( this.validateForm);
+    this.createControls(this.validateForm);
+    console.log("this.validateForm=> ", this.validateForm);
     // 生成表单的异步请求  ajaxConfigObj 对象
     this.config.ajaxConfig.forEach(ajax => {
       this.ajaxConfigObj[ajax.id] = ajax;
@@ -91,7 +95,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       this.formControlObj[Control.id] = Control;
     });
     // 初始化表单状态
-    this. formStateChange(this.config.state);
+    this.formStateChange(this.config.state);
 
     // 解析及联配置
     this.resolveRelations();
@@ -111,10 +115,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   ngAfterViewInit(): void {
     console.log('*******ngAfterViewInit********');
     this.load();
+    this.FORM_VALID = this.validateForm.valid;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if(this.validateForm){
+    if (this.validateForm) {
       console.log('form 变化', this.validateForm);
     }
   }
@@ -122,19 +127,20 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * Controls 生成（根据配置信息生成Controls）
    */
   private createControls(f) {
-   // const controls = Object.keys(this.validateForm.controls);
+    // const controls = Object.keys(this.validateForm.controls);
     // controls.forEach(control => this.validateForm.removeControl(control));
 
     this.config.formControls.forEach(Control => {
       if (Control.text && Control.editor) {
         if (Control.text.field === Control.editor.field) {
-          f.addControl(`${Control.field}`, new FormControl());
+          f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
+          console.log('-=-=-=-=-=-=-=-=-=-=-=', this.getValidations(Control.editor.validations));
           this.formValue[Control.field] = null;
         }
         else {
-         f.addControl(`${Control.text.field}`, new FormControl());
+          f.addControl(`${Control.text.field}`, new FormControl());
           this.formValue[Control.text.field] = null;
-          f.addControl(`${Control.editor.field}`, new FormControl());
+          f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
           this.formValue[Control.editor.field] = null;
         }
       }
@@ -144,28 +150,13 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
           this.formValue[Control.text.field] = null;
         }
         if (Control.editor) {
-          f.addControl(`${Control.editor.field}`, new FormControl());
+          // f.addControl(`${Control.editor.field}`, new FormControl());
+          f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
           this.formValue[Control.editor.field] = null;
         }
       }
       this.formCascade[Control.id] = {};
     });
-  }
-
-  public createGroup() {
-    const controls = [];
-    const group = this.fb.group({});
-    // this.
-    controls.forEach(control => {
-      group.addControl(control.name, this.createControl(control));
-    });
-    return group;
-  }
-
-  public createControl(control) {
-    const { disabled, value } = control;
-    const validations = this.getValidations(control.validations);
-    return this.fb.control({ disabled, value }, validations);
   }
 
 
@@ -176,16 +167,24 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     const validation = [];
     validations &&
       validations.forEach(valid => {
-        if (valid.validator === 'required' || valid.validator === 'email') {
-          validation.push(Validators[valid.validator]);
-        } else if (
-          valid.validator === 'minLength' ||
-          valid.validator === 'maxLength'
-        ) {
-          validation.push(Validators[valid.validator](valid.length));
-        } else if (valid.validator === 'pattern') {
-          validation.push(Validators[valid.validator](valid.pattern));
+        if (valid.type) {
+          if (valid.type === 'custom') {
+            //  validation.push(CustomValidator[valid.validator](valid));
+            validation.push(this[valid.validator]);
+          }
+        } else {
+          if (valid.validator === 'required' || valid.validator === 'email') {
+            validation.push(Validators[valid.validator]);
+          } else if (
+            valid.validator === 'minLength' ||
+            valid.validator === 'maxLength'
+          ) {
+            validation.push(Validators[valid.validator](valid.length));
+          } else if (valid.validator === 'pattern') {
+            validation.push(Validators[valid.validator](valid.pattern));
+          }
         }
+
       });
     return validation;
   }
@@ -197,7 +196,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   private ControlsPermissions(state?) {
     // const ob = JSON.parse(JSON.stringify( this.formControlObj));
     this.config.formControlsPermissions.forEach(items => {
-     //  debugger;
+      //  debugger;
       if (items.formState === state) {
         items.Controls.forEach(Control => {
           this.formControlObj[Control.id].state = Control.state;
@@ -215,10 +214,10 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * @param state 
    */
   public formStateChange(state?) {
-     // insert  update   text  新增、修改、查看 3种状态切换
-    this. FORM_STATE =  state;
+    // insert  update   text  新增、修改、查看 3种状态切换
+    this.FORM_STATE = state;
     // 新增状态可填写默认值，其他状态无默认值
-    this.ControlsPermissions(this. FORM_STATE);
+    this.ControlsPermissions(this.FORM_STATE);
   }
 
   /**
@@ -234,7 +233,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    */
   public SaveJson() {
     // this.validateForm.valid  表单校验状态  是否提供，写在前置条件中，判断是否通过校验
-    console.log('提交表单', this.validateForm.valid,this.validateForm.value);
+    console.log('提交表单', this.validateForm.valid, this.validateForm.value);
   }
 
   public buildParameters(paramsCfg) {
@@ -254,12 +253,30 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       this.validateForm.controls[i].markAsDirty();
       this.validateForm.controls[i].updateValueAndValidity();
     }
+    this.FORM_VALID = this.validateForm.valid;
+  }
+
+  /**
+   * validate
+   */
+  public validate() {
+    // tslint:disable-next-line:forin
+    for (const i in this.validateForm.controls) {
+      this.validateForm.controls[i].markAsDirty();
+      this.validateForm.controls[i].updateValueAndValidity();
+      // Promise.resolve().then(() => this.validateForm.controls[i].updateValueAndValidity());
+    }
+
+
+    this.FORM_VALID = this.validateForm.valid;
+    const s = this.validateForm.get('provinceName');
+    console.log('provinceName 校验', s.errors);
   }
   /**
    * load 自加载
    */
   public load() {
-    console.log('======>load');
+    console.log('======>load', this.tempValue);
     const url = this.config.loadingConfig['ajaxConfig'].url;
     const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
     const params = {
@@ -290,16 +307,17 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     if (this.config.cascade && this.config.cascade.messageSender) {
       if (!this._sender_source$) {
         // 解析组件发送消息配置,并注册消息发送对象
-        this._sender_source$ = new RelationResolver(this).resolve(this.config.cascade);
+        this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
         this._sender_subscription$ = this._sender_source$.subscribe();
       }
 
     }
     if (this.config.cascade && this.config.cascade.messageReceiver) {
       // 解析消息接受配置,并注册消息接收对象
-      this._receiver_source$ = new RelationResolver(this).resolve(this.config.cascade);
+      this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
       this._receiver_subscription$ = this._receiver_source$.subscribe();
     }
+
     this._trigger_source$ = new RelationResolver(this).resolve();
 
   }
@@ -328,7 +346,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * 考虑，如何解决1.0的问题，控制级联状态的分割，级联参数的优先级
    */
   public valueChange(v?) {
-    console.log('===valueChange==',v);
+    console.log('===valueChange==', v);
     if (!this.formCascade) {
       this.formCascade = {};
     }
@@ -381,7 +399,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ..._cascadeValue };
             }
             cascadeResult[cascadeObj.cascadeName]['exec'] = 'ajax';
-           // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+            // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
           }
           if (item.content.type === 'setOptions') {
             // 小组件静态数据集 , 目前静态数据，支持 多字段
@@ -440,7 +458,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
         });
         this.formCascade[cascadeObj.controlId] = JSON.parse(JSON.stringify(this.formCascade[cascadeObj.controlId]));
-       // console.log('==表单内值变化反馈==', this.formCascade);
+        // console.log('==表单内值变化反馈==', this.formCascade);
       });
 
 
@@ -478,82 +496,146 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
   public getCurrentComponentId() {
     return this.config.id;
-}
+  }
 
   public addForm(v?) {
     this.validateForm = this.fb.group({});
-    this.createControls( this.validateForm);
-    this.value =  this.formValue;
+    this.createControls(this.validateForm);
+    this.value = this.formValue;
     this.formStateChange('insert');
-    console.log(this.config.id + '-------------addForm',v);
+    console.log(this.config.id + '-------------addForm', v);
   }
   public editForm(v?) {
     const ss = JSON.parse(JSON.stringify(this.validateForm.value));
     // this.validateForm = this.fb.group({});
-   // this.createControls( this.validateForm);
+    // this.createControls( this.validateForm);
     this.value = ss;
     this.formStateChange('update');
-   //  this.validateForm.setValue( this.validateForm.value);
-    console.log(this.config.id + '-------------editForm',v, this.validateForm.value);
+    //  this.validateForm.setValue( this.validateForm.value);
+    console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
   }
   public cancel(v?) {
     // debugger;
     const ss = JSON.parse(JSON.stringify(this.validateForm.value));
-    console.log(this.config.id + '-------------cancel【开始】------------') ;
+    console.log(this.config.id + '-------------cancel【开始】------------');
 
-   // this.validateForm = this.fb.group({});
-   // this.createControls(this.validateForm);
+    // this.validateForm = this.fb.group({});
+    // this.createControls(this.validateForm);
     // this.validateForm.setValue(ss,{onlySelf:false,emitEvent:true});
-   this.value = ss;
+    this.value = ss;
     this.formStateChange('text');
 
-   // this.validateForm.setValue(this.validateForm.value);
-   // this.load();
-    console.log(this.config.id + '-------------cancel【结束】',v, this.validateForm.value) ;
+    // this.validateForm.setValue(this.validateForm.value);
+    // this.load();
+    console.log(this.config.id + '-------------cancel【结束】', v, this.validateForm.value);
     // setTimeout(() => this.setValue('code','liu'), 1000);
-   // setTimeout(() => this.validateForm.setValue(ss), 1000);
-   // this.setValue('code','liu');
+    // setTimeout(() => this.validateForm.setValue(ss), 1000);
+    // this.setValue('code','liu');
   }
 
-/**
- * 执行sql
- * @param ajaxConfig 
- */
-  public execute(ajaxConfig) {
-      console.log(this.config.id + '-------------执行sql', ajaxConfig);
-      // 构建业务对象
-      // 执行异步操作
-      // this.componentService.apiService.doPost();
-      const url = ajaxConfig.url;
-      const params = this.buildParameters(ajaxConfig.params);
-      this.componentService.apiService[ajaxConfig.ajaxType](url, params).subscribe(response => {
-          // success 0:全部错误,1:全部正确,2:部分错误
-          if (response.data) {
-              const successCfg = ajaxConfig.result.find(res => res.name === 'data');
-              // 弹出提示框
-              if (successCfg.senderCfg) {
-                  new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
-              }
-          }
-          if (response.validation) {
-              const validationCfg = ajaxConfig.result.find(res => res.name === 'validation');
-              if (validationCfg) {
-                  new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
-              }
-          }
-          if (response.error) {
-              const errorCfg = ajaxConfig.result.find(res => res.name === 'error');
-              if (errorCfg) {
-                  new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
-              }
-          }
-      })
+  /**
+   * 执行sql
+   * @param Config 
+   */
+  public execute(execConfig) {
+
+    this.validate(); // 这个方法通过配置来调用
+    console.log('  this.FORM_VALID', this.FORM_VALID);
+    console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
+    // 构建业务对象
+    // 执行异步操作
+    // this.componentService.apiService.doPost();
+    const url = execConfig.ajaxConfig.url;
+    const params = this.buildParameters(execConfig.ajaxConfig.params);
+    console.log(this.config.id + '-------------执行sql params:', params);
+    this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).subscribe(response => {
+      // success 0:全部错误,1:全部正确,2:部分错误
+      if (response.data) {
+        const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
+        // 弹出提示框
+        if (successCfg.senderCfg) {
+          new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
+        }
+      }
+      if (response.validation) {
+        const validationCfg = execConfig.ajaxConfig.result.find(res => res.name === 'validation');
+        if (validationCfg) {
+          new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
+        }
+      }
+      if (response.error) {
+        const errorCfg = execConfig.ajaxConfig.result.find(res => res.name === 'error');
+        if (errorCfg) {
+          new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
+        }
+      }
+    })
 
   }
 
-/**
- * 状态更改-》直接修改配置
- */
+  /**
+   * 状态更改-》直接修改配置
+   *  消息过来时，判断当前组件相应的内置操作，
+   * 例如当接受主子刷新时，子组件状态保存当前，还是恢复到某个状态
+   * 可控=》子组件可连续操作不间断。
+   * 消息的前置条件可控
+   */
+
+
+  repeat = (control: FormControl): { [s: string]: boolean } => {
+    console.log('repeat==>', control);
+    if (!control.value) {
+      return { error: true, required: true };
+    } else if (control.value === '中国香港') {
+      return { repeat: true };
+    }
+    return {};
+  };
+
+  repeat1 = (control: FormControl): { [s: string]: boolean } => {
+    console.log('repeat2==>', control);
+    let dd = {};
+
+        if (!control.value) {
+          dd = { error: true, required: true };
+        } else if (control.value === '中国香港2') {
+          dd = { repeat1: true };
+        }
+
+
+    return dd;
+  };
+
+
+  validating1 = (control: FormControl) =>
+    new Observable((observer: Observer<ValidationErrors | null>) => {
+      setTimeout(() => {
+        console.log('validating>>>>>>>>>>测试远程校验');
+
+        if (control.value === '中国香港1') {
+          // you have to return `{error: true}` to mark it as an error event
+          observer.next({ validating: true, repeat: true });
+          console.log('validating>>>>>>>>>>');
+        } else {
+          observer.next(null);
+        }
+        observer.complete();
+      }, 200);
+    });
+
+  userNameAsyncValidator = (control: FormControl) =>
+    new Observable((observer: Observer<ValidationErrors | null>) => {
+    //  setTimeout(() => {
+        if (control.value === '中国香港1') {
+          // you have to return `{error: true}` to mark it as an error event
+          console.log('validating>>>>>>>>>>');
+          observer.next({ error: true, userNameAsyncValidator: true });
+        } else {
+          observer.next(null);
+        }
+        observer.complete();
+    //  }, 1000);
+    });
 
 
 }

@@ -8,14 +8,17 @@
     {{config.config.title}}</nz-form-label>
     <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm" [nzXs]="config.config.controlSize.nzXs"
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
-        [formGroup]="formGroup" [nzErrorTip]="combineTpl">
+        [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
 
         <input nz-input placeholder="placeholder" [ngModel]="value" [formControlName]="config.field" (ngModelChange)="valueChange($event)"
         />
         <ng-template #combineTpl let-control>
-            <ng-container *ngIf="control.hasError('maxlength')">MaxLength is 12</ng-container>
-            <ng-container *ngIf="control.hasError('minlength')">MinLength is 6</ng-container>
-            <ng-container *ngIf="control.hasError('required')">Input is required</ng-container>
+                <ng-container nz-col *ngFor="let c of config.validations" > 
+                        <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>
+            </ng-container>
+            <ng-container *ngIf="control.hasError('_subscribe')">
+                    The username is redundant!
+                  </ng-container>
         </ng-template>
     </nz-form-control>
 </nz-form-item>

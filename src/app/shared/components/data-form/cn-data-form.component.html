@@ -1,6 +1,6 @@
 <div style=" background-color: #fff">
 
-  <form nz-form [formGroup]="validateForm" style="max-width: 600px;" (ngSubmit)="submitForm()">
+  <form nz-form [formGroup]="validateForm"  (ngSubmit)="submitForm()">
     <div nz-row [nzGutter]="24" *ngFor="let r of config.formLayout.rows">
       <div nz-col [nzSpan]="c.span" *ngFor="let c of r.cols">
             <ng-container CnFormItemDirective  [formGroup]="validateForm" [value]="value" [formCascade]="formCascade[c.control.id]" [config]="formControlObj[c.control.id]" [formState] ="FORM_STATE"  (updateValue)="valueChange($event)"> </ng-container> 

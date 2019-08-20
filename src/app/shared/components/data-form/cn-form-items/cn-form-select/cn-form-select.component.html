@@ -9,11 +9,8 @@
             <nz-option *ngFor="let option of selectOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
         </nz-select>
         <ng-template #emailErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('email')">
-                The input is not valid E-mail!
-            </ng-container>
-            <ng-container *ngIf="control.hasError('required')">
-                Please input your E-mail!
+                <ng-container nz-col *ngFor="let c of config.validations" > 
+                        <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>
             </ng-container>
         </ng-template>
     </nz-form-control>

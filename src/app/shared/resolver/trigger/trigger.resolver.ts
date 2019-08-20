@@ -203,6 +203,7 @@ export class TriggerResolver {
     }
 
     private checkComponentProperty(expCfg) {
+        debugger;
         // 判断取值的类型
         const allCheckResult = [];
         switch (expCfg.type) {
@@ -231,7 +232,12 @@ export class TriggerResolver {
     }
 
     private buildMatchObject(componentValue, expCfg) {
-        const value = componentValue[expCfg.name];
+        let value;
+        if (expCfg.name) { 
+            value = componentValue[expCfg.name];
+        } else {  // 读取自身数据
+            value = componentValue;
+        }
         const matchValue = expCfg.matchValue;
         const matchValueFrom = expCfg.matchValueFrom;
         const matchValueTo = expCfg.matchValueTo;
