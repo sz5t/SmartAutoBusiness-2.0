@@ -15,6 +15,7 @@ export interface IDataGridTrigger {
     WINDOW: string,
     UPLOAD: string,
     DIALOG_BATCH: string,
+    CONFIRM: string,
 
     REFRESH: string,
     HIDDEN: string,
@@ -32,7 +33,8 @@ export interface IDataGridTrigger {
 
     SAVE_ROW: string,
     SAVE_ROWS: string
-    DELETE_ROW: string,
+    DELETE_CURRENT_ROW: string,
+    EXECUTE_CURRENT_ROW: string,
     EXECUTE_SELECTED_ROW: string,
     EXECUTE_CHECKED_ROWS: string,
     EXECUTE_CHECKED_ROWS_IDS: string
@@ -59,6 +61,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     WINDOW: 'WINDOW',
     UPLOAD: 'UPLOAD',
     DIALOG_BATCH: 'DIALOG_BATCH',
+    CONFIRM: 'CONFIRM',
 
     // behavior
     REFRESH: 'REFRESH',
@@ -78,7 +81,8 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     // operation
     SAVE_ROW: 'SAVE_ROW',
     SAVE_ROWS: 'SAVE_ROWS',
-    DELETE_ROW: 'DELETE_ROW',
+    DELETE_CURRENT_ROW: 'DELETE_CURRENT_ROW',
+    EXECUTE_CURRENT_ROW: 'EXECUTE_CURRENT_ROW',
     EXECUTE_SELECTED_ROW: 'EXECUTE_SELECTED_ROW',
     EXECUTE_CHECKED_ROWS: 'EXECUTE_CHECKED_ROWS',
     EXECUTE_CHECKED_ROWS_IDS: 'EXECUTE_CHECKED_ROWS_IDS'
