@@ -85,7 +85,6 @@ export class TriggerReceiverResolver {
         const currentId = this._componentInstance.getCurrentComponentId();
         this._componentInstance.trigger_subscription$ = this._componentInstance.componentService.commonRelationTrigger.subscribe(
             data => {
-              //  debugger;
                 if (data.viewId === currentId) {
                     new TriggerResolver(
                         data,
@@ -211,7 +210,6 @@ export class ComponentSenderResolver {
         // 前置条件判断
 
         // 执行操作, 该功能不由组件实现
-        // this.sendMessage(cfg);        
         if (!this.conditionValidator(cfg.condition)) {
             return false;
         }

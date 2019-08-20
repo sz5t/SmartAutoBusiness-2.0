@@ -141,10 +141,10 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
 
     public action(btn, targetViewId) {
         setTimeout(_ => {
-            this.toolbarsIsLoading[btn.name] = false;
+            this.toolbarsIsLoading[btn.id] = false;
         }, 150);
 
-        if (!this.toolbarsIsLoading[btn.name]) {
+        if (!this.toolbarsIsLoading[btn.id]) {
             // 根据触发类型发送不同类型的具体消息内容
             // const btn_source$ = from(btn.execute);
             // btn_source$.pipe(map(exeCfg => this.sendBtnMessage(exeCfg, targetViewId))).subscribe().unsubscribe();
@@ -168,7 +168,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
 
             const btnResolver = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
             btnResolver.toolbarAction(btn, targetViewId);
-            this.toolbarsIsLoading[btn.name] = true;
+            this.toolbarsIsLoading[btn.id] = true;
         }
     }
 

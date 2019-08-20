@@ -2,7 +2,7 @@ import { BSN_RELATIVE_MESSAGE_SENDER, BSN_RELATIVE_MESSAGE_RECEIVER, BSN_RELATIV
 import { ActivatedRoute } from '@angular/router';
 import { CacheService } from '@delon/cache';
 import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
-import { Subject, BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Subject, BehaviorSubject, Observable, Subscription, config } from 'rxjs';
 import { ApiService } from '@core/services/api/api-service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Inject } from '@angular/core';
@@ -163,6 +163,24 @@ export class CnComponentBase {
             advice(args);
         };
         return target;
+    }
+
+    public confirm(confirmCfg, callback) {
+        const confirmOptional = {
+            nzTitle: confirmCfg.title ? confirmCfg.title : '',
+            nzContent: confirmCfg.content ? confirmCfg.content : '',
+            nzOnOK: () => {
+                if (callback) {
+                    callback();
+                }
+            }
+        }
+        this._componentService.modalService.confirm(confirmOptional);
+    }
+
+    public createMessage() {
+        const messageOptional = {}
+        this._componentService.modalService.create(messageOptional);
     }
 
 

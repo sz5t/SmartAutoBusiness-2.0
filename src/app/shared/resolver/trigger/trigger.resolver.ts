@@ -144,9 +144,12 @@ export class TriggerResolver {
 
     handleOperationType() {
         // 前置条件 state
-
         // 执行判断 condition
         if (!this.conditionValidator(this._triggerMsg.options.condition)) {
+            return false;
+        }
+
+        if (!this.beforeOperationValidator(this._triggerMsg.options.beforeOperation)) {
             return false;
         }
 
@@ -167,7 +170,7 @@ export class TriggerResolver {
 
     handleActionType() {
         const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
-        this._componentInstance[method]();
+        this._componentInstance[method](this._triggerMsg.options);
         // this._componentInstance[CN_DATA_GRID_METHOD[this._triggerMsg.trigger.trigger]]();
     }
 
@@ -184,6 +187,9 @@ export class TriggerResolver {
 
     private beforeOperationValidator(beforeCfg) {
 
+        if (!beforeCfg) {
+            return true;
+        }
     }
 
     private conditionValidator(condCfg): boolean {

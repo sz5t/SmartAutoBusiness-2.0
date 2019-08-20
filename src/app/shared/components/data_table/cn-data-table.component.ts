@@ -520,6 +520,55 @@ export class CnDataTableComponent extends CnComponentBase
         }
     }
 
+    public async executeHttpRequest(url, method, paramData) {
+        return this.componentService.apiService[method](url, paramData).toPromise();
+    }
+
+    public async deleteCurrentRow(option) {
+        console.log(this.config.id + '-------------executeSelectRow', option);
+
+        // const url = option.ajaxConfig.url;
+        // const method = option.ajaxConfig.ajaxType ? option.ajaxConfig.ajaxType : 'delete';
+        // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        // let paramData;
+        // if (option.data) {
+        //     paramData = ParameterResolver.resolve({
+        //         params: ajaxParams,
+        //         item: option.data.data,
+        //         tempValue: this.tempValue,
+        //         initValue: this.initValue,
+        //         cacheValue: this.cacheValue
+        //     });
+        // }
+        // const response = await this.executeHttpRequest(url, method, paramData);
+        // if (response) {
+        //     this.load();
+        // }
+    }
+
+    public async executeCurrentRow(option) {
+
+        console.log(this.config.id + '-------------executeSelectRow', option);
+        const url = option.ajaxConfig.url;
+        const method = option.ajaxConfig.ajaxType;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        let paramData;
+        if (option.data) {
+            paramData = ParameterResolver.resolve({
+                params: ajaxParams,
+                item: option.data.data,
+                tempValue: this.tempValue,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue
+            });
+        }
+        const response = await this.executeHttpRequest(url, method, paramData);
+        if (response) {
+            this.load();
+        }
+
+    }
+
     public saveRow(option) {
         const ajaxConfig = option.ajaxConfig;
         const rowData = option.data.data;
@@ -557,6 +606,8 @@ export class CnDataTableComponent extends CnComponentBase
 
             this.load();
         });
+
+        return true;
 
     }
 
@@ -616,7 +667,7 @@ export class CnDataTableComponent extends CnComponentBase
         // 处理message结果
         // 处理validation结果
         // 发送后续操作消息
-
+        return true;
     }
 
     public setSelectRow(rowData?, $event?) {
@@ -708,6 +759,16 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public download() {
+
+    }
+
+    /**
+     * 确认操作
+     * @param option 确认参数 
+     */
+    public showConfirm(option: any) {
+        console.log(option);
+        this.confirm(option, () => { })
 
     }
 

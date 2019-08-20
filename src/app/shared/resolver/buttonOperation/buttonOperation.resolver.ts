@@ -60,7 +60,15 @@ export class ButtonOperationResolver {
     public set builtinCfg(value) {
         this._builtinCfg = value;
     }
-    
+
+    private _dialogCfg;
+    public get dialogCfg() {
+        return this._dialogCfg;
+    }
+    public set dialogCfg(value) {
+        this._dialogCfg = value;
+    }
+
     constructor(private componentService: ComponentServiceProvider, private config, private data?) {
         config.ajaxConfig && (this.ajaxCfg = config.ajaxConfig);
         config.beforeTrigger && (this.beforeTriggerCfg = config.beforeTrigger);
@@ -69,6 +77,7 @@ export class ButtonOperationResolver {
         config.cascade && (this.cascade = config.cascade);
         data && (this.currentData = data);
         config.builtinConfig && (this.builtinCfg = config.builtinConfig);
+        config.dialog && (this.dialogCfg = config.dialog)
     }
     public toolbarAction(btn, targetViewId) {
         // 按钮区分具体的,状态(STATE)、行为(BEHAVIOR)、动作(ACTION)、操作(OPERATION),跳转(LINK)
@@ -100,9 +109,9 @@ export class ButtonOperationResolver {
                 state_options['condition'] = this.findConditionConfig(cfg.conditionId);
                 state_options['btnCfg'] = btn;
                 state_options['data'] = this.currentData;
-                if(cfg.builtinId){
+                if (cfg.builtinId) {
                     const _builtinConfig = this.findbuiltinConfig(cfg.builtinId);
-                    _builtinConfig && (state_options['builtinConfig'] =_builtinConfig);
+                    _builtinConfig && (state_options['builtinConfig'] = _builtinConfig);
                 }
                 const stateMsg = new BsnRelativesMessageModel(
                     triggerObj,
@@ -125,10 +134,14 @@ export class ButtonOperationResolver {
                 break;
             // 动作触发
             case BSN_TRIGGER_TYPE.ACTION:
+                const action_options = {};
+                action_options['confirm'] = this.findConfirmConfig(cfg.dialogId);
+                action_options['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
+                action_options['conditionId'] = this.findConditionConfig(cfg.conditionId);
                 const actionMsg = new BsnRelativesMessageModel(
                     triggerObj,
                     targetViewId,
-                    {}
+                    action_options
                 );
                 this.componentService.commonRelationTrigger.next(actionMsg);
                 break;
@@ -270,7 +283,7 @@ export class ButtonOperationResolver {
         if (this.builtinCfg && Array(this.builtinCfg) && this.builtinCfg.length > 0) {
             const c = this.builtinCfg.filter(cfg => cfg.id === builtinId);
             if (c && c.length > 0) {
-                builtinConfig =c[0];
+                builtinConfig = c[0];
             }
         }
         return builtinConfig;
@@ -289,7 +302,7 @@ export class ButtonOperationResolver {
         return beforeConfig;
     }
 
-    public findConditionConfig(conditionId) {
+    private findConditionConfig(conditionId) {
         let conditionConfig;
         if (this.conditionCfg && Array(this.conditionCfg) && this.conditionCfg.length > 0) {
             const c = this.conditionCfg.filter(cfg => cfg.id === conditionId);
@@ -298,5 +311,16 @@ export class ButtonOperationResolver {
             }
         }
         return conditionConfig;
+    }
+
+    private findConfirmConfig(confirmId) {
+        let confirmConfig;
+        if (this.dialogCfg && Array(this.dialogCfg) && this.dialogCfg.length > 0) {
+            const c = this.dialogCfg.find(cfg => cfg.id === confirmId);
+            if (c) {
+                confirmConfig = c;
+            }
+        }
+        return confirmConfig;
     }
 }
