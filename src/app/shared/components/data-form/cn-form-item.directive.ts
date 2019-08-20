@@ -90,7 +90,7 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
     }
     if (changes.hasOwnProperty('formState')) {
       if (!changes['formState'].firstChange) {
-        console.log('****formState******',this.config.field, this.value,this.formState);
+        console.log('****formState******',this.config.field, this.formState);
        // console.log('****formState******',this.config.field, this.value,this.formState, this.config, JSON.stringify(this.formGroup.value));
         let _config
         if (this.config.state === 'text') {
