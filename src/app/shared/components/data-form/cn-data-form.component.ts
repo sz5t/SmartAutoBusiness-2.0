@@ -229,8 +229,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   public setChangeValue(ChangeValues?) {
    // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
     if (ChangeValues && ChangeValues.length > 0) {
-      ChangeValues.forEach(cv => {
-        for (const p of cv) {
+      ChangeValues.forEach(p => {
           switch (p.valueTo) {
             case 'tempValue':
               this.tempValue[p.name] = p.value;
@@ -239,7 +238,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               this.initValue[p.name] = p.value;
               break;
           }
-        }
       });
     }
 
