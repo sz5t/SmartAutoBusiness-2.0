@@ -3,11 +3,13 @@ import { CnFormInputComponent } from '@shared/components/data-form/cn-form-items
 import { FormGroup } from '@angular/forms';
 import { CnFormSelectComponent } from '@shared/components/data-form/cn-form-items/cn-form-select/cn-form-select.component';
 import { CnFormLabelComponent } from '@shared/components/data-form/cn-form-items/cn-form-label/cn-form-label.component';
+import { CnFormSelectMultipleComponent } from '@shared/components/data-form/cn-form-items/cn-form-select-multiple/cn-form-select-multiple.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnFormInputComponent,
   select: CnFormSelectComponent,
-  label: CnFormLabelComponent
+  label: CnFormLabelComponent,
+  selectMultiple:CnFormSelectMultipleComponent
 };
 @Directive({
   selector: '[CnFormItemDirective]'
@@ -29,7 +31,7 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
 
   }
   public ngOnInit() {
-    console.log('**********', this.config, this.formCascade)
+   // console.log('**********', this.config, this.formCascade)
     let _config
     if (this.config.state === 'text') {
       _config = JSON.parse(JSON.stringify(this.config.text)); 
@@ -70,7 +72,7 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('****ngOnChanges******', changes, this.formGroup)
+   // console.log('****ngOnChanges******', changes, this.formGroup)
     // ngOnChanges只有在输入值改变的时候才会触发，
     // 如果输入值(@Input)是一个对象，改变对象内的属性的话是不会触发ngOnChanges的。
     // 部分级联需要此处中转，主要是参数等，取值赋值，隐藏显示等功能需要form表单处理。
@@ -80,7 +82,7 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
           //  console.log('触发级联', this.formCascade, this.componentConfig);
 
         }
-        console.log('****formCascade******', this.formCascade, this.config.field);
+      //  console.log('****formCascade******', this.formCascade, this.config.field);
         // console.log('ngOnChanges中inputVal变更前值为：' + changes['formCascade'].previousValue);
         //  console.log('ngOnChanges中inputVal变更后值为：' + changes['formCascade'].currentValue);
         //  console.log('ngOnChanges中inputVal是否是一次改变：' + changes['formCascade'].firstChange);
@@ -90,7 +92,7 @@ export class CnFormItemDirective implements OnInit, OnChanges,OnDestroy {
     }
     if (changes.hasOwnProperty('formState')) {
       if (!changes['formState'].firstChange) {
-        console.log('****formState******',this.config.field, this.formState);
+    //    console.log('****formState******',this.config.field, this.formState);
        // console.log('****formState******',this.config.field, this.value,this.formState, this.config, JSON.stringify(this.formGroup.value));
         let _config
         if (this.config.state === 'text') {

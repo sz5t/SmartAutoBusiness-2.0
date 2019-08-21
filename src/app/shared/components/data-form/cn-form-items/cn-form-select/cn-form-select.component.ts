@@ -37,7 +37,9 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit,Aft
       // this.load();
     } else {
       if (this.config.options) {
+        setTimeout(() => {
         this.selectOptions = this.config.options;
+        });
         this.selectItems = this.config.options;
       }
     }
@@ -108,7 +110,10 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit,Aft
       data_form.forEach(element => {
         newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
       });
-      this.selectOptions = newOptions;
+      setTimeout(() => {
+        this.selectOptions = newOptions;
+      });
+    
    //   console.log('下拉选择的最终数据集===》', this.selectOptions);
       // for (const item in this.formValue) {
       //   if (data_form.hasOwnProperty(item)) {
@@ -180,7 +185,9 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit,Aft
           this.cascadeOptions.forEach(element => {
             newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
           });
+          setTimeout(() => {
           this.selectOptions = newOptions;
+          });
         }
      }
       

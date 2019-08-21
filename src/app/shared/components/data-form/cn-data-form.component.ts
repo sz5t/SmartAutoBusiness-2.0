@@ -577,19 +577,19 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
         // 弹出提示框
         if (successCfg) {
-          new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
+        //  new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
         }
       }
       if (response.validation) {
         const validationCfg = execConfig.ajaxConfig.result.find(res => res.name === 'validation');
         if (validationCfg) {
-          new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
+        //  new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
         }
       }
       if (response.error) {
         const errorCfg = execConfig.ajaxConfig.result.find(res => res.name === 'error');
         if (errorCfg) {
-          new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
+        //  new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
         }
       }
     })
@@ -617,21 +617,21 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
       // 弹出提示框
       if (successCfg) {
-        new SenderResolver(this).resolve(successCfg.senderCfg);
+       // new SenderResolver(this).resolve(successCfg.senderCfg);
       }
       back = true;
     }
     if (response.validation) {
       const validationCfg = execConfig.ajaxConfig.result.find(res => res.name === 'validation');
       if (validationCfg) {
-        new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
+      //  new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
       }
       back = false;
     }
     if (response.error) {
       const errorCfg = execConfig.ajaxConfig.result.find(res => res.name === 'error');
       if (errorCfg) {
-        new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
+      //  new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
       }
       back = false;
     }
