@@ -10,6 +10,7 @@ import { RelationResolver, SenderResolver } from '@shared/resolver/relation/rela
 import { Subject, Subscription, Observable, Observer } from 'rxjs';
 import { CN_DATA_FORM_METHOD } from '@core/relations/bsn-methods/bsn-form-methods';
 import { CustomValidator } from '@shared/components/data-form/form-validator/CustomValidator';
+import { isArray } from 'util';
 
 @Component({
   selector: 'cn-data-form',
@@ -306,8 +307,18 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     };
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
-      if (response.data && response.data.length > 0) {
-        const data_form = response.data[0];
+     if( isArray(response.data)) {
+        if (response.data && response.data.length > 0) {
+          const data_form = response.data[0];
+          for (const item in this.formValue) {
+            if (data_form.hasOwnProperty(item)) {
+              this.formValue[item] = data_form[item];
+            }
+          }
+          this.validateForm.setValue(this.formValue);
+        }
+      }else {
+        const data_form = response.data;
         for (const item in this.formValue) {
           if (data_form.hasOwnProperty(item)) {
             this.formValue[item] = data_form[item];
@@ -315,6 +326,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         }
         this.validateForm.setValue(this.formValue);
       }
+    
 
 
     }, error => {
