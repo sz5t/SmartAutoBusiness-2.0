@@ -12,6 +12,8 @@ export interface ParametersResolverModel {
   cascadeValue?: any;
   returnValue?: any;
   router?: ActivatedRoute;
+  addedRows?: any[],
+  editedRows?: any[]
 }
 
 export interface IParameter {
@@ -125,6 +127,16 @@ export class ParameterResolver {
   private static router(param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new RouterParameter(param, model).buildParameter();
+  }
+
+  public static addedRows(param, model) {
+    // tslint:disable-next-line: no-use-before-declare
+    return new AddedRows(param, model).buildParameter();
+  }
+
+  public static editedRows(param, model) {
+    // tslint:disable-next-line: no-use-before-declare
+    return new EditedRows(param, model).buildParameter();
   }
 }
 
@@ -291,6 +303,76 @@ class ItemParameter extends BaseParameter implements IParameter {
           );
         } else {
           this._result = this._model.item[this._param.valueName];
+        }
+      }
+    }
+
+    return this._result;
+  }
+}
+
+class AddedRows extends BaseParameter implements IParameter {
+  private _result: any = {};
+  constructor(private _param, private _model) {
+    super();
+  }
+  public buildParameter() {
+    if (this._model.addedRows) {
+      // 判断组件取值是否为null
+      if (this._model.addedRows[this._param.valueName] === null || this._model.addedRows[this._param.valueName] === undefined) {
+        if (this._param.value !== undefined) {
+          if (this._param.dataType) {
+            this._result = this.getParameter(this._param.dataType, this._param.value);
+          } else if (this._param.defaultDate) {
+            const dataType = this._param.defaultDate;
+            this._result = this.getDefaultDate(dataType);
+          } else {
+            this._result = this._param.value;
+          }
+        }
+      } else {
+        if (this._param.dataType) {
+          this._result = this.getParameter(
+            this._param.dataType,
+            this._model.addedRows[this._param.valueName],
+          );
+        } else {
+          this._result = this._model.addedRows[this._param.valueName];
+        }
+      }
+    }
+
+    return this._result;
+  }
+}
+
+class EditedRows extends BaseParameter implements IParameter {
+  private _result: any = {};
+  constructor(private _param, private _model) {
+    super();
+  }
+  public buildParameter() {
+    if (this._model.editedRows) {
+      // 判断组件取值是否为null
+      if (this._model.editedRows[this._param.valueName] === null || this._model.editedRows[this._param.valueName] === undefined) {
+        if (this._param.value !== undefined) {
+          if (this._param.dataType) {
+            this._result = this.getParameter(this._param.dataType, this._param.value);
+          } else if (this._param.defaultDate) {
+            const dataType = this._param.defaultDate;
+            this._result = this.getDefaultDate(dataType);
+          } else {
+            this._result = this._param.value;
+          }
+        }
+      } else {
+        if (this._param.dataType) {
+          this._result = this.getParameter(
+            this._param.dataType,
+            this._model.editedRows[this._param.valueName],
+          );
+        } else {
+          this._result = this._model.editedRows[this._param.valueName];
         }
       }
     }

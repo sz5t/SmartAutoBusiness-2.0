@@ -24,9 +24,54 @@ export class RelationResolver {
     /**
      * 组件内部消息发送
      */
-    public resolveInnerSender(senderCfg: any) {
-        // tslint:disable-next-line: no-use-before-declare
-        new ComponentSenderResolver(this._componentInstance).sendMessage(senderCfg);
+    public resolveInnerSender(resultCfg: any, successData, isArrayResult = false) {
+        // 查找消息配置
+        if (resultCfg['senderId']) {
+            const senderCfg = this._componentInstance
+                .config
+                .cascade
+                .messageSender
+                .find(sender => sender.id === resultCfg['senderId']);
+            // tslint:disable-next-line: no-use-before-declare
+            senderCfg && new ComponentSenderResolver(this._componentInstance)
+                .sendMessage(senderCfg, isArrayResult, successData);
+        }
+    }
+
+    /**
+     * 组件验证消息
+     * @param validationCfg 
+     * @param validationData 
+     */
+    public resolverDataValidationSender(validationCfg, validationData) {
+        if (validationCfg['senderId']) {
+            const senderCfg = this._componentInstance
+                .config
+                .cascade
+                .messageSender
+                .find(sender => sender.id === validationCfg['senderId']);
+            // tslint:disable-next-line: no-use-before-declare
+            senderCfg && new ComponentSenderResolver(this._componentInstance)
+                .sendValidationMessage(senderCfg, validationData);
+        }
+    }
+
+    /**
+     * 组件数据提交错误消息
+     * @param errorCfg 错误处理配置
+     * @param errorData 错误数据
+     */
+    public resolverDataErrorSender(errorCfg, errorData) {
+        if (errorCfg['senderId']) {
+            const senderCfg = this._componentInstance
+                .config
+                .cascade
+                .messageSender
+                .find(sender => sender.id === errorCfg['senderId']);
+            // tslint:disable-next-line: no-use-before-declare
+            senderCfg && new ComponentSenderResolver(this._componentInstance)
+                .sendErrorMessage(senderCfg, errorData);
+        }
     }
 
     /**
@@ -251,16 +296,60 @@ export class ComponentSenderResolver {
     }
 
     /**
-     * 发送消息
-     * @param cfg 消息配置 
+     * 发送验证消息
      */
-    sendMessage(cfg) {
+    sendValidationMessage(cfg, validationData) {
         for (const c of cfg.sendData) {
             // 根据前置条件判断,是否能够发送消息
             if (!this.conditionValidator(c.condition)) {
                 return false;
             }
-            const options = this.getOptionParamsObj(c.params);
+            this._componentInstance.componentService.commonRelationSubject.next(
+                new BsnRelativesMessageModel(
+                    {
+                        triggerType: c.receiverTriggerType,
+                        trigger: c.receiverTrigger
+                    },
+                    cfg.senderId,
+                    validationData
+                )
+            )
+        }
+    }
+
+    /**
+     * 发送错误消息
+     */
+    sendErrorMessage(cfg, errorData) {
+        for (const c of cfg.sendData) {
+            // 根据前置条件判断,是否能够发送消息
+            if (!this.conditionValidator(c.condition)) {
+                return false;
+            }
+            this._componentInstance.componentService.commonRelationSubject.next(
+                new BsnRelativesMessageModel(
+                    {
+                        triggerType: c.receiverTriggerType,
+                        trigger: c.receiverTrigger
+                    },
+                    cfg.senderId,
+                    errorData
+                )
+            )
+        }
+    }
+
+    /**
+     * 发送通用消息
+     * @param cfg 消息配置 
+     */
+    sendMessage(cfg, isArray = false, data?) {
+        for (const c of cfg.sendData) {
+            // 根据前置条件判断,是否能够发送消息
+            if (!this.conditionValidator(c.condition)) {
+                return false;
+            }
+            const options = this.getOptionParamsObj(c.params, data, isArray);
             this._componentInstance.componentService.commonRelationSubject.next(
                 new BsnRelativesMessageModel(
                     {
@@ -278,8 +367,8 @@ export class ComponentSenderResolver {
      * 获取组件当前状态下的所有参数
      * @param paramsCfg 消息参数配置
      */
-    getOptionParamsObj(paramsCfg) {
-        return this._componentInstance.buildParameters(paramsCfg);
+    getOptionParamsObj(paramsCfg, data?, isArray = false) {
+        return this._componentInstance.buildParameters(paramsCfg, data, isArray);
     }
 
     private conditionValidator(condCfg): boolean {
@@ -402,8 +491,10 @@ export class ComponentReceiverResolver {
     public resolve(cfg: any) {
         this._componentInstance.subscription$ = this._componentInstance.componentService.commonRelationSubject.subscribe(
             data => {
+
                 // 判断发送组件与接受组件是否一致
                 if (data.viewId === cfg.senderId) {
+                    console.log('receiver data:', data);
                     // 判断发送触发器与接受触发起是否一致
                     // new TriggerResolver(
                     //     data,

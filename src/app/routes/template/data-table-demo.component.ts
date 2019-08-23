@@ -459,7 +459,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                                     {
                                                         "name": "id",
                                                         "type": "tempValue",
-                                                        "valueName": "_PID"
+                                                        "valueName": "id"
                                                     }
                                                 ],
                                                 "outputParameters": [
@@ -750,15 +750,16 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "toolbar_01"
+                                            "senderId": "afterProvinceSaveSuccessfully"
                                         },
                                         {
                                             "name": "validation",
-                                            "senderId": "toolbar_01"
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterProvinceSaveValidation"
                                         },
                                         {
                                             "name": "error",
-                                            "senderId": "toolbar_01"
+                                            "senderId": "toolbar_02"
                                         }
                                     ]
                                 },
@@ -809,7 +810,21 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterProvinceUpdateSuccessfully"
+                                        },
+                                        {
+                                            "name": "validation",
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "aftetProvinceUpdateValidation"
+                                        },
+                                        {
+                                            "name": "error",
+                                            "senderId": "toolbar_02"
+                                        }
                                     ]
                                 },
                                 {
@@ -1072,7 +1087,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                                     "trigger": "SAVE_ROWS",
                                                     "ajaxId": "edit_cities",
                                                     // "stateId": "edit_save_1",
-                                                    // "conditionId": "edit_save_1"
+                                                    "conditionId": ""
                                                 }
                                             ],
                                             "toggle": {
@@ -1465,6 +1480,110 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                                 ]
                                             }
                                         ]
+                                    },
+                                    {
+                                        "id": "afterProvinceSaveSuccessfully",
+                                        "senderId": "view_01",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "message",
+                                                        "type": "value",
+                                                        "value": "操作完成!"
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "addedRows",
+                                                        "valueName": "id"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterProvinceUpdateSuccessfully",
+                                        "senderId": "view_01",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "message",
+                                                        "type": "value",
+                                                        "value": "操作完成!"
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "editedRows",
+                                                        "valueName": "id"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterProvinceSaveValidation",
+                                        "senderId": "view_01",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "SHOW_INVALIDATE_ADDED_ROWS"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterProvinceUpdateValidation",
+                                        "senderId": "view_01",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
+                                            }
+                                        ]
                                     }
                                 ]
                             },
@@ -1845,12 +1964,12 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "grid_sender_01"
+                                            "senderId": "afterProvinceSaveSuccessfully"
                                         },
-                                        // {
-                                        //     "name": "validation",
-                                        //     "senderId": "grid_sender_02"
-                                        // },
+                                        {
+                                            "name": "validation",
+                                            "senderId": "afterProvinceSaveValidation"
+                                        },
                                         // {
                                         //     "name": "error",
                                         //     "senderId": "grid_sender_03"
@@ -1904,7 +2023,16 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterProvinceUpdateSuccessfully"
+                                        },
+                                        {
+                                            "name": "validation",
+                                            "senderId": "afterProvinceUpdateValidation"
+                                        },
                                     ]
                                 },
                                 {
@@ -2096,7 +2224,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "add_save_2",
+                                    "id": "city_condition_added_none",
                                     "state": [
                                         {
                                             "type": "component",
@@ -2125,7 +2253,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_save_2",
+                                    "id": "city_condition_edited_none",
                                     "state": [
                                         {
                                             "type": "component",
@@ -2174,39 +2302,44 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                             "ajaxConfig": [
                                 {
                                     "id": "add_cities_1",
-                                    "url": "province/insertMany",
+                                    "url": "city/insertMany",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "provinceName",
+                                            "name": "cityName",
                                             "type": "componentValue",
-                                            "valueName": "provinceName",
-                                            "dataType": "string"
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
                                         },
                                         {
                                             "name": "populationSize",
                                             "type": "componentValue",
-                                            "valueName": "populationSize",
-                                            "dataType": "int"
+                                            "valueName": "populationSize"
                                         },
                                         {
                                             "name": "directlyUnder",
                                             "type": "componentValue",
-                                            "valueName": "directlyUnder",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "areaCode",
-                                            "type": "componentValue",
-                                            "valueName": "areaCode",
-                                            "dataType": "int"
+                                            "valueName": "directlyUnder"
                                         },
                                         {
                                             "name": "createDate",
                                             "type": "componentValue",
-                                            "valueName": "createDate",
-                                            "dataType": "string"
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
+                                            "type": "tempValue",
+                                            "valueName": "_PID"
+                                        },
+                                        {
+                                            "name": "id",
+                                            "type": "componentValue",
+                                            "valueName": "id"
                                         }
                                     ],
                                     "outputParameters": [
@@ -2217,11 +2350,12 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "toolbar_02"
+                                            "senderId": "afterCitySaveSuccessfully"
                                         },
                                         {
                                             "name": "validation",
-                                            "senderId": "toolbar_02"
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCitySaveValidation"
                                         },
                                         {
                                             "name": "error",
@@ -2231,52 +2365,66 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "edit_cities_1",
-                                    "url": "province/updateMany",
+                                    "url": "city/updateMany",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
-                                            "name": "id",
+                                            "name": "cityName",
                                             "type": "componentValue",
-                                            "valueName": "id",
-                                            "dataType": "string"
+                                            "valueName": "cityName"
                                         },
                                         {
-                                            "name": "provinceName",
+                                            "name": "zipCode",
                                             "type": "componentValue",
-                                            "valueName": "provinceName",
-                                            "dataType": "string"
+                                            "valueName": "zipCode"
                                         },
                                         {
                                             "name": "populationSize",
                                             "type": "componentValue",
-                                            "valueName": "populationSize",
-                                            "dataType": "int"
+                                            "valueName": "populationSize"
                                         },
                                         {
                                             "name": "directlyUnder",
                                             "type": "componentValue",
-                                            "valueName": "directlyUnder",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "areaCode",
-                                            "type": "componentValue",
-                                            "valueName": "areaCode",
-                                            "dataType": "int"
+                                            "valueName": "directlyUnder"
                                         },
                                         {
                                             "name": "createDate",
                                             "type": "componentValue",
-                                            "valueName": "createDate",
-                                            "dataType": "string"
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
+                                            "type": "tempValue",
+                                            "valueName": "_PID"
+                                        },
+                                        {
+                                            "name": "id",
+                                            "type": "componentValue",
+                                            "valueName": "id"
                                         }
                                     ],
                                     "outputParameters": [
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCityUpdateSuccessfully"
+                                        },
+                                        {
+                                            "name": "validation",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCityUpdateValidation"
+                                        },
+                                        {
+                                            "name": "error",
+                                            "senderId": "toolbar_02"
+                                        }
                                     ]
                                 }
                             ],
@@ -2402,14 +2550,14 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                                     "trigger": "SAVE_ROWS",
                                                     "ajaxId": "add_cities_1",
                                                     // "stateId": "add_save_1",
-                                                    // "conditionId": "add_save_1"
+                                                    "conditionId": "city_condition_added_none"
                                                 },
                                                 {
                                                     "triggerType": "OPERATION",
                                                     "trigger": "SAVE_ROWS",
                                                     "ajaxId": "edit_cities_1",
                                                     // "stateId": "edit_save_1",
-                                                    // "conditionId": "edit_save_1"
+                                                    "conditionId": "city_condition_edited_none"
                                                 }
                                             ],
                                             "toggle": {
@@ -2847,7 +2995,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                         "senderId": "view_02",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROW",
-                                        "triggerMoment": "after",
+                                        "triggerMoment": "asyncAfter",
                                         "sendData": [
                                             {
                                                 "reveicerId": "",
@@ -2868,7 +3016,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                         "senderId": "view_02",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROWS",
-                                        "triggerMoment": "after",
+                                        "triggerMoment": "asyncAfter",
                                         "sendData": [
                                             {
                                                 "reveicerId": "",
@@ -2949,6 +3097,131 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             }
                                         ]
                                     },
+                                    {
+                                        "id": "grid_sender_08",
+                                        "senderId": "view_02",
+                                        "triggerType": "ACTION",
+                                        "trigger": "CONFIRM",
+                                        "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "STATE",
+                                                "receiverTrigger": "STATE_TO_TEXT",
+                                                "params": [
+                                                    {
+                                                        "name": "targetViewId",
+                                                        "value": "view_01",
+                                                        "type": "value"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterCitySaveSuccessfully",
+                                        "senderId": "view_02",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "message",
+                                                        "type": "value",
+                                                        "value": "操作完成!"
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "addedRows",
+                                                        "valueName": "id"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterCityUpdateSuccessfully",
+                                        "senderId": "view_02",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "message",
+                                                        "type": "value",
+                                                        "value": "操作完成!"
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "editedRows",
+                                                        "valueName": "id"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterCitySaveValidation",
+                                        "senderId": "view_02",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "SHOW_INVALIDATE_ADDED_ROWS"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterCityUpdateValidation",
+                                        "senderId": "view_02",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
+                                            }
+                                        ]
+                                    }
                                 ],
                                 "messageReceiver": [
                                     {
@@ -2966,6 +3239,58 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                                         "valueTo": "tempValue"
                                                     }
                                                 ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "",
+                                        "senderId": "view_02",
+                                        "receiveData": [
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "MESSAGE"
+                                                // "params": [
+                                                //     {
+                                                //         "pname": "name",
+                                                //         "cname": "_PID",
+                                                //         "valueTo": "tempValue"
+                                                //     }
+                                                // ]
+                                            },
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "CHANGE_ADDED_ROWS_TO_TEXT"
+                                                // "params": [
+                                                //     {
+                                                //         "pname": "name",
+                                                //         "cname": "_PID",
+                                                //         "valueTo": "tempValue"
+                                                //     }
+                                                // ]
+                                            },
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
+                                                // "params": [
+                                                //     {
+                                                //         "pname": "name",
+                                                //         "cname": "_PID",
+                                                //         "valueTo": "tempValue"
+                                                //     }
+                                                // ]
+                                            },
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "SHOW_INVALIDATE_ADDED_ROWS"
+                                            },
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "SHOW_INVALIDATE_EDITED_ROWS"
                                             }
                                         ]
                                     }
@@ -3114,6 +3439,11 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "ajaxType": "post",
                                     "params": [
                                         {
+                                            "name": "id",
+                                            "type": "componentValue",
+                                            "valueName": "id"
+                                        },
+                                        {
                                             "name": "cityName",
                                             "type": "componentValue",
                                             "valueName": "cityName"
@@ -3152,12 +3482,14 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "grid_sender_01"
+                                            "senderId": "afterCitySaveSuccessfully"
                                         },
-                                        // {
-                                        //     "name": "validation",
-                                        //     "senderId": "grid_sender_02"
-                                        // },
+                                        {
+                                            "name": "validation",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCitySaveValidation"
+                                        },
                                         // {
                                         //     "name": "error",
                                         //     "senderId": "grid_sender_03"
@@ -3197,8 +3529,8 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "name": "pId",
-                                            "type": "componentValue",
-                                            "valueName": "pid"
+                                            "type": "tempValue",
+                                            "valueName": "_PID"
                                         },
                                         {
                                             "name": "id",
@@ -3210,7 +3542,22 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCityUpdateSuccessfully"
+                                        },
+                                        {
+                                            "name": "validation",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCityUpdateValidation"
+                                        },
+                                        {
+                                            "name": "error",
+                                            "senderId": "toolbar_02"
+                                        }
                                     ]
                                 },
                                 {
@@ -3219,6 +3566,11 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
+                                        {
+                                            "name": "id",
+                                            "type": "componentValue",
+                                            "valueName": "id"
+                                        },
                                         {
                                             "name": "cityName",
                                             "type": "componentValue",
@@ -3302,9 +3654,9 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                             "valueName": "createDate"
                                         },
                                         {
-                                            "name": "pId",
+                                            "name": "id",
                                             "type": "componentValue",
-                                            "valueName": "_PID"
+                                            "valueName": "id"
                                         },
                                         {
                                             "name": "pId",
@@ -3316,12 +3668,17 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "grid_sender_01"
+                                        }
                                     ]
                                 },
                                 {
                                     "id": "city_delete_1",
-                                    "url": "province/delete",
+                                    "url": "city/delete",
                                     "urlType": "inner",
                                     "ajaxType": "delete",
                                     "params": [

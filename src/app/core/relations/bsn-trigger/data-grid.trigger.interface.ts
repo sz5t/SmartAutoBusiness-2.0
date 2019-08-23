@@ -10,12 +10,17 @@ export interface IDataGridTrigger {
     CANCEL_EDIT_ROWS: string,
     SEARCH_ROW: string,
     CANCEL_SEARCH_ROW: string,
+    CHANGE_ADDED_ROWS_TO_TEXT: string,
+    CHANGE_EDITED_ROWS_TO_TEXT: string,
+    SHOW_INVALIDATE_ADDED_ROWS: string,
+    SHOW_INVALIDATE_EDITED_ROWS: string,
 
     DIALOG: string,
     WINDOW: string,
     UPLOAD: string,
     DIALOG_BATCH: string,
     CONFIRM: string,
+    MESSAGE: string
 
     REFRESH: string,
     HIDDEN: string,
@@ -55,6 +60,10 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     CANCEL_NEW_ROWS: 'CANCEL_NEW_ROWS',
     SEARCH_ROW: 'SEARCH_ROW',
     CANCEL_SEARCH_ROW: 'CANCEL_SEARCH_ROW',
+    CHANGE_ADDED_ROWS_TO_TEXT: 'CHANGE_ADDED_ROWS_TO_TEXT',
+    CHANGE_EDITED_ROWS_TO_TEXT: 'CHANGE_EDITED_ROWS_TO_TEXT',
+    SHOW_INVALIDATE_ADDED_ROWS: 'SHOW_INVALIDATE_ADDED_ROWS',
+    SHOW_INVALIDATE_EDITED_ROWS: 'SHOW_INVALIDATE_EDITED_ROWS',
 
     // action
     DIALOG: 'DIALOG',
@@ -62,6 +71,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     UPLOAD: 'UPLOAD',
     DIALOG_BATCH: 'DIALOG_BATCH',
     CONFIRM: 'CONFIRM',
+    MESSAGE: 'MESSAGE',
 
     // behavior
     REFRESH: 'REFRESH',

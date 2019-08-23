@@ -109,6 +109,7 @@ export class ButtonOperationResolver {
         switch (cfg.triggerType) {
             // 状态触发
             case BSN_TRIGGER_TYPE.STATE:
+                // debugger;
                 if (this.currentData) {
                     this.setDataState(cfg.trigger, this.currentData);
                     this.setToggle(this.currentData);
@@ -202,14 +203,17 @@ export class ButtonOperationResolver {
                 break;
             case BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW:
                 dataOfState.state = 'text';
+                dataOfState.validation = true;
                 // sendMsg.isSend = true
                 break;
             case BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROWS:
                 dataOfState.state = 'text';
+                dataOfState.validation = true;
                 // sendMsg.isSend = true
                 break;
             case BSN_DATAGRID_TRIGGER.ADD_ROW:
                 dataOfState.state = 'new';
+                dataOfState.validation = true;
                 // sendMsg.isSend = true
                 break;
             case BSN_DATAGRID_TRIGGER.CANCEL_NEW_ROW:
@@ -218,15 +222,19 @@ export class ButtonOperationResolver {
                 break;
             case BSN_DATAGRID_TRIGGER.CANCEL_NEW_ROWS:
                 dataOfState.state = 'text';
+                dataOfState.validation = true;
                 break;
             case BSN_TOOLBAR_TRIGGER.STATE_TO_TEXT:
                 dataOfState.state = 'text';
+                dataOfState.validation = true;
                 break;
             case BSN_TOOLBAR_TRIGGER.EXECUTE_NONE:
                 dataOfState.state = 'text';
+                dataOfState.validation = true;
                 break;
             case BSN_DATAGRID_TRIGGER.REFRESH:
                 dataOfState.state = 'text';
+                dataOfState.validation = true;
                 break;
         }
     }

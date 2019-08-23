@@ -134,6 +134,26 @@ export class CnComponentBase {
 
     // #endregion
 
+    public asyncBefore(target, method, advice) {
+        const original = target[method];
+        target[method] = (async (...args) => {
+            const result = await advice(args);
+            if (result) {
+                original.apply(target, args);
+            }
+        });
+        return target;
+    }
+
+    public asyncAfter(target, method, advice) {
+        const original = target[method];
+        target[method] = (async (...args) => {
+            const result = await original.apply(target, args);
+            if (result) {
+                advice(args);
+            }
+        })
+    }
 
     public before(target, method, advice) {
         const original = target[method];

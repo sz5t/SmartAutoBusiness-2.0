@@ -169,8 +169,12 @@ export class TriggerResolver {
     }
 
     handleActionType() {
+        console.log('trigger data', this._triggerMsg.options);
         const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
-        this._componentInstance[method](this._triggerMsg.options);
+        if (method) {
+            this._componentInstance[method](this._triggerMsg.options);
+        }
+
         // this._componentInstance[CN_DATA_GRID_METHOD[this._triggerMsg.trigger.trigger]]();
     }
 
@@ -209,7 +213,6 @@ export class TriggerResolver {
     }
 
     private checkComponentProperty(expCfg) {
-        debugger;
         // 判断取值的类型
         const allCheckResult = [];
         switch (expCfg.type) {
@@ -239,7 +242,7 @@ export class TriggerResolver {
 
     private buildMatchObject(componentValue, expCfg) {
         let value;
-        if (expCfg.name) { 
+        if (expCfg.name) {
             value = componentValue[expCfg.name];
         } else {  // 读取自身数据
             value = componentValue;

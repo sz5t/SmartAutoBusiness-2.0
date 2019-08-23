@@ -13,13 +13,18 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     CANCEL_EDIT_ROWS: 'cancelEditRows',
     SEARCH_ROW: 'searchRow',
     CANCEL_SEARCH_ROW: 'cancelSearchRow',
-
+    CHANGE_ADDED_ROWS_TO_TEXT: 'changeAddedRowsToText',
+    CHANGE_EDITED_ROWS_TO_TEXT: 'changeEditedRowsToText',
+    SHOW_INVALIDATE_ADDED_ROWS: 'showInvalidateAddedRows',
+    SHOW_INVALIDATE_EDITED_ROWS: 'showInvalidateEditedRows',
     // action
     DIALOG: 'showDialog',
     WINDOW: 'showWindow',
     UPLOAD: 'showUpload',
     DIALOG_BATCH: 'showBatchDialog',
     CONFIRM: 'showConfirm',
+    MESSAGE: 'showMessage',
+
 
     // behavior
     REFRESH: 'load',

@@ -26,6 +26,7 @@ import { Subscription, Subject, BehaviorSubject, merge, Observable } from 'rxjs'
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
+import { arraysEqual } from 'ng-zorro-antd';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -86,7 +87,8 @@ export class CnDataTableComponent extends CnComponentBase
             state: string,
             data: any,
             originData: any,
-            actions?: any[]
+            actions?: any[],
+            validation?: boolean
         }
     } = {};
     public checkedNumber = 0;
@@ -256,6 +258,7 @@ export class CnDataTableComponent extends CnComponentBase
                         state: 'text',
                         data: d,
                         originData: { ...d },
+                        validation: true,
                         actions: this.getRowActions('text')
                     };
                     index === 0 && (this.ROW_SELECTED = d);
@@ -405,9 +408,8 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public addRow() {
-        console.log(this.config.id + '-------------add row');
         // 创建空数据对象
-        const newId = CommonUtils.uuID(6);
+        const newId = CommonUtils.uuID(32);
         const newData = this.createNewRowData();
         newData[this.KEY_ID] = newId;
 
@@ -510,6 +512,76 @@ export class CnDataTableComponent extends CnComponentBase
         return true;
     }
 
+    public changeAddedRowsToText(option) {
+        // 通过服务器端的临时ID与执行数据的ID匹配取得数据
+        if (option && Array.isArray(option)) {
+            option.map(opt => {
+                if (this.mapOfDataState[opt[this.KEY_ID]]) {
+
+                    this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== opt[this.KEY_ID]);
+                    this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
+                    this.mapOfDataState[opt[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
+                    const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
+                    trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+                }
+            })
+        } else if (option) {
+            // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
+            this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== option[this.KEY_ID]);
+            this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
+            this.mapOfDataState[option[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
+            const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
+            trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+        }
+
+
+    }
+
+    public changeEditedRowsToText(option) {
+        console.log('changeEditedRowsToText', option);
+        // 通过服务器端的临时ID与执行数据的ID匹配取得数据
+        if (option && Array.isArray(option)) {
+            option.map(opt => {
+                if (this.mapOfDataState[opt[this.KEY_ID]]) {
+                    this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
+                    const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
+                    trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+                }
+            })
+        } else if (option) {
+            // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
+            this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
+            const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
+            trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+        }
+
+    }
+
+    public showInvalidateAddedRows(option) {
+        if (option && Array.isArray(option)) {
+            option.map(opt => {
+                const rowData = opt.data;
+                this.mapOfDataState[rowData[this.KEY_ID]]['validation'] = false;
+            })
+        } else if (option) {
+            const rowData = option.data
+            this.mapOfDataState[rowData[this.KEY_ID]]['validation'] = false
+        }
+    }
+
+    public showInvalidateEditedRows(option) {
+        console.log(option);
+        if (option && Array.isArray(option)) {
+            option.map(opt => {
+                const rowData = opt.data;
+                this.mapOfDataState[rowData[this.KEY_ID]]['validation'] = false;
+            })
+        } else if (option) {
+            const rowData = option.data
+            this.mapOfDataState[rowData[this.KEY_ID]]['validation'] = false
+        }
+    }
+
     private _getComponentValueByHttpMethod(method): any[] {
         switch (method) {
             case 'post':
@@ -548,8 +620,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public async executeCurrentRow(option) {
-
-        console.log(this.config.id + '-------------executeSelectRow', option);
+        let result = false;
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
         const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
@@ -564,13 +635,77 @@ export class CnDataTableComponent extends CnComponentBase
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);
-        if (response) {
-            this.load();
-        }
+        // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+        result = this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+        // 处理validation结果
+        result = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+        // 处理error结果
+        result = this._sendDataErrorMessage(response, option.ajaxConfig.result);
 
     }
 
-    public saveRow(option) {
+    private _sendDataSuccessMessage(response, resultCfg): boolean {
+        let result = false;
+        if (Array.isArray(response.data) && response.data.length <= 0) {
+            return result;
+        }
+        if (response && response.data) {
+            const successCfg = resultCfg.find(res => res.name === 'data');
+            // 弹出提示框
+            if (successCfg) {
+                new RelationResolver(this)
+                    .resolveInnerSender(
+                        successCfg,
+                        response.data,
+                        Array.isArray(response.data)
+                    );
+            }
+            result = true;
+        }
+
+        return result;
+    }
+
+    private _sendDataValidationMessage(response, resultCfg) {
+        let result = true;
+        if (response && Array.isArray(response.validation) && response.validation.length <= 0) {
+            return result;
+        }
+        if (response && response.validation) {
+            const validationCfg = resultCfg.find(res => res.name === 'validation');
+            if (validationCfg) {
+                new RelationResolver(this)
+                    .resolverDataValidationSender(
+                        validationCfg,
+                        response.validation);
+            }
+            result = false;
+        }
+        return result;
+    }
+
+    private _sendDataErrorMessage(response, resultCfg) {
+        let result = true;
+        if (response && Array.isArray(response.error) && response.error.length <= 0) {
+            return result;
+        }
+        if (response && response.error) {
+            const errorCfg = resultCfg.find(res => res.name === 'error');
+            if (errorCfg) {
+                new RelationResolver(this)
+                    .resolverDataErrorSender(
+                        errorCfg,
+                        response.error);
+            }
+            result = false;
+        }
+        return result;
+    }
+
+    public async saveRow(option) {
+        let result = false;
         const ajaxConfig = option.ajaxConfig;
         const rowData = option.data.data;
         const url = ajaxConfig.url;
@@ -583,92 +718,46 @@ export class CnDataTableComponent extends CnComponentBase
             cacheValue: this.cacheValue,
             router: this.routerValue
         });
-        this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).subscribe(response => {
-            // success 0:全部错误,1:全部正确,2:部分错误
-            if (response.data) {
-                const successCfg = ajaxConfig.result.find(res => res.name === 'data');
-                // 弹出提示框
-                if (successCfg) {
-                    new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
-                }
-            }
-            if (response.validation) {
-                const validationCfg = ajaxConfig.result.find(res => res.name === 'validation');
-                if (validationCfg) {
-                    new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
-                }
-            }
-            if (response.error) {
-                const errorCfg = ajaxConfig.result.find(res => res.name === 'error');
-                if (errorCfg) {
-                    new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
-                }
-            }
 
-            this.load();
-        });
+        const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).toPromise();
 
-        return true;
+        // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+        result = this._sendDataSuccessMessage(response, ajaxConfig.result);
 
+        // 处理validation结果
+        result = this._sendDataValidationMessage(response, ajaxConfig.result);
+
+        // 处理error结果
+        result = this._sendDataErrorMessage(response, ajaxConfig.result);
+
+        // 返回true可以发送后续操作, 返回false终止发送,之前定义的后续操作将无法执行
+        return result;
     }
 
     /**
      * 保存编辑行
      * @param options ajaxConfig
      */
-    public saveRows(option) {
-
-        console.log(this.config.id + '-------------save row');
+    public async saveRows(option) {
+        let result = false;
         const ajaxConfig = option.ajaxConfig;
         // 构建业务对象
         // 执行异步操作
-        // this.componentService.apiService.doPost();
         const url = ajaxConfig.url;
-        const paramsData = [];
         this.COMPONENT_VALUE = this._getComponentValueByHttpMethod(ajaxConfig.ajaxType);
-        this.COMPONENT_VALUE.map(cmptValue => {
-            const d = ParameterResolver.resolve({
-                params: ajaxConfig.params,
-                tempValue: this.tempValue,
-                componentValue: cmptValue,
-                item: this.ROW_SELECTED,
-                initValue: this.initValue,
-                cacheValue: this.cacheValue,
-                router: this.routerValue
-            });
-            if (d) {
-                paramsData.push(d);
-            }
-        })
-        // const params = this.buildParameters(ajaxConfig.params);
-        this.componentService.apiService[ajaxConfig.ajaxType](url, paramsData).subscribe(response => {
-            // success 0:全部错误,1:全部正确,2:部分错误
-            if (response.data) {
-                const successCfg = ajaxConfig.result.find(res => res.name === 'data');
-                // 弹出提示框
-                if (successCfg) {
-                    new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
-                }
-            }
-            if (response.validation) {
-                const validationCfg = ajaxConfig.result.find(res => res.name === 'validation');
-                if (validationCfg) {
-                    new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
-                }
-            }
-            if (response.error) {
-                const errorCfg = ajaxConfig.result.find(res => res.name === 'error');
-                if (errorCfg) {
-                    new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
-                }
-            }
-            this.load();
-        })
-        // 处理data结果
-        // 处理message结果
+        const paramsData = this.buildParameters(ajaxConfig.params, this.COMPONENT_VALUE, true);
+        const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramsData).toPromise();
+        // 批量提交数据,返回结果都将以数组的形式返回,如果对应结果没有值则返回 {}
+        result = this._sendDataSuccessMessage(response, ajaxConfig.result);
+
         // 处理validation结果
-        // 发送后续操作消息
-        return true;
+        result = this._sendDataValidationMessage(response, ajaxConfig.result);
+
+        // 处理error结果
+        result = this._sendDataErrorMessage(response, ajaxConfig.result);
+
+        // 返回true可以发送后续操作, 返回false终止发送,之前定义的后续操作将无法执行
+        return result;
     }
 
     public setSelectRow(rowData?, $event?) {
@@ -715,16 +804,52 @@ export class CnDataTableComponent extends CnComponentBase
         // });
     }
 
-    public buildParameters(paramsCfg) {
-        return ParameterResolver.resolve({
-            params: paramsCfg,
-            tempValue: this.tempValue,
-            componentValue: this.COMPONENT_VALUE,
-            item: this.ROW_SELECTED,
-            initValue: this.initValue,
-            cacheValue: this.cacheValue,
-            router: this.routerValue
-        });
+    public buildParameters(paramsCfg, data?, isArray = false) {
+        let parameterResult: any | any[];
+        if (!isArray && !data) {
+            parameterResult = ParameterResolver.resolve({
+                params: paramsCfg,
+                tempValue: this.tempValue,
+                componentValue: this.COMPONENT_VALUE,
+                item: this.ROW_SELECTED,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue,
+                addedRows: this.ROWS_ADDED,
+                editedRows: this.ROWS_EDITED
+
+            });
+        } else if (!isArray && data) {
+            parameterResult = ParameterResolver.resolve({
+                params: paramsCfg,
+                tempValue: this.tempValue,
+                componentValue: this.COMPONENT_VALUE,
+                item: this.ROW_SELECTED,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue,
+                addedRows: data,
+                editedRows: data
+
+            });
+        } else if (isArray && data && Array.isArray(data)) {
+            parameterResult = [];
+            data.map(d => {
+                const param = ParameterResolver.resolve({
+                    params: paramsCfg,
+                    tempValue: this.tempValue,
+                    componentValue: d,
+                    item: this.ROW_SELECTED,
+                    initValue: this.initValue,
+                    cacheValue: this.cacheValue,
+                    router: this.routerValue,
+                    addedRows: d,
+                    editedRows: d
+                });
+                parameterResult.push(param);
+            })
+        }
+        return parameterResult;
     }
 
     public getCurrentComponentId() {
@@ -764,7 +889,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     /**
-     * 确认操作
+     * 显示确认对话框
      * @param option 确认参数 
      */
     public showConfirm(option: any) {
@@ -772,6 +897,13 @@ export class CnDataTableComponent extends CnComponentBase
 
     }
 
+    /**
+     * 显示表单对话框
+     * @param option 配置参数
+     * dialog
+     * changeValue
+     * ajaxConfig
+     */
     public showDialog(option: any) {
         let dialog;
         // 根据按钮类型初始化表单状态
@@ -822,7 +954,7 @@ export class CnDataTableComponent extends CnComponentBase
                     onClick: componentInstance => {
                         (async () => {
                             const result = await componentInstance.executeModal(option);
-                            dialog && dialog.close()
+                            result && dialog.close()
                         })();
                     }
                 }
@@ -842,6 +974,23 @@ export class CnDataTableComponent extends CnComponentBase
     public showBatchDialog() {
 
     }
+
+    /**
+     * 显示消息框
+     */
+    public showMessage(option) {
+        const message: { type: string, message: string } = { type: '', message: '' };
+        if (option && Array.isArray(option)) {
+            message.message = option[0].message;
+            message.type = option[0].type;
+        } else if (option) {
+            message.message = option.message;
+            message.type = option.type;
+        }
+
+        option && this.componentService.msgService.create(message.type, message.message);
+    }
+
 
     /**
      * 全选
