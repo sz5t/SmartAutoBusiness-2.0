@@ -292,8 +292,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
 
     this.FORM_VALID = this.validateForm.valid;
-    const s = this.validateForm.get('provinceName');
-    console.log('provinceName 校验', s.errors);
+  
   }
   /**
    * load 自加载
@@ -318,13 +317,15 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
           this.validateForm.setValue(this.formValue);
         }
       }else {
-        const data_form = response.data;
-        for (const item in this.formValue) {
-          if (data_form.hasOwnProperty(item)) {
-            this.formValue[item] = data_form[item];
+        if (response.data){
+          const data_form = response.data;
+          for (const item in this.formValue) {
+            if (data_form.hasOwnProperty(item)) {
+              this.formValue[item] = data_form[item];
+            }
           }
+          this.validateForm.setValue(this.formValue);
         }
-        this.validateForm.setValue(this.formValue);
       }
     
 
