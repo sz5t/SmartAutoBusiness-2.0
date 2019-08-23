@@ -1,59 +1,189 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject, AfterViewInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { CnComponentBase } from '@shared/components/cn-component.base';
+import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 
 @Component({
   selector: 'app-cn-form-select-multiple',
   templateUrl: './cn-form-select-multiple.component.html',
   styleUrls: ['./cn-form-select-multiple.component.less']
 })
-export class CnFormSelectMultipleComponent extends CnComponentBase implements OnInit {
+export class CnFormSelectMultipleComponent extends CnComponentBase implements OnInit, AfterViewInit {
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
   public selectedValue;
   public selectOptions = [];
   public selectItems = [];
-  public cascadeOptions:any;
+  public cascadeOptions: any;
   public myControl;
   public value;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
+    this.tempValue = {};
+    this.initValue = {};
   }
 
 
-  listOfOption: Array<{ label: string; value: string }> = [];
-  listOfSelectedValue = ['a10', 'c12'];
+  listOfSelectedValue = [];
 
   ngOnInit(): void {
-    const children: Array<{ label: string; value: string }> = [];
-    for (let i = 10; i < 36; i++) {
-      children.push({ label: i.toString(36) + i, value: i.toString(36) + i });
-    }
-    this.listOfOption = children;
+
   }
 
+  ngAfterViewInit() {
+    // console.log('ngAfterViewInit ==>' , this.config.field);
+    if (this.config.loadingConfig) {
+      // this.load();
+    } else {
+      if (this.config.options) {
+        setTimeout(() => {
+          this.selectOptions = this.config.options;
+        });
+        this.selectItems = this.config.options;
+      }
+    }
+  }
   /**
    * 值变化
    * @param v 
    */
-  public  valueChange(v?) {
-    console.log('多选值变化',v);
+  public async valueChange(v?) {
+    console.log('多选值变化model', v);
+    const backValue = { name: this.config.field, value: v, id: this.config.config.id };
+    if (this.selectItems.length < 1) {
+     if(this.config.loadingConfig) 
+      await this.load();
+    }
+    const index = this.selectItems.findIndex(item => item[this.config['valueName']] === v);
+    const myControl = this.formGroup.get(this.config.field);
+    if (index > -1) {
+      backValue['dataItem'] = this.selectItems[index];
+    } else {
+      //  if(v)
+      // myControl.setValue(null, { emitEvent: true });
+    }
+    if (v) {
+      this.listOfSelectedValue = v.split(',');
+    } else {
+      this.listOfSelectedValue = [];
+    }
+
+    console.log('selectMuilt 值变化', v, this.config.field, this.selectItems);
+    this.updateValue.emit(backValue);
   }
 
-/**
- * 级联分析
- * @param c 
- */
+  /**
+   * 多选值变化
+   * @param v 
+   */
+  public valueChangeSelect(v?) {
+    console.log('多选值变化select', v);
+    const newValue = v.join(',');
+    if (this.value !== newValue) {
+      this.value = newValue;
+    }
+
+  }
+
+  /**
+   * 级联分析
+   * @param c 
+   */
   public cascadeAnalysis(c?) {
 
     // 分类完善信息，此处完善的信息为 异步参数处理
     // cascadeValue
 
-    console.log('级联具体小组件接受=》',c );
+    console.log('级联具体小组件接受=》', c);
   }
+
+
+  // 构建参数-》下拉选择自加载数据
+  public buildParameters(paramsCfg) {
+    return ParameterResolver.resolve({
+      params: paramsCfg,
+      tempValue: this.tempValue,
+      componentValue: this.formGroup.value, //  组件值？返回值？级联值，需要三值参数
+      initValue: this.initValue,
+      cacheValue: this.cacheValue,
+      router: this.routerValue,
+      cascadeValue: this.cascadeValue
+    });
+  }
+
+  /**
+   * load 自加载
+   */
+  public async load() {
+    // 【参数不全是否阻止加载！】
+    // 对后续业务判断有影响
+    //  console.log('===select 自加载====>load');
+    const url = this.config.loadingConfig['ajaxConfig'].url;
+    const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
+    const params = {
+      ...this.buildParameters(this.config.loadingConfig['ajaxConfig'].params)
+    };
+    // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+    const response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
+    console.log('--da---' + this.config.field, response);
+    if (response.data && response.data.length > 0) {
+      const data_form = response.data;
+      this.selectItems = data_form;
+      const newOptions = [];
+      // 下拉选项赋值
+      data_form.forEach(element => {
+        newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
+      });
+      setTimeout(() => {
+        this.selectOptions = newOptions;
+      });
+
+      //   console.log('下拉选择的最终数据集===》', this.selectOptions);
+      // for (const item in this.formValue) {
+      //   if (data_form.hasOwnProperty(item)) {
+      //     this.formValue[item] = data_form[item];
+      //   }
+      // }
+
+    }
+    else {
+      this.selectItems = [];
+      this.selectOptions = [];
+    }
+    // this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
+    //   if (response.data && response.data.length > 0) {
+    //     const data_form = response.data;
+    //     this.selectItems = data_form;
+    //     const newOptions = [];
+    //     // 下拉选项赋值
+    //     data_form.forEach(element => {
+    //       newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
+    //     });
+    //     this.selectOptions = newOptions;
+    //  //   console.log('下拉选择的最终数据集===》', this.selectOptions);
+    //     // for (const item in this.formValue) {
+    //     //   if (data_form.hasOwnProperty(item)) {
+    //     //     this.formValue[item] = data_form[item];
+    //     //   }
+    //     // }
+
+    //   }
+    //   else{
+    //     this.selectItems = [];
+    //     this.selectOptions  =[];
+    //   }
+
+
+    // }, error => {
+    //   console.log(error);
+    // });
+
+
+  }
+
 
 }

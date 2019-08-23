@@ -5,11 +5,12 @@
     <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm" [nzXs]="config.config.controlSize.nzXs"
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
         [formGroup]="formGroup">
-        <input nz-input hidden="hidden" [formControlName]="config.field" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
-        <nz-select [nzMaxTagCount]="3" [nzMaxTagPlaceholder]="tagPlaceHolder" style="width: 100%" nzMode="multiple" nzPlaceHolder="Please select"
-            [(ngModel)]="listOfSelectedValue" [ngModelOptions]="{standalone: true}">
-            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+        <input nz-input hidden="hidden"  [formControlName]="config.field" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
+        <nz-select [nzMaxTagCount]="" [nzMaxTagPlaceholder]="tagPlaceHolder" style="width: 100%" nzMode="multiple" nzPlaceHolder="Please select"
+            [(ngModel)]="listOfSelectedValue" [ngModelOptions]="{standalone: true}"  (ngModelChange)="valueChangeSelect($event)">
+            <nz-option *ngFor="let option of selectOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
         </nz-select>
-        <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
+        <ng-template #tagPlaceHolder let-selectedList> 还有 {{ selectedList.length }} 个被选中 </ng-template>
     </nz-form-control>
 </nz-form-item>
+<!-- hidden="hidden" -->

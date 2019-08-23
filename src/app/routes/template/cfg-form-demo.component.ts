@@ -2140,6 +2140,17 @@ export class CfgFormDemoComponent implements OnInit {
                   "width": "100px",
                   "style": {},
                 },
+                {
+                  "title": "优势",
+                  "type": "field",
+                  "field": "remark",
+                  "hidden": false,
+                  "showFilter": false,
+                  "showSort": false,
+                  "width": "100px",
+                  "style": {},
+                },
+                
                 // {
                 //     "title": "message",
                 //     "type": "field",
@@ -2883,6 +2894,12 @@ export class CfgFormDemoComponent implements OnInit {
                       "type": "componentValue",
                       "valueName": "createDate",
                       "dataType": "string"
+                    },
+                    {
+                      "name": "remark",
+                      "type": "componentValue",
+                      "valueName": "remark",
+                      "dataType": "string"
                     }
                   ],
                   "outputParameters": [
@@ -2932,6 +2949,12 @@ export class CfgFormDemoComponent implements OnInit {
                       "name": "createDate",
                       "type": "componentValue",
                       "valueName": "createDate",
+                      "dataType": "string"
+                    },
+                    {
+                      "name": "remark",
+                      "type": "componentValue",
+                      "valueName": "remark",
                       "dataType": "string"
                     }
                   ],
@@ -3234,7 +3257,57 @@ export class CfgFormDemoComponent implements OnInit {
                           "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
                         },
                         "control": { "id": "006" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "007" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "008" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "009" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "010" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "011" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "012" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "013" }
                       }
+
                     ]
                   }]
               },
@@ -3474,11 +3547,11 @@ export class CfgFormDemoComponent implements OnInit {
                 {
                   id: '006',
                   "hidden": true, // 字段是否隐藏
-                  "title": '多选字段',  // lable 信息
+                  "title": '优势',  // lable 信息
                   "titleConfig": {
                     required: false
                   },
-                  "field": "inputname6",  // fromcontrol name  默认的字段
+                  "field": "remark1",  // fromcontrol name  默认的字段
                   "labelSize": {
                     "span": 8,
                     "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
@@ -3495,21 +3568,282 @@ export class CfgFormDemoComponent implements OnInit {
                   "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
                   "text": { // 文本展示字段
                     "type": 'label', // 什么组件展示文本 
-                    "field": 'inputname6',   // 字段
+                    "field": 'remark1',   // 字段
                   },
                   "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                     "type": "selectMultiple",
-                    "field": "inputname6",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "field": "remark1",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
                     options: [
-                      { label: '好人', value: '1' },
-                      { label: '坏人', value: '2' }
+                      { label: '环境好', value: '1' },
+                      { label: '高新产业多', value: '2' },
+                      { label: '高校多', value: '3' },
+                      { label: '交通便捷', value: '4' },
                     ],
                     "validations": [  // 校验
                       { validator: "required" }
                     ]
                   }
                 },
+                {
+                  id: '007',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '创建时间',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "createDate",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'createDate',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "datePicker",
+                    "field": "createDate",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '008',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '创建周',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "weekPicke",
+                    "field": "remark",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '009',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '创建月',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark4",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark4',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "monthPicker",
+                    "field": "remark4",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '010',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '开关',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark10",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark10',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "switch",
+                    "field": "remark10",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '011',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '单选',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark11",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark11',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "radio",
+                    "field": "remark11",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '012',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '多选',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark12",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark12',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "checkbox",
+                    "field": "remark12",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+                    "displayMode":"wrapper", // group wrapper
+                    "span":8,
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '013',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '下拉树',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark13",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark13',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "treeSelect",
+                    "field": "remark13",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+
+ 
+                // transfer: CnFormTransferComponent,
+                // gridSelect:CnFormGridSelectComponent,
+                // textarea: CnFormTextareaComponent,
+                
               ],
               formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
                 {

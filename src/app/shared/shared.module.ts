@@ -50,6 +50,18 @@ import { CnFormInputComponent } from './components/data-form/cn-form-items/cn-fo
 import { CnFormSelectComponent } from './components/data-form/cn-form-items/cn-form-select/cn-form-select.component';
 import { CnFormLabelComponent } from './components/data-form/cn-form-items/cn-form-label/cn-form-label.component';
 import { CnFormSelectMultipleComponent } from './components/data-form/cn-form-items/cn-form-select-multiple/cn-form-select-multiple.component';
+import { CnFormDatePickerComponent } from './components/data-form/cn-form-items/cn-form-date-picker/cn-form-date-picker.component';
+import { CnFormYearPickerComponent } from './components/data-form/cn-form-items/cn-form-year-picker/cn-form-year-picker.component';
+import { CnFormWeekPickerComponent } from './components/data-form/cn-form-items/cn-form-week-picker/cn-form-week-picker.component';
+import { CnFormRangePickerComponent } from './components/data-form/cn-form-items/cn-form-range-picker/cn-form-range-picker.component';
+import { CnFormMonthPickerComponent } from './components/data-form/cn-form-items/cn-form-month-picker/cn-form-month-picker.component';
+import { CnFormSwitchComponent } from './components/data-form/cn-form-items/cn-form-switch/cn-form-switch.component';
+import { CnFormRadioComponent } from './components/data-form/cn-form-items/cn-form-radio/cn-form-radio.component';
+import { CnFormCheckboxComponent } from './components/data-form/cn-form-items/cn-form-checkbox/cn-form-checkbox.component';
+import { CnFormTreeSelectComponent } from './components/data-form/cn-form-items/cn-form-tree-select/cn-form-tree-select.component';
+import { CnFormTransferComponent } from './components/data-form/cn-form-items/cn-form-transfer/cn-form-transfer.component';
+import { CnFormGridSelectComponent } from './components/data-form/cn-form-items/cn-form-grid-select/cn-form-grid-select.component';
+import { CnFormTextareaComponent } from './components/data-form/cn-form-items/cn-form-textarea/cn-form-textarea.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -87,7 +99,19 @@ const COMPONENTS = [
   CnFormInputComponent,
   CnFormSelectComponent,
   CnFormLabelComponent,
-  CnFormSelectMultipleComponent
+  CnFormSelectMultipleComponent,
+  CnFormDatePickerComponent,
+  CnFormYearPickerComponent,
+  CnFormWeekPickerComponent,
+  CnFormRangePickerComponent,
+  CnFormMonthPickerComponent,
+  CnFormSwitchComponent,
+  CnFormRadioComponent,
+  CnFormCheckboxComponent,
+  CnFormTreeSelectComponent,
+  CnFormTransferComponent,
+  CnFormGridSelectComponent,
+  CnFormTextareaComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -117,6 +141,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
+    
   ],
   exports: [
     CommonModule,

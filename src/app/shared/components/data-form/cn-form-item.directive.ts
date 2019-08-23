@@ -4,12 +4,36 @@ import { FormGroup } from '@angular/forms';
 import { CnFormSelectComponent } from '@shared/components/data-form/cn-form-items/cn-form-select/cn-form-select.component';
 import { CnFormLabelComponent } from '@shared/components/data-form/cn-form-items/cn-form-label/cn-form-label.component';
 import { CnFormSelectMultipleComponent } from '@shared/components/data-form/cn-form-items/cn-form-select-multiple/cn-form-select-multiple.component';
+import { CnFormRangePickerComponent } from '@shared/components/data-form/cn-form-items/cn-form-range-picker/cn-form-range-picker.component';
+import { CnFormWeekPickerComponent } from '@shared/components/data-form/cn-form-items/cn-form-week-picker/cn-form-week-picker.component';
+import { CnFormYearPickerComponent } from '@shared/components/data-form/cn-form-items/cn-form-year-picker/cn-form-year-picker.component';
+import { CnFormDatePickerComponent } from '@shared/components/data-form/cn-form-items/cn-form-date-picker/cn-form-date-picker.component';
+import { CnFormMonthPickerComponent } from '@shared/components/data-form/cn-form-items/cn-form-month-picker/cn-form-month-picker.component';
+import { CnFormSwitchComponent } from '@shared/components/data-form/cn-form-items/cn-form-switch/cn-form-switch.component';
+import { CnFormRadioComponent } from '@shared/components/data-form/cn-form-items/cn-form-radio/cn-form-radio.component';
+import { CnFormCheckboxComponent } from '@shared/components/data-form/cn-form-items/cn-form-checkbox/cn-form-checkbox.component';
+import { CnFormTreeSelectComponent } from '@shared/components/data-form/cn-form-items/cn-form-tree-select/cn-form-tree-select.component';
+import { CnFormTransferComponent } from '@shared/components/data-form/cn-form-items/cn-form-transfer/cn-form-transfer.component';
+import { CnFormTextareaComponent } from '@shared/components/data-form/cn-form-items/cn-form-textarea/cn-form-textarea.component';
+import { CnFormGridSelectComponent } from '@shared/components/data-form/cn-form-items/cn-form-grid-select/cn-form-grid-select.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnFormInputComponent,
   select: CnFormSelectComponent,
   label: CnFormLabelComponent,
-  selectMultiple:CnFormSelectMultipleComponent
+  selectMultiple:CnFormSelectMultipleComponent,
+  datePicker:CnFormDatePickerComponent,
+  yearPicker:CnFormYearPickerComponent,
+  weekPicke:CnFormWeekPickerComponent,
+  rangePicker:CnFormRangePickerComponent,
+  monthPicker:CnFormMonthPickerComponent,
+  switch:CnFormSwitchComponent,
+  radio:CnFormRadioComponent,
+  checkbox:CnFormCheckboxComponent,
+  treeSelect:CnFormTreeSelectComponent,
+  transfer: CnFormTransferComponent,
+  gridSelect:CnFormGridSelectComponent,
+  textarea: CnFormTextareaComponent,
 };
 @Directive({
   selector: '[CnFormItemDirective]'
