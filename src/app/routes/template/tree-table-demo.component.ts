@@ -12,8 +12,8 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'data-table-demo',
-    templateUrl: './data-table-demo.component.html',
+    selector: 'tree-table-demo',
+    templateUrl: './tree-table-demo.component.html',
     styles: [
         `
             :host ::ng-deep .ant-card-head {
@@ -41,7 +41,7 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
         `
     ]
 })
-export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
+export class TreeTableDemoComponent implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "layout",
@@ -66,14 +66,14 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "toolbar_001",
+                            "id": "view_treegrid_01",
                             "component": "cnToolbar",
                             "size": "default",
                             "cascade": {
                                 "messageSender": [
                                     {
                                         "id": "toolbar_01",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "triggerType": "OPERATION",
                                         "trigger": "EXECUTE_CHECKED_ROWS",
                                         "triggerMoment": "after",
@@ -102,7 +102,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                 "messageReceiver": [
                                     {
                                         "id": "s_001",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "receiveData": [
                                             {
                                                 "triggerType": "STATE",
@@ -112,7 +112,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "s_002",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "receiveData": [
                                             {
                                                 "triggerType": "STATE",
@@ -138,13 +138,13 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             ],
                             "dialog": [
                                 {
-                                    "id": "edit_province_form",
+                                    "id": "edit_city_form",
                                     "type": "confirm",
                                     "title": "数据编辑",
                                     "cancelText": "取消",
                                     "okText": "提交",
                                     "form": {
-                                        "id": "form_01",
+                                        "id": "form_office",
                                         "type": "form",
                                         "component": "form",
                                         state: 'text',
@@ -152,7 +152,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                             id: "loadform" // 将加载配置引用
                                         },
                                         formLayout: {
-                                            "id": "b86s2i",
+                                            "id": "b86s2i11",
                                             "type": "layout",
                                             "title": "表单布局b86s2i",
                                             "rows": [
@@ -169,42 +169,21 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                                 "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                             },
                                                             "control": {
-                                                                "id": "001"  // id 和引用id 值相同
+                                                                "id": "office_name"  // id 和引用id 值相同
                                                             }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "002" }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
-                                                            },
-                                                            "control": { "id": "003" }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
-                                                            },
-                                                            "control": { "id": "004" }
                                                         }
                                                     ]
                                                 }]
                                         },
                                         formControls: [
                                             {
-                                                id: '001',
+                                                id: 'office_name',
                                                 "hidden": true, // 字段是否隐藏
-                                                "title": '省名称',  // lable 信息
+                                                "title": '市名称',  // lable 信息
                                                 "titleConfig": {
                                                     required: true
                                                 },
-                                                "field": "provinceName",  // fromcontrol name  默认的字段
+                                                "field": "OFFICENAME",  // fromcontrol name  默认的字段
                                                 "labelSize": {
                                                     "span": 6,
                                                     "nzXs": { span: 6 },
@@ -226,11 +205,11 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
                                                 "text": { // 文本展示字段
                                                     "type": 'label', // 什么组件展示文本 
-                                                    "field": 'provinceName',   // 字段
+                                                    "field": 'OFFICENAME',   // 字段
                                                 },
                                                 "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                     "type": "input",
-                                                    "field": "provinceName",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                    "field": "OFFICENAME",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                     "placeholder": "请输入",
                                                     "validations": [  // 校验
                                                         { validator: "required", type: "default", "message": "请输入省名称" }
@@ -238,13 +217,13 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 }
                                             },
                                             {
-                                                id: '002',
+                                                id: 'office_id',
                                                 "hidden": true, // 字段是否隐藏
                                                 "title": '区号',  // lable 信息
                                                 "titleConfig": {
                                                     required: false
                                                 },
-                                                "field": "areaCode",  // fromcontrol name  默认的字段
+                                                "field": "ID",  // fromcontrol name  默认的字段
                                                 "labelSize": {
                                                     "span": 6,
                                                     "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
@@ -261,153 +240,50 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
                                                 "text": { // 文本展示字段
                                                     "type": 'label', // 什么组件展示文本 
-                                                    "field": 'areaCode',   // 字段
+                                                    "field": 'ID',   // 字段
                                                 },
                                                 "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                     "type": "input",
-                                                    "field": "areaCode",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                    "field": "ID",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                     "placeholder": "请输入",
                                                     "validations": [  // 校验
 
                                                     ]
-                                                },
-                                                "editor1": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                    "type": "select",
-                                                    "field": "areaCode",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                    "placeholder": "请输入",
-                                                    options: [
-                                                        { label: '是', value: '1' },
-                                                        { label: '否', value: '0' }
-                                                    ],
-                                                    labelName: 'provinceName',
-                                                    valueName: 'id',
-                                                    loadingConfig: {
-                                                        id: "loadformselect1" // 将加载配置引用
-                                                    },
-                                                    "validate": {  // 校验
-
-                                                    }
                                                 }
                                             },
                                             {
-                                                id: '003',
+                                                id: 'office_pid',
                                                 "hidden": true, // 字段是否隐藏
-                                                "title": '直属',  // lable 信息
+                                                "title": '区号',  // lable 信息
                                                 "titleConfig": {
                                                     required: false
                                                 },
-                                                "field": "directlyUnder",  // fromcontrol name  默认的字段
+                                                "field": "PID",  // fromcontrol name  默认的字段
                                                 "labelSize": {
-                                                    "span": 8,
-                                                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                                                    "span": 6,
+                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
                                                 },  // 
                                                 "controlSize": {
-                                                    "span": 16,
-                                                    "nzXs": { span: 16, offset: 0 },
-                                                    "nzSm": { span: 16, offset: 0 },
-                                                    "nzMd": { span: 16, offset: 0 },
-                                                    "nzLg": { span: 16, offset: 0 },
-                                                    "ngXl": { span: 16, offset: 0 },
-                                                    "nzXXl": { span: 16, offset: 0 }
+                                                    "span": 18,
+                                                    "nzXs": { span: 18, offset: 0 },
+                                                    "nzSm": { span: 18, offset: 0 },
+                                                    "nzMd": { span: 18, offset: 0 },
+                                                    "nzLg": { span: 18, offset: 0 },
+                                                    "ngXl": { span: 18, offset: 0 },
+                                                    "nzXXl": { span: 18, offset: 0 }
                                                 },
                                                 "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
                                                 "text": { // 文本展示字段
                                                     "type": 'label', // 什么组件展示文本 
-                                                    "field": 'directlyUnder',   // 字段
+                                                    "field": 'PID',   // 字段
                                                 },
                                                 "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                     "type": "input",
-                                                    "field": "directlyUnder",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                    "field": "PID",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                     "placeholder": "请输入",
                                                     "validations": [  // 校验
 
                                                     ]
-                                                },
-                                                "editor1": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                    "type": "select",
-                                                    "field": "inputname3",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                    "placeholder": "请输入",
-                                                    options: [
-                                                        { label: '是', value: '1' },
-                                                        { label: '否', value: '0' }
-                                                    ],
-                                                    labelName: 'cityName',
-                                                    valueName: 'id',
-                                                    loadingConfig: {
-                                                        id: "loadformselect2" // 将加载配置引用
-                                                    },
-                                                    "validate": {  // 校验
-
-                                                    }
-                                                }
-                                            },
-                                            {
-                                                id: '004',
-                                                "hidden": true, // 字段是否隐藏
-                                                "title": '测试字段4',  // lable 信息
-                                                "titleConfig": {
-                                                    required: false
-                                                },
-                                                "field": "inputname4",  // fromcontrol name  默认的字段
-                                                "labelSize": {
-                                                    "span": 8,
-                                                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 16,
-                                                    "nzXs": { span: 16, offset: 0 },
-                                                    "nzSm": { span: 16, offset: 0 },
-                                                    "nzMd": { span: 16, offset: 0 },
-                                                    "nzLg": { span: 16, offset: 0 },
-                                                    "ngXl": { span: 16, offset: 0 },
-                                                    "nzXXl": { span: 16, offset: 0 }
-                                                },
-                                                "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
-                                                "text": { // 文本展示字段
-                                                    "type": 'label', // 什么组件展示文本 
-                                                    "field": 'inputname4',   // 字段
-                                                },
-                                                "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                    "type": "select",
-                                                    "field": "inputname4",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                    "placeholder": "请输入",
-                                                    options: [
-                                                        { label: '好人', value: '1' },
-                                                        { label: '坏人', value: '2' }
-                                                    ],
-                                                    "validations": [  // 校验
-
-                                                    ]
-                                                }
-                                            },
-                                            {
-                                                id: '005',
-                                                "hidden": true, // 字段是否隐藏
-                                                "title": '测试字段5',  // lable 信息
-                                                "titleConfig": {
-                                                    required: false
-                                                },
-                                                "field": "id",  // fromcontrol name  默认的字段
-                                                "labelSize": {
-                                                    "span": 8,
-                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 16,
-                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                },
-                                                "state": "text", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
-                                                "text": { // 文本展示字段
-                                                    "type": 'label', // 什么组件展示文本 
-                                                    "field": 'id',   // 字段
-                                                },
-                                                "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                    "type": "input",
-                                                    "field": "id",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                    "placeholder": "请输入",
-                                                    "validate": {  // 校验
-
-                                                    }
                                                 }
                                             }
                                         ],
@@ -420,31 +296,19 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                     isDefault: true
                                                 },
                                                 Controls: [
-                                                    { id: '001', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '002', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '003', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '004', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '005', state: "edit", hidden: false, readOnly: false }
+                                                    { id: 'office_name', state: "edit", hidden: false, readOnly: false }
                                                 ]
                                             },
                                             {
                                                 formState: "edit",
                                                 Controls: [
-                                                    { id: '001', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '002', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '003', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '004', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '005', state: "edit", hidden: false, readOnly: false }
+                                                    { id: 'office_name', state: "edit", hidden: false, readOnly: false }
                                                 ]
                                             },
                                             {
                                                 formState: "text",
                                                 Controls: [
-                                                    { id: '001', state: "text", hidden: false, readOnly: false },
-                                                    { id: '002', state: "text", hidden: false, readOnly: false },
-                                                    { id: '003', state: "text", hidden: false, readOnly: false },
-                                                    { id: '004', state: "text", hidden: false, readOnly: false },
-                                                    { id: '005', state: "text", hidden: false, readOnly: false }
+                                                    { id: 'office_name', state: "text", hidden: false, readOnly: false }
                                                 ]
                                             }
 
@@ -452,12 +316,12 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                         ajaxConfig: [
                                             {
                                                 "id": "loadform",
-                                                "url": "information/selectAllByProvinceId",
+                                                "url": "/province/queryConditionA/CITY_SHEET",
                                                 "urlType": "inner",
                                                 "ajaxType": "get",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "ID",
                                                         "type": "tempValue",
                                                         "valueName": "id"
                                                     }
@@ -467,120 +331,6 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 ],
                                                 "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
 
-                                                ]
-                                            },
-                                            {
-                                                "id": "loadformselect1",
-                                                "url": "information/selectAllProvinceWithCity",
-                                                "urlType": "inner",
-                                                "ajaxType": "get",
-                                                "params": [
-
-
-                                                ],
-                                                "outputParameters": [
-
-                                                ],
-                                                "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
-
-                                                ]
-                                            },
-                                            {
-                                                "id": "loadformselect2_2",
-                                                "url": "information/ssld",
-                                                "urlType": "inner",
-                                                "ajaxType": "get",
-                                                "params": [
-
-                                                    {
-                                                        "name": "pId",
-                                                        "type": "value",
-                                                        "value": "1"
-                                                    }
-                                                ],
-                                                "outputParameters": [
-
-                                                ],
-                                                "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
-
-                                                ]
-                                            },
-                                            {
-                                                "id": "loadformselect2",
-                                                "url": "information/selectCityByPid",
-                                                "urlType": "inner",
-                                                "ajaxType": "get",
-                                                "params": [
-
-                                                    {
-                                                        "name": "pId",
-                                                        "type": "cascadeValue",
-                                                        "valueName": "PROVINCEID",
-                                                        "value": "2"
-                                                    }
-                                                ],
-                                                "outputParameters": [
-
-                                                ],
-                                                "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
-
-                                                ]
-                                            }
-
-
-
-                                        ],
-                                        cascade: {
-                                            "messageReceiver": [
-                                                {
-                                                    "id": "",
-                                                    "senderId": "view_01",
-                                                    "receiveData": [
-                                                        {
-                                                            "beforeReceive": [],
-                                                            "triggerType": "BEHAVIOR",
-                                                            "trigger": "REFRESH_AS_CHILD",
-                                                            "params": [
-                                                                {
-                                                                    "pname": "_PID",
-                                                                    "cname": "_PID",
-                                                                    "valueTo": "tempValue"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        cascadeValue: [ // 值级联配置
-                                            {
-                                                "type": '值变化',
-                                                "controlId": '002', //  大的control标识，级联内部
-                                                "name": 'inputname2',
-                                                "CascadeObjects": [
-                                                    {
-                                                        "controlId": '003',
-                                                        "cascadeName": 'inputname3',
-                                                        "cascadeItems": [  // 根据值执行
-                                                            {
-                                                                "type": 'default',  // conditions   default  满足条件执行或者默认都执行
-                                                                "caseValue": {    // 条件描述 （触发级联的前置条件，如果不设置，则是满足）
-                                                                    "type": 'selectObjectValue',
-                                                                    "valueName": 'num',
-                                                                    "regular": '^0$'
-                                                                },
-                                                                "content": {  // 应答体描述
-                                                                    "type": 'ajax', // 应答类型（异步、消息、赋值、隐藏、显示...）
-                                                                    "data": {
-                                                                        "option": [
-                                                                            { "name": 'PROVINCEID', "type": 'selectObjectValue', "value": '1', "valueName": 'id' }
-                                                                        ]
-                                                                    }
-                                                                }
-                                                            }
-
-                                                        ]
-                                                    }
                                                 ]
                                             }
                                         ]
@@ -828,7 +578,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "form_add_province",
+                                    "id": "tree_add_office",
                                     "url": "province/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
@@ -872,7 +622,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "form_edit_province",
+                                    "id": "tree_edit_office",
                                     "url": "province/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
@@ -928,7 +678,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             "afterTrigger": [
                                 {
                                     "id": "",
-                                    "senderId": "view_01",
+                                    "senderId": "view_treegrid_01",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -953,7 +703,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             ],
                             "toolbar": [
                                 {
-                                    "targetViewId": "view_01",
+                                    "targetViewId": "view_treegrid_01",
                                     "group": [
                                         {
                                             "id": "M_refresh",
@@ -970,23 +720,8 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                             ]
                                         },
                                         {
-                                            "id": "M_addRow",
-                                            "text": "新增",
-                                            "icon": "plus",
-                                            "color": "text-primary",
-                                            "hidden": false,
-                                            "disabled": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "ADD_ROW",
-                                                    // "conditionId": "add_state_1"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "M_addRowForm",
-                                            "text": "表单新增",
+                                            "id": "M_addParentNode",
+                                            "text": "新增节点",
                                             "state": "new",
                                             "icon": "plus",
                                             "color": "text-primary",
@@ -997,14 +732,32 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                     "triggerType": "ACTION",
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
-                                                    "dialogId": "edit_province_form",
-                                                    "ajaxId": "form_add_province",
+                                                    "dialogId": "edit_office_form",
+                                                    "ajaxId": "tree_add_office",
                                                 }
                                             ]
                                         },
                                         {
-                                            "id": "M_editRowForm",
-                                            "text": "表单更新",
+                                            "id": "M_addChildNode",
+                                            "text": "新增节点",
+                                            "state": "new",
+                                            "icon": "plus",
+                                            "color": "text-primary",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "ACTION",
+                                                    "trigger": "DIALOG",
+                                                    // "conditionId": "add_state_1"
+                                                    "dialogId": "edit_office_form",
+                                                    "ajaxId": "tree_add_office",
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "M_editTreeNode",
+                                            "text": "编辑节点",
                                             "state": "edit",
                                             "icon": "edit",
                                             "color": "text-primary",
@@ -1015,41 +768,11 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                     "triggerType": "ACTION",
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
-                                                    "dialogId": "edit_province_form",
+                                                    "dialogId": "edit_office_form",
                                                     "ajaxId": "form_edit_province",
                                                     "changeValueId": "edit_form_changeValue"
                                                 }
                                             ]
-                                        },
-                                        {
-                                            "id": "M_updateRow",
-                                            "text": "修改",
-                                            "icon": "edit",
-                                            "color": "text-success",
-                                            "hidden": false,
-                                            "disabled": false,
-                                            "state": "text",
-                                            "execute": [
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "EDIT_ROWS",
-                                                    "conditionId": "edit_cities_state"
-                                                }
-                                            ],
-                                            "toggle": {
-                                                "type": "state",
-                                                "toggleProperty": "hidden",
-                                                "values": [
-                                                    {
-                                                        "name": "edit",
-                                                        "value": true
-                                                    },
-                                                    {
-                                                        "name": "text",
-                                                        "value": false
-                                                    }
-                                                ]
-                                            }
                                         },
                                         {
                                             "id": "M_deleteRow",
@@ -1066,86 +789,6 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                     // "ajaxId": "delete_row_1"
                                                 }
                                             ]
-                                        },
-                                        {
-                                            "id": "M_saveRow",
-                                            "text": "保存",
-                                            "icon": "save",
-                                            "color": "text-primary",
-                                            "hidden": true,
-                                            "disabled": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "OPERATION",
-                                                    "trigger": "SAVE_ROWS",
-                                                    "ajaxId": "add_provinces_1",
-                                                    // "stateId": "add_save_1",
-                                                    "conditionId": "add_cities"
-                                                },
-                                                {
-                                                    "triggerType": "OPERATION",
-                                                    "trigger": "SAVE_ROWS",
-                                                    "ajaxId": "edit_cities",
-                                                    // "stateId": "edit_save_1",
-                                                    "conditionId": ""
-                                                }
-                                            ],
-                                            "toggle": {
-                                                "type": "state",
-                                                "toggleProperty": "hidden",
-                                                "values": [
-                                                    {
-                                                        "name": "edit",
-                                                        "value": false
-                                                    },
-                                                    {
-                                                        "name": "text",
-                                                        "value": true
-                                                    },
-                                                    {
-                                                        "name": "new",
-                                                        "value": false
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "id": "M_cancelrow",
-                                            "text": "取消1",
-                                            "state": "edit",
-                                            "icon": "rollback",
-                                            "color": "text-grey-darker",
-                                            "hidden": true,
-                                            "disabled": null,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "CANCEL_EDIT_ROWS",
-                                                    "conditionId": "cancel_edit_rows_2"
-                                                },
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "CANCEL_NEW_ROWS"
-                                                }
-                                            ],
-                                            "toggle": {
-                                                "type": "state",
-                                                "toggleProperty": "hidden",
-                                                "values": [
-                                                    {
-                                                        "name": "edit",
-                                                        "value": false
-                                                    },
-                                                    {
-                                                        "name": "text",
-                                                        "value": true
-                                                    },
-                                                    {
-                                                        "name": "new",
-                                                        "value": false
-                                                    }
-                                                ]
-                                            }
                                         }
                                     ]
                                 },
@@ -1207,11 +850,11 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "view_01",
-                            "title": "主表",
+                            "id": "view_treegrid_01",
+                            "title": "树表",
                             "titleIcon": "right-circle",
-                            "component": "cnDataTable",
-                            "keyId": "id",
+                            "component": "cnTreeTable",
+                            "keyId": "ID",
                             "size": "middle",
                             "isBordered": true,
                             "isFrontPagination": false,
@@ -1222,110 +865,96 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             "showCheckBox": true,
                             "pageSizeOptions": [10, 20, 50, 100],
                             "loadingOnInit": true,
-                            // "scroll": {
-                            //     "y": "300px"
-                            // },
-                            "spanWidthConfig": [
-                                '50px', '100px', '200px', '200px', '200px'
-                            ],
                             "loadingConfig": {
-                                "url": "province/page",
+                                "url": "province/queryCondition/OFFICE_SHEET",
                                 "method": "get",
                                 "params": [
-
+                                    {
+                                        "name": "_recursive",
+                                        "type": "value",
+                                        "value": true
+                                    },
+                                    {
+                                        "name": "_deep",
+                                        "type": "value",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "name": "_pcName",
+                                        "type": "value",
+                                        "value": "PID"
+                                    }
                                 ],
                                 "filter": [
 
+                                ]
+                            },
+                            "expandConfig": {
+                                "url": "province/queryCondition/OFFICE_SHEET",
+                                "method": "get",
+                                "params": [
+                                    {
+                                        "name": "PID",
+                                        "type": "item",
+                                        "valueName": "ID"
+                                    },
+                                    // {
+                                    //     "name": "_recursive",
+                                    //     "type": "value",
+                                    //     "value": true
+                                    // },
+                                    // {
+                                    //     "name": "_deep",
+                                    //     "type": "value",
+                                    //     "value": "1"
+                                    // },
+                                    // {
+                                    //     "name": "_pcName",
+                                    //     "type": "value",
+                                    //     "value": "PID"
+                                    // }
                                 ]
                             },
                             "columns": [
                                 {
                                     "title": "ID",
                                     "type": "field",
-                                    "field": "id",
-                                    "hidden": true,
+                                    "field": "ID",
+                                    "expand": true,
+                                    "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "isShowExpand": false,
-                                    "width": "50px",
+                                    "isExpand": true,
+                                    "width": "400px",
                                     "style": {}
                                 },
                                 {
-                                    "title": "PROVINCE_NAME",
+                                    "title": "OFFICE_NAME",
                                     "type": "field",
-                                    "field": "provinceName",
+                                    "field": "OFFICENAME",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "50px",
-                                    "style": {},
+                                    "isExpand": true,
+                                    "width": "400px",
+                                    "style": {}
                                 },
                                 {
-                                    "title": "POPULATIONSIZE",
+                                    "title": "PID",
                                     "type": "field",
-                                    "field": "populationSize",
+                                    "field": "PID",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
+                                    "isExpand": true,
+                                    "width": "400px",
+                                    "style": {}
                                 },
-                                {
-                                    "title": "DIRECTLYUNDER",
-                                    "type": "field",
-                                    "field": "directlyUnder",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                },
-                                {
-                                    "title": "AREACODE",
-                                    "type": "field",
-                                    "field": "areaCode",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                },
-                                {
-                                    "title": "CREATEDATE",
-                                    "type": "field",
-                                    "field": "createDate",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                },
-                                // {
-                                //     "title": "message",
-                                //     "type": "field",
-                                //     "field": "MESSAGE",
-                                //     "hidden": false,
-                                //     "showFilter": false,
-                                //     "showSort": false,
-                                //     "width": "150px",
-                                //     "style": {}
-                                // },
-                                // {
-                                //     "title": "language",
-                                //     "type": "field",
-                                //     "field": "LANGUAGE",
-                                //     "hidden": false,
-                                //     "showFilter": false,
-                                //     "showSort": false,
-                                //     "isExpand": true,
-                                //     "width": "400px",
-                                //     "style": {}
-                                // },
                                 {
                                     "title": "ACTION",
                                     "type": "action",
                                     "actionIds": [
-                                        "grid_edit", "grid_cancel", "grid_save", "grid_delete", "grid_new", "grid_new_cancel"
+                                        "treegrid_edit", "treegrid_cancel", "treegrid_save", "treegrid_delete", "treegrid_new", "treegrid_new_cancel"
                                     ]
                                 }
                             ],
@@ -1333,7 +962,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                 "messageSender": [
                                     {
                                         "id": "grid_sender_02",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "triggerType": "BEHAVIOR",
                                         "trigger": "SET_SELECT_ROW",
                                         "triggerMoment": "after",
@@ -1347,7 +976,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                     {
                                                         "name": "_PID",
                                                         "type": "item",
-                                                        "valueName": "id"
+                                                        "valueName": "PID"
                                                     }
                                                 ]
                                             }
@@ -1355,7 +984,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_03",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1368,7 +997,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_01",
+                                                        "value": "view_treegrid_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1377,7 +1006,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_04",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_NEW_ROW",
                                         "triggerMoment": "after",
@@ -1390,7 +1019,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_01",
+                                                        "value": "view_treegrid_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1399,7 +1028,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_05",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "triggerType": "STATE",
                                         "trigger": "EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1411,7 +1040,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_01",
+                                                        "value": "view_treegrid_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1420,7 +1049,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_06",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROW",
                                         "triggerMoment": "after",
@@ -1432,7 +1061,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_01",
+                                                        "value": "view_treegrid_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1441,7 +1070,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_07",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROWS",
                                         "triggerMoment": "after",
@@ -1453,7 +1082,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_01",
+                                                        "value": "view_treegrid_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1462,7 +1091,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_08",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "triggerType": "ACTION",
                                         "trigger": "CONFIRM",
                                         "triggerMoment": "after",
@@ -1474,7 +1103,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_01",
+                                                        "value": "view_treegrid_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1483,7 +1112,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterProvinceSaveSuccessfully",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -1523,7 +1152,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterProvinceUpdateSuccessfully",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -1563,7 +1192,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterProvinceSaveValidation",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1575,7 +1204,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterProvinceUpdateValidation",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1589,7 +1218,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             },
                             "rowActions": [
                                 {
-                                    "id": "grid_new",
+                                    "id": "treegrid_new",
                                     "state": "new",
                                     "text": "保存",
                                     "icon": "save",
@@ -1622,7 +1251,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "grid_new_cancel",
+                                    "id": "treegrid_new_cancel",
                                     "state": "new",
                                     "text": "取消",
                                     "icon": "rollback",
@@ -1655,7 +1284,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "grid_edit",
+                                    "id": "treegrid_edit",
                                     "state": "text",
                                     "text": "编辑",
                                     "icon": "edit",
@@ -1688,7 +1317,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "grid_cancel",
+                                    "id": "treegrid_cancel",
                                     "state": "text",
                                     "text": "取消",
                                     "icon": "rollback",
@@ -1721,7 +1350,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "grid_save",
+                                    "id": "treegrid_save",
                                     "state": "text",
                                     "text": "保存",
                                     "icon": "save",
@@ -1754,7 +1383,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "grid_delete",
+                                    "id": "treegrid_delete",
                                     "state": "text",
                                     "text": "删除",
                                     "icon": "delete",
@@ -2058,7 +1687,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             "beforeTrigger": [
                                 {
                                     "id": "before_delete_province",
-                                    "senderId": "view_01",
+                                    "senderId": "view_treegrid_01",
                                     "sendData": [
                                         {
                                             "receiverTriggerType": "ACTION",
@@ -2083,7 +1712,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                             "afterTrigger": [
                                 {
                                     "id": "",
-                                    "senderId": "view_01",
+                                    "senderId": "view_treegrid_01",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -2203,7 +1832,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                     "cancelText": "取消",
                                     "okText": "提交",
                                     "form": {
-                                        "id": "form_city",
+                                        "id": "form_office",
                                         "type": "form",
                                         "component": "form",
                                         state: 'text',
@@ -3489,7 +3118,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_01",
+                                                        "value": "view_treegrid_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -3673,7 +3302,7 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
                                 "messageReceiver": [
                                     {
                                         "id": "",
-                                        "senderId": "view_01",
+                                        "senderId": "view_treegrid_01",
                                         "receiveData": [
                                             {
                                                 "beforeReceive": [],
@@ -4156,297 +3785,5 @@ export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
         ]
     };
 
-    public beforeOperation = [
-        {
-            name: "D_addRow",
-            status: [
-                {
-                    conditions: [
-                        [
-                            {
-                                name: "_recordstatus",
-                                value: 2,
-                                checkType: "value"
-                            },
-                            {
-                                name: "_recods",
-                                value: 3,
-                                checkType: "value"
-                            },
-                            {
-                                "ajaxConfig": {
-                                    "url": "information/testList",
-                                    "ajaxType": "GET",
-                                    "params": [
-                                        {
-                                            "name": "state",
-                                            "type": "value",
-                                            "value": "D"
-                                        }
-                                    ]
-                                },
-                                "checkType": "executeAjax"
-                            }
-                        ],
-                        [
-                            {
-                                name: "_recordstatus",
-                                value: 1,
-                                checkType: "value"
-                            },
-                            {
-                                name: "_recods",
-                                value: 1,
-                                checkType: "value"
-                            }
-                        ]
-                    ],
-                    action: {
-                        type: "warning",
-                        message: "在当前状态下，无法新增",
-                        execute: "prevent"
-                    }
-                },
-                {
-                    conditions: [
-                        [
-                            {
-                                name: "_resourcesreceiveid1",
-                                value: "undefinded",
-                                checkType: "value"
-                            }
-                        ]
-                    ],
-                    action: {
-                        type: "info",
-                        message: "主表未选中数据，无法新增！",
-                        execute: "prevent"
-                    }
-                },
-                {
-                    conditions: [
-                        [
-                            {
-                                tempValue: "_createUserId",
-                                cacheValue: "accountId",
-                                checkType: "innerValue"
-                            }
-                            // {
-                            //     "ajaxConfig": {
-                            //         "url": "https://jsonplaceholder.typicode.com/users",
-                            //         "ajaxType": "GET",
-                            //         "params": []
-                            //     },
-                            //     "checkType": "executeAjax"
-                            // }
-                        ]
-                    ],
-                    action: {
-                        type: "info",
-                        message: "对他人创建的数据只有浏览权限，没有编辑权限",
-                        execute: "prevent"
-                    }
-                }
-            ]
-        }
-    ];
-
-    public dataConfig = {
-        entity: 'CaseDemo',
-        targetViewId: '',
-        type: 'array',
-        properties: [
-            {
-                name: 'id',
-                field: 'id',
-                text: 'entity.data.name',
-                value: '1',
-                dataType: 'string'
-            },
-            {
-                name: 'code',
-                field: 'code',
-                text: 'entity.data.code',
-                value: '',
-                dataType: 'string'
-            },
-            {
-                name: 'language',
-                field: 'language',
-                text: 'entity.data.language',
-                value: '',
-                dataType: 'string'
-            },
-            {
-                name: 'message',
-                field: 'message',
-                text: 'entity.data.message',
-                value: '',
-                dataType: 'string'
-            }
-        ],
-        children: [
-            {
-                entity: 'validation',
-                targetViewId: '',
-                type: 'array',
-                properties: [
-                    {
-                        name: 'code',
-                        field: 'code',
-                        text: 'entity.data.code',
-                        value: '',
-                        dataType: 'string'
-                    },
-                    {
-                        name: 'msg',
-                        field: 'message',
-                        text: 'entity.data.message',
-                        value: '',
-                    }
-                ],
-                children: [
-                    {
-                        entity: 'data',
-                        targetViewId: '',
-                        properties: [
-                            {
-                                name: 'id',
-                                field: 'id',
-                                text: 'entity.data.name',
-                                value: '1',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'code',
-                                field: 'code',
-                                text: 'entity.data.code',
-                                value: '',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'language',
-                                field: 'language',
-                                text: 'entity.data.language',
-                                value: '',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'message',
-                                field: 'message',
-                                text: 'entity.data.message',
-                                value: '',
-                                dataType: 'string'
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                entity: 'error',
-                targetViewId: '',
-                properties: [
-                    {
-                        name: 'code',
-                        field: 'code',
-                        text: 'entity.data.code',
-                        value: '',
-                        dataType: 'string'
-                    },
-                    {
-                        name: 'msg',
-                        field: 'message',
-                        text: 'entity.data.message',
-                        value: '',
-                    }
-                ],
-                children: [
-                    {
-                        entity: 'data',
-                        targetViewId: '',
-                        properties: [
-                            {
-                                name: 'id',
-                                field: 'id',
-                                text: 'entity.data.name',
-                                value: '1',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'code',
-                                field: 'code',
-                                text: 'entity.data.code',
-                                value: '',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'language',
-                                field: 'language',
-                                text: 'entity.data.language',
-                                value: '',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'message',
-                                field: 'message',
-                                text: 'entity.data.message',
-                                value: '',
-                                dataType: 'string'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
-
-    testResult: Observable<any>;
-
-    constructor(
-        @Inject(BSN_COMPONENT_SERVICES) private _componentServices: ComponentServiceProvider,
-    ) {
-        super(_componentServices);
-    }
-
-    public ngOnInit() {
-
-
-    }
-
-    public click() {
-        this.load();
-    }
-
-    private load() {
-        const beforeOperation = new BeforeOperationResolver(this.beforeOperation,
-            {
-
-            },
-            {
-                accountId: 'user1'
-            },
-            {
-                _createUserId: 'user1'
-            }, this._componentServices.apiService, this._componentServices.modalService, this._componentServices.msgService);
-        beforeOperation.operationItemData = {
-            _recordstatus: 1,
-            _recods: 1,
-            _resourcesreceiveid1: "undefined",
-            _createUserId: '1'
-        }
-        this.testResult = beforeOperation.buildStatusObservableByStatusCfg({ name: 'D_addRow' }).pipe(reduce((a, b) => a || b));
-
-        const s = new BusinessObjectBase();
-        // console.log(s.resolver(s.dataConfig));
-        const t = s.resolver(this.dataConfig);
-        t.addProperty('caseText', '123456');
-        t.editProperty('caseText', '67890');
-        // t.removeProperty('caseText');
-
-        t.addChildren('validation', { code: '2', msg: '2', data: {} });
-        t.addChildren('error', [{ code: '3', msg: '3', data: {} }, { code: '4', msg: '4', data: {} }]);
-        // t.orderChange({ groupName: '2', id: '2' }, { groupName: '4', id: '4' }, 'group');
-
-        console.log(t);
-    }
+    public ngOnInit() { }
 }

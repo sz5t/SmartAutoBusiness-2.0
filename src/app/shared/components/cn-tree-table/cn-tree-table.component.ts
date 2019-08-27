@@ -90,9 +90,13 @@ export class CnTreeTableComponent extends CnComponentBase
             data: any,
             originData: any,
             actions?: any[],
-            validation?: boolean
+            validation?: boolean,
+            parent?: any,
+            children?: any[]
         }
     } = {};
+
+    public mapOfDataExpanded: { [key: string]: any[] } = {};
     public checkedNumber = 0;
 
     public KEY_ID: string;
@@ -235,49 +239,161 @@ export class CnTreeTableComponent extends CnComponentBase
 
     }
 
-    public load() {
-        this.isLoading = true;
-        const url = this.config.loadingConfig.url;
-        const method = this.config.loadingConfig.method;
-        const params = {
-            ...this.buildParameters(this.config.loadingConfig.params),
-            ...this._buildPaging(),
-            // ...this._buildFilter(this.config.ajaxConfig.filter),
-            // ...this._buildSort(),
-            // ...this._buildColumnFilter(),
-            // ...this._buildFocusId(),
-            // ...this._buildSearch()
-        };
+    private _convertTreeToList(_root: any, _level = 0): any[] {
+        const stack: any[] = [];
+        const array: any[] = [];
+        const hasMap = {};
+        stack.push(
+            {
+                level: _level,
+                expand: false,
+                disabled: false,
+                checked: false, // index === 0 ? true : false,
+                selected: false, // index === 0 ? true : false,
+                state: 'text',
+                data: _root,
+                originData: { ..._root },
+                validation: true,
+                actions: this.getRowActions('text'),
+                children: []
+            });
 
-        this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
-            if (response && response.data && response.data.resultDatas) {
-                response.data.resultDatas.map((d, index) => {
-
-                    this.mapOfDataState[d[this.KEY_ID]] = {
-                        disabled: false,
-                        checked: false, // index === 0 ? true : false,
-                        selected: false, // index === 0 ? true : false,
-                        state: 'text',
-                        data: d,
-                        originData: { ...d },
-                        validation: true,
-                        actions: this.getRowActions('text')
-                    };
-                    index === 0 && (this.ROW_SELECTED = d);
-                });
-                this.dataList = response.data.resultDatas;
-                this.total = response.data.count;
-                // 更新
-                // this.dataCheckedStatusChange();
-                // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
-                this.setSelectRow(this.ROW_SELECTED);
-                this.isLoading = false;
-            } else {
-                this.isLoading = false;
+        while (stack.length !== 0) {
+            const node = stack.pop();
+            this._visitNode(node, hasMap, array);
+            if (node.children) {
+                for (let i = node.children.length - 1; i >= 0; i--) {
+                    stack.push(
+                        {
+                            level: node.level + 1,
+                            expand: false,
+                            parent: node,
+                            disabled: false,
+                            checked: false, // index === 0 ? true : false,
+                            selected: false, // index === 0 ? true : false,
+                            state: 'text',
+                            data: node.children[i],
+                            originData: { ...node.children[i] },
+                            validation: true,
+                            actions: this.getRowActions('text')
+                        })
+                }
             }
-        }, error => {
-            console.log(error);
+        }
+
+        return array;
+    }
+
+    private _setExpandedChildren() {
+
+    }
+
+    public async expandRow(array, item, $event: boolean) {
+        if ($event) {
+            const response = await this._getAsyncData(this.config.expandConfig, item.data, false);
+            if (response.data && response.data) {
+                debugger;
+                const appendedChildrenData: any[] = [];
+                response.data.map(data => {
+                    this.mapOfDataExpanded[data[this.KEY_ID]] = this._convertTreeToList(data, item.level + 1);
+                    appendedChildrenData.push(data);
+                })
+                this._appendChildrenToList(item.data, appendedChildrenData);
+            }
+
+        }
+        // debugger;
+        // if ($event === false) {
+        //     if (item.children) {
+        //         item.children.map(d => {
+        //             const target = array.find(arr => arr[this.KEY_ID] === d[this.KEY_ID]);
+        //             target.expand = false;
+        //             this.expandRow(array, target, false);
+        //         })
+        //     }
+        // } else {
+        //     return;
+        // }
+    }
+
+    private _appendChildrenToList(parent, childrenList) {
+        const index = this.dataList.findIndex(d => d[this.KEY_ID] === parent[this.KEY_ID]);
+        for (let i = 0, len = this.dataList.length; i < len; i++) {
+            childrenList.forEach(child => {
+                if (this.dataList[i][this.KEY_ID] === child[this.KEY_ID]) {
+                    this.dataList.splice(i, 1);
+                    i--;
+                    len--;
+                }
+            });
+        }
+        this.dataList.splice(index + 1, 0, ...childrenList);
+        this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== null);
+    }
+
+    private _visitNode(node, hasMap: { [key: string]: any }, array: any[]) {
+        if (!hasMap[node[this.KEY_ID]]) {
+            hasMap[node[this.KEY_ID]] = true;
+            array.push(node);
+        }
+    }
+
+    private async _getAsyncData(ajaxConfig = null, nodeValue = null, isPaging = true) {
+        let params = ParameterResolver.resolve({
+            params: ajaxConfig.params,
+            tempValue: this.tempValue,
+            initValue: this.initValue,
+            cacheValue: this.cacheValue,
+            item: nodeValue
         });
+
+        if (isPaging) {
+            params = { ...params, ...this._buildPaging() };
+        }
+        const ajaxData = await this.componentService.apiService
+            .getRequest(
+                ajaxConfig.url,
+                'get',
+                { params }
+            ).toPromise();
+        return ajaxData;
+    }
+
+    public async load() {
+        this.isLoading = true;
+        const response = await this._getAsyncData(this.config.loadingConfig);
+        if (response && response.data && response.data.resultDatas) {
+            response.data.resultDatas.map((d, index) => {
+
+                this.mapOfDataState[d[this.KEY_ID]] = {
+                    disabled: false,
+                    checked: false, // index === 0 ? true : false,
+                    selected: false, // index === 0 ? true : false,
+                    state: 'text',
+                    data: d,
+                    originData: { ...d },
+                    validation: true,
+                    actions: this.getRowActions('text')
+                };
+
+                this.mapOfDataExpanded[d[this.KEY_ID]] = this._convertTreeToList(d);
+                debugger;
+                // const dsa = this._convertTreeToList(d);
+
+                // this.mapOfDataState[d[this.KEY_ID]].children = this._convertTreeToList(d);
+
+                index === 0 && (this.ROW_SELECTED = d);
+            });
+            this.dataList = response.data.resultDatas;
+            this.total = response.data.count;
+            // 更新
+            // this.dataCheckedStatusChange();
+            // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
+            this.setSelectRow(this.ROW_SELECTED);
+            this.isLoading = false;
+        } else {
+            this.isLoading = false;
+        }
     }
 
     public loadRefreshData(option) {
@@ -357,8 +473,8 @@ export class CnTreeTableComponent extends CnComponentBase
     private _buildPaging() {
         const params = {};
         if (this.config.isPagination) {
-            params['pageNum'] = this.pageIndex;
-            params['pageSize'] = this.pageSize;
+            params['_page'] = this.pageIndex;
+            params['_rows'] = this.pageSize;
         }
         return params;
     }

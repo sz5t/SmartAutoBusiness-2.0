@@ -1135,38 +1135,33 @@ export class TreeDemoComponent implements OnInit {
 
                                 ]
                             },
-                            "expand": [
-                                {
-                                    "type": false,
-                                    "ajaxConfig": {
-                                        "url": "province/queryCondition/OFFICE_SHEET",
-                                        "method": "get",
-                                        "params": [
-                                            {
-                                                "name": "_root.PID",
-                                                "type": "item",
-                                                "valueName": "key",
-                                                "value": ""
-                                            },
-                                            {
-                                                "name": "_recursive",
-                                                "type": "value",
-                                                "value": true
-                                            },
-                                            {
-                                                "name": "_deep",
-                                                "type": "value",
-                                                "value": "1"
-                                            },
-                                            {
-                                                "name": "_pcName",
-                                                "type": "value",
-                                                "value": "PID"
-                                            }
-                                        ]
+                            "expandConfig": {
+                                "url": "province/queryCondition/OFFICE_SHEET",
+                                "method": "get",
+                                "params": [
+                                    {
+                                        "name": "_root.PID",
+                                        "type": "item",
+                                        "valueName": "key",
+                                        "value": ""
+                                    },
+                                    {
+                                        "name": "_recursive",
+                                        "type": "value",
+                                        "value": true
+                                    },
+                                    {
+                                        "name": "_deep",
+                                        "type": "value",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "name": "_pcName",
+                                        "type": "value",
+                                        "value": "PID"
                                     }
-                                }
-                            ],
+                                ]
+                            },
                             "columns": [
                                 {
                                     "title": "ID",

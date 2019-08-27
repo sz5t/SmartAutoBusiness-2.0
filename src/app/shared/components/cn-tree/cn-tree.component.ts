@@ -294,7 +294,7 @@ export class CnTreeComponent extends CnComponentBase
         }
     }
 
-    public expandNode($event: NzFormatEmitEvent | NzTreeNode) {
+    public async expandNode($event: NzFormatEmitEvent | NzTreeNode) {
         let node;
         if ($event instanceof NzTreeNode) {
             node = $event;
@@ -302,26 +302,27 @@ export class CnTreeComponent extends CnComponentBase
             node = $event['node'];
         }
         if (node && node.isExpanded) {
-            (async () => {
-                const s = await Promise.all(
-                    this.config.expand
-                        .filter(p => p.type === node.isLeaf)
-                        .map(async expand => {
-                            const response = await this._getAsyncTreeData(expand.ajaxConfig, node);
-                            if (response && response.data && response.data.length > 0) {
-                                response.data.map(d => {
-                                    this._setTreeNode(d);
-                                    d['isLeaf'] = false;
-                                    d['children'] = [];
-                                });
-                                node.addChildren(response.data);
-                            } else {
-                                node.addChildren([]);
-                                node.isExpanded = false;
-                            }
-                        })
-                )
-            })()
+            const response = await this._getAsyncTreeData(this.config.expandConfig, node);
+            if (response && response.data && response.data.length > 0) {
+                response.data.map(d => {
+                    this._setTreeNode(d);
+                    d['isLeaf'] = false;
+                    d['children'] = [];
+                });
+                node.addChildren(response.data);
+            } else {
+                node.addChildren([]);
+                node.isExpanded = false;
+            }
+            // (async () => {
+            //     const s = await Promise.all(
+            //         this.config.expand
+            //             .filter(p => p.type === node.isLeaf)
+            //             .map(async expand => {
+
+            //             })
+            //     )
+            // })()
         } else if (node.isExpanded === false) {
             node.clearChildren();
         }
