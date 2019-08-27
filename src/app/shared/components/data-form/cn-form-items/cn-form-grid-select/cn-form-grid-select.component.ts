@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { CnDataTableComponent } from '@shared/components/data_table/cn-data-table.component';
 
 @Component({
   selector: 'app-cn-form-grid-select',
@@ -6,10 +8,736 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./cn-form-grid-select.component.less']
 })
 export class CnFormGridSelectComponent implements OnInit {
+  @Input() public config;
+  @Input() formGroup: FormGroup;
+  @Output() public updateValue = new EventEmitter();
+  value = null;
+  visible = false;
+  _value = null;
+  _focus = false;
+  _ifocus = false;
 
+  selectedRowValue ="3";
+  selectedRowItem;
+  @ViewChild('table',{static:true}) public table: CnDataTableComponent;
   constructor() { }
 
   ngOnInit() {
+    // 静态数据，动态数据
+  }
+
+  public valueChange(v?) {
+    // ,dataItem: item
+    // tslint:disable-next-line:forin
+    this.table.selectedRowValue = this.selectedRowValue;
+    const backValue = { name: this.config.field, value: v, id: this.config.config.id,dataItem:this. selectedRowItem};
+    this.updateValue.emit(backValue);
+    console.log('backValue=>',backValue)
+    // 3 青海
+ 
+  }
+
+  /**
+   * VisibleChange
+   */
+  public VisibleChange(v?) {
+
+   // console.log('VisibleChange', v, this.visible);
+
+  }
+  /**
+   * onOk
+   */
+  public onOk() {
+    const xz = this.table.ROW_SELECTED;
+    this._value = xz['provinceName'];
+    this.value = xz['id'];
+    this.visible = false;
+    this.selectedRowValue = xz['id'];
+    this.selectedRowItem = xz;
+    console.log('ok', xz);
+  }
+
+  /**
+   * onCancel
+   */
+  public onCancel() {
+    this.visible = false;
+  }
+
+  private _onFocus() {
+   // console.log('_onFocus');
+    // if (!this._focus)
+    //   this._focus = true;
+
+  }
+  private _onBlur() {
+   // console.log('_onBlur');
+    // if (this._focus)
+    //   this._focus = false;
+  }
+  private _onMouseover() {
+    setTimeout(() => {
+      if (!this._ifocus)
+        this._focus = true;
+    }, 50);
+  }
+  private _onMouseout() {
+
+    setTimeout(() => {
+      if (!this._ifocus)
+        this._focus = false;
+    }, 50);
+  }
+  private _ionMouseover() {
+    if (!this._ifocus)
+      this._ifocus = true;
+  }
+  private _ionMouseout() {
+    if (this._ifocus)
+      this._ifocus = false;
+  }
+
+  /**
+   * 数据清空
+   */
+  public valueClear() {
+    console.log('valueClear');
+    this._value = null;
+    this.value = null;
+    this._ifocus = false;
+    this.selectedRowValue = null;
+    this.selectedRowItem = null;
+  }
+
+
+  public tableConfig = {
+    "component": {
+      "id": "view_01select",
+      "title": "主表",
+      "titleIcon": "right-circle",
+      "component": "cnDataTable",
+      "keyId": "id",
+      "size": "small",
+      "isBordered": true,
+      "isFrontPagination": false,
+      "isPagination": true,
+      "isShowSizeChanger": true,
+      "showTotal": true,
+      "pageSize": 5,
+      "showCheckBox": false,
+      "pageSizeOptions": [10, 20, 50, 100],
+      "loadingOnInit": true,
+      "isSelected":true,
+      // "scroll": {
+      //     "y": "300px"
+      // },
+      "spanWidthConfig": [
+       //  '50px', '100px', '200px', '200px', '200px'
+      ],
+      "loadingConfig": {
+        "url": "province/page",
+        "method": "get",
+        "params": [
+
+        ],
+        "filter": [
+
+        ]
+      },
+      "columns": [
+        {
+          "title": "ID",
+          "type": "field",
+          "field": "id",
+          "hidden": true,
+          "showFilter": false,
+          "showSort": false,
+          "isShowExpand": false,
+          "width": "50px",
+          "style": {}
+        },
+        {
+          "title": "省名称",
+          "type": "field",
+          "field": "provinceName",
+          "hidden": false,
+          "showFilter": false,
+          "showSort": false,
+          "width": "50px",
+          "style": {},
+        },
+        {
+          "title": "人口",
+          "type": "field",
+          "field": "populationSize",
+          "hidden": false,
+          "showFilter": false,
+          "showSort": false,
+          "width": "30px",
+          "style": {},
+        },
+        {
+          "title": "直辖",
+          "type": "field",
+          "field": "directlyUnder",
+          "hidden": false,
+          "showFilter": false,
+          "showSort": false,
+          "width": "30px",
+          "style": {},
+        },
+        {
+          "title": "区号",
+          "type": "field",
+          "field": "areaCode",
+          "hidden": false,
+          "showFilter": false,
+          "showSort": false,
+          "width": "30px",
+          "style": {},
+        },
+        {
+          "title": "创建日期",
+          "type": "field",
+          "field": "createDate",
+          "hidden": false,
+          "showFilter": false,
+          "showSort": false,
+          "width": "60px",
+          "style": {},
+        },
+        {
+          "title": "优势",
+          "type": "field",
+          "field": "remark",
+          "hidden": false,
+          "showFilter": false,
+          "showSort": false,
+          "width": "100px",
+          "style": {},
+        },
+
+        // {
+        //     "title": "message",
+        //     "type": "field",
+        //     "field": "MESSAGE",
+        //     "hidden": false,
+        //     "showFilter": false,
+        //     "showSort": false,
+        //     "width": "150px",
+        //     "style": {}
+        // },
+        // {
+        //     "title": "language",
+        //     "type": "field",
+        //     "field": "LANGUAGE",
+        //     "hidden": false,
+        //     "showFilter": false,
+        //     "showSort": false,
+        //     "isExpand": true,
+        //     "width": "400px",
+        //     "style": {}
+        // },
+      ],
+      "cascade": {
+        "messageSender": [
+        ],
+        "messageReceiver": [
+          {
+            "id": "",
+            "senderId": "form_01",
+            "receiveData": [
+              {
+                "beforeReceive": [],
+                "triggerType": "BEHAVIOR",
+                "trigger": "REFRESH_AS_CHILD",
+                "params": [
+                ]
+              }
+            ]
+          }
+        ]
+
+      },
+      "rowActions": [
+        {
+          "id": "grid_new",
+          "state": "new",
+          "text": "保存",
+          "icon": "save",
+          "color": "text-primary",
+          "type": "link",
+          "size": "small",
+          "hidden": false,
+          "execute": [
+            {
+              "triggerType": "OPERATION",
+              "trigger": "SAVE_ROW",
+              "ajaxId": "province_save_1",
+              // "stateId": "add_save_1",
+              // "conditionId": "add_save_1"
+            }
+          ],
+          "toggle": {
+            "type": "state",
+            "toggleProperty": "hidden",
+            "values": [
+              {
+                "name": "new",
+                "value": false
+              },
+              {
+                "name": "text",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "grid_new_cancel",
+          "state": "new",
+          "text": "取消",
+          "icon": "rollback",
+          "color": "text-primary",
+          "type": "link",
+          "size": "small",
+          "hidden": false,
+          "execute": [
+            {
+              "triggerType": "STATE",
+              "trigger": "CANCEL_NEW_ROW",
+              // "ajaxId": "add_save_1",
+              // "stateId": "add_save_1",
+              // "conditionId": "add_save_1"
+            }
+          ],
+          "toggle": {
+            "type": "state",
+            "toggleProperty": "hidden",
+            "values": [
+              {
+                "name": "new",
+                "value": false
+              },
+              {
+                "name": "text",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "grid_edit",
+          "state": "text",
+          "text": "编辑",
+          "icon": "edit",
+          "color": "text-primary",
+          "type": "link",
+          "size": "small",
+          "hidden": false,
+          "execute": [
+            {
+              "triggerType": "STATE",
+              "trigger": "EDIT_ROW",
+              // "ajaxId": "add_save_1",
+              // "stateId": "add_save_1",
+              // "conditionId": "add_save_1"
+            }
+          ],
+          "toggle": {
+            "type": "state",
+            "toggleProperty": "hidden",
+            "values": [
+              {
+                "name": "edit",
+                "value": true
+              },
+              {
+                "name": "text",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "grid_cancel",
+          "state": "text",
+          "text": "取消",
+          "icon": "rollback",
+          "color": "text-primary",
+          "type": "link",
+          "size": "small",
+          "hidden": true,
+          "execute": [
+            {
+              "triggerType": "STATE",
+              "trigger": "CANCEL_EDIT_ROW",
+              // "ajaxId": "add_save_1",
+              // "stateId": "add_save_1",
+              // "conditionId": "cancel_edit_1"
+            }
+          ],
+          "toggle": {
+            "type": "state",
+            "toggleProperty": "hidden",
+            "values": [
+              {
+                "name": "edit",
+                "value": false
+              },
+              {
+                "name": "text",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "grid_save",
+          "state": "text",
+          "text": "保存",
+          "icon": "save",
+          "color": "text-primary",
+          "type": "link",
+          "size": "small",
+          "hidden": true,
+          "execute": [
+            {
+              "triggerType": "OPERATION",
+              "trigger": "SAVE_ROW",
+              "ajaxId": "province_edit_1",
+              // "stateId": "add_save_1",
+              // "conditionId": "add_save_1"
+            }
+          ],
+          "toggle": {
+            "type": "state",
+            "toggleProperty": "hidden",
+            "values": [
+              {
+                "name": "edit",
+                "value": false
+              },
+              {
+                "name": "text",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "grid_delete",
+          "state": "text",
+          "text": "删除",
+          "icon": "delete",
+          "type": "link",
+          "color": "primary",
+          "size": "small",
+          "execute": [
+            {
+              "triggerType": "OPERATION",
+              "trigger": "EXECUTE_SELECTED_ROW",
+              // "conditionId": "delete_operation_1",
+              // "ajaxId": "delete_row_1"
+            }
+          ]
+        }
+      ],
+      "condition": [
+        {
+          "id": "add_state_1",
+          "state": [
+            {
+              "type": "component",
+              "valueName": "ROWS_CHECKED",
+              "expression": [
+                {
+                  "type": "property",
+                  "name": "length",
+                  "matchValue": 0,
+                  "match": "gt"
+                },
+                {
+                  "type": "element",
+                  "name": "name",
+                  "matchValue": "1",
+                  "match": "eq",
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "edit_state_1",
+          "state": [
+            {
+              "type": "component",
+              "valueName": "ROWS_CHECKED",
+              "expression": [
+                {
+                  "type": "property",
+                  "name": "length",
+                  "matchValue": 0,
+                  "match": "gt"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "add_save_1",
+          "state": [
+            {
+              "type": "component",
+              "valueName": "ROWS_CHECKED",
+              "expression": [
+                {
+                  "type": "property",
+                  "name": "length",
+                  "matchValue": 0,
+                  "match": "gt"
+                }
+              ]
+            },
+            {
+              "type": "component",
+              "valueName": "ROWS_ADDED",
+              "expression": [
+                {
+                  "type": "property",
+                  "name": "length",
+                  "matchValue": 0,
+                  "match": "gt"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "edit_save_1",
+          "state": [
+            {
+              "type": "component",
+              "valueName": "ROWS_EDITED",
+              "expression": [
+                {
+                  "type": "property",
+                  "name": "length",
+                  "matchValue": 0,
+                  "match": "gt"
+                }
+              ]
+            },
+            {
+              "type": "component",
+              "valueName": "ROWS_CHECKED",
+              "expression": [
+                {
+                  "type": "property",
+                  "name": "length",
+                  "matchValue": 0,
+                  "match": "gt"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cancel_edit_1",
+          "state": [
+            {
+              "type": "component",
+              "valueName": "ROWS_EDITED",
+              "expression": [
+                {
+                  "type": "property",
+                  "name": "length",
+                  "matchValue": 0,
+                  "match": "eq"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "cancel_edit_2",
+          "state": [
+            {
+              "type": "component",
+              "valueName": "ROWS_ADDED",
+              "expression": [
+                {
+                  "type": "property",
+                  "name": "length",
+                  "matchValue": 0,
+                  "match": "eq"
+                }
+              ]
+            }
+          ]
+        }
+
+      ],
+      "ajaxConfig": [
+        {
+          "id": "province_save_1",
+          "url": "province/insert ",
+          "urlType": "inner",
+          "ajaxType": "post",
+          "params": [
+            {
+              "name": "provinceName",
+              "type": "componentValue",
+              "valueName": "provinceName",
+              "dataType": "string"
+            },
+            {
+              "name": "populationSize",
+              "type": "componentValue",
+              "valueName": "populationSize",
+              "dataType": "number"
+            },
+            {
+              "name": "directlyUnder",
+              "type": "componentValue",
+              "valueName": "directlyUnder",
+              "dataType": "number"
+            },
+            {
+              "name": "areaCode",
+              "type": "componentValue",
+              "valueName": "areaCode",
+              "dataType": "number"
+            },
+            {
+              "name": "createDate",
+              "type": "componentValue",
+              "valueName": "createDate",
+              "dataType": "string"
+            }
+          ],
+          "outputParameters": [
+
+          ],
+          "result": [
+            {
+              "name": "data",
+              "showMessageWithNext": 0,
+              "message": "message.ajax.state.success",
+              "senderId": "grid_sender_01"
+            },
+            // {
+            //     "name": "validation",
+            //     "senderId": "grid_sender_02"
+            // },
+            // {
+            //     "name": "error",
+            //     "senderId": "grid_sender_03"
+            // }
+          ]
+        },
+        {
+          "id": "province_edit_1",
+          "url": "province/update",
+          "urlType": "inner",
+          "ajaxType": "put",
+          "params": [
+            {
+              "name": "provinceName",
+              "type": "componentValue",
+              "valueName": "provinceName",
+              "dataType": "string"
+            },
+            {
+              "name": "populationSize",
+              "type": "componentValue",
+              "valueName": "populationSize",
+              "dataType": "int"
+            },
+            {
+              "name": "directlyUnder",
+              "type": "componentValue",
+              "valueName": "directlyUnder",
+              "dataType": "int"
+            },
+            {
+              "name": "areaCode",
+              "type": "componentValue",
+              "valueName": "areaCode",
+              "dataType": "int"
+            },
+            {
+              "name": "createDate",
+              "type": "componentValue",
+              "valueName": "createDate",
+              "dataType": "string"
+            },
+            {
+              "name": "id",
+              "type": "componentValue",
+              "valueName": "id",
+              "dataType": "string"
+            }
+          ],
+          "outputParameters": [
+
+          ],
+          "result": [
+
+          ]
+        },
+        {
+          "id": "province_delete_1",
+          "url": "province/delete",
+          "urlType": "inner",
+          "ajaxType": "delete",
+          "params": [
+            {
+              "name": "ids",
+              "type": "CHECKED_ROWS_ID",
+              "value": "_ids"
+            }
+          ],
+          "outputParameters": [
+
+          ],
+          "result": [
+
+          ]
+        }
+      ],
+      "beforeTrigger": [
+
+      ],
+      "afterTrigger": [
+        {
+          "id": "",
+          "senderId": "view_01",
+          "sendData": [
+            {
+              "beforeSend": [],
+              "reveicerId": "",
+              "receiverTriggerType": "BEHAVIOR",
+              "receiverTrigger": "REFRESH_AS_CHILD",
+              "params": [
+                {
+                  "name": "parent_id",
+                  "type": "item",
+                  "valueName": "id"
+                },
+                {
+                  "name": "parent_name",
+                  "type": "item",
+                  "valueName": "name"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+
+    }
   }
 
 }

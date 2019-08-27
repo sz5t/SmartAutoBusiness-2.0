@@ -59,6 +59,6 @@ export class CnFormTreeSelectComponent implements OnInit {
     // id  name parentid  =》 指定字段
     // 树类型（异步树、静态树）
     // 异步树-》Expand 节点展开-》数据加载，可扩充条件，加载不同数据，异构树
-   // 下拉树，值展示
+   // 下拉树，值展示 根据component 取出对象值
 
 }

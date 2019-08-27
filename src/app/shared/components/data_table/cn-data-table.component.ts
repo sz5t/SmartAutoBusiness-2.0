@@ -106,6 +106,9 @@ export class CnDataTableComponent extends CnComponentBase
 
     public operationRow: any;
 
+    // 作为子组件时变量
+    public selectedRowValue;
+
     private _selectedRow;
     private _rowsData;
     private _addedRowsData;
@@ -261,7 +264,14 @@ export class CnDataTableComponent extends CnComponentBase
                         validation: true,
                         actions: this.getRowActions('text')
                     };
-                    index === 0 && (this.ROW_SELECTED = d);
+                    if(!this.config.isSelected){
+                        index === 0 && (this.ROW_SELECTED = d);
+                    }else{
+                        if(d[this.KEY_ID] === this.selectedRowValue){
+                            this.ROW_SELECTED = d
+                        } 
+                    }
+
                 });
                 this.dataList = response.data.resultDatas;
                 this.total = response.data.count;
@@ -355,8 +365,8 @@ export class CnDataTableComponent extends CnComponentBase
     private _buildPaging() {
         const params = {};
         if (this.config.isPagination) {
-            params['pageNum'] = this.pageIndex;
-            params['pageSize'] = this.pageSize;
+            params['_page'] = this.pageIndex;
+            params['_rows'] = this.pageSize;
         }
         return params;
     }

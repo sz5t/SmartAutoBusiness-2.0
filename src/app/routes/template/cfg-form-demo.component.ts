@@ -3306,7 +3306,14 @@ export class CfgFormDemoComponent implements OnInit {
                           "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
                         },
                         "control": { "id": "013" }
-                      }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "014" }
+                      },
 
                     ]
                   }]
@@ -3838,8 +3845,43 @@ export class CfgFormDemoComponent implements OnInit {
                     ]
                   }
                 },
+                {
+                  id: '014',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '下拉表格',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark14",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark14',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "gridSelect",
+                    "field": "remark14",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
 
- 
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                
                 // transfer: CnFormTransferComponent,
                 // gridSelect:CnFormGridSelectComponent,
                 // textarea: CnFormTextareaComponent,
