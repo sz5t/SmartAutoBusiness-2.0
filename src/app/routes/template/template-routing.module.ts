@@ -4,6 +4,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CfgLayoutDemoComponent } from './cfg-layout-demo.component';
 import { CfgFormDemoComponent } from './cfg-form-demo.component';
+import { TreeDemoComponent } from './tree-demo.component';
+import { TreeTableDemoComponent } from './tree-table-demo.component';
 
 
 const routes: Routes = [
@@ -11,6 +13,8 @@ const routes: Routes = [
   { path: 'cfglayoutdemo', component: CfgLayoutDemoComponent },
   { path: 'cfgformdemo', component: CfgFormDemoComponent },
   { path: 'dataTableDemo', component: DataTableDemoComponent },
+  { path: 'treeDemo', component: TreeDemoComponent },
+  { path: 'treeTableDemo', component: TreeTableDemoComponent }
 
 ];
 

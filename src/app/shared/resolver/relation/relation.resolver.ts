@@ -299,11 +299,15 @@ export class ComponentSenderResolver {
      * 发送验证消息
      */
     sendValidationMessage(cfg, validationData) {
+        let options = {}
         for (const c of cfg.sendData) {
             // 根据前置条件判断,是否能够发送消息
             if (!this.conditionValidator(c.condition)) {
                 return false;
             }
+
+            options = this.getOptionParamsObj(c.params, validationData, false);
+
             this._componentInstance.componentService.commonRelationSubject.next(
                 new BsnRelativesMessageModel(
                     {
@@ -311,7 +315,7 @@ export class ComponentSenderResolver {
                         trigger: c.receiverTrigger
                     },
                     cfg.senderId,
-                    validationData
+                    { ...validationData, ...options }
                 )
             )
         }

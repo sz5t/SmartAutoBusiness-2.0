@@ -1,3 +1,5 @@
+import { CnTreeTableComponent } from './../../components/cn-tree-table/cn-tree-table.component';
+import { CnTreeComponent } from './../../components/cn-tree/cn-tree.component';
 import { CnToolbarComponent } from './../../components/toolbar/cn-toolbar.component';
 import { CnDataTableComponent } from './../../components/data_table/cn-data-table.component';
 import { CnCustomLayoutComponent } from '../../components/layout/cn-custom-layout.component';
@@ -13,7 +15,9 @@ import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.c
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
     cnToolbar: CnToolbarComponent,
-    form: CnDataFormComponent
+    form: CnDataFormComponent,
+    cnTree: CnTreeComponent,
+    cnTreeTable: CnTreeTableComponent
 };
 
 @Directive({

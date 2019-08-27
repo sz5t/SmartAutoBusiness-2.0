@@ -13,7 +13,8 @@ export interface ParametersResolverModel {
   returnValue?: any;
   router?: ActivatedRoute;
   addedRows?: any[],
-  editedRows?: any[]
+  editedRows?: any[],
+  validation?: any[]  
 }
 
 export interface IParameter {
@@ -137,6 +138,11 @@ export class ParameterResolver {
   public static editedRows(param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new EditedRows(param, model).buildParameter();
+  }
+
+  public static validation(param, model) {
+    // tslint:disable-next-line: no-use-before-declare
+    return new ValidationParameter(param, model).buildParameter();
   }
 }
 
@@ -303,6 +309,44 @@ class ItemParameter extends BaseParameter implements IParameter {
           );
         } else {
           this._result = this._model.item[this._param.valueName];
+        }
+      }
+    }
+
+    return this._result;
+  }
+}
+
+/**
+ * 构建数据项参数
+ */
+class ValidationParameter extends BaseParameter implements IParameter {
+  private _result: any = {};
+  constructor(private _param, private _model) {
+    super();
+  }
+  public buildParameter() {
+    if (this._model.validation) {
+      // 判断组件取值是否为null
+      if (this._model.validation[this._param.valueName] === null || this._model.validation[this._param.valueName] === undefined) {
+        if (this._param.value !== undefined) {
+          if (this._param.dataType) {
+            this._result = this.getParameter(this._param.dataType, this._param.value);
+          } else if (this._param.defaultDate) {
+            const dataType = this._param.defaultDate;
+            this._result = this.getDefaultDate(dataType);
+          } else {
+            this._result = this._param.value;
+          }
+        }
+      } else {
+        if (this._param.dataType) {
+          this._result = this.getParameter(
+            this._param.dataType,
+            this._model.validation[this._param.valueName],
+          );
+        } else {
+          this._result = this._model.validation[this._param.valueName];
         }
       }
     }

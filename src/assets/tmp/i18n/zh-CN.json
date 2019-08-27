@@ -75,6 +75,8 @@
   "menu.components": "组件",
   "menu.component.form": "表单",
   "menu.component.table": "表格",
+  "menu.component.tree": "树",
+  "menu.component.treeTable": "树表",
   "app.analysis.test": "工专路 {{no}} 号店",
   "app.analysis.introduce": "指标说明",
   "app.analysis.total-sales": "总销售额",

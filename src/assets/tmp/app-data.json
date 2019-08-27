@@ -52,6 +52,18 @@
               "level": 3
             },
             {
+              "text": "树",
+              "link": "/template/treeDemo",
+              "i18n": "menu.component.tree",
+              "level": 3
+            },
+            {
+              "text": "树表",
+              "link": "/template/treeTableDemo",
+              "i18n": "menu.component.treeTable",
+              "level": 3
+            },
+            {
               "text": "表单",
               "link": "/dashboard/analysis",
               "i18n": "menu.component.form",

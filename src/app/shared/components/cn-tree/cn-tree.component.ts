@@ -1,10 +1,10 @@
 import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
-import { BSN_TOOLBAR_TRIGGER } from './../../../core/relations/bsn-trigger/toolbar.trigger.interface';
-import { BSN_DATAGRID_TRIGGER } from './../../../core/relations/bsn-trigger/data-grid.trigger.interface';
-import { ButtonOperationResolver } from './../../resolver/buttonOperation/buttonOperation.resolver';
-import { CN_DATA_GRID_PROPERTY } from './../../../core/relations/bsn-property/data-grid.property.interface';
+import { BSN_TOOLBAR_TRIGGER } from '../../../core/relations/bsn-trigger/toolbar.trigger.interface';
+import { BSN_DATAGRID_TRIGGER } from '../../../core/relations/bsn-trigger/data-grid.trigger.interface';
+import { ButtonOperationResolver } from '../../resolver/buttonOperation/buttonOperation.resolver';
+import { CN_DATA_GRID_PROPERTY } from '../../../core/relations/bsn-property/data-grid.property.interface';
 import { CN_DATA_GRID_METHOD } from '@core/relations/bsn-methods';
-import { BSN_COMPONENT_SERVICES, BsnRelativesMessageModel, BSN_RELATION_SUBJECT } from './../../../core/relations/bsn-relatives';
+import { BSN_COMPONENT_SERVICES, BsnRelativesMessageModel, BSN_RELATION_SUBJECT } from '../../../core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import {
     Component,
@@ -26,7 +26,9 @@ import { Subscription, Subject, BehaviorSubject, merge, Observable } from 'rxjs'
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
-import { arraysEqual } from 'ng-zorro-antd';
+import { arraysEqual, NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd';
+import { ITreeProperty, CN_TREE_PROPERTY } from '@core/relations/bsn-property/tree.property.interface';
+import { CN_TREE_METHOD } from '@core/relations/bsn-methods/bsn-tree-methods';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -36,32 +38,32 @@ import { arraysEqual } from 'ng-zorro-antd';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'cn-data-table,[cn-data-table]',
-    templateUrl: './cn-data-table.component.html',
-    styleUrls: [`cn-data-table.component.less`]
+    selector: 'cn-tree,[cn-tree]',
+    templateUrl: './cn-tree.component.html',
+    styleUrls: [`cn-tree.component.less`]
 })
-export class CnDataTableComponent extends CnComponentBase
-    implements OnInit, AfterViewInit, OnDestroy, IDataGridProperty {
+export class CnTreeComponent extends CnComponentBase
+    implements OnInit, AfterViewInit, OnDestroy, ITreeProperty {
 
     @Input()
     public config; // dataTables 的配置参数
     @Input()
     public permissions = [];
     @Input()
-    public dataList = [];
+    public nodes = [];
     @Output() public updateValue = new EventEmitter();
     /**
      * 组件名称
      * 所有组件实现此属性 
      */
-    public COMPONENT_NAME = "CnDataTable";
+    public COMPONENT_NAME = "CnTree";
     /**
      * 组件操作对外名称
      * 所有组件实现此属性
      */
-    public COMPONENT_METHODS = CN_DATA_GRID_METHOD;
+    public COMPONENT_METHODS = CN_TREE_METHOD;
 
-    public COMPONENT_PROPERTY = CN_DATA_GRID_PROPERTY;
+    public COMPONENT_PROPERTY = CN_TREE_PROPERTY;
 
     public tableColumns = [];
 
@@ -98,11 +100,12 @@ export class CnDataTableComponent extends CnComponentBase
     public _sortName;
     public _sortValue;
 
-    public ROWS_ADDED: any[] = [];
-    public ROWS_EDITED: any[] = [];
-    public ROW_SELECTED: any;
-    public ROWS_CHECKED: any[] = [];
+    public NODES_ADDED: any[] = [];
+    public NODES_EDITED: any[] = [];
+    public NODE_SELECTED: any;
+    public NODES_CHECKED: any[] = [];
     public COMPONENT_VALUE: any[] = [];
+    public ACTIVED_NODE: any;
 
     public operationRow: any;
 
@@ -130,7 +133,6 @@ export class CnDataTableComponent extends CnComponentBase
     ) {
         super(componentService);
         this.cacheValue = this.componentService.cacheService;
-        this.cacheValue.set('userInfo', { _createUserId: '张三丰' });
         this.tempValue = {};
         this.initValue = {};
         // init cacheValue
@@ -138,13 +140,12 @@ export class CnDataTableComponent extends CnComponentBase
 
     public ngOnInit() {
         // 设置数据操作主键
-        this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
+        this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
 
         // 初始化默认分页大小
-        this.config.pageSize && (this.pageSize = this.config.pageSize);
 
         // 构建表格列及列标题
-        this._buildColumns(this.config.columns);
+        // this._buildColumns(this.config.columns);
 
         // 解析及联配置
         this.resolveRelations();
@@ -233,50 +234,131 @@ export class CnDataTableComponent extends CnComponentBase
 
     }
 
-    public load() {
+    public async load() {
         this.isLoading = true;
-        const url = this.config.loadingConfig.url;
-        const method = this.config.loadingConfig.method;
-        const params = {
-            ...this.buildParameters(this.config.loadingConfig.params),
-            ...this._buildPaging(),
-            // ...this._buildFilter(this.config.ajaxConfig.filter),
-            // ...this._buildSort(),
-            // ...this._buildColumnFilter(),
-            // ...this._buildFocusId(),
-            // ...this._buildSearch()
-        };
+        const response = await this._getAsyncTreeData(this.config.loadingConfig);
+        if (response && response.data) {
+            response.data.map((d, index) => {
+                // 默认选中第一个节点
+                if (index === 0) {
+                    d['selected'] = true;
+                    this.ACTIVED_NODE = d;
+                }
+                this._setTreeNode(d);
 
-        this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
-            if (response && response.data && response.data.resultDatas) {
-                response.data.resultDatas.map((d, index) => {
+            });
+            this.nodes = response.data;
+            this.isLoading = false;
+        } else {
+            this.isLoading = false;
+        }
 
-                    this.mapOfDataState[d[this.KEY_ID]] = {
-                        disabled: false,
-                        checked: false, // index === 0 ? true : false,
-                        selected: false, // index === 0 ? true : false,
-                        state: 'text',
-                        data: d,
-                        originData: { ...d },
-                        validation: true,
-                        actions: this.getRowActions('text')
-                    };
-                    index === 0 && (this.ROW_SELECTED = d);
-                });
-                this.dataList = response.data.resultDatas;
-                this.total = response.data.count;
-                // 更新
-                // this.dataCheckedStatusChange();
-                // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
-                this.setSelectRow(this.ROW_SELECTED);
-                this.isLoading = false;
-            } else {
-                this.isLoading = false;
-            }
-        }, error => {
-            console.log(error);
-        });
     }
+
+    private async _getAsyncTreeData(ajaxConfig = null, nodeValue = null) {
+        const params = ParameterResolver.resolve({
+            params: ajaxConfig.params,
+            tempValue: this.tempValue,
+            initValue: this.initValue,
+            cacheValue: this.cacheValue,
+            item: nodeValue
+        })
+        const ajaxData = await this.componentService.apiService
+            .getRequest(
+                ajaxConfig.url,
+                'get',
+                { params }
+            ).toPromise();
+        return ajaxData;
+    }
+
+    private _setTreeNode(node) {
+        this.mapOfDataState[node[this.KEY_ID]] = {
+            disabled: false,
+            checked: false, // index === 0 ? true : false,
+            selected: false, // index === 0 ? true : false,
+            state: 'text',
+            data: node,
+            originData: { ...node },
+            // validation: true,
+            // actions: this.getRowActions('text')
+        };
+        this.config.columns.map(column => {
+            node[column['type']] = node[column['field']];
+        });
+
+        if (node.children && node.children.length > 0) {
+            node.children.map(n => {
+                this._setTreeNode(n);
+            })
+        }
+    }
+
+    public expandNode($event: NzFormatEmitEvent | NzTreeNode) {
+        let node;
+        if ($event instanceof NzTreeNode) {
+            node = $event;
+        } else {
+            node = $event['node'];
+        }
+        if (node && node.isExpanded) {
+            (async () => {
+                const s = await Promise.all(
+                    this.config.expand
+                        .filter(p => p.type === node.isLeaf)
+                        .map(async expand => {
+                            const response = await this._getAsyncTreeData(expand.ajaxConfig, node);
+                            if (response && response.data && response.data.length > 0) {
+                                response.data.map(d => {
+                                    this._setTreeNode(d);
+                                    d['isLeaf'] = false;
+                                    d['children'] = [];
+                                });
+                                node.addChildren(response.data);
+                            } else {
+                                node.addChildren([]);
+                                node.isExpanded = false;
+                            }
+                        })
+                )
+            })()
+        } else if (node.isExpanded === false) {
+            node.clearChildren();
+        }
+    }
+
+    public clickNode($event: NzFormatEmitEvent) {
+        if (this.ACTIVED_NODE) {
+            this.ACTIVED_NODE['isSelected'] = false;
+            this.ACTIVED_NODE['selected'] && (this.ACTIVED_NODE['selected'] = false);
+            this.ACTIVED_NODE = null;
+        }
+        $event.node.isSelected = true;
+        this.ACTIVED_NODE = $event.node;
+
+        this.tempValue['selectedNode'] = {
+            ...$event.node.origin
+        };
+    }
+
+    public openFolder(data: NzTreeNode | Required<NzFormatEmitEvent>) {
+        if (data instanceof NzTreeNode) {
+            if (!data.isExpanded) {
+                data.isExpanded = true;
+                this.expandNode(data);
+            }
+        } else {
+            const node = data.node;
+            if (node) {
+                if (!node.isExpanded) {
+                    node.isExpanded = true;
+                    this.expandNode(data);
+                }
+            }
+        }
+    }
+
+
 
     public loadRefreshData(option) {
         this.isLoading = true;
@@ -314,6 +396,8 @@ export class CnDataTableComponent extends CnComponentBase
 
     }
 
+    // #region 内置方法
+
     /**
      * 构建查询过滤参数
      * @param filterConfig
@@ -332,7 +416,7 @@ export class CnDataTableComponent extends CnComponentBase
         return filter;
     }
 
-    // #region 内置方法
+
     /**
      * 构建URL
      * @param ajaxUrl
@@ -347,19 +431,7 @@ export class CnDataTableComponent extends CnComponentBase
         }
         return url;
     }
-    /**
-     * 构建分页
-     * @returns {{}}
-     * @private
-     */
-    private _buildPaging() {
-        const params = {};
-        if (this.config.isPagination) {
-            params['pageNum'] = this.pageIndex;
-            params['pageSize'] = this.pageSize;
-        }
-        return params;
-    }
+
     /**
      * 处理URL格式
      * @param url
@@ -448,7 +520,7 @@ export class CnDataTableComponent extends CnComponentBase
         newData[this.KEY_ID] = newId;
 
         // 新增数据加入原始列表,才能够动态新增一行编辑数据
-        this.dataList = [newData, ...this.dataList];
+        this.nodes = [newData, ...this.nodes];
 
         // 组装状态数据
         this.mapOfDataState[newId] = {
@@ -461,24 +533,24 @@ export class CnDataTableComponent extends CnComponentBase
             actions: this.getRowActions('new')
         }
 
-        this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
+        this.NODES_ADDED = [newData, ...this.NODES_ADDED];
 
         // 更新状态
     }
 
     private removeEditRow(item) {
-        this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
+        this.NODES_EDITED = this.NODES_EDITED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
     }
 
     private addEditRows(item) {
-        const index = this.ROWS_EDITED.findIndex(r => r[this.KEY_ID] === item[this.KEY_ID]);
+        const index = this.NODES_EDITED.findIndex(r => r[this.KEY_ID] === item[this.KEY_ID]);
         if (index < 0) {
-            this.ROWS_EDITED = [item, ...this.ROWS_EDITED];
+            this.NODES_EDITED = [item, ...this.NODES_EDITED];
         }
     }
 
     public editRows(option) {
-        this.ROWS_CHECKED.map(
+        this.NODES_CHECKED.map(
             item => {
                 this.addEditRows(item);
                 const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
@@ -502,7 +574,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public cancelNewRows(option) {
-        this.ROWS_ADDED.map(
+        this.NODES_ADDED.map(
             item => {
                 this.removeNewRow(item);
                 const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
@@ -514,13 +586,13 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     private removeNewRow(item) {
-        this.dataList = this.dataList.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
-        this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
+        this.nodes = this.nodes.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
+        this.NODES_ADDED = this.NODES_ADDED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
         delete this.mapOfDataState[item[this.KEY_ID]];
     }
 
     public cancelEditRows(option) {
-        this.ROWS_CHECKED.map(
+        this.NODES_CHECKED.map(
             item => {
                 this.removeEditRow(item);
                 const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
@@ -535,11 +607,10 @@ export class CnDataTableComponent extends CnComponentBase
         if (option.data) {
             const itemId = option.data.data[this.KEY_ID];
             if (itemId) {
-                this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== itemId);
+                this.NODES_EDITED = this.NODES_EDITED.filter(r => r[this.KEY_ID] !== itemId);
             }
         }
 
-        console.log('-------------', this.ROWS_ADDED, this.ROWS_EDITED)
         // 调用方法之前,判断传递的验证配置,解析后是否能够继续进行后续操作
         // return true 表示通过验证, return false 表示未通过,无法继续后续操作
 
@@ -552,7 +623,7 @@ export class CnDataTableComponent extends CnComponentBase
             option.map(opt => {
                 if (this.mapOfDataState[opt[this.KEY_ID]]) {
 
-                    this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== opt[this.KEY_ID]);
+                    this.NODES_ADDED = this.NODES_ADDED.filter(r => r[this.KEY_ID] !== opt[this.KEY_ID]);
                     this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
                     this.mapOfDataState[opt[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
                     const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
@@ -561,7 +632,7 @@ export class CnDataTableComponent extends CnComponentBase
             })
         } else if (option) {
             // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
-            this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== option[this.KEY_ID]);
+            this.NODES_ADDED = this.NODES_ADDED.filter(r => r[this.KEY_ID] !== option[this.KEY_ID]);
             this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
             this.mapOfDataState[option[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
             const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
@@ -597,11 +668,11 @@ export class CnDataTableComponent extends CnComponentBase
     private _getComponentValueByHttpMethod(method): any[] {
         switch (method) {
             case 'post':
-                return this.ROWS_ADDED;
+                return this.NODES_ADDED;
             case 'put':
-                return this.ROWS_EDITED;
+                return this.NODES_EDITED;
             case 'proc':
-                return [...this.ROWS_ADDED, ...this.ROWS_EDITED];
+                return [...this.NODES_ADDED, ...this.NODES_EDITED];
         }
     }
 
@@ -724,7 +795,7 @@ export class CnDataTableComponent extends CnComponentBase
             params: ajaxConfig.params,
             tempValue: this.tempValue,
             componentValue: rowData,
-            item: this.ROW_SELECTED,
+            item: this.NODE_SELECTED,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             router: this.routerValue
@@ -783,10 +854,10 @@ export class CnDataTableComponent extends CnComponentBase
             $event.preventDefault();
         }
 
-        this.ROW_SELECTED = rowData;
+        this.NODE_SELECTED = rowData;
 
         // 选中当前行
-        this.dataList.map(row => {
+        this.nodes.map(row => {
             this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
         });
 
@@ -808,16 +879,15 @@ export class CnDataTableComponent extends CnComponentBase
     // #endregion
 
     // #region action
-
     public refreshData(loadNewData) {
         if (loadNewData && Array.isArray(loadNewData)) {
             loadNewData.map(newData => {
-                const index = this.dataList.findIndex(d => d[this.KEY_ID] === newData[this.KEY_ID]);
+                const index = this.nodes.findIndex(d => d[this.KEY_ID] === newData[this.KEY_ID]);
                 if (index > -1) {
-                    this.dataList.splice(index, 1, newData);
-                    this.dataList = [...this.dataList];
+                    this.nodes.splice(index, 1, newData);
+                    this.nodes = [...this.nodes];
                 } else {
-                    this.dataList = [loadNewData[index], ...this.dataList];
+                    this.nodes = [loadNewData[index], ...this.nodes];
                 }
                 const mapData = this.mapOfDataState[newData[this.KEY_ID]];
                 if (mapData) {
@@ -837,7 +907,7 @@ export class CnDataTableComponent extends CnComponentBase
                 }
             })
         }
-        // 刷新dataList
+        // 刷新nodes
         // 刷新mapOfDataState
     }
 
@@ -880,12 +950,12 @@ export class CnDataTableComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.ROW_SELECTED,
+                item: this.NODE_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
-                addedRows: this.ROWS_ADDED,
-                editedRows: this.ROWS_EDITED
+                addedRows: this.NODES_ADDED,
+                editedRows: this.NODES_EDITED
 
             });
         } else if (!isArray && data) {
@@ -893,7 +963,7 @@ export class CnDataTableComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.ROW_SELECTED,
+                item: this.NODE_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -909,7 +979,7 @@ export class CnDataTableComponent extends CnComponentBase
                     params: paramsCfg,
                     tempValue: this.tempValue,
                     componentValue: d,
-                    item: this.ROW_SELECTED,
+                    item: this.NODE_SELECTED,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
                     router: this.routerValue,
@@ -990,7 +1060,7 @@ export class CnDataTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: this.ROW_SELECTED,
+                item: this.NODE_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue
@@ -1076,7 +1146,7 @@ export class CnDataTableComponent extends CnComponentBase
      */
     public checkAll($value: boolean): void {
         //
-        this.dataList
+        this.nodes
             .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
             .map(item =>
                 this.mapOfDataState[item[this.KEY_ID]]['checked'] = $value
@@ -1089,18 +1159,18 @@ export class CnDataTableComponent extends CnComponentBase
      * 更新数据选中状态的CheckBox
      */
     public dataCheckedStatusChange() {
-        this.isAllChecked = this.dataList
+        this.isAllChecked = this.nodes
             .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
             .every(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
 
-        this.indeterminate = this.dataList
+        this.indeterminate = this.nodes
             .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
             .some(item => this.mapOfDataState[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
 
-        this.checkedNumber = this.dataList.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
+        this.checkedNumber = this.nodes.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
 
         // 更新当前选中数据集合
-        this.ROWS_CHECKED = this.dataList
+        this.NODES_CHECKED = this.nodes
             .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
             .filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
     }

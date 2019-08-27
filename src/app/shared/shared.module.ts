@@ -1,3 +1,4 @@
+import { CnTreeComponent } from './components/cn-tree/cn-tree.component';
 import { CnComponentResolverDirective } from './resolver/component/component-resolver.directive';
 import { CnDataTableComponent } from './components/data_table/cn-data-table.component';
 import { CnTabsComponent } from './components/layout/cn-tabs.component';
@@ -62,6 +63,7 @@ import { CnFormTreeSelectComponent } from './components/data-form/cn-form-items/
 import { CnFormTransferComponent } from './components/data-form/cn-form-items/cn-form-transfer/cn-form-transfer.component';
 import { CnFormGridSelectComponent } from './components/data-form/cn-form-items/cn-form-grid-select/cn-form-grid-select.component';
 import { CnFormTextareaComponent } from './components/data-form/cn-form-items/cn-form-textarea/cn-form-textarea.component';
+import { CnTreeTableComponent } from './components/cn-tree-table/cn-tree-table.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -73,6 +75,9 @@ const COMPONENTS = [
   CnCustomLayoutComponent,
   CnDataTableComponent,
   CnToolbarComponent,
+  CnTreeComponent,
+  CnTreeTableComponent,
+
   // --设计组件--
   CfgCustomLayoutComponent,
   CfgLayoutComponent,
@@ -141,7 +146,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
-    
+
   ],
   exports: [
     CommonModule,

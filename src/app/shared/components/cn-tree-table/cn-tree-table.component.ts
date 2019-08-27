@@ -1,10 +1,10 @@
 import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
-import { BSN_TOOLBAR_TRIGGER } from './../../../core/relations/bsn-trigger/toolbar.trigger.interface';
-import { BSN_DATAGRID_TRIGGER } from './../../../core/relations/bsn-trigger/data-grid.trigger.interface';
-import { ButtonOperationResolver } from './../../resolver/buttonOperation/buttonOperation.resolver';
-import { CN_DATA_GRID_PROPERTY } from './../../../core/relations/bsn-property/data-grid.property.interface';
+import { BSN_TOOLBAR_TRIGGER } from '../../../core/relations/bsn-trigger/toolbar.trigger.interface';
+import { BSN_DATAGRID_TRIGGER } from '../../../core/relations/bsn-trigger/data-grid.trigger.interface';
+import { ButtonOperationResolver } from '../../resolver/buttonOperation/buttonOperation.resolver';
+import { CN_DATA_GRID_PROPERTY } from '../../../core/relations/bsn-property/data-grid.property.interface';
 import { CN_DATA_GRID_METHOD } from '@core/relations/bsn-methods';
-import { BSN_COMPONENT_SERVICES, BsnRelativesMessageModel, BSN_RELATION_SUBJECT } from './../../../core/relations/bsn-relatives';
+import { BSN_COMPONENT_SERVICES, BsnRelativesMessageModel, BSN_RELATION_SUBJECT } from '../../../core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import {
     Component,
@@ -27,6 +27,8 @@ import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 import { arraysEqual } from 'ng-zorro-antd';
+import { ITreeGridProperty, CN_TREE_GRID_PROPERTY } from '@core/relations/bsn-property/tree-grid.property.interface';
+import { CN_TREE_GRID_METHOD } from '@core/relations/bsn-methods/bsn-tree-grid-method';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -36,12 +38,12 @@ import { arraysEqual } from 'ng-zorro-antd';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'cn-data-table,[cn-data-table]',
-    templateUrl: './cn-data-table.component.html',
-    styleUrls: [`cn-data-table.component.less`]
+    selector: 'cn-tree-table,[cn-tree-table]',
+    templateUrl: './cn-tree-table.component.html',
+    styleUrls: [`cn-tree-table.component.less`]
 })
-export class CnDataTableComponent extends CnComponentBase
-    implements OnInit, AfterViewInit, OnDestroy, IDataGridProperty {
+export class CnTreeTableComponent extends CnComponentBase
+    implements OnInit, AfterViewInit, OnDestroy, ITreeGridProperty {
 
     @Input()
     public config; // dataTables 的配置参数
@@ -59,9 +61,9 @@ export class CnDataTableComponent extends CnComponentBase
      * 组件操作对外名称
      * 所有组件实现此属性
      */
-    public COMPONENT_METHODS = CN_DATA_GRID_METHOD;
+    public COMPONENT_METHODS = CN_TREE_GRID_METHOD;
 
-    public COMPONENT_PROPERTY = CN_DATA_GRID_PROPERTY;
+    public COMPONENT_PROPERTY = CN_TREE_GRID_PROPERTY;
 
     public tableColumns = [];
 

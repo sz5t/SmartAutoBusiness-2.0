@@ -41,7 +41,7 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
         `
     ]
 })
-export class DataTableDemoComponent extends CnComponentBase implements OnInit {
+export class TreeTableDemoComponent extends CnComponentBase implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "layout",

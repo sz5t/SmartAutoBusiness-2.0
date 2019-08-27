@@ -1,7 +1,6 @@
-import { IDataGridTrigger } from './bsn-trigger/data-grid.trigger.interface';
-import { IToolbarTrigger } from './bsn-trigger/toolbar.trigger.interface';
+import { ITreeTrigger } from '../bsn-trigger/tree.trigger.interface';
 
-export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
+export const CN_TREE_METHOD: ITreeTrigger = {
     // state
     ADD_ROW: 'addRow',
     ADD_CHILD_ROW: 'addChildRow',
@@ -51,12 +50,4 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
     EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds'
-}
-
-export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
-    STATE_TO_TEXT: 'stateToText',
-    STATE_TO_EDIT: 'stateToEdit',
-    EXECUTE_NONE: 'executeNone',
-    EXECUTE_NONE_EDIT: 'executeNoneEdit',
-    EXECUTE: 'execute'
 }
