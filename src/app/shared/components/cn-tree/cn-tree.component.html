@@ -1,5 +1,5 @@
 <nz-spin nzTip="loading..." [nzSpinning]="isLoading">
-  <nz-tree [nzData]="nodes" [nzAsyncData]="config.async" [nzExpandAll]="config.expandAll"
+  <nz-tree #treeObj [nzData]="nodes" [nzAsyncData]="config.async" [nzExpandAll]="config.expandAll"
     [nzCheckable]="config.showCheckBox" [nzShowLine]="config.showLine" (nzClick)="clickNode($event)"
     (nzExpandChange)="expandNode($event)" [nzTreeTemplate]="nzTreeTemplate">
   </nz-tree>

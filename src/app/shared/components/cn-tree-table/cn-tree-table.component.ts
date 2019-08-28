@@ -288,19 +288,32 @@ export class CnTreeTableComponent extends CnComponentBase
 
     }
 
-    public async expandRow(array, item, $event: boolean) {
+    public expandRow(item, $event: boolean) {
         if ($event) {
-            const response = await this._getAsyncData(this.config.expandConfig, item.data, false);
-            if (response.data && response.data) {
-                debugger;
-                const appendedChildrenData: any[] = [];
-                response.data.map(data => {
-                    this.mapOfDataExpanded[data[this.KEY_ID]] = this._convertTreeToList(data, item.level + 1);
-                    appendedChildrenData.push(data);
-                })
-                this._appendChildrenToList(item.data, appendedChildrenData);
+            (async () => {
+                const response = await this._getAsyncData(this.config.expandConfig, item.data, false);
+                if (response.data && response.data) {
+                    const appendedChildrenData: any[] = [];
+                    response.data.map(data => {
+                        this.mapOfDataExpanded[data[this.KEY_ID]] = this._convertTreeToList(data, item.level + 1);
+                        appendedChildrenData.push(data);
+                    })
+                    item['children'] = appendedChildrenData;
+                    this._appendChildrenToList(item.data, appendedChildrenData);
+                }
+            })();
+        } else {
+            if (item['children'] && item['children'].length > 0) {
+                item['children'].map(c => {
+                    if (this.mapOfDataExpanded[c[this.KEY_ID]] && this.mapOfDataExpanded[c[this.KEY_ID]].length > 0) {
+                        this.mapOfDataExpanded[c[this.KEY_ID]].map(s => {
+                            this.expandRow(s, false);
+                        })
+                    }
+                    this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== c[this.KEY_ID]);
+                    delete this.mapOfDataExpanded[c[this.KEY_ID]];
+                });
             }
-
         }
         // debugger;
         // if ($event === false) {
@@ -377,7 +390,6 @@ export class CnTreeTableComponent extends CnComponentBase
                 };
 
                 this.mapOfDataExpanded[d[this.KEY_ID]] = this._convertTreeToList(d);
-                debugger;
                 // const dsa = this._convertTreeToList(d);
 
                 // this.mapOfDataState[d[this.KEY_ID]].children = this._convertTreeToList(d);

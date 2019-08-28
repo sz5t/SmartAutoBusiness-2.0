@@ -16,7 +16,8 @@ import {
     AfterViewInit,
     Output,
     EventEmitter,
-    TemplateRef
+    TemplateRef,
+    ViewChild
 } from '@angular/core';
 import { CnComponentBase } from '../cn-component.base';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
@@ -26,7 +27,7 @@ import { Subscription, Subject, BehaviorSubject, merge, Observable } from 'rxjs'
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
-import { arraysEqual, NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd';
+import { arraysEqual, NzFormatEmitEvent, NzTreeNode, NzTreeComponent } from 'ng-zorro-antd';
 import { ITreeProperty, CN_TREE_PROPERTY } from '@core/relations/bsn-property/tree.property.interface';
 import { CN_TREE_METHOD } from '@core/relations/bsn-methods/bsn-tree-methods';
 // const component: { [type: string]: Type<any> } = {
@@ -52,6 +53,9 @@ export class CnTreeComponent extends CnComponentBase
     @Input()
     public nodes = [];
     @Output() public updateValue = new EventEmitter();
+
+    @ViewChild('treeObj', { static: true })
+    public treeObj: NzTreeComponent;
     /**
      * 组件名称
      * 所有组件实现此属性 
@@ -242,7 +246,8 @@ export class CnTreeComponent extends CnComponentBase
                 // 默认选中第一个节点
                 if (index === 0) {
                     d['selected'] = true;
-                    this.ACTIVED_NODE = d;
+                    this.ACTIVED_NODE = {};
+                    this.ACTIVED_NODE['origin'] = d;
                 }
                 this._setTreeNode(d);
 
@@ -340,6 +345,8 @@ export class CnTreeComponent extends CnComponentBase
         this.tempValue['selectedNode'] = {
             ...$event.node.origin
         };
+
+        return true;
     }
 
     public openFolder(data: NzTreeNode | Required<NzFormatEmitEvent>) {
@@ -842,6 +849,10 @@ export class CnTreeComponent extends CnComponentBase
         return validationResult && errorResult;
     }
 
+    public setSelectedNode() {
+
+    }
+
     public setSelectRow(rowData?, $event?) {
         if (!rowData) {
             return false;
@@ -880,6 +891,42 @@ export class CnTreeComponent extends CnComponentBase
     // #endregion
 
     // #region action
+
+    private _setChildrenSelectedNode(currentSelectedNode) {
+        currentSelectedNode.isSelected = false;
+
+        const sNode = currentSelectedNode.getChildren();
+        sNode[0].isSelected = true;
+
+        // that.activedNode.isSelected = false;
+        // that.activedNode = null;
+
+
+        this.ACTIVED_NODE = sNode[0];
+        // that.selectedItem = that.activedNode.origin;
+        // that.tempValue['_selectedNode'] = that.selectedItem;
+    }
+
+    public appendChildToSelectedNode(option) {
+        // let appendNode: NzTreeNode;
+        const appendNodeData = {}
+        this.config.columns.map(col => {
+            appendNodeData[col['type']] = option[col['field']];
+        })
+
+        const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
+
+        if (!currentSelectedNode.isExpanded) {
+            currentSelectedNode.isExpanded = true;
+            this.expandNode(currentSelectedNode);
+            this._setChildrenSelectedNode(currentSelectedNode);
+        } else { // 节点已经打开,直接在节点下添加子节点
+            currentSelectedNode.addChildren([appendNodeData], 0);
+            this._setChildrenSelectedNode(currentSelectedNode);
+        }
+
+    }
+
     public refreshData(loadNewData) {
         if (loadNewData && Array.isArray(loadNewData)) {
             loadNewData.map(newData => {
@@ -951,7 +998,7 @@ export class CnTreeComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.NODE_SELECTED,
+                item: this.ACTIVED_NODE['origin'],
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -964,7 +1011,7 @@ export class CnTreeComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.NODE_SELECTED,
+                item: this.ACTIVED_NODE['origin'],
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -980,7 +1027,7 @@ export class CnTreeComponent extends CnComponentBase
                     params: paramsCfg,
                     tempValue: this.tempValue,
                     componentValue: d,
-                    item: this.NODE_SELECTED,
+                    item: this.ACTIVED_NODE['origin'],
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
                     router: this.routerValue,
@@ -1061,7 +1108,7 @@ export class CnTreeComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: this.NODE_SELECTED,
+                item: this.ACTIVED_NODE.origin,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue

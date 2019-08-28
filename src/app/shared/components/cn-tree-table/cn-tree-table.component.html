@@ -62,8 +62,7 @@
                     (nzExpandChange)="expandRow(item[item[KEY_ID]], item, $event)">
                     <input type="text" nz-input [(ngModel)]="item['data'][col.field]" /></td>
                   <td [nzIndentSize]="item.level * 20" [nzShowExpand]="!!item.children && col.expand"
-                    [(nzExpand)]="item.expand" (nzExpandChange)="expandRow(item[KEY_ID], item, $event)"
-                    *ngSwitchDefault>
+                    [(nzExpand)]="item.expand" (nzExpandChange)="expandRow(item, $event)" *ngSwitchDefault>
                     {{ item['originData'][col.field] }}</td>
                 </ng-container>
               </ng-container>

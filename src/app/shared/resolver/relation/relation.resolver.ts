@@ -353,6 +353,7 @@ export class ComponentSenderResolver {
             if (!this.conditionValidator(c.condition)) {
                 return false;
             }
+            debugger;
             const options = this.getOptionParamsObj(c.params, data, isArray);
             this._componentInstance.componentService.commonRelationSubject.next(
                 new BsnRelativesMessageModel(
@@ -528,7 +529,6 @@ export class ComponentReceiverResolver {
                             }
                         }
                     }
-
                     new TriggerResolver(data, this._componentInstance).resolve();
                 }
             }

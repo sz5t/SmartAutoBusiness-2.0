@@ -24,7 +24,8 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     CONFIRM: 'showConfirm',
     MESSAGE: 'showMessage',
     LOAD_REFRESH_DATA: 'loadRefreshData',
-
+    APPEND_CHILD_TO_SELECTED_NODE: 'appendChildToSelectedNode',
+    APPEND_CHILD_TO_ROOT_NODE: 'appendChildToRootNode',
 
     // behavior
     REFRESH: 'load',
@@ -37,6 +38,7 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     SET_SELECT_ROW: 'setSelectRow',
     CHECK_ROW: 'checkRow',
     REFRESH_AS_CHILD: 'load',
+    CLICK_NODE: 'clickNode',
 
     // link
     LINK: 'link',

@@ -21,6 +21,8 @@ export interface ITreeTrigger {
     CONFIRM: string,
     MESSAGE: string,
     LOAD_REFRESH_DATA
+    APPEND_CHILD_TO_SELECTED_NODE: string,
+    APPEND_CHILD_TO_ROOT_NODE: string,
 
     REFRESH: string,
     HIDDEN: string,
@@ -32,6 +34,7 @@ export interface ITreeTrigger {
     CHECK_ROW: string,
     REFRESH_AS_CHILD: string
     SET_SELECT_ROW: string,
+    CLICK_NODE,
 
     LINK: string,
     LINK_TO: string,
@@ -73,7 +76,8 @@ export const BSN_TREE_TRIGGER: ITreeTrigger = {
     CONFIRM: 'CONFIRM',
     MESSAGE: 'MESSAGE',
     LOAD_REFRESH_DATA: 'LOAD_REFRESH_DATA',
-
+    APPEND_CHILD_TO_SELECTED_NODE: 'APPEND_CHILD_TO_NODE',
+    APPEND_CHILD_TO_ROOT_NODE: 'APPEND_CHILD_TO_ROOT_NODE',
     // behavior
     REFRESH: 'REFRESH',
     REFRESH_AS_CHILD: 'REFRESH_AS_CHILD',
@@ -85,6 +89,7 @@ export const BSN_TREE_TRIGGER: ITreeTrigger = {
     SELECT_ROW: 'SELECT_ROW',
     SET_SELECT_ROW: 'SET_SELECT_ROW',
     CHECK_ROW: 'CHECK_ROW',
+    CLICK_NODE: 'CLICK_NODE',
 
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',
