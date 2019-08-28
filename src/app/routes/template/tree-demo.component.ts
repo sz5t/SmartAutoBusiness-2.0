@@ -2667,7 +2667,7 @@ export class TreeDemoComponent implements OnInit {
                             "title": "子表",
                             "titleIcon": "right-circle",
                             "component": "cnDataTable",
-                            "keyId": "id",
+                            "keyId": "ID",
                             "size": "middle",
                             "isBordered": true,
                             "isFrontPagination": false,
@@ -2721,7 +2721,7 @@ export class TreeDemoComponent implements OnInit {
                                     "showFilter": false,
                                     "showSort": false,
                                     "width": "100px",
-                                    "style": {},
+                                    "style": {}
                                 }
                             ],
                             "cascade": {

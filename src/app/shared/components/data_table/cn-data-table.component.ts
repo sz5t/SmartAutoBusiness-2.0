@@ -253,7 +253,7 @@ export class CnDataTableComponent extends CnComponentBase
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
             if (response && response.data && response.data.resultDatas) {
                 response.data.resultDatas.map((d, index) => {
-
+                    debugger;
                     this.mapOfDataState[d[this.KEY_ID]] = {
                         disabled: false,
                         checked: false, // index === 0 ? true : false,
@@ -264,15 +264,16 @@ export class CnDataTableComponent extends CnComponentBase
                         validation: true,
                         actions: this.getRowActions('text')
                     };
-                    if(!this.config.isSelected){
+                    if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
-                    }else{
-                        if(d[this.KEY_ID] === this.selectedRowValue){
+                    } else {
+                        if (d[this.KEY_ID] === this.selectedRowValue) {
                             this.ROW_SELECTED = d
-                        } 
+                        }
                     }
 
                 });
+               
                 this.dataList = response.data.resultDatas;
                 this.total = response.data.count;
                 // 更新

@@ -1272,6 +1272,7 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     getRowActions(state): any[] {
+        debugger;
         const orginAction = this.tableColumns.find(c => c.type === 'action');
         const copyAction = [];
         if (orginAction) {
