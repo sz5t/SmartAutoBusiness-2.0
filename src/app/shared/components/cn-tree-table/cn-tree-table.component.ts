@@ -181,6 +181,9 @@ export class CnTreeTableComponent extends CnComponentBase
         if (this._trigger_receiver_subscription$) {
             this._trigger_receiver_subscription$.unsubscribe();
         }
+        // if(this.subscription$) {
+        //     this.subscription$.unsubscribe();
+        // }
     }
 
     /**
@@ -1272,7 +1275,6 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     getRowActions(state): any[] {
-        debugger;
         const orginAction = this.tableColumns.find(c => c.type === 'action');
         const copyAction = [];
         if (orginAction) {

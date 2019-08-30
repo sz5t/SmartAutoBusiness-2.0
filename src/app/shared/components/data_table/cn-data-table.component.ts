@@ -163,6 +163,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public ngOnDestroy() {
+        debugger;
         // 释放级联对象
         this.unsubscribeRelation();
         // 释放及联接受对象
@@ -178,6 +179,11 @@ export class CnDataTableComponent extends CnComponentBase
         if (this._trigger_receiver_subscription$) {
             this._trigger_receiver_subscription$.unsubscribe();
         }
+
+        if (this._trigger_source$) {
+            this._trigger_source$.unsubscribe();
+        }
+
     }
 
     /**
@@ -198,7 +204,11 @@ export class CnDataTableComponent extends CnComponentBase
             this._receiver_subscription$ = this._receiver_source$.subscribe();
         }
 
-        this._trigger_source$ = new RelationResolver(this).resolve();
+        if (!this._trigger_source$) {
+            this._trigger_source$ = new RelationResolver(this).resolve();
+            // this._trigger_receiver_subscription$ = this._trigger_source$.subscribe();
+        }
+
 
     }
 
@@ -253,7 +263,6 @@ export class CnDataTableComponent extends CnComponentBase
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
             if (response && response.data && response.data.resultDatas) {
                 response.data.resultDatas.map((d, index) => {
-                    debugger;
                     this.mapOfDataState[d[this.KEY_ID]] = {
                         disabled: false,
                         checked: false, // index === 0 ? true : false,
@@ -273,7 +282,7 @@ export class CnDataTableComponent extends CnComponentBase
                     }
 
                 });
-               
+
                 this.dataList = response.data.resultDatas;
                 this.total = response.data.count;
                 // 更新

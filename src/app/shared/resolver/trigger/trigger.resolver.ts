@@ -169,7 +169,6 @@ export class TriggerResolver {
     }
 
     handleActionType() {
-        console.log('trigger data', this._triggerMsg.options);
         const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
         if (method) {
             this._componentInstance[method](this._triggerMsg.options);

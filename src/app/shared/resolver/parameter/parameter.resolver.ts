@@ -14,7 +14,8 @@ export interface ParametersResolverModel {
   router?: ActivatedRoute;
   addedRows?: any[],
   editedRows?: any[],
-  validation?: any[]  
+  validation?: any[],
+  checkedItem?: any
 }
 
 export interface IParameter {
@@ -536,12 +537,12 @@ class CheckedIdParameter extends BaseParameter implements IParameter {
     super();
   }
   public buildParameter() {
-    if (this._model.item) {
+    if (this._model.checkedItem) {
       // result[param['name']] = model.item;
       if (this._param.dataType) {
-        this._result = this.getParameter(this._param.dataType, this._model.item);
+        this._result = this.getParameter(this._param.dataType, this._model.checkedItem[this._param.valueName]);
       } else {
-        this._result = this._model.item;
+        this._result = this._model.checkedItem[this._param.valueName];
       }
     }
     return this._result;

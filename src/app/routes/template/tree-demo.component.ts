@@ -128,12 +128,23 @@ export class TreeDemoComponent implements OnInit {
                                     "id": "edit_form_changeValue",
                                     "params": [
                                         {
+                                            "name": "ID",
+                                            "type": "item",
+                                            "valueName": "ID",
+                                            "valueTo": "tempValue"
+                                        }
+                                    ],
+                                },
+                                {
+                                    "id": "add_child_form_changeValue",
+                                    "params": [
+                                        {
                                             "name": "PID",
                                             "type": "item",
                                             "valueName": "ID",
                                             "valueTo": "tempValue"
                                         }
-                                    ]
+                                    ],
                                 }
                             ],
                             "dialog": [
@@ -348,9 +359,9 @@ export class TreeDemoComponent implements OnInit {
                                                 "ajaxType": "get",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "ID",
                                                         "type": "tempValue",
-                                                        "valueName": "id"
+                                                        "valueName": "ID"
                                                     }
                                                 ],
                                                 "outputParameters": [
@@ -605,6 +616,40 @@ export class TreeDemoComponent implements OnInit {
                                     ]
                                 },
                                 {
+                                    "id": "tree_add_root_office",
+                                    "url": "office/insert/OFFICE_SHEET",
+                                    "urlType": "inner",
+                                    "ajaxType": "post",
+                                    "params": [
+                                        {
+                                            "name": "ID",
+                                            "type": "GUID"
+                                        },
+                                        {
+                                            "name": "OFFICENAME",
+                                            "type": "componentValue",
+                                            "valueName": "OFFICENAME",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "PID",
+                                            "type": "value",
+                                            "valueName": null
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterRootOfficeSaveSuccessfully"
+                                        }
+                                    ]
+                                },
+                                {
                                     "id": "tree_add_office",
                                     "url": "office/insert/OFFICE_SHEET",
                                     "urlType": "inner",
@@ -623,8 +668,7 @@ export class TreeDemoComponent implements OnInit {
                                         {
                                             "name": "PID",
                                             "type": "tempValue",
-                                            "valueName": "PID",
-                                            "dataType": "string"
+                                            "valueName": "PID"
                                         }
                                     ],
                                     "outputParameters": [
@@ -662,7 +706,61 @@ export class TreeDemoComponent implements OnInit {
 
                                     ],
                                     "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterOfficeUpdateSuccessfully"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "tree_delete_office",
+                                    "url": "office/delete/OFFICE_SHEET",
+                                    "urlType": "inner",
+                                    "ajaxType": "delete",
+                                    "params": [
+                                        {
+                                            "name": "ids",
+                                            "type": "item",
+                                            "valueName": "ID",
+                                            "dataType": "string"
+                                        }
+                                    ],
+                                    "outputParameters": [
 
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterOfficeDeleteSuccessfully"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "tree_batch_delete_office",
+                                    "url": "office/delete/OFFICE_SHEET",
+                                    "urlType": "inner",
+                                    "ajaxType": "delete",
+                                    "params": [
+                                        {
+                                            "name": "ID",
+                                            "type": "checkedId",
+                                            "valueName": "ID"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterOfficeBatchDeleteSuccessfully"
+                                        }
                                     ]
                                 }
                             ],
@@ -727,7 +825,7 @@ export class TreeDemoComponent implements OnInit {
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
                                                     "dialogId": "edit_office_form",
-                                                    "ajaxId": "tree_add_office"
+                                                    "ajaxId": "tree_add_root_office"
                                                 }
                                             ]
                                         },
@@ -746,7 +844,7 @@ export class TreeDemoComponent implements OnInit {
                                                     // "conditionId": "add_state_1"
                                                     "dialogId": "edit_office_form",
                                                     "ajaxId": "tree_add_office",
-                                                    "changeValueId": "edit_form_changeValue",
+                                                    "changeValueId": "add_child_form_changeValue"
                                                 }
                                             ]
                                         },
@@ -764,7 +862,7 @@ export class TreeDemoComponent implements OnInit {
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
                                                     "dialogId": "edit_office_form",
-                                                    "ajaxId": "form_edit_province",
+                                                    "ajaxId": "tree_edit_office",
                                                     "changeValueId": "edit_form_changeValue"
                                                 }
                                             ]
@@ -779,50 +877,27 @@ export class TreeDemoComponent implements OnInit {
                                             "execute": [
                                                 {
                                                     "triggerType": "OPERATION",
-                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                    "trigger": "EXECUTE_SELECTED_NODE",
                                                     // "conditionId": "delete_operation_1",
-                                                    // "ajaxId": "delete_row_1"
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                },
-                                {
-                                    "targetViewId": "view_02",
-                                    "group": [
-                                        {
-                                            "name": "M_addSearchRow",
-                                            "text": "查询",
-                                            "triggerType": "STATE",
-                                            "trigger": "SEARCH_ROW",
-                                            "actionName": "addSearchRow",
-                                            "icon": "search",
-                                            "color": "text-primary",
-                                            "hidden": false,
-                                            "disabled": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "SEARCH_ROW"
+                                                    "ajaxId": "tree_delete_office"
                                                 }
                                             ]
                                         },
                                         {
-                                            "name": "M_cancelSearchRow",
-                                            "text": "取消查询",
-                                            "icon": "rollback",
-                                            "triggerType": "STATE",
-                                            "trigger": "CANCEL_SEARCH_ROW",
-                                            "actionName": "cancelSearchRow",
-                                            "color": "text-grey-darker",
+                                            "id": "M_deleteRow_m",
+                                            "text": "批量删除",
+                                            "icon": "delete",
+                                            "color": "text-red-light",
                                             "hidden": false,
                                             "disabled": false,
                                             "execute": [
                                                 {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "SEARCH_ROW"
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "EXECUTE_DELETE_CHECKED_NODES_BY_ID",
+                                                    // "conditionId": "delete_operation_1",
+                                                    "ajaxId": "tree_batch_delete_office"
                                                 }
-                                            ],
+                                            ]
                                         }
                                     ]
                                 }
@@ -851,7 +926,7 @@ export class TreeDemoComponent implements OnInit {
                             "component": "cnTree",
                             "keyId": "ID",
                             "async": true,
-                            "showCheckBox": false,
+                            "showCheckBox": true,
                             "expandAll": false,
                             "loadingOnInit": true,
                             "showLine": false,
@@ -1084,6 +1159,48 @@ export class TreeDemoComponent implements OnInit {
                                         ]
                                     },
                                     {
+                                        "id": "afterRootOfficeSaveSuccessfully",
+                                        "senderId": "view_tree_01",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "code",
+                                                        "type": "value",
+                                                        "value": "message.operation.success"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "APPEND_CHILD_TO_ROOT_NODE",
+                                                "params": [
+                                                    {
+                                                        "name": "ID",
+                                                        "type": "addedRows",
+                                                        "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "OFFICENAME",
+                                                        "type": "addedRows",
+                                                        "valueName": "OFFICENAME"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
                                         "id": "afterOfficeSaveSuccessfully",
                                         "senderId": "view_tree_01",
                                         "sendData": [
@@ -1099,9 +1216,9 @@ export class TreeDemoComponent implements OnInit {
                                                         "value": "success"
                                                     },
                                                     {
-                                                        "name": "message",
+                                                        "name": "code",
                                                         "type": "value",
-                                                        "value": "操作完成!"
+                                                        "value": "message.operation.success"
                                                     },
                                                 ]
                                             },
@@ -1119,7 +1236,7 @@ export class TreeDemoComponent implements OnInit {
                                                     {
                                                         "name": "OFFICENAME",
                                                         "type": "addedRows",
-                                                        "valueName": "ID"
+                                                        "valueName": "OFFICENAME"
                                                     },
                                                     {
                                                         "name": "PID",
@@ -1127,11 +1244,24 @@ export class TreeDemoComponent implements OnInit {
                                                         "valueName": "PID"
                                                     }
                                                 ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "BEHAVIOR",
+                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                "params": [
+                                                    {
+                                                        "name": "PID",
+                                                        "type": "item",
+                                                        "valueName": "ID"
+                                                    }
+                                                ]
                                             }
                                         ]
                                     },
                                     {
-                                        "id": "afterProvinceUpdateSuccessfully",
+                                        "id": "afterOfficeUpdateSuccessfully",
                                         "senderId": "view_tree_01",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
@@ -1149,22 +1279,107 @@ export class TreeDemoComponent implements OnInit {
                                                         "value": "success"
                                                     },
                                                     {
-                                                        "name": "message",
+                                                        "name": "code",
                                                         "type": "value",
-                                                        "value": "操作完成!"
-                                                    },
+                                                        "value": "message.operation.success"
+                                                    }
                                                 ]
                                             },
                                             {
                                                 "beforeSend": {},
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+                                                "receiverTrigger": "UPDATE_SELECTED_NODE",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "ID",
                                                         "type": "editedRows",
-                                                        "valueName": "id"
+                                                        "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "OFFICENAME",
+                                                        "type": "editedRows",
+                                                        "valueName": "OFFICENAME"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterOfficeDeleteSuccessfully",
+                                        "senderId": "view_tree_01",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "code",
+                                                        "type": "value",
+                                                        "value": "message.operation.success"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "DELETE_SELECTED_NODE",
+                                                "params": [
+                                                    {
+                                                        "name": "ID",
+                                                        "type": "item",
+                                                        "valueName": "ID"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterOfficeBatchDeleteSuccessfully",
+                                        "senderId": "view_tree_01",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "code",
+                                                        "type": "value",
+                                                        "value": "message.operation.success"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "DELETE_CHECKED_NODES",
+                                                "params": [
+                                                    {
+                                                        "name": "ids",
+                                                        "type": "returnValue",
+                                                        "valueName": "ids"
                                                     }
                                                 ]
                                             }
@@ -1213,6 +1428,46 @@ export class TreeDemoComponent implements OnInit {
                                             {
                                                 "triggerType": "ACTION",
                                                 "trigger": "APPEND_CHILD_TO_ROOT_NODE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_203",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "ACTION",
+                                                "trigger": "UPDATE_SELECTED_NODE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_204",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "ACTION",
+                                                "trigger": "MESSAGE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_205",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "ACTION",
+                                                "trigger": "DELETE_SELECTED_NODE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_205",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "ACTION",
+                                                "trigger": "DELETE_CHECKED_NODES"
                                             }
                                         ]
                                     }
@@ -2873,9 +3128,9 @@ export class TreeDemoComponent implements OnInit {
                                                         "value": "success"
                                                     },
                                                     {
-                                                        "name": "message",
+                                                        "name": "code",
                                                         "type": "value",
-                                                        "value": "操作完成!"
+                                                        "value": "message.operation.success"
                                                     },
                                                 ]
                                             },
@@ -2886,9 +3141,19 @@ export class TreeDemoComponent implements OnInit {
                                                 "receiverTrigger": "APPEND_CHILD_TO_SELECTED_NODE",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "key",
                                                         "type": "addedRows",
-                                                        "valueName": "id"
+                                                        "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "parentId",
+                                                        "type": "addedRows",
+                                                        "valueName": "PID"
+                                                    },
+                                                    {
+                                                        "name": "parentId",
+                                                        "type": "addedRows",
+                                                        "valueName": "PID"
                                                     }
                                                 ]
                                             }
