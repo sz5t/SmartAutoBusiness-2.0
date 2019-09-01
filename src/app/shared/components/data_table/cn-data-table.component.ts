@@ -163,7 +163,6 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public ngOnDestroy() {
-        debugger;
         // 释放级联对象
         this.unsubscribeRelation();
         // 释放及联接受对象
@@ -184,6 +183,9 @@ export class CnDataTableComponent extends CnComponentBase
             this._trigger_source$.unsubscribe();
         }
 
+        if (this.subscription$) {
+            this.subscription$.unsubscribe();
+        }
     }
 
     /**
@@ -200,8 +202,9 @@ export class CnDataTableComponent extends CnComponentBase
         }
         if (this.config.cascade && this.config.cascade.messageReceiver) {
             // 解析消息接受配置,并注册消息接收对象
-            this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
-            this._receiver_subscription$ = this._receiver_source$.subscribe();
+            // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+            // this._receiver_subscription$ = this._receiver_source$.subscribe();
+            new RelationResolver(this).resolveReceiver(this.config);
         }
 
         if (!this._trigger_source$) {

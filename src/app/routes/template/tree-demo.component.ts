@@ -100,26 +100,26 @@ export class TreeDemoComponent implements OnInit {
                                     }
                                 ],
                                 "messageReceiver": [
-                                    {
-                                        "id": "s_001",
-                                        "senderId": "view_tree_01",
-                                        "receiveData": [
-                                            {
-                                                "triggerType": "STATE",
-                                                "trigger": "STATE_TO_TEXT"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "s_002",
-                                        "senderId": "view_tree_01",
-                                        "receiveData": [
-                                            {
-                                                "triggerType": "STATE",
-                                                "trigger": "STATE_TO_EDIT"
-                                            }
-                                        ]
-                                    }
+                                    // {
+                                    //     "id": "s_001",
+                                    //     "senderId": "view_tree_01",
+                                    //     "receiveData": [
+                                    //         {
+                                    //             "triggerType": "STATE",
+                                    //             "trigger": "STATE_TO_TEXT"
+                                    //         }
+                                    //     ]
+                                    // },
+                                    // {
+                                    //     "id": "s_002",
+                                    //     "senderId": "view_tree_01",
+                                    //     "receiveData": [
+                                    //         {
+                                    //             "triggerType": "STATE",
+                                    //             "trigger": "STATE_TO_EDIT"
+                                    //         }
+                                    //     ]
+                                    // }
 
                                 ]
                             },

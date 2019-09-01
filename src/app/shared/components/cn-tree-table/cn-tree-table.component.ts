@@ -200,8 +200,9 @@ export class CnTreeTableComponent extends CnComponentBase
         }
         if (this.config.cascade && this.config.cascade.messageReceiver) {
             // 解析消息接受配置,并注册消息接收对象
-            this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
-            this._receiver_subscription$ = this._receiver_source$.subscribe();
+            // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+            // this._receiver_subscription$ = this._receiver_source$.subscribe();
+            new RelationResolver(this).resolveReceiver(this.config);
         }
 
         this._trigger_source$ = new RelationResolver(this).resolve();
@@ -1208,11 +1209,11 @@ export class CnTreeTableComponent extends CnComponentBase
      * 全选
      */
     public checkAll($value: boolean): void {
-        //
+        debugger;
         this.dataList
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+            .filter(item => !this.mapOfDataExpanded[item[this.KEY_ID]]['dislabled'])
             .map(item =>
-                this.mapOfDataState[item[this.KEY_ID]]['checked'] = $value
+                this.mapOfDataExpanded[item[this.KEY_ID]]['checked'] = $value
             );
         this.dataCheckedStatusChange();
 
@@ -1222,20 +1223,21 @@ export class CnTreeTableComponent extends CnComponentBase
      * 更新数据选中状态的CheckBox
      */
     public dataCheckedStatusChange() {
+        debugger;
         this.isAllChecked = this.dataList
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .every(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
+            .filter(item => !this.mapOfDataExpanded[item[this.KEY_ID]]['dislabled'])
+            .every(item => this.mapOfDataExpanded[item[this.KEY_ID]]['checked']);
 
         this.indeterminate = this.dataList
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .some(item => this.mapOfDataState[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
+            .filter(item => !this.mapOfDataExpanded[item[this.KEY_ID]]['dislabled'])
+            .some(item => this.mapOfDataExpanded[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
 
-        this.checkedNumber = this.dataList.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
+        this.checkedNumber = this.dataList.filter(item => this.mapOfDataExpanded[item[this.KEY_ID]]['checked']).length;
 
         // 更新当前选中数据集合
         this.ROWS_CHECKED = this.dataList
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
+            .filter(item => !this.mapOfDataExpanded[item[this.KEY_ID]]['dislabled'])
+            .filter(item => this.mapOfDataExpanded[item[this.KEY_ID]]['checked']);
     }
 
     /**
@@ -1267,7 +1269,7 @@ export class CnTreeTableComponent extends CnComponentBase
      * @param $event 
      */
     rowAction(actionCfg, rowData, $event?) {
-        const dataOfState = this.mapOfDataState[rowData[this.KEY_ID]];
+        const dataOfState = this.mapOfDataExpanded[rowData[this.KEY_ID]];
         $event && $event.stopPropagation();
         const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
         trigger.toolbarAction(actionCfg, this.config.id);

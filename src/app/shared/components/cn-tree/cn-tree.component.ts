@@ -111,14 +111,6 @@ export class CnTreeComponent extends CnComponentBase
     public COMPONENT_VALUE: any[] = [];
     public ACTIVED_NODE: any;
 
-    public operationRow: any;
-
-    private _selectedRow;
-    private _rowsData;
-    private _addedRowsData;
-    private _editedRowsData;
-    private _search_row;
-
     private _columnFilterList;
 
     private _sender_source$: Subject<any>;
@@ -201,8 +193,9 @@ export class CnTreeComponent extends CnComponentBase
         }
         if (this.config.cascade && this.config.cascade.messageReceiver) {
             // 解析消息接受配置,并注册消息接收对象
-            this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
-            this._receiver_subscription$ = this._receiver_source$.subscribe();
+            // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+            // this._receiver_subscription$ = this._receiver_source$.subscribe();
+            new RelationResolver(this).resolveReceiver(this.config);
         }
 
         if (!this._trigger_source$) {
@@ -507,17 +500,7 @@ export class CnTreeComponent extends CnComponentBase
      * 构建查询参数
      */
     public _buildSearch() {
-        let search = {};
-        if (this._search_row) {
-            const searchData = JSON.parse(JSON.stringify(this._search_row)); 4
-            delete searchData.key;
-            delete searchData.checked;
-            delete searchData.row_status;
-            delete searchData.selected;
 
-            search = searchData;
-        }
-        return search;
     }
     // #endregion
 
@@ -859,41 +842,41 @@ export class CnTreeComponent extends CnComponentBase
 
     public async excecuteCheckedNodesByID(option) {
         console.log('execute checked nodes', option);
-        // const url = option.ajaxConfig.url;
-        // const method = option.ajaxConfig.ajaxType;
-        // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
-        // const data = [...this.treeObj.getCheckedNodeList(), ...this.treeObj.getHalfCheckedNodeList()];
-        // const parameterResult = [];
-        // data.map(d => {
-        //     const param = ParameterResolver.resolve({
-        //         params: ajaxParams,
-        //         tempValue: this.tempValue,
-        //         item: d.origin,
-        //         initValue: this.initValue,
-        //         cacheValue: this.cacheValue
-        //     });
-        //     parameterResult.push(param);
-        // });
-        // if (parameterResult) {
-        //     const ids = [];
-        //     parameterResult.map(p => {
-        //         const pData = p[this.KEY_ID]
-        //         pData && ids.push(pData);
-        //     })
-        //     const response = await this.executeHttpRequest(url, method, {ids: ids.join(',')});
-        //     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
-        //     this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+        const url = option.ajaxConfig.url;
+        const method = option.ajaxConfig.ajaxType;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        const data = [...this.treeObj.getCheckedNodeList(), ...this.treeObj.getHalfCheckedNodeList()];
+        const parameterResult = [];
+        data.map(d => {
+            const param = ParameterResolver.resolve({
+                params: ajaxParams,
+                tempValue: this.tempValue,
+                item: d.origin,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue
+            });
+            parameterResult.push(param);
+        });
+        if (parameterResult) {
+            const ids = [];
+            parameterResult.map(p => {
+                const pData = p[this.KEY_ID]
+                pData && ids.push(pData);
+            })
+            const response = await this.executeHttpRequest(url, method, { ids: ids.join(',') });
+            // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+            this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
-        //     // 处理validation结果
-        //     const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+            // 处理validation结果
+            const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
 
-        //     // 处理error结果
-        //     const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+            // 处理error结果
+            const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
 
-        //     return validationResult && errorResult;
-        // } else {
-        //     return false;
-        // }
+            return validationResult && errorResult;
+        } else {
+            return false;
+        }
 
     }
 
@@ -1262,25 +1245,25 @@ export class CnTreeComponent extends CnComponentBase
         return this.config.id;
     }
 
-    public executeSelectRow() {
-        console.log(this.config.id + '-------------executeSelectRow');
-    }
+    // public executeSelectRow() {
+    //     console.log(this.config.id + '-------------executeSelectRow');
+    // }
 
-    public executeCheckedRows() {
-        console.log(this.config.id + '-------------executeCheckedRows');
-    }
+    // public executeCheckedRows() {
+    //     console.log(this.config.id + '-------------executeCheckedRows');
+    // }
 
-    public executeCheckedRowsIds() {
-        console.log(this.config.id + '-------------executeCheckedRowsIds');
-    }
+    // public executeCheckedRowsIds() {
+    //     console.log(this.config.id + '-------------executeCheckedRowsIds');
+    // }
 
-    public searchRow() {
-        console.log(this.config.id + '-------------searchRow');
-    }
+    // public searchRow() {
+    //     console.log(this.config.id + '-------------searchRow');
+    // }
 
-    public cancelSearchRow() {
-        console.log(this.config.id + '-------------cancelSearchRow');
-    }
+    // public cancelSearchRow() {
+    //     console.log(this.config.id + '-------------cancelSearchRow');
+    // }
 
     public export() {
 

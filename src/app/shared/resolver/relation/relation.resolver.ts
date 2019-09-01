@@ -482,38 +482,36 @@ export class ComponentSenderResolver {
  */
 export class ReceiverResolver {
     constructor(private _componentInstance: any) { }
+    // public resolve(receiverCfg) {
+    //     const receiver_source$ = from(receiverCfg);
+    //     const receiver_subscribe$ = receiver_source$.pipe(map(cfg => {
+    //         // tslint:disable-next-line: no-use-before-declare
+    //         new ComponentReceiverResolver(this._componentInstance).resolve(cfg);
+    //     }));
+    //     return receiver_subscribe$;
+    // }
     public resolve(receiverCfg) {
-        const receiver_source$ = from(receiverCfg);
-        const receiver_subscribe$ = receiver_source$.pipe(map(cfg => {
-            // tslint:disable-next-line: no-use-before-declare
-            new ComponentReceiverResolver(this._componentInstance).resolve(cfg);
-        }));
-        return receiver_subscribe$;
-    }
-}
 
-export class ComponentReceiverResolver {
-    constructor(private _componentInstance: any) { }
-    public resolve(cfg: any) {
         if (!this._componentInstance.subscription$) {
             this._componentInstance.subscription$ = this._componentInstance.componentService.commonRelationSubject.subscribe(
                 data => {
+                    receiverCfg.map(cfg => {
+                        // 判断发送组件与接受组件是否一致
+                        if (data.viewId === cfg.senderId) {
+                            console.log('receiver data:', data);
+                            // 判断发送触发器与接受触发起是否一致
+                            // new TriggerResolver(
+                            //     data,
+                            //     this._componentInstance
+                            // ).resolve();
+                            this.chooseTrigger(data, cfg);
+                        }
+                    });
 
-                    // 判断发送组件与接受组件是否一致
-                    if (data.viewId === cfg.senderId) {
-                        console.log('receiver data:', data);
-                        // 判断发送触发器与接受触发起是否一致
-                        // new TriggerResolver(
-                        //     data,
-                        //     this._componentInstance
-                        // ).resolve();
-                        this.chooseTrigger(data, cfg);
-                    }
                 }
-            )
+            );
         }
     }
-
     private chooseTrigger(data, cfg) {
         if (cfg.receiveData && Array.isArray(cfg.receiveData) && cfg.receiveData.length > 0) {
             for (const c of cfg.receiveData) {
@@ -537,6 +535,16 @@ export class ComponentReceiverResolver {
             }
         }
     }
+}
+
+export class ComponentReceiverResolver {
+    constructor(private _componentInstance: any) { }
+    public resolve(cfg: any) {
+
+
+    }
+
+
 
 
 }
