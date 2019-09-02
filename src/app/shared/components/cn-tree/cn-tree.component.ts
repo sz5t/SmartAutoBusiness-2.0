@@ -176,10 +176,15 @@ export class CnTreeComponent extends CnComponentBase
             this._sender_subscription$.unsubscribe();
         }
 
-        // 释放触发器对象
-        if (this._trigger_receiver_subscription$) {
-            this._trigger_receiver_subscription$.unsubscribe();
+        if (this.subscription$) {
+            this.subscription$.unsubscribe();
         }
+
+        // 释放触发器对象
+        if (this._trigger_source$) {
+            this._trigger_source$.unsubscribe();
+        }
+
     }
 
     /**
@@ -200,7 +205,11 @@ export class CnTreeComponent extends CnComponentBase
             this._receiver_subscription$ = this._receiver_source$.subscribe();
         }
 
-        this._trigger_source$ = new RelationResolver(this).resolve();
+        if (!this._trigger_source$) {
+            this._trigger_source$ = new RelationResolver(this).resolve();
+            // this._trigger_receiver_subscription$ = this._trigger_source$.subscribe();
+        }
+
 
     }
 
@@ -710,6 +719,74 @@ export class CnTreeComponent extends CnComponentBase
         // }
     }
 
+    public deleteCheckedNodes(option) {
+        console.log('deletecheckecNodes', option);
+        if (option.ids) {
+            const arr_id = option.ids.split(',');
+            if (arr_id && arr_id.length > 0) {
+                arr_id.map(arr => {
+                    this.deleteSelectedNode({ 'ID': arr, 'id': arr });
+                })
+            }
+        }
+    }
+
+    public deleteSelectedNode(option) {
+        if (option[this.KEY_ID]) {
+            const deletedNode = this.treeObj.getTreeNodeByKey(option[this.KEY_ID]);
+            if (deletedNode) {
+                // 判断删除的Node节点是否存在父节点
+                const parentNode = deletedNode.getParentNode();
+                if (parentNode) {
+                    // 删除子节点
+                    deletedNode.remove();
+                    // 判断当前父节点是否存在子节点集合
+                    if (parentNode.getChildren().length === 0) {
+                        parentNode.isSelected = true;
+                        parentNode.isExpanded = false;
+                        this.ACTIVED_NODE = parentNode;
+                    } else {
+                        const firstNode = parentNode.getChildren()[0];
+                        firstNode.isSelected = true;
+                        this.ACTIVED_NODE = firstNode;
+                    }
+                } else {
+                    // 删除根节点
+                    this.nodes = this.nodes.filter(node => node.key !== option[this.KEY_ID]);
+                    this.nodes[0].isSelected = true;
+                    this.ACTIVED_NODE = this.nodes[0];
+                }
+            }
+        }
+    }
+
+    public async executeSelectedNode(option) {
+        const url = option.ajaxConfig.url;
+        const method = option.ajaxConfig.ajaxType;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        let paramData;
+        if (option.data) {
+            paramData = ParameterResolver.resolve({
+                params: ajaxParams,
+                item: this.ACTIVED_NODE.origin,
+                tempValue: this.tempValue,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue
+            });
+        }
+        const response = await this.executeHttpRequest(url, method, paramData);
+        // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+        this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+        // 处理validation结果
+        const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+        // 处理error结果
+        const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+        return validationResult && errorResult;
+    }
+
     public async executeCurrentRow(option) {
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
@@ -735,6 +812,89 @@ export class CnTreeComponent extends CnComponentBase
         const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
 
         return validationResult && errorResult;
+    }
+
+    public async executeCheckedNodes(option) {
+        console.log('execute checked nodes', option);
+    }
+
+    public async executeDeleteCheckedNodesByID(option) {
+        console.log('execute checked nodes', option);
+        const url = option.ajaxConfig.url;
+        const method = option.ajaxConfig.ajaxType;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        const data = this.treeObj.getCheckedNodeList();
+        const parameterResult = [];
+        data.map(d => {
+            const param = ParameterResolver.resolve({
+                params: ajaxParams,
+                tempValue: this.tempValue,
+                checkedItem: d.origin,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue
+            });
+            parameterResult.push(param);
+        });
+        if (parameterResult) {
+            const ids = [];
+            parameterResult.map(p => {
+                const pData = p[this.KEY_ID]
+                pData && ids.push(pData);
+            })
+            const response = await this.executeHttpRequest(url, method, { ids: ids.join(',') });
+            // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+            this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+            // 处理validation结果
+            const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+            // 处理error结果
+            const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+            return validationResult && errorResult;
+        } else {
+            return false;
+        }
+    }
+
+    public async excecuteCheckedNodesByID(option) {
+        console.log('execute checked nodes', option);
+        // const url = option.ajaxConfig.url;
+        // const method = option.ajaxConfig.ajaxType;
+        // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        // const data = [...this.treeObj.getCheckedNodeList(), ...this.treeObj.getHalfCheckedNodeList()];
+        // const parameterResult = [];
+        // data.map(d => {
+        //     const param = ParameterResolver.resolve({
+        //         params: ajaxParams,
+        //         tempValue: this.tempValue,
+        //         item: d.origin,
+        //         initValue: this.initValue,
+        //         cacheValue: this.cacheValue
+        //     });
+        //     parameterResult.push(param);
+        // });
+        // if (parameterResult) {
+        //     const ids = [];
+        //     parameterResult.map(p => {
+        //         const pData = p[this.KEY_ID]
+        //         pData && ids.push(pData);
+        //     })
+        //     const response = await this.executeHttpRequest(url, method, {ids: ids.join(',')});
+        //     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+        //     this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+        //     // 处理validation结果
+        //     const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+        //     // 处理error结果
+        //     const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+        //     return validationResult && errorResult;
+        // } else {
+        //     return false;
+        // }
+
     }
 
     private _sendDataSuccessMessage(response, resultCfg): boolean {
@@ -907,24 +1067,79 @@ export class CnTreeComponent extends CnComponentBase
         // that.tempValue['_selectedNode'] = that.selectedItem;
     }
 
+    private _setRootSelectedNode(currentSelectedNode) {
+        if (currentSelectedNode) {
+            currentSelectedNode.isSelected = false;
+        }
+        // const sNode = this.treeObj.getTreeNodes();
+        // sNode[0].isSelected = true;
+        // this.ACTIVED_NODE = sNode[0];
+    }
+
+    public appendChildToRootNode(option) {
+        const appendNodeData = {}
+        this.config.columns.map(col => {
+            appendNodeData[col['type']] = option[col['field']];
+        });
+
+        const addRootNode = new NzTreeNode({
+            key: appendNodeData['key'],
+            title: appendNodeData['title'],
+            selected: true,
+            parentId: null,
+            origin: appendNodeData,
+            ...option
+        });
+        this.nodes = this.treeObj.getTreeNodes();
+        const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
+        /// const nNode = { ...option, addRootNode };
+        this.nodes = [addRootNode, ...this.nodes];
+        this.ACTIVED_NODE = addRootNode;
+        this._setRootSelectedNode(currentSelectedNode);
+
+    }
+
     public appendChildToSelectedNode(option) {
         // let appendNode: NzTreeNode;
         const appendNodeData = {}
         this.config.columns.map(col => {
             appendNodeData[col['type']] = option[col['field']];
-        })
+        });
+
+        // debugger;
+        // const addChildNode = new NzTreeNode({
+        //     key: appendNodeData['key'],
+        //     title: appendNodeData['title'],
+        //     selected: true,
+        //     parentId: appendNodeData['parentId'],
+        //     origin: appendNodeData
+        // });
 
         const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
-
         if (!currentSelectedNode.isExpanded) {
             currentSelectedNode.isExpanded = true;
             this.expandNode(currentSelectedNode);
-            this._setChildrenSelectedNode(currentSelectedNode);
+            // this._setChildrenSelectedNode(currentSelectedNode);
         } else { // 节点已经打开,直接在节点下添加子节点
-            currentSelectedNode.addChildren([appendNodeData], 0);
-            this._setChildrenSelectedNode(currentSelectedNode);
+            currentSelectedNode.addChildren([{ ...option, ...appendNodeData }]);
+            // this._setChildrenSelectedNode(currentSelectedNode);
         }
 
+
+
+
+    }
+
+    public updateSelectedNode(option) {
+        const appendNodeData = {}
+        this.config.columns.map(col => {
+            appendNodeData[col['type']] = option[col['field']];
+        });
+
+        const node = this.treeObj.getTreeNodeByKey(appendNodeData['key']);
+        if (node) {
+            node.title = appendNodeData['title'];
+        }
     }
 
     public refreshData(loadNewData) {
@@ -1017,7 +1232,8 @@ export class CnTreeComponent extends CnComponentBase
                 router: this.routerValue,
                 addedRows: data,
                 editedRows: data,
-                validation: data
+                validation: data,
+                returnValue: data
 
             });
         } else if (isArray && data && Array.isArray(data)) {
@@ -1028,6 +1244,7 @@ export class CnTreeComponent extends CnComponentBase
                     tempValue: this.tempValue,
                     componentValue: d,
                     item: this.ACTIVED_NODE['origin'],
+                    checkedItem: d,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
                     router: this.routerValue,

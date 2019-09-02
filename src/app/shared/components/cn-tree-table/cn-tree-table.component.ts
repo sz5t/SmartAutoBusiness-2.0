@@ -181,6 +181,9 @@ export class CnTreeTableComponent extends CnComponentBase
         if (this._trigger_receiver_subscription$) {
             this._trigger_receiver_subscription$.unsubscribe();
         }
+        // if(this.subscription$) {
+        //     this.subscription$.unsubscribe();
+        // }
     }
 
     /**

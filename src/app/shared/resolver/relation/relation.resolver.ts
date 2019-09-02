@@ -128,7 +128,7 @@ export class TriggerReceiverResolver {
     constructor(private _componentInstance) { }
     public resolve() {
         const currentId = this._componentInstance.getCurrentComponentId();
-        this._componentInstance.trigger_subscription$ = this._componentInstance.componentService.commonRelationTrigger.subscribe(
+        const trigger_subscribe$ = this._componentInstance.componentService.commonRelationTrigger.subscribe(
             data => {
                 if (data.viewId === currentId) {
                     new TriggerResolver(
@@ -138,6 +138,7 @@ export class TriggerReceiverResolver {
                 }
             }
         )
+        return trigger_subscribe$;
     }
 }
 
@@ -353,7 +354,7 @@ export class ComponentSenderResolver {
             if (!this.conditionValidator(c.condition)) {
                 return false;
             }
-            debugger;
+            console.log('send message');
             const options = this.getOptionParamsObj(c.params, data, isArray);
             this._componentInstance.componentService.commonRelationSubject.next(
                 new BsnRelativesMessageModel(
@@ -494,21 +495,23 @@ export class ReceiverResolver {
 export class ComponentReceiverResolver {
     constructor(private _componentInstance: any) { }
     public resolve(cfg: any) {
-        this._componentInstance.subscription$ = this._componentInstance.componentService.commonRelationSubject.subscribe(
-            data => {
+        if (!this._componentInstance.subscription$) {
+            this._componentInstance.subscription$ = this._componentInstance.componentService.commonRelationSubject.subscribe(
+                data => {
 
-                // 判断发送组件与接受组件是否一致
-                if (data.viewId === cfg.senderId) {
-                    console.log('receiver data:', data);
-                    // 判断发送触发器与接受触发起是否一致
-                    // new TriggerResolver(
-                    //     data,
-                    //     this._componentInstance
-                    // ).resolve();
-                    this.chooseTrigger(data, cfg);
+                    // 判断发送组件与接受组件是否一致
+                    if (data.viewId === cfg.senderId) {
+                        console.log('receiver data:', data);
+                        // 判断发送触发器与接受触发起是否一致
+                        // new TriggerResolver(
+                        //     data,
+                        //     this._componentInstance
+                        // ).resolve();
+                        this.chooseTrigger(data, cfg);
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 
     private chooseTrigger(data, cfg) {
