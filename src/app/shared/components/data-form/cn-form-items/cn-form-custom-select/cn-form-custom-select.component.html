@@ -1,0 +1,18 @@
+<nz-form-item>
+    <nz-form-label [nzFor]="config.field" [nzSpan]="config.config.labelSize.span" [nzSm]="config.config.labelSize.nzSm" [nzXs]="config.config.labelSize.nzXs"
+        [nzMd]="config.config.labelSize.nzMd" [nzLg]="config.config.labelSize.nzLg" [nzXl]="config.config.labelSize.nzXl" [nzRequired]="config.config.titleConfig.required">
+        {{config.config.title}}</nz-form-label>
+    <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm" [nzXs]="config.config.controlSize.nzXs"
+        [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
+        [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
+        <input nz-input [formControlName]="config.field" hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)"
+        />
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 100%"> 
+            <input type="text" nz-input placeholder="input  text"  [(ngModel)]="_value" [ngModelOptions]="{standalone: true}"  /><!--  [ngModelOptions]="{standalone: true}" -->
+          </nz-input-group>
+          <ng-template #suffixIconButton>
+            <button nz-button nzType="primary" nzSearch  (click)="createModal()"><i nz-icon nzType="small-dash"></i></button>
+          </ng-template>
+        
+    </nz-form-control>
+</nz-form-item>

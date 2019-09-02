@@ -3314,6 +3314,13 @@ export class CfgFormDemoComponent implements OnInit {
                         },
                         "control": { "id": "014" }
                       },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "015" }
+                      },
 
                     ]
                   }]
@@ -3875,12 +3882,58 @@ export class CfgFormDemoComponent implements OnInit {
                     "type": "gridSelect",
                     "field": "remark14",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
-
+                    loadingConfig: {
+                      id: "loadformgrid" // 将加载配置引用
+                    },
+                    labelName: 'provinceName',
+                    valueName: 'id',
                     "validations": [  // 校验
                       { validator: "required" }
                     ]
                   }
                 },
+                {
+                  id: '015',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '自定义组件',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark15",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark15',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "customSelect",
+                    "field": "remark15",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    labelName: 'OFFICENAME',
+                    valueName: 'ID',
+                    loadingConfig: {
+                      id: "loadformcustom" // 将加载配置引用
+                    },
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                
                 
                 // transfer: CnFormTransferComponent,
                 // gridSelect:CnFormGridSelectComponent,
@@ -4004,6 +4057,37 @@ export class CfgFormDemoComponent implements OnInit {
                   "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
 
                   ]
+                },
+                {
+                  "id": "loadformgrid",
+                  "url": "information/selectAllByProvinceId",
+                  "urlType": "inner",
+                  "ajaxType": "get",
+                  "params": [
+                    {
+                      "name": "id",
+                      "type": "componentValue",
+                      "valueName": "value"
+                    }
+                  ],
+                  "outputParameters": [
+
+                  ],
+                  "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
+
+                  ]
+                },
+                {
+                  "id": "loadformcustom",
+                  "url": "province/queryCondition/OFFICE_SHEET",
+                  "method": "get",
+                  "params": [
+                    {
+                      "name": "ID",
+                      "type": "componentValue",
+                      "valueName": "value"
+                    }
+                  ],
                 }
 
 

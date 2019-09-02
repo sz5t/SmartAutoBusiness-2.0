@@ -4,7 +4,7 @@
         {{config.config.title}}</nz-form-label>
     <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm" [nzXs]="config.config.controlSize.nzXs"
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
-        [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
+        [formGroup]="formGroup" [nzErrorTip]="combineTpl" [nzHasFeedback]="false" nzValidatingTip="Validating...">
         <input nz-input [formControlName]="config.field" hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)"
         />
         <nz-input-group [nzSuffix]="suffixTemplate"  style="width: 100%">

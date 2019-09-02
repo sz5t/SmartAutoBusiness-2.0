@@ -264,12 +264,12 @@ export class CnDataTableComponent extends CnComponentBase
                         validation: true,
                         actions: this.getRowActions('text')
                     };
-                    if(!this.config.isSelected){
+                    if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
-                    }else{
-                        if(d[this.KEY_ID] === this.selectedRowValue){
+                    } else {
+                        if (d[this.KEY_ID] === this.selectedRowValue) {
                             this.ROW_SELECTED = d
-                        } 
+                        }
                     }
 
                 });
@@ -806,6 +806,28 @@ export class CnDataTableComponent extends CnComponentBase
         this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
         this.dataCheckedStatusChange();
         return true;
+    }
+
+    public clearSelectRow(type?) {
+        this.dataList.map(row => {
+            switch (type) {
+                case "selected":
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    break;
+                case "checked":
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                    break;
+                case "selectedOrchecked":
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                    break;
+                default:
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                    break;
+            }
+        });
+        this.dataCheckedStatusChange();
     }
 
     public selectRow(rowData) {

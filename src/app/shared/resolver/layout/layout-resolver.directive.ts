@@ -23,14 +23,14 @@ export class CnLayoutResolverDirective implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        let configObj ;
-        if(this.config) {
-            configObj =  this.resolver(this.config);
+        let configObj;
+        if (this.config) {
+            configObj = this.resolver(this.config);
         }
         if (configObj) {
             switch (configObj.container) {
                 case 'rows':
-                    this.buildLayout(configObj);
+                    this.buildLayoutRows(configObj);
                     break;
                 case 'tabContent':
                     this.buildTabsLayout(configObj);
@@ -43,7 +43,6 @@ export class CnLayoutResolverDirective implements OnInit, OnDestroy {
             }
 
         }
-
     }
 
     ngOnDestroy(): void {
@@ -55,6 +54,15 @@ export class CnLayoutResolverDirective implements OnInit, OnDestroy {
         const layout = this._resolver.resolveComponentFactory<any>(
             CnLayoutComponent
         );
+        this._container.clear();
+        this.component = this._container.createComponent(layout);
+        this.component.instance.layoutObj = layoutObj;
+    }
+
+    private buildLayoutRows(layoutObj: any) {
+        const layout = this._resolver.resolveComponentFactory<any>(
+            CnLayoutComponent
+        ); 
         this._container.clear();
         this.component = this._container.createComponent(layout);
         this.component.instance.layoutObj = layoutObj;
@@ -131,6 +139,9 @@ export class CnLayoutResolverDirective implements OnInit, OnDestroy {
                 break;
             case 'component':
                 containerObj.component = containerCfg.component;
+                break;
+            case 'rows':
+                containerObj.rows = containerCfg.rows;
                 break;
         }
     }
