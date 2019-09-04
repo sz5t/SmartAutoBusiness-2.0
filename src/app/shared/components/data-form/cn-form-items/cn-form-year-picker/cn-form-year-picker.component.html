@@ -5,7 +5,8 @@
     <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm" [nzXs]="config.config.controlSize.nzXs"
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
         [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
-        <nz-year-picker [(ngModel)]="date"  [formControlName]="config.field"  (ngModelChange)="onChange($event)" nzPlaceHolder="Select year"></nz-year-picker>
+        <input nz-input  [formControlName]="config.field"  hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
+        <nz-year-picker [(ngModel)]="date"    (ngModelChange)="onChange($event)" nzPlaceHolder="Select year"  [ngModelOptions]="{standalone: true}"></nz-year-picker>
 
         <ng-template #combineTpl let-control>
                 <ng-container nz-col *ngFor="let c of config.validations" > 

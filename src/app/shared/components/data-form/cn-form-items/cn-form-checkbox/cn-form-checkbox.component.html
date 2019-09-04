@@ -10,7 +10,7 @@
             <nz-checkbox-wrapper style="width: 100%;"   (nzOnChange)="log($event)">
                 <div nz-row>
                         
-                        <div nz-col [nzSpan]="config.span" *ngFor="let c of checkOptionsOne">
+                        <div nz-col [nzSpan]="config.span" *ngFor="let c of checkOptions">
                                 <label nz-checkbox [nzValue]="c['value']" [ngModel] = "c['checked']" [ngModelOptions]="{standalone: true}">{{c['label']}}</label>
                         </div>
               
@@ -18,7 +18,7 @@
               </nz-checkbox-wrapper>
         </ng-container>
         <ng-container *ngIf="config.displayMode !=='wrapper'">
-                  <nz-checkbox-group [(ngModel)]="checkOptionsOne" (ngModelChange)="log($event)" [ngModelOptions]="{standalone: true}"></nz-checkbox-group>
+                  <nz-checkbox-group [(ngModel)]="checkOptions" (ngModelChange)="log($event)" [ngModelOptions]="{standalone: true}"></nz-checkbox-group>
         </ng-container>
    
         <ng-template #combineTpl let-control>

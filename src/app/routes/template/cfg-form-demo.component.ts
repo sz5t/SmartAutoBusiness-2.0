@@ -2150,7 +2150,7 @@ export class CfgFormDemoComponent implements OnInit {
                   "width": "100px",
                   "style": {},
                 },
-                
+
                 // {
                 //     "title": "message",
                 //     "type": "field",
@@ -3062,7 +3062,7 @@ export class CfgFormDemoComponent implements OnInit {
                             "name": "new",
                             "value": true
                           },
-                          
+
                         ]
                       }
                     },
@@ -3128,7 +3128,7 @@ export class CfgFormDemoComponent implements OnInit {
                           "afterId": "edit_save_1"
                         }
                       ],
-                   
+
                       "toggle": {
                         "type": "state",
                         "toggleProperty": "hidden",
@@ -3270,6 +3270,13 @@ export class CfgFormDemoComponent implements OnInit {
                         "size": {
                           "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
                         },
+                        "control": { "id": "107" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
                         "control": { "id": "008" }
                       },
                       {
@@ -3278,6 +3285,13 @@ export class CfgFormDemoComponent implements OnInit {
                           "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
                         },
                         "control": { "id": "009" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
+                        },
+                        "control": { "id": "109" }
                       },
                       {
                         "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
@@ -3321,6 +3335,14 @@ export class CfgFormDemoComponent implements OnInit {
                         },
                         "control": { "id": "015" }
                       },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
+                        },
+                        "control": { "id": "016" }
+                      },
+
 
                     ]
                   }]
@@ -3636,6 +3658,42 @@ export class CfgFormDemoComponent implements OnInit {
                   }
                 },
                 {
+                  id: '107',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '创建年',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "createDateyearPicker",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'createDateyearPicker',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "yearPicker",
+                    "field": "createDateyearPicker",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
                   id: '008',
                   "hidden": true, // 字段是否隐藏
                   "title": '创建周',  // lable 信息
@@ -3700,6 +3758,42 @@ export class CfgFormDemoComponent implements OnInit {
                   "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                     "type": "monthPicker",
                     "field": "remark4",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '109',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '时间范围',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remarkrangePicker",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 4,
+                    "nzXs": 4, "nzSm": 4, "nzMd": 4, "nzLg": 4, "ngXl": 4, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 20,
+                    "nzXs": { span: 20, offset: 0 },
+                    "nzSm": { span: 20, offset: 0 },
+                    "nzMd": { span: 20, offset: 0 },
+                    "nzLg": { span: 20, offset: 0 },
+                    "ngXl": { span: 20, offset: 0 },
+                    "nzXXl": { span: 20, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remarkrangePicker',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "rangePicker",
+                    "field": "remarkrangePicker",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
 
                     "validations": [  // 校验
@@ -3773,7 +3867,14 @@ export class CfgFormDemoComponent implements OnInit {
                     "type": "radio",
                     "field": "remark11",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
-
+                    valueName:"value",
+                    labelName:"label",
+                    options: [
+                      { label: '环境好', value: '1' },
+                      { label: '高新产业多', value: '2' },
+                      { label: '高校多', value: '3' },
+                      { label: '交通便捷', value: '4' },
+                    ],
                     "validations": [  // 校验
                       { validator: "required" }
                     ]
@@ -3809,8 +3910,16 @@ export class CfgFormDemoComponent implements OnInit {
                     "type": "checkbox",
                     "field": "remark12",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
-                    "displayMode":"wrapper", // group wrapper
-                    "span":8,
+                    "displayMode": "wrapper", // group wrapper
+                    "span": 24,
+                    valueName:"value",
+                    labelName:"label",
+                    options: [
+                      { label: '环境好', value: '1' },
+                      { label: '高新产业多', value: '2' },
+                      { label: '高校多', value: '3' },
+                      { label: '交通便捷', value: '4' },
+                    ],
                     "validations": [  // 校验
                       { validator: "required" }
                     ]
@@ -3846,7 +3955,35 @@ export class CfgFormDemoComponent implements OnInit {
                     "type": "treeSelect",
                     "field": "remark13",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
-
+                    "loadingItemConfig1": {  // loadingItemConfig 逆向获取值
+                      id: "loadformtreeItem"
+                    },
+                    loadingConfig: {
+                      id: "loadformtree" // 将加载配置引用
+                    },
+                    expandConfig:{
+                      id: "loadformtreeexpand"
+                    },
+                    loadingItemConfig: {
+                      id: "loadformtreeitem" // 将加载配置引用
+                    },
+                    "columns": [
+                      {
+                        "title": "ID",
+                        "type": "key",
+                        "field": "ID"
+                      },
+                      {
+                        "title": "PID",
+                        "type": "parentId",
+                        "field": "PID"
+                      },
+                      {
+                        "title": "OFFICENAME",
+                        "type": "title",
+                        "field": "OFFICENAME"
+                      }
+                    ],
                     "validations": [  // 校验
                       { validator: "required" }
                     ]
@@ -3882,8 +4019,8 @@ export class CfgFormDemoComponent implements OnInit {
                     "type": "gridSelect",
                     "field": "remark14",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
-                    loadingConfig: {
-                      id: "loadformgrid" // 将加载配置引用
+                    "loadingItemConfig": {  // loadingItemConfig 逆向获取值
+                      id: "loadformgrid"
                     },
                     labelName: 'provinceName',
                     valueName: 'id',
@@ -3925,7 +4062,7 @@ export class CfgFormDemoComponent implements OnInit {
 
                     labelName: 'OFFICENAME',
                     valueName: 'ID',
-                    loadingConfig: {
+                    loadingItemConfig: {
                       id: "loadformcustom" // 将加载配置引用
                     },
                     "validations": [  // 校验
@@ -3933,12 +4070,51 @@ export class CfgFormDemoComponent implements OnInit {
                     ]
                   }
                 },
+                {
+                  id: '016',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '大文本',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark16",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 4,
+                    "nzXs": 4, "nzSm": 4, "nzMd": 4, "nzLg":4, "ngXl": 4, "nzXXl":4
+                  },  // 
+                  "controlSize": {
+                    "span": 20,
+                    "nzXs": { span: 20, offset: 0 },
+                    "nzSm": { span: 20, offset: 0 },
+                    "nzMd": { span: 20, offset: 0 },
+                    "nzLg": { span: 20, offset: 0 },
+                    "ngXl": { span: 20, offset: 0 },
+                    "nzXXl": { span: 20, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark16',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "textarea",
+                    "field": "remark16",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+                    "autosize":{ 
+                      minRows: 2, maxRows: 6 
+                    },
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
                 
+
                 
                 // transfer: CnFormTransferComponent,
                 // gridSelect:CnFormGridSelectComponent,
                 // textarea: CnFormTextareaComponent,
-                
+
               ],
               formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
                 {
@@ -4059,6 +4235,74 @@ export class CfgFormDemoComponent implements OnInit {
                   ]
                 },
                 {
+                  "id": "loadformtree",
+                  "url": "province/queryCondition/OFFICE_SHEET",
+                  "urlType": "inner",
+                  "ajaxType": "get",
+                  "params": [
+                    {
+                      "name": "_recursive",
+                      "type": "value",
+                      "value": true
+                    },
+                    {
+                      "name": "_deep",
+                      "type": "value",
+                      "value": "1"
+                    },
+                    {
+                      "name": "_pcName",
+                      "type": "value",
+                      "value": "PID"
+                    }
+                  ],
+                  "filter": [
+
+                  ]
+                },
+                {
+                  id:"loadformtreeexpand",
+                  "url": "province/queryCondition/OFFICE_SHEET",
+                  "urlType": "inner",
+                  "ajaxType": "get",
+                  "params": [
+                    {
+                      "name": "_root.PID",
+                      "type": "item",
+                      "valueName": "key",
+                      "value": ""
+                    },
+                    {
+                      "name": "_recursive",
+                      "type": "value",
+                      "value": true
+                    },
+                    {
+                      "name": "_deep",
+                      "type": "value",
+                      "value": "1"
+                    },
+                    {
+                      "name": "_pcName",
+                      "type": "value",
+                      "value": "PID"
+                    }
+                  ]
+                },
+                {
+                  "id": "loadformtreeitem",
+                  "url": "province/queryCondition/OFFICE_SHEET",
+                  "urlType": "inner",
+                  "ajaxType": "get",
+                  "params": [
+                    {
+                      "name": "ID",
+                      "type": "componentValue",
+                      "valueName": "value"
+                    }
+                  ],
+                },
+                {
                   "id": "loadformgrid",
                   "url": "information/selectAllByProvinceId",
                   "urlType": "inner",
@@ -4080,7 +4324,8 @@ export class CfgFormDemoComponent implements OnInit {
                 {
                   "id": "loadformcustom",
                   "url": "province/queryCondition/OFFICE_SHEET",
-                  "method": "get",
+                  "urlType": "inner",
+                  "ajaxType": "get",
                   "params": [
                     {
                       "name": "ID",

@@ -11,5 +11,5 @@ export class CnFormTransferComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  public cascadeAnalysis(c?) {}
 }

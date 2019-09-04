@@ -74,5 +74,6 @@ export class CnFormMonthPickerComponent implements OnInit {
     }
     return d;
 }
-
+public cascadeAnalysis(c?) {
+}
 }

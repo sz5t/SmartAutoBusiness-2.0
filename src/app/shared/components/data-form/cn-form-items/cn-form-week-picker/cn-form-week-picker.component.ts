@@ -69,4 +69,6 @@ export class CnFormWeekPickerComponent implements OnInit {
     }
     return d;
   }
+
+  public cascadeAnalysis(c?) {}
 }

@@ -95,6 +95,13 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         if (Control.editor.loadingConfig) {
           Control.editor['loadingConfig']['ajaxConfig'] = this.ajaxConfigObj[Control.editor.loadingConfig.id];
         }
+        if (Control.editor.loadingItemConfig) {
+          Control.editor['loadingItemConfig']['ajaxConfig'] = this.ajaxConfigObj[Control.editor.loadingItemConfig.id];
+        }
+        if (Control.editor.expandConfig) {
+          Control.editor['expandConfig']['ajaxConfig'] = this.ajaxConfigObj[Control.editor.expandConfig.id];
+        }
+        
       }
       this.formControlObj[Control.id] = Control;
     });
@@ -138,7 +145,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       if (Control.text && Control.editor) {
         if (Control.text.field === Control.editor.field) {
           f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
-          console.log('-=-=-=-=-=-=-=-=-=-=-=', this.getValidations(Control.editor.validations));
           this.formValue[Control.field] = null;
         }
         else {
@@ -667,7 +673,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
 
   repeat = (control: FormControl): { [s: string]: boolean } => {
-    console.log('repeat==>', control);
+   // console.log('repeat==>', control);
     if (!control.value) {
       return { error: true, required: true };
     } else if (control.value === '中国香港') {
@@ -677,7 +683,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   };
 
   repeat1 = (control: FormControl): { [s: string]: boolean } => {
-    console.log('repeat2==>', control);
+    // console.log('repeat2==>', control);
     let dd = {};
 
     if (!control.value) {

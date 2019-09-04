@@ -8,7 +8,7 @@
         <input nz-input [formControlName]="config.field" hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)"
         />
         <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 100%"> 
-            <input type="text" nz-input placeholder="input  text"  [(ngModel)]="_value" [ngModelOptions]="{standalone: true}"  /><!--  [ngModelOptions]="{standalone: true}" -->
+            <input type="text" nz-input [placeholder] = "config.placeholder"  [(ngModel)]="_value" [ngModelOptions]="{standalone: true}"   /><!--  [ngModelOptions]="{standalone: true}" -->
           </nz-input-group>
           <ng-template #suffixIconButton>
             <button nz-button nzType="primary" nzSearch  (click)="createModal()"><i nz-icon nzType="small-dash"></i></button>

@@ -5,7 +5,7 @@
     <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm" [nzXs]="config.config.controlSize.nzXs"
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
         [formGroup]="formGroup" [nzErrorTip]="emailErrorTpl">
-        <nz-select [formControlName]="config.field" (ngModelChange)="valueChange($event)" nzAllowClear nzPlaceHolder="Choose">
+        <nz-select [formControlName]="config.field" (ngModelChange)="valueChange($event)" nzAllowClear     [nzPlaceHolder] = "config.placeholder">
             <nz-option *ngFor="let option of selectOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
         </nz-select>
         <ng-template #emailErrorTpl let-control>

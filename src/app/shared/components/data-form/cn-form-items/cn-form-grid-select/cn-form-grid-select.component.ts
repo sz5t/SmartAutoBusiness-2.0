@@ -140,10 +140,10 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
     // 【参数不全是否阻止加载！】
     // 对后续业务判断有影响
     //  console.log('===select 自加载====>load');
-    const url = this.config.loadingConfig['ajaxConfig'].url;
-    const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
+    const url = this.config.loadingItemConfig['ajaxConfig'].url;
+    const method = this.config.loadingItemConfig['ajaxConfig'].ajaxType;
     const params = {
-      ...this.buildParameters(this.config.loadingConfig['ajaxConfig'].params)
+      ...this.buildParameters(this.config.loadingItemConfig['ajaxConfig'].params)
     };
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     const response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
@@ -178,6 +178,9 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
     }
     if (v) {
       if (!this.selectedRowItem) {
+        await this.load();
+      }
+      if(this.selectedRowItem && !this.selectedRowItem.hasOwnProperty(this.config.valueName)){
         await this.load();
       }
     }

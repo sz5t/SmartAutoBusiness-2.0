@@ -90,6 +90,7 @@ parserDate(date) {
   
   }
   
-
+  public cascadeAnalysis(c?) {
+  }
 
 }

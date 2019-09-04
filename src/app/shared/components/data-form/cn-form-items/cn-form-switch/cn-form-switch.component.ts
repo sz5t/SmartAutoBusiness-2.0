@@ -23,5 +23,5 @@ export class CnFormSwitchComponent implements OnInit {
     console.log('switch',v);
     
   }
-
+  public cascadeAnalysis(c?) {}
 }

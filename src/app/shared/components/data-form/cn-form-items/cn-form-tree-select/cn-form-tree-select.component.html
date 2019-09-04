@@ -5,16 +5,19 @@
         <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm" [nzXs]="config.config.controlSize.nzXs"
             [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
             [formGroup]="formGroup" [nzErrorTip]="combineTpl"  nzValidatingTip="Validating...">
-            <!-- style="width: 250px" -->
+            <!-- style="width: 250px"        [nzDefaultExpandedKeys]="expandKeys"-->
                   <nz-tree-select
-            
-                  [nzDefaultExpandedKeys]="expandKeys"
+            #tree
+                  [nzDropdownStyle]="{ 'max-height': '300px' }"
                   [nzNodes]="nodes"
+                  [nzAsyncData]="true"
+                  (nzExpandChange)="expandNode($event)"
                   nzShowSearch
                   nzPlaceHolder="Please select"
                   [formControlName]="config.field"
                   [(ngModel)]="value"
                   (ngModelChange)="valueChange($event)"
+                  [nzPlaceHolder] = "config.placeholder"
                   >
                   </nz-tree-select>
           
