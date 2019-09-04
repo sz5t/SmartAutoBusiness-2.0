@@ -1,6 +1,6 @@
 
 export interface ITreeGridTrigger {
-    ADD_ROW: string,
+    ADD_ROOT_ROW: string,
     ADD_CHILD_ROW: string,
     EDIT_ROW: string,
     EDIT_ROWS: string,
@@ -21,7 +21,7 @@ export interface ITreeGridTrigger {
     DIALOG_BATCH: string,
     CONFIRM: string,
     MESSAGE: string,
-    LOAD_REFRESH_DATA
+    LOAD_REFRESH_DATA: string,
 
     REFRESH: string,
     HIDDEN: string,
@@ -33,6 +33,7 @@ export interface ITreeGridTrigger {
     CHECK_ROW: string,
     REFRESH_AS_CHILD: string
     SET_SELECT_ROW: string,
+    REPLACE_ROW_DATA: string
 
     LINK: string,
     LINK_TO: string,
@@ -51,7 +52,7 @@ export interface ITreeGridTrigger {
  */
 export const BSN_TREEGRID_TRIGGER: ITreeGridTrigger = {
     // state
-    ADD_ROW: 'ADD_ROW',
+    ADD_ROOT_ROW: 'ADD_ROOT_ROW',
     ADD_CHILD_ROW: 'ADD_CHILD_ROW',
     EDIT_ROW: 'EDIT_ROW',
     EDIT_ROWS: 'EDIT_ROWS',
@@ -86,6 +87,7 @@ export const BSN_TREEGRID_TRIGGER: ITreeGridTrigger = {
     SELECT_ROW: 'SELECT_ROW',
     SET_SELECT_ROW: 'SET_SELECT_ROW',
     CHECK_ROW: 'CHECK_ROW',
+    REPLACE_ROW_DATA: 'REPLACE_ROW_DATA',
 
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',

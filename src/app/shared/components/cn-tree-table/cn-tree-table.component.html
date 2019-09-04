@@ -48,7 +48,8 @@
       <ng-container *ngFor="let item of mapOfDataExpanded[rowData[KEY_ID]]">
         <tr *ngIf="(item.parent && item.parent.expand) || !item.parent" (click)="setSelectRow(item.data, $event)"
           [ngClass]="{ selectedRow: item['selected'], validationError:  !item['validation']}">
-          <td nzShowCheckbox="true" [(nzChecked)]="item['checked']" (nzCheckedChange)="dataCheckedStatusChange()"></td>
+          <td nzShowCheckbox="true" [(nzChecked)]="item['checked']" (nzCheckedChange)="dataCheckedStatusChange()">
+          </td>
           <ng-template ngFor let-col [ngForOf]="tableColumns">
             <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
               <ng-container *ngSwitchCase="'field'">
@@ -56,11 +57,12 @@
                   <td *ngSwitchCase="'new'" [nzIndentSize]="item.level * 20"
                     [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
                     (nzExpandChange)="expandRow(item[KEY_ID], item, $event)">
-                    <input type="text" nz-input nzSize="default" [(ngModel)]="item['data'][col.field]" /></td>
+                    <input style="width: 150px" type="text" nz-input nzSize="default"
+                      [(ngModel)]="item['data'][col.field]" /></td>
                   <td *ngSwitchCase="'edit'" [nzIndentSize]="item.level * 20"
                     [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
                     (nzExpandChange)="expandRow(item[item[KEY_ID]], item, $event)">
-                    <input type="text" nz-input [(ngModel)]="item['data'][col.field]" /></td>
+                    <input style="width: 150px" type="text" nz-input [(ngModel)]="item['data'][col.field]" /></td>
                   <td [nzIndentSize]="item.level * 20" [nzShowExpand]="!!item.children && col.expand"
                     [(nzExpand)]="item.expand" (nzExpandChange)="expandRow(item, $event)" *ngSwitchDefault>
                     {{ item['originData'][col.field] }}</td>
@@ -71,12 +73,12 @@
                   <ng-template ngFor let-act [ngForOf]="item['actions']">
                     <ng-container [ngSwitch]="act.type">
                       <ng-container *ngSwitchCase="'link'">
-                        <a *ngIf="!act.hidden" (click)="rowAction(act, rowData, $event)"><i nz-icon [nzType]="act.icon"
+                        <a *ngIf="!act.hidden" (click)="rowAction(act, item, $event)"><i nz-icon [nzType]="act.icon"
                             nzTheme="outline"></i> {{ act.text }}</a>
                         <nz-divider nzType="vertical" *ngIf="!act.hidden"></nz-divider>
                       </ng-container>
                       <ng-container *ngSwitchCase="'button'">
-                        <button (click)="rowAction(act, rowData, $event)" nz-button nzSize="act.size"
+                        <button (click)="rowAction(act, item, $event)" nz-button nzSize="act.size"
                           [nzType]="act.color ? act.color : 'default'">
                           <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
                         </button>

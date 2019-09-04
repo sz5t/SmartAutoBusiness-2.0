@@ -25,6 +25,7 @@ export class RelationResolver {
      * 组件内部消息发送
      */
     public resolveInnerSender(resultCfg: any, successData, isArrayResult = false) {
+        debugger;
         // 查找消息配置
         if (resultCfg['senderId']) {
             const senderCfg = this._componentInstance

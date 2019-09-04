@@ -207,12 +207,7 @@ export class CnDataTableComponent extends CnComponentBase
             new RelationResolver(this).resolveReceiver(this.config);
         }
 
-        if (!this._trigger_source$) {
-            this._trigger_source$ = new RelationResolver(this).resolve();
-            // this._trigger_receiver_subscription$ = this._trigger_source$.subscribe();
-        }
-
-
+        this._trigger_source$ = new RelationResolver(this).resolve();
     }
 
     /**
@@ -922,7 +917,8 @@ export class CnDataTableComponent extends CnComponentBase
                 router: this.routerValue,
                 addedRows: data,
                 editedRows: data,
-                validation: data
+                validation: data,
+                returnValue: data
 
             });
         } else if (isArray && data && Array.isArray(data)) {
@@ -938,7 +934,8 @@ export class CnDataTableComponent extends CnComponentBase
                     router: this.routerValue,
                     addedRows: d,
                     editedRows: d,
-                    validation: d
+                    validation: d,
+                    returnValue: d
                 });
                 parameterResult.push(param);
             })

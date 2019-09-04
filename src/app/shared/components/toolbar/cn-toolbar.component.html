@@ -24,11 +24,10 @@
             <ng-template ngFor let-btn [ngForOf]="btn.buttons">
               <li *ngIf="!btn.hidden" nz-menu-item (click)="action(btn, toolbar.targetViewId)">
                 <strong>
-                  <a> <i nz-icon type="btn.icon" [theme]="btn.theme ? btn.theme : 'outline'"></i>{{b.text}}</a>
+                  <a> <i nz-icon type="btn.icon" [theme]="btn.theme ? btn.theme : 'outline'"></i>{{btn.text}}</a>
                 </strong>
               </li>
             </ng-template>
-
           </ul>
         </nz-dropdown-menu>
       </ng-container>

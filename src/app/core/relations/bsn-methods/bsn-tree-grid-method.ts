@@ -3,7 +3,7 @@ import { ITreeGridTrigger } from '../bsn-trigger/tree-grid.trigger.interface';
 
 export const CN_TREE_GRID_METHOD: ITreeGridTrigger = {
     // state
-    ADD_ROW: 'addRow',
+    ADD_ROOT_ROW: 'addRootRow',
     ADD_CHILD_ROW: 'addChildRow',
     EDIT_ROW: 'editRow',
     EDIT_ROWS: 'editRows',
@@ -27,6 +27,7 @@ export const CN_TREE_GRID_METHOD: ITreeGridTrigger = {
     LOAD_REFRESH_DATA: 'loadRefreshData',
 
 
+
     // behavior
     REFRESH: 'load',
     HIDDEN: 'hidden',
@@ -38,6 +39,7 @@ export const CN_TREE_GRID_METHOD: ITreeGridTrigger = {
     SET_SELECT_ROW: 'setSelectRow',
     CHECK_ROW: 'checkRow',
     REFRESH_AS_CHILD: 'load',
+    REPLACE_ROW_DATA: 'replaceRowData',
 
     // link
     LINK: 'link',

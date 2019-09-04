@@ -181,9 +181,14 @@ export class CnTreeTableComponent extends CnComponentBase
         if (this._trigger_receiver_subscription$) {
             this._trigger_receiver_subscription$.unsubscribe();
         }
-        // if(this.subscription$) {
-        //     this.subscription$.unsubscribe();
-        // }
+
+        if (this._trigger_source$) {
+            this._trigger_source$.unsubscribe();
+        }
+
+        if (this.subscription$) {
+            this.subscription$.unsubscribe();
+        }
     }
 
     /**
@@ -301,6 +306,7 @@ export class CnTreeTableComponent extends CnComponentBase
                     response.data.map(data => {
                         this.mapOfDataExpanded[data[this.KEY_ID]] = this._convertTreeToList(data, item.level + 1);
                         appendedChildrenData.push(data);
+                        this.total = this.total + 1;
                     })
                     item['children'] = appendedChildrenData;
                     this._appendChildrenToList(item.data, appendedChildrenData);
@@ -316,10 +322,11 @@ export class CnTreeTableComponent extends CnComponentBase
                     }
                     this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== c[this.KEY_ID]);
                     delete this.mapOfDataExpanded[c[this.KEY_ID]];
+                    this.total = this.total - 1;
                 });
             }
         }
-        // debugger;
+        this.dataCheckedStatusChange();
         // if ($event === false) {
         //     if (item.children) {
         //         item.children.map(d => {
@@ -567,15 +574,18 @@ export class CnTreeTableComponent extends CnComponentBase
     // #endregion
 
     // #region state 状态切换
+
+
+
     private createNewRowData() {
         const newData = {}
-        this.config.columns.map(col => {
+        this.config.columns.filter(c => c.type === 'field').map(col => {
             newData[col.field] = null
         });
         return newData;
     }
 
-    public addRow() {
+    public addRootRow() {
         // 创建空数据对象
         const newId = CommonUtils.uuID(32);
         const newData = this.createNewRowData();
@@ -583,9 +593,8 @@ export class CnTreeTableComponent extends CnComponentBase
 
         // 新增数据加入原始列表,才能够动态新增一行编辑数据
         this.dataList = [newData, ...this.dataList];
-
-        // 组装状态数据
-        this.mapOfDataState[newId] = {
+        // this.mapOfDataExpanded[newId] = [];
+        this.mapOfDataExpanded[newId] = [{
             data: newData,
             originData: { ...newData },
             disabled: false,
@@ -593,11 +602,71 @@ export class CnTreeTableComponent extends CnComponentBase
             selected: false, // index === 0 ? true : false,
             state: 'new',
             actions: this.getRowActions('new')
-        }
+        }]
+        // 组装状态数据
+        // this.mapOfDataExpanded[newId] = {
+        //     data: newData,
+        //     originData: { ...newData },
+        //     disabled: false,
+        //     checked: true, // index === 0 ? true : false,
+        //     selected: false, // index === 0 ? true : false,
+        //     state: 'new',
+        //     actions: this.getRowActions('new')
+        // }
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
 
         // 更新状态
+    }
+
+    public addChildRow() {
+        // 创建空数据对象
+        const newId = CommonUtils.uuID(32);
+        const parentId = this.ROW_SELECTED[this.KEY_ID];
+        const newData = this.createNewRowData();
+        newData['PID'] = parentId;
+        newData[this.KEY_ID] = newId;
+
+        // 新增数据加入原始列表,才能够动态新增一行编辑数据
+        this.dataList = this._setNewChildRow(newData, parentId);
+        const parentLevel = this.mapOfDataExpanded[parentId][0].level;
+
+        this.mapOfDataExpanded[newId] = [
+            {
+                data: newData,
+                originData: { ...newData },
+                disabled: false,
+                checked: true, // index === 0 ? true : false,
+                selected: false, // index === 0 ? true : false,
+                state: 'new',
+                level: parentLevel + 1,
+                actions: this.getRowActions('new'),
+                children: [],
+                expand: false
+            }
+        ]
+
+        this.mapOfDataExpanded[parentId][0].children.push(newData);
+        this.mapOfDataExpanded[parentId][0].expand = true;
+        // 组装状态数据
+
+        this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
+
+        // 更新状态
+    }
+
+    private _setNewChildRow(newRowData, parentId) {
+        if (this.dataList) {
+            const parentIndex = this.dataList.findIndex(d => d[this.KEY_ID] === parentId);
+            if (parentIndex > -1) {
+                // const level = this.dataList[parentIndex]['level'];
+                // if (level > 0) {
+                //     newRowData['level'] = level + 1;
+                // }
+                this.dataList.splice(parentIndex + 1, 0, newRowData);
+            }
+        }
+        return this.dataList.filter(d => d[this.KEY_ID] !== null);
     }
 
     private removeEditRow(item) {
@@ -614,8 +683,8 @@ export class CnTreeTableComponent extends CnComponentBase
     public editRows(option) {
         this.ROWS_CHECKED.map(
             item => {
-                this.addEditRows(item);
-                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+                this.addEditRows(item.data);
+                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataExpanded[item.data[this.KEY_ID]][0]);
                 trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.EDIT_ROW }, this.config.id);
             }
         )
@@ -639,7 +708,7 @@ export class CnTreeTableComponent extends CnComponentBase
         this.ROWS_ADDED.map(
             item => {
                 this.removeNewRow(item);
-                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataExpanded[item[this.KEY_ID]]);
                 trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
 
             }
@@ -650,14 +719,14 @@ export class CnTreeTableComponent extends CnComponentBase
     private removeNewRow(item) {
         this.dataList = this.dataList.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
         this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
-        delete this.mapOfDataState[item[this.KEY_ID]];
+        delete this.mapOfDataExpanded[item[this.KEY_ID]];
     }
 
     public cancelEditRows(option) {
         this.ROWS_CHECKED.map(
             item => {
-                this.removeEditRow(item);
-                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+                this.removeEditRow(item.data);
+                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataExpanded[item.data[this.KEY_ID]][0]);
                 trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
 
             }
@@ -684,21 +753,22 @@ export class CnTreeTableComponent extends CnComponentBase
         // 通过服务器端的临时ID与执行数据的ID匹配取得数据
         if (option && Array.isArray(option)) {
             option.map(opt => {
-                if (this.mapOfDataState[opt[this.KEY_ID]]) {
+                if (this.mapOfDataExpanded[opt[this.KEY_ID]]) {
 
                     this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== opt[this.KEY_ID]);
-                    this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
-                    this.mapOfDataState[opt[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
-                    const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
+                    this.mapOfDataExpanded[opt[this.KEY_ID]][0]['originData'] = { ...this.mapOfDataExpanded[opt[this.KEY_ID]][0]['data'] };
+                    this.mapOfDataExpanded[opt[this.KEY_ID]][0]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
+                    const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataExpanded[opt[this.KEY_ID]][0]);
                     trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
                 }
             })
-        } else if (option) {
+        } else if (option && option[this.KEY_ID]) {
+
             // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
             this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== option[this.KEY_ID]);
-            this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
-            this.mapOfDataState[option[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
-            const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
+            this.mapOfDataExpanded[option[this.KEY_ID]][0]['originData'] = { ...this.mapOfDataExpanded[option[this.KEY_ID]][0]['data'] };
+            this.mapOfDataExpanded[option[this.KEY_ID]][0]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
+            const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataExpanded[option[this.KEY_ID]][0]);
             trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
         }
 
@@ -710,20 +780,71 @@ export class CnTreeTableComponent extends CnComponentBase
         // 通过服务器端的临时ID与执行数据的ID匹配取得数据
         if (option && Array.isArray(option)) {
             option.map(opt => {
-                if (this.mapOfDataState[opt[this.KEY_ID]]) {
-                    this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
-                    const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
+                if (opt[this.KEY_ID] && this.mapOfDataExpanded[opt[this.KEY_ID]]) {
+                    this.mapOfDataExpanded[opt[this.KEY_ID]][0]['originData'] = { ...this.mapOfDataExpanded[opt[this.KEY_ID]][0]['data'] };
+                    const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataExpanded[opt[this.KEY_ID]][0]);
                     trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
                 }
             })
-        } else if (option) {
-            // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
-            this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
-            const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
+        } else if (option && option[this.KEY_ID]) {
+
+            this.mapOfDataExpanded[option[this.KEY_ID]][0]['originData'] = { ...this.mapOfDataExpanded[option[this.KEY_ID]][0]['data'] };
+            const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataExpanded[option[this.KEY_ID]][0]);
             trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
         }
 
     }
+
+
+    /**
+     * 替换行内数据
+     * @param option 
+     */
+    public replaceRowData(option) {
+        if (option && Array.isArray(option)) {
+            option.map(d => {
+                this._rewriteData(d);
+            })
+        } else {
+            this._rewriteData(option);
+        }
+
+        this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== null);
+    }
+
+    private _rewriteData(newData) {
+        if (this.mapOfDataExpanded[newData[this.KEY_ID]]) {
+            this.mapOfDataExpanded[newData[this.KEY_ID]][0].originData = {
+                ...this.mapOfDataExpanded[newData[this.KEY_ID]][0].originData, ...newData
+            }
+
+            this.mapOfDataExpanded[newData[this.KEY_ID]][0].data = {
+                ...this.mapOfDataExpanded[newData[this.KEY_ID]][0].data, ...newData
+            }
+
+            this.mapOfDataExpanded[newData[this.KEY_ID]] = [...this.mapOfDataExpanded[newData[this.KEY_ID]]];
+
+            for (let i = 0, n = this.dataList.length; i < n; i++) {
+                if (this.dataList[i][this.KEY_ID] === newData[this.KEY_ID]) {
+                    this.dataList[i] = { ...this.dataList[i], ...newData }
+                }
+            }
+
+            // this.dataList.map(d => {
+            //     if (d[this.KEY_ID] === newData[this.KEY_ID]) {
+            //         d = { ...d, ...newData };
+            //     }
+            // });
+        }
+        if (this.ROW_SELECTED[this.KEY_ID] === newData[this.KEY_ID]) {
+            this.ROW_SELECTED = { ...this.ROW_SELECTED, ...newData };
+        }
+    }
+
+
+
+
+
 
     // #endregion
 
@@ -743,26 +864,68 @@ export class CnTreeTableComponent extends CnComponentBase
         return this.componentService.apiService[method](url, paramData).toPromise();
     }
 
-    public async deleteCurrentRow(option) {
-        console.log(this.config.id + '-------------executeSelectRow', option);
+    public deleteCurrentRow(option) {
+        if (option[this.KEY_ID]) {
+            // 为了保证树表在数据内容的一致性 , 需要递归删除所有子节点数据
+            // 删除子节点数据时,只需要删除dataList上对应的数据项, 而mapOfDataExpanded 通过delete 删除的时候,能够将结构内的所有数据全部删除
+            this._recursiveDeleteRow(option[this.KEY_ID]);
+            // 如果选择的当前选中行,则需要重新选中定位
+            // 区分跟节点的选中删除和子节点的选中删除、包括最后一个节点的选中删除
+            if (option[this.KEY_ID] === this.ROW_SELECTED[this.KEY_ID]) {
 
-        // const url = option.ajaxConfig.url;
-        // const method = option.ajaxConfig.ajaxType ? option.ajaxConfig.ajaxType : 'delete';
-        // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
-        // let paramData;
-        // if (option.data) {
-        //     paramData = ParameterResolver.resolve({
-        //         params: ajaxParams,
-        //         item: option.data.data,
-        //         tempValue: this.tempValue,
-        //         initValue: this.initValue,
-        //         cacheValue: this.cacheValue
-        //     });
-        // }
-        // const response = await this.executeHttpRequest(url, method, paramData);
-        // if (response) {
-        //     this.load();
-        // }
+                this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== option[this.KEY_ID]);
+                delete this.mapOfDataExpanded[option[this.KEY_ID]];
+
+                // 如果选中的是根结点
+                if (!this.ROW_SELECTED['PID'] || this.ROW_SELECTED['PID'] === '') {
+                    // parentMapOfData['selected'] = true;
+                    const parentList = this.dataList.filter(d => (!d['PID'] || d['PID'] === ''));
+                    parentList && parentList.length > 0 && this.setSelectRow(parentList[0]);
+                } else { // 选中的子节点
+
+                    const parentMapOfData = this.mapOfDataExpanded[this.ROW_SELECTED['PID']][0];
+                    const parentData = parentMapOfData.data;
+                    const deleteItemIndex = parentMapOfData.children.findIndex(c => c[this.KEY_ID] === option[this.KEY_ID]);
+                    if (deleteItemIndex > -1) {
+                        parentMapOfData.children.splice(deleteItemIndex, 1);
+                    }
+
+                    if (parentMapOfData.children.length > 0) {
+                        // 选中子节点中第一个
+                        // parentMapOfData.children[0][this.KEY_ID];
+                        this.setSelectRow(parentMapOfData.children[0]);
+
+                    } else {
+                        // 选中父节点
+                        // parentMapOfData.selected = true;
+                        this.setSelectRow(parentData);
+                    }
+                }
+            } else {
+                this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== option[this.KEY_ID]);
+                delete this.mapOfDataExpanded[option[this.KEY_ID]];
+                if (option['PID'] && option['PID'].length > 0) {
+                    const parentMapOfData = this.mapOfDataExpanded[option['PID']][0];
+                    const deleteItemIndex = parentMapOfData.children.findIndex(c => c[this.KEY_ID] === option[this.KEY_ID]);
+                    if (deleteItemIndex > -1) {
+                        parentMapOfData.children.splice(deleteItemIndex, 0);
+                    }
+                }
+            }
+        } else {
+            console.log('delete current row data', option);
+        }
+    }
+
+    private _recursiveDeleteRow(recID) {
+        if (this.mapOfDataExpanded[recID] && this.mapOfDataExpanded[recID][0].children.length > 0) {
+            this.mapOfDataExpanded[recID][0].children.forEach(d => {
+                this._recursiveDeleteRow(d[this.KEY_ID]);
+                this.dataList = this.dataList.filter(s => s[this.KEY_ID] !== recID);
+            })
+        } else {
+            this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== recID);
+        }
     }
 
     public async executeCurrentRow(option) {
@@ -921,13 +1084,21 @@ export class CnTreeTableComponent extends CnComponentBase
 
         // 选中当前行
         this.dataList.map(row => {
-            this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+            this.mapOfDataExpanded[row[this.KEY_ID]].map(mItem => {
+                mItem['selected'] = false;
+            })
         });
 
-        this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
+        this.mapOfDataExpanded[rowData[this.KEY_ID]].map(mItem => {
+            if (mItem.data[this.KEY_ID] === rowData[this.KEY_ID]) {
+                mItem['selected'] = true;
+            }
+        });
+
+        // this.mapOfDataExpanded[rowData[this.KEY_ID]]['selected'] = true;
 
         // 勾选/取消当前行勾选状态
-        this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
+        this.mapOfDataExpanded[rowData[this.KEY_ID]]['checked'] = !this.mapOfDataExpanded[rowData[this.KEY_ID]]['checked'];
         this.dataCheckedStatusChange();
         return true;
     }
@@ -979,11 +1150,11 @@ export class CnTreeTableComponent extends CnComponentBase
         if (option && Array.isArray(option)) {
             option.map(opt => {
                 const rowData = opt.data;
-                this.mapOfDataState[rowData[this.KEY_ID]]['validation'] = false;
+                this.mapOfDataExpanded[rowData[this.KEY_ID]][0]['validation'] = false;
             })
         } else if (option) {
             const rowData = option.data
-            this.mapOfDataState[rowData[this.KEY_ID]]['validation'] = false
+            this.mapOfDataExpanded[rowData[this.KEY_ID]][0]['validation'] = false
         }
     }
 
@@ -992,11 +1163,11 @@ export class CnTreeTableComponent extends CnComponentBase
         if (option && Array.isArray(option)) {
             option.map(opt => {
                 const rowData = opt.data;
-                this.mapOfDataState[rowData[this.KEY_ID]]['validation'] = false;
+                this.mapOfDataExpanded[rowData[this.KEY_ID]][0]['validation'] = false;
             })
         } else if (option) {
             const rowData = option.data
-            this.mapOfDataState[rowData[this.KEY_ID]]['validation'] = false
+            this.mapOfDataExpanded[rowData[this.KEY_ID]][0]['validation'] = false
         }
     }
 
@@ -1033,7 +1204,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 router: this.routerValue,
                 addedRows: data,
                 editedRows: data,
-                validation: data
+                validation: data,
+                returnValue: data
 
             });
         } else if (isArray && data && Array.isArray(data)) {
@@ -1049,7 +1221,8 @@ export class CnTreeTableComponent extends CnComponentBase
                     router: this.routerValue,
                     addedRows: d,
                     editedRows: d,
-                    validation: d
+                    validation: d,
+                    returnValue: d
                 });
                 parameterResult.push(param);
             })
@@ -1065,12 +1238,86 @@ export class CnTreeTableComponent extends CnComponentBase
         console.log(this.config.id + '-------------executeSelectRow');
     }
 
-    public executeCheckedRows() {
-        console.log(this.config.id + '-------------executeCheckedRows');
+    public async executeCheckedRows(option) {
+        debugger;
+        console.log(this.config.id + '-------------executeCheckedRows', option);
+        const url = option.ajaxConfig.url;
+        const method = option.ajaxConfig.ajaxType;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
+        const data = this.ROWS_CHECKED;
+        const parameterResult = [];
+        if (data && data.length > 0) {
+            data.map(d => {
+                const p = ParameterResolver.resolve({
+                    params: ajaxParams,
+                    item: d.data,
+                    tempValue: this.tempValue,
+                    initValue: this.initValue,
+                    cacheValue: this.cacheValue
+                });
+                parameterResult.push(p);
+            });
+        }
+        if (parameterResult) {
+            const response = await this.executeHttpRequest(url, method, parameterResult);
+            // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+            this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+            // 处理validation结果
+            const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+            // 处理error结果
+            const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+            return validationResult && errorResult;
+
+        } else {
+            return false;
+        }
     }
 
-    public executeCheckedRowsIds() {
-        console.log(this.config.id + '-------------executeCheckedRowsIds');
+    public async executeCheckedRowsIds(option) {
+        console.log(this.config.id + '-------------executeCheckedRowsIds', option);
+        const url = option.ajaxConfig.url;
+        const method = option.ajaxConfig.ajaxType;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
+        const data = this.ROW_SELECTED;
+        const parameterResult = [];
+        let paramData;
+        if (data && data.length > 0) {
+            data.map(d => {
+                const p = paramData = ParameterResolver.resolve({
+                    params: ajaxParams,
+                    item: d,
+                    tempValue: this.tempValue,
+                    initValue: this.initValue,
+                    cacheValue: this.cacheValue
+                });
+                parameterResult.push(p);
+            });
+        }
+        if (parameterResult) {
+            const ids = [];
+            parameterResult.map(p => {
+                const pData = p[this.KEY_ID]
+                pData && ids.push(pData);
+            });
+            const response = await this.executeHttpRequest(url, method, { ids: ids.join(',') });
+            // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+            this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+            // 处理validation结果
+            const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+            // 处理error结果
+            const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+            return validationResult && errorResult;
+        } else {
+            return false;
+        }
+
+
     }
 
     public searchRow() {
@@ -1209,12 +1456,14 @@ export class CnTreeTableComponent extends CnComponentBase
      * 全选
      */
     public checkAll($value: boolean): void {
-        debugger;
-        this.dataList
-            .filter(item => !this.mapOfDataExpanded[item[this.KEY_ID]]['dislabled'])
-            .map(item =>
-                this.mapOfDataExpanded[item[this.KEY_ID]]['checked'] = $value
-            );
+        this.dataList.map(
+            item => {
+                this.mapOfDataExpanded[item[this.KEY_ID]]
+                    .filter(mItem => !mItem['disabled'])
+                    .map(mItem => mItem['checked'] = $value);
+            }
+        )
+
         this.dataCheckedStatusChange();
 
     }
@@ -1223,21 +1472,31 @@ export class CnTreeTableComponent extends CnComponentBase
      * 更新数据选中状态的CheckBox
      */
     public dataCheckedStatusChange() {
-        debugger;
-        this.isAllChecked = this.dataList
-            .filter(item => !this.mapOfDataExpanded[item[this.KEY_ID]]['dislabled'])
-            .every(item => this.mapOfDataExpanded[item[this.KEY_ID]]['checked']);
+        this.isAllChecked = this.dataList.every(
+            item => {
+                return this.mapOfDataExpanded[item[this.KEY_ID]]
+                    .filter(mItem => !mItem['disabled'])
+                    .every(mItem => mItem['checked']);
+            }
+        )
 
-        this.indeterminate = this.dataList
-            .filter(item => !this.mapOfDataExpanded[item[this.KEY_ID]]['dislabled'])
-            .some(item => this.mapOfDataExpanded[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
+        this.indeterminate = this.dataList.some(
+            item => {
+                return this.mapOfDataExpanded[item[this.KEY_ID]]
+                    .filter(mItem => !mItem['disabled'])
+                    .some(mItem => mItem['checked'] && !this.isAllChecked);
+            }
+        )
 
-        this.checkedNumber = this.dataList.filter(item => this.mapOfDataExpanded[item[this.KEY_ID]]['checked']).length;
+        this.checkedNumber = 0;
+        this.ROWS_CHECKED = [];
+        this.dataList.map(item => {
+            const itemLength = this.mapOfDataExpanded[item[this.KEY_ID]]
+                .filter(mItem => mItem['checked']).length;
+            this.checkedNumber = this.checkedNumber + itemLength;
 
-        // 更新当前选中数据集合
-        this.ROWS_CHECKED = this.dataList
-            .filter(item => !this.mapOfDataExpanded[item[this.KEY_ID]]['dislabled'])
-            .filter(item => this.mapOfDataExpanded[item[this.KEY_ID]]['checked']);
+            this.ROWS_CHECKED.push(...this.mapOfDataExpanded[item[this.KEY_ID]].filter(mItem => mItem['checked']));
+        })
     }
 
     /**
@@ -1268,8 +1527,7 @@ export class CnTreeTableComponent extends CnComponentBase
      * @param rowData 当前数据行
      * @param $event 
      */
-    rowAction(actionCfg, rowData, $event?) {
-        const dataOfState = this.mapOfDataExpanded[rowData[this.KEY_ID]];
+    rowAction(actionCfg, dataOfState, $event?) {
         $event && $event.stopPropagation();
         const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
         trigger.toolbarAction(actionCfg, this.config.id);
