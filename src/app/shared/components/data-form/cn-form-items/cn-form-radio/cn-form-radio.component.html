@@ -9,10 +9,9 @@
         <!-- <input nz-input placeholder="placeholder" [ngModel]="value" [formControlName]="config.field" (ngModelChange)="valueChange($event)"
         /> -->
         <nz-radio-group [(ngModel)]="radioValue" nzName="radiogroup"  [formControlName]="config.field"  (ngModelChange)="valueChange($event)">
-            <label nz-radio nzValue="A"  (click)="radioClick('A')">A</label>
-            <label nz-radio nzValue="B"  (click)="radioClick('B')" >B</label>
-            <label nz-radio nzValue="C"  (click)="radioClick('C')" >C</label>
-            <label nz-radio nzValue="D"   (click)="radioClick('D')" >D</label>
+            <ng-container  *ngFor="let c of selectOptions" > 
+                <label nz-radio [nzValue]="c.value"  (click)="radioClick(c.value)">{{c.label}}</label>
+            </ng-container>
           </nz-radio-group>
         <ng-template #combineTpl let-control>
                 <ng-container nz-col *ngFor="let c of config.validations" > 

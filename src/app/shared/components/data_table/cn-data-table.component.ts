@@ -816,6 +816,28 @@ export class CnDataTableComponent extends CnComponentBase
         return true;
     }
 
+    public clearSelectRow(type?) {
+        this.dataList.map(row => {
+            switch (type) {
+                case "selected":
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    break;
+                case "checked":
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                    break;
+                case "selectedOrchecked":
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                    break;
+                default:
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                    break;
+            }
+        });
+        this.dataCheckedStatusChange();
+    }
+
     public selectRow(rowData) {
 
 

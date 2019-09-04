@@ -237,6 +237,8 @@ class TempValueParameter extends BaseParameter implements IParameter {
       } else {
         this._result = this._model.tempValue[this._param.valueName];
       }
+    }else if(!this._param.valueName){
+       this._result = this._model.tempValue;  // 不配valueName，则将当前属性给他 object
     } else {
       if (this._param.value === null || this._param.value === '' || this._param.value === 0) {
         if (this._param.dataType) {
@@ -301,7 +303,9 @@ class ItemParameter extends BaseParameter implements IParameter {
           } else {
             this._result = this._param.value;
           }
-        }
+        }else if(!this._param.valueName){
+          this._result = this._model.item;  // 不配valueName，则将当前属性给他 object
+       }
       } else {
         if (this._param.dataType) {
           this._result = this.getParameter(

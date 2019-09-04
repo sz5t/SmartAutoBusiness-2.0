@@ -64,6 +64,8 @@ import { CnFormTransferComponent } from './components/data-form/cn-form-items/cn
 import { CnFormGridSelectComponent } from './components/data-form/cn-form-items/cn-form-grid-select/cn-form-grid-select.component';
 import { CnFormTextareaComponent } from './components/data-form/cn-form-items/cn-form-textarea/cn-form-textarea.component';
 import { CnTreeTableComponent } from './components/cn-tree-table/cn-tree-table.component';
+import { CnFormCustomSelectComponent } from './components/data-form/cn-form-items/cn-form-custom-select/cn-form-custom-select.component';
+import { CnPageComponent } from './components/cn-page/cn-page.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -117,6 +119,8 @@ const COMPONENTS = [
   CnFormTransferComponent,
   CnFormGridSelectComponent,
   CnFormTextareaComponent,
+  CnFormCustomSelectComponent,
+  CnPageComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -146,6 +150,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
+
 
   ],
   exports: [
