@@ -346,40 +346,48 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    */
   private resolveRelations() {
     if (this.config.cascade && this.config.cascade.messageSender) {
-      if (!this._sender_source$) {
-        // 解析组件发送消息配置,并注册消息发送对象
-        this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
-        this._sender_subscription$ = this._sender_source$.subscribe();
-      }
+        if (!this._sender_source$) {
+            // 解析组件发送消息配置,并注册消息发送对象
+            this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
+            this._sender_subscription$ = this._sender_source$.subscribe();
+        }
 
     }
     if (this.config.cascade && this.config.cascade.messageReceiver) {
-      // 解析消息接受配置,并注册消息接收对象
-      this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
-      this._receiver_subscription$ = this._receiver_source$.subscribe();
+        // 解析消息接受配置,并注册消息接收对象
+        // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+        // this._receiver_subscription$ = this._receiver_source$.subscribe();
+        new RelationResolver(this).resolveReceiver(this.config);
     }
 
     this._trigger_source$ = new RelationResolver(this).resolve();
+}
 
-  }
   public ngOnDestroy() {
     // 释放级联对象
     this.unsubscribeRelation();
     // 释放及联接受对象
     if (this._receiver_subscription$) {
-      this._receiver_subscription$.unsubscribe();
+        this._receiver_subscription$.unsubscribe();
     }
 
     if (this._sender_subscription$) {
-      this._sender_subscription$.unsubscribe();
+        this._sender_subscription$.unsubscribe();
     }
 
     // 释放触发器对象
     if (this._trigger_receiver_subscription$) {
-      this._trigger_receiver_subscription$.unsubscribe();
+        this._trigger_receiver_subscription$.unsubscribe();
     }
-  }
 
+    if (this._trigger_source$) {
+        this._trigger_source$.unsubscribe();
+    }
+
+    if (this.subscription$) {
+        this.subscription$.unsubscribe();
+    }
+}
 
   /**
    * valueChange 表单内值变化
