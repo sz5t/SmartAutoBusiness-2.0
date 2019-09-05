@@ -247,7 +247,7 @@ export class ApiService extends _HttpClient {
     if (!options) {
       options = { headers: HttpHeaders };
       options.headers = new HttpHeaders()
-        .set("_log", '{"clientType":"PC","type":"test"}')
+        .set("_log", '{"clientType": 1,"type": 1}')
         // .set("Pragma", "no-cache")
         // .set("Cache-Control", "no-cache")
         // .set("Expires", "Sat, 01 Jan 2000 00:00:00 GMT")
@@ -256,7 +256,7 @@ export class ApiService extends _HttpClient {
     }
     if (!options.headers) {
       options.headers = new HttpHeaders()
-        .set("_log", '{"clientType":"PC","type":"test"}')
+        .set("_log", '{"clientType": 1,"type": 1}')
         // .set("Pragma", "no-cache")
         // .set("Cache-Control", "no-cache")
         // .set("Expires", "Sat, 01 Jan 2000 00:00:00 GMT")

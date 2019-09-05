@@ -8,8 +8,17 @@ import { CfgFormDemoComponent } from './cfg-form-demo.component';
 import { DataTableDemoComponent } from './data-table-demo.component';
 import { TreeDemoComponent } from './tree-demo.component';
 import { TreeTableDemoComponent } from './tree-table-demo.component';
+import { DataModelingComponent } from './data-modeling.component';
 
-const COMPONENTS = [LayoutDemoComponent, CfgLayoutDemoComponent, CfgFormDemoComponent, DataTableDemoComponent, TreeDemoComponent, TreeTableDemoComponent];
+const COMPONENTS = [
+  LayoutDemoComponent,
+  CfgLayoutDemoComponent,
+  CfgFormDemoComponent,
+  DataTableDemoComponent,
+  TreeDemoComponent,
+  TreeTableDemoComponent,
+  DataModelingComponent
+];
 
 const COMPONENTS_NOROUNT = [];
 

@@ -9,6 +9,29 @@
     "email": "cipchk@qq.com"
   },
   "menu": [{
+      "text": "建模",
+      "i18n": "menu.data.modeling",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "icon": "book",
+      "children": [{
+          "text": "数据建模",
+          "i18n": "menu.data.datamodeling",
+          "icon": "database",
+          "level": 2,
+          "link": "/template/datamodeling"
+        },
+        {
+          "text": "SQL建模",
+          "i18n": "menu.data.sqlmodeling",
+          "icon": "database",
+          "level": 2,
+          "link": "/template/sqlmodeling"
+        }
+      ]
+    },
+    {
       "text": "DEMO",
       "i18n": "menu.demo",
       "group": true,

@@ -1,3 +1,4 @@
+import { DataModelingComponent } from './data-modeling.component';
 import { DataTableDemoComponent } from './data-table-demo.component';
 import { LayoutDemoComponent } from './layout-demo.component';
 import { NgModule } from '@angular/core';
@@ -14,8 +15,8 @@ const routes: Routes = [
   { path: 'cfgformdemo', component: CfgFormDemoComponent },
   { path: 'dataTableDemo', component: DataTableDemoComponent },
   { path: 'treeDemo', component: TreeDemoComponent },
-  { path: 'treeTableDemo', component: TreeTableDemoComponent }
-
+  { path: 'treeTableDemo', component: TreeTableDemoComponent },
+  { path: 'datamodeling', component: DataModelingComponent }
 ];
 
 @NgModule({
