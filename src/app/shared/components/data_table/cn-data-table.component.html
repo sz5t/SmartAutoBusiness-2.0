@@ -45,25 +45,29 @@
   </thead>
   <tbody>
     <tr *ngFor="let rowData of dataTable.data" (click)="setSelectRow(rowData, $event)"
-      [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]]['selected'], validationError:  !mapOfDataState[rowData[KEY_ID]]['validation']}">
+      [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['selected'] : false, validationError:  !mapOfDataState[rowData[KEY_ID]]['validation']}">
       <td nzShowCheckbox="true" [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']"
         (nzCheckedChange)="dataCheckedStatusChange()"></td>
       <ng-template ngFor let-col [ngForOf]="tableColumns">
         <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
           <ng-container *ngSwitchCase="'field'">
             <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
-               <ng-container *ngIf="col.editor">
-                  <td *ngSwitchCase="'new'">
-                      <ng-container CnGridItemDirective   [state] ="'new'" [config]="col.editor" [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.field]}"  (updateValue)="valueChange($event)"> </ng-container> 
-                    </td>
-                  <td *ngSwitchCase="'edit'">
-                      <ng-container CnGridItemDirective    [state] ="'edit'"  [config]="col.editor" [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.field]}"  (updateValue)="valueChange($event)"> </ng-container> 
-                    </td>
-                  <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
-               </ng-container>
-               <ng-container *ngIf="!col.editor">
-                   <td >{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
-               </ng-container>
+              <ng-container *ngIf="col.editor">
+                <td *ngSwitchCase="'new'">
+                  <ng-container CnGridItemDirective [state]="'new'" [config]="col.editor"
+                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.field]}"
+                    (updateValue)="valueChange($event)"> </ng-container>
+                </td>
+                <td *ngSwitchCase="'edit'">
+                  <ng-container CnGridItemDirective [state]="'edit'" [config]="col.editor"
+                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.field]}"
+                    (updateValue)="valueChange($event)"> </ng-container>
+                </td>
+                <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
+              </ng-container>
+              <ng-container *ngIf="!col.editor">
+                <td>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
+              </ng-container>
 
             </ng-container>
             <!-- <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['state'] === 'edit'; else rowTextTemplate">

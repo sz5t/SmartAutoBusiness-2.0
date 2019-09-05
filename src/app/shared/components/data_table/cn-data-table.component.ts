@@ -244,6 +244,15 @@ export class CnDataTableComponent extends CnComponentBase
 
     }
 
+    private _initComponentData() {
+        this.mapOfDataState = {};
+        this.ROWS_ADDED = [];
+        this.ROWS_EDITED = [];
+        this.ROW_SELECTED = [];
+        this.ROWS_CHECKED = [];
+        this.COMPONENT_VALUE = [];
+    }
+
     public load() {
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
@@ -260,6 +269,7 @@ export class CnDataTableComponent extends CnComponentBase
 
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
             if (response && response.data && response.data.resultDatas) {
+                this._initComponentData();
                 response.data.resultDatas.map((d, index) => {
                     this.mapOfDataState[d[this.KEY_ID]] = {
                         disabled: false,
@@ -286,7 +296,7 @@ export class CnDataTableComponent extends CnComponentBase
                 // 更新
                 // this.dataCheckedStatusChange();
                 // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
-                this.setSelectRow(this.ROW_SELECTED);
+                this.dataList.length > 0 && this.setSelectRow(this.ROW_SELECTED);
                 this.isLoading = false;
             } else {
                 this.isLoading = false;
@@ -460,6 +470,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public addRow() {
+        debugger;
         // 创建空数据对象
         const newId = CommonUtils.uuID(32);
         const newData = this.createNewRowData();
@@ -565,6 +576,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public changeAddedRowsToText(option) {
+        debugger;
         // 通过服务器端的临时ID与执行数据的ID匹配取得数据
         if (option && Array.isArray(option)) {
             option.map(opt => {
@@ -1194,8 +1206,8 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
 
-    valueChange(v?){
-        console.log('行返回',v);
+    valueChange(v?) {
+        console.log('行返回', v);
         this.mapOfDataState[v.id]['data'][v.name] = v.value;
     }
 
