@@ -1193,4 +1193,10 @@ export class CnDataTableComponent extends CnComponentBase
         return copyAction;
     }
 
+
+    valueChange(v?){
+        console.log('行返回',v);
+        this.mapOfDataState[v.id]['data'][v.name] = v.value;
+    }
+
 }

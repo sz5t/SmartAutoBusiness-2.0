@@ -2099,6 +2099,10 @@ export class CfgFormDemoComponent implements OnInit {
                   "showSort": false,
                   "width": "50px",
                   "style": {},
+                  editor: {
+                    "type": "input",
+                    "field": "provinceName",
+                  }
                 },
                 {
                   "title": "POPULATIONSIZE",
@@ -2129,6 +2133,19 @@ export class CfgFormDemoComponent implements OnInit {
                   "showSort": false,
                   "width": "100px",
                   "style": {},
+                  editor: {
+                    "type": "select",
+                    "field": "areaCode",
+                    "placeholder": "请输入",
+                    options: [
+                      { label: '东方不败', value:0 },
+                      { label: '独孤求败', value:1 },
+                      { label: '西门吹雪', value: 2 },
+                      { label: '陆小凤', value: 3 },
+                    ],
+                    labelName: 'label',
+                    valueName: 'value',
+                  }
                 },
                 {
                   "title": "CREATEDATE",
@@ -3867,8 +3884,8 @@ export class CfgFormDemoComponent implements OnInit {
                     "type": "radio",
                     "field": "remark11",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
-                    valueName:"value",
-                    labelName:"label",
+                    valueName: "value",
+                    labelName: "label",
                     options: [
                       { label: '环境好', value: '1' },
                       { label: '高新产业多', value: '2' },
@@ -3912,8 +3929,8 @@ export class CfgFormDemoComponent implements OnInit {
                     "placeholder": "请输入",
                     "displayMode": "wrapper", // group wrapper
                     "span": 24,
-                    valueName:"value",
-                    labelName:"label",
+                    valueName: "value",
+                    labelName: "label",
                     options: [
                       { label: '环境好', value: '1' },
                       { label: '高新产业多', value: '2' },
@@ -3961,7 +3978,7 @@ export class CfgFormDemoComponent implements OnInit {
                     loadingConfig: {
                       id: "loadformtree" // 将加载配置引用
                     },
-                    expandConfig:{
+                    expandConfig: {
                       id: "loadformtreeexpand"
                     },
                     loadingItemConfig: {
@@ -4080,7 +4097,7 @@ export class CfgFormDemoComponent implements OnInit {
                   "field": "remark16",  // fromcontrol name  默认的字段
                   "labelSize": {
                     "span": 4,
-                    "nzXs": 4, "nzSm": 4, "nzMd": 4, "nzLg":4, "ngXl": 4, "nzXXl":4
+                    "nzXs": 4, "nzSm": 4, "nzMd": 4, "nzLg": 4, "ngXl": 4, "nzXXl": 4
                   },  // 
                   "controlSize": {
                     "span": 20,
@@ -4100,17 +4117,17 @@ export class CfgFormDemoComponent implements OnInit {
                     "type": "textarea",
                     "field": "remark16",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
-                    "autosize":{ 
-                      minRows: 2, maxRows: 6 
+                    "autosize": {
+                      minRows: 2, maxRows: 6
                     },
                     "validations": [  // 校验
                       { validator: "required" }
                     ]
                   }
                 },
-                
 
-                
+
+
                 // transfer: CnFormTransferComponent,
                 // gridSelect:CnFormGridSelectComponent,
                 // textarea: CnFormTextareaComponent,
@@ -4261,7 +4278,7 @@ export class CfgFormDemoComponent implements OnInit {
                   ]
                 },
                 {
-                  id:"loadformtreeexpand",
+                  id: "loadformtreeexpand",
                   "url": "province/queryCondition/OFFICE_SHEET",
                   "urlType": "inner",
                   "ajaxType": "get",

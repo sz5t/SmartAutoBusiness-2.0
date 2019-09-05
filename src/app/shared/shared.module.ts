@@ -66,6 +66,9 @@ import { CnFormTextareaComponent } from './components/data-form/cn-form-items/cn
 import { CnTreeTableComponent } from './components/cn-tree-table/cn-tree-table.component';
 import { CnFormCustomSelectComponent } from './components/data-form/cn-form-items/cn-form-custom-select/cn-form-custom-select.component';
 import { CnPageComponent } from './components/cn-page/cn-page.component';
+import { CnGridInputComponent } from './components/data_table/cn-grid-items/cn-grid-input/cn-grid-input.component';
+import { CnGridSelectComponent } from './components/data_table/cn-grid-items/cn-grid-select/cn-grid-select.component';
+import { CnGridItemDirective } from '@shared/components/data_table/cn-grid-item.directive';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -121,6 +124,8 @@ const COMPONENTS = [
   CnFormTextareaComponent,
   CnFormCustomSelectComponent,
   CnPageComponent,
+  CnGridInputComponent,
+  CnGridSelectComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -128,7 +133,8 @@ const DIRECTIVES = [
   CnComponentResolverDirective,
   CfgFormItemContentDirective,
   CfgLayoutItemContentDirective,
-  CnFormItemDirective
+  CnFormItemDirective,
+  CnGridItemDirective
 ];
 // #endregion
 
@@ -150,7 +156,6 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
-
 
   ],
   exports: [
