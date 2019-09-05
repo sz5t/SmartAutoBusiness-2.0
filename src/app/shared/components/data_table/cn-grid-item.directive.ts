@@ -27,7 +27,7 @@ const components: { [type: string]: Type<any> } = {
 export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
   @Input() public config;
   @Input() public formCascade;
-  @Input() public formState;
+  @Input() public state;
   @Input() public valueConfig;
 
   @Output() public updateValue = new EventEmitter();
@@ -57,6 +57,8 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
     this.component = this.container.createComponent(comp);
     this.component.instance.config = this.config;
     this.component.instance.valueConfig = this.valueConfig;
+    this.component.instance.state = this.state;
+    
     
     // 级联数据接受 liu
     if (this.component.instance.updateValue) {
@@ -111,6 +113,7 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
         this.component = this.container.createComponent(comp);
         this.component.instance.config = this.config;
         this.component.instance.valueConfig = this.valueConfig;
+        this.component.instance.state = this.state;
         // 级联数据接受 liu
         if (this.component.instance.updateValue) {
           this.component.instance.updateValue.subscribe(event => {

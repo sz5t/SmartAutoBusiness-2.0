@@ -2102,6 +2102,7 @@ export class CfgFormDemoComponent implements OnInit {
                   editor: {
                     "type": "input",
                     "field": "provinceName",
+                    "defaultValue":'默认值'
                   }
                 },
                 {
@@ -2143,6 +2144,7 @@ export class CfgFormDemoComponent implements OnInit {
                       { label: '西门吹雪', value: 2 },
                       { label: '陆小凤', value: 3 },
                     ],
+                    "defaultValue":3,
                     labelName: 'label',
                     valueName: 'value',
                   }
