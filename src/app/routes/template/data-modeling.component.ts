@@ -349,7 +349,12 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "name": "_mapToObject",
                                                         "type": "value",
                                                         "value": true
-                                                    }
+                                                    },
+                                                    {
+                                                        "name": "_mapToObject",
+                                                        "type": "value",
+                                                        "value": true
+                                                    },
                                                 ],
                                                 "outputParameters": [
 
@@ -645,7 +650,12 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterTableModelingSaveSuccess"
+                                        }
                                     ]
                                 },
                                 {
@@ -674,18 +684,23 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterTableModelingSaveSuccess"
+                                        }
                                     ]
                                 },
                                 {
                                     "id": "create_modeling",
-                                    "url": "dmtable/update",
+                                    "url": "dmtable/createModel",
                                     "urlType": "inner",
-                                    "ajaxType": "put",
+                                    "ajaxType": "post",
                                     "params": [
                                         {
                                             "name": "id",
-                                            "type": "checkedId",
+                                            "type": "item",
                                             "valueName": "id"
                                         }
                                     ],
@@ -693,7 +708,12 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterTableModelingSaveSuccess"
+                                        },
                                     ]
                                 },
                                 {
@@ -872,7 +892,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "execute": [
                                                 {
                                                     "triggerType": "OPERATION",
-                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                    "trigger": "EXECUTE_SELECTED_ROW",
                                                     // "conditionId": "delete_operation_1",
                                                     "ajaxId": "create_modeling"
                                                 }
@@ -1055,7 +1075,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "titleIcon": "right-circle",
                             "component": "cnDataTable",
                             "keyId": "id",
-                            "size": "middle",
+                            "size": "small",
                             "isBordered": true,
                             "isFrontPagination": false,
                             "isPagination": true,
@@ -1108,6 +1128,26 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "title": "描述",
                                     "type": "field",
                                     "field": "descName",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "100px",
+                                    "style": {},
+                                },
+                                {
+                                    "title": "是否建模",
+                                    "type": "field",
+                                    "field": "isBuildModel",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "100px",
+                                    "style": {},
+                                },
+                                {
+                                    "title": "创建时间",
+                                    "type": "field",
+                                    "field": "createDate",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
@@ -1315,6 +1355,46 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
+                                        "id": "afterTableModelingSaveSuccess",
+                                        "senderId": "view_data_table",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "message",
+                                                        "type": "value",
+                                                        "value": "操作完成!"
+                                                    },
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "LOAD_REFRESH_DATA",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "addedRows",
+                                                        "valueName": "id"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
                                         "id": "afterTableUpdateSuccess",
                                         "senderId": "view_data_table",
                                         // "triggerType": "ACTION",
@@ -1378,7 +1458,33 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             }
                                         ]
                                     }
+                                ],
+                                "messageReceiver": [
+                                    {
+                                        "id": "",
+                                        "senderId": "view_data_table",
+                                        "receiveData": [
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "MESSAGE"
+                                                // "params": [
+                                                //     {
+                                                //         "pname": "name",
+                                                //         "cname": "_PID",
+                                                //         "valueTo": "tempValue"
+                                                //     }
+                                                // ]
+                                            },
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "LOAD_REFRESH_DATA"
+                                            }
+                                        ]
+                                    }
                                 ]
+
                             },
                             "rowActions": [
                                 {
@@ -2549,7 +2655,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterCityUpdateSuccessfully"
+                                            "senderId": "afterUpdateSuccess"
                                         },
                                         {
                                             "name": "validation",
@@ -2753,7 +2859,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "M_cancelrow",
-                                            "text": "取消1",
+                                            "text": "取消",
                                             "state": "edit",
                                             "icon": "rollback",
                                             "color": "text-grey-darker",
@@ -2865,11 +2971,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "pageSizeOptions": [10, 20, 50, 100],
                             "loadingOnInit": false,
                             "loadingConfig": {
-                                "url": "/dataQuery/DM_COLUMN/queryCondition",
+                                "url": "dataQuery/DM_COLUMN/queryCondition",
                                 "method": "get",
                                 "params": [
                                     {
-                                        "name": "table_Id",
+                                        "name": "tableId",
                                         "type": "tempValue",
                                         "valueName": "_tableId"
                                     },

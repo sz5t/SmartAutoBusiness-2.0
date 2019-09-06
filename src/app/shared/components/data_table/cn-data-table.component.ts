@@ -317,9 +317,9 @@ export class CnDataTableComponent extends CnComponentBase
             option.map(opt => {
                 rids.push(opt[this.KEY_ID]);
             })
-            param1['ids'] = `in(${rids.join(',')})`;
+            param1['id'] = `in(${rids.join(',')})`;
         } else if (option) {
-            param1['ids'] = `in(${option[this.KEY_ID]})`
+            param1['id'] = `in(${option[this.KEY_ID]})`
         }
 
         // 页面其他参数
@@ -470,7 +470,6 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public addRow() {
-        debugger;
         // 创建空数据对象
         const newId = CommonUtils.uuID(32);
         const newData = this.createNewRowData();
@@ -576,7 +575,6 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public changeAddedRowsToText(option) {
-        debugger;
         // 通过服务器端的临时ID与执行数据的ID匹配取得数据
         if (option && Array.isArray(option)) {
             option.map(opt => {
@@ -981,9 +979,44 @@ export class CnDataTableComponent extends CnComponentBase
         return this.config.id;
     }
 
-    public executeSelectRow() {
+    public async executeSelectRow(option) {
         console.log(this.config.id + '-------------executeSelectRow');
+        const result = await this._executeAjax(option);
+        return result;
     }
+
+    private async _executeAjax(option) {
+        const url = option.ajaxConfig.url;
+        const method = option.ajaxConfig.ajaxType;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        let paramData;
+        if (option.data) {
+            paramData = this._createSelectedRowParameter(ajaxParams);
+        }
+        const response = await this.executeHttpRequest(url, method, paramData);
+        // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+        this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+        // 处理validation结果
+        const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+        // 处理error结果
+        const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+        return validationResult && errorResult;
+    }
+
+    private _createSelectedRowParameter(ajaxParams) {
+        return ParameterResolver.resolve({
+            params: ajaxParams,
+            item: this.ROW_SELECTED,
+            tempValue: this.tempValue,
+            initValue: this.initValue,
+            cacheValue: this.cacheValue
+        });
+    }
+
+
 
     public executeCheckedRows() {
         console.log(this.config.id + '-------------executeCheckedRows');
