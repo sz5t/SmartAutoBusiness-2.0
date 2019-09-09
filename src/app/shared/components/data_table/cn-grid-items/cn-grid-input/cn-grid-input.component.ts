@@ -14,16 +14,23 @@ export class CnGridInputComponent implements OnInit {
   value = null;
   ngOnInit() {
     // console.log('input=>:', this.config,this.formGroup);
+    let v_value;
     if (this.valueConfig) {
-      this.value = this.valueConfig.value;
+      v_value = this.valueConfig.value;
     }
     if(this.state ==='new'){
       if (this.config.defaultValue) {
         if (!this.value) {
-          this.value = this.config.defaultValue;
+          v_value = this.config.defaultValue;
         }
       }
     }
+
+    setTimeout(() => {
+      this.value =v_value;
+      this.valueChange( this.value);
+    });
+
   }
 
 

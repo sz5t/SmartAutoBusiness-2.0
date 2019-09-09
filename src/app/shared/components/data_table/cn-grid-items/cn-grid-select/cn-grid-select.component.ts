@@ -28,17 +28,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
   ngOnInit() {
     // console.log('select 初始化ngOnInit=>当前表单的值',this.formGroup.value , this.config);
     // console.log('select required',this.myControl);
-    if (this.valueConfig) {
-      this.selectedValue = this.valueConfig.value;
-    }
 
-    if(this.state ==='new'){
-      if (this.config.hasOwnProperty('defaultValue') ) {
-        if (!this.selectedValue) {
-          this.selectedValue = this.config.defaultValue;
-        }
-      }
-    }
   
 
   }
@@ -55,6 +45,25 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
         this.selectItems = this.config.options;
       }
     }
+
+    let s_value;
+    if (this.valueConfig) {
+      s_value = this.valueConfig.value;
+    }
+
+    if(this.state ==='new'){
+      if (this.config.hasOwnProperty('defaultValue') ) {
+        if (!this.selectedValue) {
+          s_value = this.config.defaultValue;
+        }
+      }
+    }
+
+    setTimeout(() => {
+      this.selectedValue= s_value;
+      this.valueChange(this.selectedValue);
+    });
+
   }
 
   /**
