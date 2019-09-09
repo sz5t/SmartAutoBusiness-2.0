@@ -33,7 +33,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
     }
 
     if(this.state ==='new'){
-      if (this.config.defaultValue) {
+      if (this.config.hasOwnProperty('defaultValue') ) {
         if (!this.selectedValue) {
           this.selectedValue = this.config.defaultValue;
         }
