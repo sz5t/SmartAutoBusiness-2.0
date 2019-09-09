@@ -1239,7 +1239,6 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public async executeCheckedRows(option) {
-        debugger;
         console.log(this.config.id + '-------------executeCheckedRows', option);
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;

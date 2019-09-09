@@ -541,7 +541,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "ajaxConfig": [
                                 {
                                     "id": "add_data_tables",
-                                    "url": "dmtable/insertMany",
+                                    "url": "table/batchInsert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -583,7 +583,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "edit_data_tables",
-                                    "url": "dmtable/updateMany",
+                                    "url": "table/batchInsert",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -626,7 +626,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "form_add_data_table",
-                                    "url": "dmtable/insert",
+                                    "url": "table/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -642,8 +642,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "name": "id",
-                                            "type": "componentValue",
-                                            "valueName": "id"
+                                            "type": "GUID"
                                         }
                                     ],
                                     "outputParameters": [
@@ -660,7 +659,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "form_edit_data_table",
-                                    "url": "dmtable/update",
+                                    "url": "table/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -694,7 +693,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "create_modeling",
-                                    "url": "dmtable/createModel",
+                                    "url": "table/createModel",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -737,7 +736,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "delete_data_table",
-                                    "url": "dmtable/delete",
+                                    "url": "table/delete",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -1092,14 +1091,24 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 '50px', '100px', '200px', '200px', '200px'
                             ],
                             "loadingConfig": {
-                                "url": "dataQuery/DM_TABLE/queryCondition",
+                                "url": "td/DM_TABLE/query",
                                 "method": "get",
                                 "params": [
                                     {
                                         "name": "_mapToObject",
                                         "type": "value",
                                         "value": true
-                                    }
+                                    },
+                                    // {
+                                    //     "name": "_sort",
+                                    //     "type": "value",
+                                    //     "value": "createDate DESC"
+                                    // },
+                                    // {
+                                    //     "name": "_order",
+                                    //     "type": "value",
+                                    //     "value": "DESC"
+                                    // }
                                 ],
                                 "filter": []
                             },
@@ -1121,7 +1130,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "50px",
+                                    // "width": "50px",
                                     "style": {},
                                 },
                                 {
@@ -1131,7 +1140,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "100px",
+                                    // "width": "100px",
                                     "style": {},
                                 },
                                 {
@@ -1141,19 +1150,19 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "width": "100px",
+                                    // "width": "100px",
                                     "style": {},
                                 },
-                                {
-                                    "title": "创建时间",
-                                    "type": "field",
-                                    "field": "createDate",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                },
+                                // {
+                                //     "title": "创建时间",
+                                //     "type": "field",
+                                //     "field": "createDate",
+                                //     "hidden": false,
+                                //     "showFilter": false,
+                                //     "showSort": false,
+                                //     "width": "100px",
+                                //     "style": {},
+                                // },
                                 {
                                     "title": "ACTION",
                                     "type": "action",
@@ -1820,7 +1829,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "ajaxConfig": [
                                 {
                                     "id": "data_table_save_actions_01",
-                                    "url": "dmtable/insert ",
+                                    "url": "table/insert ",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -1861,7 +1870,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "data_table_edit_actions_02",
-                                    "url": "dmtable/update",
+                                    "url": "table/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -1899,7 +1908,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "data_table_delete_actions_03",
-                                    "url": "province/delete",
+                                    "url": "table/delete",
                                     "urlType": "inner",
                                     "ajaxType": "delete",
                                     "params": [
@@ -2484,7 +2493,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 // },
                                 {
                                     "id": "add_table_columns",
-                                    "url": "dmcolumn/insertMany",
+                                    "url": "column/batchInsert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -2577,7 +2586,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "edit_table_columns",
-                                    "url": "dmcolumn/updateMany",
+                                    "url": "column/batchUpdate",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -2655,13 +2664,13 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterUpdateSuccess"
+                                            "senderId": "afterTableColumnUpdateSuccess"
                                         },
                                         {
                                             "name": "validation",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterCityUpdateValidation"
+                                            "senderId": "afterTableColumnUpdateValidation"
                                         },
                                         {
                                             "name": "error",
@@ -2971,7 +2980,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "pageSizeOptions": [10, 20, 50, 100],
                             "loadingOnInit": false,
                             "loadingConfig": {
-                                "url": "dataQuery/DM_COLUMN/queryCondition",
+                                "url": "td/DM_COLUMN/query",
                                 "method": "get",
                                 "params": [
                                     {
@@ -3902,7 +3911,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "ajaxConfig": [
                                 {
                                     "id": "add_column_1",
-                                    "url": "dmcolumn/insert",
+                                    "url": "column/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -3992,7 +4001,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "edit_column_1",
-                                    "url": "dmcolumn/update",
+                                    "url": "column/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -4044,7 +4053,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "name": "orderCode",
                                             "type": "componentValue",
-                                            "valueName": "orderCode"
+                                            "valueName": "orderCode",
+                                            "dataType": "ingeter"
                                         },
                                         {
                                             "name": "precision",
@@ -4081,7 +4091,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "add_table_column",
-                                    "url": "dmcolumn/insert",
+                                    "url": "column/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -4167,7 +4177,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "edit_table_columns_1",
-                                    "url": "city/updateMany",
+                                    "url": "column/batchUpdate",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -4219,7 +4229,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "name": "orderCode",
                                             "type": "componentValue",
-                                            "valueName": "orderCode"
+                                            "valueName": "orderCode",
+                                            "dataType": "integer"
                                         },
                                         {
                                             "name": "precision",
@@ -4246,7 +4257,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 {
                                     "id": "column_delete_1",
-                                    "url": "dmcolumn/delete",
+                                    "url": "column/delete",
                                     "urlType": "inner",
                                     "ajaxType": "delete",
                                     "params": [

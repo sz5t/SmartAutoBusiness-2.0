@@ -261,7 +261,7 @@ export class CnDataTableComponent extends CnComponentBase
             ...this.buildParameters(this.config.loadingConfig.params),
             ...this._buildPaging(),
             // ...this._buildFilter(this.config.ajaxConfig.filter),
-            // ...this._buildSort(),
+            ...this._buildSort(),
             // ...this._buildColumnFilter(),
             // ...this._buildFocusId(),
             // ...this._buildSearch()
@@ -861,13 +861,13 @@ export class CnDataTableComponent extends CnComponentBase
 
     public refreshData(loadNewData) {
         if (loadNewData && Array.isArray(loadNewData)) {
-            loadNewData.map(newData => {
+            loadNewData.map((newData, ind) => {
                 const index = this.dataList.findIndex(d => d[this.KEY_ID] === newData[this.KEY_ID]);
                 if (index > -1) {
                     this.dataList.splice(index, 1, newData);
                     this.dataList = [...this.dataList];
                 } else {
-                    this.dataList = [loadNewData[index], ...this.dataList];
+                    this.dataList = [loadNewData[ind], ...this.dataList];
                 }
                 const mapData = this.mapOfDataState[newData[this.KEY_ID]];
                 if (mapData) {
