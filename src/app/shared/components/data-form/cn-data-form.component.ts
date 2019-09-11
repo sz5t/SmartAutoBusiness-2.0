@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy, Input, OnDestroy, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, Input, OnDestroy, AfterViewInit, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
@@ -551,7 +551,12 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     this.validateForm = this.fb.group({});
     this.createControls(this.validateForm);
     this.value = this.formValue;
-    this.formStateChange('insert');
+    if(v.hasOwnProperty('builtinConfig') ){
+      if (v['builtinConfig'].event ==='formStateChange'){
+        this.formStateChange(v['builtinConfig'].state?v['builtinConfig'].state:'insert');
+      }
+    }
+
     console.log(this.config.id + '-------------addForm', v);
   }
   public editForm(v?) {
@@ -559,7 +564,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // this.validateForm = this.fb.group({});
     // this.createControls( this.validateForm);
     this.value = ss;
-    this.formStateChange('update');
+    if(v.hasOwnProperty('builtinConfig') ){
+      if (v['builtinConfig'].event ==='formStateChange'){
+        this.formStateChange(v['builtinConfig'].state?v['builtinConfig'].state:'update');
+      }
+    }
     this.load();
     //  this.validateForm.setValue( this.validateForm.value);
     console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
@@ -573,8 +582,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // this.createControls(this.validateForm);
     // this.validateForm.setValue(ss,{onlySelf:false,emitEvent:true});
     this.value = ss;
-    this.formStateChange('text');
-
+    if(v.hasOwnProperty('builtinConfig') ){
+      if (v['builtinConfig'].event ==='formStateChange'){
+        this.formStateChange(v['builtinConfig'].state?v['builtinConfig'].state:'text');
+      }
+    }
     // this.validateForm.setValue(this.validateForm.value);
     this.load();
     console.log(this.config.id + '-------------cancel【结束】', v, this.validateForm.value);
@@ -735,5 +747,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       //  }, 1000);
     });
 
+
+
+    // 分组属性表单=》动态读取属性，分布提交
+    // 根据属性生成-》折叠+表格+扩展页面=>组合属性
+    // 【分组】? 
+    // tab页签下：折叠面板+Descriptions描述列表 ==构成属性编辑器
 
 }

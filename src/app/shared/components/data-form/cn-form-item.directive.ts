@@ -17,6 +17,7 @@ import { CnFormTransferComponent } from '@shared/components/data-form/cn-form-it
 import { CnFormTextareaComponent } from '@shared/components/data-form/cn-form-items/cn-form-textarea/cn-form-textarea.component';
 import { CnFormGridSelectComponent } from '@shared/components/data-form/cn-form-items/cn-form-grid-select/cn-form-grid-select.component';
 import { CnFormCustomSelectComponent } from '@shared/components/data-form/cn-form-items/cn-form-custom-select/cn-form-custom-select.component';
+import { CnFormCodeEditComponent } from '@shared/components/data-form/cn-form-items/cn-form-code-edit/cn-form-code-edit.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnFormInputComponent,
@@ -36,6 +37,7 @@ const components: { [type: string]: Type<any> } = {
   gridSelect:CnFormGridSelectComponent,
   textarea: CnFormTextareaComponent,
   customSelect: CnFormCustomSelectComponent,
+  codeEdit:CnFormCodeEditComponent
 };
 @Directive({
   selector: '[CnFormItemDirective]'

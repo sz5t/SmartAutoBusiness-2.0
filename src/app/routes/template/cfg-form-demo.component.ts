@@ -2988,36 +2988,18 @@ export class CfgFormDemoComponent implements OnInit {
               "builtinConfig": [
                 {
                   "id": "add_state_1",
-                  event: "changeState", // 内置方法
-                  "url": "information/test2",
-                  "urlType": "inner",
-                  "ajaxType": "post",
-                  "params": [
-                    {
-                      "name": "state",
-                      "type": "value",
-                      "value": "DVM"
-                    }
-                  ],
-                  "outputParameters": [
-
-                  ],
-                  "result": [
-                    {
-                      "name": "data",
-                      "showMessageWithNext": 0,
-                      "message": "message.ajax.state.success",
-                      "senderId": "toolbar_01"
-                    },
-                    {
-                      "name": "validation",
-                      "senderId": "toolbar_01"
-                    },
-                    {
-                      "name": "error",
-                      "senderId": "toolbar_01"
-                    }
-                  ]
+                  event: "formStateChange", // 内置方法
+                  state:"insert",
+                },
+                {
+                  "id": "edit_state_1",
+                  event: "formStateChange", // 内置方法
+                  state:"update",
+                },
+                {
+                  "id": "cancel_state_1",
+                  event: "formStateChange", // 内置方法
+                  state:"text",
                 },
               ],
               "beforeTrigger": [
@@ -3098,6 +3080,7 @@ export class CfgFormDemoComponent implements OnInit {
                           "triggerType": "STATE",
                           "trigger": "EDIT_FORM",
                           // "conditionId": "edit_state_1"
+                          "builtinId": "edit_state_1"
                         }
                       ],
                       "toggle": {
@@ -3183,7 +3166,8 @@ export class CfgFormDemoComponent implements OnInit {
                       "execute": [
                         {
                           "triggerType": "STATE",
-                          "trigger": "CANCEL"
+                          "trigger": "CANCEL",
+                          "builtinId": "cancel_state_1"
                         }
                       ],
                       "state": "cancel",
@@ -3360,6 +3344,13 @@ export class CfgFormDemoComponent implements OnInit {
                           "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                         },
                         "control": { "id": "016" }
+                      },
+                      {
+                        "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
+                        },
+                        "control": { "id": "017" }
                       },
 
 
@@ -4127,6 +4118,47 @@ export class CfgFormDemoComponent implements OnInit {
                     ]
                   }
                 },
+                {
+                  id: '017',
+                  "hidden": true, // 字段是否隐藏
+                  "title": 'sql',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark17",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 4,
+                    "nzXs": 4, "nzSm": 4, "nzMd": 4, "nzLg": 4, "ngXl": 4, "nzXXl": 4
+                  },  // 
+                  "controlSize": {
+                    "span": 20,
+                    "nzXs": { span: 20, offset: 0 },
+                    "nzSm": { span: 20, offset: 0 },
+                    "nzMd": { span: 20, offset: 0 },
+                    "nzLg": { span: 20, offset: 0 },
+                    "ngXl": { span: 20, offset: 0 },
+                    "nzXXl": { span: 20, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark17',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "codeEdit",
+                    "field": "remark17",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "mode":"text/x-sql",
+                    "placeholder": "请输入",
+                    "autosize": {
+                      minRows: 2, maxRows: 6
+                    },
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+
+                
 
 
 

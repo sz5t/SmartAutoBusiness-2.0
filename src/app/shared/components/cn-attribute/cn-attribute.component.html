@@ -1,0 +1,34 @@
+<p>cn-attribute works!</p>
+
+<cn-code-edit  [config]="{'mode':'text/x-sql'}"></cn-code-edit>
+<nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
+        <nz-tab *ngFor="let tab of tabs" [nzTitle]="tab.title"> 
+
+                <nz-collapse>
+                        <nz-collapse-panel
+                          *ngFor="let panel of tab.panels"
+                          [nzHeader]="panel.name"
+                          [nzActive]="panel.active"
+                          [nzDisabled]="panel.disabled"
+                        >
+                          <p style="margin:0;" *ngIf="panel.panelsform">
+                       
+                            <nz-descriptions nzTitle="" nzBordered [nzLayout]="panel.layout" [nzSize]="panel.size">
+                                
+                                    <ng-container  *ngFor="let c of panel.panelsform">
+                                            <nz-descriptions-item [nzTitle]="c.name" nzSpan="3">
+                                                    <ng-container CnGridItemDirective [state]="'edit'" [config]="c.editor"
+                                                    [valueConfig]="{'id':'','value':''}"
+                                                    (updateValue)="valueChange($event)"> </ng-container>
+                                                </nz-descriptions-item>
+                                    </ng-container>
+            
+                             </nz-descriptions>
+                          </p>
+                        </nz-collapse-panel>
+                      </nz-collapse>
+        </nz-tab>
+      </nz-tabset>
+
+
+

@@ -69,6 +69,9 @@ import { CnPageComponent } from './components/cn-page/cn-page.component';
 import { CnGridInputComponent } from './components/data_table/cn-grid-items/cn-grid-input/cn-grid-input.component';
 import { CnGridSelectComponent } from './components/data_table/cn-grid-items/cn-grid-select/cn-grid-select.component';
 import { CnGridItemDirective } from '@shared/components/data_table/cn-grid-item.directive';
+import { CnAttributeComponent } from './components/cn-attribute/cn-attribute.component';
+import { CnFormCodeEditComponent } from '@shared/components/data-form/cn-form-items/cn-form-code-edit/cn-form-code-edit.component';
+import { CnCodeEditComponent } from './components/cn-code-edit/cn-code-edit.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -126,6 +129,9 @@ const COMPONENTS = [
   CnPageComponent,
   CnGridInputComponent,
   CnGridSelectComponent,
+  CnAttributeComponent,
+  CnFormCodeEditComponent,
+  CnCodeEditComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -156,6 +162,8 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
+
+
 
   ],
   exports: [

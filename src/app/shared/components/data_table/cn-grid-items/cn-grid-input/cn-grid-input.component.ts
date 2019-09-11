@@ -44,4 +44,20 @@ export class CnGridInputComponent implements OnInit {
   public cascadeAnalysis(c?) {
   }
 
+  public onblur(e?, type?) {
+    this.assemblyValue();
+
+}
+public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+        this.assemblyValue();
+    }
+}
+
+// 组装值
+public assemblyValue() {
+   console.log('组装值',this.value)
+    this.valueChange(this.value);
+}
+
 }
