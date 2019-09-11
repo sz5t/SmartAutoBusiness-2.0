@@ -86,9 +86,9 @@ export class ParameterResolver {
     return new SelectedParameter(param, model).buildParameter();
   }
 
-  private static checkedId(param, model) {
+  private static checkedItem(param, model) {
     // tslint:disable-next-line: no-use-before-declare
-    return new CheckedIdParameter(param, model).buildParameter();
+    return new CheckedItemParameter(param, model).buildParameter();
   }
 
   private static cacheValue(param, model) {
@@ -535,7 +535,7 @@ class SelectedParameter extends BaseParameter implements IParameter {
 /**
  * 构建勾选ID项
  */
-class CheckedIdParameter extends BaseParameter implements IParameter {
+class CheckedItemParameter extends BaseParameter implements IParameter {
   private _result: any;
   constructor(private _param, private _model) {
     super();

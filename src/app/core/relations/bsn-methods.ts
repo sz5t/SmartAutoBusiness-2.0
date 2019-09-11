@@ -47,6 +47,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     SAVE_ROW: 'saveRow',
     SAVE_ROWS: 'saveRows',
     DELETE_CURRENT_ROW: 'deleteCurrentRow',
+    DELETE_CHECKED_ROWS: 'deleteCheckedRows',
     EXECUTE_CURRENT_ROW: 'executeCurrentRow',
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',

@@ -32,6 +32,29 @@
       ]
     },
     {
+      "text": "配置项基础数据维护",
+      "i18n": "menu.cfg.base",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "icon": "book",
+      "children": [{
+          "text": "内置属性维护",
+          "i18n": "menu.cfg.base.innerPropertyManager",
+          "icon": "database",
+          "level": 2,
+          "link": "/template/innerPropertyManager"
+        },
+        {
+          "text": "配置属性维护",
+          "i18n": "menu.cfg.base.configPropertyManager",
+          "icon": "database",
+          "level": 2,
+          "link": "/template/configPropertyManager"
+        }
+      ]
+    },
+    {
       "text": "DEMO",
       "i18n": "menu.demo",
       "group": true,
