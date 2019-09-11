@@ -1,3 +1,5 @@
+import { DataSqlModelingComponent } from './data-sql-modeling.component';
+import { BaseInnerPropertyManagerComponent } from './base-inner-property-manager.component';
 import { DataModelingComponent } from './data-modeling.component';
 import { DataTableDemoComponent } from './data-table-demo.component';
 import { LayoutDemoComponent } from './layout-demo.component';
@@ -16,7 +18,9 @@ const routes: Routes = [
   { path: 'dataTableDemo', component: DataTableDemoComponent },
   { path: 'treeDemo', component: TreeDemoComponent },
   { path: 'treeTableDemo', component: TreeTableDemoComponent },
-  { path: 'datamodeling', component: DataModelingComponent }
+  { path: 'datamodeling', component: DataModelingComponent },
+  { path: 'innerPropertyManager', component: BaseInnerPropertyManagerComponent },
+  { path: 'sqlmodeling', component: DataSqlModelingComponent }
 ];
 
 @NgModule({

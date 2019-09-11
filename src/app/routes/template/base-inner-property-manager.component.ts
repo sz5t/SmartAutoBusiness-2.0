@@ -12,36 +12,36 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'data-modeling',
-    templateUrl: './data-modeling.component.html',
+    selector: 'base-inner-property-manager',
+    templateUrl: './base-inner-property-manager.component.html',
     styles: [
         `
-            // :host ::ng-deep .ant-card-head {
-            //     min-height: 36px;
-            // }
+            :host ::ng-deep .ant-card-head {
+                min-height: 36px;
+            }
 
-            // .trigger {
-            //     font-size: 20px;
-            //     padding: 0 5px;
-            //     cursor: pointer;
-            //     transition: color 0.3;
-            //     right:0px;
-            //     position:relative;
-            //     z-index:8;
-            //     padding-top:8px;
-            // }
-            // .trigger:hover {
-            //     color: #1890ff;
-            // }
+            .trigger {
+                font-size: 20px;
+                padding: 0 5px;
+                cursor: pointer;
+                transition: color 0.3;
+                right:0px;
+                position:relative;
+                z-index:8;
+                padding-top:8px;
+            }
+            .trigger:hover {
+                color: #1890ff;
+            }
 
-            // .collapsedArea {
-            //     position:relative;
+            .collapsedArea {
+                position:relative;
 
-            // }
+            }
         `
     ]
 })
-export class DataModelingComponent extends CnComponentBase implements OnInit {
+export class BaseInnerPropertyManagerComponent implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "layout",
@@ -66,14 +66,14 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "toolbar_001",
+                            "id": "view_tree_01",
                             "component": "cnToolbar",
                             "size": "default",
                             "cascade": {
                                 "messageSender": [
                                     {
                                         "id": "toolbar_01",
-                                        "senderId": "view_data_table",
+                                        "senderId": "view_tree_01",
                                         "triggerType": "OPERATION",
                                         "trigger": "EXECUTE_CHECKED_ROWS",
                                         "triggerMoment": "after",
@@ -100,51 +100,62 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     }
                                 ],
                                 "messageReceiver": [
-                                    {
-                                        "id": "s_001",
-                                        "senderId": "view_data_table",
-                                        "receiveData": [
-                                            {
-                                                "triggerType": "STATE",
-                                                "trigger": "STATE_TO_TEXT"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "s_002",
-                                        "senderId": "view_data_table",
-                                        "receiveData": [
-                                            {
-                                                "triggerType": "STATE",
-                                                "trigger": "STATE_TO_EDIT"
-                                            }
-                                        ]
-                                    }
+                                    // {
+                                    //     "id": "s_001",
+                                    //     "senderId": "view_tree_01",
+                                    //     "receiveData": [
+                                    //         {
+                                    //             "triggerType": "STATE",
+                                    //             "trigger": "STATE_TO_TEXT"
+                                    //         }
+                                    //     ]
+                                    // },
+                                    // {
+                                    //     "id": "s_002",
+                                    //     "senderId": "view_tree_01",
+                                    //     "receiveData": [
+                                    //         {
+                                    //             "triggerType": "STATE",
+                                    //             "trigger": "STATE_TO_EDIT"
+                                    //         }
+                                    //     ]
+                                    // }
 
                                 ]
                             },
                             "changeValue": [
                                 {
-                                    "id": "edit_form_data_table_changeValue",
+                                    "id": "edit_form_changeValue",
                                     "params": [
                                         {
-                                            "name": "_tableId",
+                                            "name": "ID",
                                             "type": "item",
-                                            "valueName": "id",
+                                            "valueName": "ID",
                                             "valueTo": "tempValue"
                                         }
-                                    ]
+                                    ],
+                                },
+                                {
+                                    "id": "add_child_form_changeValue",
+                                    "params": [
+                                        {
+                                            "name": "PID",
+                                            "type": "item",
+                                            "valueName": "ID",
+                                            "valueTo": "tempValue"
+                                        }
+                                    ],
                                 }
                             ],
                             "dialog": [
                                 {
-                                    "id": "edit_data_table_form",
+                                    "id": "edit_office_form",
                                     "type": "confirm",
                                     "title": "数据编辑",
                                     "cancelText": "取消",
                                     "okText": "提交",
                                     "form": {
-                                        "id": "form_data_table",
+                                        "id": "form_01",
                                         "type": "form",
                                         "component": "form",
                                         state: 'text',
@@ -172,19 +183,26 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                                 "id": "001"  // id 和引用id 值相同
                                                             }
                                                         },
-                                                        {
-                                                            "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "input",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "002" }
-                                                        },
                                                         // {
-                                                        //     "id": "ioj0mV1", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "input",
+                                                        //     "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
                                                         //     "size": {
                                                         //         "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                         //     },
+                                                        //     "control": { "id": "002" }
+                                                        // },
+                                                        // {
+                                                        //     "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                                                        //     "size": {
+                                                        //         "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                                                        //     },
                                                         //     "control": { "id": "003" }
+                                                        // },
+                                                        // {
+                                                        //     "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                                                        //     "size": {
+                                                        //         "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                                                        //     },
+                                                        //     "control": { "id": "004" }
                                                         // }
                                                     ]
                                                 }]
@@ -193,11 +211,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             {
                                                 id: '001',
                                                 "hidden": true, // 字段是否隐藏
-                                                "title": '表名',  // lable 信息
+                                                "title": '名称',  // lable 信息
                                                 "titleConfig": {
                                                     required: true
                                                 },
-                                                "field": "tname",  // fromcontrol name  默认的字段
+                                                "field": "OFFICENAME",  // fromcontrol name  默认的字段
                                                 "labelSize": {
                                                     "span": 6,
                                                     "nzXs": { span: 6 },
@@ -219,11 +237,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
                                                 "text": { // 文本展示字段
                                                     "type": 'label', // 什么组件展示文本 
-                                                    "field": 'tname',   // 字段
+                                                    "field": 'OFFICENAME',   // 字段
                                                 },
                                                 "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                     "type": "input",
-                                                    "field": "tname",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                    "field": "OFFICENAME",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                     "placeholder": "请输入",
                                                     "validations": [  // 校验
                                                         { validator: "required", type: "default", "message": "请输入省名称" }
@@ -233,11 +251,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             {
                                                 id: '002',
                                                 "hidden": true, // 字段是否隐藏
-                                                "title": '表描述',  // lable 信息
+                                                "title": '',  // lable 信息
                                                 "titleConfig": {
                                                     required: false
                                                 },
-                                                "field": "descName",  // fromcontrol name  默认的字段
+                                                "field": "ID",  // fromcontrol name  默认的字段
                                                 "labelSize": {
                                                     "span": 6,
                                                     "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
@@ -254,11 +272,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
                                                 "text": { // 文本展示字段
                                                     "type": 'label', // 什么组件展示文本 
-                                                    "field": 'descName',   // 字段
+                                                    "field": 'ID',   // 字段
                                                 },
                                                 "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                     "type": "input",
-                                                    "field": "descName",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                    "field": "ID",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                     "placeholder": "请输入",
                                                     "validations": [  // 校验
 
@@ -268,11 +286,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             {
                                                 id: '003',
                                                 "hidden": true, // 字段是否隐藏
-                                                "title": '直属',  // lable 信息
+                                                "title": '',  // lable 信息
                                                 "titleConfig": {
                                                     required: false
                                                 },
-                                                "field": "id",  // fromcontrol name  默认的字段
+                                                "field": "PID",  // fromcontrol name  默认的字段
                                                 "labelSize": {
                                                     "span": 8,
                                                     "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
@@ -289,11 +307,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
                                                 "text": { // 文本展示字段
                                                     "type": 'label', // 什么组件展示文本 
-                                                    "field": 'id',   // 字段
+                                                    "field": 'PID',   // 字段
                                                 },
                                                 "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                     "type": "input",
-                                                    "field": "id",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                    "field": "PID",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                     "placeholder": "请输入",
                                                     "validations": [  // 校验
 
@@ -311,24 +329,24 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 },
                                                 Controls: [
                                                     { id: '001', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '002', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '003', state: "edit", hidden: false, readOnly: false }
+                                                    { id: '002', state: "edit", hidden: true, readOnly: false },
+                                                    { id: '003', state: "edit", hidden: true, readOnly: false }
                                                 ]
                                             },
                                             {
                                                 formState: "edit",
                                                 Controls: [
                                                     { id: '001', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '002', state: "edit", hidden: false, readOnly: false },
-                                                    { id: '003', state: "edit", hidden: false, readOnly: false }
+                                                    { id: '002', state: "edit", hidden: true, readOnly: false },
+                                                    { id: '003', state: "edit", hidden: true, readOnly: false }
                                                 ]
                                             },
                                             {
                                                 formState: "text",
                                                 Controls: [
                                                     { id: '001', state: "text", hidden: false, readOnly: false },
-                                                    { id: '002', state: "text", hidden: false, readOnly: false },
-                                                    { id: '003', state: "edit", hidden: false, readOnly: false }
+                                                    { id: '002', state: "text", hidden: true, readOnly: false },
+                                                    { id: '003', state: "text", hidden: true, readOnly: false }
                                                 ]
                                             }
 
@@ -336,25 +354,15 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ajaxConfig: [
                                             {
                                                 "id": "loadform",
-                                                "url": "dataQuery/DM_TABLE/queryCondition",
+                                                "url": "province/queryCondition/OFFICE_SHEET",
                                                 "urlType": "inner",
                                                 "ajaxType": "get",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "ID",
                                                         "type": "tempValue",
-                                                        "valueName": "_tableId"
-                                                    },
-                                                    {
-                                                        "name": "_mapToObject",
-                                                        "type": "value",
-                                                        "value": true
-                                                    },
-                                                    {
-                                                        "name": "_mapToObject",
-                                                        "type": "value",
-                                                        "value": true
-                                                    },
+                                                        "valueName": "ID"
+                                                    }
                                                 ],
                                                 "outputParameters": [
 
@@ -363,67 +371,13 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
 
                                                 ]
                                             }
-                                        ],
-                                        cascade: {
-                                            "messageReceiver": [
-                                                {
-                                                    "id": "",
-                                                    "senderId": "view_data_table",
-                                                    "receiveData": [
-                                                        {
-                                                            "beforeReceive": [],
-                                                            "triggerType": "BEHAVIOR",
-                                                            "trigger": "REFRESH_AS_CHILD",
-                                                            "params": [
-                                                                {
-                                                                    "pname": "id",
-                                                                    "cname": "_id",
-                                                                    "valueTo": "tempValue"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        cascadeValue: [ // 值级联配置
-                                            {
-                                                "type": '值变化',
-                                                "controlId": '002', //  大的control标识，级联内部
-                                                "name": 'inputname2',
-                                                "CascadeObjects": [
-                                                    {
-                                                        "controlId": '003',
-                                                        "cascadeName": 'inputname3',
-                                                        "cascadeItems": [  // 根据值执行
-                                                            {
-                                                                "type": 'default',  // conditions   default  满足条件执行或者默认都执行
-                                                                "caseValue": {    // 条件描述 （触发级联的前置条件，如果不设置，则是满足）
-                                                                    "type": 'selectObjectValue',
-                                                                    "valueName": 'num',
-                                                                    "regular": '^0$'
-                                                                },
-                                                                "content": {  // 应答体描述
-                                                                    "type": 'ajax', // 应答类型（异步、消息、赋值、隐藏、显示...）
-                                                                    "data": {
-                                                                        "option": [
-                                                                            { "name": 'PROVINCEID', "type": 'selectObjectValue', "value": '1', "valueName": 'id' }
-                                                                        ]
-                                                                    }
-                                                                }
-                                                            }
-
-                                                        ]
-                                                    }
-                                                ]
-                                            }
                                         ]
                                     }
                                 }
                             ],
                             "condition": [
                                 {
-                                    "id": "add_data_tables_state",
+                                    "id": "add_cities_state",
                                     "state": [
                                         {
                                             "type": "component",
@@ -446,7 +400,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_data_tables_state",
+                                    "id": "edit_cities_state",
                                     "state": [
                                         {
                                             "type": "component",
@@ -463,7 +417,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "add_data_table_condition",
+                                    "id": "add_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -492,7 +446,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_data_table_condition",
+                                    "id": "edit_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -521,7 +475,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_data_tables_cancel_2",
+                                    "id": "cancel_edit_rows_2",
                                     "state": [
                                         {
                                             "type": "component",
@@ -540,24 +494,40 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "ajaxConfig": [
                                 {
-                                    "id": "add_data_tables",
-                                    "url": "table/batchInsert",
+                                    "id": "add_provinces_1",
+                                    "url": "province/insertMany",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "tname",
+                                            "name": "provinceName",
                                             "type": "componentValue",
-                                            "valueName": "tname"
+                                            "valueName": "provinceName",
+                                            "dataType": "string"
                                         },
                                         {
-                                            "name": "descName",
+                                            "name": "populationSize",
                                             "type": "componentValue",
-                                            "valueName": "descName"
+                                            "valueName": "populationSize",
+                                            "dataType": "int"
                                         },
                                         {
-                                            "name": "id",
-                                            "type": "GUID",
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "areaCode",
+                                            "type": "componentValue",
+                                            "valueName": "areaCode",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
@@ -568,39 +538,60 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableSaveSuccess"
+                                            "senderId": "afterProvinceSaveSuccessfully"
                                         },
                                         {
                                             "name": "validation",
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableSaveValidation"
+                                            "senderId": "afterProvinceSaveValidation"
                                         },
                                         {
                                             "name": "error",
-                                            "senderId": "toolbar_data_columns_01"
+                                            "senderId": "toolbar_02"
                                         }
                                     ]
                                 },
                                 {
-                                    "id": "edit_data_tables",
-                                    "url": "table/batchInsert",
+                                    "id": "edit_save_1",
+                                    "url": "province/updateMany",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
-                                            "name": "tname",
-                                            "type": "componentValue",
-                                            "valueName": "tname"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
                                             "name": "id",
                                             "type": "componentValue",
-                                            "valueName": "id"
+                                            "valueName": "id",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "provinceName",
+                                            "type": "componentValue",
+                                            "valueName": "provinceName",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "areaCode",
+                                            "type": "componentValue",
+                                            "valueName": "areaCode",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
@@ -611,7 +602,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableUpdateSuccess"
+                                            "senderId": "afterProvinceUpdateSuccessfully"
                                         },
                                         {
                                             "name": "validation",
@@ -620,29 +611,30 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "name": "error",
-                                            "senderId": "toolbar_data_columns_01"
+                                            "senderId": "toolbar_02"
                                         }
                                     ]
                                 },
                                 {
-                                    "id": "form_add_data_table",
-                                    "url": "table/insert",
+                                    "id": "tree_add_root_office",
+                                    "url": "office/insert/OFFICE_SHEET",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "tname",
-                                            "type": "componentValue",
-                                            "valueName": "tname"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
-                                            "name": "id",
+                                            "name": "ID",
                                             "type": "GUID"
+                                        },
+                                        {
+                                            "name": "OFFICENAME",
+                                            "type": "componentValue",
+                                            "valueName": "OFFICENAME",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "PID",
+                                            "type": "value",
+                                            "valueName": null
                                         }
                                     ],
                                     "outputParameters": [
@@ -653,54 +645,30 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableModelingSaveSuccess"
+                                            "senderId": "afterRootOfficeSaveSuccessfully"
                                         }
                                     ]
                                 },
                                 {
-                                    "id": "form_edit_data_table",
-                                    "url": "table/update",
-                                    "urlType": "inner",
-                                    "ajaxType": "put",
-                                    "params": [
-                                        {
-                                            "name": "tname",
-                                            "type": "componentValue",
-                                            "valueName": "tname"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
-                                            "name": "id",
-                                            "type": "componentValue",
-                                            "valueName": "id"
-                                        }
-                                    ],
-                                    "outputParameters": [
-
-                                    ],
-                                    "result": [
-                                        {
-                                            "name": "data",
-                                            "showMessageWithNext": 0,
-                                            "message": "message.ajax.state.success",
-                                            "senderId": "afterTableModelingSaveSuccess"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": "create_modeling",
-                                    "url": "table/createModel",
+                                    "id": "tree_add_office",
+                                    "url": "office/insert/OFFICE_SHEET",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "id",
-                                            "type": "item",
-                                            "valueName": "id"
+                                            "name": "ID",
+                                            "type": "GUID"
+                                        },
+                                        {
+                                            "name": "OFFICENAME",
+                                            "type": "componentValue",
+                                            "valueName": "OFFICENAME",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "PID",
+                                            "type": "tempValue",
+                                            "valueName": "PID"
                                         }
                                     ],
                                     "outputParameters": [
@@ -711,54 +679,98 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableModelingSaveSuccess"
-                                        },
+                                            "senderId": "afterOfficeSaveSuccessfully"
+                                        }
                                     ]
                                 },
                                 {
-                                    "id": "cancel_create_modeling",
-                                    "url": "dmtable/cancelModel",
+                                    "id": "tree_edit_office",
+                                    "url": "office/update/OFFICE_SHEET",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
-                                            "name": "id",
-                                            "type": "checkedId",
-                                            "valueName": "id"
+                                            "name": "OFFICENAME",
+                                            "type": "componentValue",
+                                            "valueName": "OFFICENAME",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "ID",
+                                            "type": "componentValue",
+                                            "valueName": "ID",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
 
                                     ],
                                     "result": [
-
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterOfficeUpdateSuccessfully"
+                                        }
                                     ]
                                 },
                                 {
-                                    "id": "delete_data_table",
-                                    "url": "table/delete",
+                                    "id": "tree_delete_office",
+                                    "url": "office/delete/OFFICE_SHEET",
                                     "urlType": "inner",
-                                    "ajaxType": "put",
+                                    "ajaxType": "delete",
                                     "params": [
                                         {
                                             "name": "ids",
-                                            "type": "checkedId",
-                                            "valueName": "id"
+                                            "type": "item",
+                                            "valueName": "ID",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
 
                                     ],
                                     "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterOfficeDeleteSuccessfully"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "tree_batch_delete_office",
+                                    "url": "office/delete/OFFICE_SHEET",
+                                    "urlType": "inner",
+                                    "ajaxType": "delete",
+                                    "params": [
+                                        {
+                                            "name": "ID",
+                                            "type": "checkedId",
+                                            "valueName": "ID"
+                                        }
+                                    ],
+                                    "outputParameters": [
 
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterOfficeBatchDeleteSuccessfully"
+                                        }
                                     ]
                                 }
                             ],
-                            "beforeTrigger": [],
+                            "beforeTrigger": [
+
+                            ],
                             "afterTrigger": [
                                 {
                                     "id": "",
-                                    "senderId": "view_data_table",
+                                    "senderId": "view_tree_01",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -783,7 +795,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "toolbar": [
                                 {
-                                    "targetViewId": "view_data_table",
+                                    "targetViewId": "view_tree_01",
                                     "group": [
                                         {
                                             "id": "M_refresh",
@@ -799,24 +811,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 }
                                             ]
                                         },
-                                        // {
-                                        //     "id": "M_addRow",
-                                        //     "text": "新增表资源",
-                                        //     "icon": "plus",
-                                        //     "color": "text-primary",
-                                        //     "hidden": false,
-                                        //     "disabled": false,
-                                        //     "execute": [
-                                        //         {
-                                        //             "triggerType": "STATE",
-                                        //             "trigger": "ADD_ROW",
-                                        //             // "conditionId": "add_state_1"
-                                        //         }
-                                        //     ]
-                                        // },
                                         {
-                                            "id": "M_addRowForm",
-                                            "text": "新增表资源",
+                                            "id": "M_addParentNode",
+                                            "text": "新增根节点",
                                             "state": "new",
                                             "icon": "plus",
                                             "color": "text-primary",
@@ -827,14 +824,33 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "triggerType": "ACTION",
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
-                                                    "dialogId": "edit_data_table_form",
-                                                    "ajaxId": "form_add_data_table",
+                                                    "dialogId": "edit_office_form",
+                                                    "ajaxId": "tree_add_root_office"
                                                 }
                                             ]
                                         },
                                         {
-                                            "id": "M_editRowForm",
-                                            "text": "修改表资源",
+                                            "id": "M_addChildNode",
+                                            "text": "新增子节点",
+                                            "state": "new",
+                                            "icon": "plus",
+                                            "color": "text-primary",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "ACTION",
+                                                    "trigger": "DIALOG",
+                                                    // "conditionId": "add_state_1"
+                                                    "dialogId": "edit_office_form",
+                                                    "ajaxId": "tree_add_office",
+                                                    "changeValueId": "add_child_form_changeValue"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "M_editTreeNode",
+                                            "text": "编辑节点",
                                             "state": "edit",
                                             "icon": "edit",
                                             "color": "text-primary",
@@ -845,71 +861,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "triggerType": "ACTION",
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
-                                                    "dialogId": "edit_data_table_form",
-                                                    "ajaxId": "form_edit_data_table",
-                                                    "changeValueId": "edit_form_data_table_changeValue"
-                                                }
-                                            ]
-                                        },
-                                        // {
-                                        //     "id": "M_updateRow",
-                                        //     "text": "修改",
-                                        //     "icon": "edit",
-                                        //     "color": "text-success",
-                                        //     "hidden": false,
-                                        //     "disabled": false,
-                                        //     "state": "text",
-                                        //     "execute": [
-                                        //         {
-                                        //             "triggerType": "STATE",
-                                        //             "trigger": "EDIT_ROWS",
-                                        //             "conditionId": "edit_data_tables_state"
-                                        //         }
-                                        //     ],
-                                        //     "toggle": {
-                                        //         "type": "state",
-                                        //         "toggleProperty": "hidden",
-                                        //         "values": [
-                                        //             {
-                                        //                 "name": "edit",
-                                        //                 "value": true
-                                        //             },
-                                        //             {
-                                        //                 "name": "text",
-                                        //                 "value": false
-                                        //             }
-                                        //         ]
-                                        //     }
-                                        // },
-                                        {
-                                            "id": "M_modeling",
-                                            "text": "建模",
-                                            "icon": "table",
-                                            "color": "text-red-light",
-                                            "hidden": false,
-                                            "disabled": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "OPERATION",
-                                                    "trigger": "EXECUTE_SELECTED_ROW",
-                                                    // "conditionId": "delete_operation_1",
-                                                    "ajaxId": "create_modeling"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "M_cancel_modeling",
-                                            "text": "取消建模",
-                                            "icon": "line",
-                                            "color": "text-red-light",
-                                            "hidden": false,
-                                            "disabled": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "OPERATION",
-                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
-                                                    // "conditionId": "delete_operation_1",
-                                                    "ajaxId": "cancel_create_modeling"
+                                                    "dialogId": "edit_office_form",
+                                                    "ajaxId": "tree_edit_office",
+                                                    "changeValueId": "edit_form_changeValue"
                                                 }
                                             ]
                                         },
@@ -923,130 +877,27 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "execute": [
                                                 {
                                                     "triggerType": "OPERATION",
-                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                    "trigger": "EXECUTE_SELECTED_NODE",
                                                     // "conditionId": "delete_operation_1",
-                                                    "ajaxId": "delete_data_table"
-                                                }
-                                            ]
-                                        },
-                                        // {
-                                        //     "id": "M_saveRow",
-                                        //     "text": "保存",
-                                        //     "icon": "save",
-                                        //     "color": "text-primary",
-                                        //     "hidden": true,
-                                        //     "disabled": false,
-                                        //     "execute": [
-                                        //         {
-                                        //             "triggerType": "OPERATION",
-                                        //             "trigger": "SAVE_ROWS",
-                                        //             "ajaxId": "add_data_tables",
-                                        //             // "stateId": "add_save_1",
-                                        //             "conditionId": "add_data_table_condition"
-                                        //         },
-                                        //         {
-                                        //             "triggerType": "OPERATION",
-                                        //             "trigger": "SAVE_ROWS",
-                                        //             "ajaxId": "edit_data_table_condition",
-                                        //             // "stateId": "edit_data_tables",
-                                        //             "conditionId": ""
-                                        //         }
-                                        //     ],
-                                        //     "toggle": {
-                                        //         "type": "state",
-                                        //         "toggleProperty": "hidden",
-                                        //         "values": [
-                                        //             {
-                                        //                 "name": "edit",
-                                        //                 "value": false
-                                        //             },
-                                        //             {
-                                        //                 "name": "text",
-                                        //                 "value": true
-                                        //             },
-                                        //             {
-                                        //                 "name": "new",
-                                        //                 "value": false
-                                        //             }
-                                        //         ]
-                                        //     }
-                                        // },
-                                        // {
-                                        //     "id": "M_cancelrow",
-                                        //     "text": "取消1",
-                                        //     "state": "edit",
-                                        //     "icon": "rollback",
-                                        //     "color": "text-grey-darker",
-                                        //     "hidden": true,
-                                        //     "disabled": null,
-                                        //     "execute": [
-                                        //         {
-                                        //             "triggerType": "STATE",
-                                        //             "trigger": "CANCEL_EDIT_ROWS",
-                                        //             "conditionId": "edit_data_tables_cancel_2"
-                                        //         },
-                                        //         {
-                                        //             "triggerType": "STATE",
-                                        //             "trigger": "CANCEL_NEW_ROWS"
-                                        //         }
-                                        //     ],
-                                        //     "toggle": {
-                                        //         "type": "state",
-                                        //         "toggleProperty": "hidden",
-                                        //         "values": [
-                                        //             {
-                                        //                 "name": "edit",
-                                        //                 "value": false
-                                        //             },
-                                        //             {
-                                        //                 "name": "text",
-                                        //                 "value": true
-                                        //             },
-                                        //             {
-                                        //                 "name": "new",
-                                        //                 "value": false
-                                        //             }
-                                        //         ]
-                                        //     }
-                                        // }
-                                    ]
-                                },
-                                {
-                                    "targetViewId": "view_data_columns",
-                                    "group": [
-                                        {
-                                            "name": "M_addSearchRow",
-                                            "text": "查询",
-                                            "triggerType": "STATE",
-                                            "trigger": "SEARCH_ROW",
-                                            "actionName": "addSearchRow",
-                                            "icon": "search",
-                                            "color": "text-primary",
-                                            "hidden": false,
-                                            "disabled": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "SEARCH_ROW"
+                                                    "ajaxId": "tree_delete_office"
                                                 }
                                             ]
                                         },
                                         {
-                                            "name": "M_cancelSearchRow",
-                                            "text": "取消查询",
-                                            "icon": "rollback",
-                                            "triggerType": "STATE",
-                                            "trigger": "CANCEL_SEARCH_ROW",
-                                            "actionName": "cancelSearchRow",
-                                            "color": "text-grey-darker",
+                                            "id": "M_deleteRow_m",
+                                            "text": "批量删除",
+                                            "icon": "delete",
+                                            "color": "text-red-light",
                                             "hidden": false,
                                             "disabled": false,
                                             "execute": [
                                                 {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "SEARCH_ROW"
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "EXECUTE_DELETE_CHECKED_NODES_BY_ID",
+                                                    // "conditionId": "delete_operation_1",
+                                                    "ajaxId": "tree_batch_delete_office"
                                                 }
-                                            ],
+                                            ]
                                         }
                                     ]
                                 }
@@ -1069,115 +920,99 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "view_data_table",
-                            "title": "主表",
+                            "id": "view_tree_01",
+                            "title": "树",
                             "titleIcon": "right-circle",
-                            "component": "cnDataTable",
-                            "keyId": "id",
-                            "size": "small",
-                            "isBordered": true,
-                            "isFrontPagination": false,
-                            "isPagination": true,
-                            "isShowSizeChanger": true,
-                            "showTotal": true,
-                            "pageSize": 10,
+                            "component": "cnTree",
+                            "keyId": "ID",
+                            "async": true,
                             "showCheckBox": true,
-                            "pageSizeOptions": [10, 20, 50, 100],
+                            "expandAll": false,
                             "loadingOnInit": true,
-                            // "scroll": {
-                            //     "y": "300px"
-                            // },
-                            "spanWidthConfig": [
-                                '50px', '100px', '200px', '200px', '200px'
-                            ],
+                            "showLine": false,
+                            "rootTitle": '根节点',
                             "loadingConfig": {
-                                "url": "td/DM_TABLE/query",
+                                "url": "province/queryCondition/OFFICE_SHEET",
                                 "method": "get",
                                 "params": [
                                     {
-                                        "name": "_mapToObject",
+                                        "name": "_recursive",
                                         "type": "value",
                                         "value": true
                                     },
-                                    // {
-                                    //     "name": "_sort",
-                                    //     "type": "value",
-                                    //     "value": "TNAME ASC"
-                                    // },
-                                    // {
-                                    //     "name": "_order",
-                                    //     "type": "value",
-                                    //     "value": "DESC"
-                                    // }
+                                    {
+                                        "name": "_deep",
+                                        "type": "value",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "name": "_pcName",
+                                        "type": "value",
+                                        "value": "PID"
+                                    }
                                 ],
-                                "filter": []
+                                "filter": [
+
+                                ]
+                            },
+                            "expandConfig": {
+                                "url": "province/queryCondition/OFFICE_SHEET",
+                                "method": "get",
+                                "params": [
+                                    {
+                                        "name": "_root.PID",
+                                        "type": "item",
+                                        "valueName": "key",
+                                        "value": ""
+                                    },
+                                    {
+                                        "name": "_recursive",
+                                        "type": "value",
+                                        "value": true
+                                    },
+                                    {
+                                        "name": "_deep",
+                                        "type": "value",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "name": "_pcName",
+                                        "type": "value",
+                                        "value": "PID"
+                                    }
+                                ]
                             },
                             "columns": [
                                 {
-                                    "title": "主键",
-                                    "type": "field",
-                                    "field": "id",
-                                    "hidden": true,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "50px",
-                                    "style": {}
+                                    "title": "ID",
+                                    "type": "key",
+                                    "field": "ID"
                                 },
                                 {
-                                    "title": "表名称",
-                                    "type": "field",
-                                    "field": "tname",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    // "width": "50px",
-                                    "style": {},
+                                    "title": "PID",
+                                    "type": "parentId",
+                                    "field": "PID"
                                 },
                                 {
-                                    "title": "描述",
-                                    "type": "field",
-                                    "field": "descName",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    // "width": "100px",
-                                    "style": {},
-                                },
-                                {
-                                    "title": "是否建模",
-                                    "type": "field",
-                                    "field": "isBuildModel",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    // "width": "100px",
-                                    "style": {},
+                                    "title": "OFFICENAME",
+                                    "type": "title",
+                                    "field": "OFFICENAME"
                                 },
                                 // {
-                                //     "title": "创建时间",
-                                //     "type": "field",
-                                //     "field": "createDate",
-                                //     "hidden": false,
-                                //     "showFilter": false,
-                                //     "showSort": false,
-                                //     "width": "100px",
-                                //     "style": {},
-                                // },
-                                {
-                                    "title": "ACTION",
-                                    "type": "action",
-                                    "actionIds": [
-                                        "data_table_edit", "data_table_cancel", "data_table_save", "data_table_delete", "data_table_new", "data_table_new_cancel"
-                                    ]
-                                }
+                                //     "title": "ACTION",
+                                //     "type": "action",
+                                //     "actionIds": [
+                                //         "grid_edit", "grid_cancel", "grid_save", "grid_delete", "grid_new", "grid_new_cancel"
+                                //     ]
+                                // }
                             ],
                             "cascade": {
                                 "messageSender": [
                                     {
-                                        "id": "data_table_sender_01",
-                                        "senderId": "view_data_table",
+                                        "id": "grid_sender_02",
+                                        "senderId": "view_tree_01",
                                         "triggerType": "BEHAVIOR",
-                                        "trigger": "SET_SELECT_ROW",
+                                        "trigger": "CLICK_NODE",
                                         "triggerMoment": "after",
                                         "sendData": [
                                             {
@@ -1187,17 +1022,17 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "receiverTrigger": "REFRESH_AS_CHILD",
                                                 "params": [
                                                     {
-                                                        "name": "_tableId",
+                                                        "name": "PID",
                                                         "type": "item",
-                                                        "valueName": "id"
+                                                        "valueName": "ID"
                                                     }
                                                 ]
                                             }
                                         ]
                                     },
                                     {
-                                        "id": "data_table_sender_02",
-                                        "senderId": "view_data_table",
+                                        "id": "grid_sender_03",
+                                        "senderId": "view_tree_01",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1210,7 +1045,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_table",
+                                                        "value": "view_tree_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1218,8 +1053,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "data_table_sender_03",
-                                        "senderId": "view_data_table",
+                                        "id": "grid_sender_04",
+                                        "senderId": "view_tree_01",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_NEW_ROW",
                                         "triggerMoment": "after",
@@ -1232,7 +1067,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_table",
+                                                        "value": "view_tree_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1240,8 +1075,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "data_table_sender_04",
-                                        "senderId": "view_data_table",
+                                        "id": "grid_sender_05",
+                                        "senderId": "view_tree_01",
                                         "triggerType": "STATE",
                                         "trigger": "EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1253,7 +1088,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_table",
+                                                        "value": "view_tree_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1261,8 +1096,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "data_table_sender_05",
-                                        "senderId": "view_data_table",
+                                        "id": "grid_sender_06",
+                                        "senderId": "view_tree_01",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROW",
                                         "triggerMoment": "after",
@@ -1274,7 +1109,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_table",
+                                                        "value": "view_tree_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1282,8 +1117,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "data_table_sender_06",
-                                        "senderId": "view_data_table",
+                                        "id": "grid_sender_07",
+                                        "senderId": "view_tree_01",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROWS",
                                         "triggerMoment": "after",
@@ -1295,7 +1130,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_table",
+                                                        "value": "view_tree_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1303,8 +1138,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "data_table_sender_07",
-                                        "senderId": "view_data_table",
+                                        "id": "grid_sender_08",
+                                        "senderId": "view_tree_01",
                                         "triggerType": "ACTION",
                                         "trigger": "CONFIRM",
                                         "triggerMoment": "after",
@@ -1316,7 +1151,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_table",
+                                                        "value": "view_tree_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1324,11 +1159,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterTableSaveSuccess",
-                                        "senderId": "view_data_table",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
+                                        "id": "afterRootOfficeSaveSuccessfully",
+                                        "senderId": "view_tree_01",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1342,33 +1174,35 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "value": "success"
                                                     },
                                                     {
-                                                        "name": "message",
+                                                        "name": "code",
                                                         "type": "value",
-                                                        "value": "操作完成!"
-                                                    },
+                                                        "value": "message.operation.success"
+                                                    }
                                                 ]
                                             },
                                             {
                                                 "beforeSend": {},
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+                                                "receiverTrigger": "APPEND_CHILD_TO_ROOT_NODE",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "ID",
                                                         "type": "addedRows",
-                                                        "valueName": "id"
+                                                        "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "OFFICENAME",
+                                                        "type": "addedRows",
+                                                        "valueName": "OFFICENAME"
                                                     }
                                                 ]
                                             }
                                         ]
                                     },
                                     {
-                                        "id": "afterTableModelingSaveSuccess",
-                                        "senderId": "view_data_table",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
+                                        "id": "afterOfficeSaveSuccessfully",
+                                        "senderId": "view_tree_01",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1382,9 +1216,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "value": "success"
                                                     },
                                                     {
-                                                        "name": "message",
+                                                        "name": "code",
                                                         "type": "value",
-                                                        "value": "操作完成!"
+                                                        "value": "message.operation.success"
                                                     },
                                                 ]
                                             },
@@ -1392,20 +1226,43 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "beforeSend": {},
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "LOAD_REFRESH_DATA",
+                                                "receiverTrigger": "APPEND_CHILD_TO_SELECTED_NODE",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "ID",
                                                         "type": "addedRows",
-                                                        "valueName": "id"
+                                                        "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "OFFICENAME",
+                                                        "type": "addedRows",
+                                                        "valueName": "OFFICENAME"
+                                                    },
+                                                    {
+                                                        "name": "PID",
+                                                        "type": "addedRows",
+                                                        "valueName": "PID"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "BEHAVIOR",
+                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                "params": [
+                                                    {
+                                                        "name": "PID",
+                                                        "type": "item",
+                                                        "valueName": "ID"
                                                     }
                                                 ]
                                             }
                                         ]
                                     },
                                     {
-                                        "id": "afterTableUpdateSuccess",
-                                        "senderId": "view_data_table",
+                                        "id": "afterOfficeUpdateSuccessfully",
+                                        "senderId": "view_tree_01",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -1422,30 +1279,115 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "value": "success"
                                                     },
                                                     {
-                                                        "name": "message",
+                                                        "name": "code",
                                                         "type": "value",
-                                                        "value": "操作完成!"
-                                                    },
+                                                        "value": "message.operation.success"
+                                                    }
                                                 ]
                                             },
                                             {
                                                 "beforeSend": {},
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+                                                "receiverTrigger": "UPDATE_SELECTED_NODE",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "ID",
                                                         "type": "editedRows",
-                                                        "valueName": "id"
+                                                        "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "OFFICENAME",
+                                                        "type": "editedRows",
+                                                        "valueName": "OFFICENAME"
                                                     }
                                                 ]
                                             }
                                         ]
                                     },
                                     {
-                                        "id": "afterTableSaveValidation",
-                                        "senderId": "view_data_table",
+                                        "id": "afterOfficeDeleteSuccessfully",
+                                        "senderId": "view_tree_01",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "code",
+                                                        "type": "value",
+                                                        "value": "message.operation.success"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "DELETE_SELECTED_NODE",
+                                                "params": [
+                                                    {
+                                                        "name": "ID",
+                                                        "type": "item",
+                                                        "valueName": "ID"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterOfficeBatchDeleteSuccessfully",
+                                        "senderId": "view_tree_01",
+                                        // "triggerType": "ACTION",
+                                        // "trigger": "MESSAGE0",
+                                        // "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
+                                                "params": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "code",
+                                                        "type": "value",
+                                                        "value": "message.operation.success"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "DELETE_CHECKED_NODES",
+                                                "params": [
+                                                    {
+                                                        "name": "ids",
+                                                        "type": "returnValue",
+                                                        "valueName": "ids"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "afterProvinceSaveValidation",
+                                        "senderId": "view_tree_01",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1457,7 +1399,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterProvinceUpdateValidation",
-                                        "senderId": "view_data_table",
+                                        "senderId": "view_tree_01",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1470,34 +1412,70 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 ],
                                 "messageReceiver": [
                                     {
-                                        "id": "",
-                                        "senderId": "view_data_table",
+                                        "id": "s_201",
+                                        "senderId": "view_tree_01",
                                         "receiveData": [
                                             {
-                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "APPEND_CHILD_TO_SELECTED_NODE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_202",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "ACTION",
+                                                "trigger": "APPEND_CHILD_TO_ROOT_NODE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_203",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "ACTION",
+                                                "trigger": "UPDATE_SELECTED_NODE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_204",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
+                                            {
                                                 "triggerType": "ACTION",
                                                 "trigger": "MESSAGE"
-                                                // "params": [
-                                                //     {
-                                                //         "pname": "name",
-                                                //         "cname": "_PID",
-                                                //         "valueTo": "tempValue"
-                                                //     }
-                                                // ]
-                                            },
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_205",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
                                             {
-                                                "beforeReceive": [],
                                                 "triggerType": "ACTION",
-                                                "trigger": "LOAD_REFRESH_DATA"
+                                                "trigger": "DELETE_SELECTED_NODE"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "s_205",
+                                        "senderId": "view_tree_01",
+                                        "receiveData": [
+                                            {
+                                                "triggerType": "ACTION",
+                                                "trigger": "DELETE_CHECKED_NODES"
                                             }
                                         ]
                                     }
                                 ]
-
                             },
                             "rowActions": [
                                 {
-                                    "id": "data_table_new",
+                                    "id": "grid_new",
                                     "state": "new",
                                     "text": "保存",
                                     "icon": "save",
@@ -1509,7 +1487,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "triggerType": "OPERATION",
                                             "trigger": "SAVE_ROW",
-                                            "ajaxId": "data_table_save_actions_01",
+                                            "ajaxId": "province_save_1",
                                             // "stateId": "add_save_1",
                                             // "conditionId": "add_citiessave_1"
                                         }
@@ -1530,7 +1508,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "data_table_new_cancel",
+                                    "id": "grid_new_cancel",
                                     "state": "new",
                                     "text": "取消",
                                     "icon": "rollback",
@@ -1563,7 +1541,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "data_table_edit",
+                                    "id": "grid_edit",
                                     "state": "text",
                                     "text": "编辑",
                                     "icon": "edit",
@@ -1577,7 +1555,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "trigger": "EDIT_ROW",
                                             // "ajaxId": "add_save_1",
                                             // "stateId": "add_save_1",
-                                            //  "conditionId": "edit_data_table_condition"
+                                            //  "conditionId": "edit_cities"
                                         }
                                     ],
                                     "toggle": {
@@ -1596,7 +1574,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "data_table_cancel",
+                                    "id": "grid_cancel",
                                     "state": "text",
                                     "text": "取消",
                                     "icon": "rollback",
@@ -1629,7 +1607,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "data_table_save",
+                                    "id": "grid_save",
                                     "state": "text",
                                     "text": "保存",
                                     "icon": "save",
@@ -1641,9 +1619,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "triggerType": "OPERATION",
                                             "trigger": "SAVE_ROW",
-                                            "ajaxId": "data_table_edit_actions_02",
+                                            "ajaxId": "province_edit_1",
                                             // "stateId": "add_save_1",
-                                            // "conditionId": "add_data_table_condition"
+                                            // "conditionId": "add_cities"
                                         },
                                     ],
                                     "toggle": {
@@ -1662,7 +1640,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "data_table_delete",
+                                    "id": "grid_delete",
                                     "state": "text",
                                     "text": "删除",
                                     "icon": "delete",
@@ -1673,17 +1651,17 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "triggerType": "ACTION",
                                             "trigger": "CONFIRM",
-                                            "dialogId": "data_table_delete_confirm_actions_03",
+                                            "dialogId": "delete_confirm",
                                             // "conditionId": "delete_operation_1",
-                                            "ajaxId": "data_table_delete_actions_03",
-                                            // "stateId": "before_delete_data_table"
+                                            "ajaxId": "delete_province",
+                                            // "stateId": "before_delete_province"
                                         }
                                     ]
                                 }
                             ],
                             "dialog": [
                                 {
-                                    "id": "data_table_delete_confirm_actions_03",
+                                    "id": "delete_confirm",
                                     "type": "confirm",
                                     "title": "确认操作",
                                     "content": "是否删除当前操作数据?",
@@ -1693,7 +1671,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "condition": [
                                 {
-                                    "id": "add_data_tables_state",
+                                    "id": "add_cities_state",
                                     "state": [
                                         {
                                             "type": "component",
@@ -1716,7 +1694,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_data_tables_state",
+                                    "id": "edit_cities_state",
                                     "state": [
                                         {
                                             "type": "component",
@@ -1733,7 +1711,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "add_data_table_condition",
+                                    "id": "add_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -1762,7 +1740,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_data_table_condition",
+                                    "id": "edit_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -1791,7 +1769,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "cancel_edit_data_tables",
+                                    "id": "cancel_edit_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -1808,7 +1786,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "cancel_add_data_tables",
+                                    "id": "cancel_add_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -1828,24 +1806,40 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "ajaxConfig": [
                                 {
-                                    "id": "data_table_save_actions_01",
-                                    "url": "table/insert ",
+                                    "id": "province_save_1",
+                                    "url": "province/insert ",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "id",
-                                            "type": "GUID"
+                                            "name": "provinceName",
+                                            "type": "componentValue",
+                                            "valueName": "provinceName",
+                                            "dataType": "string"
                                         },
                                         {
-                                            "name": "tname",
+                                            "name": "populationSize",
                                             "type": "componentValue",
-                                            "valueName": "tname"
+                                            "valueName": "populationSize",
+                                            "dataType": "number"
                                         },
                                         {
-                                            "name": "descName",
+                                            "name": "directlyUnder",
                                             "type": "componentValue",
-                                            "valueName": "descName"
+                                            "valueName": "directlyUnder",
+                                            "dataType": "number"
+                                        },
+                                        {
+                                            "name": "areaCode",
+                                            "type": "componentValue",
+                                            "valueName": "areaCode",
+                                            "dataType": "number"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
@@ -1856,38 +1850,59 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableSaveSuccess"
+                                            "senderId": "afterProvinceSaveSuccessfully"
                                         },
                                         {
                                             "name": "validation",
-                                            "senderId": "afterTableSaveValidation"
+                                            "senderId": "afterProvinceSaveValidation"
                                         },
                                         // {
                                         //     "name": "error",
-                                        //     "senderId": "data_table_sender_02"
+                                        //     "senderId": "grid_sender_03"
                                         // }
                                     ]
                                 },
                                 {
-                                    "id": "data_table_edit_actions_02",
-                                    "url": "table/update",
+                                    "id": "province_edit_1",
+                                    "url": "province/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
+                                            "name": "provinceName",
+                                            "type": "componentValue",
+                                            "valueName": "provinceName",
+                                            "dataType": "string"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "areaCode",
+                                            "type": "componentValue",
+                                            "valueName": "areaCode",
+                                            "dataType": "int"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate",
+                                            "dataType": "string"
+                                        },
+                                        {
                                             "name": "id",
                                             "type": "componentValue",
-                                            "valueName": "id"
-                                        },
-                                        {
-                                            "name": "tname",
-                                            "type": "componentValue",
-                                            "valueName": "tname"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
+                                            "valueName": "id",
+                                            "dataType": "string"
                                         }
                                     ],
                                     "outputParameters": [
@@ -1898,17 +1913,17 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableUpdateSuccess"
+                                            "senderId": "afterProvinceUpdateSuccessfully"
                                         },
                                         {
                                             "name": "validation",
                                             "senderId": "afterProvinceUpdateValidation"
-                                        }
+                                        },
                                     ]
                                 },
                                 {
-                                    "id": "data_table_delete_actions_03",
-                                    "url": "table/delete",
+                                    "id": "delete_province",
+                                    "url": "province/delete",
                                     "urlType": "inner",
                                     "ajaxType": "delete",
                                     "params": [
@@ -1922,19 +1937,14 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
 
                                     ],
                                     "result": [
-                                        {
-                                            "name": "data",
-                                            "showMessageWithNext": 0,
-                                            "message": "message.ajax.state.success",
-                                            "senderId": "afterTableDeleteSuccess"
-                                        },
+
                                     ]
                                 }
                             ],
                             "beforeTrigger": [
                                 {
-                                    "id": "before_delete_data_table",
-                                    "senderId": "view_data_table",
+                                    "id": "before_delete_province",
+                                    "senderId": "view_tree_01",
                                     "sendData": [
                                         {
                                             "receiverTriggerType": "ACTION",
@@ -1958,8 +1968,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "afterTrigger": [
                                 {
-                                    "id": "after_selected_row",
-                                    "senderId": "view_data_table",
+                                    "id": "",
+                                    "senderId": "view_tree_01",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -1968,9 +1978,14 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "receiverTrigger": "REFRESH_AS_CHILD",
                                             "params": [
                                                 {
-                                                    "name": "_pid",
+                                                    "name": "parent_id",
                                                     "type": "item",
                                                     "valueName": "id"
+                                                },
+                                                {
+                                                    "name": "parent_name",
+                                                    "type": "item",
+                                                    "valueName": "name"
                                                 }
                                             ]
                                         }
@@ -1996,69 +2011,46 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "toolbar_data_column",
+                            "id": "toolbar_002",
                             "component": "cnToolbar",
                             "size": "default",
                             "cascade": {
                                 "messageSender": [
-                                    // {
-                                    //     "id": "toolbar_data_columns_01",
-                                    //     "senderId": "view_data_columns",
-                                    //     "triggerType": "OPERATION",
-                                    //     "trigger": "EXECUTE_CHECKED_ROWS",
-                                    //     "triggerMoment": "after",
-                                    //     "sendData": [
-                                    //         {
-                                    //             "beforeSend": {},
-                                    //             "reveicerId": "",
-                                    //             "receiverTriggerType": "BEHAVIOR",
-                                    //             "receiverTrigger": "REFRESH_AS_CHILD",
-                                    //             "params": [
-                                    //                 {
-                                    //                     "name": "id",
-                                    //                     "type": "item",
-                                    //                     "valueName": "id"
-                                    //                 },
-                                    //                 {
-                                    //                     "name": "parent_name",
-                                    //                     "type": "item",
-                                    //                     "valueName": "name"
-                                    //                 }
-                                    //             ]
-                                    //         }
-                                    //     ]
-                                    // }
-                                ],
-                                "messageReceiver": [
                                     {
-                                        "id": "s_201",
-                                        "senderId": "view_data_columns",
-                                        "receiveData": [
+                                        "id": "toolbar_02",
+                                        "senderId": "view_02",
+                                        "triggerType": "OPERATION",
+                                        "trigger": "EXECUTE_CHECKED_ROWS",
+                                        "triggerMoment": "after",
+                                        "sendData": [
                                             {
-                                                "triggerType": "STATE",
-                                                "trigger": "STATE_TO_TEXT"
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "s_202",
-                                        "senderId": "view_data_columns",
-                                        "receiveData": [
-                                            {
-                                                "triggerType": "STATE",
-                                                "trigger": "STATE_TO_EDIT"
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "BEHAVIOR",
+                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                "params": [
+                                                    {
+                                                        "name": "parent_id",
+                                                        "type": "item",
+                                                        "valueName": "id"
+                                                    },
+                                                    {
+                                                        "name": "parent_name",
+                                                        "type": "item",
+                                                        "valueName": "name"
+                                                    }
+                                                ]
                                             }
                                         ]
                                     }
-
-                                ]
+                                ],
                             },
                             "changeValue": [
                                 {
                                     "id": "edit_form_changeValue",
                                     "params": [
                                         {
-                                            "name": "_columnId",
+                                            "name": "id",
                                             "type": "item",
                                             "valueName": "id",
                                             "valueTo": "tempValue"
@@ -2068,13 +2060,13 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "dialog": [
                                 {
-                                    "id": "edit_data_table_form",
+                                    "id": "edit_city_form",
                                     "type": "confirm",
                                     "title": "数据编辑",
                                     "cancelText": "取消",
                                     "okText": "提交",
                                     "form": {
-                                        "id": "form_data_table",
+                                        "id": "form_city",
                                         "type": "form",
                                         "component": "form",
                                         state: 'text',
@@ -2099,7 +2091,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                                 "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                             },
                                                             "control": {
-                                                                "id": "data_table_name_control"  // id 和引用id 值相同
+                                                                "id": "city_name"  // id 和引用id 值相同
                                                             }
                                                         }
                                                     ]
@@ -2107,13 +2099,13 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         formControls: [
                                             {
-                                                id: 'data_table_name_control',
+                                                id: 'city_name',
                                                 "hidden": true, // 字段是否隐藏
-                                                "title": '表名称',  // lable 信息
+                                                "title": '市名称',  // lable 信息
                                                 "titleConfig": {
                                                     required: true
                                                 },
-                                                "field": "tname",  // fromcontrol name  默认的字段
+                                                "field": "cityName",  // fromcontrol name  默认的字段
                                                 "labelSize": {
                                                     "span": 6,
                                                     "nzXs": { span: 6 },
@@ -2135,11 +2127,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
                                                 "text": { // 文本展示字段
                                                     "type": 'label', // 什么组件展示文本 
-                                                    "field": 'tname',   // 字段
+                                                    "field": 'cityName',   // 字段
                                                 },
                                                 "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                     "type": "input",
-                                                    "field": "tname",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                    "field": "cityName",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                     "placeholder": "请输入",
                                                     "validations": [  // 校验
                                                         { validator: "required", type: "default", "message": "请输入省名称" }
@@ -2147,7 +2139,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 }
                                             },
                                             {
-                                                id: 'data_table_id_control',
+                                                id: 'city_id',
                                                 "hidden": true, // 字段是否隐藏
                                                 "title": '区号',  // lable 信息
                                                 "titleConfig": {
@@ -2182,13 +2174,13 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 }
                                             },
                                             {
-                                                id: 'data_table_desc_control',
+                                                id: 'city_pid',
                                                 "hidden": true, // 字段是否隐藏
-                                                "title": '描述',  // lable 信息
+                                                "title": '区号',  // lable 信息
                                                 "titleConfig": {
                                                     required: false
                                                 },
-                                                "field": "descName",  // fromcontrol name  默认的字段
+                                                "field": "pId",  // fromcontrol name  默认的字段
                                                 "labelSize": {
                                                     "span": 6,
                                                     "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
@@ -2205,11 +2197,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
                                                 "text": { // 文本展示字段
                                                     "type": 'label', // 什么组件展示文本 
-                                                    "field": 'descName',   // 字段
+                                                    "field": 'pId',   // 字段
                                                 },
                                                 "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                     "type": "input",
-                                                    "field": "descName",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                    "field": "pId",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                     "placeholder": "请输入",
                                                     "validations": [  // 校验
 
@@ -2226,19 +2218,19 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     isDefault: true
                                                 },
                                                 Controls: [
-                                                    { id: 'data_table_name_control', state: "edit", hidden: false, readOnly: false }
+                                                    { id: 'city_name', state: "edit", hidden: false, readOnly: false }
                                                 ]
                                             },
                                             {
                                                 formState: "edit",
                                                 Controls: [
-                                                    { id: 'data_table_name_control', state: "edit", hidden: false, readOnly: false }
+                                                    { id: 'city_name', state: "edit", hidden: false, readOnly: false }
                                                 ]
                                             },
                                             {
                                                 formState: "text",
                                                 Controls: [
-                                                    { id: 'data_table_name_control', state: "text", hidden: false, readOnly: false }
+                                                    { id: 'city_name', state: "text", hidden: false, readOnly: false }
                                                 ]
                                             }
 
@@ -2246,12 +2238,12 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ajaxConfig: [
                                             {
                                                 "id": "loadform",
-                                                "url": "dataQuery/DM_TABLE/queryCondition",
+                                                "url": "/province/queryConditionA/CITY_SHEET",
                                                 "urlType": "inner",
                                                 "ajaxType": "get",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "ID",
                                                         "type": "tempValue",
                                                         "valueName": "id"
                                                     }
@@ -2269,7 +2261,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "condition": [
                                 {
-                                    "id": "add_data_table_condition_2",
+                                    "id": "add_state_2",
                                     "state": [
                                         {
                                             "type": "component",
@@ -2292,7 +2284,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_data_table_condition_2",
+                                    "id": "edit_state_2",
                                     "state": [
                                         {
                                             "type": "component",
@@ -2309,7 +2301,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "add_table_column_condition_none",
+                                    "id": "city_condition_added_none",
                                     "state": [
                                         {
                                             "type": "component",
@@ -2338,7 +2330,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_table_column_condition_none",
+                                    "id": "city_condition_edited_none",
                                     "state": [
                                         {
                                             "type": "component",
@@ -2367,7 +2359,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "data_table_condition_cancel",
+                                    "id": "cancel_edit_rows_2_2",
                                     "state": [
                                         {
                                             "type": "component",
@@ -2385,182 +2377,46 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 }
                             ],
                             "ajaxConfig": [
-                                // {
-                                //     "id": "form_add_data_table",
-                                //     "url": "dmtable/insert",
-                                //     "urlType": "inner",
-                                //     "ajaxType": "post",
-                                //     "params": [
-                                //         {
-                                //             "name": "tname",
-                                //             "type": "componentValue",
-                                //             "valueName": "tname"
-                                //         },
-                                //         {
-                                //             "name": "descName",
-                                //             "type": "componentValue",
-                                //             "valueName": "descName"
-                                //         },
-                                //         {
-                                //             "name": "id",
-                                //             "type": "GUID"
-                                //         }
-                                //     ],
-                                //     "outputParameters": [
-
-                                //     ],
-                                //     "result": [
-                                //         {
-                                //             "name": "data",
-                                //             "showMessageWithNext": 0,
-                                //             "message": "message.ajax.state.success",
-                                //             "senderId": "afterTableColumnSaveSuccess"
-                                //         },
-                                //         {
-                                //             "name": "validation",
-                                //             "message": "message.ajax.state.success",
-                                //             "senderId": "afterTableColumnSaveValidation"
-                                //         },
-                                //         {
-                                //             "name": "error",
-                                //             "senderId": "toolbar_data_columns_01"
-                                //         }
-                                //     ]
-                                // },
-                                // {
-                                //     "id": "form_edit_city",
-                                //     "url": "city/update",
-                                //     "urlType": "inner",
-                                //     "ajaxType": "put",
-                                //     "params": [
-                                //         {
-                                //             "name": "cityName",
-                                //             "type": "componentValue",
-                                //             "valueName": "cityName"
-                                //         },
-                                //         {
-                                //             "name": "zipCode",
-                                //             "type": "componentValue",
-                                //             "valueName": "zipCode"
-                                //         },
-                                //         {
-                                //             "name": "populationSize",
-                                //             "type": "componentValue",
-                                //             "valueName": "populationSize"
-                                //         },
-                                //         {
-                                //             "name": "directlyUnder",
-                                //             "type": "componentValue",
-                                //             "valueName": "directlyUnder"
-                                //         },
-                                //         {
-                                //             "name": "createDate",
-                                //             "type": "componentValue",
-                                //             "valueName": "createDate"
-                                //         },
-                                //         {
-                                //             "name": "pId",
-                                //             "type": "componentValue",
-                                //             "valueName": "pId"
-                                //         },
-                                //         {
-                                //             "name": "id",
-                                //             "type": "componentValue",
-                                //             "valueName": "id"
-                                //         }
-                                //     ],
-                                //     "outputParameters": [
-
-                                //     ],
-                                //     "result": [
-                                //         {
-                                //             "name": "data",
-                                //             "showMessageWithNext": 0,
-                                //             "message": "message.ajax.state.success",
-                                //             "senderId": "afterCityUpdateFormSuccessfully"
-                                //         },
-                                //         {
-                                //             "name": "validation",
-                                //             "showMessageWithNext": 0,
-                                //             "message": "message.ajax.state.success",
-                                //             "senderId": "afterCityUpdateFormValidation"
-                                //         },
-                                //         {
-                                //             "name": "error",
-                                //             "senderId": "toolbar_data_columns_01"
-                                //         }
-                                //     ]
-                                // },
                                 {
-                                    "id": "add_table_columns",
-                                    "url": "column/batchInsert",
+                                    "id": "form_add_city",
+                                    "url": "city/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
+                                            "name": "cityName",
+                                            "type": "componentValue",
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
+                                            "type": "componentValue",
+                                            "valueName": "pId"
+                                        },
+                                        {
                                             "name": "id",
                                             "type": "componentValue",
                                             "valueName": "id"
-                                        },
-                                        {
-                                            "name": "tableId",
-                                            "type": "tempValue",
-                                            "valueName": "_tableId"
-                                        },
-                                        {
-                                            "name": "cname",
-                                            "type": "componentValue",
-                                            "valueName": "cname"
-                                        },
-                                        {
-                                            "name": "isNullable",
-                                            "type": "componentValue",
-                                            "valueName": "isNullable",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "isUnique",
-                                            "type": "componentValue",
-                                            "valueName": "isUnique",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "isValidate",
-                                            "type": "componentValue",
-                                            "valueName": "isValidate",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "defaultValue",
-                                            "type": "componentValue",
-                                            "valueName": "defaultValue"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
-                                            "name": "datatype",
-                                            "type": "componentValue",
-                                            "valueName": "datatype"
-                                        },
-                                        {
-                                            "name": "orderCode",
-                                            "type": "componentValue",
-                                            "valueName": "orderCode",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "precision",
-                                            "type": "componentValue",
-                                            "valueName": "precision",
-                                            "dataType": "float"
-                                        },
-                                        {
-                                            "name": "length",
-                                            "type": "componentValue",
-                                            "valueName": "length"
                                         }
                                     ],
                                     "outputParameters": [
@@ -2571,7 +2427,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableColumnSaveSuccess"
+                                            "senderId": "afterOfficeSaveSuccessfully"
                                         },
                                         {
                                             "name": "validation",
@@ -2580,80 +2436,50 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "name": "error",
-                                            "senderId": "toolbar_data_columns_01"
+                                            "senderId": "toolbar_02"
                                         }
                                     ]
                                 },
                                 {
-                                    "id": "edit_table_columns",
-                                    "url": "column/batchUpdate",
+                                    "id": "form_edit_city",
+                                    "url": "city/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
+                                            "name": "cityName",
+                                            "type": "componentValue",
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
+                                            "type": "componentValue",
+                                            "valueName": "pId"
+                                        },
+                                        {
                                             "name": "id",
                                             "type": "componentValue",
                                             "valueName": "id"
-                                        },
-                                        {
-                                            "name": "tableId",
-                                            "type": "tempValue",
-                                            "valueName": "_tableId"
-                                        },
-                                        {
-                                            "name": "cname",
-                                            "type": "componentValue",
-                                            "valueName": "cname"
-                                        },
-                                        {
-                                            "name": "isNullable",
-                                            "type": "componentValue",
-                                            "valueName": "isNullable",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "isUnique",
-                                            "type": "componentValue",
-                                            "valueName": "isUnique",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "isValidate",
-                                            "type": "componentValue",
-                                            "valueName": "isValidate",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "defaultValue",
-                                            "type": "componentValue",
-                                            "valueName": "defaultValue"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
-                                            "name": "datatype",
-                                            "type": "componentValue",
-                                            "valueName": "datatype"
-                                        },
-                                        {
-                                            "name": "orderCode",
-                                            "type": "componentValue",
-                                            "valueName": "orderCode",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "precision",
-                                            "type": "componentValue",
-                                            "valueName": "precision",
-                                            "dataType": "float"
-                                        },
-                                        {
-                                            "name": "length",
-                                            "type": "componentValue",
-                                            "valueName": "length"
                                         }
                                     ],
                                     "outputParameters": [
@@ -2664,29 +2490,59 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableColumnUpdateSuccess"
+                                            "senderId": "afterCityUpdateFormSuccessfully"
                                         },
                                         {
                                             "name": "validation",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableColumnUpdateValidation"
+                                            "senderId": "afterCityUpdateFormValidation"
                                         },
                                         {
                                             "name": "error",
-                                            "senderId": "toolbar_data_columns_01"
+                                            "senderId": "toolbar_02"
                                         }
                                     ]
                                 },
                                 {
-                                    "id": "column_batch_delete_1",
-                                    "url": "column/delete",
+                                    "id": "add_cities_1",
+                                    "url": "city/insertMany",
                                     "urlType": "inner",
-                                    "ajaxType": "delete",
+                                    "ajaxType": "post",
                                     "params": [
                                         {
+                                            "name": "cityName",
+                                            "type": "componentValue",
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
+                                            "type": "tempValue",
+                                            "valueName": "_PID"
+                                        },
+                                        {
                                             "name": "id",
-                                            "type": "checkedItem",
+                                            "type": "componentValue",
                                             "valueName": "id"
                                         }
                                     ],
@@ -2698,7 +2554,80 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterColumnDeleteSuccess"
+                                            "senderId": "afterOfficeSaveSuccessfully"
+                                        },
+                                        {
+                                            "name": "validation",
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCitySaveValidation"
+                                        },
+                                        {
+                                            "name": "error",
+                                            "senderId": "toolbar_02"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "id": "edit_cities_1",
+                                    "url": "city/updateMany",
+                                    "urlType": "inner",
+                                    "ajaxType": "put",
+                                    "params": [
+                                        {
+                                            "name": "cityName",
+                                            "type": "componentValue",
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
+                                            "type": "tempValue",
+                                            "valueName": "_PID"
+                                        },
+                                        {
+                                            "name": "id",
+                                            "type": "componentValue",
+                                            "valueName": "id"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCityUpdateSuccessfully"
+                                        },
+                                        {
+                                            "name": "validation",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterCityUpdateValidation"
+                                        },
+                                        {
+                                            "name": "error",
+                                            "senderId": "toolbar_02"
                                         }
                                     ]
                                 }
@@ -2709,7 +2638,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "afterTrigger": [
                                 {
                                     "id": "",
-                                    "senderId": "view_data_columns",
+                                    "senderId": "view_02",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -2734,7 +2663,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "toolbar": [
                                 {
-                                    "targetViewId": "view_data_columns",
+                                    "targetViewId": "view_02",
                                     "group": [
                                         {
                                             "id": "M_refresh",
@@ -2752,7 +2681,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "M_addRow",
-                                            "text": "新增列",
+                                            "text": "新增",
                                             "icon": "plus",
                                             "color": "text-primary",
                                             "hidden": false,
@@ -2767,7 +2696,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "M_updateRow",
-                                            "text": "编辑列",
+                                            "text": "修改",
                                             "icon": "edit",
                                             "color": "text-success",
                                             "hidden": false,
@@ -2796,8 +2725,62 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             }
                                         },
                                         {
+                                            "id": "M_addRowForm",
+                                            "text": "表单新增",
+                                            "state": "new",
+                                            "icon": "plus",
+                                            "color": "text-primary",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "ACTION",
+                                                    "trigger": "DIALOG",
+                                                    // "conditionId": "add_state_1"
+                                                    "dialogId": "edit_city_form",
+                                                    "ajaxId": "form_add_city",
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "M_editRowForm",
+                                            "text": "表单更新",
+                                            "state": "edit",
+                                            "icon": "edit",
+                                            "color": "text-primary",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "ACTION",
+                                                    "trigger": "DIALOG",
+                                                    // "conditionId": "add_state_1"
+                                                    "dialogId": "edit_city_form",
+                                                    "ajaxId": "form_edit_city",
+                                                    "changeValueId": "edit_form_changeValue"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "M_deleteRow",
+                                            "text": "删除",
+                                            "icon": "delete",
+                                            "color": "text-red-light",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                    "conditionId": "delete_operation_2",
+                                                    "ajaxId": "delete_row_2"
+                                                }
+                                            ]
+                                        },
+                                        {
                                             "id": "M_saveRow",
                                             "text": "保存",
+                                            "state": "edit",
                                             "icon": "save",
                                             "color": "text-primary",
                                             "hidden": true,
@@ -2806,16 +2789,16 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 {
                                                     "triggerType": "OPERATION",
                                                     "trigger": "SAVE_ROWS",
-                                                    "ajaxId": "add_table_columns",
+                                                    "ajaxId": "add_cities_1",
                                                     // "stateId": "add_save_1",
-                                                    "conditionId": "add_table_column_condition_none"
+                                                    "conditionId": "city_condition_added_none"
                                                 },
                                                 {
                                                     "triggerType": "OPERATION",
                                                     "trigger": "SAVE_ROWS",
-                                                    "ajaxId": "edit_table_columns",
+                                                    "ajaxId": "edit_cities_1",
                                                     // "stateId": "edit_save_1",
-                                                    "conditionId": "edit_table_column_condition_none"
+                                                    "conditionId": "city_condition_edited_none"
                                                 }
                                             ],
                                             "toggle": {
@@ -2837,62 +2820,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 ]
                                             }
                                         },
-                                        // {
-                                        //     "id": "M_addRowForm",
-                                        //     "text": "表单新增",
-                                        //     "state": "new",
-                                        //     "icon": "plus",
-                                        //     "color": "text-primary",
-                                        //     "hidden": false,
-                                        //     "disabled": false,
-                                        //     "execute": [
-                                        //         {
-                                        //             "triggerType": "ACTION",
-                                        //             "trigger": "DIALOG",
-                                        //             // "conditionId": "add_state_1"
-                                        //             "dialogId": "edit_data_table_form",
-                                        //             "ajaxId": "form_add_data_table",
-                                        //         }
-                                        //     ]
-                                        // },
-                                        // {
-                                        //     "id": "M_editRowForm",
-                                        //     "text": "表单更新",
-                                        //     "state": "edit",
-                                        //     "icon": "edit",
-                                        //     "color": "text-primary",
-                                        //     "hidden": false,
-                                        //     "disabled": false,
-                                        //     "execute": [
-                                        //         {
-                                        //             "triggerType": "ACTION",
-                                        //             "trigger": "DIALOG",
-                                        //             // "conditionId": "add_state_1"
-                                        //             "dialogId": "edit_data_table_form",
-                                        //             "ajaxId": "form_edit_city",
-                                        //             "changeValueId": "edit_form_changeValue"
-                                        //         }
-                                        //     ]
-                                        // },
-                                        {
-                                            "id": "M_deleteRow",
-                                            "text": "删除",
-                                            "icon": "delete",
-                                            "color": "text-red-light",
-                                            "hidden": false,
-                                            "disabled": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "OPERATION",
-                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
-                                                    // "conditionId": "delete_operation_2",
-                                                    "ajaxId": "column_batch_delete_1"
-                                                }
-                                            ]
-                                        },
                                         {
                                             "id": "M_cancelrow",
-                                            "text": "取消",
+                                            "text": "取消1",
                                             "state": "edit",
                                             "icon": "rollback",
                                             "color": "text-grey-darker",
@@ -2902,7 +2832,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 {
                                                     "triggerType": "STATE",
                                                     "trigger": "CANCEL_EDIT_ROWS",
-                                                    "conditionId": "data_table_condition_cancel"
+                                                    "conditionId": "cancel_edit_rows_2_2"
                                                 },
                                                 {
                                                     "triggerType": "STATE",
@@ -2931,7 +2861,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "targetViewId": "view_data_columns",
+                                    "targetViewId": "view_02",
                                     "group": [
                                         {
                                             "name": "M_addSearchRow",
@@ -2988,34 +2918,29 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "view_data_columns",
-                            "title": "建模列",
+                            "id": "view_02",
+                            "title": "子表",
                             "titleIcon": "right-circle",
                             "component": "cnDataTable",
-                            "keyId": "id",
-                            "size": "small",
+                            "keyId": "ID",
+                            "size": "middle",
                             "isBordered": true,
                             "isFrontPagination": false,
                             "isPagination": true,
                             "isShowSizeChanger": true,
                             "showTotal": true,
-                            "pageSize": 10,
+                            "pageSize": 5,
                             "showCheckBox": true,
                             "pageSizeOptions": [10, 20, 50, 100],
                             "loadingOnInit": false,
                             "loadingConfig": {
-                                "url": "td/DM_COLUMN/query",
+                                "url": "province/queryCondition/OFFICE_SHEET",
                                 "method": "get",
                                 "params": [
                                     {
-                                        "name": "tableId",
+                                        "name": "PID",
                                         "type": "tempValue",
-                                        "valueName": "_tableId"
-                                    },
-                                    {
-                                        "name": "_mapToObject",
-                                        "type": "value",
-                                        "value": true
+                                        "valueName": "PID"
                                     }
                                 ],
                                 "filter": [
@@ -3024,402 +2949,41 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             },
                             "columns": [
                                 {
-                                    "title": "id",
+                                    "title": "ID",
                                     "type": "field",
-                                    "field": "id",
-                                    "hidden": true,
+                                    "field": "ID",
+                                    "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "isShowExpand": false,
                                     "width": "50px",
                                     "style": {}
                                 },
                                 {
-                                    "title": "tableId",
+                                    "title": "PID",
                                     "type": "field",
-                                    "field": "tableId",
-                                    "hidden": true,
+                                    "field": "PID",
+                                    "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
-                                    "isShowExpand": false,
                                     "width": "50px",
                                     "style": {}
                                 },
                                 {
-                                    "title": "列名",
+                                    "title": "OFFICE_NAME",
                                     "type": "field",
-                                    "field": "cname",
+                                    "field": "OFFICENAME",
                                     "hidden": false,
                                     "showFilter": false,
                                     "showSort": false,
                                     "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "input",
-                                        "field": "cname"
-                                    }
-                                },
-                                {
-                                    "title": "描述",
-                                    "type": "field",
-                                    "field": "descName",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "input",
-                                        "field": "descName"
-                                    }
-                                },
-                                {
-                                    "title": "数据类型",
-                                    "type": "field",
-                                    "field": "datatype",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "select",
-                                        "field": "datatype",
-                                        "placeholder": "请输入",
-                                        "defaultValue": "string",
-                                        "options": [
-                                            { "label": 'string', "value": "string" },
-                                            { "label": 'nstring', "value": "nstring" },
-                                            { "label": 'char', "value": "char" },
-                                            { "label": "nchar", "value": "nchar" },
-                                            { "label": 'byte', "value": "byte" },
-                                            { "label": 'short', "value": "short" },
-                                            { "label": 'integer', "value": "integer" },
-                                            { "label": "float", "value": "float" },
-                                            { "label": 'double', "value": "double" },
-                                            { "label": 'date', "value": "date" },
-                                            { "label": 'clob', "value": "clob" },
-                                            { "label": "blob", "value": "blob" }
-                                        ],
-                                        "labelName": 'label',
-                                        "valueName": 'value'
-                                    }
-                                },
-                                {
-                                    "title": "长度",
-                                    "type": "field",
-                                    "field": "length",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "input",
-                                        "field": "length"
-                                    }
-                                },
-                                {
-                                    "title": "默认值",
-                                    "type": "field",
-                                    "field": "defaultValue",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "input",
-                                        "field": "defautValue"
-                                    }
-                                },
-                                {
-                                    "title": "精度",
-                                    "type": "field",
-                                    "field": "precision",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "input",
-                                        "field": "precision"
-                                    }
-                                },
-                                {
-                                    "title": "是否为空",
-                                    "type": "field",
-                                    "field": "isNullable",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "select",
-                                        "field": "isNullable",
-                                        // "placeholder": "请输入",
-                                        "defaultValue": 1,
-                                        "options": [
-                                            { "label": '不为空', "value": 0 },
-                                            { "label": '可为空', "value": 1 },
-                                        ],
-                                        "labelName": 'label',
-                                        "valueName": 'value',
-                                    }
-                                },
-                                {
-                                    "title": "是否唯一",
-                                    "type": "field",
-                                    "field": "isUnique",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "select",
-                                        "field": "isUnique",
-                                        // "placeholder": "请输入",
-                                        "defaultValue": 0,
-                                        "options": [
-                                            { "label": '不唯一', "value": 0 },
-                                            { "label": '唯一', "value": 1 },
-                                        ],
-                                        "labelName": 'label',
-                                        "valueName": 'value',
-                                    }
-                                },
-                                {
-                                    "title": "是否可用",
-                                    "type": "field",
-                                    "field": "isValidate",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "select",
-                                        "field": "isValidate",
-                                        // "placeholder": "请输入",
-                                        "defaultValue": 1,
-                                        "options": [
-                                            { "label": '不可用', "value": 0 },
-                                            { "label": '可用', "value": 1 },
-                                        ],
-                                        "labelName": 'label',
-                                        "valueName": 'value',
-                                    }
-                                },
-                                {
-                                    "title": "排序编号",
-                                    "type": "field",
-                                    "field": "orderCode",
-                                    "hidden": false,
-                                    "showFilter": false,
-                                    "showSort": false,
-                                    "width": "100px",
-                                    "style": {},
-                                    "editor": {
-                                        "type": "input",
-                                        "field": "orderCode"
-                                    }
-                                },
-                                {
-                                    "title": "ACTION",
-                                    "type": "action",
-                                    "width": "150px",
-                                    "actionIds": [
-                                        "column_new_row", "column_cancel_new_row", "column_edit", "column_save", "column_cancel", "column_delete"
-                                    ]
-                                }
-                            ],
-                            "rowActions": [
-                                {
-                                    "id": "column_new_row",
-                                    "state": "new",
-                                    "text": "保存",
-                                    "icon": "save",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": false,
-                                    "execute": [
-                                        {
-                                            "triggerType": "OPERATION",
-                                            "trigger": "SAVE_ROW",
-                                            "ajaxId": "add_column_1",
-                                            // "stateId": "add_save_1",
-                                            // "conditionId": "add_save_1"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "new",
-                                                "value": false
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": true
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "column_cancel_new_row",
-                                    "state": "new",
-                                    "text": "取消",
-                                    "icon": "rollback",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": false,
-                                    "execute": [
-                                        {
-                                            "triggerType": "STATE",
-                                            "trigger": "CANCEL_NEW_ROW",
-                                            // "ajaxId": "add_save_1",
-                                            // "stateId": "add_save_1",
-                                            // "conditionId": "add_save_1"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "new",
-                                                "value": false
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": true
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "column_edit",
-                                    "state": "text",
-                                    "text": "编辑",
-                                    "icon": "save",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": false,
-                                    "execute": [
-                                        {
-                                            "triggerType": "STATE",
-                                            "trigger": "EDIT_ROW"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "edit",
-                                                "value": true
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": false
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "column_save",
-                                    "text": "保存",
-                                    "state": "text",
-                                    "icon": "save",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": true,
-                                    "execute": [
-                                        {
-                                            "triggerType": "OPERATION",
-                                            "trigger": "SAVE_ROW",
-                                            "ajaxId": "edit_column_1",
-                                            // "stateId": "add_save_1",
-                                            // "conditionId": "add_save_1"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "edit",
-                                                "value": false
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": true
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "column_cancel",
-                                    "state": "text",
-                                    "text": "取消",
-                                    "icon": "rollback",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": true,
-                                    "execute": [
-                                        {
-                                            "triggerType": "STATE",
-                                            "trigger": "CANCEL_EDIT_ROW"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "edit",
-                                                "value": false
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": true
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "column_delete",
-                                    "text": "删除",
-                                    "state": "text",
-                                    "icon": "delete",
-                                    "type": "link",
-                                    "color": "primary",
-                                    "size": "small",
-                                    "hidden": false,
-                                    "execute": [
-                                        {
-                                            "triggerType": "OPERATION",
-                                            "trigger": "EXECUTE_SELECTED_ROW",
-                                            // "conditionId": "delete_operation_1",
-                                            "ajaxId": "column_delete_1"
-                                        }
-                                    ]
+                                    "style": {}
                                 }
                             ],
                             "cascade": {
                                 "messageSender": [
                                     {
                                         "id": "view2_sender_1",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROW",
                                         "triggerMoment": "asyncAfter",
@@ -3431,7 +2995,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_columns",
+                                                        "value": "view_02",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -3440,7 +3004,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "view2_sender_2",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROWS",
                                         "triggerMoment": "asyncAfter",
@@ -3452,7 +3016,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_columns",
+                                                        "value": "view_02",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -3461,7 +3025,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "view2_sender_3",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_EDIT_ROW",
                                         "triggerMoment": "after",
@@ -3470,11 +3034,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "STATE",
                                                 "receiverTrigger": "STATE_TO_TEXT",
-                                                "conditionId": "cancel_edit_data_tables",
+                                                "conditionId": "cancel_edit_cities",
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_columns",
+                                                        "value": "view_02",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -3483,7 +3047,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "view2_sender_04",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_NEW_ROW",
                                         "triggerMoment": "after",
@@ -3492,11 +3056,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "STATE",
                                                 "receiverTrigger": "STATE_TO_TEXT",
-                                                "conditionId": "cancel_add_data_tables",
+                                                "conditionId": "cancel_add_cities",
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_columns",
+                                                        "value": "view_02",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -3504,8 +3068,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "data_table_sender_04",
-                                        "senderId": "view_data_columns",
+                                        "id": "grid_sender_05",
+                                        "senderId": "view_02",
                                         "triggerType": "STATE",
                                         "trigger": "EDIT_ROW",
                                         "triggerMoment": "after",
@@ -3517,7 +3081,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_columns",
+                                                        "value": "view_02",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -3525,8 +3089,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "data_table_sender_07",
-                                        "senderId": "view_data_columns",
+                                        "id": "grid_sender_08",
+                                        "senderId": "view_02",
                                         "triggerType": "ACTION",
                                         "trigger": "CONFIRM",
                                         "triggerMoment": "after",
@@ -3538,7 +3102,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_data_table",
+                                                        "value": "view_tree_01",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -3546,8 +3110,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterTableColumnSaveSuccess",
-                                        "senderId": "view_data_columns",
+                                        "id": "afterOfficeSaveSuccessfully",
+                                        "senderId": "view_02",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -3564,9 +3128,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "value": "success"
                                                     },
                                                     {
-                                                        "name": "message",
+                                                        "name": "code",
                                                         "type": "value",
-                                                        "value": "操作完成!"
+                                                        "value": "message.operation.success"
                                                     },
                                                 ]
                                             },
@@ -3574,20 +3138,30 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "beforeSend": {},
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+                                                "receiverTrigger": "APPEND_CHILD_TO_SELECTED_NODE",
                                                 "params": [
                                                     {
-                                                        "name": "id",
+                                                        "name": "key",
                                                         "type": "addedRows",
-                                                        "valueName": "id"
+                                                        "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "parentId",
+                                                        "type": "addedRows",
+                                                        "valueName": "PID"
+                                                    },
+                                                    {
+                                                        "name": "parentId",
+                                                        "type": "addedRows",
+                                                        "valueName": "PID"
                                                     }
                                                 ]
                                             }
                                         ]
                                     },
                                     {
-                                        "id": "afterTableColumnUpdateSuccess",
-                                        "senderId": "view_data_columns",
+                                        "id": "afterCityUpdateSuccessfully",
+                                        "senderId": "view_02",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -3627,7 +3201,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterCitySaveValidation",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -3639,7 +3213,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterCityUpdateValidation",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -3651,7 +3225,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterCityUpdateFormSuccessfully",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -3670,7 +3244,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     {
                                                         "name": "code",
                                                         "type": "value",
-                                                        "value": "operation.code.success"
+                                                        "value": "operation..code.success"
                                                     }
                                                 ]
                                             },
@@ -3691,7 +3265,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "afterCityUpdateFormValidation",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -3718,51 +3292,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             }
                                         ]
                                     },
-                                    {
-                                        "id": "afterColumnDeleteSuccess",
-                                        "senderId": "view_data_columns",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
-                                        "sendData": [
-                                            {
-                                                "beforeSend": {},
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "MESSAGE",
-                                                "params": [
-                                                    {
-                                                        "name": "type",
-                                                        "type": "value",
-                                                        "value": "success"
-                                                    },
-                                                    {
-                                                        "name": "code",
-                                                        "type": "value",
-                                                        "value": "message.operation.success"
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "beforeSend": {},
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "DELETE_CHECKED_ROWS",
-                                                "params": [
-                                                    {
-                                                        "name": "ids",
-                                                        "type": "returnValue",
-                                                        "valueName": "ids"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
                                 ],
                                 "messageReceiver": [
                                     {
                                         "id": "",
-                                        "senderId": "view_data_table",
+                                        "senderId": "view_tree_01",
                                         "receiveData": [
                                             {
                                                 "beforeReceive": [],
@@ -3770,8 +3304,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "trigger": "REFRESH_AS_CHILD",
                                                 "params": [
                                                     {
-                                                        "pname": "_tableId",
-                                                        "cname": "_tableId",
+                                                        "pname": "PID",
+                                                        "cname": "PID",
                                                         "valueTo": "tempValue"
                                                     }
                                                 ]
@@ -3780,7 +3314,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     },
                                     {
                                         "id": "",
-                                        "senderId": "view_data_columns",
+                                        "senderId": "view_02",
                                         "receiveData": [
                                             {
                                                 "beforeReceive": [],
@@ -3797,7 +3331,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             {
                                                 "beforeReceive": [],
                                                 "triggerType": "ACTION",
-                                                "trigger": "CHANGE_ADDED_ROWS_TO_TEXT"
+                                                "trigger": "APPEND_CHILD_TO_SELECTED_NODE"
                                                 // "params": [
                                                 //     {
                                                 //         "pname": "name",
@@ -3832,11 +3366,6 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "beforeReceive": [],
                                                 "triggerType": "ACTION",
                                                 "trigger": "LOAD_REFRESH_DATA"
-                                            },
-                                            {
-                                                "beforeReceive": [],
-                                                "triggerType": "ACTION",
-                                                "trigger": "DELETE_CHECKED_ROWS"
                                             }
                                         ]
                                     }
@@ -3844,7 +3373,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             },
                             "condition": [
                                 {
-                                    "id": "add_table_column_state",
+                                    "id": "add_cities_state",
                                     "state": [
                                         {
                                             "type": "component",
@@ -3867,7 +3396,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_table_column_state",
+                                    "id": "edit_cities_state",
                                     "state": [
                                         {
                                             "type": "component",
@@ -3884,7 +3413,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "add_table_column_condition",
+                                    "id": "add_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -3913,7 +3442,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "edit_table_column_condition",
+                                    "id": "edit_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -3942,7 +3471,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "cancel_edit_table_column",
+                                    "id": "cancel_edit_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -3959,7 +3488,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "cancel_add_table_column",
+                                    "id": "cancel_add_cities",
                                     "state": [
                                         {
                                             "type": "component",
@@ -3979,8 +3508,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                             ],
                             "ajaxConfig": [
                                 {
-                                    "id": "add_column_1",
-                                    "url": "column/insert",
+                                    "id": "add_city_1",
+                                    "url": "city/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -3990,61 +3519,35 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "valueName": "id"
                                         },
                                         {
-                                            "name": "tableId",
+                                            "name": "cityName",
+                                            "type": "componentValue",
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
                                             "type": "tempValue",
-                                            "valueName": "_tableId"
-                                        },
-                                        {
-                                            "name": "cname",
-                                            "type": "componentValue",
-                                            "valueName": "cname"
-                                        },
-                                        {
-                                            "name": "isNullable",
-                                            "type": "componentValue",
-                                            "valueName": "isNullable"
-                                        },
-                                        {
-                                            "name": "isUnique",
-                                            "type": "componentValue",
-                                            "valueName": "isUnique"
-                                        },
-                                        {
-                                            "name": "isValidate",
-                                            "type": "componentValue",
-                                            "valueName": "isValidate"
-                                        },
-                                        {
-                                            "name": "defaultValue",
-                                            "type": "componentValue",
-                                            "valueName": "defaultValue"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
-                                            "name": "datatype",
-                                            "type": "componentValue",
-                                            "valueName": "datatype"
-                                        },
-                                        {
-                                            "name": "orderCode",
-                                            "type": "componentValue",
-                                            "valueName": "orderCode"
-                                        },
-                                        {
-                                            "name": "precision",
-                                            "type": "componentValue",
-                                            "valueName": "precision"
-                                        },
-                                        {
-                                            "name": "length",
-                                            "type": "componentValue",
-                                            "valueName": "length"
+                                            "valueName": "_PID"
                                         }
-
                                     ],
                                     "outputParameters": [
 
@@ -4054,86 +3557,60 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableColumnSaveSuccess"
+                                            "senderId": "afterOfficeSaveSuccessfully"
                                         },
                                         {
                                             "name": "validation",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableColumnSaveValidation"
+                                            "senderId": "afterCitySaveValidation"
                                         },
                                         // {
                                         //     "name": "error",
-                                        //     "senderId": "data_table_sender_02"
+                                        //     "senderId": "grid_sender_03"
                                         // }
                                     ]
                                 },
                                 {
-                                    "id": "edit_column_1",
-                                    "url": "column/update",
+                                    "id": "edit_city_1",
+                                    "url": "city/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
+                                            "name": "cityName",
+                                            "type": "componentValue",
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
+                                            "type": "tempValue",
+                                            "valueName": "_PID"
+                                        },
+                                        {
                                             "name": "id",
                                             "type": "componentValue",
                                             "valueName": "id"
-                                        },
-                                        {
-                                            "name": "tableId",
-                                            "type": "tempValue",
-                                            "valueName": "tableId"
-                                        },
-                                        {
-                                            "name": "cname",
-                                            "type": "componentValue",
-                                            "valueName": "cname"
-                                        },
-                                        {
-                                            "name": "isNullable",
-                                            "type": "componentValue",
-                                            "valueName": "isNullable"
-                                        },
-                                        {
-                                            "name": "isUnique",
-                                            "type": "componentValue",
-                                            "valueName": "isUnique"
-                                        },
-                                        {
-                                            "name": "isValidate",
-                                            "type": "componentValue",
-                                            "valueName": "isValidate"
-                                        },
-                                        {
-                                            "name": "defaultValue",
-                                            "type": "componentValue",
-                                            "valueName": "defaultValue"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
-                                            "name": "datatype",
-                                            "type": "componentValue",
-                                            "valueName": "datatype"
-                                        },
-                                        {
-                                            "name": "orderCode",
-                                            "type": "componentValue",
-                                            "valueName": "orderCode",
-                                            "dataType": "ingeter"
-                                        },
-                                        {
-                                            "name": "precision",
-                                            "type": "componentValue",
-                                            "valueName": "precision"
-                                        },
-                                        {
-                                            "name": "length",
-                                            "type": "componentValue",
-                                            "valueName": "length"
                                         }
                                     ],
                                     "outputParameters": [
@@ -4144,84 +3621,60 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableColumnUpdateSuccess"
+                                            "senderId": "afterCityUpdateSuccessfully"
                                         },
                                         {
                                             "name": "validation",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterTableColumnUpdateValidation"
+                                            "senderId": "afterCityUpdateValidation"
                                         },
                                         {
                                             "name": "error",
-                                            "senderId": "toolbar_data_columns_01"
+                                            "senderId": "toolbar_02"
                                         }
                                     ]
                                 },
                                 {
-                                    "id": "add_table_column",
-                                    "url": "column/insert",
+                                    "id": "add_cities_1",
+                                    "url": "city/insertMany",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
                                             "name": "id",
-                                            "type": "GUID"
+                                            "type": "componentValue",
+                                            "valueName": "id"
                                         },
                                         {
-                                            "name": "tableId",
+                                            "name": "cityName",
+                                            "type": "componentValue",
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate"
+                                        },
+                                        {
+                                            "name": "pId",
                                             "type": "tempValue",
-                                            "valueName": "tableId"
-                                        },
-                                        {
-                                            "name": "cname",
-                                            "type": "componentValue",
-                                            "valueName": "cname"
-                                        },
-                                        {
-                                            "name": "isNullable",
-                                            "type": "componentValue",
-                                            "valueName": "isNullable"
-                                        },
-                                        {
-                                            "name": "isUnique",
-                                            "type": "componentValue",
-                                            "valueName": "isUnique"
-                                        },
-                                        {
-                                            "name": "isValidate",
-                                            "type": "componentValue",
-                                            "valueName": "isValidate"
-                                        },
-                                        {
-                                            "name": "defaultValue",
-                                            "type": "componentValue",
-                                            "valueName": "defaultValue"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
-                                            "name": "datatype",
-                                            "type": "componentValue",
-                                            "valueName": "datatype"
-                                        },
-                                        {
-                                            "name": "orderCode",
-                                            "type": "componentValue",
-                                            "valueName": "orderCode"
-                                        },
-                                        {
-                                            "name": "precision",
-                                            "type": "componentValue",
-                                            "valueName": "precision"
-                                        },
-                                        {
-                                            "name": "length",
-                                            "type": "componentValue",
-                                            "valueName": "length"
+                                            "valueName": "_PID"
                                         }
                                     ],
                                     "outputParameters": [
@@ -4236,80 +3689,54 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         // {
                                         //     "name": "validation",
-                                        //     "senderId": "data_table_sender_01"
+                                        //     "senderId": "grid_sender_02"
                                         // },
                                         // {
                                         //     "name": "error",
-                                        //     "senderId": "data_table_sender_02"
+                                        //     "senderId": "grid_sender_03"
                                         // }
                                     ]
                                 },
                                 {
-                                    "id": "edit_table_columns_1",
-                                    "url": "column/batchUpdate",
+                                    "id": "edit_cities_1",
+                                    "url": "city/updateMany",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
+                                        {
+                                            "name": "cityName",
+                                            "type": "componentValue",
+                                            "valueName": "cityName"
+                                        },
+                                        {
+                                            "name": "zipCode",
+                                            "type": "componentValue",
+                                            "valueName": "zipCode"
+                                        },
+                                        {
+                                            "name": "populationSize",
+                                            "type": "componentValue",
+                                            "valueName": "populationSize"
+                                        },
+                                        {
+                                            "name": "directlyUnder",
+                                            "type": "componentValue",
+                                            "valueName": "directlyUnder"
+                                        },
+                                        {
+                                            "name": "createDate",
+                                            "type": "componentValue",
+                                            "valueName": "createDate"
+                                        },
                                         {
                                             "name": "id",
                                             "type": "componentValue",
                                             "valueName": "id"
                                         },
                                         {
-                                            "name": "tableId",
+                                            "name": "pId",
                                             "type": "tempValue",
-                                            "valueName": "tableId"
-                                        },
-                                        {
-                                            "name": "cname",
-                                            "type": "componentValue",
-                                            "valueName": "cname"
-                                        },
-                                        {
-                                            "name": "isNullable",
-                                            "type": "componentValue",
-                                            "valueName": "isNullable"
-                                        },
-                                        {
-                                            "name": "isUnique",
-                                            "type": "componentValue",
-                                            "valueName": "isUnique"
-                                        },
-                                        {
-                                            "name": "isValidate",
-                                            "type": "componentValue",
-                                            "valueName": "isValidate"
-                                        },
-                                        {
-                                            "name": "defaultValue",
-                                            "type": "componentValue",
-                                            "valueName": "defaultValue"
-                                        },
-                                        {
-                                            "name": "descName",
-                                            "type": "componentValue",
-                                            "valueName": "descName"
-                                        },
-                                        {
-                                            "name": "datatype",
-                                            "type": "componentValue",
-                                            "valueName": "datatype"
-                                        },
-                                        {
-                                            "name": "orderCode",
-                                            "type": "componentValue",
-                                            "valueName": "orderCode",
-                                            "dataType": "integer"
-                                        },
-                                        {
-                                            "name": "precision",
-                                            "type": "componentValue",
-                                            "valueName": "precision"
-                                        },
-                                        {
-                                            "name": "length",
-                                            "type": "componentValue",
-                                            "valueName": "length"
+                                            "valueName": "_PID"
                                         }
                                     ],
                                     "outputParameters": [
@@ -4325,8 +3752,8 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "column_delete_1",
-                                    "url": "column/delete",
+                                    "id": "city_delete_1",
+                                    "url": "city/delete",
                                     "urlType": "inner",
                                     "ajaxType": "delete",
                                     "params": [
@@ -4352,297 +3779,5 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
         ]
     };
 
-    public beforeOperation = [
-        {
-            name: "D_addRow",
-            status: [
-                {
-                    conditions: [
-                        [
-                            {
-                                name: "_recordstatus",
-                                value: 2,
-                                checkType: "value"
-                            },
-                            {
-                                name: "_recods",
-                                value: 3,
-                                checkType: "value"
-                            },
-                            {
-                                "ajaxConfig": {
-                                    "url": "information/testList",
-                                    "ajaxType": "GET",
-                                    "params": [
-                                        {
-                                            "name": "state",
-                                            "type": "value",
-                                            "value": "D"
-                                        }
-                                    ]
-                                },
-                                "checkType": "executeAjax"
-                            }
-                        ],
-                        [
-                            {
-                                name: "_recordstatus",
-                                value: 1,
-                                checkType: "value"
-                            },
-                            {
-                                name: "_recods",
-                                value: 1,
-                                checkType: "value"
-                            }
-                        ]
-                    ],
-                    action: {
-                        type: "warning",
-                        message: "在当前状态下，无法新增",
-                        execute: "prevent"
-                    }
-                },
-                {
-                    conditions: [
-                        [
-                            {
-                                name: "_resourcesreceiveid1",
-                                value: "undefinded",
-                                checkType: "value"
-                            }
-                        ]
-                    ],
-                    action: {
-                        type: "info",
-                        message: "主表未选中数据，无法新增！",
-                        execute: "prevent"
-                    }
-                },
-                {
-                    conditions: [
-                        [
-                            {
-                                tempValue: "_createUserId",
-                                cacheValue: "accountId",
-                                checkType: "innerValue"
-                            }
-                            // {
-                            //     "ajaxConfig": {
-                            //         "url": "https://jsonplaceholder.typicode.com/users",
-                            //         "ajaxType": "GET",
-                            //         "params": []
-                            //     },
-                            //     "checkType": "executeAjax"
-                            // }
-                        ]
-                    ],
-                    action: {
-                        type: "info",
-                        message: "对他人创建的数据只有浏览权限，没有编辑权限",
-                        execute: "prevent"
-                    }
-                }
-            ]
-        }
-    ];
-
-    public dataConfig = {
-        entity: 'CaseDemo',
-        targetViewId: '',
-        type: 'array',
-        properties: [
-            {
-                name: 'id',
-                field: 'id',
-                text: 'entity.data.name',
-                value: '1',
-                dataType: 'string'
-            },
-            {
-                name: 'code',
-                field: 'code',
-                text: 'entity.data.code',
-                value: '',
-                dataType: 'string'
-            },
-            {
-                name: 'language',
-                field: 'language',
-                text: 'entity.data.language',
-                value: '',
-                dataType: 'string'
-            },
-            {
-                name: 'message',
-                field: 'message',
-                text: 'entity.data.message',
-                value: '',
-                dataType: 'string'
-            }
-        ],
-        children: [
-            {
-                entity: 'validation',
-                targetViewId: '',
-                type: 'array',
-                properties: [
-                    {
-                        name: 'code',
-                        field: 'code',
-                        text: 'entity.data.code',
-                        value: '',
-                        dataType: 'string'
-                    },
-                    {
-                        name: 'msg',
-                        field: 'message',
-                        text: 'entity.data.message',
-                        value: '',
-                    }
-                ],
-                children: [
-                    {
-                        entity: 'data',
-                        targetViewId: '',
-                        properties: [
-                            {
-                                name: 'id',
-                                field: 'id',
-                                text: 'entity.data.name',
-                                value: '1',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'code',
-                                field: 'code',
-                                text: 'entity.data.code',
-                                value: '',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'language',
-                                field: 'language',
-                                text: 'entity.data.language',
-                                value: '',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'message',
-                                field: 'message',
-                                text: 'entity.data.message',
-                                value: '',
-                                dataType: 'string'
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                entity: 'error',
-                targetViewId: '',
-                properties: [
-                    {
-                        name: 'code',
-                        field: 'code',
-                        text: 'entity.data.code',
-                        value: '',
-                        dataType: 'string'
-                    },
-                    {
-                        name: 'msg',
-                        field: 'message',
-                        text: 'entity.data.message',
-                        value: '',
-                    }
-                ],
-                children: [
-                    {
-                        entity: 'data',
-                        targetViewId: '',
-                        properties: [
-                            {
-                                name: 'id',
-                                field: 'id',
-                                text: 'entity.data.name',
-                                value: '1',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'code',
-                                field: 'code',
-                                text: 'entity.data.code',
-                                value: '',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'language',
-                                field: 'language',
-                                text: 'entity.data.language',
-                                value: '',
-                                dataType: 'string'
-                            },
-                            {
-                                name: 'message',
-                                field: 'message',
-                                text: 'entity.data.message',
-                                value: '',
-                                dataType: 'string'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
-
-    testResult: Observable<any>;
-
-    constructor(
-        @Inject(BSN_COMPONENT_SERVICES) private _componentServices: ComponentServiceProvider,
-    ) {
-        super(_componentServices);
-    }
-
-    public ngOnInit() {
-
-
-    }
-
-    public click() {
-        this.load();
-    }
-
-    private load() {
-        const beforeOperation = new BeforeOperationResolver(this.beforeOperation,
-            {
-
-            },
-            {
-                accountId: 'user1'
-            },
-            {
-                _createUserId: 'user1'
-            }, this._componentServices.apiService, this._componentServices.modalService, this._componentServices.msgService);
-        beforeOperation.operationItemData = {
-            _recordstatus: 1,
-            _recods: 1,
-            _resourcesreceiveid1: "undefined",
-            _createUserId: '1'
-        }
-        this.testResult = beforeOperation.buildStatusObservableByStatusCfg({ name: 'D_addRow' }).pipe(reduce((a, b) => a || b));
-
-        const s = new BusinessObjectBase();
-        // console.log(s.resolver(s.dataConfig));
-        const t = s.resolver(this.dataConfig);
-        t.addProperty('caseText', '123456');
-        t.editProperty('caseText', '67890');
-        // t.removeProperty('caseText');
-
-        t.addChildren('validation', { code: '2', msg: '2', data: {} });
-        t.addChildren('error', [{ code: '3', msg: '3', data: {} }, { code: '4', msg: '4', data: {} }]);
-        // t.orderChange({ groupName: '2', id: '2' }, { groupName: '4', id: '4' }, 'group');
-
-        console.log(t);
-    }
+    public ngOnInit() { }
 }

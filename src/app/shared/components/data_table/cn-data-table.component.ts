@@ -637,6 +637,18 @@ export class CnDataTableComponent extends CnComponentBase
         return this.componentService.apiService[method](url, paramData).toPromise();
     }
 
+    public deleteCheckedRows(option) {
+        console.log(this.config.id + '-------------executeSelectRow', option);
+        if (option && option.ids) {
+            option.ids.split(',').map(id => {
+                this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== id);
+            });
+        }
+        if (this.dataList.length > 0) {
+            this.setSelectRow(this.dataList[0]);
+        }
+    }
+
     public async deleteCurrentRow(option) {
         console.log(this.config.id + '-------------executeSelectRow', option);
 
@@ -981,19 +993,17 @@ export class CnDataTableComponent extends CnComponentBase
 
     public async executeSelectRow(option) {
         console.log(this.config.id + '-------------executeSelectRow');
-        const result = await this._executeAjax(option);
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        const paramData = this._createSelectedRowParameter(ajaxParams);
+        const result = await this._executeAjax(option, paramData);
         return result;
     }
 
-    private async _executeAjax(option) {
+    private async _executeAjax(option, paramData) {
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
-        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
-        let paramData;
-        if (option.data) {
-            paramData = this._createSelectedRowParameter(ajaxParams);
-        }
-        const response = await this.executeHttpRequest(url, method, paramData);
+
+        const response = await this.executeHttpRequest(url, method, paramData ? paramData : {});
         // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
         this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1022,8 +1032,29 @@ export class CnDataTableComponent extends CnComponentBase
         console.log(this.config.id + '-------------executeCheckedRows');
     }
 
-    public executeCheckedRowsIds() {
-        console.log(this.config.id + '-------------executeCheckedRowsIds');
+    public async executeCheckedRowsIds(option) {
+        console.log(this.config.id + '-------------executeCheckedRowsIds', option);
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        const paramData = this._createCheckedRowsIdParameter(ajaxParams);
+        const result = await this._executeAjax(option, paramData);
+        return result;
+    }
+
+    private _createCheckedRowsIdParameter(ajaxParams) {
+        const params = [];
+        if (this.ROWS_CHECKED.length > 0) {
+            this.ROWS_CHECKED.map(cr => {
+                const p = ParameterResolver.resolve({
+                    params: ajaxParams,
+                    checkedItem: cr,
+                    tempValue: this.tempValue,
+                    initValue: this.initValue,
+                    cacheValue: this.cacheValue
+                });
+                params.push(p[this.KEY_ID]);
+            });
+        }
+        return { ids: params.join(',') };
     }
 
     public searchRow() {

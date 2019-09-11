@@ -1,3 +1,4 @@
+import { BaseInnerPropertyManagerComponent } from './base-inner-property-manager.component';
 import { LayoutDemoComponent } from './layout-demo.component';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '@shared';
@@ -9,6 +10,7 @@ import { DataTableDemoComponent } from './data-table-demo.component';
 import { TreeDemoComponent } from './tree-demo.component';
 import { TreeTableDemoComponent } from './tree-table-demo.component';
 import { DataModelingComponent } from './data-modeling.component';
+import { DataSqlModelingComponent } from './data-sql-modeling.component';
 
 const COMPONENTS = [
   LayoutDemoComponent,
@@ -17,7 +19,9 @@ const COMPONENTS = [
   DataTableDemoComponent,
   TreeDemoComponent,
   TreeTableDemoComponent,
-  DataModelingComponent
+  DataModelingComponent,
+  BaseInnerPropertyManagerComponent,
+  DataSqlModelingComponent
 ];
 
 const COMPONENTS_NOROUNT = [];
