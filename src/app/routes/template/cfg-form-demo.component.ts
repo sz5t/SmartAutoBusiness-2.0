@@ -4141,14 +4141,27 @@ export class CfgFormDemoComponent implements OnInit {
                   },
                   "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
                   "text": { // 文本展示字段
-                    "type": 'label', // 什么组件展示文本 
-                    "field": 'remark17',   // 字段
+                    "type": "codeEdit",
+                    "field": "remark17",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "mode":"text/x-sql",
+                    "autofocus":false,
+                    "readOnly":true,
+                    "placeholder": "请输入",
+                    "autosize": {
+                      minRows: 2, maxRows: 6
+                    },
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
                   },
                   "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                     "type": "codeEdit",
                     "field": "remark17",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "mode":"text/x-sql",
                     "placeholder": "请输入",
+                    "autofocus":true,
+                    "readOnly":false,
+                    "height":800,
                     "autosize": {
                       minRows: 2, maxRows: 6
                     },
@@ -4181,7 +4194,8 @@ export class CfgFormDemoComponent implements OnInit {
                     { id: '003', state: "edit", hidden: false, readOnly: false },
                     { id: '004', state: "edit", hidden: false, readOnly: false },
                     { id: '005', state: "edit", hidden: false, readOnly: false },
-                    { id: '006', state: "edit", hidden: false, readOnly: false }
+                    { id: '006', state: "edit", hidden: false, readOnly: false },
+                    { id: '017', state: "edit", hidden: false, readOnly: false },
                   ]
                 },
                 {
@@ -4192,7 +4206,8 @@ export class CfgFormDemoComponent implements OnInit {
                     { id: '003', state: "edit", hidden: false, readOnly: false },
                     { id: '004', state: "edit", hidden: false, readOnly: false },
                     { id: '005', state: "edit", hidden: false, readOnly: false },
-                    { id: '006', state: "edit", hidden: false, readOnly: false }
+                    { id: '006', state: "edit", hidden: false, readOnly: false },
+                    { id: '017', state: "edit", hidden: false, readOnly: false }
                   ]
                 },
                 {
@@ -4203,7 +4218,8 @@ export class CfgFormDemoComponent implements OnInit {
                     { id: '003', state: "text", hidden: false, readOnly: false },
                     { id: '004', state: "text", hidden: false, readOnly: false },
                     { id: '005', state: "text", hidden: false, readOnly: false },
-                    { id: '006', state: "text", hidden: false, readOnly: false }
+                    { id: '006', state: "text", hidden: false, readOnly: false },
+                    { id: '017', state: "text", hidden: false, readOnly: false }
                   ]
                 }
 

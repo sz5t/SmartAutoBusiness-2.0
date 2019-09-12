@@ -34,12 +34,14 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.editor = CodeMirror.fromTextArea(this.codeEditor.nativeElement, {
         mode: this.config.mode,
+        readOnly: this.config.readOnly,
+        styleActiveLine:true,
         highlightFormatting: true,
         indentWithTabs: true,
         smartIndent: true,
         lineNumbers: true,
         matchBrackets: true,
-        autofocus: true,
+        autofocus: this.config.autofocus,
         extraKeys: { 'Ctrl-Space': 'autocomplete' },
         hintOptions: {
           tables: {
@@ -48,6 +50,10 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
           }
         }
       });
+      if(this.config.height){
+        this.editor.setSize(null,this.config.height);
+      }
+  
   
       // this.editor.on("cursorActivity",  () =>{
       //   // 调用显示提示
