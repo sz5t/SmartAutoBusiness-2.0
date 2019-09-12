@@ -307,6 +307,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public loadRefreshData(option) {
+        debugger;
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
@@ -992,7 +993,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public async executeSelectRow(option) {
-        console.log(this.config.id + '-------------executeSelectRow');
+        console.log(this.config.id + '-------------executeSelectRow', option);
         const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
         const paramData = this._createSelectedRowParameter(ajaxParams);
         const result = await this._executeAjax(option, paramData);

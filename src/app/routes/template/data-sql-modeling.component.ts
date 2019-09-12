@@ -69,9 +69,9 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                             "id": "form_sql",
                             "type": "form",
                             "component": "form",
-                            "state": "edit",
+                            "state": "text",
                             "loadingConfig": {
-                                "id": "loadform" // 将加载配置引用
+                                "id": "loadform"
                             },
                             "formLayout": {
                                 "id": "b86s2i11",
@@ -84,10 +84,10 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         "cols": [
                                             {
                                                 "id": "iHspYn1", "col": "cc", "type": "col",
-                                                "title": "", "span": 12,
+                                                "title": "", "span": 24,
                                                 "layoutContain": "input",
                                                 "size": {
-                                                    "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                 },
                                                 "control": {
                                                     "id": "sql_name"  // id 和引用id 值相同
@@ -95,10 +95,10 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             },
                                             {
                                                 "id": "iHspYn2", "col": "cc", "type": "col",
-                                                "title": "", "span": 12,
+                                                "title": "", "span": 24,
                                                 "layoutContain": "input",
                                                 "size": {
-                                                    "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                 },
                                                 "control": {
                                                     "id": "sql_source_name"
@@ -119,6 +119,53 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     }
                                 ]
                             },
+                            "cascade": {
+                                "messageSender": [
+                                    {
+                                        "id": "afterSQLSaveSuccess",
+                                        "senderId": "form_sql",
+                                        // "triggerType": "BEHAVIOR",
+                                        // "trigger": "SET_SELECT_ROW",
+                                        "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "BEHAVIOR",
+                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                "params": [
+                                                    {
+                                                        "name": "_ID",
+                                                        "type": "item",
+                                                        "valueName": "ID"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                ],
+                                "messageReceiver": [
+                                    {
+                                        "id": "",
+                                        "senderId": "sql_grid_view",
+                                        "receiveData": [
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "BEHAVIOR",
+                                                "trigger": "REFRESH_AS_CHILD",
+                                                "params": [
+                                                    {
+                                                        "pname": "_ID",
+                                                        "cname": "_ID",
+                                                        "valueTo": "tempValue"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            "cascadeValue": [],
                             "formControls": [
                                 {
                                     "id": "sql_name",
@@ -129,22 +176,22 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     "field": "NAME",
                                     "labelSize": {
-                                        "span": 6,
-                                        "nzXs": { "span": 6 },
-                                        "nzSm": { "span": 6 },
-                                        "nzMd": { "span": 6 },
-                                        "nzLg": { "span": 6 },
-                                        "ngXl": { "span": 6 },
-                                        "nzXXl": { "span": 6 }
+                                        "span": 3,
+                                        "nzXs": { "span": 3 },
+                                        "nzSm": { "span": 3 },
+                                        "nzMd": { "span": 3 },
+                                        "nzLg": { "span": 3 },
+                                        "ngXl": { "span": 3 },
+                                        "nzXXl": { "span": 3 }
                                     },
                                     "controlSize": {
-                                        "span": 18,
-                                        "nzXs": 18,
-                                        "nzSm": 18,
-                                        "nzMd": 18,
-                                        "nzLg": 18,
-                                        "ngXl": 18,
-                                        "nzXXl": 18
+                                        "span": 6,
+                                        "nzXs": 6,
+                                        "nzSm": 6,
+                                        "nzMd": 6,
+                                        "nzLg": 6,
+                                        "ngXl": 6,
+                                        "nzXXl": 6
                                     },
                                     "state": "edit",
                                     "text": {
@@ -169,17 +216,17 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     "field": "SNAME",
                                     "labelSize": {
-                                        "span": 6,
-                                        "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
+                                        "span": 3,
+                                        "nzXs": 3, "nzSm": 3, "nzMd": 3, "nzLg": 3, "ngXl": 3, "nzXXl": 3
                                     },
                                     "controlSize": {
-                                        "span": 18,
-                                        "nzXs": { "span": 18, "offset": 0 },
-                                        "nzSm": { "span": 18, "offset": 0 },
-                                        "nzMd": { "span": 18, "offset": 0 },
-                                        "nzLg": { "span": 18, "offset": 0 },
-                                        "ngXl": { "span": 18, "offset": 0 },
-                                        "nzXXl": { "span": 18, "offset": 0 }
+                                        "span": 6,
+                                        "nzXs": { "span": 6, "offset": 0 },
+                                        "nzSm": { "span": 6, "offset": 0 },
+                                        "nzMd": { "span": 6, "offset": 0 },
+                                        "nzLg": { "span": 6, "offset": 0 },
+                                        "ngXl": { "span": 6, "offset": 0 },
+                                        "nzXXl": { "span": 6, "offset": 0 }
                                     },
                                     "state": "edit",
                                     "text": {
@@ -218,15 +265,26 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     "state": "edit",
                                     "text": {
-                                        "type": "label",
+                                        "type": "codeEdit",
                                         "field": "SQL_CONTENT",
+                                        "autofocus": false,
+                                        "mode": "text/x-sql",
+                                        "readOnly": true,
+                                        "height": 400
                                     },
                                     "editor": {
-                                        "type": "input",
+                                        "type": "codeEdit",
                                         "field": "SQL_CONTENT",
+                                        "mode": "text/x-sql",
                                         "placeholder": "请输入",
+                                        "autofocus": true,
+                                        "readOnly": false,
+                                        "height": 400,
+                                        "autosize": {
+                                            minRows: 2, maxRows: 6
+                                        },
                                         "validations": [
-
+                                            { validator: "required" }
                                         ]
                                     }
                                 }
@@ -273,7 +331,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         {
                                             "name": "ID",
                                             "type": "tempValue",
-                                            "valueName": "ID"
+                                            "valueName": "_ID"
                                         }
                                     ],
                                     "outputParameters": [
@@ -351,7 +409,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 {
                                                     "type": "property",
                                                     "name": "",
-                                                    "matchValue": "insert",
+                                                    "matchValue": "new",
                                                     "match": "eq"
                                                 }
                                             ]
@@ -368,7 +426,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 {
                                                     "type": "property",
                                                     "name": "",
-                                                    "matchValue": "update",
+                                                    "matchValue": "edit",
                                                     "match": "eq"
                                                 }
                                             ]
@@ -381,123 +439,24 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                             "ajaxConfig": [
                                 {
                                     "id": "add_save_1",
-                                    "url": "province/insert",
+                                    "url": "sql/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
-                                            "name": "provinceName",
+                                            "name": "sname",
                                             "type": "componentValue",
-                                            "valueName": "provinceName",
-                                            "dataType": "string"
+                                            "valueName": "SNAME"
                                         },
                                         {
-                                            "name": "populationSize",
+                                            "name": "name",
                                             "type": "componentValue",
-                                            "valueName": "populationSize",
-                                            "dataType": "int"
+                                            "valueName": "NAME"
                                         },
                                         {
-                                            "name": "directlyUnder",
+                                            "name": "sqlContent",
                                             "type": "componentValue",
-                                            "valueName": "directlyUnder",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "areaCode",
-                                            "type": "componentValue",
-                                            "valueName": "areaCode",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "createDate",
-                                            "type": "componentValue",
-                                            "valueName": "createDate",
-                                            "dataType": "string"
-                                        },
-                                        {
-                                            "name": "remark",
-                                            "type": "componentValue",
-                                            "valueName": "remark",
-                                            "dataType": "string"
-                                        }
-                                    ],
-                                    "outputParameters": [
-
-                                    ],
-                                    "result": [
-
-                                    ]
-                                },
-                                {
-                                    "id": "edit_save_1",
-                                    "url": "province/update",
-                                    "urlType": "inner",
-                                    "ajaxType": "put",
-                                    "params": [
-                                        {
-                                            "name": "id",
-                                            "type": "componentValue",
-                                            "valueName": "id",
-                                            "dataType": "string"
-                                        },
-                                        {
-                                            "name": "provinceName",
-                                            "type": "componentValue",
-                                            "valueName": "provinceName",
-                                            "dataType": "string"
-                                        },
-                                        {
-                                            "name": "populationSize",
-                                            "type": "componentValue",
-                                            "valueName": "populationSize",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "directlyUnder",
-                                            "type": "componentValue",
-                                            "valueName": "directlyUnder",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "areaCode",
-                                            "type": "componentValue",
-                                            "valueName": "areaCode",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "createDate",
-                                            "type": "componentValue",
-                                            "valueName": "createDate",
-                                            "dataType": "string"
-                                        },
-                                        {
-                                            "name": "remark",
-                                            "type": "componentValue",
-                                            "valueName": "remark",
-                                            "dataType": "string"
-                                        }
-                                    ],
-                                    "outputParameters": [
-
-                                    ],
-                                    "result": [
-
-                                    ]
-                                }
-                            ],
-                            "builtinConfig": [
-                                {
-                                    "id": "add_state_1",
-                                    event: "changeState", // 内置方法
-                                    "url": "information/test2",
-                                    "urlType": "inner",
-                                    "ajaxType": "post",
-                                    "params": [
-                                        {
-                                            "name": "state",
-                                            "type": "value",
-                                            "value": "DVM"
+                                            "valueName": "SQL_CONTENT"
                                         }
                                     ],
                                     "outputParameters": [
@@ -508,18 +467,108 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "toolbar_01"
+                                            "senderId": "afterSQLSaveSuccess"
                                         },
-                                        {
-                                            "name": "validation",
-                                            "senderId": "toolbar_01"
-                                        },
-                                        {
-                                            "name": "error",
-                                            "senderId": "toolbar_01"
-                                        }
+                                        // {
+                                        //     "name": "validation",
+                                        //     "showMessageWithNext": 0,
+                                        //     "message": "message.ajax.state.success",
+                                        //     "senderId": "afterCitySaveValidation"
+                                        // },
                                     ]
                                 },
+                                {
+                                    "id": "edit_save_1",
+                                    "url": "sql/update",
+                                    "urlType": "inner",
+                                    "ajaxType": "put",
+                                    "params": [
+                                        {
+                                            "name": "id",
+                                            "type": "tempValue",
+                                            "valueName": "_ID"
+                                        },
+                                        {
+                                            "name": "sname",
+                                            "type": "componentValue",
+                                            "valueName": "SNAME"
+                                        },
+                                        {
+                                            "name": "name",
+                                            "type": "componentValue",
+                                            "valueName": "NAME"
+                                        },
+                                        {
+                                            "name": "sqlContent",
+                                            "type": "componentValue",
+                                            "valueName": "SQL_CONTENT"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterSQLUpdateSuccess"
+                                        },
+                                        // {
+                                        //     "name": "validation",
+                                        //     "showMessageWithNext": 0,
+                                        //     "message": "message.ajax.state.success",
+                                        //     "senderId": "afterCitySaveValidation"
+                                        // },
+                                    ]
+                                },
+                                {
+                                    "id": "create_sql_model",
+                                    "url": "sql/createModel",
+                                    "urlType": "inner",
+                                    "ajaxType": "put",
+                                    "params": [
+                                        {
+                                            "name": "id",
+                                            "type": "item",
+                                            "valueName": "ID"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterSQLModelSuccess"
+                                        },
+                                        // {
+                                        //     "name": "validation",
+                                        //     "showMessageWithNext": 0,
+                                        //     "message": "message.ajax.state.success",
+                                        //     "senderId": "afterCitySaveValidation"
+                                        // },
+                                    ]
+                                }
+                            ],
+                            "builtinConfig": [
+                                {
+                                    "id": "add_state_1",
+                                    "event": "formStateChange", // 内置方法
+                                    "state": "new",
+                                },
+                                {
+                                    "id": "edit_state_1",
+                                    "event": "formStateChange", // 内置方法
+                                    "state": "edit",
+                                },
+                                {
+                                    "id": "cancel_state_1",
+                                    "event": "formStateChange", // 内置方法
+                                    "state": "text",
+                                }
                             ],
                             "beforeTrigger": [
 
@@ -544,7 +593,6 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                 {
                                     "targetViewId": "form_sql",
                                     "group": [
-
                                         {
                                             "id": "M_addRow",
                                             "text": "新增SQL资源",
@@ -558,7 +606,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                     "triggerType": "STATE",
                                                     "trigger": "ADD_FORM",
                                                     // "conditionId": "add_state_1"
-                                                    // "builtinId": "add_state_1"
+                                                    "builtinId": "add_state_1"
 
                                                 }
                                             ],
@@ -598,7 +646,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 {
                                                     "triggerType": "STATE",
                                                     "trigger": "EDIT_FORM",
-                                                    // "conditionId": "edit_state_1"
+                                                    "builtinId": "edit_state_1"
                                                 }
                                             ],
                                             "toggle": {
@@ -631,21 +679,21 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "color": "text-primary",
                                             "hidden": true,
                                             "disabled": false,
-                                            "execute": [ // 根据前置条件判断，当前 表单状态是什么，执行什么sql
+                                            "execute": [
                                                 {
                                                     "triggerType": "OPERATION",
                                                     "trigger": "EXECUTE",
                                                     "ajaxId": "add_save_1",
-                                                    "stateId": "add_save_1",
+                                                    // "stateId": "add_save_1",
                                                     "conditionId": "add_save_1"
                                                 },
                                                 {
                                                     "triggerType": "OPERATION",
                                                     "trigger": "EXECUTE",
-                                                    "stateId": "edit_save_1",
+                                                    // "stateId": "edit_save_1",
                                                     "ajaxId": "edit_save_1",
                                                     "conditionId": "edit_save_1",
-                                                    "afterId": "edit_save_1"
+                                                    // "afterId": "edit_save_1"
                                                 }
                                             ],
 
@@ -684,7 +732,8 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "execute": [
                                                 {
                                                     "triggerType": "STATE",
-                                                    "trigger": "CANCEL"
+                                                    "trigger": "CANCEL",
+                                                    "builtinId": "cancel_state_1"
                                                 }
                                             ],
                                             "state": "cancel",
@@ -712,6 +761,28 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             }
                                         }
                                     ]
+                                },
+                                {
+                                    "targetViewId": "sql_grid_view",
+                                    "group": [
+                                        {
+                                            "id": "M_updateRows",
+                                            "text": "创建资源",
+                                            "icon": "build",
+                                            "color": "text-success",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "state": "text",
+                                            "execute": [
+                                                {
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "EXECUTE_SELECTED_ROW",
+                                                    // "builtinId": "cancel_state_1",
+                                                    "ajaxId": "create_sql_model"
+                                                }
+                                            ]
+                                        },
+                                    ]
                                 }
                             ]
                         }
@@ -732,7 +803,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "view_02",
+                            "id": "sql_grid_view",
                             "title": "子表",
                             "titleIcon": "right-circle",
                             "component": "cnDataTable",
@@ -1045,8 +1116,30 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                             "cascade": {
                                 "messageSender": [
                                     {
+                                        "id": "grid_sender_02",
+                                        "senderId": "sql_grid_view",
+                                        "triggerType": "BEHAVIOR",
+                                        "trigger": "SET_SELECT_ROW",
+                                        "triggerMoment": "after",
+                                        "sendData": [
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "BEHAVIOR",
+                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                "params": [
+                                                    {
+                                                        "name": "_ID",
+                                                        "type": "item",
+                                                        "valueName": "ID"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
                                         "id": "view2_sender_1",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROW",
                                         "triggerMoment": "asyncAfter",
@@ -1058,7 +1151,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_02",
+                                                        "value": "sql_grid_view",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1067,7 +1160,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     {
                                         "id": "view2_sender_2",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROWS",
                                         "triggerMoment": "asyncAfter",
@@ -1079,7 +1172,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_02",
+                                                        "value": "sql_grid_view",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1088,7 +1181,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     {
                                         "id": "view2_sender_3",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1101,7 +1194,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_02",
+                                                        "value": "sql_grid_view",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1110,7 +1203,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     {
                                         "id": "view2_sender_04",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_NEW_ROW",
                                         "triggerMoment": "after",
@@ -1123,7 +1216,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_02",
+                                                        "value": "sql_grid_view",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1132,7 +1225,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     {
                                         "id": "grid_sender_05",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "triggerType": "STATE",
                                         "trigger": "EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1144,7 +1237,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_02",
+                                                        "value": "sql_grid_view",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1153,7 +1246,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     {
                                         "id": "grid_sender_08",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "triggerType": "ACTION",
                                         "trigger": "CONFIRM",
                                         "triggerMoment": "after",
@@ -1173,8 +1266,8 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         ]
                                     },
                                     {
-                                        "id": "afterCitySaveSuccessfully",
-                                        "senderId": "view_02",
+                                        "id": "afterSQLSaveSuccess",
+                                        "senderId": "sql_grid_view",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -1213,8 +1306,8 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         ]
                                     },
                                     {
-                                        "id": "afterCityUpdateSuccessfully",
-                                        "senderId": "view_02",
+                                        "id": "afterSQLUpdateSuccess",
+                                        "senderId": "sql_grid_view",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -1254,7 +1347,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     {
                                         "id": "afterCitySaveValidation",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1266,7 +1359,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     {
                                         "id": "afterCityUpdateValidation",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1277,11 +1370,8 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         ]
                                     },
                                     {
-                                        "id": "afterCityUpdateFormSuccessfully",
-                                        "senderId": "view_02",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
+                                        "id": "afterSQLModelSuccess",
+                                        "senderId": "sql_grid_view",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1297,7 +1387,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                     {
                                                         "name": "code",
                                                         "type": "value",
-                                                        "value": "operation..code.success"
+                                                        "value": "operation.code.success"
                                                     }
                                                 ]
                                             },
@@ -1308,9 +1398,9 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "receiverTrigger": "LOAD_REFRESH_DATA",
                                                 "params": [
                                                     {
-                                                        "name": "id",
-                                                        "type": "addedRows",
-                                                        "valueName": "id"
+                                                        "name": "ID",
+                                                        "type": "item",
+                                                        "valueName": "ID"
                                                     }
                                                 ]
                                             }
@@ -1318,7 +1408,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                     {
                                         "id": "afterCityUpdateFormValidation",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1347,27 +1437,27 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     },
                                 ],
                                 "messageReceiver": [
+                                    // {
+                                    //     "id": "",
+                                    //     "senderId": "view_01",
+                                    //     "receiveData": [
+                                    //         {
+                                    //             "beforeReceive": [],
+                                    //             "triggerType": "BEHAVIOR",
+                                    //             "trigger": "REFRESH_AS_CHILD",
+                                    //             "params": [
+                                    //                 {
+                                    //                     "pname": "_PID",
+                                    //                     "cname": "_PID",
+                                    //                     "valueTo": "tempValue"
+                                    //                 }
+                                    //             ]
+                                    //         }
+                                    //     ]
+                                    // },
                                     {
                                         "id": "",
-                                        "senderId": "view_01",
-                                        "receiveData": [
-                                            {
-                                                "beforeReceive": [],
-                                                "triggerType": "BEHAVIOR",
-                                                "trigger": "REFRESH_AS_CHILD",
-                                                "params": [
-                                                    {
-                                                        "pname": "_PID",
-                                                        "cname": "_PID",
-                                                        "valueTo": "tempValue"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        "id": "",
-                                        "senderId": "view_02",
+                                        "senderId": "sql_grid_view",
                                         "receiveData": [
                                             {
                                                 "beforeReceive": [],
