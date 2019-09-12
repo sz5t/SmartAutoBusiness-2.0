@@ -15,14 +15,20 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
   @Output() public updateValue = new EventEmitter();
   value = null;
   _value = null;
-
+  isSpinning = true;
   editor;
+  divstyle={width:'100%',height:'330px'};
   constructor(
     private http: _HttpClient
   ) { }
 
   ngOnInit() {
-
+   if( this.config.height){
+   this. divstyle.height = this.interpret( this.config.height);
+   }
+  }
+   interpret(val) {
+    return typeof val === "number" || /^\d+$/.test(String(val)) ? val + "px" : val;
   }
 
   /**
@@ -30,7 +36,6 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
    * text/x-markdown
    */
   ngAfterViewInit() {
-
     setTimeout(() => {
       this.editor = CodeMirror.fromTextArea(this.codeEditor.nativeElement, {
         mode: this.config.mode,
@@ -53,7 +58,7 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
       if(this.config.height){
         this.editor.setSize(null,this.config.height);
       }
-  
+      this.isSpinning = false;
   
       // this.editor.on("cursorActivity",  () =>{
       //   // 调用显示提示

@@ -12,9 +12,14 @@
             [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
             [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
             <input nz-input  [formControlName]="config.field"  hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
-            <div style="border:1px solid #d9d9d9;border-radius: 4px; width:100%; height: 100%; ">
-                <textarea #CodeMirror name="code"></textarea> 
-            </div>
+            <nz-spin [nzSpinning]="isSpinning" [nzDelay]="300">
+                    <div style="border:1px solid #d9d9d9;border-radius: 4px; width:100%; ">
+                       
+                            <textarea #CodeMirror name="code"  [ngStyle]="divstyle"></textarea> 
+                            <div style="height: 3px;"></div>
+                        </div>
+             </nz-spin>
+       
 
             <ng-template #combineTpl let-control>
                     <ng-container nz-col *ngFor="let c of config.validations" > 
