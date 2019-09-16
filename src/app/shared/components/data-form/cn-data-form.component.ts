@@ -177,10 +177,12 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     const validation = [];
     validations &&
       validations.forEach(valid => {
-        if (valid.type) {
+        if (valid.type && valid.type === 'custom' ) {
           if (valid.type === 'custom') {
             //  validation.push(CustomValidator[valid.validator](valid));
             validation.push(this[valid.validator]);
+          } else {
+             validation.push(Validators[valid.validator]);
           }
         } else {
           if (valid.validator === 'required' || valid.validator === 'email') {
@@ -410,6 +412,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // 做配置转化，否则需要不断循环处理，转化为对象，则直接访问属性
     const triggerKey = v.name;
 
+    if(this.config.cascadeValue)
     this.config.cascadeValue.forEach(cascade => {
       // 满足应答触发
       if (cascade.controlId !== v.id) {
