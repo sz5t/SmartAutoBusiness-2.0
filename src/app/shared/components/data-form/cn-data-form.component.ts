@@ -101,7 +101,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         if (Control.editor.expandConfig) {
           Control.editor['expandConfig']['ajaxConfig'] = this.ajaxConfigObj[Control.editor.expandConfig.id];
         }
-        
+
       }
       this.formControlObj[Control.id] = Control;
     });
@@ -234,17 +234,17 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * setChangeValue 接受 初始变量值
    */
   public setChangeValue(ChangeValues?) {
-   // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+    // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
     if (ChangeValues && ChangeValues.length > 0) {
       ChangeValues.forEach(p => {
-          switch (p.valueTo) {
-            case 'tempValue':
-              this.tempValue[p.name] = p.value;
-              break;
-            case 'initValue':
-              this.initValue[p.name] = p.value;
-              break;
-          }
+        switch (p.valueTo) {
+          case 'tempValue':
+            this.tempValue[p.name] = p.value;
+            break;
+          case 'initValue':
+            this.initValue[p.name] = p.value;
+            break;
+        }
       });
     }
 
@@ -265,14 +265,15 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     console.log('提交表单', this.validateForm.valid, this.validateForm.value);
   }
 
-  public buildParameters(paramsCfg) {
+  public buildParameters(paramsCfg, returnData?) {
     return ParameterResolver.resolve({
       params: paramsCfg,
       tempValue: this.tempValue,
       componentValue: this.validateForm.value,
       initValue: this.initValue,
       cacheValue: this.cacheValue,
-      router: this.routerValue
+      router: this.routerValue,
+      returnValue: returnData ? returnData : {}
     });
   }
 
@@ -298,7 +299,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
 
     this.FORM_VALID = this.validateForm.valid;
-  
+
   }
   /**
    * load 自加载
@@ -312,7 +313,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     };
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
-     if( isArray(response.data)) {
+      if (isArray(response.data)) {
         if (response.data && response.data.length > 0) {
           const data_form = response.data[0];
           for (const item in this.formValue) {
@@ -322,8 +323,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
           }
           this.validateForm.setValue(this.formValue);
         }
-      }else {
-        if (response.data){
+      } else {
+        if (response.data) {
           const data_form = response.data;
           for (const item in this.formValue) {
             if (data_form.hasOwnProperty(item)) {
@@ -333,7 +334,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
           this.validateForm.setValue(this.formValue);
         }
       }
-    
+
 
 
     }, error => {
@@ -346,48 +347,48 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    */
   private resolveRelations() {
     if (this.config.cascade && this.config.cascade.messageSender) {
-        if (!this._sender_source$) {
-            // 解析组件发送消息配置,并注册消息发送对象
-            this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
-            this._sender_subscription$ = this._sender_source$.subscribe();
-        }
+      if (!this._sender_source$) {
+        // 解析组件发送消息配置,并注册消息发送对象
+        this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
+        this._sender_subscription$ = this._sender_source$.subscribe();
+      }
 
     }
     if (this.config.cascade && this.config.cascade.messageReceiver) {
-        // 解析消息接受配置,并注册消息接收对象
-        // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
-        // this._receiver_subscription$ = this._receiver_source$.subscribe();
-        new RelationResolver(this).resolveReceiver(this.config);
+      // 解析消息接受配置,并注册消息接收对象
+      // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+      // this._receiver_subscription$ = this._receiver_source$.subscribe();
+      new RelationResolver(this).resolveReceiver(this.config);
     }
 
     this._trigger_source$ = new RelationResolver(this).resolve();
-}
+  }
 
   public ngOnDestroy() {
     // 释放级联对象
     this.unsubscribeRelation();
     // 释放及联接受对象
     if (this._receiver_subscription$) {
-        this._receiver_subscription$.unsubscribe();
+      this._receiver_subscription$.unsubscribe();
     }
 
     if (this._sender_subscription$) {
-        this._sender_subscription$.unsubscribe();
+      this._sender_subscription$.unsubscribe();
     }
 
     // 释放触发器对象
     if (this._trigger_receiver_subscription$) {
-        this._trigger_receiver_subscription$.unsubscribe();
+      this._trigger_receiver_subscription$.unsubscribe();
     }
 
     if (this._trigger_source$) {
-        this._trigger_source$.unsubscribe();
+      this._trigger_source$.unsubscribe();
     }
 
     if (this.subscription$) {
-        this.subscription$.unsubscribe();
+      this.subscription$.unsubscribe();
     }
-}
+  }
 
   /**
    * valueChange 表单内值变化
@@ -551,9 +552,9 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     this.validateForm = this.fb.group({});
     this.createControls(this.validateForm);
     this.value = this.formValue;
-    if(v.hasOwnProperty('builtinConfig') ){
-      if (v['builtinConfig'].event ==='formStateChange'){
-        this.formStateChange(v['builtinConfig'].state?v['builtinConfig'].state:'insert');
+    if (v.hasOwnProperty('builtinConfig')) {
+      if (v['builtinConfig'].event === 'formStateChange') {
+        this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'insert');
       }
     }
 
@@ -564,9 +565,9 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // this.validateForm = this.fb.group({});
     // this.createControls( this.validateForm);
     this.value = ss;
-    if(v.hasOwnProperty('builtinConfig') ){
-      if (v['builtinConfig'].event ==='formStateChange'){
-        this.formStateChange(v['builtinConfig'].state?v['builtinConfig'].state:'update');
+    if (v.hasOwnProperty('builtinConfig')) {
+      if (v['builtinConfig'].event === 'formStateChange') {
+        this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'update');
       }
     }
     this.load();
@@ -582,9 +583,9 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // this.createControls(this.validateForm);
     // this.validateForm.setValue(ss,{onlySelf:false,emitEvent:true});
     this.value = ss;
-    if(v.hasOwnProperty('builtinConfig') ){
-      if (v['builtinConfig'].event ==='formStateChange'){
-        this.formStateChange(v['builtinConfig'].state?v['builtinConfig'].state:'text');
+    if (v.hasOwnProperty('builtinConfig')) {
+      if (v['builtinConfig'].event === 'formStateChange') {
+        this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'text');
       }
     }
     // this.validateForm.setValue(this.validateForm.value);
@@ -599,7 +600,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * 执行sql
    * @param Config 
    */
-  public execute(execConfig) {
+  public async execute(execConfig) {
 
     this.validate(); // 这个方法通过配置来调用
     console.log('  this.FORM_VALID', this.FORM_VALID);
@@ -610,28 +611,19 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     const url = execConfig.ajaxConfig.url;
     const params = this.buildParameters(execConfig.ajaxConfig.params);
     console.log(this.config.id + '-------------执行sql params:', params);
-    this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).subscribe(response => {
-      // success 0:全部错误,1:全部正确,2:部分错误
-      if (response.data) {
-        const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
-        // 弹出提示框
-        if (successCfg) {
-        //  new RelationResolver(this).resolveInnerSender(successCfg.senderCfg);
-        }
-      }
-      if (response.validation) {
-        const validationCfg = execConfig.ajaxConfig.result.find(res => res.name === 'validation');
-        if (validationCfg) {
-        //  new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
-        }
-      }
-      if (response.error) {
-        const errorCfg = execConfig.ajaxConfig.result.find(res => res.name === 'error');
-        if (errorCfg) {
-        //  new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
-        }
-      }
-    })
+    const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
+
+
+    // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+    this._sendDataSuccessMessage(response, execConfig.ajaxConfig.result);
+
+    // 处理validation结果
+    const validationResult = this._sendDataValidationMessage(response, execConfig.ajaxConfig.result);
+
+    // 处理error结果
+    const errorResult = this._sendDataErrorMessage(response, execConfig.ajaxConfig.result);
+
+    return validationResult && errorResult;
 
   }
 
@@ -648,38 +640,68 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     const url = execConfig.ajaxConfig.url;
     const params = this.buildParameters(execConfig.ajaxConfig.params);
     console.log(this.config.id + '-------------执行sql params:', params);
-    let back = false;
+    const back = false;
     const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
-
-    // success 0:全部错误,1:全部正确,2:部分错误
-    if (response.data) {
-      const successCfg = execConfig.ajaxConfig.result.find(res => res.name === 'data');
-      // 弹出提示框
-      if (successCfg) {
-       // new SenderResolver(this).resolve(successCfg.senderCfg);
-      }
-      back = true;
-    }
-    if (response.validation) {
-      const validationCfg = execConfig.ajaxConfig.result.find(res => res.name === 'validation');
-      if (validationCfg) {
-      //  new RelationResolver(this).resolveInnerSender(validationCfg.senderCfg);
-      }
-      back = false;
-    }
-    if (response.error) {
-      const errorCfg = execConfig.ajaxConfig.result.find(res => res.name === 'error');
-      if (errorCfg) {
-      //  new RelationResolver(this).resolveInnerSender(errorCfg.senderCfg);
-      }
-      back = false;
-    }
-
     return response;
-
-
   }
 
+  private _sendDataSuccessMessage(response, resultCfg): boolean {
+    let result = false;
+    if (Array.isArray(response.data) && response.data.length <= 0) {
+      return result;
+    }
+    if (response && response.data) {
+      const successCfg = resultCfg.find(res => res.name === 'data');
+      // 弹出提示框
+      if (successCfg) {
+        new RelationResolver(this)
+          .resolveInnerSender(
+            successCfg,
+            response.data,
+            Array.isArray(response.data)
+          );
+      }
+      result = true;
+    }
+
+    return result;
+  }
+
+  private _sendDataValidationMessage(response, resultCfg) {
+    let result = true;
+    if (response && Array.isArray(response.validation) && response.validation.length <= 0) {
+      return result;
+    }
+    if (response && response.validation) {
+      const validationCfg = resultCfg.find(res => res.name === 'validation');
+      if (validationCfg) {
+        new RelationResolver(this)
+          .resolverDataValidationSender(
+            validationCfg,
+            response.validation);
+      }
+      result = false;
+    }
+    return result;
+  }
+
+  private _sendDataErrorMessage(response, resultCfg) {
+    let result = true;
+    if (response && Array.isArray(response.error) && response.error.length <= 0) {
+      return result;
+    }
+    if (response && response.error) {
+      const errorCfg = resultCfg.find(res => res.name === 'error');
+      if (errorCfg) {
+        new RelationResolver(this)
+          .resolverDataErrorSender(
+            errorCfg,
+            response.error);
+      }
+      result = false;
+    }
+    return result;
+  }
 
   //       return new SenderResolver(this._componentInstance).resolve(config.cascade.messageSender);
 
@@ -693,7 +715,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
 
   repeat = (control: FormControl): { [s: string]: boolean } => {
-   // console.log('repeat==>', control);
+    // console.log('repeat==>', control);
     if (!control.value) {
       return { error: true, required: true };
     } else if (control.value === '中国香港') {
@@ -749,9 +771,9 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
 
 
-    // 分组属性表单=》动态读取属性，分布提交
-    // 根据属性生成-》折叠+表格+扩展页面=>组合属性
-    // 【分组】? 
-    // tab页签下：折叠面板+Descriptions描述列表 ==构成属性编辑器
+  // 分组属性表单=》动态读取属性，分布提交
+  // 根据属性生成-》折叠+表格+扩展页面=>组合属性
+  // 【分组】? 
+  // tab页签下：折叠面板+Descriptions描述列表 ==构成属性编辑器
 
 }

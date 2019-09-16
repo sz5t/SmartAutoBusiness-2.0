@@ -126,18 +126,36 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         "senderId": "form_sql",
                                         // "triggerType": "BEHAVIOR",
                                         // "trigger": "SET_SELECT_ROW",
-                                        "triggerMoment": "after",
+                                        "triggerMoment": "asyncAfter",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
                                                 "reveicerId": "",
-                                                "receiverTriggerType": "BEHAVIOR",
-                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "MESSAGE",
                                                 "params": [
                                                     {
-                                                        "name": "_ID",
-                                                        "type": "item",
-                                                        "valueName": "ID"
+                                                        "name": "type",
+                                                        "type": "value",
+                                                        "value": "success"
+                                                    },
+                                                    {
+                                                        "name": "code",
+                                                        "type": "value",
+                                                        "value": "operation.code.success"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "beforeSend": {},
+                                                "reveicerId": "",
+                                                "receiverTriggerType": "ACTION",
+                                                "receiverTrigger": "LOAD_REFRESH_DATA",
+                                                "params": [
+                                                    {
+                                                        "name": "ID",
+                                                        "type": "returnValue",
+                                                        "valueName": "id"
                                                     }
                                                 ]
                                             }
@@ -270,7 +288,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         "autofocus": false,
                                         "mode": "text/x-sql",
                                         "readOnly": true,
-                                        "height": 400
+                                        "height": 300
                                     },
                                     "editor": {
                                         "type": "codeEdit",
@@ -279,7 +297,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         "placeholder": "请输入",
                                         "autofocus": true,
                                         "readOnly": false,
-                                        "height": 400,
+                                        "height": 300,
                                         "autosize": {
                                             minRows: 2, maxRows: 6
                                         },
@@ -512,7 +530,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterSQLUpdateSuccess"
+                                            "senderId": "afterSQLSaveSuccess"
                                         },
                                         // {
                                         //     "name": "validation",
@@ -791,7 +809,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                         "id": "r5zDHB2-1",
                         "col": "cc",
                         "type": "col",
-                        "title": "SQL 资源表",
+                        "title": "",
                         "span": 12,
                         "container": "component",
                         "size": {
@@ -804,7 +822,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                         },
                         "component": {
                             "id": "sql_grid_view",
-                            "title": "子表",
+                            "title": "SQL 资源表",
                             "titleIcon": "right-circle",
                             "component": "cnDataTable",
                             "keyId": "ID",
@@ -1455,6 +1473,22 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     //         }
                                     //     ]
                                     // },
+                                    {
+                                        "id": "",
+                                        "senderId": "form_sql",
+                                        "receiveData": [
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "MESSAGE"
+                                            },
+                                            {
+                                                "beforeReceive": [],
+                                                "triggerType": "ACTION",
+                                                "trigger": "LOAD_REFRESH_DATA"
+                                            }
+                                        ]
+                                    },
                                     {
                                         "id": "",
                                         "senderId": "sql_grid_view",
