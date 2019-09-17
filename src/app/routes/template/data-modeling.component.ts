@@ -2246,7 +2246,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         ajaxConfig: [
                                             {
                                                 "id": "loadform",
-                                                "url": "dataQuery/DM_TABLE/queryCondition",
+                                                "url": "td/DM_TABLE/query",
                                                 "urlType": "inner",
                                                 "ajaxType": "get",
                                                 "params": [

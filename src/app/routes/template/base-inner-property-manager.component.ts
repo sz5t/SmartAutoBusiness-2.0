@@ -66,14 +66,14 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "view_tree_01",
+                            "id": "view_tree_component_base",
                             "component": "cnToolbar",
                             "size": "default",
                             "cascade": {
                                 "messageSender": [
                                     {
                                         "id": "toolbar_01",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "triggerType": "OPERATION",
                                         "trigger": "EXECUTE_CHECKED_ROWS",
                                         "triggerMoment": "after",
@@ -102,7 +102,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                 "messageReceiver": [
                                     // {
                                     //     "id": "s_001",
-                                    //     "senderId": "view_tree_01",
+                                    //     "senderId": "view_tree_component_base",
                                     //     "receiveData": [
                                     //         {
                                     //             "triggerType": "STATE",
@@ -112,7 +112,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     // },
                                     // {
                                     //     "id": "s_002",
-                                    //     "senderId": "view_tree_01",
+                                    //     "senderId": "view_tree_component_base",
                                     //     "receiveData": [
                                     //         {
                                     //             "triggerType": "STATE",
@@ -160,7 +160,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         "component": "form",
                                         state: 'text',
                                         loadingConfig: {
-                                            id: "loadform" // 将加载配置引用
+                                            id: "loadform"
                                         },
                                         formLayout: {
                                             "id": "b86s2i",
@@ -487,12 +487,12 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 }
                                             },
                                         ],
-                                        formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
+                                        formControlsPermissions: [
                                             {
-                                                formState: "new", // 新增状态下的Controls 展示与否，是否读写属性设置
-                                                formStateContent: { // 对当前状态的描述 ，描述当前状态下 表单组件 具备的行为，例如是否自加载，是否启用默认值
+                                                formState: "new",
+                                                formStateContent: {
                                                     isLoad: false,
-                                                    loadAjax: {}, // 如果启用load，是否用新的加载地址
+                                                    loadAjax: {},
                                                     isDefault: true
                                                 },
                                                 Controls: [
@@ -545,7 +545,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "outputParameters": [
 
                                                 ],
-                                                "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
+                                                "result": [
 
                                                 ]
                                             }
@@ -564,7 +564,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         "component": "form",
                                         state: 'text',
                                         loadingConfig: {
-                                            id: "loadform" // 将加载配置引用
+                                            id: "loadform"
                                         },
                                         formLayout: {
                                             "id": "b86s2i",
@@ -894,25 +894,24 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "type": "select",
                                                     "field": "CMPT_ID",
                                                     "placeholder": "请输入",
+                                                    loadingConfig: {
+                                                        id: "loadformselectcmpt" // 将加载配置引用
+                                                    },
                                                     "validations": [
                                                         { validator: "required", type: "default", "message": "属性不能没有所属组件" }
                                                     ],
-                                                    "options": [
-                                                        { "label": 'v1.0', "value": "v1.0" },
-                                                        { "label": 'v2.0', "value": "v2.0" }
-                                                    ],
                                                     "defaultValue": "v2.0",
-                                                    "labelName": "label",
-                                                    "valueName": "value"
+                                                    "labelName": "NAME",
+                                                    "valueName": "ID"
                                                 }
                                             }
                                         ],
-                                        formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
+                                        formControlsPermissions: [
                                             {
-                                                formState: "new", // 新增状态下的Controls 展示与否，是否读写属性设置
-                                                formStateContent: { // 对当前状态的描述 ，描述当前状态下 表单组件 具备的行为，例如是否自加载，是否启用默认值
+                                                formState: "new",
+                                                formStateContent: {
                                                     isLoad: false,
-                                                    loadAjax: {}, // 如果启用load，是否用新的加载地址
+                                                    loadAjax: {},
                                                     isDefault: true
                                                 },
                                                 Controls: [
@@ -952,7 +951,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ajaxConfig: [
                                             {
                                                 "id": "loadform",
-                                                "url": "td/SMT_BASE_COMPONENt/query",
+                                                "url": "td/SMT_BASE_COMPONENT_PROPERTY/query",
                                                 "urlType": "inner",
                                                 "ajaxType": "get",
                                                 "params": [
@@ -965,7 +964,26 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "outputParameters": [
 
                                                 ],
-                                                "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
+                                                "result": [
+
+                                                ]
+                                            },
+                                            {
+                                                "id": "loadformselectcmpt",
+                                                "url": "td/SMT_BASE_COMPONENT/query",
+                                                "urlType": "inner",
+                                                "ajaxType": "get",
+                                                "params": [
+                                                    // {
+                                                    //     "name": "ID",
+                                                    //     "type": "tempValue",
+                                                    //     "valueName": "_ID"
+                                                    // }
+                                                ],
+                                                "outputParameters": [
+
+                                                ],
+                                                "result": [
 
                                                 ]
                                             }
@@ -1408,7 +1426,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "afterTrigger": [
                                 {
                                     "id": "",
-                                    "senderId": "view_tree_01",
+                                    "senderId": "view_tree_component_base",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -1433,7 +1451,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             ],
                             "toolbar": [
                                 {
-                                    "targetViewId": "view_tree_01",
+                                    "targetViewId": "view_tree_component_base",
                                     "group": [
                                         {
                                             "id": "M_refresh",
@@ -1558,7 +1576,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "nzXXl": 8
                         },
                         "component": {
-                            "id": "view_tree_01",
+                            "id": "view_tree_component_base",
                             "title": "树",
                             "titleIcon": "right-circle",
                             "component": "cnTree",
@@ -1647,8 +1665,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "cascade": {
                                 "messageSender": [
                                     {
-                                        "id": "grid_sender_02",
-                                        "senderId": "view_tree_01",
+                                        "id": "",
+                                        "senderId": "view_tree_component_base",
                                         "triggerType": "BEHAVIOR",
                                         "trigger": "CLICK_NODE",
                                         "triggerMoment": "after",
@@ -1660,7 +1678,12 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "receiverTrigger": "REFRESH_AS_CHILD",
                                                 "params": [
                                                     {
-                                                        "name": "PID",
+                                                        "name": "_ID",
+                                                        "type": "item",
+                                                        "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "_PID",
                                                         "type": "item",
                                                         "valueName": "ID"
                                                     }
@@ -1670,7 +1693,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_03",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1683,7 +1706,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_01",
+                                                        "value": "view_tree_component_base",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1692,7 +1715,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_04",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_NEW_ROW",
                                         "triggerMoment": "after",
@@ -1705,7 +1728,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_01",
+                                                        "value": "view_tree_component_base",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1714,7 +1737,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_05",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "triggerType": "STATE",
                                         "trigger": "EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1726,7 +1749,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_01",
+                                                        "value": "view_tree_component_base",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1735,7 +1758,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_06",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROW",
                                         "triggerMoment": "after",
@@ -1747,7 +1770,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_01",
+                                                        "value": "view_tree_component_base",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1756,7 +1779,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_07",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROWS",
                                         "triggerMoment": "after",
@@ -1768,7 +1791,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_01",
+                                                        "value": "view_tree_component_base",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1777,7 +1800,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_08",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "triggerType": "ACTION",
                                         "trigger": "CONFIRM",
                                         "triggerMoment": "after",
@@ -1789,7 +1812,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_01",
+                                                        "value": "view_tree_component_base",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1797,8 +1820,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterRootOfficeSaveSuccessfully",
-                                        "senderId": "view_tree_01",
+                                        "id": "afterComponentSaveSuccess",
+                                        "senderId": "view_tree_component_base",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1830,17 +1853,17 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         "valueName": "ID"
                                                     },
                                                     {
-                                                        "name": "OFFICENAME",
+                                                        "name": "NAME",
                                                         "type": "addedRows",
-                                                        "valueName": "OFFICENAME"
+                                                        "valueName": "NAME"
                                                     }
                                                 ]
                                             }
                                         ]
                                     },
                                     {
-                                        "id": "afterComponentSaveSuccess",
-                                        "senderId": "view_tree_01",
+                                        "id": "afterComponentSaveSuccess1",
+                                        "senderId": "view_tree_component_base",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1898,54 +1921,54 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             }
                                         ]
                                     },
-                                    {
-                                        "id": "afterComponentUpdateSuccess",
-                                        "senderId": "view_tree_01",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
-                                        "sendData": [
-                                            {
-                                                "beforeSend": {},
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "MESSAGE",
-                                                "params": [
-                                                    {
-                                                        "name": "type",
-                                                        "type": "value",
-                                                        "value": "success"
-                                                    },
-                                                    {
-                                                        "name": "code",
-                                                        "type": "value",
-                                                        "value": "message.operation.success"
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "beforeSend": {},
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "UPDATE_SELECTED_NODE",
-                                                "params": [
-                                                    {
-                                                        "name": "ID",
-                                                        "type": "editedRows",
-                                                        "valueName": "ID"
-                                                    },
-                                                    {
-                                                        "name": "OFFICENAME",
-                                                        "type": "editedRows",
-                                                        "valueName": "OFFICENAME"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
+                                    // {
+                                    //     "id": "afterComponentUpdateSuccess",
+                                    //     "senderId": "view_tree_component_base",
+                                    //     // "triggerType": "ACTION",
+                                    //     // "trigger": "MESSAGE0",
+                                    //     // "triggerMoment": "after",
+                                    //     "sendData": [
+                                    //         {
+                                    //             "beforeSend": {},
+                                    //             "reveicerId": "",
+                                    //             "receiverTriggerType": "ACTION",
+                                    //             "receiverTrigger": "MESSAGE",
+                                    //             "params": [
+                                    //                 {
+                                    //                     "name": "type",
+                                    //                     "type": "value",
+                                    //                     "value": "success"
+                                    //                 },
+                                    //                 {
+                                    //                     "name": "code",
+                                    //                     "type": "value",
+                                    //                     "value": "message.operation.success"
+                                    //                 }
+                                    //             ]
+                                    //         },
+                                    //         {
+                                    //             "beforeSend": {},
+                                    //             "reveicerId": "",
+                                    //             "receiverTriggerType": "ACTION",
+                                    //             "receiverTrigger": "UPDATE_SELECTED_NODE",
+                                    //             "params": [
+                                    //                 {
+                                    //                     "name": "ID",
+                                    //                     "type": "editedRows",
+                                    //                     "valueName": "ID"
+                                    //                 },
+                                    //                 {
+                                    //                     "name": "OFFICENAME",
+                                    //                     "type": "editedRows",
+                                    //                     "valueName": "OFFICENAME"
+                                    //                 }
+                                    //             ]
+                                    //         }
+                                    //     ]
+                                    // },
                                     {
                                         "id": "afterComponentDeleteSuccess",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -1985,7 +2008,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "afterComponentBatchDeleteSuccess",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         // "triggerType": "ACTION",
                                         // "trigger": "MESSAGE0",
                                         // "triggerMoment": "after",
@@ -2025,7 +2048,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "afterProvinceSaveValidation",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -2037,7 +2060,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "afterProvinceUpdateValidation",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -2051,7 +2074,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                 "messageReceiver": [
                                     {
                                         "id": "s_201",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2061,7 +2084,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_202",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2071,7 +2094,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_203",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_form_edit_component",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2081,7 +2104,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_204",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2091,7 +2114,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_205",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2101,7 +2124,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_205",
-                                        "senderId": "view_tree_01",
+                                        "senderId": "view_tree_component_base",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2582,7 +2605,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "beforeTrigger": [
                                 {
                                     "id": "before_delete_province",
-                                    "senderId": "view_tree_01",
+                                    "senderId": "view_tree_component_base",
                                     "sendData": [
                                         {
                                             "receiverTriggerType": "ACTION",
@@ -2607,7 +2630,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "afterTrigger": [
                                 {
                                     "id": "",
-                                    "senderId": "view_tree_01",
+                                    "senderId": "view_tree_component_base",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -2672,34 +2695,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "size": "default",
                                             "cascade": {
                                                 "messageSender": [
-                                                    {
-                                                        "id": "toolbar_02",
-                                                        "senderId": "view_02",
-                                                        "triggerType": "OPERATION",
-                                                        "trigger": "EXECUTE_CHECKED_ROWS",
-                                                        "triggerMoment": "after",
-                                                        "sendData": [
-                                                            {
-                                                                "beforeSend": {},
-                                                                "reveicerId": "",
-                                                                "receiverTriggerType": "BEHAVIOR",
-                                                                "receiverTrigger": "REFRESH_AS_CHILD",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "parent_id",
-                                                                        "type": "item",
-                                                                        "valueName": "id"
-                                                                    },
-                                                                    {
-                                                                        "name": "parent_name",
-                                                                        "type": "item",
-                                                                        "valueName": "name"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ],
+
+                                                ]
                                             },
                                             "changeValue": [
                                                 {
@@ -2714,318 +2711,19 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     ]
                                                 }
                                             ],
-                                            "dialog": [
-                                                {
-                                                    "id": "edit_city_form",
-                                                    "type": "confirm",
-                                                    "title": "数据编辑",
-                                                    "cancelText": "取消",
-                                                    "okText": "提交",
-                                                    "form": {
-                                                        "id": "form_city",
-                                                        "type": "form",
-                                                        "component": "form",
-                                                        state: 'text',
-                                                        loadingConfig: {
-                                                            id: "loadform" // 将加载配置引用
-                                                        },
-                                                        formLayout: {
-                                                            "id": "b86s2i11",
-                                                            "type": "layout",
-                                                            "title": "表单布局b86s2i",
-                                                            "rows": [
-                                                                {
-                                                                    "id": "MefhXa",
-                                                                    "type": "row",
-                                                                    // 行列，是否 显示。
-                                                                    "cols": [
-                                                                        {
-                                                                            "id": "iHspYn", "col": "cc", "type": "col",
-                                                                            "title": "列iHspYn", "span": 24,
-                                                                            "layoutContain": "input",
-                                                                            "size": {
-                                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                            },
-                                                                            "control": {
-                                                                                "id": "city_name"  // id 和引用id 值相同
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }]
-                                                        },
-                                                        formControls: [
-                                                            {
-                                                                id: 'city_name',
-                                                                "hidden": true,
-                                                                "title": '市名称',
-                                                                "titleConfig": {
-                                                                    required: true
-                                                                },
-                                                                "field": "cityName",
-                                                                "labelSize": {
-                                                                    "span": 6,
-                                                                    "nzXs": { span: 6 },
-                                                                    "nzSm": { span: 6 },
-                                                                    "nzMd": { span: 6 },
-                                                                    "nzLg": { span: 6 },
-                                                                    "ngXl": { span: 6 },
-                                                                    "nzXXl": { span: 6 }
-                                                                },  // 
-                                                                "controlSize": {
-                                                                    "span": 18,
-                                                                    "nzXs": 18,
-                                                                    "nzSm": 18,
-                                                                    "nzMd": 18,
-                                                                    "nzLg": 18,
-                                                                    "ngXl": 18,
-                                                                    "nzXXl": 18
-                                                                },
-                                                                "state": "edit",
-                                                                "text": {
-                                                                    "type": 'label',
-                                                                    "field": 'cityName',
-                                                                },
-                                                                "editor": {
-                                                                    "type": "input",
-                                                                    "field": "cityName",
-                                                                    "placeholder": "请输入",
-                                                                    "validations": [
-                                                                        { validator: "required", type: "default", "message": "请输入省名称" }
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                id: 'city_id',
-                                                                "hidden": true,
-                                                                "title": '区号',
-                                                                "titleConfig": {
-                                                                    required: false
-                                                                },
-                                                                "field": "id",
-                                                                "labelSize": {
-                                                                    "span": 6,
-                                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                                },  // 
-                                                                "controlSize": {
-                                                                    "span": 18,
-                                                                    "nzXs": { span: 18, offset: 0 },
-                                                                    "nzSm": { span: 18, offset: 0 },
-                                                                    "nzMd": { span: 18, offset: 0 },
-                                                                    "nzLg": { span: 18, offset: 0 },
-                                                                    "ngXl": { span: 18, offset: 0 },
-                                                                    "nzXXl": { span: 18, offset: 0 }
-                                                                },
-                                                                "state": "edit",
-                                                                "text": {
-                                                                    "type": 'label',
-                                                                    "field": 'id',
-                                                                },
-                                                                "editor": {
-                                                                    "type": "input",
-                                                                    "field": "id",
-                                                                    "placeholder": "请输入",
-                                                                    "validations": [
-
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                id: 'city_pid',
-                                                                "hidden": true,
-                                                                "title": '区号',
-                                                                "titleConfig": {
-                                                                    required: false
-                                                                },
-                                                                "field": "pId",
-                                                                "labelSize": {
-                                                                    "span": 6,
-                                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                                },  // 
-                                                                "controlSize": {
-                                                                    "span": 18,
-                                                                    "nzXs": { span: 18, offset: 0 },
-                                                                    "nzSm": { span: 18, offset: 0 },
-                                                                    "nzMd": { span: 18, offset: 0 },
-                                                                    "nzLg": { span: 18, offset: 0 },
-                                                                    "ngXl": { span: 18, offset: 0 },
-                                                                    "nzXXl": { span: 18, offset: 0 }
-                                                                },
-                                                                "state": "edit",
-                                                                "text": {
-                                                                    "type": 'label',
-                                                                    "field": 'pId',
-                                                                },
-                                                                "editor": {
-                                                                    "type": "input",
-                                                                    "field": "pId",
-                                                                    "placeholder": "请输入",
-                                                                    "validations": [
-
-                                                                    ]
-                                                                }
-                                                            }
-                                                        ],
-                                                        formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
-                                                            {
-                                                                formState: "new", // 新增状态下的Controls 展示与否，是否读写属性设置
-                                                                formStateContent: { // 对当前状态的描述 ，描述当前状态下 表单组件 具备的行为，例如是否自加载，是否启用默认值
-                                                                    isLoad: false,
-                                                                    loadAjax: {}, // 如果启用load，是否用新的加载地址
-                                                                    isDefault: true
-                                                                },
-                                                                Controls: [
-                                                                    { id: 'city_name', state: "edit", hidden: false, readOnly: false }
-                                                                ]
-                                                            },
-                                                            {
-                                                                formState: "edit",
-                                                                Controls: [
-                                                                    { id: 'city_name', state: "edit", hidden: false, readOnly: false }
-                                                                ]
-                                                            },
-                                                            {
-                                                                formState: "text",
-                                                                Controls: [
-                                                                    { id: 'city_name', state: "text", hidden: false, readOnly: false }
-                                                                ]
-                                                            }
-
-                                                        ],
-                                                        ajaxConfig: [
-                                                            {
-                                                                "id": "loadform",
-                                                                "url": "/province/queryConditionA/CITY_SHEET",
-                                                                "urlType": "inner",
-                                                                "ajaxType": "get",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "ID",
-                                                                        "type": "tempValue",
-                                                                        "valueName": "id"
-                                                                    }
-                                                                ],
-                                                                "outputParameters": [
-
-                                                                ],
-                                                                "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
-
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ],
                                             "condition": [
                                                 {
-                                                    "id": "add_state_2",
+                                                    "id": "component_condition_edited_none",
                                                     "state": [
                                                         {
                                                             "type": "component",
-                                                            "valueName": "ROWS_CHECKED",
+                                                            "valueName": "FORM_VALID",
                                                             "expression": [
                                                                 {
                                                                     "type": "property",
-                                                                    "name": "length",
-                                                                    "matchValue": 0,
-                                                                    "match": "gt"
-                                                                },
-                                                                {
-                                                                    "type": "element",
-                                                                    "name": "name",
-                                                                    "matchValue": "1",
-                                                                    "match": "eq",
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "edit_state_2",
-                                                    "state": [
-                                                        {
-                                                            "type": "component",
-                                                            "valueName": "ROWS_CHECKED",
-                                                            "expression": [
-                                                                {
-                                                                    "type": "property",
-                                                                    "name": "length",
-                                                                    "matchValue": 0,
-                                                                    "match": "gt"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "city_condition_added_none",
-                                                    "state": [
-                                                        {
-                                                            "type": "component",
-                                                            "valueName": "ROWS_CHECKED",
-                                                            "expression": [
-                                                                {
-                                                                    "type": "property",
-                                                                    "name": "length",
-                                                                    "matchValue": 0,
-                                                                    "match": "gt"
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "component",
-                                                            "valueName": "ROWS_ADDED",
-                                                            "expression": [
-                                                                {
-                                                                    "type": "property",
-                                                                    "name": "length",
-                                                                    "matchValue": 0,
-                                                                    "match": "gt"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "city_condition_edited_none",
-                                                    "state": [
-                                                        {
-                                                            "type": "component",
-                                                            "valueName": "ROWS_EDITED",
-                                                            "expression": [
-                                                                {
-                                                                    "type": "property",
-                                                                    "name": "length",
-                                                                    "matchValue": 0,
-                                                                    "match": "gt"
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "type": "component",
-                                                            "valueName": "ROWS_CHECKED",
-                                                            "expression": [
-                                                                {
-                                                                    "type": "property",
-                                                                    "name": "length",
-                                                                    "matchValue": 0,
-                                                                    "match": "gt"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "cancel_edit_rows_2_2",
-                                                    "state": [
-                                                        {
-                                                            "type": "component",
-                                                            "valueName": "ROWS_EDITED",
-                                                            "expression": [
-                                                                {
-                                                                    "type": "property",
-                                                                    "name": "length",
-                                                                    "matchValue": 0,
-                                                                    "match": "gt"
+                                                                    "name": "",
+                                                                    "matchValue": true,
+                                                                    "match": "eq"
                                                                 }
                                                             ]
                                                         }
@@ -3034,108 +2732,47 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             ],
                                             "ajaxConfig": [
                                                 {
-                                                    "id": "form_add_city",
-                                                    "url": "city/insert",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "post",
-                                                    "params": [
-                                                        {
-                                                            "name": "cityName",
-                                                            "type": "componentValue",
-                                                            "valueName": "cityName"
-                                                        },
-                                                        {
-                                                            "name": "zipCode",
-                                                            "type": "componentValue",
-                                                            "valueName": "zipCode"
-                                                        },
-                                                        {
-                                                            "name": "populationSize",
-                                                            "type": "componentValue",
-                                                            "valueName": "populationSize"
-                                                        },
-                                                        {
-                                                            "name": "directlyUnder",
-                                                            "type": "componentValue",
-                                                            "valueName": "directlyUnder"
-                                                        },
-                                                        {
-                                                            "name": "createDate",
-                                                            "type": "componentValue",
-                                                            "valueName": "createDate"
-                                                        },
-                                                        {
-                                                            "name": "pId",
-                                                            "type": "componentValue",
-                                                            "valueName": "pId"
-                                                        },
-                                                        {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-                                                        {
-                                                            "name": "data",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterComponentSaveSuccess"
-                                                        },
-                                                        {
-                                                            "name": "validation",
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCitySaveValidation"
-                                                        },
-                                                        {
-                                                            "name": "error",
-                                                            "senderId": "toolbar_02"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "form_edit_city",
-                                                    "url": "city/update",
+                                                    "id": "toolbar_form_component_base_edit",
+                                                    "url": "td/SMT_BASE_COMPONENT/update",
                                                     "urlType": "inner",
                                                     "ajaxType": "put",
                                                     "params": [
                                                         {
-                                                            "name": "cityName",
+                                                            "name": "ID",
                                                             "type": "componentValue",
-                                                            "valueName": "cityName"
+                                                            "valueName": "ID"
                                                         },
                                                         {
-                                                            "name": "zipCode",
+                                                            "name": "NAME",
                                                             "type": "componentValue",
-                                                            "valueName": "zipCode"
+                                                            "valueName": "NAME",
+                                                            "dataType": "string"
                                                         },
                                                         {
-                                                            "name": "populationSize",
+                                                            "name": "CODE",
                                                             "type": "componentValue",
-                                                            "valueName": "populationSize"
+                                                            "valueName": "CODE"
                                                         },
                                                         {
-                                                            "name": "directlyUnder",
+                                                            "name": "TYPE",
                                                             "type": "componentValue",
-                                                            "valueName": "directlyUnder"
+                                                            "valueName": "TYPE"
                                                         },
                                                         {
-                                                            "name": "createDate",
+                                                            "name": "VERSION",
                                                             "type": "componentValue",
-                                                            "valueName": "createDate"
+                                                            "valueName": "VERSION"
                                                         },
                                                         {
-                                                            "name": "pId",
+                                                            "name": "SORT",
                                                             "type": "componentValue",
-                                                            "valueName": "pId"
+                                                            "valueName": "SORT",
+                                                            "dataType": "int"
                                                         },
                                                         {
-                                                            "name": "id",
+                                                            "name": "STATE",
                                                             "type": "componentValue",
-                                                            "valueName": "id"
+                                                            "valueName": "STATE"
                                                         }
                                                     ],
                                                     "outputParameters": [
@@ -3146,140 +2783,13 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                             "name": "data",
                                                             "showMessageWithNext": 0,
                                                             "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateFormSuccessfully"
+                                                            "senderId": "afterComponentFormUpdateSuccess"
                                                         },
                                                         {
                                                             "name": "validation",
                                                             "showMessageWithNext": 0,
                                                             "message": "message.ajax.state.success",
                                                             "senderId": "afterCityUpdateFormValidation"
-                                                        },
-                                                        {
-                                                            "name": "error",
-                                                            "senderId": "toolbar_02"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "add_cities_1",
-                                                    "url": "city/insertMany",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "post",
-                                                    "params": [
-                                                        {
-                                                            "name": "cityName",
-                                                            "type": "componentValue",
-                                                            "valueName": "cityName"
-                                                        },
-                                                        {
-                                                            "name": "zipCode",
-                                                            "type": "componentValue",
-                                                            "valueName": "zipCode"
-                                                        },
-                                                        {
-                                                            "name": "populationSize",
-                                                            "type": "componentValue",
-                                                            "valueName": "populationSize"
-                                                        },
-                                                        {
-                                                            "name": "directlyUnder",
-                                                            "type": "componentValue",
-                                                            "valueName": "directlyUnder"
-                                                        },
-                                                        {
-                                                            "name": "createDate",
-                                                            "type": "componentValue",
-                                                            "valueName": "createDate"
-                                                        },
-                                                        {
-                                                            "name": "pId",
-                                                            "type": "tempValue",
-                                                            "valueName": "_PID"
-                                                        },
-                                                        {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-                                                        {
-                                                            "name": "data",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterComponentSaveSuccess"
-                                                        },
-                                                        {
-                                                            "name": "validation",
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCitySaveValidation"
-                                                        },
-                                                        {
-                                                            "name": "error",
-                                                            "senderId": "toolbar_02"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "edit_cities_1",
-                                                    "url": "city/updateMany",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "put",
-                                                    "params": [
-                                                        {
-                                                            "name": "cityName",
-                                                            "type": "componentValue",
-                                                            "valueName": "cityName"
-                                                        },
-                                                        {
-                                                            "name": "zipCode",
-                                                            "type": "componentValue",
-                                                            "valueName": "zipCode"
-                                                        },
-                                                        {
-                                                            "name": "populationSize",
-                                                            "type": "componentValue",
-                                                            "valueName": "populationSize"
-                                                        },
-                                                        {
-                                                            "name": "directlyUnder",
-                                                            "type": "componentValue",
-                                                            "valueName": "directlyUnder"
-                                                        },
-                                                        {
-                                                            "name": "createDate",
-                                                            "type": "componentValue",
-                                                            "valueName": "createDate"
-                                                        },
-                                                        {
-                                                            "name": "pId",
-                                                            "type": "tempValue",
-                                                            "valueName": "_PID"
-                                                        },
-                                                        {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-                                                        {
-                                                            "name": "data",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateSuccessfully"
-                                                        },
-                                                        {
-                                                            "name": "validation",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateValidation"
                                                         },
                                                         {
                                                             "name": "error",
@@ -3317,6 +2827,23 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     ]
                                                 }
                                             ],
+                                            "builtinConfig": [
+                                                // {
+                                                //     "id": "add_state_1",
+                                                //     "event": "formStateChange", // 内置方法
+                                                //     "state": "new",
+                                                // },
+                                                {
+                                                    "id": "edit_state_1",
+                                                    "event": "formStateChange", // 内置方法
+                                                    "state": "edit",
+                                                },
+                                                {
+                                                    "id": "cancel_state_1",
+                                                    "event": "formStateChange", // 内置方法
+                                                    "state": "text",
+                                                }
+                                            ],
                                             "toolbar": [
                                                 {
                                                     "targetViewId": "view_form_edit_component",
@@ -3346,8 +2873,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                             "execute": [
                                                                 {
                                                                     "triggerType": "STATE",
-                                                                    "trigger": "EDIT_ROWS",
-                                                                    // "conditionId": "edit_state_1"
+                                                                    "trigger": "EDIT_FORM",
+                                                                    "builtinId": "edit_state_1"
                                                                 }
                                                             ],
                                                             "toggle": {
@@ -3368,83 +2895,63 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         {
                                                             "id": "toolbar_edit_component_save",
                                                             "text": "保存",
-                                                            "state": "edit",
+                                                            "state": "text",
                                                             "icon": "save",
                                                             "color": "text-primary",
-                                                            "hidden": true,
+                                                            "hidden": false,
                                                             "disabled": false,
                                                             "execute": [
                                                                 {
                                                                     "triggerType": "OPERATION",
-                                                                    "trigger": "SAVE_ROWS",
-                                                                    "ajaxId": "add_cities_1",
-                                                                    // "stateId": "add_save_1",
-                                                                    "conditionId": "city_condition_added_none"
-                                                                },
-                                                                {
-                                                                    "triggerType": "OPERATION",
-                                                                    "trigger": "SAVE_ROWS",
-                                                                    "ajaxId": "edit_cities_1",
-                                                                    // "stateId": "edit_save_1",
-                                                                    "conditionId": "city_condition_edited_none"
+                                                                    "trigger": "EXECUTE",
+                                                                    "ajaxId": "toolbar_form_component_base_edit",
+                                                                    // "conditionId": "component_condition_edited_none"
                                                                 }
                                                             ],
-                                                            "toggle": {
-                                                                "type": "state",
-                                                                "toggleProperty": "hidden",
-                                                                "values": [
-                                                                    {
-                                                                        "name": "edit",
-                                                                        "value": false
-                                                                    },
-                                                                    {
-                                                                        "name": "text",
-                                                                        "value": true
-                                                                    },
-                                                                    {
-                                                                        "name": "new",
-                                                                        "value": false
-                                                                    }
-                                                                ]
-                                                            }
+                                                            // "toggle": {
+                                                            //     "type": "state",
+                                                            //     "toggleProperty": "hidden",
+                                                            //     "values": [
+                                                            //         {
+                                                            //             "name": "edit",
+                                                            //             "value": false
+                                                            //         },
+                                                            //         {
+                                                            //             "name": "text",
+                                                            //             "value": true
+                                                            //         }
+                                                            //     ]
+                                                            // }
                                                         },
                                                         {
                                                             "id": "toolbar_edit_component_cancel",
                                                             "text": "取消",
-                                                            "state": "edit",
+                                                            "state": "text",
                                                             "icon": "rollback",
                                                             "color": "text-grey-darker",
-                                                            "hidden": true,
+                                                            "hidden": false,
                                                             "disabled": null,
                                                             "execute": [
                                                                 {
                                                                     "triggerType": "STATE",
-                                                                    "trigger": "CANCEL_EDIT_ROWS",
-                                                                    "conditionId": "cancel_edit_rows_2_2"
-                                                                },
-                                                                {
-                                                                    "triggerType": "STATE",
-                                                                    "trigger": "CANCEL_NEW_ROWS"
+                                                                    "trigger": "CANCEL",
+                                                                    "builtinId": "cancel_state_1"
                                                                 }
                                                             ],
-                                                            "toggle": {
-                                                                "type": "state",
-                                                                "toggleProperty": "hidden",
-                                                                "values": [
-                                                                    {
-                                                                        "name": "edit",
-                                                                        "value": false
-                                                                    },
-                                                                    {
-                                                                        "name": "text",
-                                                                        "value": true
-                                                                    },
-                                                                    {
-                                                                        "name": "new",
-                                                                        "value": false
-                                                                    }
-                                                                ]
-                                                            }
+                                                            // "toggle": {
+                                                            //     "type": "state",
+                                                            //     "toggleProperty": "hidden",
+                                                            //     "values": [
+                                                            //         {
+                                                            //             "name": "edit",
+                                                            //             "value": false
+                                                            //         },
+                                                            //         {
+                                                            //             "name": "text",
+                                                            //             "value": true
+                                                            //         }
+                                                            //     ]
+                                                            // }
                                                         }
                                                     ]
                                                 }
@@ -3470,11 +2977,77 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "id": "view_form_edit_component",
                                             "type": "form",
                                             "component": "form",
-                                            state: 'text',
-                                            loadingConfig: {
-                                                id: "loadform" // 将加载配置引用
+                                            "state": 'text',
+                                            "loadingConfig": {
+                                                "id": "loadform"
                                             },
-                                            formLayout: {
+                                            "cascade": {
+                                                "messageSender": [
+                                                    {
+                                                        "id": "afterComponentFormUpdateSuccess",
+                                                        "senderId": "view_form_edit_component",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "MESSAGE",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "value",
+                                                                        "value": "success"
+                                                                    },
+                                                                    {
+                                                                        "name": "code",
+                                                                        "type": "value",
+                                                                        "value": "message.operation.success"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "UPDATE_SELECTED_NODE",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "ID",
+                                                                        "type": "returnValue",
+                                                                        "valueName": "ID"
+                                                                    },
+                                                                    {
+                                                                        "name": "NAME",
+                                                                        "type": "returnValue",
+                                                                        "valueName": "NAME"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "messageReceiver": [
+                                                    {
+                                                        "id": "",
+                                                        "senderId": "view_tree_component_base",
+                                                        "receiveData": [
+                                                            {
+                                                                "beforeReceive": [],
+                                                                "triggerType": "BEHAVIOR",
+                                                                "trigger": "REFRESH_AS_CHILD",
+                                                                "params": [
+                                                                    {
+                                                                        "pname": "_ID",
+                                                                        "cname": "_ID",
+                                                                        "valueTo": "tempValue"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            "formLayout": {
                                                 "id": "b86s2i",
                                                 "type": "layout",
                                                 "title": "表单布局b86s2i",
@@ -3533,7 +3106,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         ]
                                                     }]
                                             },
-                                            formControls: [
+                                            "formControls": [
                                                 {
                                                     id: 'ctl_id',
                                                     "hidden": true,
@@ -3799,12 +3372,12 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     }
                                                 },
                                             ],
-                                            formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
+                                            "formControlsPermissions": [
                                                 {
-                                                    formState: "new", // 新增状态下的Controls 展示与否，是否读写属性设置
-                                                    formStateContent: { // 对当前状态的描述 ，描述当前状态下 表单组件 具备的行为，例如是否自加载，是否启用默认值
+                                                    formState: "new",
+                                                    formStateContent: {
                                                         isLoad: false,
-                                                        loadAjax: {}, // 如果启用load，是否用新的加载地址
+                                                        loadAjax: {},
                                                         isDefault: true
                                                     },
                                                     Controls: [
@@ -3831,33 +3404,33 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 {
                                                     formState: "text",
                                                     Controls: [
-                                                        { id: 'ctl_name', state: "edit", hidden: false, readOnly: false },
-                                                        { id: 'ctl_code', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_type', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_version', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_sort', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_state', state: "edit", hidden: true, readOnly: false }
+                                                        { id: 'ctl_name', state: "text", hidden: false, readOnly: false },
+                                                        { id: 'ctl_code', state: "text", hidden: true, readOnly: false },
+                                                        { id: 'ctl_type', state: "text", hidden: true, readOnly: false },
+                                                        { id: 'ctl_version', state: "text", hidden: true, readOnly: false },
+                                                        { id: 'ctl_sort', state: "text", hidden: true, readOnly: false },
+                                                        { id: 'ctl_state', state: "text", hidden: true, readOnly: false }
                                                     ]
                                                 }
 
                                             ],
-                                            ajaxConfig: [
+                                            "ajaxConfig": [
                                                 {
                                                     "id": "loadform",
-                                                    "url": "td/SMT_BASE_COMPONENt/query",
+                                                    "url": "td/SMT_BASE_COMPONENT/query",
                                                     "urlType": "inner",
                                                     "ajaxType": "get",
                                                     "params": [
                                                         {
                                                             "name": "ID",
                                                             "type": "tempValue",
-                                                            "valueName": "ID"
+                                                            "valueName": "_ID"
                                                         }
                                                     ],
                                                     "outputParameters": [
 
                                                     ],
-                                                    "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
+                                                    "result": [
 
                                                     ]
                                                 }
@@ -3961,7 +3534,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         "component": "form",
                                                         state: 'text',
                                                         loadingConfig: {
-                                                            id: "loadform" // 将加载配置引用
+                                                            id: "loadform"
                                                         },
                                                         formLayout: {
                                                             "id": "b86s2i11",
@@ -4099,12 +3672,12 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                 }
                                                             }
                                                         ],
-                                                        formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
+                                                        formControlsPermissions: [
                                                             {
-                                                                formState: "new", // 新增状态下的Controls 展示与否，是否读写属性设置
-                                                                formStateContent: { // 对当前状态的描述 ，描述当前状态下 表单组件 具备的行为，例如是否自加载，是否启用默认值
+                                                                formState: "new",
+                                                                formStateContent: {
                                                                     isLoad: false,
-                                                                    loadAjax: {}, // 如果启用load，是否用新的加载地址
+                                                                    loadAjax: {},
                                                                     isDefault: true
                                                                 },
                                                                 Controls: [
@@ -4141,7 +3714,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                 "outputParameters": [
 
                                                                 ],
-                                                                "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
+                                                                "result": [
 
                                                                 ]
                                                             }
@@ -4380,7 +3953,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                             "name": "data",
                                                             "showMessageWithNext": 0,
                                                             "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateFormSuccessfully"
+                                                            "senderId": "afterComponentFormUpdateSuccess"
                                                         },
                                                         {
                                                             "name": "validation",
@@ -4824,13 +4397,13 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "pageSizeOptions": [10, 20, 50, 100],
                                             "loadingOnInit": false,
                                             "loadingConfig": {
-                                                "url": "province/queryCondition/OFFICE_SHEET",
+                                                "url": "td/SMT_BASE_INNER_PROPERTY/query",
                                                 "method": "get",
                                                 "params": [
                                                     {
                                                         "name": "PID",
                                                         "type": "tempValue",
-                                                        "valueName": "PID"
+                                                        "valueName": "_PID"
                                                     }
                                                 ],
                                                 "filter": [
@@ -4842,7 +4415,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "title": "ID",
                                                     "type": "field",
                                                     "field": "ID",
-                                                    "hidden": false,
+                                                    "hidden": true,
                                                     "showFilter": false,
                                                     "showSort": false,
                                                     "width": "50px",
@@ -4852,16 +4425,56 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "title": "PID",
                                                     "type": "field",
                                                     "field": "PID",
-                                                    "hidden": false,
+                                                    "hidden": true,
                                                     "showFilter": false,
                                                     "showSort": false,
                                                     "width": "50px",
                                                     "style": {}
                                                 },
                                                 {
-                                                    "title": "OFFICE_NAME",
+                                                    "title": "属性名称",
                                                     "type": "field",
-                                                    "field": "OFFICENAME",
+                                                    "field": "NAME",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {}
+                                                },
+                                                {
+                                                    "title": "属性类型",
+                                                    "type": "field",
+                                                    "field": "TYPE",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {}
+                                                },
+                                                {
+                                                    "title": "属性数据类型",
+                                                    "type": "field",
+                                                    "field": "DATA_TYPE",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {}
+                                                },
+                                                {
+                                                    "title": "是否启用",
+                                                    "type": "field",
+                                                    "field": "STATE",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {}
+                                                },
+                                                {
+                                                    "title": "备注",
+                                                    "type": "field",
+                                                    "field": "REMARK",
                                                     "hidden": false,
                                                     "showFilter": false,
                                                     "showSort": false,
@@ -4992,7 +4605,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                 "params": [
                                                                     {
                                                                         "name": "targetViewId",
-                                                                        "value": "view_tree_01",
+                                                                        "value": "view_tree_component_base",
                                                                         "type": "value"
                                                                     }
                                                                 ]
@@ -5114,7 +4727,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         ]
                                                     },
                                                     {
-                                                        "id": "afterCityUpdateFormSuccessfully",
+                                                        "id": "afterComponentFormUpdateSuccess",
                                                         "senderId": "view_02",
                                                         // "triggerType": "ACTION",
                                                         // "trigger": "MESSAGE0",
@@ -5134,7 +4747,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                     {
                                                                         "name": "code",
                                                                         "type": "value",
-                                                                        "value": "operation..code.success"
+                                                                        "value": "operation.code.success"
                                                                     }
                                                                 ]
                                                             },
@@ -5186,7 +4799,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "messageReceiver": [
                                                     {
                                                         "id": "",
-                                                        "senderId": "view_tree_01",
+                                                        "senderId": "view_tree_component_base",
                                                         "receiveData": [
                                                             {
                                                                 "beforeReceive": [],
@@ -5194,8 +4807,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                 "trigger": "REFRESH_AS_CHILD",
                                                                 "params": [
                                                                     {
-                                                                        "pname": "PID",
-                                                                        "cname": "PID",
+                                                                        "pname": "_PID",
+                                                                        "cname": "_PID",
                                                                         "valueTo": "tempValue"
                                                                     }
                                                                 ]
