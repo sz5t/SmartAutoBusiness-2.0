@@ -58,6 +58,13 @@ export class CnComponentBase {
         this._cascadeValue = value;
     }
 
+    private _staticComponentValue: any;
+    public get staticComponentValue(): any {
+        return this._staticComponentValue ? this._staticComponentValue : {};
+    }
+    public set staticComponentValue(value: any) {
+        this._staticComponentValue = value;
+    }
 
 
     private _subscription$: Subscription;
