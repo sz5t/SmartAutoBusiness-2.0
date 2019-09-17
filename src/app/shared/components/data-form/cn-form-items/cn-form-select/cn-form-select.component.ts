@@ -34,7 +34,7 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit,Aft
    ngAfterViewInit() {
     // console.log('ngAfterViewInit ==>' , this.config.field);
     if (this.config.loadingConfig) {
-      // this.load();
+       this.load();
     } else {
       if (this.config.options) {
         setTimeout(() => {
@@ -93,7 +93,7 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit,Aft
   public async load() {
     // 【参数不全是否阻止加载！】
     // 对后续业务判断有影响
-  //  console.log('===select 自加载====>load');
+    console.log('===select 自加载====>load');
     const url = this.config.loadingConfig['ajaxConfig'].url;
     const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
     const params = {
