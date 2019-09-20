@@ -1,3 +1,4 @@
+import { BaseCfgPropertyManagerComponent } from './base-cfg-property-manager.component';
 import { BaseInnerPropertyManagerComponent } from './base-inner-property-manager.component';
 import { LayoutDemoComponent } from './layout-demo.component';
 import { NgModule } from '@angular/core';
@@ -21,7 +22,8 @@ const COMPONENTS = [
   TreeTableDemoComponent,
   DataModelingComponent,
   BaseInnerPropertyManagerComponent,
-  DataSqlModelingComponent
+  DataSqlModelingComponent,
+  BaseCfgPropertyManagerComponent
 ];
 
 const COMPONENTS_NOROUNT = [];

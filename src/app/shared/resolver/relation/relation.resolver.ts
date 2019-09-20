@@ -527,6 +527,9 @@ export class ReceiverResolver {
                                 case 'initValue':
                                     this._componentInstance.initValue[p.cname] = data.options[p.pname];
                                     break;
+                                case 'staticComponentValue':
+                                    this._componentInstance.staticComponentValue[p.cname] = data.options[p.pname];
+                                    break;
                             }
                         }
                     }

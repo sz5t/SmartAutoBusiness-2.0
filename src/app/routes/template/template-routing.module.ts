@@ -1,3 +1,4 @@
+import { BaseCfgPropertyManagerComponent } from './base-cfg-property-manager.component';
 import { DataSqlModelingComponent } from './data-sql-modeling.component';
 import { BaseInnerPropertyManagerComponent } from './base-inner-property-manager.component';
 import { DataModelingComponent } from './data-modeling.component';
@@ -20,7 +21,8 @@ const routes: Routes = [
   { path: 'treeTableDemo', component: TreeTableDemoComponent },
   { path: 'datamodeling', component: DataModelingComponent },
   { path: 'innerPropertyManager', component: BaseInnerPropertyManagerComponent },
-  { path: 'sqlmodeling', component: DataSqlModelingComponent }
+  { path: 'sqlmodeling', component: DataSqlModelingComponent },
+  { path: 'configPropertyManager', component: BaseCfgPropertyManagerComponent }
 ];
 
 @NgModule({

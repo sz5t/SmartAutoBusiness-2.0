@@ -12,36 +12,14 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'base-inner-property-manager',
-    templateUrl: './base-inner-property-manager.component.html',
+    selector: 'base-cfg-property-manager',
+    templateUrl: './base-cfg-property-manager.component.html',
     styles: [
         `
-            :host ::ng-deep .ant-card-head {
-                min-height: 36px;
-            }
-
-            .trigger {
-                font-size: 20px;
-                padding: 0 5px;
-                cursor: pointer;
-                transition: color 0.3;
-                right:0px;
-                position:relative;
-                z-index:8;
-                padding-top:8px;
-            }
-            .trigger:hover {
-                color: #1890ff;
-            }
-
-            .collapsedArea {
-                position:relative;
-
-            }
         `
     ]
 })
-export class BaseInnerPropertyManagerComponent implements OnInit {
+export class BaseCfgPropertyManagerComponent implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "layout",
@@ -66,14 +44,14 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "nzXXl": 24
                         },
                         "component": {
-                            "id": "view_tree_component_base",
+                            "id": "view_tree_component_property_category",
                             "component": "cnToolbar",
                             "size": "default",
                             "cascade": {
                                 "messageSender": [
                                     {
                                         "id": "toolbar_01",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "triggerType": "OPERATION",
                                         "trigger": "EXECUTE_CHECKED_ROWS",
                                         "triggerMoment": "after",
@@ -102,7 +80,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                 "messageReceiver": [
                                     // {
                                     //     "id": "s_001",
-                                    //     "senderId": "view_tree_component_base",
+                                    //     "senderId": "view_tree_component_property_category",
                                     //     "receiveData": [
                                     //         {
                                     //             "triggerType": "STATE",
@@ -112,7 +90,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     // },
                                     // {
                                     //     "id": "s_002",
-                                    //     "senderId": "view_tree_component_base",
+                                    //     "senderId": "view_tree_component_property_category",
                                     //     "receiveData": [
                                     //         {
                                     //             "triggerType": "STATE",
@@ -136,7 +114,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "add_child_form_changeValue",
+                                    "id": "add_property_form_changeValue",
                                     "params": [
                                         {
                                             "name": "CMPT_ID",
@@ -155,9 +133,9 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             ],
                             "dialog": [
                                 {
-                                    "id": "form_component",
+                                    "id": "form_property_category",
                                     "type": "confirm",
-                                    "title": "新增组件信息",
+                                    "title": "新增组件属性分类信息",
                                     "cancelText": "取消",
                                     "okText": "提交",
                                     "form": {
@@ -186,7 +164,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                 "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                             },
                                                             "control": {
-                                                                "id": "ctl_name"  // id 和引用id 值相同
+                                                                "id": "category_name"  // id 和引用id 值相同
                                                             }
                                                         },
                                                         {
@@ -194,42 +172,35 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                             "size": {
                                                                 "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                             },
-                                                            "control": { "id": "ctl_code" }
+                                                            "control": { "id": "category_code" }
                                                         },
                                                         {
                                                             "id": "ioj0mV2", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
                                                             "size": {
                                                                 "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                             },
-                                                            "control": { "id": "ctl_type" }
+                                                            "control": { "id": "category_type" }
                                                         },
-                                                        {
-                                                            "id": "ioj0mV3", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "ctl_version" }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV4", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "ctl_sort" }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV5", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "ctl_state" }
-                                                        }
+                                                        // {
+                                                        //     "id": "ioj0mV4", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
+                                                        //     "size": {
+                                                        //         "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
+                                                        //     },
+                                                        //     "control": { "id": "category_sort" }
+                                                        // },
+                                                        // {
+                                                        //     "id": "ioj0mV5", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
+                                                        //     "size": {
+                                                        //         "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
+                                                        //     },
+                                                        //     "control": { "id": "category_state" }
+                                                        // }
                                                     ]
                                                 }]
                                         },
                                         formControls: [
                                             {
-                                                id: 'ctl_id',
+                                                id: 'category_id',
                                                 "hidden": true,
                                                 "title": "ID",
                                                 "titleConfig": {
@@ -269,7 +240,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 }
                                             },
                                             {
-                                                id: 'ctl_name',
+                                                id: 'category_name',
                                                 "hidden": true,
                                                 "title": "名称",
                                                 "titleConfig": {
@@ -309,9 +280,9 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 }
                                             },
                                             {
-                                                id: 'ctl_code',
+                                                id: 'category_code',
                                                 "hidden": true,
-                                                "title": "组件编码",
+                                                "title": "属性分类编码",
                                                 "titleConfig": {
                                                     required: false
                                                 },
@@ -343,14 +314,49 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     ]
                                                 }
                                             },
+                                            // {
+                                            //     id: 'category_sort',
+                                            //     "hidden": true,
+                                            //     "title": "属性分类排序",
+                                            //     "titleConfig": {
+                                            //         required: false
+                                            //     },
+                                            //     "field": "SORT",
+                                            //     "labelSize": {
+                                            //         "span": 6,
+                                            //         "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
+                                            //     },  // 
+                                            //     "controlSize": {
+                                            //         "span": 18,
+                                            //         "nzXs": { span: 18, offset: 0 },
+                                            //         "nzSm": { span: 18, offset: 0 },
+                                            //         "nzMd": { span: 18, offset: 0 },
+                                            //         "nzLg": { span: 18, offset: 0 },
+                                            //         "ngXl": { span: 18, offset: 0 },
+                                            //         "nzXXl": { span: 18, offset: 0 }
+                                            //     },
+                                            //     "state": "edit",
+                                            //     "text": {
+                                            //         "type": 'label',
+                                            //         "field": 'SORT',
+                                            //     },
+                                            //     "editor": {
+                                            //         "type": "input",
+                                            //         "field": "SORT",
+                                            //         "placeholder": "请输入",
+                                            //         "validations": [
+
+                                            //         ]
+                                            //     }
+                                            // },
                                             {
-                                                id: 'ctl_version',
+                                                id: 'category_type',
                                                 "hidden": true,
-                                                "title": "版本",
+                                                "title": "属性分类",
                                                 "titleConfig": {
                                                     required: false
                                                 },
-                                                "field": "VERSION",
+                                                "field": "PROPERTY_TYPE",
                                                 "labelSize": {
                                                     "span": 6,
                                                     "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
@@ -367,551 +373,60 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "state": "edit",
                                                 "text": {
                                                     "type": 'label',
-                                                    "field": 'VERSION',
+                                                    "field": 'PROPERTY_TYPE',
                                                 },
                                                 "editor": {
                                                     "type": "select",
-                                                    "field": "VERSION",
+                                                    "field": "PROPERTY_TYPE",
                                                     "placeholder": "请输入",
                                                     "options": [
-                                                        { "label": 'v1.0', "value": "v1.0" },
-                                                        { "label": 'v2.0', "value": "v2.0" }
-                                                    ],
-                                                    "defaultValue": "v2.0",
-                                                    "labelName": "label",
-                                                    "valueName": "value"
-                                                }
-                                            },
-                                            {
-                                                id: 'ctl_sort',
-                                                "hidden": true,
-                                                "title": "排序",
-                                                "titleConfig": {
-                                                    required: false
-                                                },
-                                                "field": "SORT",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'SORT',
-                                                },
-                                                "editor": {
-                                                    "type": "input",
-                                                    "field": "SORT",
-                                                    "placeholder": "请输入"
-                                                }
-                                            },
-                                            {
-                                                id: 'ctl_type',
-                                                "hidden": true,
-                                                "title": "组件类型",
-                                                "titleConfig": {
-                                                    required: false
-                                                },
-                                                "field": "TYPE",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'TYPE',
-                                                },
-                                                "editor": {
-                                                    "type": "select",
-                                                    "field": "TYPE",
-                                                    "placeholder": "请输入",
-                                                    "options": [
-                                                        { "label": "布局", "value": "layout" },
-                                                        { "label": "组件", "value": "component" }
-                                                    ],
-                                                    "defaultValue": "layout",
-                                                    "labelName": "label",
-                                                    "valueName": "value"
-                                                }
-                                            },
-                                            {
-                                                id: 'ctl_state',
-                                                "hidden": true,
-                                                "title": "是否启用",
-                                                "titleConfig": {
-                                                    required: false
-                                                },
-                                                "field": "STATE",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'STATE',
-                                                },
-                                                "editor": {
-                                                    "type": "select",
-                                                    "field": "STATE",
-                                                    "placeholder": "请输入",
-                                                    "options": [
-                                                        { "label": "启用", "value": 1 },
-                                                        { "label": "禁用", "value": 2 }
-                                                    ],
-                                                    "defaultValue": 1,
-                                                    "labelName": "label",
-                                                    "valueName": "value"
-                                                }
-                                            },
-                                        ],
-                                        formControlsPermissions: [
-                                            {
-                                                formState: "new",
-                                                formStateContent: {
-                                                    isLoad: false,
-                                                    loadAjax: {},
-                                                    isDefault: true
-                                                },
-                                                Controls: [
-                                                    { id: 'ctl_name', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'ctl_code', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_type', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_version', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_sort', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_state', state: "edit", hidden: true, readOnly: false }
-
-                                                ]
-                                            },
-                                            {
-                                                formState: "edit",
-                                                Controls: [
-                                                    { id: 'ctl_name', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'ctl_code', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_type', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_version', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_sort', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_state', state: "edit", hidden: true, readOnly: false }
-                                                ]
-                                            },
-                                            {
-                                                formState: "text",
-                                                Controls: [
-                                                    { id: 'ctl_name', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'ctl_code', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_type', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_version', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_sort', state: "edit", hidden: true, readOnly: false },
-                                                    { id: 'ctl_state', state: "edit", hidden: true, readOnly: false }
-                                                ]
-                                            }
-
-                                        ],
-                                        ajaxConfig: [
-                                            {
-                                                "id": "loadform",
-                                                "url": "td/SMT_BASE_COMPONENt/query",
-                                                "urlType": "inner",
-                                                "ajaxType": "get",
-                                                "params": [
-                                                    {
-                                                        "name": "ID",
-                                                        "type": "tempValue",
-                                                        "valueName": "ID"
-                                                    }
-                                                ],
-                                                "outputParameters": [
-
-                                                ],
-                                                "result": [
-
-                                                ]
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "form_property",
-                                    "type": "confirm",
-                                    "title": "新增组件内置属性信息",
-                                    "cancelText": "取消",
-                                    "okText": "提交",
-                                    "form": {
-                                        "id": "form_property_new",
-                                        "type": "form",
-                                        "component": "form",
-                                        state: 'text',
-                                        loadingConfig: {
-                                            id: "loadform"
-                                        },
-                                        formLayout: {
-                                            "id": "b86s2i",
-                                            "type": "layout",
-                                            "title": "表单布局b86s2i",
-                                            "rows": [
-                                                {
-                                                    "id": "MefhXa",
-                                                    "type": "row",
-                                                    // 行列，是否 显示。
-                                                    "cols": [
-                                                        {
-                                                            "id": "iHspYn", "col": "cc", "type": "col",
-                                                            "title": "列iHspYn", "span": 24,
-                                                            "layoutContain": "input",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": {
-                                                                "id": "prop_name"  // id 和引用id 值相同
-                                                            }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV1", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "prop_code" }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV2", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "prop_type" }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV3", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "prop_datatype" }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV4", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "prop_remark" }
-                                                        },
-                                                        {
-                                                            "id": "ioj0mV5", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                            "size": {
-                                                                "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                            },
-                                                            "control": { "id": "prop_cmptId" }
-                                                        },
-                                                        // {
-                                                        //     "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
-                                                        //     "size": {
-                                                        //         "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
-                                                        //     },
-                                                        //     "control": { "id": "004" }
-                                                        // }
-                                                    ]
-                                                }]
-                                        },
-                                        formControls: [
-                                            {
-                                                id: 'prop_id',
-                                                "hidden": true,
-                                                "title": "ID",
-                                                "titleConfig": {
-                                                    required: false
-                                                },
-                                                "field": "ID",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": { span: 6 },
-                                                    "nzSm": { span: 6 },
-                                                    "nzMd": { span: 6 },
-                                                    "nzLg": { span: 6 },
-                                                    "ngXl": { span: 6 },
-                                                    "nzXXl": { span: 6 }
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": 18,
-                                                    "nzSm": 18,
-                                                    "nzMd": 18,
-                                                    "nzLg": 18,
-                                                    "ngXl": 18,
-                                                    "nzXXl": 18
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'ID',
-                                                },
-                                                "editor": {
-                                                    "type": "input",
-                                                    "field": "ID",
-                                                    "placeholder": "请输入",
-                                                    "validations": [
-
-                                                    ]
-                                                }
-                                            },
-                                            {
-                                                id: 'prop_name',
-                                                "hidden": true,
-                                                "title": "属性名称",
-                                                "titleConfig": {
-                                                    required: true
-                                                },
-                                                "field": "NAME",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": { span: 6 },
-                                                    "nzSm": { span: 6 },
-                                                    "nzMd": { span: 6 },
-                                                    "nzLg": { span: 6 },
-                                                    "ngXl": { span: 6 },
-                                                    "nzXXl": { span: 6 }
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": 18,
-                                                    "nzSm": 18,
-                                                    "nzMd": 18,
-                                                    "nzLg": 18,
-                                                    "ngXl": 18,
-                                                    "nzXXl": 18
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'NAME',
-                                                },
-                                                "editor": {
-                                                    "type": "input",
-                                                    "field": "NAME",
-                                                    "placeholder": "请输入",
-                                                    "validations": [
-                                                        { validator: "required", type: "default", "message": "请输入属性名称" }
-                                                    ]
-                                                }
-                                            },
-                                            {
-                                                id: 'prop_code',
-                                                "hidden": true,
-                                                "title": "属性编码",
-                                                "titleConfig": {
-                                                    required: true
-                                                },
-                                                "field": "CODE",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'CODE',
-                                                },
-                                                "editor": {
-                                                    "type": "input",
-                                                    "field": "CODE",
-                                                    "placeholder": "请输入",
-                                                    "validations": [
-                                                        { validator: "required", type: "default", "message": "请输入属性编码" }
-                                                    ]
-                                                }
-                                            },
-                                            {
-                                                id: 'prop_type',
-                                                "hidden": true,
-                                                "title": "属性类型",
-                                                "titleConfig": {
-                                                    required: true
-                                                },
-                                                "field": "TYPE",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'TYPE',
-                                                },
-                                                "editor": {
-                                                    "type": "select",
-                                                    "field": "TYPE",
-                                                    "placeholder": "请输入",
-                                                    "options": [
-                                                        { "label": "属性", "value": "property" },
-                                                        { "label": "方法", "value": "method" }
-                                                    ],
-                                                    "validations": [
-                                                        { validator: "required", type: "default", "message": "请选择属性类型" }
-                                                    ],
-                                                    "defaultValue": "1",
-                                                    "labelName": "label",
-                                                    "valueName": "value"
-                                                }
-                                            },
-                                            {
-                                                id: 'prop_remark',
-                                                "hidden": true,
-                                                "title": "属性说明",
-                                                "titleConfig": {
-                                                    required: false
-                                                },
-                                                "field": "REMARK",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'REMARK',
-                                                },
-                                                "editor": {
-                                                    "type": "input",
-                                                    "field": "REMARK",
-                                                    "placeholder": "请输入"
-                                                }
-                                            },
-                                            {
-                                                id: 'prop_datatype',
-                                                "hidden": true,
-                                                "title": "属性数据类型",
-                                                "titleConfig": {
-                                                    required: true
-                                                },
-                                                "field": "DATA_TYPE",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'DATA_TYPE',
-                                                },
-                                                "editor": {
-                                                    "type": "select",
-                                                    "field": "DATA_TYPE",
-                                                    "placeholder": "请输入",
-                                                    "options": [
-                                                        { "label": "值", "value": "value" },
                                                         { "label": "对象", "value": "object" },
                                                         { "label": "数组", "value": "array" }
-                                                    ],
-                                                    "validations": [
-                                                        { validator: "required", type: "default", "message": "请选择属性数据类型" }
                                                     ],
                                                     "defaultValue": "object",
                                                     "labelName": "label",
                                                     "valueName": "value"
                                                 }
                                             },
-                                            {
-                                                id: 'prop_cmptId',
-                                                "hidden": true,
-                                                "title": "所属组件",
-                                                "titleConfig": {
-                                                    required: true
-                                                },
-                                                "field": "CMPT_ID",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'CMPT_ID',
-                                                },
-                                                "editor": {
-                                                    "type": "select",
-                                                    "field": "CMPT_ID",
-                                                    "placeholder": "请输入",
-                                                    loadingConfig: {
-                                                        id: "loadformselectcmpt" // 将加载配置引用
-                                                    },
-                                                    "validations": [
-                                                        { validator: "required", type: "default", "message": "属性不能没有所属组件" }
-                                                    ],
-                                                    "defaultValue": "v2.0",
-                                                    "labelName": "NAME",
-                                                    "valueName": "ID"
-                                                }
-                                            }
+                                            // {
+                                            //     id: 'category_state',
+                                            //     "hidden": true,
+                                            //     "title": "是否启用",
+                                            //     "titleConfig": {
+                                            //         required: false
+                                            //     },
+                                            //     "field": "STATE",
+                                            //     "labelSize": {
+                                            //         "span": 6,
+                                            //         "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
+                                            //     },  // 
+                                            //     "controlSize": {
+                                            //         "span": 18,
+                                            //         "nzXs": { span: 18, offset: 0 },
+                                            //         "nzSm": { span: 18, offset: 0 },
+                                            //         "nzMd": { span: 18, offset: 0 },
+                                            //         "nzLg": { span: 18, offset: 0 },
+                                            //         "ngXl": { span: 18, offset: 0 },
+                                            //         "nzXXl": { span: 18, offset: 0 }
+                                            //     },
+                                            //     "state": "edit",
+                                            //     "text": {
+                                            //         "type": 'label',
+                                            //         "field": 'STATE',
+                                            //     },
+                                            //     "editor": {
+                                            //         "type": "select",
+                                            //         "field": "STATE",
+                                            //         "placeholder": "请输入",
+                                            //         "options": [
+                                            //             { "label": "启用", "value": 1 },
+                                            //             { "label": "禁用", "value": 2 }
+                                            //         ],
+                                            //         "defaultValue": 1,
+                                            //         "labelName": "label",
+                                            //         "valueName": "value"
+                                            //     }
+                                            // }
                                         ],
                                         formControlsPermissions: [
                                             {
@@ -922,43 +437,29 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     isDefault: true
                                                 },
                                                 Controls: [
-                                                    { id: 'prop_name', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_code', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_type', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_remark', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_datatype', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_cmptId', state: "edit", hidden: false, readOnly: false }
+                                                    { id: 'category_name', state: "edit", hidden: false, readOnly: false },
+                                                    { id: 'category_code', state: "edit", hidden: false, readOnly: false },
+                                                    { id: 'category_type', state: "edit", hidden: false, readOnly: false },
+                                                    // { id: 'category_sort', state: "edit", hidden: true, readOnly: false },
+                                                    // { id: 'category_state', state: "edit", hidden: true, readOnly: false }
 
                                                 ]
                                             },
                                             {
                                                 formState: "edit",
                                                 Controls: [
-                                                    { id: 'prop_name', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_code', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_type', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_remark', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_datatype', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_cmptId', state: "edit", hidden: false, readOnly: false }
-                                                ]
-                                            },
-                                            {
-                                                formState: "text",
-                                                Controls: [
-                                                    { id: 'prop_name', state: "text", hidden: false, readOnly: true },
-                                                    { id: 'prop_code', state: "text", hidden: false, readOnly: true },
-                                                    { id: 'prop_type', state: "text", hidden: false, readOnly: true },
-                                                    { id: 'prop_remark', state: "text", hidden: false, readOnly: true },
-                                                    { id: 'prop_datatype', state: "text", hidden: false, readOnly: true },
-                                                    { id: 'prop_cmptId', state: "text", hidden: false, readOnly: true }
+                                                    { id: 'category_name', state: "edit", hidden: false, readOnly: false },
+                                                    { id: 'category_code', state: "edit", hidden: false, readOnly: false },
+                                                    { id: 'category_type', state: "edit", hidden: false, readOnly: false },
+                                                    // { id: 'category_sort', state: "edit", hidden: true, readOnly: false },
+                                                    // { id: 'category_state', state: "edit", hidden: true, readOnly: false }
                                                 ]
                                             }
-
                                         ],
                                         ajaxConfig: [
                                             {
                                                 "id": "loadform",
-                                                "url": "td/SMT_BASE_COMPONENT_PROPERTY/query",
+                                                "url": "td/SMT_BASE_CFG_PROPERTY/query",
                                                 "urlType": "inner",
                                                 "ajaxType": "get",
                                                 "params": [
@@ -967,25 +468,6 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         "type": "tempValue",
                                                         "valueName": "ID"
                                                     }
-                                                ],
-                                                "outputParameters": [
-
-                                                ],
-                                                "result": [
-
-                                                ]
-                                            },
-                                            {
-                                                "id": "loadformselectcmpt",
-                                                "url": "td/SMT_BASE_COMPONENT/query",
-                                                "urlType": "inner",
-                                                "ajaxType": "get",
-                                                "params": [
-                                                    // {
-                                                    //     "name": "ID",
-                                                    //     "type": "tempValue",
-                                                    //     "valueName": "_ID"
-                                                    // }
                                                 ],
                                                 "outputParameters": [
 
@@ -1117,8 +599,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             ],
                             "ajaxConfig": [
                                 {
-                                    "id": "tree_add_property",
-                                    "url": "td/SMT_BASE_INNER_PROPERTY/insert",
+                                    "id": "tree_add_property_category",
+                                    "url": "sd/operate/ADD_PROPERTY_CATEGORY",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -1138,24 +620,30 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "valueName": "CODE"
                                         },
                                         {
-                                            "name": "TYPE",
+                                            "name": "PROPERTY_TYPE",
                                             "type": "componentValue",
-                                            "valueName": "TYPE"
+                                            "valueName": "PROPERTY_TYPE"
                                         },
+
+                                        // {
+                                        //     "name": "SORT",
+                                        //     "type": "componentValue",
+                                        //     "valueName": "SORT"
+                                        // },
+                                        // {
+                                        //     "name": "STATE",
+                                        //     "type": "componentValue",
+                                        //     "valueName": "STATE"
+                                        // },
                                         {
-                                            "name": "DATA_TYPE",
-                                            "type": "componentValue",
-                                            "valueName": "DATA_TYPE"
+                                            "name": "PARENT_ID",
+                                            "type": "tempValue",
+                                            "valueName": "CMPT_ID"
                                         },
                                         {
                                             "name": "CMPT_ID",
                                             "type": "tempValue",
                                             "valueName": "CMPT_ID"
-                                        },
-                                        {
-                                            "name": "REMARK",
-                                            "type": "componentValue",
-                                            "valueName": "REMARK"
                                         }
                                     ],
                                     "outputParameters": [
@@ -1166,7 +654,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterPropertySaveSuccess"
+                                            "senderId": "afterPropertyCategorySaveSuccess"
                                         },
                                         {
                                             "name": "validation",
@@ -1180,8 +668,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "tree_edit_property",
-                                    "url": "td/SMT_BASE_INNER_PROPERTY/update",
+                                    "id": "tree_edit_property_category",
+                                    "url": "td/operate/EDIT_PROPERTY_CATEGORY",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -1200,25 +688,35 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "type": "componentValue",
                                             "valueName": "CODE"
                                         },
+                                        // {
+                                        //     "name": "TYPE",
+                                        //     "type": "componentValue",
+                                        //     "valueName": "TYPE"
+                                        // },
                                         {
-                                            "name": "TYPE",
+                                            "name": "CATEGORY_TYPE",
                                             "type": "componentValue",
-                                            "valueName": "TYPE"
+                                            "valueName": "CATEGORY_TYPE"
                                         },
+                                        // {
+                                        //     "name": "SORT",
+                                        //     "type": "componentValue",
+                                        //     "valueName": "SORT"
+                                        // },
+                                        // {
+                                        //     "name": "STATE",
+                                        //     "type": "componentValue",
+                                        //     "valueName": "STATE"
+                                        // },
                                         {
-                                            "name": "DATA_TYPE",
-                                            "type": "componentValue",
-                                            "valueName": "DATA_TYPE"
-                                        },
-                                        {
-                                            "name": "CMPT_ID",
-                                            "type": "componentValue",
+                                            "name": "PARENT_ID",
+                                            "type": "tempValue",
                                             "valueName": "CMPT_ID"
                                         },
                                         {
-                                            "name": "REMARK",
-                                            "type": "componentValue",
-                                            "valueName": "REMARK"
+                                            "name": "CMPT_ID",
+                                            "type": "tempValue",
+                                            "valueName": "CMPT_ID"
                                         }
                                     ],
                                     "outputParameters": [
@@ -1229,12 +727,12 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterComponentSaveSuccess"
+                                            "senderId": "afterPropertyCategoryUpdateSuccess"
                                         },
                                         {
                                             "name": "validation",
                                             "message": "message.ajax.state.success",
-                                            "senderId": "aftetProvinceUpdateValidation"
+                                            "senderId": "afterProvinceSaveValidation"
                                         },
                                         {
                                             "name": "error",
@@ -1243,123 +741,13 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "tree_add_component",
-                                    "url": "td/SMT_BASE_COMPONENT/insert",
+                                    "id": "tree_delete_property",
+                                    "url": "sd/operate/DELETE_PROPERTY",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
                                         {
                                             "name": "ID",
-                                            "type": "GUID"
-                                        },
-                                        {
-                                            "name": "NAME",
-                                            "type": "componentValue",
-                                            "valueName": "NAME",
-                                            "dataType": "string"
-                                        },
-                                        {
-                                            "name": "CODE",
-                                            "type": "componentValue",
-                                            "valueName": "CODE"
-                                        },
-                                        {
-                                            "name": "TYPE",
-                                            "type": "componentValue",
-                                            "valueName": "TYPE"
-                                        },
-                                        {
-                                            "name": "VERSION",
-                                            "type": "componentValue",
-                                            "valueName": "VERSION"
-                                        },
-                                        {
-                                            "name": "SORT",
-                                            "type": "componentValue",
-                                            "valueName": "SORT",
-                                            "dataType": "int"
-                                        },
-                                        {
-                                            "name": "STATE",
-                                            "type": "componentValue",
-                                            "valueName": "STATE"
-                                        }
-                                    ],
-                                    "outputParameters": [
-
-                                    ],
-                                    "result": [
-                                        {
-                                            "name": "data",
-                                            "showMessageWithNext": 0,
-                                            "message": "message.ajax.state.success",
-                                            "senderId": "afterComponentSaveSuccess"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": "tree_edit_component",
-                                    "url": "td/SMT_BASE_COMPONENT/update",
-                                    "urlType": "inner",
-                                    "ajaxType": "put",
-                                    "params": [
-                                        {
-                                            "name": "ID",
-                                            "type": "componentValue",
-                                            "valueName": "ID",
-                                        },
-                                        {
-                                            "name": "NAME",
-                                            "type": "componentValue",
-                                            "valueName": "NAME",
-                                            "dataType": "string"
-                                        },
-                                        {
-                                            "name": "CODE",
-                                            "type": "componentValue",
-                                            "valueName": "CODE"
-                                        },
-                                        {
-                                            "name": "TYPE",
-                                            "type": "componentValue",
-                                            "valueName": "TYPE"
-                                        },
-                                        {
-                                            "name": "VERSION",
-                                            "type": "componentValue",
-                                            "valueName": "VERSION"
-                                        },
-                                        {
-                                            "name": "SORT",
-                                            "type": "componentValue",
-                                            "valueName": "SORT"
-                                        },
-                                        {
-                                            "name": "STATE",
-                                            "type": "componentValue",
-                                            "valueName": "STATE"
-                                        }
-                                    ],
-                                    "outputParameters": [
-
-                                    ],
-                                    "result": [
-                                        {
-                                            "name": "data",
-                                            "showMessageWithNext": 0,
-                                            "message": "message.ajax.state.success",
-                                            "senderId": "afterComponentUpdateSuccess"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": "tree_delete_component",
-                                    "url": "td/SMT_BASE_COMPONENT/delete",
-                                    "urlType": "inner",
-                                    "ajaxType": "delete",
-                                    "params": [
-                                        {
-                                            "name": "ids",
                                             "type": "item",
                                             "valueName": "ID",
                                             "dataType": "string"
@@ -1373,56 +761,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterComponentDeleteSuccess"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": "tree_batch_delete_component",
-                                    "url": "td/SMT_BASE_COMPONENT/delete",
-                                    "urlType": "inner",
-                                    "ajaxType": "delete",
-                                    "params": [
-                                        {
-                                            "name": "ID",
-                                            "type": "checkedId",
-                                            "valueName": "ID"
-                                        }
-                                    ],
-                                    "outputParameters": [
-
-                                    ],
-                                    "result": [
-                                        {
-                                            "name": "data",
-                                            "showMessageWithNext": 0,
-                                            "message": "message.ajax.state.success",
-                                            "senderId": "afterComponentBatchDeleteSuccess"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "id": "tree_delete_component",
-                                    "url": "td/SMT_BASE_INNER_PROPERTY/delete",
-                                    "urlType": "inner",
-                                    "ajaxType": "delete",
-                                    "params": [
-                                        {
-                                            "name": "ids",
-                                            "type": "item",
-                                            "valueName": "ID",
-                                            "dataType": "string"
-                                        }
-                                    ],
-                                    "outputParameters": [
-
-                                    ],
-                                    "result": [
-                                        {
-                                            "name": "data",
-                                            "showMessageWithNext": 0,
-                                            "message": "message.ajax.state.success",
-                                            "senderId": "afterComponentDeleteSuccess"
+                                            "senderId": "afterPropertyDeleteSuccess"
                                         }
                                     ]
                                 },
@@ -1433,7 +772,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "afterTrigger": [
                                 {
                                     "id": "",
-                                    "senderId": "view_tree_component_base",
+                                    "senderId": "view_tree_component_property_category",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -1458,7 +797,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             ],
                             "toolbar": [
                                 {
-                                    "targetViewId": "view_tree_component_base",
+                                    "targetViewId": "view_tree_component_property_category",
                                     "group": [
                                         {
                                             "id": "M_refresh",
@@ -1475,8 +814,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             ]
                                         },
                                         {
-                                            "id": "M_addParentNode",
-                                            "text": "新增组件",
+                                            "id": "add_property_category_node",
+                                            "text": "新增属性分类",
                                             "state": "new",
                                             "icon": "plus",
                                             "color": "text-primary",
@@ -1487,35 +826,17 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "triggerType": "ACTION",
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
-                                                    "dialogId": "form_component",
-                                                    "ajaxId": "tree_add_component"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "M_addChildNode",
-                                            "text": "新增属性",
-                                            "state": "new",
-                                            "icon": "plus",
-                                            "color": "text-primary",
-                                            "hidden": false,
-                                            "disabled": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "ACTION",
-                                                    "trigger": "DIALOG",
-                                                    // "conditionId": "add_state_1"
-                                                    "dialogId": "form_property",
-                                                    "ajaxId": "tree_add_property",
-                                                    "changeValueId": "add_child_form_changeValue"
+                                                    "dialogId": "form_property_category",
+                                                    "ajaxId": "tree_add_property_category",
+                                                    "changeValueId": "add_property_form_changeValue"
                                                 }
                                             ]
                                         },
                                         // {
-                                        //     "id": "M_editTreeNode",
-                                        //     "text": "编辑节点",
-                                        //     "state": "edit",
-                                        //     "icon": "edit",
+                                        //     "id": "M_addChildNode",
+                                        //     "text": "新增数组属性",
+                                        //     "state": "new",
+                                        //     "icon": "plus",
                                         //     "color": "text-primary",
                                         //     "hidden": false,
                                         //     "disabled": false,
@@ -1524,28 +845,47 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         //             "triggerType": "ACTION",
                                         //             "trigger": "DIALOG",
                                         //             // "conditionId": "add_state_1"
-                                        //             "dialogId": "edit_office_form",
-                                        //             "ajaxId": "tree_edit_component",
-                                        //             "changeValueId": "edit_form_changeValue"
+                                        //             "dialogId": "form_array_properties",
+                                        //             "ajaxId": "tree_add_array_properties",
+                                        //             "changeValueId": "add_child_form_changeValue"
                                         //         }
                                         //     ]
                                         // },
-                                        // {
-                                        //     "id": "M_deleteRow",
-                                        //     "text": "删除",
-                                        //     "icon": "delete",
-                                        //     "color": "text-red-light",
-                                        //     "hidden": false,
-                                        //     "disabled": false,
-                                        //     "execute": [
-                                        //         {
-                                        //             "triggerType": "OPERATION",
-                                        //             "trigger": "EXECUTE_SELECTED_NODE",
-                                        //             // "conditionId": "delete_operation_1",
-                                        //             "ajaxId": "tree_delete_component"
-                                        //         }
-                                        //     ]
-                                        // },
+                                        {
+                                            "id": "M_editTreeNode",
+                                            "text": "编辑属性分类",
+                                            "state": "edit",
+                                            "icon": "edit",
+                                            "color": "text-primary",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "ACTION",
+                                                    "trigger": "DIALOG",
+                                                    // "conditionId": "add_state_1"
+                                                    "dialogId": "form_property_category",
+                                                    "ajaxId": "tree_edit_property_category",
+                                                    "changeValueId": "edit_form_changeValue"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "M_deleteRow",
+                                            "text": "删除",
+                                            "icon": "delete",
+                                            "color": "text-red-light",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "execute": [
+                                                {
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "EXECUTE_SELECTED_NODE",
+                                                    // "conditionId": "delete_operation_1",
+                                                    "ajaxId": "tree_delete_property"
+                                                }
+                                            ]
+                                        },
                                         // {
                                         //     "id": "M_deleteRow_m",
                                         //     "text": "批量删除",
@@ -1583,19 +923,19 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "nzXXl": 8
                         },
                         "component": {
-                            "id": "view_tree_component_base",
+                            "id": "view_tree_component_property_category",
                             "title": "树",
                             "titleIcon": "right-circle",
                             "component": "cnTree",
                             "keyId": "ID",
                             "async": true,
-                            "showCheckBox": true,
+                            "showCheckBox": false,
                             "expandAll": false,
                             "loadingOnInit": true,
                             "showLine": false,
                             "rootTitle": '根节点',
                             "loadingConfig": {
-                                "url": "sd/query/COMPONENT_TREE_BASE_DATA",
+                                "url": "sd/query/COMPONENT_TREE_BASE_PROPERTIES_DATA",
                                 "method": "get",
                                 "params": [
                                     {
@@ -1619,7 +959,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                 ]
                             },
                             "expandConfig": {
-                                "url": "sd/query/COMPONENT_TREE_BASE_DATA",
+                                "url": "sd/query/COMPONENT_TREE_BASE_PROPERTIES_DATA",
                                 "method": "get",
                                 "params": [
                                     {
@@ -1660,20 +1000,13 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     "title": "NAME",
                                     "type": "title",
                                     "field": "NAME"
-                                },
-                                // {
-                                //     "title": "ACTION",
-                                //     "type": "action",
-                                //     "actionIds": [
-                                //         "grid_edit", "grid_cancel", "grid_save", "grid_delete", "grid_new", "grid_new_cancel"
-                                //     ]
-                                // }
+                                }
                             ],
                             "cascade": {
                                 "messageSender": [
                                     {
                                         "id": "",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "triggerType": "BEHAVIOR",
                                         "trigger": "CLICK_NODE",
                                         "triggerMoment": "after",
@@ -1693,6 +1026,16 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         "name": "_PID",
                                                         "type": "item",
                                                         "valueName": "ID"
+                                                    },
+                                                    {
+                                                        "name": "_CMPT_ID",
+                                                        "type": "item",
+                                                        "valueName": "CMPT_ID"
+                                                    },
+                                                    {
+                                                        "name": "_NODE_TYPE",
+                                                        "type": "item",
+                                                        "valueName": "TYPE"
                                                     }
                                                 ]
                                             }
@@ -1700,7 +1043,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_03",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1713,7 +1056,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_component_base",
+                                                        "value": "view_tree_component_property_category",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1722,7 +1065,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_04",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "triggerType": "STATE",
                                         "trigger": "CANCEL_NEW_ROW",
                                         "triggerMoment": "after",
@@ -1735,7 +1078,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_component_base",
+                                                        "value": "view_tree_component_property_category",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1744,7 +1087,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_05",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "triggerType": "STATE",
                                         "trigger": "EDIT_ROW",
                                         "triggerMoment": "after",
@@ -1756,7 +1099,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_component_base",
+                                                        "value": "view_tree_component_property_category",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1765,7 +1108,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_06",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROW",
                                         "triggerMoment": "after",
@@ -1777,7 +1120,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_component_base",
+                                                        "value": "view_tree_component_property_category",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1786,7 +1129,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_07",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "triggerType": "OPERATION",
                                         "trigger": "SAVE_ROWS",
                                         "triggerMoment": "after",
@@ -1798,7 +1141,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_component_base",
+                                                        "value": "view_tree_component_property_category",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1807,7 +1150,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "grid_sender_08",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "triggerType": "ACTION",
                                         "trigger": "CONFIRM",
                                         "triggerMoment": "after",
@@ -1819,7 +1162,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "params": [
                                                     {
                                                         "name": "targetViewId",
-                                                        "value": "view_tree_component_base",
+                                                        "value": "view_tree_component_property_category",
                                                         "type": "value"
                                                     }
                                                 ]
@@ -1827,8 +1170,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterComponentSaveSuccess",
-                                        "senderId": "view_tree_component_base",
+                                        "id": "afterObjectPropertySuccess",
+                                        "senderId": "view_tree_component_property_category",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1869,8 +1212,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterPropertySaveSuccess",
-                                        "senderId": "view_tree_component_base",
+                                        "id": "afterPropertyCategorySaveSuccess",
+                                        "senderId": "view_tree_component_property_category",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1911,8 +1254,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterComponentSaveSuccess1",
-                                        "senderId": "view_tree_component_base",
+                                        "id": "afterComponentUpdateSuccess",
+                                        "senderId": "view_tree_component_property_category",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -1929,98 +1272,32 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         "name": "code",
                                                         "type": "value",
                                                         "value": "message.operation.success"
-                                                    },
+                                                    }
                                                 ]
                                             },
                                             {
                                                 "beforeSend": {},
                                                 "reveicerId": "",
                                                 "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "APPEND_CHILD_TO_SELECTED_NODE",
+                                                "receiverTrigger": "UPDATE_SELECTED_NODE",
                                                 "params": [
                                                     {
                                                         "name": "ID",
-                                                        "type": "addedRows",
+                                                        "type": "editedRows",
                                                         "valueName": "ID"
                                                     },
                                                     {
                                                         "name": "OFFICENAME",
-                                                        "type": "addedRows",
+                                                        "type": "editedRows",
                                                         "valueName": "OFFICENAME"
-                                                    },
-                                                    {
-                                                        "name": "PID",
-                                                        "type": "addedRows",
-                                                        "valueName": "PID"
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "beforeSend": {},
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "BEHAVIOR",
-                                                "receiverTrigger": "REFRESH_AS_CHILD",
-                                                "params": [
-                                                    {
-                                                        "name": "PID",
-                                                        "type": "item",
-                                                        "valueName": "ID"
                                                     }
                                                 ]
                                             }
                                         ]
                                     },
-                                    // {
-                                    //     "id": "afterComponentUpdateSuccess",
-                                    //     "senderId": "view_tree_component_base",
-                                    //     // "triggerType": "ACTION",
-                                    //     // "trigger": "MESSAGE0",
-                                    //     // "triggerMoment": "after",
-                                    //     "sendData": [
-                                    //         {
-                                    //             "beforeSend": {},
-                                    //             "reveicerId": "",
-                                    //             "receiverTriggerType": "ACTION",
-                                    //             "receiverTrigger": "MESSAGE",
-                                    //             "params": [
-                                    //                 {
-                                    //                     "name": "type",
-                                    //                     "type": "value",
-                                    //                     "value": "success"
-                                    //                 },
-                                    //                 {
-                                    //                     "name": "code",
-                                    //                     "type": "value",
-                                    //                     "value": "message.operation.success"
-                                    //                 }
-                                    //             ]
-                                    //         },
-                                    //         {
-                                    //             "beforeSend": {},
-                                    //             "reveicerId": "",
-                                    //             "receiverTriggerType": "ACTION",
-                                    //             "receiverTrigger": "UPDATE_SELECTED_NODE",
-                                    //             "params": [
-                                    //                 {
-                                    //                     "name": "ID",
-                                    //                     "type": "editedRows",
-                                    //                     "valueName": "ID"
-                                    //                 },
-                                    //                 {
-                                    //                     "name": "OFFICENAME",
-                                    //                     "type": "editedRows",
-                                    //                     "valueName": "OFFICENAME"
-                                    //                 }
-                                    //             ]
-                                    //         }
-                                    //     ]
-                                    // },
                                     {
-                                        "id": "afterComponentDeleteSuccess",
-                                        "senderId": "view_tree_component_base",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
+                                        "id": "afterPropertyDeleteSuccess",
+                                        "senderId": "view_tree_component_property_category",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -2056,48 +1333,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterComponentBatchDeleteSuccess",
-                                        "senderId": "view_tree_component_base",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
-                                        "sendData": [
-                                            {
-                                                "beforeSend": {},
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "MESSAGE",
-                                                "params": [
-                                                    {
-                                                        "name": "type",
-                                                        "type": "value",
-                                                        "value": "success"
-                                                    },
-                                                    {
-                                                        "name": "code",
-                                                        "type": "value",
-                                                        "value": "message.operation.success"
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "beforeSend": {},
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "ACTION",
-                                                "receiverTrigger": "DELETE_CHECKED_NODES",
-                                                "params": [
-                                                    {
-                                                        "name": "ids",
-                                                        "type": "returnValue",
-                                                        "valueName": "ids"
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    {
                                         "id": "afterProvinceSaveValidation",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -2109,7 +1346,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "afterProvinceUpdateValidation",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -2123,7 +1360,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                 "messageReceiver": [
                                     {
                                         "id": "s_201",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2132,12 +1369,12 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "s_202",
-                                        "senderId": "view_tree_component_base",
+                                        "id": "s_2011",
+                                        "senderId": "view_02",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
-                                                "trigger": "APPEND_CHILD_TO_ROOT_NODE"
+                                                "trigger": "APPEND_CHILD_TO_SELECTED_NODE"
                                             }
                                         ]
                                     },
@@ -2153,7 +1390,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_204",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2163,212 +1400,16 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_205",
-                                        "senderId": "view_tree_component_base",
+                                        "senderId": "view_tree_component_property_category",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
                                                 "trigger": "DELETE_SELECTED_NODE"
                                             }
                                         ]
-                                    },
-                                    {
-                                        "id": "s_205",
-                                        "senderId": "view_tree_component_base",
-                                        "receiveData": [
-                                            {
-                                                "triggerType": "ACTION",
-                                                "trigger": "DELETE_CHECKED_NODES"
-                                            }
-                                        ]
                                     }
                                 ]
                             },
-                            "rowActions": [
-                                {
-                                    "id": "grid_new",
-                                    "state": "new",
-                                    "text": "保存",
-                                    "icon": "save",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": false,
-                                    "execute": [
-                                        {
-                                            "triggerType": "OPERATION",
-                                            "trigger": "SAVE_ROW",
-                                            "ajaxId": "province_save_1",
-                                            // "stateId": "add_save_1",
-                                            // "conditionId": "add_citiessave_1"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "new",
-                                                "value": false
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": true
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "grid_new_cancel",
-                                    "state": "new",
-                                    "text": "取消",
-                                    "icon": "rollback",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": false,
-                                    "execute": [
-                                        {
-                                            "triggerType": "STATE",
-                                            "trigger": "CANCEL_NEW_ROW",
-                                            // "ajaxId": "add_save_1",
-                                            // "stateId": "add_save_1",
-                                            // "conditionId": "add_save_1"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "new",
-                                                "value": false
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": true
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "grid_edit",
-                                    "state": "text",
-                                    "text": "编辑",
-                                    "icon": "edit",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": false,
-                                    "execute": [
-                                        {
-                                            "triggerType": "STATE",
-                                            "trigger": "EDIT_ROW",
-                                            // "ajaxId": "add_save_1",
-                                            // "stateId": "add_save_1",
-                                            //  "conditionId": "edit_cities"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "edit",
-                                                "value": true
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": false
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "grid_cancel",
-                                    "state": "text",
-                                    "text": "取消",
-                                    "icon": "rollback",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": true,
-                                    "execute": [
-                                        {
-                                            "triggerType": "STATE",
-                                            "trigger": "CANCEL_EDIT_ROW",
-                                            // "ajaxId": "add_save_1",
-                                            // "stateId": "add_save_1",
-                                            // "conditionId": "cancel_edit_1"
-                                        }
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "edit",
-                                                "value": false
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": true
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "grid_save",
-                                    "state": "text",
-                                    "text": "保存",
-                                    "icon": "save",
-                                    "color": "text-primary",
-                                    "type": "link",
-                                    "size": "small",
-                                    "hidden": true,
-                                    "execute": [
-                                        {
-                                            "triggerType": "OPERATION",
-                                            "trigger": "SAVE_ROW",
-                                            "ajaxId": "province_edit_1",
-                                            // "stateId": "add_save_1",
-                                            // "conditionId": "add_cities"
-                                        },
-                                    ],
-                                    "toggle": {
-                                        "type": "state",
-                                        "toggleProperty": "hidden",
-                                        "values": [
-                                            {
-                                                "name": "edit",
-                                                "value": false
-                                            },
-                                            {
-                                                "name": "text",
-                                                "value": true
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    "id": "grid_delete",
-                                    "state": "text",
-                                    "text": "删除",
-                                    "icon": "delete",
-                                    "type": "link",
-                                    "color": "primary",
-                                    "size": "small",
-                                    "execute": [
-                                        {
-                                            "triggerType": "ACTION",
-                                            "trigger": "CONFIRM",
-                                            "dialogId": "delete_confirm",
-                                            // "conditionId": "delete_operation_1",
-                                            "ajaxId": "delete_province",
-                                            // "stateId": "before_delete_province"
-                                        }
-                                    ]
-                                }
-                            ],
                             "dialog": [
                                 {
                                     "id": "delete_confirm",
@@ -2654,7 +1695,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "beforeTrigger": [
                                 {
                                     "id": "before_delete_province",
-                                    "senderId": "view_tree_component_base",
+                                    "senderId": "view_tree_component_property_category",
                                     "sendData": [
                                         {
                                             "receiverTriggerType": "ACTION",
@@ -2679,7 +1720,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "afterTrigger": [
                                 {
                                     "id": "",
-                                    "senderId": "view_tree_component_base",
+                                    "senderId": "view_tree_component_property_category",
                                     "sendData": [
                                         {
                                             "beforeSend": [],
@@ -2706,12 +1747,11 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                         }
                     },
                     {
-                        "id": "layout_component_form",
-                        "col": "cc",
-                        "type": "col",
+                        "id": "4K0naM",
+                        "type": "layout",
                         "title": "",
-                        "span": 16,
                         "container": "rows",
+                        "span": 16,
                         "size": {
                             "nzXs": 16,
                             "nzSm": 16,
@@ -2739,798 +1779,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "nzXXl": 24
                                         },
                                         "component": {
-                                            "id": "toolbar_edit_component",
-                                            "component": "cnToolbar",
-                                            "size": "default",
-                                            "cascade": {
-                                                "messageSender": [
-
-                                                ]
-                                            },
-                                            "changeValue": [
-                                                {
-                                                    "id": "edit_form_changeValue",
-                                                    "params": [
-                                                        // {
-                                                        //     "name": "id",
-                                                        //     "type": "item",
-                                                        //     "valueName": "id",
-                                                        //     "valueTo": "tempValue"
-                                                        // },
-                                                        {
-                                                            "name": "CMPT_ID",
-                                                            "type": "item",
-                                                            "valueName": "ID",
-                                                            "valueTo": "staticComponentValue"
-                                                        }
-
-                                                    ]
-                                                }
-                                            ],
-                                            "condition": [
-                                                {
-                                                    "id": "component_condition_edited_none",
-                                                    "state": [
-                                                        {
-                                                            "type": "component",
-                                                            "valueName": "FORM_VALID",
-                                                            "expression": [
-                                                                {
-                                                                    "type": "property",
-                                                                    "name": "",
-                                                                    "matchValue": true,
-                                                                    "match": "eq"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "ajaxConfig": [
-                                                {
-                                                    "id": "toolbar_form_component_base_edit",
-                                                    "url": "td/SMT_BASE_COMPONENT/update",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "put",
-                                                    "params": [
-                                                        {
-                                                            "name": "ID",
-                                                            "type": "componentValue",
-                                                            "valueName": "ID"
-                                                        },
-                                                        {
-                                                            "name": "NAME",
-                                                            "type": "componentValue",
-                                                            "valueName": "NAME",
-                                                            "dataType": "string"
-                                                        },
-                                                        {
-                                                            "name": "CODE",
-                                                            "type": "componentValue",
-                                                            "valueName": "CODE"
-                                                        },
-                                                        {
-                                                            "name": "TYPE",
-                                                            "type": "componentValue",
-                                                            "valueName": "TYPE"
-                                                        },
-                                                        {
-                                                            "name": "VERSION",
-                                                            "type": "componentValue",
-                                                            "valueName": "VERSION"
-                                                        },
-                                                        {
-                                                            "name": "SORT",
-                                                            "type": "componentValue",
-                                                            "valueName": "SORT",
-                                                            "dataType": "int"
-                                                        },
-                                                        {
-                                                            "name": "STATE",
-                                                            "type": "componentValue",
-                                                            "valueName": "STATE"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-                                                        {
-                                                            "name": "data",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterComponentFormUpdateSuccess"
-                                                        },
-                                                        {
-                                                            "name": "validation",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateFormValidation"
-                                                        },
-                                                        {
-                                                            "name": "error",
-                                                            "senderId": "toolbar_02"
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "beforeTrigger": [
-
-                                            ],
-                                            "afterTrigger": [
-                                                {
-                                                    "id": "",
-                                                    "senderId": "view_02",
-                                                    "sendData": [
-                                                        {
-                                                            "beforeSend": [],
-                                                            "reveicerId": "",
-                                                            "receiverTriggerType": "BEHAVIOR",
-                                                            "receiverTrigger": "REFRESH_AS_CHILD",
-                                                            "params": [
-                                                                {
-                                                                    "name": "parent_id",
-                                                                    "type": "item",
-                                                                    "valueName": "id"
-                                                                },
-                                                                {
-                                                                    "name": "parent_name",
-                                                                    "type": "item",
-                                                                    "valueName": "name"
-                                                                }
-                                                            ]
-                                                        }
-                                                    ]
-                                                }
-                                            ],
-                                            "builtinConfig": [
-                                                // {
-                                                //     "id": "add_state_1",
-                                                //     "event": "formStateChange", // 内置方法
-                                                //     "state": "new",
-                                                // },
-                                                {
-                                                    "id": "edit_state_1",
-                                                    "event": "formStateChange", // 内置方法
-                                                    "state": "edit",
-                                                },
-                                                {
-                                                    "id": "cancel_state_1",
-                                                    "event": "formStateChange", // 内置方法
-                                                    "state": "text",
-                                                }
-                                            ],
-                                            "toolbar": [
-                                                {
-                                                    "targetViewId": "view_form_edit_component",
-                                                    "group": [
-                                                        {
-                                                            "id": "toolbar_edit_component_refresh",
-                                                            "text": "刷新",
-                                                            "icon": "reload",
-                                                            "color": "text-primary",
-                                                            "hidden": false,
-                                                            "disabled": false,
-                                                            "execute": [
-                                                                {
-                                                                    "triggerType": "BEHAVIOR",
-                                                                    "trigger": "REFRESH"
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "id": "toolbar_edit_component_edit",
-                                                            "text": "编辑",
-                                                            "icon": "edit",
-                                                            "color": "text-success",
-                                                            "hidden": false,
-                                                            "disabled": false,
-                                                            "state": "text",
-                                                            "execute": [
-                                                                {
-                                                                    "triggerType": "STATE",
-                                                                    "trigger": "EDIT_FORM",
-                                                                    "builtinId": "edit_state_1"
-                                                                }
-                                                            ],
-                                                            "toggle": {
-                                                                "type": "state",
-                                                                "toggleProperty": "hidden",
-                                                                "values": [
-                                                                    {
-                                                                        "name": "edit",
-                                                                        "value": true
-                                                                    },
-                                                                    {
-                                                                        "name": "text",
-                                                                        "value": false
-                                                                    }
-                                                                ]
-                                                            }
-                                                        },
-                                                        {
-                                                            "id": "toolbar_edit_component_save",
-                                                            "text": "保存",
-                                                            "state": "text",
-                                                            "icon": "save",
-                                                            "color": "text-primary",
-                                                            "hidden": false,
-                                                            "disabled": false,
-                                                            "execute": [
-                                                                {
-                                                                    "triggerType": "OPERATION",
-                                                                    "trigger": "EXECUTE",
-                                                                    "ajaxId": "toolbar_form_component_base_edit",
-                                                                    // "conditionId": "component_condition_edited_none"
-                                                                }
-                                                            ],
-                                                            // "toggle": {
-                                                            //     "type": "state",
-                                                            //     "toggleProperty": "hidden",
-                                                            //     "values": [
-                                                            //         {
-                                                            //             "name": "edit",
-                                                            //             "value": false
-                                                            //         },
-                                                            //         {
-                                                            //             "name": "text",
-                                                            //             "value": true
-                                                            //         }
-                                                            //     ]
-                                                            // }
-                                                        },
-                                                        {
-                                                            "id": "toolbar_edit_component_cancel",
-                                                            "text": "取消",
-                                                            "state": "text",
-                                                            "icon": "rollback",
-                                                            "color": "text-grey-darker",
-                                                            "hidden": false,
-                                                            "disabled": null,
-                                                            "execute": [
-                                                                {
-                                                                    "triggerType": "STATE",
-                                                                    "trigger": "CANCEL",
-                                                                    "builtinId": "cancel_state_1"
-                                                                }
-                                                            ],
-                                                            // "toggle": {
-                                                            //     "type": "state",
-                                                            //     "toggleProperty": "hidden",
-                                                            //     "values": [
-                                                            //         {
-                                                            //             "name": "edit",
-                                                            //             "value": false
-                                                            //         },
-                                                            //         {
-                                                            //             "name": "text",
-                                                            //             "value": true
-                                                            //         }
-                                                            //     ]
-                                                            // }
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "id": "layout_form_component",
-                                        "col": "cc",
-                                        "type": "col",
-                                        "title": "",
-                                        "span": 24,
-                                        "container": "component",
-                                        "size": {
-                                            "nzXs": 24,
-                                            "nzSm": 24,
-                                            "nzMd": 24,
-                                            "nzLg": 24,
-                                            "nzXl": 24,
-                                            "nzXXl": 24
-                                        },
-                                        "component": {
-                                            "id": "view_form_edit_component",
-                                            "type": "form",
-                                            "component": "form",
-                                            "state": 'text',
-                                            "loadingConfig": {
-                                                "id": "loadform"
-                                            },
-                                            "cascade": {
-                                                "messageSender": [
-                                                    {
-                                                        "id": "afterComponentFormUpdateSuccess",
-                                                        "senderId": "view_form_edit_component",
-                                                        "sendData": [
-                                                            {
-                                                                "beforeSend": {},
-                                                                "reveicerId": "",
-                                                                "receiverTriggerType": "ACTION",
-                                                                "receiverTrigger": "MESSAGE",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "type",
-                                                                        "type": "value",
-                                                                        "value": "success"
-                                                                    },
-                                                                    {
-                                                                        "name": "code",
-                                                                        "type": "value",
-                                                                        "value": "message.operation.success"
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                "beforeSend": {},
-                                                                "reveicerId": "",
-                                                                "receiverTriggerType": "ACTION",
-                                                                "receiverTrigger": "UPDATE_SELECTED_NODE",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "ID",
-                                                                        "type": "returnValue",
-                                                                        "valueName": "ID"
-                                                                    },
-                                                                    {
-                                                                        "name": "NAME",
-                                                                        "type": "returnValue",
-                                                                        "valueName": "NAME"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ],
-                                                "messageReceiver": [
-                                                    {
-                                                        "id": "",
-                                                        "senderId": "view_tree_component_base",
-                                                        "receiveData": [
-                                                            {
-                                                                "beforeReceive": [],
-                                                                "triggerType": "BEHAVIOR",
-                                                                "trigger": "REFRESH_AS_CHILD",
-                                                                "params": [
-                                                                    {
-                                                                        "pname": "_ID",
-                                                                        "cname": "_ID",
-                                                                        "valueTo": "tempValue"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            "formLayout": {
-                                                "id": "b86s2i",
-                                                "type": "layout",
-                                                "title": "表单布局b86s2i",
-                                                "rows": [
-                                                    {
-                                                        "id": "MefhXa",
-                                                        "type": "row",
-                                                        // 行列，是否 显示。
-                                                        "cols": [
-                                                            {
-                                                                "id": "iHspYn", "col": "cc", "type": "col",
-                                                                "title": "列iHspYn", "span": 24,
-                                                                "layoutContain": "input",
-                                                                "size": {
-                                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                },
-                                                                "control": {
-                                                                    "id": "ctl_name"  // id 和引用id 值相同
-                                                                }
-                                                            },
-                                                            {
-                                                                "id": "ioj0mV1", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                "size": {
-                                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                },
-                                                                "control": { "id": "ctl_code" }
-                                                            },
-                                                            {
-                                                                "id": "ioj0mV2", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                "size": {
-                                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                },
-                                                                "control": { "id": "ctl_type" }
-                                                            },
-                                                            {
-                                                                "id": "ioj0mV3", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                "size": {
-                                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                },
-                                                                "control": { "id": "ctl_version" }
-                                                            },
-                                                            {
-                                                                "id": "ioj0mV4", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                "size": {
-                                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                },
-                                                                "control": { "id": "ctl_sort" }
-                                                            },
-                                                            {
-                                                                "id": "ioj0mV5", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                "size": {
-                                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                },
-                                                                "control": { "id": "ctl_state" }
-                                                            }
-                                                        ]
-                                                    }]
-                                            },
-                                            "formControls": [
-                                                {
-                                                    id: 'ctl_id',
-                                                    "hidden": true,
-                                                    "title": "ID",
-                                                    "titleConfig": {
-                                                        required: false
-                                                    },
-                                                    "field": "ID",
-                                                    "labelSize": {
-                                                        "span": 6,
-                                                        "nzXs": { span: 6 },
-                                                        "nzSm": { span: 6 },
-                                                        "nzMd": { span: 6 },
-                                                        "nzLg": { span: 6 },
-                                                        "ngXl": { span: 6 },
-                                                        "nzXXl": { span: 6 }
-                                                    },  // 
-                                                    "controlSize": {
-                                                        "span": 18,
-                                                        "nzXs": 18,
-                                                        "nzSm": 18,
-                                                        "nzMd": 18,
-                                                        "nzLg": 18,
-                                                        "ngXl": 18,
-                                                        "nzXXl": 18
-                                                    },
-                                                    "state": "edit",
-                                                    "text": {
-                                                        "type": 'label',
-                                                        "field": 'ID',
-                                                    },
-                                                    "editor": {
-                                                        "type": "input",
-                                                        "field": "ID",
-                                                        "placeholder": "请输入",
-                                                        "validations": [
-                                                            { validator: "required", type: "default", "message": "请输入组件名称" }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    id: 'ctl_name',
-                                                    "hidden": true,
-                                                    "title": "名称",
-                                                    "titleConfig": {
-                                                        required: true
-                                                    },
-                                                    "field": "NAME",
-                                                    "labelSize": {
-                                                        "span": 6,
-                                                        "nzXs": { span: 6 },
-                                                        "nzSm": { span: 6 },
-                                                        "nzMd": { span: 6 },
-                                                        "nzLg": { span: 6 },
-                                                        "ngXl": { span: 6 },
-                                                        "nzXXl": { span: 6 }
-                                                    },  // 
-                                                    "controlSize": {
-                                                        "span": 18,
-                                                        "nzXs": 18,
-                                                        "nzSm": 18,
-                                                        "nzMd": 18,
-                                                        "nzLg": 18,
-                                                        "ngXl": 18,
-                                                        "nzXXl": 18
-                                                    },
-                                                    "state": "edit",
-                                                    "text": {
-                                                        "type": 'label',
-                                                        "field": 'NAME',
-                                                    },
-                                                    "editor": {
-                                                        "type": "input",
-                                                        "field": "NAME",
-                                                        "placeholder": "请输入",
-                                                        "validations": [
-                                                            { validator: "required", type: "default", "message": "请输入组件名称" }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    id: 'ctl_code',
-                                                    "hidden": true,
-                                                    "title": "组件编码",
-                                                    "titleConfig": {
-                                                        required: false
-                                                    },
-                                                    "field": "CODE",
-                                                    "labelSize": {
-                                                        "span": 6,
-                                                        "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                    },  // 
-                                                    "controlSize": {
-                                                        "span": 18,
-                                                        "nzXs": { span: 18, offset: 0 },
-                                                        "nzSm": { span: 18, offset: 0 },
-                                                        "nzMd": { span: 18, offset: 0 },
-                                                        "nzLg": { span: 18, offset: 0 },
-                                                        "ngXl": { span: 18, offset: 0 },
-                                                        "nzXXl": { span: 18, offset: 0 }
-                                                    },
-                                                    "state": "edit",
-                                                    "text": {
-                                                        "type": 'label',
-                                                        "field": 'CODE',
-                                                    },
-                                                    "editor": {
-                                                        "type": "input",
-                                                        "field": "CODE",
-                                                        "placeholder": "请输入",
-                                                        "validations": [
-
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    id: 'ctl_version',
-                                                    "hidden": true,
-                                                    "title": "版本",
-                                                    "titleConfig": {
-                                                        required: false
-                                                    },
-                                                    "field": "VERSION",
-                                                    "labelSize": {
-                                                        "span": 6,
-                                                        "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                    },  // 
-                                                    "controlSize": {
-                                                        "span": 18,
-                                                        "nzXs": { span: 18, offset: 0 },
-                                                        "nzSm": { span: 18, offset: 0 },
-                                                        "nzMd": { span: 18, offset: 0 },
-                                                        "nzLg": { span: 18, offset: 0 },
-                                                        "ngXl": { span: 18, offset: 0 },
-                                                        "nzXXl": { span: 18, offset: 0 }
-                                                    },
-                                                    "state": "edit",
-                                                    "text": {
-                                                        "type": 'label',
-                                                        "field": 'VERSION',
-                                                    },
-                                                    "editor": {
-                                                        "type": "select",
-                                                        "field": "VERSION",
-                                                        "placeholder": "请输入",
-                                                        "options": [
-                                                            { "label": 'v1.0', "value": "v1.0" },
-                                                            { "label": 'v2.0', "value": "v2.0" }
-                                                        ],
-                                                        "defaultValue": "v2.0",
-                                                        "labelName": "label",
-                                                        "valueName": "value"
-                                                    }
-                                                },
-                                                {
-                                                    id: 'ctl_sort',
-                                                    "hidden": true,
-                                                    "title": "排序",
-                                                    "titleConfig": {
-                                                        required: false
-                                                    },
-                                                    "field": "SORT",
-                                                    "labelSize": {
-                                                        "span": 6,
-                                                        "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                    },  // 
-                                                    "controlSize": {
-                                                        "span": 18,
-                                                        "nzXs": { span: 18, offset: 0 },
-                                                        "nzSm": { span: 18, offset: 0 },
-                                                        "nzMd": { span: 18, offset: 0 },
-                                                        "nzLg": { span: 18, offset: 0 },
-                                                        "ngXl": { span: 18, offset: 0 },
-                                                        "nzXXl": { span: 18, offset: 0 }
-                                                    },
-                                                    "state": "edit",
-                                                    "text": {
-                                                        "type": 'label',
-                                                        "field": 'SORT',
-                                                    },
-                                                    "editor": {
-                                                        "type": "input",
-                                                        "field": "SORT",
-                                                        "placeholder": "请输入"
-                                                    }
-                                                },
-                                                {
-                                                    id: 'ctl_type',
-                                                    "hidden": true,
-                                                    "title": "组件类型",
-                                                    "titleConfig": {
-                                                        required: false
-                                                    },
-                                                    "field": "TYPE",
-                                                    "labelSize": {
-                                                        "span": 6,
-                                                        "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                    },  // 
-                                                    "controlSize": {
-                                                        "span": 18,
-                                                        "nzXs": { span: 18, offset: 0 },
-                                                        "nzSm": { span: 18, offset: 0 },
-                                                        "nzMd": { span: 18, offset: 0 },
-                                                        "nzLg": { span: 18, offset: 0 },
-                                                        "ngXl": { span: 18, offset: 0 },
-                                                        "nzXXl": { span: 18, offset: 0 }
-                                                    },
-                                                    "state": "edit",
-                                                    "text": {
-                                                        "type": 'label',
-                                                        "field": 'TYPE',
-                                                    },
-                                                    "editor": {
-                                                        "type": "select",
-                                                        "field": "TYPE",
-                                                        "placeholder": "请输入",
-                                                        "options": [
-                                                            { "label": "布局", "value": "1" },
-                                                            { "label": "组件", "value": "2" }
-                                                        ],
-                                                        "defaultValue": "1",
-                                                        "labelName": "label",
-                                                        "valueName": "value"
-                                                    }
-                                                },
-                                                {
-                                                    id: 'ctl_state',
-                                                    "hidden": true,
-                                                    "title": "是否启用",
-                                                    "titleConfig": {
-                                                        required: false
-                                                    },
-                                                    "field": "STATE",
-                                                    "labelSize": {
-                                                        "span": 6,
-                                                        "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                    },  // 
-                                                    "controlSize": {
-                                                        "span": 18,
-                                                        "nzXs": { span: 18, offset: 0 },
-                                                        "nzSm": { span: 18, offset: 0 },
-                                                        "nzMd": { span: 18, offset: 0 },
-                                                        "nzLg": { span: 18, offset: 0 },
-                                                        "ngXl": { span: 18, offset: 0 },
-                                                        "nzXXl": { span: 18, offset: 0 }
-                                                    },
-                                                    "state": "edit",
-                                                    "text": {
-                                                        "type": 'label',
-                                                        "field": 'STATE',
-                                                    },
-                                                    "editor": {
-                                                        "type": "select",
-                                                        "field": "STATE",
-                                                        "placeholder": "请输入",
-                                                        "options": [
-                                                            { "label": "启用", "value": 1 },
-                                                            { "label": "禁用", "value": 2 }
-                                                        ],
-                                                        "defaultValue": 1,
-                                                        "labelName": "label",
-                                                        "valueName": "value"
-                                                    }
-                                                },
-                                            ],
-                                            "formControlsPermissions": [
-                                                {
-                                                    formState: "new",
-                                                    formStateContent: {
-                                                        isLoad: false,
-                                                        loadAjax: {},
-                                                        isDefault: true
-                                                    },
-                                                    Controls: [
-                                                        { id: 'ctl_name', state: "edit", hidden: false, readOnly: false },
-                                                        { id: 'ctl_code', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_type', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_version', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_sort', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_state', state: "edit", hidden: true, readOnly: false }
-
-                                                    ]
-                                                },
-                                                {
-                                                    formState: "edit",
-                                                    Controls: [
-                                                        { id: 'ctl_name', state: "edit", hidden: false, readOnly: false },
-                                                        { id: 'ctl_code', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_type', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_version', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_sort', state: "edit", hidden: true, readOnly: false },
-                                                        { id: 'ctl_state', state: "edit", hidden: true, readOnly: false }
-                                                    ]
-                                                },
-                                                {
-                                                    formState: "text",
-                                                    Controls: [
-                                                        { id: 'ctl_name', state: "text", hidden: false, readOnly: false },
-                                                        { id: 'ctl_code', state: "text", hidden: true, readOnly: false },
-                                                        { id: 'ctl_type', state: "text", hidden: true, readOnly: false },
-                                                        { id: 'ctl_version', state: "text", hidden: true, readOnly: false },
-                                                        { id: 'ctl_sort', state: "text", hidden: true, readOnly: false },
-                                                        { id: 'ctl_state', state: "text", hidden: true, readOnly: false }
-                                                    ]
-                                                }
-
-                                            ],
-                                            "ajaxConfig": [
-                                                {
-                                                    "id": "loadform",
-                                                    "url": "td/SMT_BASE_COMPONENT/query",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "get",
-                                                    "params": [
-                                                        {
-                                                            "name": "ID",
-                                                            "type": "tempValue",
-                                                            "valueName": "_ID"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        "id": "4K0naM",
-                        "type": "layout",
-                        "title": "",
-                        "container": "rows",
-                        "span": 24,
-                        "size": {
-                            "nzXs": 24,
-                            "nzSm": 24,
-                            "nzMd": 24,
-                            "nzLg": 24,
-                            "nzXl": 24,
-                            "nzXXl": 24
-                        },
-                        "rows": [
-                            {
-                                "cols": [
-                                    {
-                                        "id": "r5zDHB2-1",
-                                        "col": "cc",
-                                        "type": "col",
-                                        "title": "",
-                                        "span": 24,
-                                        "container": "component",
-                                        "size": {
-                                            "nzXs": 24,
-                                            "nzSm": 24,
-                                            "nzMd": 24,
-                                            "nzLg": 24,
-                                            "nzXl": 24,
-                                            "nzXXl": 24
-                                        },
-                                        "component": {
-                                            "id": "toolbar_002",
+                                            "id": "toolbar_property_detail",
                                             "component": "cnToolbar",
                                             "size": "default",
                                             "cascade": {
@@ -3820,7 +2069,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     ]
                                                 },
                                                 {
-                                                    "id": "city_condition_added_none",
+                                                    "id": "properties_condition_added_none",
                                                     "state": [
                                                         {
                                                             "type": "component",
@@ -3849,7 +2098,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     ]
                                                 },
                                                 {
-                                                    "id": "city_condition_edited_none",
+                                                    "id": "properties_condition_edited_none",
                                                     "state": [
                                                         {
                                                             "type": "component",
@@ -3897,172 +2146,64 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             ],
                                             "ajaxConfig": [
                                                 {
-                                                    "id": "form_add_city",
-                                                    "url": "city/insert",
+                                                    "id": "add_properties_data",
+                                                    "url": "sd/batchOperate/ADD_PROPERTY_DETAIL",
                                                     "urlType": "inner",
                                                     "ajaxType": "post",
                                                     "params": [
                                                         {
-                                                            "name": "cityName",
+                                                            "name": "ID",
+                                                            "type": "GUID",
+                                                        },
+                                                        {
+                                                            "name": "NAME",
                                                             "type": "componentValue",
-                                                            "valueName": "cityName"
+                                                            "valueName": "NAME"
                                                         },
                                                         {
-                                                            "name": "zipCode",
+                                                            "name": "CODE",
                                                             "type": "componentValue",
-                                                            "valueName": "zipCode"
+                                                            "valueName": "CODE"
                                                         },
                                                         {
-                                                            "name": "populationSize",
+                                                            "name": "PROPERTY_TYPE",
                                                             "type": "componentValue",
-                                                            "valueName": "populationSize"
+                                                            "valueName": "PROPERTY_TYPE"
                                                         },
                                                         {
-                                                            "name": "directlyUnder",
+                                                            "name": "CMPT_ID",
+                                                            "type": "tempValue",
+                                                            "valueName": "_CMPT_ID"
+                                                        },
+                                                        {
+                                                            "name": "IS_SUB_PROPERTY",
                                                             "type": "componentValue",
-                                                            "valueName": "directlyUnder"
+                                                            "valueName": "IS_SUB_PROPERTY"
                                                         },
                                                         {
-                                                            "name": "createDate",
+                                                            "name": "PROPERTY_TYPE",
                                                             "type": "componentValue",
-                                                            "valueName": "createDate"
+                                                            "valueName": "PROPERTY_TYPE"
                                                         },
                                                         {
-                                                            "name": "pId",
+                                                            "name": "REF_TYPE",
                                                             "type": "componentValue",
-                                                            "valueName": "pId"
+                                                            "valueName": "REF_TYPE"
                                                         },
                                                         {
-                                                            "name": "id",
+                                                            "name": "STATE",
                                                             "type": "componentValue",
-                                                            "valueName": "id"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-                                                        {
-                                                            "name": "data",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterComponentSaveSuccess"
+                                                            "valueName": "STATE"
                                                         },
                                                         {
-                                                            "name": "validation",
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCitySaveValidation"
-                                                        },
-                                                        {
-                                                            "name": "error",
-                                                            "senderId": "toolbar_02"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "form_edit_city",
-                                                    "url": "city/update",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "put",
-                                                    "params": [
-                                                        {
-                                                            "name": "cityName",
-                                                            "type": "componentValue",
-                                                            "valueName": "cityName"
-                                                        },
-                                                        {
-                                                            "name": "zipCode",
-                                                            "type": "componentValue",
-                                                            "valueName": "zipCode"
-                                                        },
-                                                        {
-                                                            "name": "populationSize",
-                                                            "type": "componentValue",
-                                                            "valueName": "populationSize"
-                                                        },
-                                                        {
-                                                            "name": "directlyUnder",
-                                                            "type": "componentValue",
-                                                            "valueName": "directlyUnder"
-                                                        },
-                                                        {
-                                                            "name": "createDate",
-                                                            "type": "componentValue",
-                                                            "valueName": "createDate"
-                                                        },
-                                                        {
-                                                            "name": "pId",
-                                                            "type": "componentValue",
-                                                            "valueName": "pId"
-                                                        },
-                                                        {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-                                                        {
-                                                            "name": "data",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterComponentFormUpdateSuccess"
-                                                        },
-                                                        {
-                                                            "name": "validation",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateFormValidation"
-                                                        },
-                                                        {
-                                                            "name": "error",
-                                                            "senderId": "toolbar_02"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "add_cities_1",
-                                                    "url": "city/insertMany",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "post",
-                                                    "params": [
-                                                        {
-                                                            "name": "cityName",
-                                                            "type": "componentValue",
-                                                            "valueName": "cityName"
-                                                        },
-                                                        {
-                                                            "name": "zipCode",
-                                                            "type": "componentValue",
-                                                            "valueName": "zipCode"
-                                                        },
-                                                        {
-                                                            "name": "populationSize",
-                                                            "type": "componentValue",
-                                                            "valueName": "populationSize"
-                                                        },
-                                                        {
-                                                            "name": "directlyUnder",
-                                                            "type": "componentValue",
-                                                            "valueName": "directlyUnder"
-                                                        },
-                                                        {
-                                                            "name": "createDate",
-                                                            "type": "componentValue",
-                                                            "valueName": "createDate"
-                                                        },
-                                                        {
-                                                            "name": "pId",
+                                                            "name": "PARENT_ID",
                                                             "type": "tempValue",
                                                             "valueName": "_PID"
                                                         },
                                                         {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
+                                                            "name": "NODE_TYPE",
+                                                            "type": "tempValue",
+                                                            "valueName": "_NODE_TYPE"
                                                         }
                                                     ],
                                                     "outputParameters": [
@@ -4073,21 +2214,20 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                             "name": "data",
                                                             "showMessageWithNext": 0,
                                                             "message": "message.ajax.state.success",
-                                                            "senderId": "afterComponentSaveSuccess"
+                                                            "senderId": "afterPropertyDetailSuccess"
                                                         },
-                                                        {
-                                                            "name": "validation",
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCitySaveValidation"
-                                                        },
-                                                        {
-                                                            "name": "error",
-                                                            "senderId": "toolbar_02"
-                                                        }
+                                                        // {
+                                                        //     "name": "validation",
+                                                        //     "senderId": "grid_sender_02"
+                                                        // },
+                                                        // {
+                                                        //     "name": "error",
+                                                        //     "senderId": "grid_sender_03"
+                                                        // }
                                                     ]
                                                 },
                                                 {
-                                                    "id": "edit_cities_1",
+                                                    "id": "edit_properties_data",
                                                     "url": "city/updateMany",
                                                     "urlType": "inner",
                                                     "ajaxType": "put",
@@ -4151,9 +2291,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     ]
                                                 }
                                             ],
-                                            "beforeTrigger": [
-
-                                            ],
+                                            "beforeTrigger": [],
                                             "afterTrigger": [
                                                 {
                                                     "id": "",
@@ -4200,7 +2338,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         },
                                                         {
                                                             "id": "M_addRow",
-                                                            "text": "新增",
+                                                            "text": "新增属性",
                                                             "icon": "plus",
                                                             "color": "text-primary",
                                                             "hidden": false,
@@ -4215,7 +2353,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         },
                                                         {
                                                             "id": "M_updateRow",
-                                                            "text": "修改",
+                                                            "text": "修改属性",
                                                             "icon": "edit",
                                                             "color": "text-success",
                                                             "hidden": false,
@@ -4242,43 +2380,6 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                     }
                                                                 ]
                                                             }
-                                                        },
-                                                        {
-                                                            "id": "M_addRowForm",
-                                                            "text": "表单新增",
-                                                            "state": "new",
-                                                            "icon": "plus",
-                                                            "color": "text-primary",
-                                                            "hidden": false,
-                                                            "disabled": false,
-                                                            "execute": [
-                                                                {
-                                                                    "triggerType": "ACTION",
-                                                                    "trigger": "DIALOG",
-                                                                    // "conditionId": "add_state_1"
-                                                                    "dialogId": "edit_city_form",
-                                                                    "ajaxId": "form_add_city",
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "id": "M_editRowForm",
-                                                            "text": "表单更新",
-                                                            "state": "edit",
-                                                            "icon": "edit",
-                                                            "color": "text-primary",
-                                                            "hidden": false,
-                                                            "disabled": false,
-                                                            "execute": [
-                                                                {
-                                                                    "triggerType": "ACTION",
-                                                                    "trigger": "DIALOG",
-                                                                    // "conditionId": "add_state_1"
-                                                                    "dialogId": "edit_city_form",
-                                                                    "ajaxId": "form_edit_city",
-                                                                    "changeValueId": "edit_form_changeValue"
-                                                                }
-                                                            ]
                                                         },
                                                         {
                                                             "id": "M_deleteRow",
@@ -4308,16 +2409,16 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                 {
                                                                     "triggerType": "OPERATION",
                                                                     "trigger": "SAVE_ROWS",
-                                                                    "ajaxId": "add_cities_1",
+                                                                    "ajaxId": "add_properties_data",
                                                                     // "stateId": "add_save_1",
-                                                                    "conditionId": "city_condition_added_none"
+                                                                    "conditionId": "properties_condition_added_none"
                                                                 },
                                                                 {
                                                                     "triggerType": "OPERATION",
                                                                     "trigger": "SAVE_ROWS",
-                                                                    "ajaxId": "edit_cities_1",
+                                                                    "ajaxId": "edit_properties_data",
                                                                     // "stateId": "edit_save_1",
-                                                                    "conditionId": "city_condition_edited_none"
+                                                                    "conditionId": "properties_condition_edited_none"
                                                                 }
                                                             ],
                                                             "toggle": {
@@ -4341,7 +2442,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         },
                                                         {
                                                             "id": "M_cancelrow",
-                                                            "text": "取消1",
+                                                            "text": "取消",
                                                             "state": "edit",
                                                             "icon": "rollback",
                                                             "color": "text-grey-darker",
@@ -4376,45 +2477,6 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                     }
                                                                 ]
                                                             }
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "targetViewId": "view_02",
-                                                    "group": [
-                                                        {
-                                                            "name": "M_addSearchRow",
-                                                            "text": "查询",
-                                                            "triggerType": "STATE",
-                                                            "trigger": "SEARCH_ROW",
-                                                            "actionName": "addSearchRow",
-                                                            "icon": "search",
-                                                            "color": "text-primary",
-                                                            "hidden": false,
-                                                            "disabled": false,
-                                                            "execute": [
-                                                                {
-                                                                    "triggerType": "STATE",
-                                                                    "trigger": "SEARCH_ROW"
-                                                                }
-                                                            ]
-                                                        },
-                                                        {
-                                                            "name": "M_cancelSearchRow",
-                                                            "text": "取消查询",
-                                                            "icon": "rollback",
-                                                            "triggerType": "STATE",
-                                                            "trigger": "CANCEL_SEARCH_ROW",
-                                                            "actionName": "cancelSearchRow",
-                                                            "color": "text-grey-darker",
-                                                            "hidden": false,
-                                                            "disabled": false,
-                                                            "execute": [
-                                                                {
-                                                                    "triggerType": "STATE",
-                                                                    "trigger": "SEARCH_ROW"
-                                                                }
-                                                            ],
                                                         }
                                                     ]
                                                 }
@@ -4453,11 +2515,11 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "pageSizeOptions": [10, 20, 50, 100],
                                             "loadingOnInit": false,
                                             "loadingConfig": {
-                                                "url": "td/SMT_BASE_INNER_PROPERTY/query",
+                                                "url": "sd/query/GET_PROPERTY_DETAILS",
                                                 "method": "get",
                                                 "params": [
                                                     {
-                                                        "name": "CMPT_ID",
+                                                        "name": "PID",
                                                         "type": "tempValue",
                                                         "valueName": "_PID"
                                                     }
@@ -4495,7 +2557,25 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "showFilter": false,
                                                     "showSort": false,
                                                     "width": "100px",
-                                                    "style": {}
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "input",
+                                                        "field": "NAME"
+                                                    }
+                                                },
+                                                {
+                                                    "title": "属性编码",
+                                                    "type": "field",
+                                                    "field": "CODE",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "input",
+                                                        "field": "CODE"
+                                                    }
                                                 },
                                                 {
                                                     "title": "属性类型",
@@ -4505,17 +2585,68 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "showFilter": false,
                                                     "showSort": false,
                                                     "width": "100px",
-                                                    "style": {}
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "select",
+                                                        "field": "PROPERTY_TYPE",
+                                                        "placeholder": "请输入",
+                                                        "defaultValue": "value",
+                                                        "options": [
+                                                            { "label": '对象', "value": "object" },
+                                                            { "label": '数组', "value": "array" },
+                                                            { "label": '值', "value": "value" }
+                                                        ],
+                                                        "labelName": 'label',
+                                                        "valueName": 'value'
+                                                    }
                                                 },
                                                 {
-                                                    "title": "属性数据类型",
+                                                    "title": "属性关系",
                                                     "type": "field",
-                                                    "field": "DATA_TYPE",
+                                                    "field": "REF_TYPE",
                                                     "hidden": false,
                                                     "showFilter": false,
                                                     "showSort": false,
                                                     "width": "100px",
-                                                    "style": {}
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "select",
+                                                        "field": "REF_TYPE",
+                                                        "placeholder": "请输入",
+                                                        "defaultValue": "value",
+                                                        "options": [
+                                                            { "label": '值-对象', "value": "value_object" },
+                                                            { "label": '值-数组', "value": "value_array" },
+                                                            { "label": '值', "value": "value" },
+                                                            { "label": '数组-对象', "value": "array-object" },
+                                                            { "label": '数组-数组', "value": "array-array" }
+
+                                                        ],
+                                                        "labelName": 'label',
+                                                        "valueName": 'value'
+                                                    }
+                                                },
+                                                {
+                                                    "title": "是否末级属性",
+                                                    "type": "field",
+                                                    "field": "IS_SUB_PROPERTY",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "select",
+                                                        "field": "IS_SUB_PROPERTY",
+                                                        "placeholder": "请选择",
+                                                        "defaultValue": 1,
+                                                        "options": [
+                                                            { "label": "是", "value": 1 },
+                                                            { "label": "否", "value": 2 }
+                                                        ],
+                                                        "labelName": 'label',
+                                                        "valueName": 'value'
+                                                    }
                                                 },
                                                 {
                                                     "title": "是否启用",
@@ -4525,18 +2656,30 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "showFilter": false,
                                                     "showSort": false,
                                                     "width": "100px",
-                                                    "style": {}
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "select",
+                                                        "field": "STATE",
+                                                        "placeholder": "请选择",
+                                                        "defaultValue": 1,
+                                                        "options": [
+                                                            { "label": "启用", "value": 1 },
+                                                            { "label": "禁用", "value": 2 }
+                                                        ],
+                                                        "labelName": 'label',
+                                                        "valueName": 'value'
+                                                    }
                                                 },
-                                                {
-                                                    "title": "备注",
-                                                    "type": "field",
-                                                    "field": "REMARK",
-                                                    "hidden": false,
-                                                    "showFilter": false,
-                                                    "showSort": false,
-                                                    "width": "100px",
-                                                    "style": {}
-                                                }
+                                                // {
+                                                //     "title": "备注",
+                                                //     "type": "field",
+                                                //     "field": "REMARK",
+                                                //     "hidden": false,
+                                                //     "showFilter": false,
+                                                //     "showSort": false,
+                                                //     "width": "100px",
+                                                //     "style": {}
+                                                // }
                                             ],
                                             "cascade": {
                                                 "messageSender": [
@@ -4661,7 +2804,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                 "params": [
                                                                     {
                                                                         "name": "targetViewId",
-                                                                        "value": "view_tree_component_base",
+                                                                        "value": "view_tree_component_property_category",
                                                                         "type": "value"
                                                                     }
                                                                 ]
@@ -4669,11 +2812,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         ]
                                                     },
                                                     {
-                                                        "id": "afterComponentSaveSuccess",
+                                                        "id": "afterPropertyDetailSuccess",
                                                         "senderId": "view_02",
-                                                        // "triggerType": "ACTION",
-                                                        // "trigger": "MESSAGE0",
-                                                        // "triggerMoment": "after",
                                                         "sendData": [
                                                             {
                                                                 "beforeSend": {},
@@ -4781,81 +2921,12 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                 "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
                                                             }
                                                         ]
-                                                    },
-                                                    {
-                                                        "id": "afterComponentFormUpdateSuccess",
-                                                        "senderId": "view_02",
-                                                        // "triggerType": "ACTION",
-                                                        // "trigger": "MESSAGE0",
-                                                        // "triggerMoment": "after",
-                                                        "sendData": [
-                                                            {
-                                                                "beforeSend": {},
-                                                                "reveicerId": "",
-                                                                "receiverTriggerType": "ACTION",
-                                                                "receiverTrigger": "MESSAGE",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "type",
-                                                                        "type": "value",
-                                                                        "value": "success"
-                                                                    },
-                                                                    {
-                                                                        "name": "code",
-                                                                        "type": "value",
-                                                                        "value": "operation.code.success"
-                                                                    }
-                                                                ]
-                                                            },
-                                                            {
-                                                                "beforeSend": {},
-                                                                "reveicerId": "",
-                                                                "receiverTriggerType": "ACTION",
-                                                                "receiverTrigger": "LOAD_REFRESH_DATA",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "id",
-                                                                        "type": "addedRows",
-                                                                        "valueName": "id"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    },
-                                                    {
-                                                        "id": "afterCityUpdateFormValidation",
-                                                        "senderId": "view_02",
-                                                        "sendData": [
-                                                            {
-                                                                "beforeSend": {},
-                                                                "reveicerId": "",
-                                                                "receiverTriggerType": "ACTION",
-                                                                "receiverTrigger": "MESSAGE",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "type",
-                                                                        "type": "value",
-                                                                        "value": "warning"
-                                                                    },
-                                                                    {
-                                                                        "name": "message",
-                                                                        "type": "validation",
-                                                                        "valueName": "code"
-                                                                    },
-                                                                    {
-                                                                        "name": "field",
-                                                                        "type": "validation",
-                                                                        "valueName": "field"
-                                                                    }
-                                                                ]
-                                                            }
-                                                        ]
-                                                    },
+                                                    }
                                                 ],
                                                 "messageReceiver": [
                                                     {
                                                         "id": "",
-                                                        "senderId": "view_tree_component_base",
+                                                        "senderId": "view_tree_component_property_category",
                                                         "receiveData": [
                                                             {
                                                                 "beforeReceive": [],
@@ -4866,7 +2937,17 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                                         "pname": "_PID",
                                                                         "cname": "_PID",
                                                                         "valueTo": "tempValue"
-                                                                    }
+                                                                    },
+                                                                    {
+                                                                        "pname": "_CMPT_ID",
+                                                                        "cname": "_CMPT_ID",
+                                                                        "valueTo": "tempValue"
+                                                                    },
+                                                                    {
+                                                                        "pname": "_NODE_TYPE",
+                                                                        "cname": "_NODE_TYPE",
+                                                                        "valueTo": "tempValue"
+                                                                    },
                                                                 ]
                                                             }
                                                         ]
@@ -5067,45 +3148,64 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             ],
                                             "ajaxConfig": [
                                                 {
-                                                    "id": "add_city_1",
-                                                    "url": "city/insert",
+                                                    "id": "add_properties_data",
+                                                    "url": "sd/operate/ADD_PROPERTY_DETAIL",
                                                     "urlType": "inner",
                                                     "ajaxType": "post",
                                                     "params": [
                                                         {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
+                                                            "name": "ID",
+                                                            "type": "GUID",
                                                         },
                                                         {
-                                                            "name": "cityName",
+                                                            "name": "NAME",
                                                             "type": "componentValue",
-                                                            "valueName": "cityName"
+                                                            "valueName": "NAME"
                                                         },
                                                         {
-                                                            "name": "zipCode",
+                                                            "name": "CODE",
                                                             "type": "componentValue",
-                                                            "valueName": "zipCode"
+                                                            "valueName": "CODE"
                                                         },
                                                         {
-                                                            "name": "populationSize",
+                                                            "name": "PROPERTY_TYPE",
                                                             "type": "componentValue",
-                                                            "valueName": "populationSize"
+                                                            "valueName": "PROPERTY_TYPE"
                                                         },
                                                         {
-                                                            "name": "directlyUnder",
-                                                            "type": "componentValue",
-                                                            "valueName": "directlyUnder"
+                                                            "name": "CMPT_ID",
+                                                            "type": "tempValue",
+                                                            "valueName": "_CMPT_ID"
                                                         },
                                                         {
-                                                            "name": "createDate",
+                                                            "name": "IS_SUB_PROPERTY",
                                                             "type": "componentValue",
-                                                            "valueName": "createDate"
+                                                            "valueName": "IS_SUB_PROPERTY"
                                                         },
                                                         {
-                                                            "name": "pId",
+                                                            "name": "PROPERTY_TYPE",
+                                                            "type": "componentValue",
+                                                            "valueName": "PROPERTY_TYPE"
+                                                        },
+                                                        {
+                                                            "name": "REF_TYPE",
+                                                            "type": "componentValue",
+                                                            "valueName": "REF_TYPE"
+                                                        },
+                                                        {
+                                                            "name": "STATE",
+                                                            "type": "componentValue",
+                                                            "valueName": "STATE"
+                                                        },
+                                                        {
+                                                            "name": "PARENT_ID",
                                                             "type": "tempValue",
                                                             "valueName": "_PID"
+                                                        },
+                                                        {
+                                                            "name": "NODE_TYPE",
+                                                            "type": "tempValue",
+                                                            "valueName": "_NODE_TYPE"
                                                         }
                                                     ],
                                                     "outputParameters": [
@@ -5116,135 +3216,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                             "name": "data",
                                                             "showMessageWithNext": 0,
                                                             "message": "message.ajax.state.success",
-                                                            "senderId": "afterComponentSaveSuccess"
-                                                        },
-                                                        {
-                                                            "name": "validation",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCitySaveValidation"
-                                                        },
-                                                        // {
-                                                        //     "name": "error",
-                                                        //     "senderId": "grid_sender_03"
-                                                        // }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "edit_city_1",
-                                                    "url": "city/update",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "put",
-                                                    "params": [
-                                                        {
-                                                            "name": "cityName",
-                                                            "type": "componentValue",
-                                                            "valueName": "cityName"
-                                                        },
-                                                        {
-                                                            "name": "zipCode",
-                                                            "type": "componentValue",
-                                                            "valueName": "zipCode"
-                                                        },
-                                                        {
-                                                            "name": "populationSize",
-                                                            "type": "componentValue",
-                                                            "valueName": "populationSize"
-                                                        },
-                                                        {
-                                                            "name": "directlyUnder",
-                                                            "type": "componentValue",
-                                                            "valueName": "directlyUnder"
-                                                        },
-                                                        {
-                                                            "name": "createDate",
-                                                            "type": "componentValue",
-                                                            "valueName": "createDate"
-                                                        },
-                                                        {
-                                                            "name": "pId",
-                                                            "type": "tempValue",
-                                                            "valueName": "_PID"
-                                                        },
-                                                        {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-                                                        {
-                                                            "name": "data",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateSuccessfully"
-                                                        },
-                                                        {
-                                                            "name": "validation",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateValidation"
-                                                        },
-                                                        {
-                                                            "name": "error",
-                                                            "senderId": "toolbar_02"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "add_cities_1",
-                                                    "url": "city/insertMany",
-                                                    "urlType": "inner",
-                                                    "ajaxType": "post",
-                                                    "params": [
-                                                        {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
-                                                        },
-                                                        {
-                                                            "name": "cityName",
-                                                            "type": "componentValue",
-                                                            "valueName": "cityName"
-                                                        },
-                                                        {
-                                                            "name": "zipCode",
-                                                            "type": "componentValue",
-                                                            "valueName": "zipCode"
-                                                        },
-                                                        {
-                                                            "name": "populationSize",
-                                                            "type": "componentValue",
-                                                            "valueName": "populationSize"
-                                                        },
-                                                        {
-                                                            "name": "directlyUnder",
-                                                            "type": "componentValue",
-                                                            "valueName": "directlyUnder"
-                                                        },
-                                                        {
-                                                            "name": "createDate",
-                                                            "type": "componentValue",
-                                                            "valueName": "createDate"
-                                                        },
-                                                        {
-                                                            "name": "pId",
-                                                            "type": "tempValue",
-                                                            "valueName": "_PID"
-                                                        }
-                                                    ],
-                                                    "outputParameters": [
-
-                                                    ],
-                                                    "result": [
-                                                        {
-                                                            "name": "data",
-                                                            "showMessageWithNext": 0,
-                                                            "message": "message.ajax.state.success",
-                                                            "senderId": "grid_sender_01"
+                                                            "senderId": "afterPropertyDetailSuccess"
                                                         },
                                                         // {
                                                         //     "name": "validation",
@@ -5257,8 +3229,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     ]
                                                 },
                                                 {
-                                                    "id": "edit_cities_1",
-                                                    "url": "city/updateMany",
+                                                    "id": "edit_properties_data",
+                                                    "url": "sd/operate/EDIT_PROPERTY_DETAILS_DATA",
                                                     "urlType": "inner",
                                                     "ajaxType": "put",
                                                     "params": [
@@ -5306,7 +3278,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                             "name": "data",
                                                             "showMessageWithNext": 0,
                                                             "message": "message.ajax.state.success",
-                                                            "senderId": "grid_sender_01"
+                                                            "senderId": "afterPropertyDetailSuccess"
                                                         }
                                                     ]
                                                 },

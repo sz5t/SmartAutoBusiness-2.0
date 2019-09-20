@@ -1235,7 +1235,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
 
                                 ],
                                 "filter": [
-
+                                    
                                 ]
                             },
                             "columns": [

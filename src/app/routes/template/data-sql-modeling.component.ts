@@ -544,7 +544,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     "id": "create_sql_model",
                                     "url": "sql/createModel",
                                     "urlType": "inner",
-                                    "ajaxType": "put",
+                                    "ajaxType": "post",
                                     "params": [
                                         {
                                             "name": "id",

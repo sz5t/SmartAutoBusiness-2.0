@@ -62,6 +62,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     super(componentService);
     this.tempValue = {};
     this.initValue = {};
+    this.staticComponentValue = {};
   }
 
   ngOnInit() {
@@ -236,6 +237,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * setChangeValue 接受 初始变量值
    */
   public setChangeValue(ChangeValues?) {
+    console.log('changeValue', ChangeValues);
     // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
     if (ChangeValues && ChangeValues.length > 0) {
       ChangeValues.forEach(p => {
@@ -330,7 +332,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         }
       }
 
-      data_form = {...data_form,...this.staticComponentValue};
+      data_form = { ...data_form, ...this.staticComponentValue };
       for (const item in this.formValue) {
         if (data_form.hasOwnProperty(item)) {
           this.formValue[item] = data_form[item];
