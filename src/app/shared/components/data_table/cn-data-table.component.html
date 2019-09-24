@@ -55,12 +55,12 @@
               <ng-container *ngIf="col.editor">
                 <td *ngSwitchCase="'new'">
                   <ng-container CnGridItemDirective [state]="'new'" [config]="col.editor"
-                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.field]}"
+                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
                     (updateValue)="valueChange($event)"> </ng-container>
                 </td>
                 <td *ngSwitchCase="'edit'">
                   <ng-container CnGridItemDirective [state]="'edit'" [config]="col.editor"
-                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.field]}"
+                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
                     (updateValue)="valueChange($event)"> </ng-container>
                 </td>
                 <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
