@@ -669,13 +669,14 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                 },
                                 {
                                     "id": "tree_edit_property_category",
-                                    "url": "td/operate/EDIT_PROPERTY_CATEGORY",
+                                    "url": "td/SMT_BASE_CFG_PROPERTY/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
                                         {
                                             "name": "ID",
-                                            "type": "GUID"
+                                            "type": "componentValue",
+                                            "valueName": "ID"
                                         },
                                         {
                                             "name": "NAME",
@@ -693,11 +694,11 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                         //     "type": "componentValue",
                                         //     "valueName": "TYPE"
                                         // },
-                                        {
-                                            "name": "CATEGORY_TYPE",
-                                            "type": "componentValue",
-                                            "valueName": "CATEGORY_TYPE"
-                                        },
+                                        // {
+                                        //     "name": "CATEGORY_TYPE",
+                                        //     "type": "componentValue",
+                                        //     "valueName": "CATEGORY_TYPE"
+                                        // },
                                         // {
                                         //     "name": "SORT",
                                         //     "type": "componentValue",
@@ -708,16 +709,16 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                         //     "type": "componentValue",
                                         //     "valueName": "STATE"
                                         // },
-                                        {
-                                            "name": "PARENT_ID",
-                                            "type": "tempValue",
-                                            "valueName": "CMPT_ID"
-                                        },
-                                        {
-                                            "name": "CMPT_ID",
-                                            "type": "tempValue",
-                                            "valueName": "CMPT_ID"
-                                        }
+                                        // {
+                                        //     "name": "PARENT_ID",
+                                        //     "type": "tempValue",
+                                        //     "valueName": "CMPT_ID"
+                                        // },
+                                        // {
+                                        //     "name": "CMPT_ID",
+                                        //     "type": "tempValue",
+                                        //     "valueName": "CMPT_ID"
+                                        // }
                                     ],
                                     "outputParameters": [
 
@@ -934,6 +935,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                             "loadingOnInit": true,
                             "showLine": false,
                             "rootTitle": '根节点',
+                            "desc": "NAME",
                             "loadingConfig": {
                                 "url": "sd/query/COMPONENT_TREE_BASE_PROPERTIES_DATA",
                                 "method": "get",
@@ -997,10 +999,11 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                     "field": "PID"
                                 },
                                 {
-                                    "title": "NAME",
+                                    "title": "CODE",
                                     "type": "title",
-                                    "field": "NAME"
+                                    "field": "CODE"
                                 }
+
                             ],
                             "cascade": {
                                 "messageSender": [
@@ -1254,7 +1257,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterComponentUpdateSuccess",
+                                        "id": "afterPropertyCategoryUpdateSuccess",
                                         "senderId": "view_tree_component_property_category",
                                         "sendData": [
                                             {
@@ -1287,9 +1290,9 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                         "valueName": "ID"
                                                     },
                                                     {
-                                                        "name": "OFFICENAME",
+                                                        "name": "NAME",
                                                         "type": "editedRows",
-                                                        "valueName": "OFFICENAME"
+                                                        "valueName": "NAME+"
                                                     }
                                                 ]
                                             }
@@ -1370,7 +1373,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_2011",
-                                        "senderId": "view_02",
+                                        "senderId": "view_tree_component_property_category",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -1380,7 +1383,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                     },
                                     {
                                         "id": "s_203",
-                                        "senderId": "view_form_edit_component",
+                                        "senderId": "view_tree_component_property_category",
                                         "receiveData": [
                                             {
                                                 "triggerType": "ACTION",
@@ -2276,7 +2279,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                             "name": "data",
                                                             "showMessageWithNext": 0,
                                                             "message": "message.ajax.state.success",
-                                                            "senderId": "afterCityUpdateSuccessfully"
+                                                            "senderId": "afterpropertyDetailSuccess"
                                                         },
                                                         {
                                                             "name": "validation",
@@ -2510,7 +2513,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                             "isPagination": true,
                                             "isShowSizeChanger": true,
                                             "showTotal": true,
-                                            "pageSize": 5,
+                                            "pageSize": 10,
                                             "showCheckBox": true,
                                             "pageSizeOptions": [10, 20, 50, 100],
                                             "loadingOnInit": false,
@@ -2580,7 +2583,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                 {
                                                     "title": "属性类型",
                                                     "type": "field",
-                                                    "field": "TYPE",
+                                                    "field": "TYPE_TEXT",
                                                     "hidden": false,
                                                     "showFilter": false,
                                                     "showSort": false,
@@ -2588,7 +2591,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                     "style": {},
                                                     "editor": {
                                                         "type": "select",
-                                                        "field": "PROPERTY_TYPE",
+                                                        "field": "TYPE",
                                                         "placeholder": "请输入",
                                                         "defaultValue": "value",
                                                         "options": [
@@ -2603,7 +2606,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                 {
                                                     "title": "属性关系",
                                                     "type": "field",
-                                                    "field": "REF_TYPE",
+                                                    "field": "REF_TYPE_TEXT",
                                                     "hidden": false,
                                                     "showFilter": false,
                                                     "showSort": false,
@@ -2629,7 +2632,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                 {
                                                     "title": "是否末级属性",
                                                     "type": "field",
-                                                    "field": "IS_SUB_PROPERTY",
+                                                    "field": "IS_SUB_PROPERTY_TEXT",
                                                     "hidden": false,
                                                     "showFilter": false,
                                                     "showSort": false,
@@ -2651,7 +2654,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                 {
                                                     "title": "是否启用",
                                                     "type": "field",
-                                                    "field": "STATE",
+                                                    "field": "STATE_TEXT",
                                                     "hidden": false,
                                                     "showFilter": false,
                                                     "showSort": false,
@@ -2859,7 +2862,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                         ]
                                                     },
                                                     {
-                                                        "id": "afterCityUpdateSuccessfully",
+                                                        "id": "afterpropertyDetailSuccess",
                                                         "senderId": "view_02",
                                                         // "triggerType": "ACTION",
                                                         // "trigger": "MESSAGE0",
@@ -3230,44 +3233,29 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                 },
                                                 {
                                                     "id": "edit_properties_data",
-                                                    "url": "sd/operate/EDIT_PROPERTY_DETAILS_DATA",
+                                                    "url": "td/SMT_BASE_CFG_PROPERTY_DETAIL/update",
                                                     "urlType": "inner",
                                                     "ajaxType": "put",
                                                     "params": [
                                                         {
-                                                            "name": "cityName",
+                                                            "name": "ID",
                                                             "type": "componentValue",
-                                                            "valueName": "cityName"
+                                                            "valueName": "ID"
                                                         },
                                                         {
-                                                            "name": "zipCode",
+                                                            "name": "NAME",
                                                             "type": "componentValue",
-                                                            "valueName": "zipCode"
+                                                            "valueName": "NAME"
                                                         },
                                                         {
-                                                            "name": "populationSize",
+                                                            "name": "CODE",
                                                             "type": "componentValue",
-                                                            "valueName": "populationSize"
+                                                            "valueName": "CODE"
                                                         },
                                                         {
-                                                            "name": "directlyUnder",
+                                                            "name": "STATE",
                                                             "type": "componentValue",
-                                                            "valueName": "directlyUnder"
-                                                        },
-                                                        {
-                                                            "name": "createDate",
-                                                            "type": "componentValue",
-                                                            "valueName": "createDate"
-                                                        },
-                                                        {
-                                                            "name": "id",
-                                                            "type": "componentValue",
-                                                            "valueName": "id"
-                                                        },
-                                                        {
-                                                            "name": "pId",
-                                                            "type": "tempValue",
-                                                            "valueName": "_PID"
+                                                            "valueName": "STATE"
                                                         }
                                                     ],
                                                     "outputParameters": [
@@ -3278,7 +3266,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                             "name": "data",
                                                             "showMessageWithNext": 0,
                                                             "message": "message.ajax.state.success",
-                                                            "senderId": "afterPropertyDetailSuccess"
+                                                            "senderId": "afterpropertyDetailSuccess"
                                                         }
                                                     ]
                                                 },

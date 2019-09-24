@@ -294,6 +294,7 @@ export class CnTreeComponent extends CnComponentBase
             node[column['type']] = node[column['field']];
         });
 
+
         if (node.children && node.children.length > 0) {
             node.children.map(n => {
                 this._setTreeNode(n);

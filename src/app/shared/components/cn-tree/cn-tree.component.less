@@ -20,8 +20,15 @@
 }
 
 .active {
-  background: #0bcaf8;
-  color: #fff;
+  background-color: @primary-2;
+  color: #333;
+}
+
+.active .file-desc,
+.active .folder-desc {
+  background: none;
+  color: #222;
+  font-weight: 500;
 }
 
 .file-name,
@@ -33,8 +40,9 @@
 .folder-desc {
   padding: 0 8px;
   display: inline-block;
-  background: #87ceff;
-  color: #ffffff;
+  background: #e5e9ec;
+  color: #555;
   position: relative;
-  left: 12px;
+  left: 10px;
+  border-radius: 3px;
 }
