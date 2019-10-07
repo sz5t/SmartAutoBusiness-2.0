@@ -1,10 +1,4 @@
-<!-- <h1>CnDataTable</h1>
-<div nz-button-group>
-  <button nz-button (click)="selectRow($event)">Click SelectRow</button>
-  <button nz-button (click)="executeCheckedRows($event)">Click ChechedRows</button>
-</div>-->
-
-<nz-table #dataTable [nzLoading]="isLoading" [nzShowSizeChanger]="config.isShowSizeChanger"
+<nz-table #dataTable [nzShowSizeChanger]="config.isShowSizeChanger" [nzLoadingDelay]="300"
   [nzFrontPagination]="config.isFrontPagination" [nzShowPagination]="config.isPagination" [nzTotal]="total"
   [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
   (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="config.pageSizeOptions" [nzData]="dataList"

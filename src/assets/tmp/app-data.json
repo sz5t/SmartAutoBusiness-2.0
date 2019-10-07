@@ -46,6 +46,13 @@
           "link": "/template/innerPropertyManager"
         },
         {
+          "text": "内置操作维护",
+          "i18n": "menu.cfg.base.innerMethodManager",
+          "icon": "database",
+          "level": 2,
+          "link": "/template/innerMethodManager"
+        },
+        {
           "text": "配置属性维护",
           "i18n": "menu.cfg.base.configPropertyManager",
           "icon": "database",

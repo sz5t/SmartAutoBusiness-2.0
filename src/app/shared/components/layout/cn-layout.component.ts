@@ -11,10 +11,14 @@ import { Component, Input, OnInit, Output, EventEmitter, Inject, TemplateRef, Vi
 })
 export class CnLayoutComponent implements OnInit {
     public layoutObj;
+    @Input() public initData;
+    @Input() public tempData;
     constructor() {
+
     }
 
     public ngOnInit() {
+        console.log('layout init---', this.initData, this.tempData);
         // console.log('******',this.layoutObj);
     }
 }

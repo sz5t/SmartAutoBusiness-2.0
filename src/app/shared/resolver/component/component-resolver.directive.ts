@@ -2,14 +2,7 @@ import { CnTreeTableComponent } from './../../components/cn-tree-table/cn-tree-t
 import { CnTreeComponent } from './../../components/cn-tree/cn-tree.component';
 import { CnToolbarComponent } from './../../components/toolbar/cn-toolbar.component';
 import { CnDataTableComponent } from './../../components/data_table/cn-data-table.component';
-import { CnCustomLayoutComponent } from '../../components/layout/cn-custom-layout.component';
-import { CnTabsComponent } from '../../components/layout/cn-tabs.component';
 import { Directive, OnInit, Input, OnDestroy, ComponentFactoryResolver, ViewContainerRef, ComponentRef, Type } from '@angular/core';
-import { CnLayoutComponent } from '@shared/components/layout/cn-layout.component';
-import { LayoutBase, LayoutSize } from '../layout/layout.base';
-import { LayoutRow } from '../layout/layout.row';
-import { LayoutColumn } from '../layout/layout.column';
-import { LayoutTabs } from '../layout/layout.tabs';
 import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
 
 const components: { [type: string]: Type<any> } = {
@@ -26,6 +19,8 @@ const components: { [type: string]: Type<any> } = {
 })
 export class CnComponentResolverDirective implements OnInit, OnDestroy {
     @Input() config;
+    @Input() initData;
+    @Input() tempData;
     private _componentRef: ComponentRef<any>;
     constructor(
         private _resolver: ComponentFactoryResolver,
@@ -35,7 +30,6 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // console.log('component result init', this.config);
         this.resolve();
     }
 
@@ -58,12 +52,11 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
         const comp = this._resolver.resolveComponentFactory<any>(
             components[this.config.component]
         );
+
         this._componentRef = this._container.createComponent(comp);
         this._componentRef.instance.config = this.config;
-        // if (this.tempValue && this.componentRef.instance.tempValue) {
-        //     this.componentRef.instance.tempValue = this.tempValue;
-        // }
-
+        this._componentRef.instance.initData = this.initData;
+        this._componentRef.instance.tempData = this.tempData;
     }
 
 

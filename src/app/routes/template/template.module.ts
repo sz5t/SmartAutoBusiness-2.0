@@ -1,3 +1,4 @@
+import { BaseInnerMethodManagerComponent } from './base-inner-method-manager.component';
 import { BaseCfgPropertyManagerComponent } from './base-cfg-property-manager.component';
 import { BaseInnerPropertyManagerComponent } from './base-inner-property-manager.component';
 import { LayoutDemoComponent } from './layout-demo.component';
@@ -23,7 +24,8 @@ const COMPONENTS = [
   DataModelingComponent,
   BaseInnerPropertyManagerComponent,
   DataSqlModelingComponent,
-  BaseCfgPropertyManagerComponent
+  BaseCfgPropertyManagerComponent,
+  BaseInnerMethodManagerComponent
 ];
 
 const COMPONENTS_NOROUNT = [];

@@ -26,7 +26,6 @@ import { Subscription, Subject, BehaviorSubject, merge, Observable } from 'rxjs'
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
-import { arraysEqual } from 'ng-zorro-antd';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -45,6 +44,8 @@ export class CnDataTableComponent extends CnComponentBase
 
     @Input()
     public config; // dataTables 的配置参数
+    @Input() initData;
+    @Input() tempData;
     @Input()
     public permissions = [];
     @Input()
@@ -133,9 +134,7 @@ export class CnDataTableComponent extends CnComponentBase
     ) {
         super(componentService);
         this.cacheValue = this.componentService.cacheService;
-        this.cacheValue.set('userInfo', { _createUserId: '张三丰' });
-        this.tempValue = {};
-        this.initValue = {};
+
         // init cacheValue
     }
 
@@ -149,14 +148,32 @@ export class CnDataTableComponent extends CnComponentBase
         // 构建表格列及列标题
         this._buildColumns(this.config.columns);
 
+        this._initInnerValue();
+
         // 解析及联配置
         this.resolveRelations();
+
+
 
         // 是否需要进行初始化数据加载
         if (this.config.loadingOnInit) {
             this.load();
         }
     }
+
+    private _initInnerValue() {
+        if (this.tempData) {
+            this.tempValue = this.tempData;
+        } else {
+            this.tempValue = {};
+        }
+        if (this.initData) {
+            this.initValue = this.initData;
+        } else {
+            this.initValue = {};
+        }
+    }
+
 
     public ngAfterViewInit() {
 

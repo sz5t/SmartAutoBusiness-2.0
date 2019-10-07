@@ -8,10 +8,14 @@
 
 
           <nz-card [ngSwitch]="c.container" [nzTitle]="c.title ? c.title : false">
-            <ng-container *ngSwitchCase="'tabs'" cnLayoutResolverDirective [config]="c.tabs"></ng-container>
-            <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout"></ng-container>
-            <ng-container *ngSwitchCase="'component'" cnComponentResolverDirective [config]="c.component">     </ng-container>
-            <ng-container *ngSwitchCase="'rows'" cnLayoutResolverDirective [config]="c"> </ng-container> 
+            <ng-container *ngSwitchCase="'tabs'" cnLayoutResolverDirective [config]="c.tabs" [tempData]="tempData"
+              [initData]="initData"></ng-container>
+            <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout" [tempData]="tempData"
+              [initData]="initData"></ng-container>
+            <ng-container *ngSwitchCase="'component'" cnComponentResolverDirective [config]="c.component"
+              [tempData]="tempData" [initData]="initData"> </ng-container>
+            <ng-container *ngSwitchCase="'rows'" cnLayoutResolverDirective [config]="c" [tempData]="tempData"
+              [initData]="initData"> </ng-container>
           </nz-card>
         </div>
       </div>

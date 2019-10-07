@@ -9,6 +9,13 @@ export class LayoutTabs extends LayoutBase implements ILayout {
     public set tabContent(value: LayoutTab[]) {
         this._tabContent = value;
     }
+    private _tabActiveMapping;
+    public get tabActiveMapping() {
+        return this._tabActiveMapping;
+    }
+    public set tabActiveMapping(value) {
+        this._tabActiveMapping = value;
+    }
 
     add(tab: LayoutTab) {
         this._tabContent.push(tab);

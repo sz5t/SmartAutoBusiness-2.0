@@ -1,3 +1,5 @@
+import { CN_LAYOUT_DIRECTIVE_RESOLVER_METHOD } from './../../../core/relations/bsn-methods/layout-directive-resolver-methods';
+import { CnComponentBase } from './../../components/cn-component.base';
 import { CnCustomLayoutComponent } from './../../components/layout/cn-custom-layout.component';
 import { CnTabsComponent } from './../../components/layout/cn-tabs.component';
 import { CommonUtils } from '../../../core/utils/common-utils';
@@ -5,25 +7,86 @@ import { LayoutRow } from './layout.row';
 import { LayoutBase, LayoutSize } from './layout.base';
 import { LayoutColumn } from './layout.column';
 import { LayoutTabs, LayoutTab } from './layout.tabs';
-import { Directive, OnInit, Input, OnDestroy, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from '@angular/core';
+import { Directive, OnInit, Input, OnDestroy, ComponentFactoryResolver, ViewContainerRef, ComponentRef, Inject } from '@angular/core';
 import { CnLayoutComponent } from '@shared/components/layout/cn-layout.component';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { Subject, Subscription } from 'rxjs';
+import { RelationResolver } from '../relation/relation.resolver';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
     selector: ' [cnLayoutResolverDirective]'
 })
-export class CnLayoutResolverDirective implements OnInit, OnDestroy {
+export class CnLayoutResolverDirective extends CnComponentBase implements OnInit, OnDestroy {
     @Input() config;
+    @Input() public tempData;
+    @Input() public initData;
+
+
+    private _layoutObj: ComponentRef<any>;
+    private _rowsObj: ComponentRef<any>;
+    private _tabObj: ComponentRef<any>;
+    private _customObj: ComponentRef<any>;
+
     private component: ComponentRef<any>;
+    public COMPONENT_METHODS = CN_LAYOUT_DIRECTIVE_RESOLVER_METHOD;
+    public COMPONENT_PROPERTY = {};
+
+    private _sender_source$: Subject<any>;
+    private _receiver_source$: Subject<any>;
+    private _trigger_source$: Subject<any>;
+
+    private _receiver_subscription$: Subscription;
+    private _sender_subscription$: Subscription;
+    private _trigger_receiver_subscription$: Subscription;
     constructor(
         private _resolver: ComponentFactoryResolver,
-        private _container: ViewContainerRef
+        private _container: ViewContainerRef,
+        @Inject(BSN_COMPONENT_SERVICES)
+        public componentService: ComponentServiceProvider
     ) {
+        super(componentService);
+        this.cacheValue = this.componentService.cacheService;
+        if (this.tempData) {
+            this.tempValue = this.tempData;
+        } else {
+            this.tempValue = {};
+        }
+        if (this.initData) {
+            this.initValue = this.initData;
+        } else {
+            this.initValue = {};
+        }
+
+    }
+
+    /**
+    * 解析级联消息
+    */
+    private resolveRelations() {
+        if (this.config.cascade && this.config.cascade.messageSender) {
+            if (!this._sender_source$) {
+                // 解析组件发送消息配置,并注册消息发送对象
+                this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
+                this._sender_subscription$ = this._sender_source$.subscribe();
+            }
+
+        }
+        if (this.config.cascade && this.config.cascade.messageReceiver) {
+            // 解析消息接受配置,并注册消息接收对象
+            // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+            // this._receiver_subscription$ = this._receiver_source$.subscribe();
+            new RelationResolver(this).resolveReceiver(this.config);
+        }
+
+        this._trigger_source$ = new RelationResolver(this).resolve();
 
     }
 
     ngOnInit() {
         let configObj;
+        this.resolveRelations();
         if (this.config) {
             configObj = this.resolver(this.config);
         }
@@ -45,49 +108,117 @@ export class CnLayoutResolverDirective implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {
+    public getCurrentComponentId() {
+        return this.config.id;
+    }
 
+    public receiveMessage(data) {
+        if (this._tabObj) {
+            this._tabObj.instance['initData'] = this.initValue;
+            this._tabObj.instance['tempData'] = this.tempValue;
+            this._tabObj.instance.reloadTabContent();
+            // this._tabObj.instance.tabsObj = CommonUtils.deepCopy(this._tabObj.instance.tabsObj);
+        }
+    }
+
+    public tabActiveChangeByMapping(data) {
+        if (this._tabObj) {
+            this._tabObj.instance['initData'] = this.initValue;
+            this._tabObj.instance['tempData'] = this.tempValue;
+            this._tabObj.instance.setActiveByMapping(data);
+            // this._tabObj.instance.tabsObj = CommonUtils.deepCopy(this._tabObj.instance.tabsObj);
+        }
+    }
+
+    ngOnDestroy(): void {
+        // 释放级联对象
+        this.unsubscribeRelation();
+        // 释放及联接受对象
+        if (this._receiver_subscription$) {
+            this._receiver_subscription$.unsubscribe();
+        }
+
+        if (this._sender_subscription$) {
+            this._sender_subscription$.unsubscribe();
+        }
+
+        // 释放触发器对象
+        if (this._trigger_receiver_subscription$) {
+            this._trigger_receiver_subscription$.unsubscribe();
+        }
+
+        if (this._trigger_source$) {
+            this._trigger_source$.unsubscribe();
+        }
+
+        if (this.subscription$) {
+            this.subscription$.unsubscribe();
+        }
     }
 
     private buildLayout(layoutObj: any) {
-
-        const layout = this._resolver.resolveComponentFactory<any>(
+        // console.log('buildLayout Receive message --', this.initValue, this.tempValue);
+        const cmpt = this._resolver.resolveComponentFactory<any>(
             CnLayoutComponent
         );
         this._container.clear();
-        this.component = this._container.createComponent(layout);
-        this.component.instance.layoutObj = layoutObj;
+        this._layoutObj = this._container.createComponent(cmpt);
+        this._layoutObj.instance.layoutObj = layoutObj;
+        if (this.tempValue) {
+            this._layoutObj.instance['tempData'] = this.tempData;
+        }
+        if (this.initValue) {
+            this._layoutObj.instance['initData'] = this.initData;
+        }
     }
 
     private buildLayoutRows(layoutObj: any) {
-        const layout = this._resolver.resolveComponentFactory<any>(
+        // console.log('buildLayoutRows Receive message --', this.initData, this.tempData);
+        const cmpt = this._resolver.resolveComponentFactory<any>(
             CnLayoutComponent
-        ); 
+        );
         this._container.clear();
-        this.component = this._container.createComponent(layout);
-        this.component.instance.layoutObj = layoutObj;
+        this._rowsObj = this._container.createComponent(cmpt);
+        this._rowsObj.instance.layoutObj = layoutObj;
+        if (this.tempValue) {
+            this._rowsObj.instance['tempData'] = this.tempData;
+        }
+        if (this.initValue) {
+            this._rowsObj.instance['initData'] = this.initData;
+        }
     }
 
     private buildTabsLayout(tabsObj: any) {
-        const tabset = this._resolver.resolveComponentFactory<any>(
+        // console.log('tabsObj Receive message --', this.initData, this.tempData);
+        const cmpt = this._resolver.resolveComponentFactory<any>(
             CnTabsComponent
         );
         this._container.clear();
-        this.component = this._container.createComponent(tabset);
-        this.component.instance.tabsObj = tabsObj;
+        this._tabObj = this._container.createComponent(cmpt);
+        this._tabObj.instance.tabsObj = tabsObj;
+        if (this.tempValue) {
+            this._tabObj.instance['tempData'] = this.tempData;
+        }
+        if (this.initValue) {
+            this._tabObj.instance['initData'] = this.initData;
+        }
     }
 
     private buildCustomerLayout(customLayoutObj: any) {
-        const customLayout = this._resolver.resolveComponentFactory<any>(
+        // console.log('customLayoutObj Receive message --', this.initValue, this.tempValue);
+        const cmpt = this._resolver.resolveComponentFactory<any>(
             CnCustomLayoutComponent
         );
         this._container.clear();
-        this.component = this._container.createComponent(customLayout);
-        this.component.instance.config = customLayoutObj;
+        this._customObj = this._container.createComponent(cmpt);
+        this._customObj.instance.config = customLayoutObj;
+        if (this.tempValue) {
+            this._customObj.instance['tempData'] = this.tempData;
+        }
+        if (this.initValue) {
+            this._customObj.instance['initData'] = this.initData;
+        }
     }
-
-
-
 
     public resolver(cfg) {
         switch (cfg.container) {
@@ -171,6 +302,7 @@ export class CnLayoutResolverDirective implements OnInit, OnDestroy {
         const newTabs = new LayoutTabs();
         newTabs.container = cfg.container;
         newTabs.tabContent = cfg.tabContent;
+        newTabs.tabActiveMapping = cfg.tabActiveMapping;
         // if (Array.isArray(cfg.container) && cfg.container.length > 0) {
         //     for (const tab of cfg.container) {
         //         const newTab = new LayoutTab();

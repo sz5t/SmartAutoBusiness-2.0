@@ -1,7 +1,12 @@
 <nz-tabset [nzType]="tabsObj.tabType ? tabsObj.tabType :'card'" [nzTabPosition]="'top'"
-  [nzSize]="tabsObj.size ? tabsObj.size : 'default'" [nzAnimated]="true">
-  <nz-tab *ngFor="let tab of tabsObj.tabContent" [nzTitle]="header">
-    <ng-container cnLayoutResolverDirective [config]="tab.layout"></ng-container>
+  [nzSize]="tabsObj.size ? tabsObj.size : 'default'" [nzAnimated]="true" (nzSelectChange)="tabChange($event)"
+  [(nzSelectedIndex)]="selectedIndex" (nzSelectedIndexChange)="selectedIndexEvent($event)">
+  <nz-tab *ngFor="let tab of tabsConfig" [nzTitle]="header" (nzDeselect)="tabDisactive(tab)"
+    (nzSelect)="tabActive(tab)">
+
+    <ng-container *ngIf="tab.active" cnLayoutResolverDirective [config]="tab.layout" [initData]="initData"
+      [tempData]="tempData">
+    </ng-container>
     <ng-template #header>
       <span><i nz-icon spin type="tag" theme="outline"></i> {{ tab.title }}</span>
     </ng-template>
@@ -36,3 +41,27 @@
   </cn-component-resolver>
 </ng-template>
 </nz-card> -->
+<!-- <nz-tabset [nzTabPosition]="config.tabPosition" [nzType]="config.tabType" [nzSize]="config.size" (nzSelectChange)="tabChange($event)">
+  <nz-tab *ngFor="let tab of config.tabs" [nzTitle]="header" (nzDeselect)="tabDisactive(tab)" (nzSelect)="tabActive(tab)">
+      <ng-container *ngIf="tab.rows;else tabView">
+          <div *ngIf="tab.active">
+                  <cn-layout-resolver [config]="tab" [initData] = "initData" [tempValue] = "tempValue" [permissions] = "permissions ? permissions : []" ></cn-layout-resolver>
+          </div>
+      </ng-container>
+      <ng-template #tabView>
+          <div *ngIf="tab.active">
+              <div *ngIf="tab.viewCfg; else tabLayout">
+                  <div *ngIf="!tab.handleMapping;else tmpHandleSingle">
+                          <cn-component-resolver [config]="tabConfig" *ngFor="let tabConfig of tab.viewCfg" [initData]="initValue" [tempValue] = "tempValue"  [permissions] = "permissions ? permissions : []" ></cn-component-resolver>
+                  </div>
+                  <ng-template #tmpHandleSingle>
+                      <ng-container cnLayoutInnerResolverDirective  [config]="tab"  [initData]="initValue" [tempValue] = "tempValue"  [permissions] = "permissions ? permissions : []" ></ng-container>
+                  </ng-template>
+              </div>
+          </div>
+      </ng-template>
+      <ng-template #header>
+          <span><i nz-icon type="tag" theme="outline"></i> {{tab.title}}</span>
+      </ng-template>
+  </nz-tab>
+</nz-tabset> -->

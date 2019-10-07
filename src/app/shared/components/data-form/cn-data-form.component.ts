@@ -24,6 +24,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
   @Input() public config;
   @Input() public changeValue;
+  @Input() public tempData;
+  @Input() public initData;
   validateForm: FormGroup;
   controlArray: any[] = [];
   value;
@@ -60,12 +62,21 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   constructor(private fb: FormBuilder, @Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
-    this.tempValue = {};
-    this.initValue = {};
-    this.staticComponentValue = {};
   }
 
   ngOnInit() {
+
+    if (this.initData) {
+      this.initValue = this.initData;
+    } else {
+      this.initValue = {};
+    }
+    if (this.tempData) {
+      this.tempValue = this.tempData;
+    } else {
+      this.tempValue = {};
+    }
+    this.staticComponentValue = {};
     // 动态构建表单的初始默认值, 校验规则
     // this.validateForm = this.fb.group({
     //   code: ['liu', [Validators.required]],

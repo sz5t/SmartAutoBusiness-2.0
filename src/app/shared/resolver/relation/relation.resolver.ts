@@ -498,7 +498,7 @@ export class ReceiverResolver {
                     receiverCfg.map(cfg => {
                         // 判断发送组件与接受组件是否一致
                         if (data.viewId === cfg.senderId) {
-                            console.log('receiver data:', data);
+                            // console.log('receiver data:', data);
                             // 判断发送触发器与接受触发起是否一致
                             // new TriggerResolver(
                             //     data,

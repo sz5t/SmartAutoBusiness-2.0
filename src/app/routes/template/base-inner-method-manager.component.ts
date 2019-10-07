@@ -12,8 +12,8 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'base-inner-property-manager',
-    templateUrl: './base-inner-property-manager.component.html',
+    selector: 'base-inner-method-manager',
+    templateUrl: './base-inner-method-manager.component.html',
     styles: [
         `
             :host ::ng-deep .ant-card-head {
@@ -41,7 +41,7 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
         `
     ]
 })
-export class BaseInnerPropertyManagerComponent implements OnInit {
+export class BaseInnerMethodManagerComponent implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "layout",
@@ -559,13 +559,13 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     }
                                 },
                                 {
-                                    "id": "form_property",
+                                    "id": "form_method",
                                     "type": "confirm",
-                                    "title": "新增组件内置属性信息",
+                                    "title": "新增组件内置操作信息",
                                     "cancelText": "取消",
                                     "okText": "提交",
                                     "form": {
-                                        "id": "form_property_new",
+                                        "id": "form_method_new",
                                         "type": "form",
                                         "component": "form",
                                         state: 'text',
@@ -605,14 +605,14 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                             "size": {
                                                                 "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                             },
-                                                            "control": { "id": "prop_type" }
+                                                            "control": { "id": "prop_method" }
                                                         },
                                                         {
-                                                            "id": "ioj0mV3", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
+                                                            "id": "ioj0mV2", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
                                                             "size": {
                                                                 "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                             },
-                                                            "control": { "id": "prop_datatype" }
+                                                            "control": { "id": "prop_type" }
                                                         },
                                                         {
                                                             "id": "ioj0mV4", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
@@ -682,7 +682,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             {
                                                 id: 'prop_name',
                                                 "hidden": true,
-                                                "title": "属性名称",
+                                                "title": "操作名称",
                                                 "titleConfig": {
                                                     required: true
                                                 },
@@ -715,14 +715,14 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "field": "NAME",
                                                     "placeholder": "请输入",
                                                     "validations": [
-                                                        { validator: "required", type: "default", "message": "请输入属性名称" }
+                                                        { validator: "required", type: "default", "message": "请输操作性名称" }
                                                     ]
                                                 }
                                             },
                                             {
                                                 id: 'prop_code',
                                                 "hidden": true,
-                                                "title": "属性编码",
+                                                "title": "操作编码",
                                                 "titleConfig": {
                                                     required: true
                                                 },
@@ -750,18 +750,18 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "field": "CODE",
                                                     "placeholder": "请输入",
                                                     "validations": [
-                                                        { validator: "required", type: "default", "message": "请输入属性编码" }
+                                                        { validator: "required", type: "default", "message": "请输入操作编码" }
                                                     ]
                                                 }
                                             },
                                             {
-                                                id: 'prop_type',
+                                                id: 'prop_method',
                                                 "hidden": true,
-                                                "title": "属性类型",
+                                                "title": "操作",
                                                 "titleConfig": {
                                                     required: true
                                                 },
-                                                "field": "TYPE",
+                                                "field": "METHOD",
                                                 "labelSize": {
                                                     "span": 6,
                                                     "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
@@ -778,20 +778,57 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 "state": "edit",
                                                 "text": {
                                                     "type": 'label',
-                                                    "field": 'TYPE',
+                                                    "field": 'METHOD',
+                                                },
+                                                "editor": {
+                                                    "type": "input",
+                                                    "field": "METHOD",
+                                                    "placeholder": "请输入",
+                                                    "validations": [
+                                                        { validator: "required", type: "default", "message": "请输入操作" }
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                id: 'prop_type',
+                                                "hidden": true,
+                                                "title": "操作类型",
+                                                "titleConfig": {
+                                                    required: true
+                                                },
+                                                "field": "METHOD_TYPE",
+                                                "labelSize": {
+                                                    "span": 6,
+                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
+                                                },  // 
+                                                "controlSize": {
+                                                    "span": 18,
+                                                    "nzXs": { span: 18, offset: 0 },
+                                                    "nzSm": { span: 18, offset: 0 },
+                                                    "nzMd": { span: 18, offset: 0 },
+                                                    "nzLg": { span: 18, offset: 0 },
+                                                    "ngXl": { span: 18, offset: 0 },
+                                                    "nzXXl": { span: 18, offset: 0 }
+                                                },
+                                                "state": "edit",
+                                                "text": {
+                                                    "type": 'label',
+                                                    "field": 'METHOD_TYPE',
                                                 },
                                                 "editor": {
                                                     "type": "select",
-                                                    "field": "TYPE",
-                                                    "placeholder": "请输入",
+                                                    "field": "METHOD_TYPE",
+                                                    "placeholder": "请选择",
                                                     "options": [
-                                                        { "label": "属性", "value": "property" },
-                                                        { "label": "方法", "value": "method" }
+                                                        { "label": "状态变更", "value": "STATE" },
+                                                        { "label": "动作", "value": "ACTION" },
+                                                        { "label": "行为", "value": "BEHAVIOR" },
+                                                        { "label": "操作", "value": "OPERATION" }
                                                     ],
                                                     "validations": [
-                                                        { validator: "required", type: "default", "message": "请选择属性类型" }
+                                                        { validator: "required", type: "default", "message": "请选择操作类型" }
                                                     ],
-                                                    "defaultValue": "1",
+                                                    "defaultValue": "STATE",
                                                     "labelName": "label",
                                                     "valueName": "value"
                                                 }
@@ -826,49 +863,6 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "type": "input",
                                                     "field": "REMARK",
                                                     "placeholder": "请输入"
-                                                }
-                                            },
-                                            {
-                                                id: 'prop_datatype',
-                                                "hidden": true,
-                                                "title": "属性数据类型",
-                                                "titleConfig": {
-                                                    required: true
-                                                },
-                                                "field": "DATA_TYPE",
-                                                "labelSize": {
-                                                    "span": 6,
-                                                    "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                },  // 
-                                                "controlSize": {
-                                                    "span": 18,
-                                                    "nzXs": { span: 18, offset: 0 },
-                                                    "nzSm": { span: 18, offset: 0 },
-                                                    "nzMd": { span: 18, offset: 0 },
-                                                    "nzLg": { span: 18, offset: 0 },
-                                                    "ngXl": { span: 18, offset: 0 },
-                                                    "nzXXl": { span: 18, offset: 0 }
-                                                },
-                                                "state": "edit",
-                                                "text": {
-                                                    "type": 'label',
-                                                    "field": 'DATA_TYPE',
-                                                },
-                                                "editor": {
-                                                    "type": "select",
-                                                    "field": "DATA_TYPE",
-                                                    "placeholder": "请输入",
-                                                    "options": [
-                                                        { "label": "值", "value": "value" },
-                                                        { "label": "对象", "value": "object" },
-                                                        { "label": "数组", "value": "array" }
-                                                    ],
-                                                    "validations": [
-                                                        { validator: "required", type: "default", "message": "请选择属性数据类型" }
-                                                    ],
-                                                    "defaultValue": "object",
-                                                    "labelName": "label",
-                                                    "valueName": "value"
                                                 }
                                             },
                                             {
@@ -924,9 +918,9 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 Controls: [
                                                     { id: 'prop_name', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_code', state: "edit", hidden: false, readOnly: false },
+                                                    { id: 'prop_method', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_type', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_remark', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_datatype', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_cmptId', state: "edit", hidden: false, readOnly: false }
 
                                                 ]
@@ -936,9 +930,9 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 Controls: [
                                                     { id: 'prop_name', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_code', state: "edit", hidden: false, readOnly: false },
+                                                    { id: 'prop_method', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_type', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_remark', state: "edit", hidden: false, readOnly: false },
-                                                    { id: 'prop_datatype', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_cmptId', state: "edit", hidden: false, readOnly: false }
                                                 ]
                                             },
@@ -947,9 +941,9 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                 Controls: [
                                                     { id: 'prop_name', state: "text", hidden: false, readOnly: true },
                                                     { id: 'prop_code', state: "text", hidden: false, readOnly: true },
+                                                    { id: 'prop_method', state: "edit", hidden: false, readOnly: false },
                                                     { id: 'prop_type', state: "text", hidden: false, readOnly: true },
                                                     { id: 'prop_remark', state: "text", hidden: false, readOnly: true },
-                                                    { id: 'prop_datatype', state: "text", hidden: false, readOnly: true },
                                                     { id: 'prop_cmptId', state: "text", hidden: false, readOnly: true }
                                                 ]
                                             }
@@ -1117,8 +1111,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             ],
                             "ajaxConfig": [
                                 {
-                                    "id": "tree_add_property",
-                                    "url": "td/SMT_BASE_INNER_PROPERTY/insert",
+                                    "id": "tree_add_method",
+                                    "url": "td/SMT_BASE_INNER_METHOD/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -1138,14 +1132,14 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "valueName": "CODE"
                                         },
                                         {
-                                            "name": "TYPE",
+                                            "name": "METHOD",
                                             "type": "componentValue",
-                                            "valueName": "TYPE"
+                                            "valueName": "METHOD"
                                         },
                                         {
-                                            "name": "DATA_TYPE",
+                                            "name": "METHOD_TYPE",
                                             "type": "componentValue",
-                                            "valueName": "DATA_TYPE"
+                                            "valueName": "METHOD_TYPE"
                                         },
                                         {
                                             "name": "CMPT_ID",
@@ -1166,7 +1160,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             "name": "data",
                                             "showMessageWithNext": 0,
                                             "message": "message.ajax.state.success",
-                                            "senderId": "afterPropertySaveSuccess"
+                                            "senderId": "afterMethodSaveSuccess"
                                         },
                                         {
                                             "name": "validation",
@@ -1180,8 +1174,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     ]
                                 },
                                 {
-                                    "id": "tree_edit_property",
-                                    "url": "td/SMT_BASE_INNER_PROPERTY/update",
+                                    "id": "tree_edit_method",
+                                    "url": "td/SMT_BASE_INNER_METHOD/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -1494,7 +1488,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         },
                                         {
                                             "id": "M_addChildNode",
-                                            "text": "新增属性",
+                                            "text": "新增操作",
                                             "state": "new",
                                             "icon": "plus",
                                             "color": "text-primary",
@@ -1505,8 +1499,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                     "triggerType": "ACTION",
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
-                                                    "dialogId": "form_property",
-                                                    "ajaxId": "tree_add_property",
+                                                    "dialogId": "form_method",
+                                                    "ajaxId": "tree_add_method",
                                                     "changeValueId": "add_child_form_changeValue"
                                                 }
                                             ]
@@ -1596,7 +1590,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                             "rootTitle": '根节点',
                             "desc": "NAME",
                             "loadingConfig": {
-                                "url": "sd/query/COMPONENT_TREE_BASE_DATA",
+                                "url": "sd/query/COMPONENT_TREE_BASE_METHOD",
                                 "method": "get",
                                 "params": [
                                     {
@@ -1620,7 +1614,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                 ]
                             },
                             "expandConfig": {
-                                "url": "sd/query/COMPONENT_TREE_BASE_DATA",
+                                "url": "sd/query/COMPONENT_TREE_BASE_METHOD",
                                 "method": "get",
                                 "params": [
                                     {
@@ -1694,57 +1688,6 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                                         "name": "_PID",
                                                         "type": "item",
                                                         "valueName": "ID"
-                                                    }
-                                                ]
-                                            },
-                                            // {
-                                            //     "beforeSend": {},
-                                            //     "reveicerId": "",
-                                            //     "receiverTriggerType": "BEHAVIOR",
-                                            //     "receiverTrigger": "RECEIVE_MESSAGE",
-                                            //     "params": [
-                                            //         {
-                                            //             "name": "_ID",
-                                            //             "type": "item",
-                                            //             "valueName": "ID"
-                                            //         },
-                                            //         {
-                                            //             "name": "_PID",
-                                            //             "type": "item",
-                                            //             "valueName": "ID"
-                                            //         },
-                                            //         {
-                                            //             "name": "_PROP_ID",
-                                            //             "type": "item",
-                                            //             "valueName": "ID"
-                                            //         }
-                                            //     ]
-                                            // },
-                                            {
-                                                "beforeSend": {},
-                                                "reveicerId": "",
-                                                "receiverTriggerType": "BEHAVIOR",
-                                                "receiverTrigger": "TAB_ACTIVE_CHANGE_BY_MAPPING",
-                                                "params": [
-                                                    {
-                                                        "name": "_ID",
-                                                        "type": "item",
-                                                        "valueName": "ID"
-                                                    },
-                                                    {
-                                                        "name": "_PID",
-                                                        "type": "item",
-                                                        "valueName": "ID"
-                                                    },
-                                                    {
-                                                        "name": "_PROP_ID",
-                                                        "type": "item",
-                                                        "valueName": "ID"
-                                                    },
-                                                    {
-                                                        "name": "_TYPE",
-                                                        "type": "item",
-                                                        "valueName": "TYPE"
                                                     }
                                                 ]
                                             }
@@ -1921,7 +1864,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     {
-                                        "id": "afterPropertySaveSuccess",
+                                        "id": "afterMethodSaveSuccess",
                                         "senderId": "view_tree_component_base",
                                         "sendData": [
                                             {
@@ -3550,2480 +3493,1266 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                         ]
                     },
                     {
-                        "id": "4EnORY",
-                        "col": "cc",
-                        "type": "col",
-                        "titlestate": 1,
+                        "id": "4K0naM",
+                        "type": "layout",
                         "title": "",
+                        "container": "rows",
                         "span": 24,
-                        "container": "tabs",
                         "size": {
                             "nzXs": 24,
                             "nzSm": 24,
                             "nzMd": 24,
                             "nzLg": 24,
-                            "ngXl": 24,
+                            "nzXl": 24,
                             "nzXXl": 24
                         },
-                        "tabs": {
-                            "id": "innerPropertyTab",
-                            "type": "tabs",
-                            "title": "标签页布局",
-                            "container": "tabContent",
-                            "cascade": {
-                                "messageReceiver": [
+                        "rows": [
+                            {
+                                "cols": [
                                     {
-                                        "id": "",
-                                        "senderId": "view_tree_component_base",
-                                        "receiveData": [
-                                            {
-                                                "beforeReceive": [],
-                                                "triggerType": "BEHAVIOR",
-                                                "trigger": "TAB_ACTIVE_CHANGE_BY_MAPPING", // RECEIVE_MESSAGE
+                                        "id": "r5zDHB2-1",
+                                        "col": "cc",
+                                        "type": "col",
+                                        "title": "",
+                                        "span": 24,
+                                        "container": "component",
+                                        "size": {
+                                            "nzXs": 24,
+                                            "nzSm": 24,
+                                            "nzMd": 24,
+                                            "nzLg": 24,
+                                            "nzXl": 24,
+                                            "nzXXl": 24
+                                        },
+                                        "component": {
+                                            "id": "toolbar_002",
+                                            "component": "cnToolbar",
+                                            "size": "default",
+                                            "cascade": {
+                                                "messageSender": [
+                                                    {
+                                                        "id": "toolbar_02",
+                                                        "senderId": "view_02",
+                                                        "triggerType": "OPERATION",
+                                                        "trigger": "EXECUTE_CHECKED_ROWS",
+                                                        "triggerMoment": "after",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "BEHAVIOR",
+                                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "parent_id",
+                                                                        "type": "item",
+                                                                        "valueName": "id"
+                                                                    },
+                                                                    {
+                                                                        "name": "parent_name",
+                                                                        "type": "item",
+                                                                        "valueName": "name"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                            },
+                                            "changeValue": [
+                                                {
+                                                    "id": "edit_form_changeValue",
+                                                    "params": [
+                                                        {
+                                                            "name": "id",
+                                                            "type": "item",
+                                                            "valueName": "id",
+                                                            "valueTo": "tempValue"
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "condition": [
+                                                {
+                                                    "id": "add_state_2",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_CHECKED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "name": "name",
+                                                                    "matchValue": "1",
+                                                                    "match": "eq",
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "edit_state_2",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_CHECKED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "city_condition_added_none",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_CHECKED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_ADDED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "city_condition_edited_none",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_EDITED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_CHECKED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "cancel_edit_rows_2_2",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_EDITED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "ajaxConfig": [
+                                                {
+                                                    "id": "add_methods",
+                                                    "url": "td/SMT_BASE_INNER_METHOD/batchInsert",
+                                                    "urlType": "inner",
+                                                    "ajaxType": "post",
+                                                    "params": [
+                                                        {
+                                                            "name": "ID",
+                                                            "type": "GUID"
+                                                        },
+                                                        {
+                                                            "name": "NAME",
+                                                            "type": "componentValue",
+                                                            "valueName": "NAME",
+                                                            "dataType": "string"
+                                                        },
+                                                        {
+                                                            "name": "CODE",
+                                                            "type": "componentValue",
+                                                            "valueName": "CODE"
+                                                        },
+                                                        {
+                                                            "name": "METHOD",
+                                                            "type": "componentValue",
+                                                            "valueName": "METHOD"
+                                                        },
+                                                        {
+                                                            "name": "METHOD_TYPE",
+                                                            "type": "componentValue",
+                                                            "valueName": "METHOD_TYPE"
+                                                        },
+                                                        {
+                                                            "name": "CMPT_ID",
+                                                            "type": "tempValue",
+                                                            "valueName": "_PID"
+                                                        },
+                                                        {
+                                                            "name": "REMARK",
+                                                            "type": "componentValue",
+                                                            "valueName": "REMARK"
+                                                        }
+                                                    ],
+                                                    "outputParameters": [
+
+                                                    ],
+                                                    "result": [
+                                                        {
+                                                            "name": "data",
+                                                            "showMessageWithNext": 0,
+                                                            "message": "message.ajax.state.success",
+                                                            "senderId": "afterMethodSaveSuccess"
+                                                        },
+                                                        {
+                                                            "name": "validation",
+                                                            "message": "message.ajax.state.success",
+                                                            "senderId": "afterProvinceSaveValidation"
+                                                        },
+                                                        {
+                                                            "name": "error",
+                                                            "senderId": "toolbar_02"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "edit_methods",
+                                                    "url": "td/SMT_BASE_INNER_METHOD/batchUpdate",
+                                                    "urlType": "inner",
+                                                    "ajaxType": "put",
+                                                    "params": [
+                                                        {
+                                                            "name": "ID",
+                                                            "type": "componentValue",
+                                                            "valueName": "ID"
+                                                        },
+                                                        {
+                                                            "name": "NAME",
+                                                            "type": "componentValue",
+                                                            "valueName": "NAME",
+                                                            "dataType": "string"
+                                                        },
+                                                        {
+                                                            "name": "CODE",
+                                                            "type": "componentValue",
+                                                            "valueName": "CODE"
+                                                        },
+                                                        {
+                                                            "name": "METHOD",
+                                                            "type": "componentValue",
+                                                            "valueName": "METHOD"
+                                                        },
+                                                        {
+                                                            "name": "METHOD_TYPE",
+                                                            "type": "componentValue",
+                                                            "valueName": "METHOD_TYPE"
+                                                        },
+                                                        {
+                                                            "name": "CMPT_ID",
+                                                            "type": "componentValue",
+                                                            "valueName": "_PID"
+                                                        },
+                                                        {
+                                                            "name": "REMARK",
+                                                            "type": "componentValue",
+                                                            "valueName": "REMARK"
+                                                        }
+                                                    ],
+                                                    "outputParameters": [
+
+                                                    ],
+                                                    "result": [
+                                                        {
+                                                            "name": "data",
+                                                            "showMessageWithNext": 0,
+                                                            "message": "message.ajax.state.success",
+                                                            "senderId": "afterComponentSaveSuccess"
+                                                        },
+                                                        {
+                                                            "name": "validation",
+                                                            "message": "message.ajax.state.success",
+                                                            "senderId": "aftetProvinceUpdateValidation"
+                                                        },
+                                                        {
+                                                            "name": "error",
+                                                            "senderId": "toolbar_02"
+                                                        }
+                                                    ]
+                                                },
+                                            ],
+                                            "beforeTrigger": [
+
+                                            ],
+                                            "afterTrigger": [
+                                                {
+                                                    "id": "",
+                                                    "senderId": "view_02",
+                                                    "sendData": [
+                                                        {
+                                                            "beforeSend": [],
+                                                            "reveicerId": "",
+                                                            "receiverTriggerType": "BEHAVIOR",
+                                                            "receiverTrigger": "REFRESH_AS_CHILD",
+                                                            "params": [
+                                                                {
+                                                                    "name": "parent_id",
+                                                                    "type": "item",
+                                                                    "valueName": "id"
+                                                                },
+                                                                {
+                                                                    "name": "parent_name",
+                                                                    "type": "item",
+                                                                    "valueName": "name"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ],
+                                            "toolbar": [
+                                                {
+                                                    "targetViewId": "view_02",
+                                                    "group": [
+                                                        {
+                                                            "id": "M_refresh",
+                                                            "text": "刷新",
+                                                            "icon": "reload",
+                                                            "color": "text-primary",
+                                                            "hidden": false,
+                                                            "disabled": false,
+                                                            "execute": [
+                                                                {
+                                                                    "triggerType": "BEHAVIOR",
+                                                                    "trigger": "REFRESH"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "id": "M_addRow",
+                                                            "text": "新增操作",
+                                                            "icon": "plus",
+                                                            "color": "text-primary",
+                                                            "hidden": false,
+                                                            "disabled": false,
+                                                            "execute": [
+                                                                {
+                                                                    "triggerType": "STATE",
+                                                                    "trigger": "ADD_ROW",
+                                                                    // "conditionId": "add_state_1"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "id": "M_updateRow",
+                                                            "text": "修改操作",
+                                                            "icon": "edit",
+                                                            "color": "text-success",
+                                                            "hidden": false,
+                                                            "disabled": false,
+                                                            "state": "text",
+                                                            "execute": [
+                                                                {
+                                                                    "triggerType": "STATE",
+                                                                    "trigger": "EDIT_ROWS",
+                                                                    // "conditionId": "edit_state_1"
+                                                                }
+                                                            ],
+                                                            "toggle": {
+                                                                "type": "state",
+                                                                "toggleProperty": "hidden",
+                                                                "values": [
+                                                                    {
+                                                                        "name": "edit",
+                                                                        "value": true
+                                                                    },
+                                                                    {
+                                                                        "name": "text",
+                                                                        "value": false
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "M_deleteRow",
+                                                            "text": "删除操作",
+                                                            "icon": "delete",
+                                                            "color": "text-red-light",
+                                                            "hidden": false,
+                                                            "disabled": false,
+                                                            "execute": [
+                                                                {
+                                                                    "triggerType": "OPERATION",
+                                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                                    "conditionId": "delete_operation_2",
+                                                                    "ajaxId": "delete_row_2"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "id": "M_saveRow",
+                                                            "text": "保存",
+                                                            "state": "edit",
+                                                            "icon": "save",
+                                                            "color": "text-primary",
+                                                            "hidden": true,
+                                                            "disabled": false,
+                                                            "execute": [
+                                                                {
+                                                                    "triggerType": "OPERATION",
+                                                                    "trigger": "SAVE_ROWS",
+                                                                    "ajaxId": "add_methods",
+                                                                    // "stateId": "add_save_1",
+                                                                    "conditionId": "city_condition_added_none"
+                                                                },
+                                                                {
+                                                                    "triggerType": "OPERATION",
+                                                                    "trigger": "SAVE_ROWS",
+                                                                    "ajaxId": "edit_methods",
+                                                                    // "stateId": "edit_save_1",
+                                                                    "conditionId": "city_condition_edited_none"
+                                                                }
+                                                            ],
+                                                            "toggle": {
+                                                                "type": "state",
+                                                                "toggleProperty": "hidden",
+                                                                "values": [
+                                                                    {
+                                                                        "name": "edit",
+                                                                        "value": false
+                                                                    },
+                                                                    {
+                                                                        "name": "text",
+                                                                        "value": true
+                                                                    },
+                                                                    {
+                                                                        "name": "new",
+                                                                        "value": false
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": "M_cancelrow",
+                                                            "text": "取消1",
+                                                            "state": "edit",
+                                                            "icon": "rollback",
+                                                            "color": "text-grey-darker",
+                                                            "hidden": true,
+                                                            "disabled": null,
+                                                            "execute": [
+                                                                {
+                                                                    "triggerType": "STATE",
+                                                                    "trigger": "CANCEL_EDIT_ROWS",
+                                                                    "conditionId": "cancel_edit_rows_2_2"
+                                                                },
+                                                                {
+                                                                    "triggerType": "STATE",
+                                                                    "trigger": "CANCEL_NEW_ROWS"
+                                                                }
+                                                            ],
+                                                            "toggle": {
+                                                                "type": "state",
+                                                                "toggleProperty": "hidden",
+                                                                "values": [
+                                                                    {
+                                                                        "name": "edit",
+                                                                        "value": false
+                                                                    },
+                                                                    {
+                                                                        "name": "text",
+                                                                        "value": true
+                                                                    },
+                                                                    {
+                                                                        "name": "new",
+                                                                        "value": false
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "targetViewId": "view_02",
+                                                    "group": [
+                                                        {
+                                                            "name": "M_addSearchRow",
+                                                            "text": "查询",
+                                                            "triggerType": "STATE",
+                                                            "trigger": "SEARCH_ROW",
+                                                            "actionName": "addSearchRow",
+                                                            "icon": "search",
+                                                            "color": "text-primary",
+                                                            "hidden": false,
+                                                            "disabled": false,
+                                                            "execute": [
+                                                                {
+                                                                    "triggerType": "STATE",
+                                                                    "trigger": "SEARCH_ROW"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "name": "M_cancelSearchRow",
+                                                            "text": "取消查询",
+                                                            "icon": "rollback",
+                                                            "triggerType": "STATE",
+                                                            "trigger": "CANCEL_SEARCH_ROW",
+                                                            "actionName": "cancelSearchRow",
+                                                            "color": "text-grey-darker",
+                                                            "hidden": false,
+                                                            "disabled": false,
+                                                            "execute": [
+                                                                {
+                                                                    "triggerType": "STATE",
+                                                                    "trigger": "SEARCH_ROW"
+                                                                }
+                                                            ],
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "id": "r5zDHB2-1",
+                                        "col": "cc",
+                                        "type": "col",
+                                        "title": "",
+                                        "span": 24,
+                                        "container": "component",
+                                        "size": {
+                                            "nzXs": 24,
+                                            "nzSm": 24,
+                                            "nzMd": 24,
+                                            "nzLg": 24,
+                                            "nzXl": 24,
+                                            "nzXXl": 24
+                                        },
+                                        "component": {
+                                            "id": "view_02",
+                                            "title": "操作列表",
+                                            "titleIcon": "right-circle",
+                                            "component": "cnDataTable",
+                                            "keyId": "ID",
+                                            "size": "middle",
+                                            "isBordered": true,
+                                            "isFrontPagination": false,
+                                            "isPagination": true,
+                                            "isShowSizeChanger": true,
+                                            "showTotal": true,
+                                            "pageSize": 5,
+                                            "showCheckBox": true,
+                                            "pageSizeOptions": [10, 20, 50, 100],
+                                            "loadingOnInit": false,
+                                            "loadingConfig": {
+                                                "url": "td/SMT_BASE_INNER_METHOD/query",
+                                                "method": "get",
                                                 "params": [
                                                     {
-                                                        "pname": "_PID",
-                                                        "cname": "_PID",
-                                                        "valueTo": "tempValue"
+                                                        "name": "CMPT_ID",
+                                                        "type": "tempValue",
+                                                        "valueName": "_PID"
+                                                    }
+                                                ],
+                                                "filter": [
+
+                                                ]
+                                            },
+                                            "columns": [
+                                                {
+                                                    "title": "ID",
+                                                    "type": "field",
+                                                    "field": "ID",
+                                                    "hidden": true,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "50px",
+                                                    "style": {}
+                                                },
+                                                {
+                                                    "title": "PID",
+                                                    "type": "field",
+                                                    "field": "PID",
+                                                    "hidden": true,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "50px",
+                                                    "style": {}
+                                                },
+                                                {
+                                                    "title": "操作名称",
+                                                    "type": "field",
+                                                    "field": "NAME",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "input",
+                                                        "field": "NAME"
+                                                    }
+                                                },
+                                                {
+                                                    "title": "操作编码",
+                                                    "type": "field",
+                                                    "field": "CODE",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "input",
+                                                        "field": "CODE"
+                                                    }
+                                                },
+                                                {
+                                                    "title": "操作类型",
+                                                    "type": "field",
+                                                    "field": "METHOD_TYPE",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "select",
+                                                        "field": "METHOD_TYPE",
+                                                        "placeholder": "请选择",
+                                                        "defaultValue": "STATE",
+                                                        "options": [
+                                                            { "label": '状态改变', "value": "STATE" },
+                                                            { "label": '动作', "value": "ACTION" },
+                                                            { "label": '行为', "value": "BEHAVIOR" },
+                                                            { "label": '操作', "value": "OPERATION" }
+                                                        ],
+                                                        "labelName": 'label',
+                                                        "valueName": 'value'
+                                                    }
+                                                },
+                                                {
+                                                    "title": "操作",
+                                                    "type": "field",
+                                                    "field": "METHOD",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "input",
+                                                        "field": "METHOD"
+                                                    }
+                                                },
+                                                // {
+                                                //     "title": "是否启用",
+                                                //     "type": "field",
+                                                //     "field": "STATE",
+                                                //     "hidden": false,
+                                                //     "showFilter": false,
+                                                //     "showSort": false,
+                                                //     "width": "100px",
+                                                //     "style": {},
+                                                //     "editor": {
+                                                //         "type": "select",
+                                                //         "field": "STATE",
+                                                //         "placeholder": "请选择",
+                                                //         "defaultValue": 1,
+                                                //         "options": [
+                                                //             { "label": '启用', "value": 1 },
+                                                //             { "label": '禁用', "value": 2 }
+                                                //         ],
+                                                //         "labelName": 'label',
+                                                //         "valueName": 'value'
+                                                //     }
+                                                // },
+                                                {
+                                                    "title": "操作说明",
+                                                    "type": "field",
+                                                    "field": "REMARK",
+                                                    "hidden": false,
+                                                    "showFilter": false,
+                                                    "showSort": false,
+                                                    "width": "100px",
+                                                    "style": {},
+                                                    "editor": {
+                                                        "type": "input",
+                                                        "field": "REMARK"
+                                                    }
+                                                }
+                                            ],
+                                            "cascade": {
+                                                "messageSender": [
+                                                    {
+                                                        "id": "view2_sender_1",
+                                                        "senderId": "view_02",
+                                                        "triggerType": "OPERATION",
+                                                        "trigger": "SAVE_ROW",
+                                                        "triggerMoment": "asyncAfter",
+                                                        "sendData": [
+                                                            {
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "STATE",
+                                                                "receiverTrigger": "STATE_TO_TEXT",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "targetViewId",
+                                                                        "value": "view_02",
+                                                                        "type": "value"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
                                                     },
                                                     {
-                                                        "pname": "_PROP_ID",
-                                                        "cname": "_PROP_ID",
-                                                        "valueTo": "tempValue"
+                                                        "id": "view2_sender_2",
+                                                        "senderId": "view_02",
+                                                        "triggerType": "OPERATION",
+                                                        "trigger": "SAVE_ROWS",
+                                                        "triggerMoment": "asyncAfter",
+                                                        "sendData": [
+                                                            {
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "STATE",
+                                                                "receiverTrigger": "STATE_TO_TEXT",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "targetViewId",
+                                                                        "value": "view_02",
+                                                                        "type": "value"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
                                                     },
                                                     {
-                                                        "pname": "_PROP_ID",
-                                                        "cname": "_PROP_ID",
-                                                        "valueTo": "initValue"
+                                                        "id": "view2_sender_3",
+                                                        "senderId": "view_02",
+                                                        "triggerType": "STATE",
+                                                        "trigger": "CANCEL_EDIT_ROW",
+                                                        "triggerMoment": "after",
+                                                        "sendData": [
+                                                            {
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "STATE",
+                                                                "receiverTrigger": "STATE_TO_TEXT",
+                                                                "conditionId": "cancel_edit_cities",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "targetViewId",
+                                                                        "value": "view_02",
+                                                                        "type": "value"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
                                                     },
                                                     {
-                                                        "pname": "_PID",
-                                                        "cname": "_PID",
-                                                        "valueTo": "initValue"
+                                                        "id": "view2_sender_04",
+                                                        "senderId": "view_02",
+                                                        "triggerType": "STATE",
+                                                        "trigger": "CANCEL_NEW_ROW",
+                                                        "triggerMoment": "after",
+                                                        "sendData": [
+                                                            {
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "STATE",
+                                                                "receiverTrigger": "STATE_TO_TEXT",
+                                                                "conditionId": "cancel_add_cities",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "targetViewId",
+                                                                        "value": "view_02",
+                                                                        "type": "value"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "grid_sender_05",
+                                                        "senderId": "view_02",
+                                                        "triggerType": "STATE",
+                                                        "trigger": "EDIT_ROW",
+                                                        "triggerMoment": "after",
+                                                        "sendData": [
+                                                            {
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "STATE",
+                                                                "receiverTrigger": "STATE_TO_EDIT",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "targetViewId",
+                                                                        "value": "view_02",
+                                                                        "type": "value"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "grid_sender_08",
+                                                        "senderId": "view_02",
+                                                        "triggerType": "ACTION",
+                                                        "trigger": "CONFIRM",
+                                                        "triggerMoment": "after",
+                                                        "sendData": [
+                                                            {
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "STATE",
+                                                                "receiverTrigger": "STATE_TO_TEXT",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "targetViewId",
+                                                                        "value": "view_tree_component_base",
+                                                                        "type": "value"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "afterComponentSaveSuccess",
+                                                        "senderId": "view_02",
+                                                        // "triggerType": "ACTION",
+                                                        // "trigger": "MESSAGE0",
+                                                        // "triggerMoment": "after",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "MESSAGE",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "value",
+                                                                        "value": "success"
+                                                                    },
+                                                                    {
+                                                                        "name": "code",
+                                                                        "type": "value",
+                                                                        "value": "message.operation.success"
+                                                                    },
+                                                                ]
+                                                            },
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "APPEND_CHILD_TO_SELECTED_NODE",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "key",
+                                                                        "type": "addedRows",
+                                                                        "valueName": "ID"
+                                                                    },
+                                                                    {
+                                                                        "name": "parentId",
+                                                                        "type": "addedRows",
+                                                                        "valueName": "PID"
+                                                                    },
+                                                                    {
+                                                                        "name": "parentId",
+                                                                        "type": "addedRows",
+                                                                        "valueName": "PID"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "afterCityUpdateSuccessfully",
+                                                        "senderId": "view_02",
+                                                        // "triggerType": "ACTION",
+                                                        // "trigger": "MESSAGE0",
+                                                        // "triggerMoment": "after",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "MESSAGE",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "value",
+                                                                        "value": "success"
+                                                                    },
+                                                                    {
+                                                                        "name": "message",
+                                                                        "type": "value",
+                                                                        "value": "操作完成!"
+                                                                    },
+                                                                ]
+                                                            },
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "id",
+                                                                        "type": "editedRows",
+                                                                        "valueName": "id"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "afterCitySaveValidation",
+                                                        "senderId": "view_02",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "SHOW_INVALIDATE_ADDED_ROWS"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "afterCityUpdateValidation",
+                                                        "senderId": "view_02",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "afterComponentFormUpdateSuccess",
+                                                        "senderId": "view_02",
+                                                        // "triggerType": "ACTION",
+                                                        // "trigger": "MESSAGE0",
+                                                        // "triggerMoment": "after",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "MESSAGE",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "value",
+                                                                        "value": "success"
+                                                                    },
+                                                                    {
+                                                                        "name": "code",
+                                                                        "type": "value",
+                                                                        "value": "operation.code.success"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "LOAD_REFRESH_DATA",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "id",
+                                                                        "type": "addedRows",
+                                                                        "valueName": "id"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "afterCityUpdateFormValidation",
+                                                        "senderId": "view_02",
+                                                        "sendData": [
+                                                            {
+                                                                "beforeSend": {},
+                                                                "reveicerId": "",
+                                                                "receiverTriggerType": "ACTION",
+                                                                "receiverTrigger": "MESSAGE",
+                                                                "params": [
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "value",
+                                                                        "value": "warning"
+                                                                    },
+                                                                    {
+                                                                        "name": "message",
+                                                                        "type": "validation",
+                                                                        "valueName": "code"
+                                                                    },
+                                                                    {
+                                                                        "name": "field",
+                                                                        "type": "validation",
+                                                                        "valueName": "field"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                ],
+                                                "messageReceiver": [
+                                                    {
+                                                        "id": "",
+                                                        "senderId": "view_tree_component_base",
+                                                        "receiveData": [
+                                                            {
+                                                                "beforeReceive": [],
+                                                                "triggerType": "BEHAVIOR",
+                                                                "trigger": "REFRESH_AS_CHILD",
+                                                                "params": [
+                                                                    {
+                                                                        "pname": "_PID",
+                                                                        "cname": "_PID",
+                                                                        "valueTo": "tempValue"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "",
+                                                        "senderId": "view_02",
+                                                        "receiveData": [
+                                                            {
+                                                                "beforeReceive": [],
+                                                                "triggerType": "ACTION",
+                                                                "trigger": "MESSAGE"
+                                                                // "params": [
+                                                                //     {
+                                                                //         "pname": "name",
+                                                                //         "cname": "_PID",
+                                                                //         "valueTo": "tempValue"
+                                                                //     }
+                                                                // ]
+                                                            },
+                                                            {
+                                                                "beforeReceive": [],
+                                                                "triggerType": "ACTION",
+                                                                "trigger": "APPEND_CHILD_TO_SELECTED_NODE"
+                                                                // "params": [
+                                                                //     {
+                                                                //         "pname": "name",
+                                                                //         "cname": "_PID",
+                                                                //         "valueTo": "tempValue"
+                                                                //     }
+                                                                // ]
+                                                            },
+                                                            {
+                                                                "beforeReceive": [],
+                                                                "triggerType": "ACTION",
+                                                                "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
+                                                                // "params": [
+                                                                //     {
+                                                                //         "pname": "name",
+                                                                //         "cname": "_PID",
+                                                                //         "valueTo": "tempValue"
+                                                                //     }
+                                                                // ]
+                                                            },
+                                                            {
+                                                                "beforeReceive": [],
+                                                                "triggerType": "ACTION",
+                                                                "trigger": "SHOW_INVALIDATE_ADDED_ROWS"
+                                                            },
+                                                            {
+                                                                "beforeReceive": [],
+                                                                "triggerType": "ACTION",
+                                                                "trigger": "SHOW_INVALIDATE_EDITED_ROWS"
+                                                            },
+                                                            {
+                                                                "beforeReceive": [],
+                                                                "triggerType": "ACTION",
+                                                                "trigger": "LOAD_REFRESH_DATA"
+                                                            }
+                                                        ]
                                                     }
                                                 ]
-                                            }
-                                        ]
-                                    },
+                                            },
+                                            "condition": [
+                                                {
+                                                    "id": "add_cities_state",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_CHECKED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                },
+                                                                {
+                                                                    "type": "element",
+                                                                    "name": "name",
+                                                                    "matchValue": "1",
+                                                                    "match": "eq",
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "edit_cities_state",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_CHECKED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "add_cities",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_CHECKED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_ADDED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "edit_cities",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_EDITED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_CHECKED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "gt"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "cancel_edit_cities",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_EDITED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "eq"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "cancel_add_cities",
+                                                    "state": [
+                                                        {
+                                                            "type": "component",
+                                                            "valueName": "ROWS_ADDED",
+                                                            "expression": [
+                                                                {
+                                                                    "type": "property",
+                                                                    "name": "length",
+                                                                    "matchValue": 0,
+                                                                    "match": "eq"
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+
+                                            ],
+                                            "ajaxConfig": []
+                                        }
+                                    }
                                 ]
-                            },
-                            "tabActiveMapping": [
-                                {
-                                    "targetId": "tab1-1",
-                                    "field": "_TYPE",
-                                    "matchValue": "component"
-                                },
-                                {
-                                    "targetId": "tab1-2",
-                                    "field": "_TYPE",
-                                    "matchValue": "property"
-                                }
-                            ],
-                            "tabContent": [
-                                {
-                                    "id": "tab1-1",
-                                    "type": "tab",
-                                    "title": "组件属性",
-                                    "container": "layout",
-                                    "active": true,
-                                    "layout": {
-                                        "id": "yZtJqO",
-                                        "type": "layout",
-                                        "title": "布局yZtJqO",
-                                        "rows": [
-                                            {
-                                                "cols": [
-                                                    {
-                                                        "id": "r5zDHB2-1",
-                                                        "col": "cc",
-                                                        "type": "col",
-                                                        "title": "",
-                                                        "span": 24,
-                                                        "container": "component",
-                                                        "size": {
-                                                            "nzXs": 24,
-                                                            "nzSm": 24,
-                                                            "nzMd": 24,
-                                                            "nzLg": 24,
-                                                            "nzXl": 24,
-                                                            "nzXXl": 24
-                                                        },
-                                                        "component": {
-                                                            "id": "toolbar_002",
-                                                            "component": "cnToolbar",
-                                                            "size": "default",
-                                                            "cascade": {
-                                                                "messageSender": [
-                                                                    {
-                                                                        "id": "toolbar_02",
-                                                                        "senderId": "view_02",
-                                                                        "triggerType": "OPERATION",
-                                                                        "trigger": "EXECUTE_CHECKED_ROWS",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "BEHAVIOR",
-                                                                                "receiverTrigger": "REFRESH_AS_CHILD",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "parent_id",
-                                                                                        "type": "item",
-                                                                                        "valueName": "id"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "parent_name",
-                                                                                        "type": "item",
-                                                                                        "valueName": "name"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ],
-                                                            },
-                                                            "changeValue": [
-                                                                {
-                                                                    "id": "edit_form_changeValue",
-                                                                    "params": [
-                                                                        {
-                                                                            "name": "id",
-                                                                            "type": "item",
-                                                                            "valueName": "id",
-                                                                            "valueTo": "tempValue"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "condition": [
-                                                                {
-                                                                    "id": "add_state_2",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                },
-                                                                                {
-                                                                                    "type": "element",
-                                                                                    "name": "name",
-                                                                                    "matchValue": "1",
-                                                                                    "match": "eq",
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "edit_state_2",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "city_condition_added_none",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_ADDED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "city_condition_edited_none",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_EDITED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "cancel_edit_rows_2_2",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_EDITED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "ajaxConfig": [
-                                                                {
-                                                                    "id": "add_properties",
-                                                                    "url": "td/SMT_BASE_INNER_PROPERTY/batchInsert",
-                                                                    "urlType": "inner",
-                                                                    "ajaxType": "post",
-                                                                    "params": [
-                                                                        {
-                                                                            "name": "ID",
-                                                                            "type": "GUID"
-                                                                        },
-                                                                        {
-                                                                            "name": "NAME",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "NAME",
-                                                                            "dataType": "string"
-                                                                        },
-                                                                        {
-                                                                            "name": "CODE",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "CODE"
-                                                                        },
-                                                                        {
-                                                                            "name": "TYPE",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "TYPE"
-                                                                        },
-                                                                        {
-                                                                            "name": "DATA_TYPE",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "DATA_TYPE"
-                                                                        },
-                                                                        {
-                                                                            "name": "CMPT_ID",
-                                                                            "type": "tempValue",
-                                                                            "valueName": "_PID"
-                                                                        },
-                                                                        {
-                                                                            "name": "REMARK",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "REMARK"
-                                                                        }
-                                                                    ],
-                                                                    "outputParameters": [
-
-                                                                    ],
-                                                                    "result": [
-                                                                        {
-                                                                            "name": "data",
-                                                                            "showMessageWithNext": 0,
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "afterPropertySaveSuccess"
-                                                                        },
-                                                                        {
-                                                                            "name": "validation",
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "afterProvinceSaveValidation"
-                                                                        },
-                                                                        {
-                                                                            "name": "error",
-                                                                            "senderId": "toolbar_02"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "edit_properties",
-                                                                    "url": "td/SMT_BASE_INNER_PROPERTY/batchUpdate",
-                                                                    "urlType": "inner",
-                                                                    "ajaxType": "put",
-                                                                    "params": [
-                                                                        {
-                                                                            "name": "ID",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "ID"
-                                                                        },
-                                                                        {
-                                                                            "name": "NAME",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "NAME",
-                                                                            "dataType": "string"
-                                                                        },
-                                                                        {
-                                                                            "name": "CODE",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "CODE"
-                                                                        },
-                                                                        {
-                                                                            "name": "TYPE",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "TYPE"
-                                                                        },
-                                                                        {
-                                                                            "name": "DATA_TYPE",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "DATA_TYPE"
-                                                                        },
-                                                                        {
-                                                                            "name": "CMPT_ID",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "_PID"
-                                                                        },
-                                                                        {
-                                                                            "name": "REMARK",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "REMARK"
-                                                                        }
-                                                                    ],
-                                                                    "outputParameters": [
-
-                                                                    ],
-                                                                    "result": [
-                                                                        {
-                                                                            "name": "data",
-                                                                            "showMessageWithNext": 0,
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "afterComponentSaveSuccess"
-                                                                        },
-                                                                        {
-                                                                            "name": "validation",
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "aftetProvinceUpdateValidation"
-                                                                        },
-                                                                        {
-                                                                            "name": "error",
-                                                                            "senderId": "toolbar_02"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                            ],
-                                                            "beforeTrigger": [
-
-                                                            ],
-                                                            "afterTrigger": [
-                                                                {
-                                                                    "id": "",
-                                                                    "senderId": "view_02",
-                                                                    "sendData": [
-                                                                        {
-                                                                            "beforeSend": [],
-                                                                            "reveicerId": "",
-                                                                            "receiverTriggerType": "BEHAVIOR",
-                                                                            "receiverTrigger": "REFRESH_AS_CHILD",
-                                                                            "params": [
-                                                                                {
-                                                                                    "name": "parent_id",
-                                                                                    "type": "item",
-                                                                                    "valueName": "id"
-                                                                                },
-                                                                                {
-                                                                                    "name": "parent_name",
-                                                                                    "type": "item",
-                                                                                    "valueName": "name"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "toolbar": [
-                                                                {
-                                                                    "targetViewId": "view_02",
-                                                                    "group": [
-                                                                        {
-                                                                            "id": "M_refresh",
-                                                                            "text": "刷新",
-                                                                            "icon": "reload",
-                                                                            "color": "text-primary",
-                                                                            "hidden": false,
-                                                                            "disabled": false,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "BEHAVIOR",
-                                                                                    "trigger": "REFRESH"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "id": "M_addRow",
-                                                                            "text": "新增属性",
-                                                                            "icon": "plus",
-                                                                            "color": "text-primary",
-                                                                            "hidden": false,
-                                                                            "disabled": false,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "STATE",
-                                                                                    "trigger": "ADD_ROW",
-                                                                                    // "conditionId": "add_state_1"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "id": "M_updateRow",
-                                                                            "text": "修改属性",
-                                                                            "icon": "edit",
-                                                                            "color": "text-success",
-                                                                            "hidden": false,
-                                                                            "disabled": false,
-                                                                            "state": "text",
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "STATE",
-                                                                                    "trigger": "EDIT_ROWS",
-                                                                                    // "conditionId": "edit_state_1"
-                                                                                }
-                                                                            ],
-                                                                            "toggle": {
-                                                                                "type": "state",
-                                                                                "toggleProperty": "hidden",
-                                                                                "values": [
-                                                                                    {
-                                                                                        "name": "edit",
-                                                                                        "value": true
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "text",
-                                                                                        "value": false
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "id": "M_deleteRow",
-                                                                            "text": "删除属性",
-                                                                            "icon": "delete",
-                                                                            "color": "text-red-light",
-                                                                            "hidden": false,
-                                                                            "disabled": false,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "OPERATION",
-                                                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
-                                                                                    "conditionId": "delete_operation_2",
-                                                                                    "ajaxId": "delete_row_2"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "id": "M_saveRow",
-                                                                            "text": "保存",
-                                                                            "state": "edit",
-                                                                            "icon": "save",
-                                                                            "color": "text-primary",
-                                                                            "hidden": true,
-                                                                            "disabled": false,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "OPERATION",
-                                                                                    "trigger": "SAVE_ROWS",
-                                                                                    "ajaxId": "add_properties",
-                                                                                    // "stateId": "add_save_1",
-                                                                                    "conditionId": "city_condition_added_none"
-                                                                                },
-                                                                                {
-                                                                                    "triggerType": "OPERATION",
-                                                                                    "trigger": "SAVE_ROWS",
-                                                                                    "ajaxId": "edit_properties",
-                                                                                    // "stateId": "edit_save_1",
-                                                                                    "conditionId": "city_condition_edited_none"
-                                                                                }
-                                                                            ],
-                                                                            "toggle": {
-                                                                                "type": "state",
-                                                                                "toggleProperty": "hidden",
-                                                                                "values": [
-                                                                                    {
-                                                                                        "name": "edit",
-                                                                                        "value": false
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "text",
-                                                                                        "value": true
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "new",
-                                                                                        "value": false
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "id": "M_cancelrow",
-                                                                            "text": "取消1",
-                                                                            "state": "edit",
-                                                                            "icon": "rollback",
-                                                                            "color": "text-grey-darker",
-                                                                            "hidden": true,
-                                                                            "disabled": null,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "STATE",
-                                                                                    "trigger": "CANCEL_EDIT_ROWS",
-                                                                                    "conditionId": "cancel_edit_rows_2_2"
-                                                                                },
-                                                                                {
-                                                                                    "triggerType": "STATE",
-                                                                                    "trigger": "CANCEL_NEW_ROWS"
-                                                                                }
-                                                                            ],
-                                                                            "toggle": {
-                                                                                "type": "state",
-                                                                                "toggleProperty": "hidden",
-                                                                                "values": [
-                                                                                    {
-                                                                                        "name": "edit",
-                                                                                        "value": false
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "text",
-                                                                                        "value": true
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "new",
-                                                                                        "value": false
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        "id": "r5zDHB2-1",
-                                                        "col": "cc",
-                                                        "type": "col",
-                                                        "title": "",
-                                                        "span": 24,
-                                                        "container": "component",
-                                                        "size": {
-                                                            "nzXs": 24,
-                                                            "nzSm": 24,
-                                                            "nzMd": 24,
-                                                            "nzLg": 24,
-                                                            "nzXl": 24,
-                                                            "nzXXl": 24
-                                                        },
-                                                        "component": {
-                                                            "id": "view_02",
-                                                            "title": "",
-                                                            "titleIcon": "right-circle",
-                                                            "component": "cnDataTable",
-                                                            "keyId": "ID",
-                                                            "size": "middle",
-                                                            "isBordered": true,
-                                                            "isFrontPagination": false,
-                                                            "isPagination": true,
-                                                            "isShowSizeChanger": true,
-                                                            "showTotal": true,
-                                                            "pageSize": 5,
-                                                            "showCheckBox": true,
-                                                            "pageSizeOptions": [10, 20, 50, 100],
-                                                            "loadingOnInit": true,
-                                                            "loadingConfig": {
-                                                                "url": "td/SMT_BASE_INNER_PROPERTY/query",
-                                                                "method": "get",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "CMPT_ID",
-                                                                        "type": "tempValue",
-                                                                        "valueName": "_PID"
-                                                                    }
-                                                                ],
-                                                                "filter": [
-
-                                                                ]
-                                                            },
-                                                            "columns": [
-                                                                {
-                                                                    "title": "ID",
-                                                                    "type": "field",
-                                                                    "field": "ID",
-                                                                    "hidden": true,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "50px",
-                                                                    "style": {}
-                                                                },
-                                                                {
-                                                                    "title": "PID",
-                                                                    "type": "field",
-                                                                    "field": "PID",
-                                                                    "hidden": true,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "50px",
-                                                                    "style": {}
-                                                                },
-                                                                {
-                                                                    "title": "属性名称",
-                                                                    "type": "field",
-                                                                    "field": "NAME",
-                                                                    "hidden": false,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "100px",
-                                                                    "style": {},
-                                                                    "editor": {
-                                                                        "type": "input",
-                                                                        "field": "NAME"
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "title": "属性编码",
-                                                                    "type": "field",
-                                                                    "field": "CODE",
-                                                                    "hidden": false,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "100px",
-                                                                    "style": {},
-                                                                    "editor": {
-                                                                        "type": "input",
-                                                                        "field": "CODE"
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "title": "属性类型",
-                                                                    "type": "field",
-                                                                    "field": "TYPE",
-                                                                    "hidden": false,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "100px",
-                                                                    "style": {},
-                                                                    "editor": {
-                                                                        "type": "select",
-                                                                        "field": "TYPE",
-                                                                        "placeholder": "请选择",
-                                                                        "defaultValue": "property",
-                                                                        "options": [
-                                                                            { "label": '属性', "value": "property" },
-                                                                            { "label": '方法', "value": "method" }
-                                                                        ],
-                                                                        "labelName": 'label',
-                                                                        "valueName": 'value'
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "title": "属性数据类型",
-                                                                    "type": "field",
-                                                                    "field": "DATA_TYPE",
-                                                                    "hidden": false,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "100px",
-                                                                    "style": {},
-                                                                    "editor": {
-                                                                        "type": "select",
-                                                                        "field": "DATA_TYPE",
-                                                                        "placeholder": "请选择",
-                                                                        "defaultValue": "object",
-                                                                        "options": [
-                                                                            { "label": '对象', "value": "object" },
-                                                                            { "label": '数组', "value": "array" },
-                                                                            { "label": '值', "value": "value" }
-                                                                        ],
-                                                                        "labelName": 'label',
-                                                                        "valueName": 'value'
-                                                                    }
-                                                                },
-                                                                // {
-                                                                //     "title": "是否启用",
-                                                                //     "type": "field",
-                                                                //     "field": "STATE",
-                                                                //     "hidden": false,
-                                                                //     "showFilter": false,
-                                                                //     "showSort": false,
-                                                                //     "width": "100px",
-                                                                //     "style": {},
-                                                                //     "editor": {
-                                                                //         "type": "select",
-                                                                //         "field": "STATE",
-                                                                //         "placeholder": "请选择",
-                                                                //         "defaultValue": 1,
-                                                                //         "options": [
-                                                                //             { "label": '启用', "value": 1 },
-                                                                //             { "label": '禁用', "value": 2 }
-                                                                //         ],
-                                                                //         "labelName": 'label',
-                                                                //         "valueName": 'value'
-                                                                //     }
-                                                                // },
-                                                                {
-                                                                    "title": "属性说明",
-                                                                    "type": "field",
-                                                                    "field": "REMARK",
-                                                                    "hidden": false,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "100px",
-                                                                    "style": {},
-                                                                    "editor": {
-                                                                        "type": "input",
-                                                                        "field": "REMARK"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "cascade": {
-                                                                "messageSender": [
-                                                                    // {
-                                                                    //     "id": "grid_sender_02",
-                                                                    //     "senderId": "view_02",
-                                                                    //     "triggerType": "BEHAVIOR",
-                                                                    //     "trigger": "SET_SELECT_ROW",
-                                                                    //     "triggerMoment": "after",
-                                                                    //     "sendData": [
-                                                                    //         {
-                                                                    //             "beforeSend": {},
-                                                                    //             "reveicerId": "",
-                                                                    //             "receiverTriggerType": "BEHAVIOR",
-                                                                    //             "receiverTrigger": "REFRESH_AS_CHILD",
-                                                                    //             "params": [
-                                                                    //                 {
-                                                                    //                     "name": "_PROP_ID",
-                                                                    //                     "type": "item",
-                                                                    //                     "valueName": "ID"
-                                                                    //                 }
-                                                                    //             ]
-                                                                    //         }
-                                                                    //     ]
-                                                                    // },
-                                                                    {
-                                                                        "id": "view2_sender_1",
-                                                                        "senderId": "view_02",
-                                                                        "triggerType": "OPERATION",
-                                                                        "trigger": "SAVE_ROW",
-                                                                        "triggerMoment": "asyncAfter",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_02",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "view2_sender_2",
-                                                                        "senderId": "view_02",
-                                                                        "triggerType": "OPERATION",
-                                                                        "trigger": "SAVE_ROWS",
-                                                                        "triggerMoment": "asyncAfter",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_02",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "view2_sender_3",
-                                                                        "senderId": "view_02",
-                                                                        "triggerType": "STATE",
-                                                                        "trigger": "CANCEL_EDIT_ROW",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "conditionId": "cancel_edit_cities",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_02",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "view2_sender_04",
-                                                                        "senderId": "view_02",
-                                                                        "triggerType": "STATE",
-                                                                        "trigger": "CANCEL_NEW_ROW",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "conditionId": "cancel_add_cities",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_02",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "grid_sender_05",
-                                                                        "senderId": "view_02",
-                                                                        "triggerType": "STATE",
-                                                                        "trigger": "EDIT_ROW",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_EDIT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_02",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "grid_sender_08",
-                                                                        "senderId": "view_02",
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "CONFIRM",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_tree_component_base",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterComponentSaveSuccess",
-                                                                        "senderId": "view_02",
-                                                                        // "triggerType": "ACTION",
-                                                                        // "trigger": "MESSAGE0",
-                                                                        // "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "success"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "code",
-                                                                                        "type": "value",
-                                                                                        "value": "message.operation.success"
-                                                                                    },
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "APPEND_CHILD_TO_SELECTED_NODE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "key",
-                                                                                        "type": "addedRows",
-                                                                                        "valueName": "ID"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "parentId",
-                                                                                        "type": "addedRows",
-                                                                                        "valueName": "PID"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "parentId",
-                                                                                        "type": "addedRows",
-                                                                                        "valueName": "PID"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterCityUpdateSuccessfully",
-                                                                        "senderId": "view_02",
-                                                                        // "triggerType": "ACTION",
-                                                                        // "trigger": "MESSAGE0",
-                                                                        // "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "success"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "message",
-                                                                                        "type": "value",
-                                                                                        "value": "操作完成!"
-                                                                                    },
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "id",
-                                                                                        "type": "editedRows",
-                                                                                        "valueName": "id"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterCitySaveValidation",
-                                                                        "senderId": "view_02",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "SHOW_INVALIDATE_ADDED_ROWS"
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterCityUpdateValidation",
-                                                                        "senderId": "view_02",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterComponentFormUpdateSuccess",
-                                                                        "senderId": "view_02",
-                                                                        // "triggerType": "ACTION",
-                                                                        // "trigger": "MESSAGE0",
-                                                                        // "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "success"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "code",
-                                                                                        "type": "value",
-                                                                                        "value": "operation.code.success"
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "LOAD_REFRESH_DATA",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "id",
-                                                                                        "type": "addedRows",
-                                                                                        "valueName": "id"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterCityUpdateFormValidation",
-                                                                        "senderId": "view_02",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "warning"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "message",
-                                                                                        "type": "validation",
-                                                                                        "valueName": "code"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "field",
-                                                                                        "type": "validation",
-                                                                                        "valueName": "field"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                ],
-                                                                "messageReceiver": [
-                                                                    // {
-                                                                    //     "id": "",
-                                                                    //     "senderId": "view_tree_component_base",
-                                                                    //     "receiveData": [
-                                                                    //         {
-                                                                    //             "beforeReceive": [],
-                                                                    //             "triggerType": "BEHAVIOR",
-                                                                    //             "trigger": "REFRESH_AS_CHILD",
-                                                                    //             "params": [
-                                                                    //                 {
-                                                                    //                     "pname": "_PID",
-                                                                    //                     "cname": "_PID",
-                                                                    //                     "valueTo": "tempValue"
-                                                                    //                 }
-                                                                    //             ]
-                                                                    //         }
-                                                                    //     ]
-                                                                    // },
-                                                                    {
-                                                                        "id": "",
-                                                                        "senderId": "view_02",
-                                                                        "receiveData": [
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "MESSAGE"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "APPEND_CHILD_TO_SELECTED_NODE"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "SHOW_INVALIDATE_ADDED_ROWS"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "SHOW_INVALIDATE_EDITED_ROWS"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "LOAD_REFRESH_DATA"
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            },
-                                                            "condition": [
-                                                                {
-                                                                    "id": "add_cities_state",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                },
-                                                                                {
-                                                                                    "type": "element",
-                                                                                    "name": "name",
-                                                                                    "matchValue": "1",
-                                                                                    "match": "eq",
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "edit_cities_state",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "add_cities",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_ADDED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "edit_cities",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_EDITED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "cancel_edit_cities",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_EDITED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "eq"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "cancel_add_cities",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_ADDED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "eq"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-
-                                                            ],
-                                                            "ajaxConfig": []
-                                                        }
-                                                    }
-                                                ],
-                                                "id": "rYJqA3",
-                                                "type": "row",
-                                                "container": "cols"
-                                            }
-                                        ],
-                                        "customlayout": [],
-                                        "container": "rows"
-                                    }
-                                },
-                                {
-                                    "id": "tab1-2",
-                                    "type": "tab",
-                                    "title": "组件属性明细",
-                                    "container": "layout",
-                                    "active": false,
-                                    "layout": {
-                                        "id": "yZtJqO",
-                                        "type": "layout",
-                                        "title": "布局yZtJqO",
-                                        "rows": [
-                                            {
-                                                "cols": [
-                                                    {
-                                                        "id": "r5zDHB2-1",
-                                                        "col": "cc",
-                                                        "type": "col",
-                                                        "title": "",
-                                                        "span": 24,
-                                                        "container": "component",
-                                                        "size": {
-                                                            "nzXs": 24,
-                                                            "nzSm": 24,
-                                                            "nzMd": 24,
-                                                            "nzLg": 24,
-                                                            "nzXl": 24,
-                                                            "nzXXl": 24
-                                                        },
-                                                        "component": {
-                                                            "id": "toolbar_003",
-                                                            "component": "cnToolbar",
-                                                            "size": "default",
-                                                            "cascade": {
-                                                                "messageSender": [
-                                                                    {
-                                                                        "id": "afterDetailDeleteSuccess",
-                                                                        "senderId": "view_data_columns",
-                                                                        // "triggerType": "ACTION",
-                                                                        // "trigger": "MESSAGE0",
-                                                                        // "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "success"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "code",
-                                                                                        "type": "value",
-                                                                                        "value": "message.operation.success"
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "DELETE_CHECKED_ROWS",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "ids",
-                                                                                        "type": "returnValue",
-                                                                                        "valueName": "ids"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ],
-                                                                "messageReceiver": [
-                                                                    {
-                                                                        "beforeReceive": [],
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "MESSAGE"
-                                                                        // "params": [
-                                                                        //     {
-                                                                        //         "pname": "name",
-                                                                        //         "cname": "_PID",
-                                                                        //         "valueTo": "tempValue"
-                                                                        //     }
-                                                                        // ]
-                                                                    },
-                                                                    {
-                                                                        "beforeReceive": [],
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "CHANGE_ADDED_ROWS_TO_TEXT"
-                                                                        // "params": [
-                                                                        //     {
-                                                                        //         "pname": "name",
-                                                                        //         "cname": "_PID",
-                                                                        //         "valueTo": "tempValue"
-                                                                        //     }
-                                                                        // ]
-                                                                    },
-                                                                    {
-                                                                        "beforeReceive": [],
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
-                                                                        // "params": [
-                                                                        //     {
-                                                                        //         "pname": "name",
-                                                                        //         "cname": "_PID",
-                                                                        //         "valueTo": "tempValue"
-                                                                        //     }
-                                                                        // ]
-                                                                    },
-                                                                    {
-                                                                        "beforeReceive": [],
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "SHOW_INVALIDATE_ADDED_ROWS"
-                                                                    },
-                                                                    {
-                                                                        "beforeReceive": [],
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "SHOW_INVALIDATE_EDITED_ROWS"
-                                                                    },
-                                                                    {
-                                                                        "beforeReceive": [],
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "LOAD_REFRESH_DATA"
-                                                                    },
-                                                                    {
-                                                                        "beforeReceive": [],
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "DELETE_CHECKED_ROWS"
-                                                                    }
-                                                                ]
-                                                            },
-                                                            "condition": [
-                                                                {
-                                                                    "id": "add_detail_state",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                },
-                                                                                {
-                                                                                    "type": "element",
-                                                                                    "name": "name",
-                                                                                    "matchValue": "1",
-                                                                                    "match": "eq"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "edit_detail_state",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "city_condition_added_none",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_ADDED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "city_condition_edited_none",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_EDITED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "cancel_detail_edit_rows",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_EDITED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "ajaxConfig": [
-                                                                {
-                                                                    "id": "add_details",
-                                                                    "url": "td/SMT_BASE_INNER_PROPERTY_DETAIL/batchInsert",
-                                                                    "urlType": "inner",
-                                                                    "ajaxType": "post",
-                                                                    "params": [
-                                                                        {
-                                                                            "name": "ID",
-                                                                            "type": "GUID"
-                                                                        },
-                                                                        {
-                                                                            "name": "NAME",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "NAME",
-                                                                            "dataType": "string"
-                                                                        },
-                                                                        {
-                                                                            "name": "CODE",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "CODE"
-                                                                        },
-                                                                        {
-                                                                            "name": "PROP_ID",
-                                                                            "type": "tempValue",
-                                                                            "valueName": "_PROP_ID"
-                                                                        },
-                                                                        {
-                                                                            "name": "REMARK",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "REMARK"
-                                                                        }
-                                                                    ],
-                                                                    "outputParameters": [],
-                                                                    "result": [
-                                                                        {
-                                                                            "name": "data",
-                                                                            "showMessageWithNext": 0,
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "afterPropertyDetailSaveSuccess"
-                                                                        },
-                                                                        {
-                                                                            "name": "validation",
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "afterPropertyDetailSaveValidation"
-                                                                        },
-                                                                        {
-                                                                            "name": "error",
-                                                                            "senderId": "toolbar_02"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "edit_details",
-                                                                    "url": "td/SMT_BASE_INNER_PROPERTY_DETAIL/batchUpdate",
-                                                                    "urlType": "inner",
-                                                                    "ajaxType": "put",
-                                                                    "params": [
-                                                                        {
-                                                                            "name": "ID",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "ID"
-                                                                        },
-                                                                        {
-                                                                            "name": "NAME",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "NAME",
-                                                                            "dataType": "string"
-                                                                        },
-                                                                        {
-                                                                            "name": "CODE",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "CODE"
-                                                                        },
-                                                                        {
-                                                                            "name": "PROP_ID",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "_PROP_ID"
-                                                                        },
-                                                                        {
-                                                                            "name": "REMARK",
-                                                                            "type": "componentValue",
-                                                                            "valueName": "REMARK"
-                                                                        }
-                                                                    ],
-                                                                    "outputParameters": [],
-                                                                    "result": [
-                                                                        {
-                                                                            "name": "data",
-                                                                            "showMessageWithNext": 0,
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "afterDetailUpdateSuccess"
-                                                                        },
-                                                                        {
-                                                                            "name": "validation",
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "afterDetailUpdateValidation"
-                                                                        },
-                                                                        {
-                                                                            "name": "error",
-                                                                            "senderId": "toolbar_02"
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "delete_details",
-                                                                    "url": "td/SMT_BASE_INNER_PROPERTY_DETAIL/delete",
-                                                                    "urlType": "inner",
-                                                                    "ajaxType": "delete",
-                                                                    "params": [
-                                                                        {
-                                                                            "name": "ID",
-                                                                            "type": "checkedItem",
-                                                                            "valueName": "ID"
-                                                                        }
-                                                                    ],
-                                                                    "outputParameters": [
-
-                                                                    ],
-                                                                    "result": [
-                                                                        {
-                                                                            "name": "data",
-                                                                            "showMessageWithNext": 0,
-                                                                            "message": "message.ajax.state.success",
-                                                                            "senderId": "afterDetailDeleteSuccess"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "beforeTrigger": [],
-                                                            "afterTrigger": [],
-                                                            "toolbar": [
-                                                                {
-                                                                    "targetViewId": "view_03",
-                                                                    "group": [
-                                                                        {
-                                                                            "id": "M_refresh",
-                                                                            "text": "刷新",
-                                                                            "icon": "reload",
-                                                                            "color": "text-primary",
-                                                                            "hidden": false,
-                                                                            "disabled": false,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "BEHAVIOR",
-                                                                                    "trigger": "REFRESH"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "id": "M_addRow",
-                                                                            "text": "新增属性明细",
-                                                                            "icon": "plus",
-                                                                            "color": "text-primary",
-                                                                            "hidden": false,
-                                                                            "disabled": false,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "STATE",
-                                                                                    "trigger": "ADD_ROW"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "id": "M_updateRow",
-                                                                            "text": "修改属性明细",
-                                                                            "icon": "edit",
-                                                                            "color": "text-success",
-                                                                            "hidden": false,
-                                                                            "disabled": false,
-                                                                            "state": "text",
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "STATE",
-                                                                                    "trigger": "EDIT_ROWS"
-                                                                                }
-                                                                            ],
-                                                                            "toggle": {
-                                                                                "type": "state",
-                                                                                "toggleProperty": "hidden",
-                                                                                "values": [
-                                                                                    {
-                                                                                        "name": "edit",
-                                                                                        "value": true
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "text",
-                                                                                        "value": false
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "id": "M_deleteRow",
-                                                                            "text": "删除操作",
-                                                                            "icon": "delete",
-                                                                            "color": "text-red-light",
-                                                                            "hidden": false,
-                                                                            "disabled": false,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "OPERATION",
-                                                                                    "trigger": "EXECUTE_CHECKED_ROWS_IDS",
-                                                                                    "conditionId": "delete_details",
-                                                                                    "ajaxId": "delete_row_2"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "id": "M_saveRow",
-                                                                            "text": "保存",
-                                                                            "state": "edit",
-                                                                            "icon": "save",
-                                                                            "color": "text-primary",
-                                                                            "hidden": true,
-                                                                            "disabled": false,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "OPERATION",
-                                                                                    "trigger": "SAVE_ROWS",
-                                                                                    "ajaxId": "add_details",
-                                                                                    "conditionId": "city_condition_added_none"
-                                                                                },
-                                                                                {
-                                                                                    "triggerType": "OPERATION",
-                                                                                    "trigger": "SAVE_ROWS",
-                                                                                    "ajaxId": "edit_details",
-                                                                                    "conditionId": "city_condition_edited_none"
-                                                                                }
-                                                                            ],
-                                                                            "toggle": {
-                                                                                "type": "state",
-                                                                                "toggleProperty": "hidden",
-                                                                                "values": [
-                                                                                    {
-                                                                                        "name": "edit",
-                                                                                        "value": false
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "text",
-                                                                                        "value": true
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "new",
-                                                                                        "value": false
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        {
-                                                                            "id": "M_cancelrow",
-                                                                            "text": "取消",
-                                                                            "state": "edit",
-                                                                            "icon": "rollback",
-                                                                            "color": "text-grey-darker",
-                                                                            "hidden": true,
-                                                                            "disabled": null,
-                                                                            "execute": [
-                                                                                {
-                                                                                    "triggerType": "STATE",
-                                                                                    "trigger": "CANCEL_EDIT_ROWS",
-                                                                                    "conditionId": "cancel_detail_edit_rows"
-                                                                                },
-                                                                                {
-                                                                                    "triggerType": "STATE",
-                                                                                    "trigger": "CANCEL_NEW_ROWS"
-                                                                                }
-                                                                            ],
-                                                                            "toggle": {
-                                                                                "type": "state",
-                                                                                "toggleProperty": "hidden",
-                                                                                "values": [
-                                                                                    {
-                                                                                        "name": "edit",
-                                                                                        "value": false
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "text",
-                                                                                        "value": true
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "new",
-                                                                                        "value": false
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        "id": "r5zDHB2-1",
-                                                        "col": "cc",
-                                                        "type": "col",
-                                                        "title": "",
-                                                        "span": 24,
-                                                        "container": "component",
-                                                        "size": {
-                                                            "nzXs": 24,
-                                                            "nzSm": 24,
-                                                            "nzMd": 24,
-                                                            "nzLg": 24,
-                                                            "nzXl": 24,
-                                                            "nzXXl": 24
-                                                        },
-                                                        "component": {
-                                                            "id": "view_03",
-                                                            "title": "",
-                                                            "titleIcon": "right-circle",
-                                                            "component": "cnDataTable",
-                                                            "keyId": "ID",
-                                                            "size": "middle",
-                                                            "isBordered": true,
-                                                            "isFrontPagination": false,
-                                                            "isPagination": true,
-                                                            "isShowSizeChanger": true,
-                                                            "showTotal": true,
-                                                            "pageSize": 5,
-                                                            "showCheckBox": true,
-                                                            "pageSizeOptions": [
-                                                                10,
-                                                                20,
-                                                                50,
-                                                                100
-                                                            ],
-                                                            "loadingOnInit": true,
-                                                            "loadingConfig": {
-                                                                "url": "td/SMT_BASE_INNER_PROPERTY_DETAIL/query",
-                                                                "method": "get",
-                                                                "params": [
-                                                                    {
-                                                                        "name": "PROP_ID",
-                                                                        "type": "tempValue",
-                                                                        "valueName": "_PROP_ID"
-                                                                    }
-                                                                ],
-                                                                "filter": []
-                                                            },
-                                                            "columns": [
-                                                                {
-                                                                    "title": "ID",
-                                                                    "type": "field",
-                                                                    "field": "ID",
-                                                                    "hidden": true,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "50px",
-                                                                    "style": {}
-                                                                },
-                                                                {
-                                                                    "title": "PID",
-                                                                    "type": "field",
-                                                                    "field": "PROP_ID",
-                                                                    "hidden": true,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "50px",
-                                                                    "style": {}
-                                                                },
-                                                                {
-                                                                    "title": "明细名称",
-                                                                    "type": "field",
-                                                                    "field": "NAME",
-                                                                    "hidden": false,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "100px",
-                                                                    "style": {},
-                                                                    "editor": {
-                                                                        "type": "input",
-                                                                        "field": "NAME"
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "title": "明细编码",
-                                                                    "type": "field",
-                                                                    "field": "CODE",
-                                                                    "hidden": false,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "100px",
-                                                                    "style": {},
-                                                                    "editor": {
-                                                                        "type": "input",
-                                                                        "field": "CODE"
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "title": "操作说明",
-                                                                    "type": "field",
-                                                                    "field": "REMARK",
-                                                                    "hidden": false,
-                                                                    "showFilter": false,
-                                                                    "showSort": false,
-                                                                    "width": "100px",
-                                                                    "style": {},
-                                                                    "editor": {
-                                                                        "type": "input",
-                                                                        "field": "REMARK"
-                                                                    }
-                                                                }
-                                                            ],
-                                                            "cascade": {
-                                                                "messageSender": [
-                                                                    {
-                                                                        "id": "view2_sender_1",
-                                                                        "senderId": "view_03",
-                                                                        "triggerType": "OPERATION",
-                                                                        "trigger": "SAVE_ROW",
-                                                                        "triggerMoment": "asyncAfter",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_03",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "view2_sender_2",
-                                                                        "senderId": "view_03",
-                                                                        "triggerType": "OPERATION",
-                                                                        "trigger": "SAVE_ROWS",
-                                                                        "triggerMoment": "asyncAfter",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_03",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "view2_sender_3",
-                                                                        "senderId": "view_03",
-                                                                        "triggerType": "STATE",
-                                                                        "trigger": "CANCEL_EDIT_ROW",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "conditionId": "cancel_edit_details",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_03",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "view2_sender_04",
-                                                                        "senderId": "view_03",
-                                                                        "triggerType": "STATE",
-                                                                        "trigger": "CANCEL_NEW_ROW",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "conditionId": "cancel_add_cities",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_03",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "grid_sender_05",
-                                                                        "senderId": "view_03",
-                                                                        "triggerType": "STATE",
-                                                                        "trigger": "EDIT_ROW",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_EDIT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_03",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "grid_sender_08",
-                                                                        "senderId": "view_03",
-                                                                        "triggerType": "ACTION",
-                                                                        "trigger": "CONFIRM",
-                                                                        "triggerMoment": "after",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "STATE",
-                                                                                "receiverTrigger": "STATE_TO_TEXT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "targetViewId",
-                                                                                        "value": "view_tree_component_base",
-                                                                                        "type": "value"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterDetailUpdateSuccess",
-                                                                        "senderId": "view_03",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "success"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "code",
-                                                                                        "type": "value",
-                                                                                        "value": "message.operation.success"
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "APPEND_CHILD_TO_SELECTED_NODE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "key",
-                                                                                        "type": "addedRows",
-                                                                                        "valueName": "ID"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "parentId",
-                                                                                        "type": "addedRows",
-                                                                                        "valueName": "PID"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "parentId",
-                                                                                        "type": "addedRows",
-                                                                                        "valueName": "PID"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterCityUpdateSuccessfully",
-                                                                        "senderId": "view_03",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "success"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "message",
-                                                                                        "type": "value",
-                                                                                        "value": "操作完成!"
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "id",
-                                                                                        "type": "editedRows",
-                                                                                        "valueName": "id"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterCitySaveValidation",
-                                                                        "senderId": "view_03",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "SHOW_INVALIDATE_ADDED_ROWS"
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterCityUpdateValidation",
-                                                                        "senderId": "view_03",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterComponentFormUpdateSuccess",
-                                                                        "senderId": "view_03",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "success"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "code",
-                                                                                        "type": "value",
-                                                                                        "value": "operation.code.success"
-                                                                                    }
-                                                                                ]
-                                                                            },
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "LOAD_REFRESH_DATA",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "id",
-                                                                                        "type": "addedRows",
-                                                                                        "valueName": "id"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    },
-                                                                    {
-                                                                        "id": "afterCityUpdateFormValidation",
-                                                                        "senderId": "view_03",
-                                                                        "sendData": [
-                                                                            {
-                                                                                "beforeSend": {},
-                                                                                "reveicerId": "",
-                                                                                "receiverTriggerType": "ACTION",
-                                                                                "receiverTrigger": "MESSAGE",
-                                                                                "params": [
-                                                                                    {
-                                                                                        "name": "type",
-                                                                                        "type": "value",
-                                                                                        "value": "warning"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "message",
-                                                                                        "type": "validation",
-                                                                                        "valueName": "code"
-                                                                                    },
-                                                                                    {
-                                                                                        "name": "field",
-                                                                                        "type": "validation",
-                                                                                        "valueName": "field"
-                                                                                    }
-                                                                                ]
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ],
-                                                                "messageReceiver": [
-                                                                    // {
-                                                                    //     "id": "",
-                                                                    //     "senderId": "view_02",
-                                                                    //     "receiveData": [
-                                                                    //         {
-                                                                    //             "beforeReceive": [],
-                                                                    //             "triggerType": "BEHAVIOR",
-                                                                    //             "trigger": "REFRESH_AS_CHILD",
-                                                                    //             "params": [
-                                                                    //                 {
-                                                                    //                     "pname": "_PROP_ID",
-                                                                    //                     "cname": "_PROP_ID",
-                                                                    //                     "valueTo": "tempValue"
-                                                                    //                 }
-                                                                    //             ]
-                                                                    //         }
-                                                                    //     ]
-                                                                    // },
-                                                                    {
-                                                                        "id": "",
-                                                                        "senderId": "view_03",
-                                                                        "receiveData": [
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "MESSAGE"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "APPEND_CHILD_TO_SELECTED_NODE"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "SHOW_INVALIDATE_ADDED_ROWS"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "SHOW_INVALIDATE_EDITED_ROWS"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "LOAD_REFRESH_DATA"
-                                                                            },
-                                                                            {
-                                                                                "beforeReceive": [],
-                                                                                "triggerType": "ACTION",
-                                                                                "trigger": "DELETE_CHECKED_ROWS"
-                                                                            }
-                                                                        ]
-                                                                    }
-                                                                ]
-                                                            },
-                                                            "condition": [
-                                                                {
-                                                                    "id": "add_cities_state",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                },
-                                                                                {
-                                                                                    "type": "element",
-                                                                                    "name": "name",
-                                                                                    "matchValue": "1",
-                                                                                    "match": "eq"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "edit_cities_state",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "add_cities",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_ADDED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "edit_cities",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_EDITED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_CHECKED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "gt"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "cancel_edit_details",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_EDITED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "eq"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                },
-                                                                {
-                                                                    "id": "cancel_add_cities",
-                                                                    "state": [
-                                                                        {
-                                                                            "type": "component",
-                                                                            "valueName": "ROWS_ADDED",
-                                                                            "expression": [
-                                                                                {
-                                                                                    "type": "property",
-                                                                                    "name": "length",
-                                                                                    "matchValue": 0,
-                                                                                    "match": "eq"
-                                                                                }
-                                                                            ]
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            ],
-                                                            "ajaxConfig": []
-                                                        }
-                                                    }
-                                                ],
-                                                "id": "rYJqA3",
-                                                "type": "row",
-                                                "container": "cols"
-                                            }
-                                        ],
-                                        "customlayout": [],
-                                        "container": "rows"
-                                    }
-                                }
-                            ]
-                        }
+                            }
+                        ]
                     }
                 ],
                 id: "3vlDRq",

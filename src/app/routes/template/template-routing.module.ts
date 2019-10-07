@@ -1,3 +1,4 @@
+import { BaseInnerMethodManagerComponent } from './base-inner-method-manager.component';
 import { BaseCfgPropertyManagerComponent } from './base-cfg-property-manager.component';
 import { DataSqlModelingComponent } from './data-sql-modeling.component';
 import { BaseInnerPropertyManagerComponent } from './base-inner-property-manager.component';
@@ -22,7 +23,8 @@ const routes: Routes = [
   { path: 'datamodeling', component: DataModelingComponent },
   { path: 'innerPropertyManager', component: BaseInnerPropertyManagerComponent },
   { path: 'sqlmodeling', component: DataSqlModelingComponent },
-  { path: 'configPropertyManager', component: BaseCfgPropertyManagerComponent }
+  { path: 'configPropertyManager', component: BaseCfgPropertyManagerComponent },
+  { path: 'innerMethodManager', component: BaseInnerMethodManagerComponent }
 ];
 
 @NgModule({

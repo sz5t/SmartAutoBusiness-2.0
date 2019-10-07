@@ -738,7 +738,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "id": "delete_data_table",
                                     "url": "table/delete",
                                     "urlType": "inner",
-                                    "ajaxType": "put",
+                                    "ajaxType": "delete",
                                     "params": [
                                         {
                                             "name": "ids",
@@ -3548,9 +3548,6 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     {
                                         "id": "afterTableColumnSaveSuccess",
                                         "senderId": "view_data_columns",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -3588,9 +3585,6 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     {
                                         "id": "afterTableColumnUpdateSuccess",
                                         "senderId": "view_data_columns",
-                                        // "triggerType": "ACTION",
-                                        // "trigger": "MESSAGE0",
-                                        // "triggerMoment": "after",
                                         "sendData": [
                                             {
                                                 "beforeSend": {},
@@ -3757,7 +3751,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 ]
                                             }
                                         ]
-                                    },
+                                    }
                                 ],
                                 "messageReceiver": [
                                     {
