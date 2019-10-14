@@ -75,7 +75,6 @@ import { CnGridItemDirective } from '@shared/components/data_table/cn-grid-item.
 import { CnAttributeComponent } from './components/cn-attribute/cn-attribute.component';
 import { CnFormCodeEditComponent } from '@shared/components/data-form/cn-form-items/cn-form-code-edit/cn-form-code-edit.component';
 import { CnCodeEditComponent } from './components/cn-code-edit/cn-code-edit.component';
-<<<<<<< HEAD
 import { CnAttributeObjectComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-object/cn-attribute-object.component';
 import { CnAttributeArrayComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-array/cn-attribute-array.component';
 import { CnAttributeTableComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-table/cn-attribute-table.component';
@@ -84,9 +83,7 @@ import { CnAttributeFormComponent } from './components/cn-attribute/cn-attribute
 import { CnAttributeItemDirective } from '@shared/components/cn-attribute/cn-attribute-item.directive';
 import { CnAttributeTableFormComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-table-form/cn-attribute-table-form.component';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
-=======
 import { CnStatisticComponent } from './components/cn-statistic/cn-statistic.component';
->>>>>>> 36575051b22726bab750b76f2e0d1843804e1907
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -148,18 +145,15 @@ const COMPONENTS = [
   CnAttributeComponent,
   CnFormCodeEditComponent,
   CnCodeEditComponent,
-<<<<<<< HEAD
   CnAttributeObjectComponent,
   CnAttributeArrayComponent,
   CnAttributeTableComponent,
   CnAttributePropertyGridComponent,
   CnAttributeFormComponent,
   CnAttributeTableFormComponent,
-=======
   CnDescriptionsComponent,
   CnStepsComponent,
-  CnStatisticComponent
->>>>>>> 36575051b22726bab750b76f2e0d1843804e1907
+  CnStatisticComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
