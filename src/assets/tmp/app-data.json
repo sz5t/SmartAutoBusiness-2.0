@@ -121,6 +121,12 @@
               "link": "/dashboard/analysis",
               "i18n": "menu.component.form",
               "level": 3
+            },
+            {
+              "text": "步骤",
+              "link": "/template/stepsDemo",
+              "i18n": "menu.component.steps",
+              "level": 3
             }
           ]
         }

@@ -11,6 +11,7 @@ import { CfgLayoutDemoComponent } from './cfg-layout-demo.component';
 import { CfgFormDemoComponent } from './cfg-form-demo.component';
 import { TreeDemoComponent } from './tree-demo.component';
 import { TreeTableDemoComponent } from './tree-table-demo.component';
+import { StepsDemoComponent } from './steps-demo.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'treeDemo', component: TreeDemoComponent },
   { path: 'treeTableDemo', component: TreeTableDemoComponent },
   { path: 'datamodeling', component: DataModelingComponent },
+  { path: 'stepsDemo', component: StepsDemoComponent },
   { path: 'innerPropertyManager', component: BaseInnerPropertyManagerComponent },
   { path: 'sqlmodeling', component: DataSqlModelingComponent },
   { path: 'configPropertyManager', component: BaseCfgPropertyManagerComponent },

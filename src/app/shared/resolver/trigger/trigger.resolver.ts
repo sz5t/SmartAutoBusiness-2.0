@@ -136,7 +136,6 @@ export class TriggerResolver {
 
     handleBehaviorType() {
         // 前置条件判断
-
         // 该功能不由组件实现
         const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
         this._componentInstance[method](this._triggerMsg.options);

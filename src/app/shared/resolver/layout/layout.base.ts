@@ -30,6 +30,7 @@ export class LayoutBase implements ILayout {
     private _type: string;
     private _container: string;
     private _title: string;
+    private _noBorder: boolean;
     private _span: number;
     private _size: LayoutSize;
     private _hidden: boolean;
@@ -38,6 +39,21 @@ export class LayoutBase implements ILayout {
     private _rows: LayoutRow[];
     private _tabs: LayoutRow[];
     private _customLayout: any[];
+    private _bodyStyle: any;
+    public get bodyStyle(): any {
+        return this._bodyStyle;
+    }
+    public set bodyStyle(value: any) {
+        this._bodyStyle = value;
+    }
+
+    public get noBorder(): boolean {
+        return this._noBorder;
+    }
+    public set noBorder(value: boolean) {
+        this._noBorder = value;
+    }
+
     public get customLayout(): any[] {
         return this._customLayout;
     }

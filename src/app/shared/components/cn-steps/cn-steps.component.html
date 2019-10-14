@@ -1,0 +1,42 @@
+<div *ngIf="config.mode === 'normal'"
+  [ngClass]="{float_left: config.direction === 'vertical',float_none: config.direction === 'vertical'}">
+  <nz-steps [nzSize]="config.size" [nzCurrent]="current" (nzIndexChange)="onIndexChange($event)"
+    [nzDirection]="config.direction">
+    <nz-step *ngFor="let item of stepItems" [nzTitle]="item.title" [nzSubtitle]="item.subTitle"
+      [nzDescription]="item.desc">
+    </nz-step>
+  </nz-steps>
+</div>
+<nz-alert [ngClass]="{'alert':config.direction === 'horizontal','alert-grid':config.direction === 'vertical'}"
+  *ngIf="showAlert" nzType="info" nzMessage="Success Tips" nzShowIcon></nz-alert>
+<div *ngIf="config.mode === 'normal'"
+  [ngClass]="{'steps-content':config.direction === 'horizontal','steps-content-grid':config.direction === 'vertical'}">
+  <ng-container cnLayoutResolverDirective [config]="view" *ngFor="let view of currentViews" [initData]="initValue"
+    [tempData]="tempValue">
+  </ng-container>
+</div>
+
+
+<div *ngIf="config.mode === 'custom'"
+  [ngClass]="{float_left: config.direction === 'vertical',float_none: config.direction === 'vertical'}">
+  <nz-steps [nzSize]="config.size" [nzProgressDot]="progressTemplate" [nzCurrent]="current"
+    (nzIndexChange)="onIndexChange($event)" [nzDirection]="config.direction">
+    <nz-step *ngFor="let item of stepItems" [nzStatus]="item.status" [nzTitle]="item.title" [nzSubtitle]="item.subTitle"
+      [nzDescription]="item.desc">
+
+    </nz-step>
+  </nz-steps>
+</div>
+<nz-alert [ngClass]="{'alert':config.direction === 'horizontal','alert-grid':config.direction === 'vertical'}"
+  *ngIf="showAlert" nzType="info" nzMessage="Success Tips" nzShowIcon></nz-alert>
+<div *ngIf="config.mode === 'custom'"
+  [ngClass]="{'steps-content':config.direction === 'horizontal','steps-content-grid':config.direction === 'vertical'}">
+  <ng-container cnLayoutResolverDirective [config]="view" *ngFor="let view of currentViews" [initData]="initValue"
+    [tempData]="tempValue">
+  </ng-container>
+</div>
+<ng-template #progressTemplate let-dot let-status="status" let-index="index">
+  <span nz-popover nzContent="步骤: {{ index }} 状态: {{ status }}" style="margin-left: -100%;">
+    <ng-template [ngTemplateOutlet]="dot"></ng-template>
+  </span>
+</ng-template>
