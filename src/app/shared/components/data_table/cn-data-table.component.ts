@@ -268,6 +268,7 @@ export class CnDataTableComponent extends CnComponentBase
         this.ROW_SELECTED = [];
         this.ROWS_CHECKED = [];
         this.COMPONENT_VALUE = [];
+        this.ROW_SELECTED = JSON.parse(`{"${this.KEY_ID}": ""}`);
     }
 
     public load() {
@@ -313,7 +314,9 @@ export class CnDataTableComponent extends CnComponentBase
                 // 更新
                 // this.dataCheckedStatusChange();
                 // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
-                this.dataList.length > 0 && this.setSelectRow(this.ROW_SELECTED);
+                // this.dataList.length > 0 && this.setSelectRow(this.ROW_SELECTED);
+
+                this.setSelectRow(this.ROW_SELECTED);
                 this.isLoading = false;
             } else {
                 this.isLoading = false;
@@ -843,15 +846,18 @@ export class CnDataTableComponent extends CnComponentBase
         this.ROW_SELECTED = rowData;
 
         // 选中当前行
-        this.dataList.map(row => {
-            this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
-        });
+        if (this.dataList.length > 0) {
+            this.dataList.map(row => {
+                this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+            });
 
-        this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
+            this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
 
-        // 勾选/取消当前行勾选状态
-        this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
-        this.dataCheckedStatusChange();
+            // 勾选/取消当前行勾选状态
+            this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
+            this.dataCheckedStatusChange();
+        }
+
         return true;
     }
 

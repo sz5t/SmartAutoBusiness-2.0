@@ -1,3 +1,6 @@
+import { CnStepsComponent } from './components/cn-steps/cn-steps.component';
+import { CnDescriptionsComponent } from './components/cn-descriptions/cn-descriptions.component';
+import { CnPageHeaderComponent } from './components/layout/cn-page-header.component';
 import { CnTreeComponent } from './components/cn-tree/cn-tree.component';
 import { CnComponentResolverDirective } from './resolver/component/component-resolver.directive';
 import { CnDataTableComponent } from './components/data_table/cn-data-table.component';
@@ -72,6 +75,7 @@ import { CnGridItemDirective } from '@shared/components/data_table/cn-grid-item.
 import { CnAttributeComponent } from './components/cn-attribute/cn-attribute.component';
 import { CnFormCodeEditComponent } from '@shared/components/data-form/cn-form-items/cn-form-code-edit/cn-form-code-edit.component';
 import { CnCodeEditComponent } from './components/cn-code-edit/cn-code-edit.component';
+import { CnStatisticComponent } from './components/cn-statistic/cn-statistic.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -85,6 +89,7 @@ const COMPONENTS = [
   CnToolbarComponent,
   CnTreeComponent,
   CnTreeTableComponent,
+  CnPageHeaderComponent,
 
   // --设计组件--
   CfgCustomLayoutComponent,
@@ -132,6 +137,9 @@ const COMPONENTS = [
   CnAttributeComponent,
   CnFormCodeEditComponent,
   CnCodeEditComponent,
+  CnDescriptionsComponent,
+  CnStepsComponent,
+  CnStatisticComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [

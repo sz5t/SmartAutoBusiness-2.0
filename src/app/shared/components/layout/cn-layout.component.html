@@ -4,19 +4,34 @@
       <div nz-row [nzGutter]="6" *ngFor="let row of layoutObj.rows">
 
         <div nz-col *ngFor="let c of row.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
-          [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl" [nzXXl]="c.size.nzXXL">
+          [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl" [nzXXl]="c.size.nzXXL"
+          [ngSwitch]="c.container">
 
 
-          <nz-card [ngSwitch]="c.container" [nzTitle]="c.title ? c.title : false">
-            <ng-container *ngSwitchCase="'tabs'" cnLayoutResolverDirective [config]="c.tabs" [tempData]="tempData"
-              [initData]="initData"></ng-container>
-            <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout" [tempData]="tempData"
-              [initData]="initData"></ng-container>
-            <ng-container *ngSwitchCase="'component'" cnComponentResolverDirective [config]="c.component"
-              [tempData]="tempData" [initData]="initData"> </ng-container>
-            <ng-container *ngSwitchCase="'rows'" cnLayoutResolverDirective [config]="c" [tempData]="tempData"
+
+          <ng-container *ngSwitchCase="'pageHeader'" cnLayoutResolverDirective [config]="c.pageHeader"
+            [tempData]="tempData" [initData]="initData"></ng-container>
+
+          <ng-container *ngSwitchCase="'tabs'" cnLayoutResolverDirective [config]="c.tabs" [tempData]="tempData"
+            [initData]="initData"></ng-container>
+
+          <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout" [tempData]="tempData"
+            [initData]="initData">
+          </ng-container>
+
+
+          <nz-card *ngSwitchCase="'component'" [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
+            [nzTitle]="c.title ? c.title : false">
+            <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
               [initData]="initData"> </ng-container>
           </nz-card>
+          <ng-container *ngSwitchCase="'rows'" cnLayoutResolverDirective [config]="c" [tempData]="tempData"
+            [initData]="initData">
+          </ng-container>
+
+          <!-- <nz-card [ngSwitch]="c.container" >
+            
+          </nz-card> -->
         </div>
       </div>
     </ng-container>

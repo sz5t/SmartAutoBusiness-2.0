@@ -65,7 +65,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
   ngOnInit() {
-
     if (this.initData) {
       this.initValue = this.initData;
     } else {

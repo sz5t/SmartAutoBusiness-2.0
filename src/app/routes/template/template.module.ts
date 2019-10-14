@@ -13,6 +13,7 @@ import { TreeDemoComponent } from './tree-demo.component';
 import { TreeTableDemoComponent } from './tree-table-demo.component';
 import { DataModelingComponent } from './data-modeling.component';
 import { DataSqlModelingComponent } from './data-sql-modeling.component';
+import { StepsDemoComponent } from './steps-demo.component';
 
 const COMPONENTS = [
   LayoutDemoComponent,
@@ -25,7 +26,8 @@ const COMPONENTS = [
   BaseInnerPropertyManagerComponent,
   DataSqlModelingComponent,
   BaseCfgPropertyManagerComponent,
-  BaseInnerMethodManagerComponent
+  BaseInnerMethodManagerComponent,
+  StepsDemoComponent
 ];
 
 const COMPONENTS_NOROUNT = [];

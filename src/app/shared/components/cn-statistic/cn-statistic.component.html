@@ -1,0 +1,22 @@
+<!-- <div style="background: #e1e1e1; padding: 15px;"></div> -->
+<nz-row [nzGutter]="config.gutter ? config.gutter : 16">
+  <nz-col *ngFor="let item of itemData" [nzSpan]="config.span ? config.span : 24">
+    <nz-alert nzType="info" [nzDescription]="descTmpl">
+
+    </nz-alert>
+    <ng-template #descTmpl>
+      <nz-statistic [nzValue]="item.value" [nzTitle]="item.title" [nzPrefix]="perfixTmpl" [nzSuffix]="suffixTmpl"
+        [nzValueStyle]="item.style"></nz-statistic>
+      <ng-template #perfixTmpl>
+        <i style="font-size: 24px" nz-icon [nzType]="item.prefix? item.prefix : ''"></i>
+      </ng-template>
+      <ng-template #suffixTmpl>
+        {{item.suffix ? item.suffix : ''}}
+      </ng-template>
+    </ng-template>
+  </nz-col>
+</nz-row>
+<!-- <ng-template #descTmpl>
+ 
+</ng-template> -->
+<!-- </div> -->

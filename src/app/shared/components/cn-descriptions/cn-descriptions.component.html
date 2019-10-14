@@ -1,0 +1,9 @@
+<nz-descriptions [nzTitle]="title" [nzLayout]="config.layout" nzBordered [nzSize]="config.size"
+  [nzColumn]="config.columnCount">
+
+  <nz-descriptions-item *ngFor="let item of descriptionItems" [nzTitle]="item.title" [nzSpan]="item.span"> {{item.text}}
+  </nz-descriptions-item>
+</nz-descriptions>
+<ng-template #title>
+  {{config.title}} <nz-tag [nzColor]="'blue'">{{config.title}}</nz-tag>
+</ng-template>

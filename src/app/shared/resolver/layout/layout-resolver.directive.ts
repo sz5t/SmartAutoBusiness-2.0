@@ -13,6 +13,8 @@ import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { Subject, Subscription } from 'rxjs';
 import { RelationResolver } from '../relation/relation.resolver';
+import { CnPageHeaderComponent } from '@shared/components/layout/cn-page-header.component';
+import { LayoutPageHeader } from './layout.page-header';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
@@ -28,6 +30,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
     private _rowsObj: ComponentRef<any>;
     private _tabObj: ComponentRef<any>;
     private _customObj: ComponentRef<any>;
+    private _pageHeaderObj: ComponentRef<CnPageHeaderComponent>;
 
     private component: ComponentRef<any>;
     public COMPONENT_METHODS = CN_LAYOUT_DIRECTIVE_RESOLVER_METHOD;
@@ -98,6 +101,9 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
                 case 'tabContent':
                     this.buildTabsLayout(configObj);
                     break;
+                case 'pageHeader':
+                    this.buildPageHeader(configObj);
+                    break;
                 case 'customLayout':
                     this.buildCustomerLayout(configObj);
                     break;
@@ -153,6 +159,22 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
 
         if (this.subscription$) {
             this.subscription$.unsubscribe();
+        }
+    }
+
+    private buildPageHeader(pageHeaderObj: any) {
+        // console.log('buildLayout Receive message --', this.initValue, this.tempValue);
+        const cmpt = this._resolver.resolveComponentFactory<any>(
+            CnPageHeaderComponent
+        );
+        this._container.clear();
+        this._pageHeaderObj = this._container.createComponent(cmpt);
+        this._pageHeaderObj.instance.headerConfig = pageHeaderObj;
+        if (this.tempValue) {
+            this._pageHeaderObj.instance['tempData'] = this.tempData;
+        }
+        if (this.initValue) {
+            this._pageHeaderObj.instance['initData'] = this.initData;
         }
     }
 
@@ -228,6 +250,8 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
                 return this.buildCustomerObj(cfg);
             case 'tabContent':
                 return this.buildTabsObj(cfg);
+            case 'pageHeader':
+                return this.buildPageHeaderObj(cfg.pageHeader);
             case 'layout':
                 return this.resolver(cfg);
         }
@@ -248,6 +272,8 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
                         newCol.type = c.type;
                         newCol.title = c.title;
                         newCol.span = c.span;
+                        newCol.noBorder = c.noBorder ? true : false;
+                        newCol.bodyStyle = c.bodyStyle;
                         newCol.size = new LayoutSize(c.size);
                         newCol.container = c.container;
                         this.setContainer(newCol, c);
@@ -267,6 +293,9 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
                 break;
             case 'tabs':
                 containerObj.tabs = containerCfg.tabs;
+                break;
+            case 'pageHeader':
+                containerObj.pageHeader = containerCfg.pageHeader;
                 break;
             case 'component':
                 containerObj.component = containerCfg.component;
@@ -319,6 +348,28 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
         //     }
         // }
         return newTabs;
+    }
+
+    private buildPageHeaderObj(cfg): any {
+        const newPageHeader = new LayoutPageHeader();
+        newPageHeader.container = "pageHeader";
+        newPageHeader.title = cfg.title;
+        newPageHeader.subTitle = cfg.subTitle;
+        newPageHeader.tagColor = cfg.tagColor;
+        newPageHeader.tagText = cfg.tagText;
+        newPageHeader.descColumnsCount = cfg.descColumnsCount;
+        newPageHeader.operations = cfg.operations;
+        newPageHeader.contentItems = cfg.contentItems;
+        newPageHeader.extraItems = cfg.extraItems;
+        newPageHeader.ajaxConfig = cfg.ajaxConfig;
+        newPageHeader.cascade = cfg.casacde;
+        newPageHeader.headerMapping = cfg.headMapping;
+        newPageHeader.contentMapping = cfg.contentMapping;
+        newPageHeader.footMapping = cfg.footMapping;
+        newPageHeader.extraMapping = cfg.extraMapping;
+        newPageHeader.defaultLoading = cfg.defaultLoading;
+        newPageHeader.layout = cfg.layout;
+        return newPageHeader;
     }
 
 
