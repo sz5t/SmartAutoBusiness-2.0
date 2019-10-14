@@ -5,6 +5,7 @@ import { CnAttributeObjectComponent } from '@shared/components/cn-attribute/cn-a
 import { CnAttributeArrayComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-array/cn-attribute-array.component';
 import { CnAttributeTableComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-table/cn-attribute-table.component';
 import { CnAttributePropertyGridComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-property-grid/cn-attribute-property-grid.component';
+import { CnAttributeTableFormComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-table-form/cn-attribute-table-form.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnGridInputComponent,
@@ -12,7 +13,8 @@ const components: { [type: string]: Type<any> } = {
   AttributeObject:CnAttributeObjectComponent,
   AttributeArray:  CnAttributeArrayComponent,
   AttributeTable:CnAttributeTableComponent,
-  AttributePropertyGrid:CnAttributePropertyGridComponent
+  AttributePropertyGrid:CnAttributePropertyGridComponent,
+  AttributeTableForm:CnAttributeTableFormComponent
   // label: ,
   // selectMultiple:,
   // datePicker:,
@@ -30,10 +32,11 @@ const components: { [type: string]: Type<any> } = {
   // customSelect: ,
 };
 @Directive({
-  selector: '[CnGridItemDirective]'
+  selector: '[CnAttributeItemDirective]'
 })
-export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
+export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
   @Input() public config;
+  @Input() public attributeConfig;
   @Input() public formCascade;
   @Input() public state;
   @Input() public valueConfig;
@@ -66,6 +69,7 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
     this.component.instance.config = this.config;
     this.component.instance.valueConfig = this.valueConfig;
     this.component.instance.state = this.state;
+    this.component.instance.attributeConfig = this.attributeConfig;
     
     
     // 级联数据接受 liu
@@ -122,6 +126,7 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
         this.component.instance.config = this.config;
         this.component.instance.valueConfig = this.valueConfig;
         this.component.instance.state = this.state;
+        this.component.instance.attributeConfig = this.attributeConfig;
         // 级联数据接受 liu
         if (this.component.instance.updateValue) {
           this.component.instance.updateValue.subscribe(event => {

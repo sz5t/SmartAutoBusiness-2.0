@@ -34,6 +34,7 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
   /**
    * text/x-sql
    * text/x-markdown
+   * application/json
    */
   ngAfterViewInit() {
     setTimeout(() => {

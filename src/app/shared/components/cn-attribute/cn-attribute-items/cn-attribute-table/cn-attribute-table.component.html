@@ -1,0 +1,21 @@
+<nz-table [nzData]="listOfData" [nzFrontPagination]="false" [nzShowPagination]="false"  [nzFooter]="footer">
+        <thead>
+          <tr>
+
+             <th *ngFor="let c of config.columns">{{c.title}}</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody cdkDropList (cdkDropListDropped)="drop($event)">
+          <tr *ngFor="let data of listOfData" cdkDrag>
+                <td *ngFor="let c of config.columns">{{data[c.feild]}}</td>
+            <td>  <button nz-button nzType="primary"  style="width: 100%"> <i nz-icon nzType="edit" ></i></button></td>
+          </tr>
+        </tbody>
+      </nz-table>
+      <ng-template #footer>
+            <button nz-button nzType="primary"  style="width: 100%" (click)="createModal()"><i nz-icon nzType="setting"></i>新增</button>
+          </ng-template>
+
+        
+

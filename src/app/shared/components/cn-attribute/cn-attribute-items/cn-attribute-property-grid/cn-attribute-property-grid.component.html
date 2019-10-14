@@ -1,0 +1,44 @@
+<nz-table #nzTable [nzData]="listOfData">
+  <thead>
+    <tr>
+      <th nzShowExpand style="width: 25px; background-color: #fafafa;"></th>
+      <th>属性</th>
+      <th>值</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <ng-template ngFor let-data [ngForOf]="nzTable.data">
+      <tr>
+        <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]" style="width: 25px; background-color: #fafafa;"></td>
+        <td>{{ data.name }}</td>
+        <td>{{ data.age }}</td>
+
+      </tr>
+      <tr [nzExpand]="mapOfExpandData[data.id]">
+
+        <td colspan="3">
+
+          <nz-table #nzTable1 [nzData]="listOfData1"  [nzFrontPagination]="false" [nzShowPagination]="false" >
+            <tbody>
+              <ng-template ngFor let-data [ngForOf]="nzTable1.data">
+                <tr>
+                  <td nzShowExpand [(nzExpand)]="mapOfExpandData1[data.id]" style="width: 25px; background-color: #fafafa;"></td>
+                  <td  [nzIndentSize]="1 * 20">{{ data.name }}</td>
+                  <td>{{ data.age }}</td>
+
+                </tr>
+                <tr [nzExpand]="mapOfExpandData1[data.id]">
+
+                  <td colspan="3">
+
+                  </td>
+                </tr>
+              </ng-template>
+            </tbody>
+          </nz-table>
+        </td>
+      </tr>
+    </ng-template>
+  </tbody>
+</nz-table>

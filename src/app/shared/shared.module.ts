@@ -72,6 +72,14 @@ import { CnGridItemDirective } from '@shared/components/data_table/cn-grid-item.
 import { CnAttributeComponent } from './components/cn-attribute/cn-attribute.component';
 import { CnFormCodeEditComponent } from '@shared/components/data-form/cn-form-items/cn-form-code-edit/cn-form-code-edit.component';
 import { CnCodeEditComponent } from './components/cn-code-edit/cn-code-edit.component';
+import { CnAttributeObjectComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-object/cn-attribute-object.component';
+import { CnAttributeArrayComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-array/cn-attribute-array.component';
+import { CnAttributeTableComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-table/cn-attribute-table.component';
+import { CnAttributePropertyGridComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-property-grid/cn-attribute-property-grid.component';
+import { CnAttributeFormComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-form/cn-attribute-form.component';
+import { CnAttributeItemDirective } from '@shared/components/cn-attribute/cn-attribute-item.directive';
+import { CnAttributeTableFormComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-table-form/cn-attribute-table-form.component';
+import { NzResizableModule } from 'ng-zorro-antd/resizable';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -132,6 +140,12 @@ const COMPONENTS = [
   CnAttributeComponent,
   CnFormCodeEditComponent,
   CnCodeEditComponent,
+  CnAttributeObjectComponent,
+  CnAttributeArrayComponent,
+  CnAttributeTableComponent,
+  CnAttributePropertyGridComponent,
+  CnAttributeFormComponent,
+  CnAttributeTableFormComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -140,7 +154,8 @@ const DIRECTIVES = [
   CfgFormItemContentDirective,
   CfgLayoutItemContentDirective,
   CnFormItemDirective,
-  CnGridItemDirective
+  CnGridItemDirective,
+  CnAttributeItemDirective
 ];
 // #endregion
 
@@ -157,6 +172,7 @@ const DIRECTIVES = [
     DelonFormModule,
     // third libs
     ...THIRDMODULES,
+    NzResizableModule 
   ],
   declarations: [
     // your components
