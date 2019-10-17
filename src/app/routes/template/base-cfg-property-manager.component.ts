@@ -63,24 +63,24 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                 "type": "col",
                                 "title": "",
                                 "noBorder": true,
-                                "span": 24,
+                                "span": 12,
                                 "bodyStyle": {
-                                    "padding": "0 0 16px 0"
+                                    "padding": "0 8px 16px 0"
                                 },
                                 "container": "component",
                                 "size": {
-                                    "nzXs": 24,
-                                    "nzSm": 24,
-                                    "nzMd": 24,
-                                    "nzLg": 24,
-                                    "nzXl": 24,
-                                    "nzXXl": 24
+                                    "nzXs": 12,
+                                    "nzSm": 12,
+                                    "nzMd": 12,
+                                    "nzLg": 12,
+                                    "nzXl": 12,
+                                    "nzXXl": 12
                                 },
                                 "component": {
-                                    "id": "",
+                                    "id": "statistic_01",
                                     "component": "cnStatistic",
                                     "gutter": 16,
-                                    "span": "6",
+                                    "span": 12,
                                     "loadingOnInit": true,
                                     "loadingConfig": {
                                         "id": "loading"
@@ -137,6 +137,69 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                     ],
                                     "styleMapping": [
 
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "r5zDHB2-1",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "noBorder": true,
+                                "span": 12,
+                                "bodyStyle": {
+                                    "padding": "0 0 16px 0"
+                                },
+                                "container": "component",
+                                "size": {
+                                    "nzXs": 12,
+                                    "nzSm": 12,
+                                    "nzMd": 12,
+                                    "nzLg": 12,
+                                    "nzXl": 12,
+                                    "nzXXl": 12
+                                },
+                                "component": {
+                                    "id": "progress_01",
+                                    "component": "cnProgress",
+                                    "loadingOnInit": true,
+                                    "typeKeyName": "PROGRESS_TYPE",
+                                    "defaultType": "line",
+                                    "bgColor": "success",
+                                    "gutter": 16,
+                                    "span": 12,
+                                    "cascade": {
+                                        "messageSender": [],
+                                        "messageReceiver": []
+                                    },
+                                    "loadingConfig": {
+                                        "id": "loading"
+                                    },
+                                    "ajaxConfig": [
+                                        {
+                                            "id": "loading",
+                                            "url": "sd/SQL_PERCENT/query",
+                                            "method": "get",
+                                            "params": []
+                                        }
+                                    ],
+                                    "dataMapping": [
+                                        {
+                                            "name": "title",
+                                            "field": "P_TITLE"
+                                        },
+                                        {
+                                            "name": "percent",
+                                            "field": "P_PERCENT"
+                                        },
+                                        {
+                                            "name": "status",
+                                            "field": "P_STATUS"
+                                        },
+                                        {
+                                            "name": "successPercent",
+                                            "field": "P_SUCCESS_PERCENT"
+                                        }
                                     ]
                                 }
                             },

@@ -1235,7 +1235,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
 
                                 ],
                                 "filter": [
-                                    
+
                                 ]
                             },
                             "columns": [
@@ -1299,6 +1299,16 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "showSort": false,
                                     "width": "100px",
                                     "style": {},
+                                },
+                                {
+                                    "title": "CREATEDATE",
+                                    "type": "field",
+                                    "field": "createDate",
+                                    "hidden": false,
+                                    "showFilter": false,
+                                    "showSort": false,
+                                    "width": "100px",
+                                    "style": {}
                                 },
                                 // {
                                 //     "title": "message",

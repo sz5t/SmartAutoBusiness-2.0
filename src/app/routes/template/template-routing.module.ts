@@ -1,3 +1,5 @@
+import { PageDesignComponent } from './page-design.component';
+import { CalendarDemoComponent } from './calendar-demo.component';
 import { BaseInnerMethodManagerComponent } from './base-inner-method-manager.component';
 import { BaseCfgPropertyManagerComponent } from './base-cfg-property-manager.component';
 import { DataSqlModelingComponent } from './data-sql-modeling.component';
@@ -26,7 +28,9 @@ const routes: Routes = [
   { path: 'innerPropertyManager', component: BaseInnerPropertyManagerComponent },
   { path: 'sqlmodeling', component: DataSqlModelingComponent },
   { path: 'configPropertyManager', component: BaseCfgPropertyManagerComponent },
-  { path: 'innerMethodManager', component: BaseInnerMethodManagerComponent }
+  { path: 'innerMethodManager', component: BaseInnerMethodManagerComponent },
+  { path: 'calendarDemo', component: CalendarDemoComponent },
+  { path: 'pageDesign', component: PageDesignComponent }
 ];
 
 @NgModule({

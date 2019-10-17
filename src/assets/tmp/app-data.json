@@ -32,6 +32,21 @@
       ]
     },
     {
+      "text": "页面管理",
+      "i18n": "menu.page.pagemamange",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "icon": "book",
+      "children": [{
+        "text": "页面设计",
+        "i18n": "menu.page.design",
+        "icon": "database",
+        "level": 2,
+        "link": "/template/pageDesign"
+      }]
+    },
+    {
       "text": "配置项基础数据维护",
       "i18n": "menu.cfg.base",
       "group": true,
@@ -126,6 +141,12 @@
               "text": "步骤",
               "link": "/template/stepsDemo",
               "i18n": "menu.component.steps",
+              "level": 3
+            },
+            {
+              "text": "步骤",
+              "link": "/template/calendarDemo",
+              "i18n": "menu.component.calendar",
               "level": 3
             }
           ]

@@ -12,8 +12,8 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'tree-demo',
-    templateUrl: './tree-demo.component.html',
+    selector: 'page-design',
+    templateUrl: './page-design.component.html',
     styles: [
         `
             :host ::ng-deep .ant-card-head {
@@ -41,7 +41,7 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
         `
     ]
 })
-export class TreeDemoComponent implements OnInit {
+export class PageDesignComponent implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "layout",

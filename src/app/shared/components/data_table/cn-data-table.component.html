@@ -60,7 +60,14 @@
                 <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
               </ng-container>
               <ng-container *ngIf="!col.editor">
-                <td>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
+                <td *ngIf="col.custom; else text">
+                  <ng-container CnGridItemDirective [state]="'edit'" [config]="col.custom"
+                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
+                    (updateValue)="valueChange($event)"> </ng-container>
+                </td>
+                <ng-template #text>
+                  <td>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
+                </ng-template>
               </ng-container>
 
             </ng-container>

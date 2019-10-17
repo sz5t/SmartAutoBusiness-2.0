@@ -1,0 +1,16 @@
+<nz-row *ngIf="!config.inlineMode;else inlineTmpl" [nzGutter]="config.gutter">
+  <nz-col [nzSpan]="config.span" *ngFor="let item of progressItems">
+    <nz-alert [nzType]="config.bgColor" [nzMessage]="item.title" [nzDescription]="progressTmpl"> </nz-alert>
+    <ng-template #progressTmpl>
+      <nz-progress nz-tooltip [nzTitle]="item.title" [nzPercent]="item.percent" [nzType]="item.type"
+        [nzStatus]="item.status" [nzSuccessPercent]="item.successPercent" [nzShowInfo]="item.showInfo"
+        [nzStrokeLinecap]="item.strokeLinecap"></nz-progress>
+    </ng-template>
+  </nz-col>
+</nz-row>
+
+<ng-template #inlineTmpl>
+  <nz-progress *ngFor="let item of progressItems" nzSize="small" nz-tooltip [nzTitle]="item.title" [nzPercent]="item.percent"
+    [nzType]="item.type" [nzStatus]="item.status" [nzSuccessPercent]="item.successPercent" [nzShowInfo]="item.showInfo"
+    [nzStrokeLinecap]="item.strokeLinecap"></nz-progress>
+</ng-template>

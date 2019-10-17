@@ -1,3 +1,5 @@
+import { CnCalendarComponent } from './components/cn-calendar/cn-calendar.component';
+import { CnGridTagComponent } from './components/data_table/cn-grid-items/cn-grid-tag/cn-grid-tag.component';
 import { CnStepsComponent } from './components/cn-steps/cn-steps.component';
 import { CnDescriptionsComponent } from './components/cn-descriptions/cn-descriptions.component';
 import { CnPageHeaderComponent } from './components/layout/cn-page-header.component';
@@ -84,6 +86,7 @@ import { CnAttributeItemDirective } from '@shared/components/cn-attribute/cn-att
 import { CnAttributeTableFormComponent } from './components/cn-attribute/cn-attribute-items/cn-attribute-table-form/cn-attribute-table-form.component';
 import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { CnStatisticComponent } from './components/cn-statistic/cn-statistic.component';
+import { CnProgressComponent } from './components/cn-progress/cn-progress.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -142,6 +145,7 @@ const COMPONENTS = [
   CnPageComponent,
   CnGridInputComponent,
   CnGridSelectComponent,
+  CnGridTagComponent,
   CnAttributeComponent,
   CnFormCodeEditComponent,
   CnCodeEditComponent,
@@ -154,6 +158,8 @@ const COMPONENTS = [
   CnDescriptionsComponent,
   CnStepsComponent,
   CnStatisticComponent,
+  CnProgressComponent,
+  CnCalendarComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -180,7 +186,7 @@ const DIRECTIVES = [
     DelonFormModule,
     // third libs
     ...THIRDMODULES,
-    NzResizableModule 
+    NzResizableModule
   ],
   declarations: [
     // your components

@@ -1112,7 +1112,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "titleIcon": "right-circle",
                                     "component": "cnDataTable",
                                     "keyId": "id",
-                                    "size": "small",
+                                    "size": "large",
                                     "isBordered": true,
                                     "isFrontPagination": false,
                                     "isPagination": true,
@@ -1129,7 +1129,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         '50px', '100px', '200px', '200px', '200px'
                                     ],
                                     "loadingConfig": {
-                                        "url": "td/DM_TABLE/query",
+                                        "url": "sd/GET_DATA_MODELING_TABLE/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -1184,12 +1184,58 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "title": "是否建模",
                                             "type": "field",
+                                            "field": "buildModelText",
+                                            "hidden": false,
+                                            "showFilter": false,
+                                            "showSort": false,
+                                            // "width": "100px",
+                                            "style": {},
+                                            "custom": {
+                                                "type": "tag",
+                                                "field": "buildModelText",
+                                                "dataMapping": [
+                                                    {
+                                                        "color": "#87d068",
+                                                        "field": "buildModelText",
+                                                        "value": "已建模"
+                                                    },
+                                                    {
+                                                        "color": "#2db7f5",
+                                                        "field": "buildModelText",
+                                                        "value": "无"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "title": "进度",
+                                            "type": "field",
                                             "field": "isBuildModel",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
                                             // "width": "100px",
                                             "style": {},
+                                            "custom": {
+                                                "type": "progress",
+                                                "defaultType": "line",
+                                                "inlineMode": true,
+                                                "dataMapping": [
+                                                    {
+                                                        "name": "percent",
+                                                        "field": "pPercent"
+                                                    },
+                                                    {
+                                                        "name": "status",
+                                                        "field": "pStatus"
+                                                    },
+                                                    {
+                                                        "name": "title",
+                                                        "field": "pTitle"
+                                                    }
+                                                ],
+                                                "showInfo": true
+                                            }
                                         },
                                         // {
                                         //     "title": "创建时间",

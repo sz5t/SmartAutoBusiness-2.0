@@ -1,3 +1,5 @@
+import { CnCalendarComponent } from './../../components/cn-calendar/cn-calendar.component';
+import { CnProgressComponent } from './../../components/cn-progress/cn-progress.component';
 import { CnStatisticComponent } from './../../components/cn-statistic/cn-statistic.component';
 import { CnStepsComponent } from './../../components/cn-steps/cn-steps.component';
 import { CnDescriptionsComponent } from './../../components/cn-descriptions/cn-descriptions.component';
@@ -16,7 +18,9 @@ const components: { [type: string]: Type<any> } = {
     cnTreeTable: CnTreeTableComponent,
     cnDescription: CnDescriptionsComponent,
     cnSteps: CnStepsComponent,
-    cnStatistic: CnStatisticComponent
+    cnStatistic: CnStatisticComponent,
+    cnProgress: CnProgressComponent,
+    cnCalendar: CnCalendarComponent
 };
 
 @Directive({

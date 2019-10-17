@@ -1,3 +1,5 @@
+import { CnGridTagComponent } from './cn-grid-items/cn-grid-tag/cn-grid-tag.component';
+import { CnProgressComponent } from './../cn-progress/cn-progress.component';
 import { Directive, ComponentFactoryResolver, ViewContainerRef, Type, ComponentRef, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { CnGridSelectComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-select/cn-grid-select.component';
 import { CnGridInputComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-input/cn-grid-input.component';
@@ -9,10 +11,12 @@ import { CnAttributePropertyGridComponent } from '@shared/components/cn-attribut
 const components: { [type: string]: Type<any> } = {
   input: CnGridInputComponent,
   select: CnGridSelectComponent,
-  AttributeObject:CnAttributeObjectComponent,
-  AttributeArray:  CnAttributeArrayComponent,
-  AttributeTable:CnAttributeTableComponent,
-  AttributePropertyGrid:CnAttributePropertyGridComponent
+  AttributeObject: CnAttributeObjectComponent,
+  AttributeArray: CnAttributeArrayComponent,
+  AttributeTable: CnAttributeTableComponent,
+  AttributePropertyGrid: CnAttributePropertyGridComponent,
+  progress: CnProgressComponent,
+  tag: CnGridTagComponent
   // label: ,
   // selectMultiple:,
   // datePicker:,
@@ -32,7 +36,7 @@ const components: { [type: string]: Type<any> } = {
 @Directive({
   selector: '[CnGridItemDirective]'
 })
-export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
+export class CnGridItemDirective implements OnInit, OnChanges, OnDestroy {
   @Input() public config;
   @Input() public formCascade;
   @Input() public state;
@@ -48,12 +52,12 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
 
   }
   public ngOnInit() {
-   // console.log('**********', this.config, this.formCascade)
+    // console.log('**********', this.config, this.formCascade)
     if (!components[this.config.type]) {
       const supportedTypes = Object.keys(components).join(', ');
       throw new Error(
         `不支持此类型的组件 (${
-          this.config.type
+        this.config.type
         }).可支持的类型为: ${supportedTypes}`
       );
     }
@@ -66,8 +70,8 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
     this.component.instance.config = this.config;
     this.component.instance.valueConfig = this.valueConfig;
     this.component.instance.state = this.state;
-    
-    
+
+
     // 级联数据接受 liu
     if (this.component.instance.updateValue) {
       this.component.instance.updateValue.subscribe(event => {
@@ -83,7 +87,7 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-   // console.log('****ngOnChanges******', changes, this.formGroup)
+    // console.log('****ngOnChanges******', changes, this.formGroup)
     // ngOnChanges只有在输入值改变的时候才会触发，
     // 如果输入值(@Input)是一个对象，改变对象内的属性的话是不会触发ngOnChanges的。
     // 部分级联需要此处中转，主要是参数等，取值赋值，隐藏显示等功能需要form表单处理。
@@ -93,7 +97,7 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
           //  console.log('触发级联', this.formCascade, this.componentConfig);
 
         }
-      //  console.log('****formCascade******', this.formCascade, this.config.field);
+        //  console.log('****formCascade******', this.formCascade, this.config.field);
         // console.log('ngOnChanges中inputVal变更前值为：' + changes['formCascade'].previousValue);
         //  console.log('ngOnChanges中inputVal变更后值为：' + changes['formCascade'].currentValue);
         //  console.log('ngOnChanges中inputVal是否是一次改变：' + changes['formCascade'].firstChange);
@@ -103,13 +107,13 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
     }
     if (changes.hasOwnProperty('formState')) {
       if (!changes['formState'].firstChange) {
-    //    console.log('****formState******',this.config.field, this.formState);
-       // console.log('****formState******',this.config.field, this.value,this.formState, this.config, JSON.stringify(this.formGroup.value));
+        //    console.log('****formState******',this.config.field, this.formState);
+        // console.log('****formState******',this.config.field, this.value,this.formState, this.config, JSON.stringify(this.formGroup.value));
         if (!components[this.config.type]) {
           const supportedTypes = Object.keys(components).join(', ');
           throw new Error(
             `不支持此类型的组件 (${
-              this.config.type
+            this.config.type
             }).可支持的类型为: ${supportedTypes}`
           );
         }
@@ -128,8 +132,8 @@ export class CnGridItemDirective implements OnInit, OnChanges,OnDestroy {
             this.setValue(event);
           });
         }
-       // if(this.config.field ==='inputname4')
-       // this.formGroup.setValue(this.value);
+        // if(this.config.field ==='inputname4')
+        // this.formGroup.setValue(this.value);
       }
     }
 

@@ -1,3 +1,5 @@
+import { PageDesignComponent } from './page-design.component';
+import { CalendarDemoComponent } from './calendar-demo.component';
 import { BaseInnerMethodManagerComponent } from './base-inner-method-manager.component';
 import { BaseCfgPropertyManagerComponent } from './base-cfg-property-manager.component';
 import { BaseInnerPropertyManagerComponent } from './base-inner-property-manager.component';
@@ -27,7 +29,9 @@ const COMPONENTS = [
   DataSqlModelingComponent,
   BaseCfgPropertyManagerComponent,
   BaseInnerMethodManagerComponent,
-  StepsDemoComponent
+  StepsDemoComponent,
+  CalendarDemoComponent,
+  PageDesignComponent
 ];
 
 const COMPONENTS_NOROUNT = [];

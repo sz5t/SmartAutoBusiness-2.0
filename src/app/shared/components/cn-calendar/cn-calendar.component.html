@@ -1,0 +1,24 @@
+<nz-calendar [(ngModel)]="date" [(nzMode)]="mode" (nzPanelChange)="panelChange($event)"
+  (nzSelectChange)="selectedChange($event)">
+  <ul *nzDateCell="let dateCell">
+    <li class="calendar_list"
+      *ngFor="let item of listData['s' + dateCell.getFullYear() + (dateCell.getMonth() + 1) + dateCell.getDate()]">
+      <nz-tag nz-popover nzPopoverPlacement="left" [nzPopoverContent]="contentTemplate" [nzColor]="item.color">
+        {{item.title}}
+      </nz-tag>
+      <ng-template #contentTemplate>
+        <nz-descriptions [nzTitle]="config.descTitle" [nzLayout]="'horizontal'" nzBordered [nzSize]="'small'"
+          [nzColumn]="2">
+          <nz-descriptions-item *ngFor="let desc of item.itemDescriptions" [nzTitle]="desc.descTitle"
+            [nzSpan]="desc.span">
+            {{desc.descText}}
+          </nz-descriptions-item>
+        </nz-descriptions>
+        <ng-template #title>
+          {{item.title}} <nz-tag [nzColor]="'blue'">{{config.title}}</nz-tag>
+        </ng-template>
+        <button style="margin-top: 5px" nz-button nzType="primary" nzBlock>查看详细</button>
+      </ng-template>
+    </li>
+  </ul>
+</nz-calendar>
