@@ -73,7 +73,8 @@ export class CfgTreeComponent implements OnInit ,OnChanges{
      // 部分级联需要此处中转，主要是参数等，取值赋值，隐藏显示等功能需要form表单处理。
      if (changes.hasOwnProperty('dataList')) {
       if(this.dataList){
-        this.nodes = this.listToAsyncTreeData(this.dataList,'NULL');
+        const d = JSON.parse(JSON.stringify(this.dataList));
+        this.nodes = this.listToAsyncTreeData(d,'NULL');
       }
      }
      console.log('shuChanges:',this.dataList, this.nodes);
@@ -85,7 +86,7 @@ export class CfgTreeComponent implements OnInit ,OnChanges{
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < data.length; i++) {
       if (data[i].parentId === parentid) {
-        temp = this.listToAsyncTreeData(data, data[i].key);
+        temp = this.listToAsyncTreeData(data, data[i].id);
         if (temp.length > 0) {
           data[i]['children'] = temp;
           data[i]['isLeaf'] = false;
@@ -94,6 +95,7 @@ export class CfgTreeComponent implements OnInit ,OnChanges{
         }
         data[i].level = '';
         data[i]['expanded'] = true;
+        data[i]['key'] = data[i]['id'];
         result.push(data[i]);
       }
     }

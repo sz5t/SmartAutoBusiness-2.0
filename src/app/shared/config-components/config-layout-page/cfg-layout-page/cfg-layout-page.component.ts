@@ -1,17 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { CnComponentBase } from '@shared/components/cn-component.base';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 
 @Component({
   selector: 'cfg-layout-page,[cfg-layout-page]',
   templateUrl: './cfg-layout-page.component.html',
   styleUrls: ['./cfg-layout-page.component.less']
 })
-export class CfgLayoutPageComponent implements OnInit {
+export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
+  @Input()
+  public config; // dataTables 的配置参数
+  @Input() initData;
+  @Input() tempData;
+  constructor(
+    @Inject(BSN_COMPONENT_SERVICES)
+    public componentService: ComponentServiceProvider
+) {
+    super(componentService);
+    this.cacheValue = this.componentService.cacheService;
 
-  constructor() { }
+    // init cacheValue
+}
 
   ngOnInit() {
   }
-
+  private _initInnerValue() {
+    if (this.tempData) {
+        this.tempValue = this.tempData;
+    } else {
+        this.tempValue = {};
+    }
+    if (this.initData) {
+        this.initValue = this.initData;
+    } else {
+        this.initValue = {};
+    }
+}
   index = 0;
   disable = false;
   onIndexChange(index: number): void {
@@ -48,7 +73,7 @@ export class CfgLayoutPageComponent implements OnInit {
     // 目前的表设计，逆向难度较大，向纯结构靠拢后，可实现
     this.ts_new = [];
     this.jxlayout(this.c_config,'NULL');
-    console.log("简析当前结构树：", this.ts_new);
+    console.log("简析当前结构树：", this.ts_new, JSON.stringify(this.ts_new));
 
   }
 
@@ -88,7 +113,7 @@ export class CfgLayoutPageComponent implements OnInit {
     if (layoutconfig instanceof Array) { // 数组
       layoutconfig.forEach(item => {
         if (item.hasOwnProperty('container')  ) {
-          this.ts_new.push({ key: item['id'],type:item['type'],title:item['title'], parentId:parentid,container: item['container'] });
+          this.ts_new.push({ id: item['id'],type:item['type'],title:item['title'], parentId:parentid,container: item['container'] });
           if(item['container']!=='')
           this.jxlayout(item[item['container']],item['id']);
         }
@@ -99,7 +124,7 @@ export class CfgLayoutPageComponent implements OnInit {
       if (layoutconfig.hasOwnProperty('container') ) {
         // 下一层布局
 
-        this.ts_new.push({ key: layoutconfig['id'],type:layoutconfig['type'],title:layoutconfig['title'], parentId:parentid, container: layoutconfig['container'] });
+        this.ts_new.push({ id: layoutconfig['id'],type:layoutconfig['type'],title:layoutconfig['title'], parentId:parentid, container: layoutconfig['container'] });
         if( layoutconfig['container']!=='' && layoutconfig[layoutconfig['container']])
         this.jxlayout(layoutconfig[layoutconfig['container']],layoutconfig['id']);
       }

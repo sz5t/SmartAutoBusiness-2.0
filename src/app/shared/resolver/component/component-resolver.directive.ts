@@ -9,6 +9,7 @@ import { CnToolbarComponent } from './../../components/toolbar/cn-toolbar.compon
 import { CnDataTableComponent } from './../../components/data_table/cn-data-table.component';
 import { Directive, OnInit, Input, OnDestroy, ComponentFactoryResolver, ViewContainerRef, ComponentRef, Type } from '@angular/core';
 import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
+import { CfgLayoutPageComponent } from '@shared/config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -20,7 +21,8 @@ const components: { [type: string]: Type<any> } = {
     cnSteps: CnStepsComponent,
     cnStatistic: CnStatisticComponent,
     cnProgress: CnProgressComponent,
-    cnCalendar: CnCalendarComponent
+    cnCalendar: CnCalendarComponent,
+    CfgLayoutPage:CfgLayoutPageComponent
 };
 
 @Directive({
