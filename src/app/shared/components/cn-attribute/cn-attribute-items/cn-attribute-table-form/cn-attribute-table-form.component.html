@@ -59,7 +59,7 @@
 <div nz-row>
     <div nz-col nzSpan="12">
         <nz-card [nzBordered]="true" nzTitle="数组列表">
-            <ng-container CnAttributeItemDirective [state]="'edit'" [config]="{  type: 'AttributeTable', field: 'params',columns:config.columns}"
+            <ng-container CnAttributeItemDirective [state]="'edit'" [config]="{  type: 'AttributeTable',keyId:config.keyId, field: 'params',columns:config.columns}"
                 [attributeConfig]="attributeConfig" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
             </ng-container>
             </nz-card>

@@ -29,7 +29,9 @@ export class CfgLayoutItemComponent implements OnInit {
     console.log('拖动行ondrop临时值', ss);
     this.component = ss;
     this.config.container = 'component';
-    this.config['component'] = { type:ss, component: ss };
+    const fieldIdentity =this.uuID(6);
+    const componentTitle=ss+'组件';
+    this.config['component'] = {id:fieldIdentity,title: componentTitle,type:ss, container: ss };
     console.log('拖拽后组件状态----》', this.component);
   }
   public f_ondragover(e?, d?) {
@@ -60,6 +62,15 @@ export class CfgLayoutItemComponent implements OnInit {
 
 
 
+  public uuID(w) {
+    let s = '';
+    const str =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    for (let i = 0; i < w; i++) {
+      s += str.charAt(Math.round(Math.random() * (str.length - 1)));
+    }
+    return s;
+  }
 
 
 

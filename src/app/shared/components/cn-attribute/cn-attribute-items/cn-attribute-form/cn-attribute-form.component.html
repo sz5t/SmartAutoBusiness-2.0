@@ -17,7 +17,7 @@
                       </ng-template> -->
                   </ng-container>
              
-                <ng-container  *ngIf="!c.type" CnAttributeItemDirective [state]="'edit'" [config]="c.editor" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
+                <ng-container  *ngIf="!c.type && dataList" CnAttributeItemDirective [state]="'edit'" [config]="c.editor" [valueConfig]="{'id':config.keyId?config.keyId:'','value':dataList[c.field]?dataList[c.field]:null}" (updateValue)="valueChange($event)">
                 </ng-container>
               </nz-descriptions-item>
         </ng-container>
@@ -30,7 +30,7 @@
       </ng-container> -->
 
       <ng-container   CnAttributeItemDirective [state]="'edit'"
-      [config]="{  type: 'AttributeTableForm', field: 'params',columns:config.arrayJson.objectJson}" 
+      [config]="{  type: 'AttributeTableForm',keyId:config.keyId, field: 'params',columns:config.arrayJson.objectJson}" 
        [attributeConfig] = "config.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
         </ng-container>
    

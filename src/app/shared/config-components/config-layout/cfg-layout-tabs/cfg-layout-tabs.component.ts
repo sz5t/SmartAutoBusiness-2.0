@@ -18,6 +18,7 @@ export class CfgLayoutTabsComponent implements OnInit {
   public ngOnInit() {
     console.log('CfgLayoutTabsComponent->tabContent', this.config);
     this.tabs = this.config['tabContent'];
+    this.attribute_config = JSON.parse(JSON.stringify(this.config));
   }
 
 
@@ -46,7 +47,7 @@ export class CfgLayoutTabsComponent implements OnInit {
     const title = '布局' + fieldIdentity;
     const titletab = '标签' + fieldIdentitytab;
     const tab = {
-      id: fieldIdentity,
+      id: fieldIdentitytab,
       type: 'tab',
       title: titletab,
       container: "layout",
@@ -75,6 +76,34 @@ export class CfgLayoutTabsComponent implements OnInit {
       }
     }
     this.updateValue.emit(back);
+  }
+
+  attribute_config;
+  attribute_isVisible =false;
+
+  public openAttribute() {
+
+    this.attribute_config = JSON.parse(JSON.stringify(this.config));
+    this.attribute_isVisible = true;
+
+  }
+
+  public attribute_handleCancel() {
+    this.attribute_isVisible = false;
+  }
+  /**
+   * attribute_handleOk
+   */
+  public attribute_handleOk() {
+    this.config['tabContent'].forEach(tab => {
+      this.attribute_config['tabContent'].forEach(tabitem => {
+        if(tab.id ===tabitem.id ){
+          tab.title = tabitem.title;
+        }
+      })
+      
+    });
+    this.attribute_isVisible = false;
   }
 
 }

@@ -11,6 +11,7 @@ export class CfgLayoutComponent implements OnInit {
   @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
   @Output() public updateLayoutValue = new EventEmitter();
+  @Input() public configStatus;      // 配置信息
 
   public layoutType = true;
 
@@ -60,6 +61,10 @@ export class CfgLayoutComponent implements OnInit {
       this.addRow();
     }
 
+    if(this.configStatus){
+      this.configType = true;
+    }
+
   }
 
   /**
@@ -70,8 +75,10 @@ export class CfgLayoutComponent implements OnInit {
     const row = {
       cols: []
     };
+    const title = '行' + fieldIdentity;
     row['id'] = fieldIdentity;
     row['type'] = 'row';
+    row['title'] = title;
     row['container'] = 'cols';
     // console.log('新增行信息', row);
     this.rows.push(row);

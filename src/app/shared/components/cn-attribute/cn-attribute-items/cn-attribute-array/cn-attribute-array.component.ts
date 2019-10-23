@@ -24,7 +24,7 @@ export class CnAttributeArrayComponent extends CnComponentBase  implements OnIni
 
 
   createModal(): void {
-    console.log('createModal');
+    console.log('createModal弹出数组配置',this.attributeConfig);
     this.componentService.modalService.create({
       nzWidth: '85%',
       nzBodyStyle: { overflow: 'auto' },

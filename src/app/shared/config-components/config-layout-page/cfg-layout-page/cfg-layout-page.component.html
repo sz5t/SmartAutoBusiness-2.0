@@ -1,0 +1,72 @@
+<p>页面设计</p>
+<nz-steps [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
+    <nz-step nzTitle="布局设计" [nzDisabled]="disable" nzDescription="设计当前页面的布局结构."></nz-step>
+    <nz-step nzTitle="组件拖拽" nzDescription="给布局上放置组件."></nz-step>
+    <nz-step nzTitle="组件设置" nzDescription="设置每个组件的详细配置信息."></nz-step>
+  </nz-steps>
+  <nz-divider></nz-divider>
+
+  <div>
+
+  <!-- <ng-container cnLayoutResolverDirective [config]="view" *ngFor="let view of currentViews" [initData]="initValue"
+    [tempData]="tempValue">
+  </ng-container> -->
+  <ng-container *ngIf="index ===0">
+  
+    <div nz-row [nzGutter]="6">
+      <div nz-col [nzSpan]="6">
+        <nz-card nzTitle="组件布局树">
+
+          <cfg-tree [(dataList)]="ts_new"> </cfg-tree> 
+        </nz-card>
+    
+      </div>
+      <div nz-col [nzSpan]="18">
+        <cfg-layout [(config)]="c_config" [configStatus]="true"  (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout> 
+      </div>
+    </div> 
+    
+  </ng-container>
+  <ng-container *ngIf="index ===1">
+    <div nz-row [nzGutter]="6">
+        <div nz-col [nzSpan]="4">
+          <nz-card nzTitle="组件选项">
+            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'form')">
+              表单组件
+            </div>
+            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'table')">
+              表格组件
+            </div>
+            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'tree')">
+              树组件
+            </div>
+            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'calendar')">
+              日历组件
+            </div>
+            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'carousel')">
+              走马灯组件
+            </div>
+      
+          </nz-card>
+      
+        </div>
+        <div nz-col [nzSpan]="20" style=" height: 600px; overflow:auto;">
+          <cfg-layout #child1 [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
+        </div>
+      </div> 
+  </ng-container>
+  <ng-container *ngIf="index ===2">
+        <div nz-row [nzGutter]="6">
+                <div nz-col [nzSpan]="16">
+                      <cfg-layout  [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
+                </div>
+                <div nz-col [nzSpan]="8" style=" height: 600px; overflow:auto;">
+                        <cn-attribute></cn-attribute>
+                </div>
+              </div> 
+
+  </ng-container>
+
+</div>
+
+  

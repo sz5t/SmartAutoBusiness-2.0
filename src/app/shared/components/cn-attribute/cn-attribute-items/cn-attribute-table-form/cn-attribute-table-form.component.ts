@@ -11,6 +11,7 @@ export class CnAttributeTableFormComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log("table__form", this.attributeConfig);
   }
 
   col = 8;

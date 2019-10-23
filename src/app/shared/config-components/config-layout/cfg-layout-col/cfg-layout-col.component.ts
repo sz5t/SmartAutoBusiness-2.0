@@ -85,6 +85,7 @@ export class CfgLayoutColComponent implements OnInit {
       };
       row['id'] = fieldIdentity;
       row['type'] = 'row';
+      row['title'] = '行'+fieldIdentity;
       this.rows.push(row);
       this.config['rows'] = this.rows;
       this.config.container = 'rows';
@@ -102,6 +103,8 @@ export class CfgLayoutColComponent implements OnInit {
     if (this.config.container === '') {
       this.config.container = 'tabs';
       this.config['tabs'] = this.tabs;
+      const fieldIdentity = this.uuID(6);
+      this.tabs['id'] = fieldIdentity;
     } else {
       // console.log('**列内添加tabs不允许,条件不满足**');
     }
@@ -114,6 +117,8 @@ export class CfgLayoutColComponent implements OnInit {
     if (this.config.container === '') {
       this.config.container = 'collapse';
       this.config['collapse'] = this.collapse;
+      const fieldIdentity = this.uuID(6);
+      this.collapse['id'] = fieldIdentity;
     } else {
       // console.log('**列内添加Collapse折叠面板不允许,条件不满足**');
     }

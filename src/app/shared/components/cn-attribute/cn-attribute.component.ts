@@ -1938,174 +1938,160 @@ export class CnAttributeComponent implements OnInit {
       "layout": "horizontal",
       "size": "default",
       "panelsform": {
-        "jsonType": "object",
-        "keyId": "9C2B2CE3-6E51-4B1D-A24B-74FAAD515B94",
+        "jsonType": "object", "keyId": "9C2B2CE3-6E51-4B1D-A24B-74FAAD515B94", 
         "objectJson": [{
           "title": "消息发送器",
           "field": "messageSender",
           "type": "ARRAY",
           "array": {
-            "jsonType": "array",
-            "keyId": "E1070799-E75B-4AC9-9A5B-D1A5161B9AC3",
-            "arrayJson": {
-              "jsonType": "object",
-              "keyId": "ARcPQwJCoLE0YZsHuYyGsnFsBRchV2d2",
-              "objectJson": [
-                {
-                  "title": "标识",
+            "jsonType": "array", "keyId": "E1070799-E75B-4AC9-9A5B-D1A5161B9AC3", "arrayJson": {
+              "jsonType": "object", "keyId": "ARcPQwJCoLE0YZsHuYyGsnFsBRchV2d2", "objectJson": [{
+                "title": "标识",
+                "field": "id",
+                "state": "edit",
+                "text": {
+                  "type": "label",
+                  "field": "id"
+
+                },
+                "editor": {
+                  "type": "input",
                   "field": "id",
-                  "state": "edit",
-                  "text": {
-                    "type": "label",
-                    "field": "id"
+                  "placeholder": "请输入"
+                }
 
-                  },
-                  "editor": {
-                    "type": "input",
-                    "field": "id",
-                    "placeholder": "请输入"
-                  }
+              }, {
+                "title": "触发类型",
+                "field": "triggerType",
+                "state": "edit",
+                "text": {
+                  "type": "label",
+                  "field": "triggerType"
 
-                }, {
-                  "title": "触发类型",
+                },
+                "editor": {
+                  "type": "input",
                   "field": "triggerType",
-                  "state": "edit",
-                  "text": {
-                    "type": "label",
-                    "field": "triggerType"
+                  "placeholder": "请输入"
+                }
 
-                  },
-                  "editor": {
-                    "type": "input",
-                    "field": "triggerType",
-                    "placeholder": "请输入"
-                  }
+              }, {
+                "title": "触发内容",
+                "field": "trigger",
+                "state": "edit",
+                "text": {
+                  "type": "label",
+                  "field": "trigger"
 
-                }, {
-                  "title": "触发内容",
+                },
+                "editor": {
+                  "type": "input",
                   "field": "trigger",
-                  "state": "edit",
-                  "text": {
-                    "type": "label",
-                    "field": "trigger"
+                  "placeholder": "请输入"
+                }
 
-                  },
-                  "editor": {
-                    "type": "input",
-                    "field": "trigger",
-                    "placeholder": "请输入"
-                  }
-
-                }, {
-                  "title": "消息数据",
-                  "field": "sendData",
-                  "type": "ARRAY",
-                  "array": {
-                    "jsonType": "array",
-                    "keyId": "C03FD4A4-8598-4638-B153-E7AE45DED9ED",
-                    "arrayJson": {
-                      "jsonType": "object",
-                      "keyId": "lQRfJHrW6sO3fsPd7RgN8ChNtpNCFI62",
-                      "objectJson": [{
-                        "title": "触发前置事件",
+              }, {
+                "title": "消息数据",
+                "field": "sendData",
+                "type": "ARRAY",
+                "array": {
+                  "jsonType": "array", "keyId": "C03FD4A4-8598-4638-B153-E7AE45DED9ED", "arrayJson": {
+                    "jsonType": "object", "keyId": "lQRfJHrW6sO3fsPd7RgN8ChNtpNCFI62", "objectJson": [{
+                      "title": "触发前置事件",
+                      "field": "beforeSender",
+                      "type": "OBJECT",
+                      "object": { "jsonType": "object", "keyId": "0507BEFC-FB7D-40CF-9FBD-2F9F3A4BED70", "objectJson": [] },
+                      "editor": {
+                        "type": "AttributeObject",
                         "field": "beforeSender",
-                        "type": "OBJECT",
-                        "object": {
-                          "jsonType": "object",
-                          "keyId": "0507BEFC-FB7D-40CF-9FBD-2F9F3A4BED70",
-                          "objectJson": []
-                        },
-                        "editor": {
-                          "type": "AttributeObject",
-                          "field": "beforeSender",
-                          "placeholder": "请输入"
-                        }
+                        "placeholder": "请输入"
+                      }
 
-                      }, {
-                        "title": "接收消息的触发类型",
+                    }, {
+                      "title": "接收消息的触发类型",
+                      "field": "receiverTriggerType",
+                      "state": "edit",
+                      "text": {
+                        "type": "label",
+                        "field": "receiverTriggerType"
+
+                      },
+                      "editor": {
+                        "type": "input",
                         "field": "receiverTriggerType",
-                        "state": "edit",
-                        "text": {
-                          "type": "label",
-                          "field": "receiverTriggerType"
+                        "placeholder": "请输入"
+                      }
 
-                        },
-                        "editor": {
-                          "type": "input",
-                          "field": "receiverTriggerType",
-                          "placeholder": "请输入"
-                        }
+                    }, {
+                      "title": "消息接收者",
+                      "field": "receiverId",
+                      "state": "edit",
+                      "text": {
+                        "type": "label",
+                        "field": "receiverId"
 
-                      }, {
-                        "title": "消息接收者",
+                      },
+                      "editor": {
+                        "type": "input",
                         "field": "receiverId",
-                        "state": "edit",
-                        "text": {
-                          "type": "label",
-                          "field": "receiverId"
+                        "placeholder": "请输入"
+                      }
 
-                        },
-                        "editor": {
-                          "type": "input",
-                          "field": "receiverId",
-                          "placeholder": "请输入"
-                        }
+                    }, {
+                      "title": "接受消息的触发内容",
+                      "field": "receiverTrigger",
+                      "state": "edit",
+                      "text": {
+                        "type": "label",
+                        "field": "receiverTrigger"
 
-                      }, {
-                        "title": "接受消息的触发内容",
+                      },
+                      "editor": {
+                        "type": "input",
                         "field": "receiverTrigger",
-                        "state": "edit",
-                        "text": {
-                          "type": "label",
-                          "field": "receiverTrigger"
+                        "placeholder": "请输入"
+                      }
 
-                        },
-                        "editor": {
-                          "type": "input",
-                          "field": "receiverTrigger",
-                          "placeholder": "请输入"
-                        }
-
-                      }]
-                    }
-                  },
-                  "editor": {
-                    "type": "AttributeArray",
-                    "field": "sendData",
-                    "placeholder": "请输入"
+                    }]
                   }
+                },
+                "editor": {
+                  "type": "AttributeArray",
+                  "field": "sendData",
+                  "placeholder": "请输入"
+                }
 
-                }, {
-                  "title": "消息发送者",
+              }, {
+                "title": "消息发送者",
+                "field": "senderId",
+                "state": "edit",
+                "text": {
+                  "type": "label",
+                  "field": "senderId"
+
+                },
+                "editor": {
+                  "type": "input",
                   "field": "senderId",
-                  "state": "edit",
-                  "text": {
-                    "type": "label",
-                    "field": "senderId"
+                  "placeholder": "请输入"
+                }
 
-                  },
-                  "editor": {
-                    "type": "input",
-                    "field": "senderId",
-                    "placeholder": "请输入"
-                  }
+              }, {
+                "title": "触发时机",
+                "field": "triggerMoment",
+                "state": "edit",
+                "text": {
+                  "type": "label",
+                  "field": "triggerMoment"
 
-                }, {
-                  "title": "触发时机",
+                },
+                "editor": {
+                  "type": "input",
                   "field": "triggerMoment",
-                  "state": "edit",
-                  "text": {
-                    "type": "label",
-                    "field": "triggerMoment"
+                  "placeholder": "请输入"
+                }
 
-                  },
-                  "editor": {
-                    "type": "input",
-                    "field": "triggerMoment",
-                    "placeholder": "请输入"
-                  }
-
-                }]
+              }]
             }
           },
           "editor": {
@@ -2114,18 +2100,13 @@ export class CnAttributeComponent implements OnInit {
             "placeholder": "请输入"
           }
 
-        },
-        {
+        }, {
           "title": "消息接收器",
           "field": "messageReceiver",
           "type": "ARRAY",
           "array": {
-            "jsonType": "array",
-            "keyId": "A226BCD3-E42C-4698-851E-CDD49BBD3A19",
-            "arrayJson": {
-              "jsonType": "object",
-              "keyId": "Izgh4qVmohcFHZ7HGwDLqCgZhcYQ4MHS",
-              "objectJson": [{
+            "jsonType": "array", "keyId": "A226BCD3-E42C-4698-851E-CDD49BBD3A19", "arrayJson": {
+              "jsonType": "object", "keyId": "Izgh4qVmohcFHZ7HGwDLqCgZhcYQ4MHS", "objectJson": [{
                 "title": "标识",
                 "field": "id",
                 "state": "edit",
@@ -2145,12 +2126,8 @@ export class CnAttributeComponent implements OnInit {
                 "field": "receiveData",
                 "type": "ARRAY",
                 "array": {
-                  "jsonType": "array",
-                  "keyId": "6F2B0C5C-C59F-4F34-80A1-DB360551A1C3",
-                  "arrayJson": {
-                    "jsonType": "object",
-                    "keyId": "qtbQtpsGHCXGGVuwtpJWSdonqXN9Gtfl",
-                    "objectJson": [{
+                  "jsonType": "array", "keyId": "6F2B0C5C-C59F-4F34-80A1-DB360551A1C3", "arrayJson": {
+                    "jsonType": "object", "keyId": "qtbQtpsGHCXGGVuwtpJWSdonqXN9Gtfl", "objectJson": [{
                       "title": "触发消息内容",
                       "field": "trigger",
                       "state": "edit",
@@ -2185,12 +2162,8 @@ export class CnAttributeComponent implements OnInit {
                       "field": "params",
                       "type": "ARRAY",
                       "array": {
-                        "jsonType": "array",
-                        "keyId": "19A492A8-D01B-471E-B258-2414C7FD5105",
-                        "arrayJson": {
-                          "jsonType": "object",
-                          "keyId": "sy5eudlEDSEQAwduJnzhFvBUho8rityz",
-                          "objectJson": [{
+                        "jsonType": "array", "keyId": "19A492A8-D01B-471E-B258-2414C7FD5105", "arrayJson": {
+                          "jsonType": "object", "keyId": "sy5eudlEDSEQAwduJnzhFvBUho8rityz", "objectJson": [{
                             "title": "固定值",
                             "field": "value",
                             "state": "edit",
@@ -2250,9 +2223,7 @@ export class CnAttributeComponent implements OnInit {
                               "placeholder": "请输入"
                             }
 
-                          },
-                          {
-
+                          }, {
                             "title": "参数写入对象",
                             "field": "valueTo",
                             "state": "edit",
@@ -2267,8 +2238,7 @@ export class CnAttributeComponent implements OnInit {
                               "placeholder": "请输入"
                             }
 
-                          }
-                          ]
+                          }]
                         }
                       },
                       "editor": {
@@ -2310,24 +2280,17 @@ export class CnAttributeComponent implements OnInit {
             "placeholder": "请输入"
           }
 
-        }
-        ]
+        }]
       }
-    },
-    {
+    }, {
       "feild": "condition",
       "active": true,
       "name": "前置条件",
       "disabled": false,
       "layout": "horizontal",
       "size": "default",
-      "panelsform": {
-        "jsonType": "array",
-        "keyId": "72D11F11-9129-4FA9-BE68-478FBFA3970E",
-        "arrayJson": []
-      }
-    },
-    {
+      "panelsform": { "jsonType": "array", "keyId": "72D11F11-9129-4FA9-BE68-478FBFA3970E", "arrayJson": [] }
+    }, {
       "feild": "baseProperties",
       "active": true,
       "name": "基本属性",
@@ -2335,9 +2298,7 @@ export class CnAttributeComponent implements OnInit {
       "layout": "horizontal",
       "size": "default",
       "panelsform": {
-        "jsonType": "object",
-        "keyId": "9B01D70F-4255-40E8-9E3F-CEAD1355AAA7",
-        "objectJson": [{
+        "jsonType": "object", "keyId": "9B01D70F-4255-40E8-9E3F-CEAD1355AAA7", "objectJson": [{
           "title": "是否显示边框",
           "field": "isBordered",
           "state": "edit",
@@ -2579,8 +2540,7 @@ export class CnAttributeComponent implements OnInit {
 
         }]
       }
-    },
-    {
+    }, {
       "feild": "rowActions",
       "active": true,
       "name": "行内操作",
@@ -2588,12 +2548,8 @@ export class CnAttributeComponent implements OnInit {
       "layout": "horizontal",
       "size": "default",
       "panelsform": {
-        "jsonType": "array",
-        "keyId": "A3F056DE-365C-4AB0-A85F-BCCDD34C427D",
-        "arrayJson": {
-          "jsonType": "object",
-          "keyId": "MFYojRxTxcy8rk0WO1GbsAbdw8zU00Cc",
-          "objectJson": [{
+        "jsonType": "array", "keyId": "A3F056DE-365C-4AB0-A85F-BCCDD34C427D", "arrayJson": {
+          "jsonType": "object", "keyId": "MFYojRxTxcy8rk0WO1GbsAbdw8zU00Cc", "objectJson": [{
             "title": "是否隐藏",
             "field": "hidden",
             "state": "edit",
@@ -2642,15 +2598,7 @@ export class CnAttributeComponent implements OnInit {
             "title": "执行操作",
             "field": "execute",
             "type": "ARRAY",
-            "array": {
-              "jsonType": "array",
-              "keyId": "6D2C62BF-9F98-4B70-BCF9-D9AFAA81EF6E",
-              "arrayJson": {
-                "jsonType": "object",
-                "keyId": "1WHTVKcEbARAsLNOE9f5dWfEKt7r9aqJ",
-                "objectJson": []
-              }
-            },
+            "array": { "jsonType": "array", "keyId": "6D2C62BF-9F98-4B70-BCF9-D9AFAA81EF6E", "arrayJson": { "jsonType": "object", "keyId": "1WHTVKcEbARAsLNOE9f5dWfEKt7r9aqJ", "objectJson": [] } },
             "editor": {
               "type": "AttributeArray",
               "field": "execute",
@@ -2722,9 +2670,7 @@ export class CnAttributeComponent implements OnInit {
             "field": "toggle",
             "type": "OBJECT",
             "object": {
-              "jsonType": "object",
-              "keyId": "3694F33A-F035-4339-A45D-E35A146DD234",
-              "objectJson": [{
+              "jsonType": "object", "keyId": "3694F33A-F035-4339-A45D-E35A146DD234", "objectJson": [{
                 "title": "目标属性",
                 "field": "toggleProperty",
                 "state": "edit",
@@ -2759,12 +2705,8 @@ export class CnAttributeComponent implements OnInit {
                 "field": "values",
                 "type": "ARRAY",
                 "array": {
-                  "jsonType": "array",
-                  "keyId": "59A59475-E639-4775-B4A4-CB6BDD170036",
-                  "arrayJson": {
-                    "jsonType": "object",
-                    "keyId": "eGKhdLT5ZcCk6JMqZZ2gxqbbLOjLlgS2",
-                    "objectJson": [{
+                  "jsonType": "array", "keyId": "59A59475-E639-4775-B4A4-CB6BDD170036", "arrayJson": {
+                    "jsonType": "object", "keyId": "eGKhdLT5ZcCk6JMqZZ2gxqbbLOjLlgS2", "objectJson": [{
                       "title": "状态名称",
                       "field": "name",
                       "state": "edit",
@@ -2829,8 +2771,7 @@ export class CnAttributeComponent implements OnInit {
           }]
         }
       }
-    },
-    {
+    }, {
       "feild": "ajaxConfig",
       "active": true,
       "name": "数据操作",
@@ -2838,12 +2779,8 @@ export class CnAttributeComponent implements OnInit {
       "layout": "horizontal",
       "size": "default",
       "panelsform": {
-        "jsonType": "array",
-        "keyId": "87BE8EE5-0CF1-45A8-BF07-D109233C0FB3",
-        "arrayJson": {
-          "jsonType": "object",
-          "keyId": "6y1587c2AfPu0js3mD1MmQXS82qxDX9Y",
-          "objectJson": [{
+        "jsonType": "array", "keyId": "87BE8EE5-0CF1-45A8-BF07-D109233C0FB3", "arrayJson": {
+          "jsonType": "object", "keyId": "6y1587c2AfPu0js3mD1MmQXS82qxDX9Y", "objectJson": [{
             "title": "标识",
             "field": "id",
             "state": "edit",
@@ -2878,12 +2815,8 @@ export class CnAttributeComponent implements OnInit {
             "field": "params",
             "type": "ARRAY",
             "array": {
-              "jsonType": "array",
-              "keyId": "2D542DAF-6AE2-4A79-A8F4-4FAFA4A57408",
-              "arrayJson": {
-                "jsonType": "object",
-                "keyId": "iqOEL2tn6bS1c6nr2S3rHqihhx8WVu1u",
-                "objectJson": [{
+              "jsonType": "array", "keyId": "2D542DAF-6AE2-4A79-A8F4-4FAFA4A57408", "arrayJson": {
+                "jsonType": "object", "keyId": "iqOEL2tn6bS1c6nr2S3rHqihhx8WVu1u", "objectJson": [{
                   "title": "取值属性",
                   "field": "valueName",
                   "state": "edit",
@@ -2985,8 +2918,7 @@ export class CnAttributeComponent implements OnInit {
           }]
         }
       }
-    },
-    {
+    }, {
       "feild": "columns",
       "active": true,
       "name": "数据列",
@@ -2994,12 +2926,8 @@ export class CnAttributeComponent implements OnInit {
       "layout": "horizontal",
       "size": "default",
       "panelsform": {
-        "jsonType": "array",
-        "keyId": "F363D6AB-E933-4F25-B318-61A3D53AE729",
-        "arrayJson": {
-          "jsonType": "object",
-          "keyId": "eMqk5MkVcp5547xLlhR5Twnhc2Eyisuw",
-          "objectJson": [{
+        "jsonType": "array", "keyId": "F363D6AB-E933-4F25-B318-61A3D53AE729", "arrayJson": {
+          "jsonType": "object", "keyId": "eMqk5MkVcp5547xLlhR5Twnhc2Eyisuw", "objectJson": [{
             "title": "是否展开列",
             "field": "showExpand",
             "state": "edit",
@@ -3018,11 +2946,7 @@ export class CnAttributeComponent implements OnInit {
             "title": "自定义样式",
             "field": "style",
             "type": "OBJECT",
-            "object": {
-              "jsonType": "object",
-              "keyId": "4BFCC77A-4192-44D8-ACB5-3DEB0AD5A979",
-              "objectJson": []
-            },
+            "object": { "jsonType": "object", "keyId": "4BFCC77A-4192-44D8-ACB5-3DEB0AD5A979", "objectJson": [] },
             "editor": {
               "type": "AttributeObject",
               "field": "style",
@@ -3124,9 +3048,7 @@ export class CnAttributeComponent implements OnInit {
             "field": "editor",
             "type": "OBJECT",
             "object": {
-              "jsonType": "object",
-              "keyId": "D82FDA08-3F50-470A-9BDF-48AC3A8FF29E",
-              "objectJson": [{
+              "jsonType": "object", "keyId": "D82FDA08-3F50-470A-9BDF-48AC3A8FF29E", "objectJson": [{
                 "title": "编辑字段",
                 "field": "field",
                 "state": "edit",
@@ -3161,12 +3083,8 @@ export class CnAttributeComponent implements OnInit {
                 "field": "options",
                 "type": "ARRAY",
                 "array": {
-                  "jsonType": "array",
-                  "keyId": "61252A71-5EB5-48F9-ABDD-470F60209A76",
-                  "arrayJson": {
-                    "jsonType": "object",
-                    "keyId": "jFnZbo1IJW2z18ybF8gYcym4deTAvATJ",
-                    "objectJson": [{
+                  "jsonType": "array", "keyId": "61252A71-5EB5-48F9-ABDD-470F60209A76", "arrayJson": {
+                    "jsonType": "object", "keyId": "jFnZbo1IJW2z18ybF8gYcym4deTAvATJ", "objectJson": [{
                       "title": "值",
                       "field": "value",
                       "state": "edit",
@@ -3276,21 +3194,15 @@ export class CnAttributeComponent implements OnInit {
           }]
         }
       }
-    },
-    {
+    }, {
       "feild": "afterTrigger",
       "active": true,
       "name": "后置操作",
       "disabled": false,
       "layout": "horizontal",
       "size": "default",
-      "panelsform": {
-        "jsonType": "array",
-        "keyId": "89461DDD-57A5-4E01-928C-4BD715800D0D",
-        "arrayJson": []
-      }
-    },
-    {
+      "panelsform": { "jsonType": "array", "keyId": "89461DDD-57A5-4E01-928C-4BD715800D0D", "arrayJson": [] }
+    }, {
       "feild": "loadingConfig",
       "active": true,
       "name": "数据加载",
@@ -3298,9 +3210,7 @@ export class CnAttributeComponent implements OnInit {
       "layout": "horizontal",
       "size": "default",
       "panelsform": {
-        "jsonType": "object",
-        "keyId": "71E31FF0-D563-46FA-95F5-AEEEF17F9EC5",
-        "objectJson": [{
+        "jsonType": "object", "keyId": "71E31FF0-D563-46FA-95F5-AEEEF17F9EC5", "objectJson": [{
           "title": "执行方式",
           "field": "method",
           "state": "edit",
@@ -3320,12 +3230,8 @@ export class CnAttributeComponent implements OnInit {
           "field": "filter",
           "type": "ARRAY",
           "array": {
-            "jsonType": "array",
-            "keyId": "43D25E68-1DA1-4DA7-913B-5AD057073A32",
-            "arrayJson": {
-              "jsonType": "object",
-              "keyId": "tm23z3H3K18drjk0ADb1xuK8noRVIohY",
-              "objectJson": [{
+            "jsonType": "array", "keyId": "43D25E68-1DA1-4DA7-913B-5AD057073A32", "arrayJson": {
+              "jsonType": "object", "keyId": "tm23z3H3K18drjk0ADb1xuK8noRVIohY", "objectJson": [{
                 "title": "取值参数",
                 "field": "valueName",
                 "state": "edit",
@@ -3399,12 +3305,8 @@ export class CnAttributeComponent implements OnInit {
           "field": "params",
           "type": "ARRAY",
           "array": {
-            "jsonType": "array",
-            "keyId": "76281444-0EA4-4B09-8654-AA27BBB82A81",
-            "arrayJson": {
-              "jsonType": "object",
-              "keyId": "FpLAw6rba1jyacSBBkDAYK8zncs12PY3",
-              "objectJson": [{
+            "jsonType": "array", "keyId": "76281444-0EA4-4B09-8654-AA27BBB82A81", "arrayJson": {
+              "jsonType": "object", "keyId": "FpLAw6rba1jyacSBBkDAYK8zncs12PY3", "objectJson": [{
                 "title": "赋值属性",
                 "field": "valueName",
                 "state": "edit",
@@ -3490,32 +3392,22 @@ export class CnAttributeComponent implements OnInit {
 
         }]
       }
-    },
-    {
+    }, {
       "feild": "dialog",
       "active": true,
       "name": "弹出页",
       "disabled": false,
       "layout": "horizontal",
       "size": "default",
-      "panelsform": {
-        "jsonType": "array",
-        "keyId": "CFA274C9-0FEC-4C52-9589-E26703780FF6",
-        "arrayJson": []
-      }
-    },
-    {
+      "panelsform": { "jsonType": "array", "keyId": "CFA274C9-0FEC-4C52-9589-E26703780FF6", "arrayJson": [] }
+    }, {
       "feild": "beforeTrigger",
       "active": true,
       "name": "前置操作",
       "disabled": false,
       "layout": "horizontal",
       "size": "default",
-      "panelsform": {
-        "jsonType": "array",
-        "keyId": "BF2AC4D8-4091-4321-BAE5-DDDB44400FED",
-        "arrayJson": []
-      }
+      "panelsform": { "jsonType": "array", "keyId": "BF2AC4D8-4091-4321-BAE5-DDDB44400FED", "arrayJson": [] }
     }
   ]
 

@@ -17,7 +17,7 @@ export class CfgLayoutCollapseComponent implements OnInit {
 
   public ngOnInit() {
     this.panels = this.config['collapseContent'] ;
-
+    this.attribute_config = JSON.parse(JSON.stringify(this.config));
     // console.log('Collapsed****:' , this.config);
   }
 
@@ -45,7 +45,7 @@ export class CfgLayoutCollapseComponent implements OnInit {
     const title = '布局' + fieldIdentity;
     const titletab = '面板' + fieldIdentitytab;
     const tab = {
-      id: fieldIdentity,
+      id: fieldIdentitytab,
       type: 'collapsePanel',
       title: titletab,
       active: true,
@@ -62,6 +62,34 @@ export class CfgLayoutCollapseComponent implements OnInit {
 
     }
     this.panels.push(tab);
+  }
+
+  attribute_config;
+  attribute_isVisible =false;
+
+  public openAttribute() {
+
+    this.attribute_config = JSON.parse(JSON.stringify(this.config));
+    this.attribute_isVisible = true;
+
+  }
+
+  public attribute_handleCancel() {
+    this.attribute_isVisible = false;
+  }
+  /**
+   * attribute_handleOk
+   */
+  public attribute_handleOk() {
+    this.config['collapseContent'].forEach(tab => {
+      this.attribute_config['collapseContent'].forEach(tabitem => {
+        if(tab.id ===tabitem.id ){
+          tab.title = tabitem.title;
+        }
+      })
+      
+    });
+    this.attribute_isVisible = false;
   }
 
 }

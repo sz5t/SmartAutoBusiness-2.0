@@ -1,20 +1,23 @@
-<nz-table [nzData]="listOfData" [nzFrontPagination]="false" [nzShowPagination]="false"  [nzFooter]="footer">
+<nz-table [nzData]="dataList" [nzFrontPagination]="false" [nzShowPagination]="false"  [nzFooter]="footer">
         <thead>
           <tr>
 
              <th *ngFor="let c of config.columns">{{c.title}}</th>
-            <th>操作</th>
+            <!-- <th>操作</th> -->
           </tr>
         </thead>
         <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-          <tr *ngFor="let data of listOfData" cdkDrag>
-                <td *ngFor="let c of config.columns">{{data[c.feild]}}</td>
-            <td>  <button nz-button nzType="primary"  style="width: 100%"> <i nz-icon nzType="edit" ></i></button></td>
+          <tr *ngFor="let data of dataList" cdkDrag  (click)="setSelectRow(data, $event)"
+          [ngClass]="{ selectedRow: data['rowSelected'] ? data['rowSelected']: false}"
+          >
+                <td *ngFor="let c of config.columns">{{data[c.field]}}</td>
+            <!-- <td>  <button nz-button nzType="primary"  style="width: 100%"> <i nz-icon nzType="edit" ></i></button></td> -->
           </tr>
         </tbody>
       </nz-table>
       <ng-template #footer>
-            <button nz-button nzType="primary"  style="width: 100%" (click)="createModal()"><i nz-icon nzType="setting"></i>新增</button>
+            <button nz-button nzType="primary"  style="width: 48%" (click)="createModal()"><i nz-icon nzType="file-add" ></i>添加(A)</button>
+            <button nz-button nzType="primary"  style="width: 48%" (click)="createModal()"><i nz-icon nzType="delete"></i>移除(R)</button>
           </ng-template>
 
         

@@ -29,7 +29,7 @@ export class CfgLayoutItemContentDirective  implements OnInit {
 
   }
   public ngOnInit() {
-    if (!components[this.config.component]) {
+    if (!components[this.config.container]) {
       const supportedTypes = Object.keys(components).join(', ');
       throw new Error(
         `不支持此类型的组件 (${

@@ -1,4 +1,4 @@
-<p>cn-attribute works!</p>
+
 
 <!-- <cn-code-edit  [config]="{'mode':'text/x-sql'}"></cn-code-edit> -->
 <!-- <nz-tabset [nzTabPosition]="'top'" [nzType]="'card'">
@@ -72,27 +72,20 @@
   </nz-collapse-panel>
 </nz-collapse>
  -->
-<hr>
-<h2>====新动态属性=====</h2>
+<!-- <h2>====新动态属性=====</h2> -->
 <nz-collapse>
     <nz-collapse-panel *ngFor="let panel of M1_config" [nzHeader]="panel.name" [nzActive]="panel.active" [nzDisabled]="panel.disabled">
       <p style="margin:0;" *ngIf="panel.panelsform">
          <ng-container *ngIf="panel.panelsform.jsonType==='object'">
-            <nz-descriptions nzTitle="" nzBordered [nzLayout]="panel.layout" [nzSize]="panel.size" [nzColumn]="{ xxl: 4, xl: 3, lg: 3, md: 2, sm: 1, xs: 1 }">
+            <div cn-attribute-form [config]="panel.panelsform"></div>
+            <!-- <nz-descriptions nzTitle="" nzBordered [nzLayout]="panel.layout" [nzSize]="panel.size" [nzColumn]="{ xxl: 4, xl: 3, lg: 3, md: 2, sm: 1, xs: 1 }">
                 <ng-container *ngFor="let c of panel.panelsform.objectJson">
                     <nz-descriptions-item [nzTitle]="c.title" nzSpan="2">
                         <ng-container *ngIf="c.type === 'ARRAY'" CnAttributeItemDirective [state]="'edit'" [config]="c.editor"   [attributeConfig] = "c.array" [valueConfig]="{'id':'','value':''}" >
-                            <!-- <nz-input-group [nzAddOnAfterIcon]="'setting'"   style="width: 100%">
-                                <input type="text" nz-input [(ngModel)]="inputValue" />
-                              </nz-input-group> -->
+                       
                         </ng-container>
                         <ng-container *ngIf="c.type === 'OBJECT'" CnAttributeItemDirective [state]="'edit'" [config]="c.editor"   [attributeConfig] = "c.object" [valueConfig]="{'id':'','value':''}" >
-                            <!-- <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
-                                <input type="text" nz-input placeholder="input search text" />
-                              </nz-input-group>
-                              <ng-template #suffixIconButton>
-                                <button nz-button nzType="primary" nzSearch><i nz-icon nzType="search"></i></button>
-                              </ng-template> -->
+                          
                           </ng-container>
                      
                         <ng-container  *ngIf="!c.type" CnAttributeItemDirective [state]="'edit'" [config]="c.editor"  [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
@@ -100,10 +93,10 @@
                       </nz-descriptions-item>
                 </ng-container>
         
-              </nz-descriptions>
+              </nz-descriptions> -->
          </ng-container>
          <ng-container *ngIf="panel.panelsform.jsonType==='array'">
-            <ng-container   CnAttributeItemDirective [state]="'edit'" [config]="{  type: 'AttributeTable', field: 'params',columns:panel.panelsform.arrayJson.objectJson}"  [attributeConfig] = "panel.panelsform.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
+            <ng-container   CnAttributeItemDirective [state]="'edit'" [config]="{  type: 'AttributeTable', keyId:panel.panelsform.keyId, field: 'params',columns:panel.panelsform.arrayJson.objectJson}"  [attributeConfig] = "panel.panelsform.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
               </ng-container>
   
               <!-- <ng-container   CnAttributeItemDirective [state]="'edit'" [config]="{  type: 'AttributePropertyGrid', field: 'params',columns:panel.panelsform.arrayJson.objectJson}" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
@@ -126,3 +119,4 @@
       </p>
     </nz-collapse-panel>
   </nz-collapse>
+

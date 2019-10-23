@@ -51,7 +51,7 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
 
   }
   public ngOnInit() {
-   // console.log('**********', this.config, this.formCascade)
+    console.log('**********', this.valueConfig)
     if (!components[this.config.type]) {
       const supportedTypes = Object.keys(components).join(', ');
       throw new Error(
