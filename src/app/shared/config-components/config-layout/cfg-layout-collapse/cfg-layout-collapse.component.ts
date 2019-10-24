@@ -11,6 +11,7 @@ export class CfgLayoutCollapseComponent implements OnInit {
   @Input() public designStatus;  // 设计状态
   @Output() public updateValue = new EventEmitter();
   public isCollapsed = false;
+  public editTitleState = false;
   public panels = [
   ];
   constructor() { }
@@ -40,10 +41,11 @@ export class CfgLayoutCollapseComponent implements OnInit {
    * addCollapsePanel 给折叠面板添加面板
    */
   public addCollapsePanel() {
-    const fieldIdentity = CommonUtils.uuID(6);
-    const fieldIdentitytab = CommonUtils.uuID(6);
-    const title = '布局' + fieldIdentity;
-    const titletab = '面板' + fieldIdentitytab;
+    const fieldIdentity = CommonUtils.uuID(36);
+    const fieldIdentitytab = CommonUtils.uuID(36);
+    const fieldIdentitytabtitle = CommonUtils.uuID(6);
+    const title = '布局';
+    const titletab = '面板' + fieldIdentitytabtitle;
     const tab = {
       id: fieldIdentitytab,
       type: 'collapsePanel',
@@ -89,7 +91,22 @@ export class CfgLayoutCollapseComponent implements OnInit {
       })
       
     });
+    this.config['title'] =  this.attribute_config['title'];
     this.attribute_isVisible = false;
   }
+
+  public editTitle(e?) {
+    this.editTitleState = true;
+  }
+
+  public onblurtitle(e?, type?) {
+      this.editTitleState = false;
+      event.stopPropagation();
+  }
+  public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+      this.editTitleState = false;
+    }
+}
 
 }

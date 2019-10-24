@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Inject } from '@angular/core';
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 
 @Component({
   selector: 'cfg-layout-page,[cfg-layout-page]',
@@ -24,6 +25,7 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
 }
 
   ngOnInit() {
+    this._initInnerValue();
   }
   private _initInnerValue() {
     if (this.tempData) {
@@ -41,6 +43,7 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
   disable = false;
   onIndexChange(index: number): void {
     this.index = index;
+    // 切换导航，是数据流向保存等操作
   }
 
   public c_config;
@@ -89,21 +92,6 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
 
 
   public ts_new = [];
-  public ts = {
-    "id": "7U8BWW", "type": "layout", "title": "布局7U8BWW", "container": "rows",
-    "rows": [
-      {
-        "cols": [
-          { "id": "1MjHon", "col": "cc", "type": "col", "titlestate": 1, "title": "主记录", "span": 24, "container": "", "size": { "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24 } },
-          { "id": "HjY7Kp", "col": "cc", "type": "col", "titlestate": 1, "title": "子记录", "span": 24, "container": "", "size": { "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24 } }
-        ], "id": "yrCdHD", "type": "row", "container": "cols"
-      }
-    ],
-    "customlayout": []
-  };
-
-
-
 
   /**
    * jxlayout
@@ -134,6 +122,78 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
 
 
   }
+
+    // 构建参数-》下拉选择自加载数据
+    public buildParameters(paramsCfg) {
+      return ParameterResolver.resolve({
+        params: paramsCfg,
+        tempValue: this.tempValue,
+        componentValue: {}, //  组件值？返回值？级联值，需要三值参数
+        initValue: this.initValue,
+        cacheValue: this.cacheValue,
+        router: this.routerValue,
+        cascadeValue: this.cascadeValue
+      });
+    }
+  
+    loadingConfig = {
+      "url": "sd/B_P_D_CONFIG_JSON_P/procedure",  // operation 操作 query
+      "ajaxType": "post",
+      "params": [
+        {
+          "name": "PID",
+          "type": "componentValue",
+          "valueName": "PID",
+          "dataType": "string"
+        },
+        {
+          "name": "TYPE",
+          "type": "value",
+          "valueName": "PID",
+          "dataType": "int",
+          "value": 1
+        },
+      ],
+      "filter": [
+  
+      ]
+    }
+    // 加载数据
+    public async load() {
+  
+      const url = this.loadingConfig.url;
+      const method = this.loadingConfig.ajaxType;
+      const params = {
+        ...this.buildParameters(this.loadingConfig.params)
+      };
+      // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+      const response = await this.componentService.apiService.post(url, params).toPromise();
+       console.log("页面数据json加载", response.data);
+      // if (response.data._procedure_resultset_1[0]['W'] === "") { 
+      //   this.dataList={};
+      // }
+      // else {
+      //   const d = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+      //   this.convertData(d);
+      // }
+  
+  
+  
+    }
+
+    /**
+     * execSaveJson 保存json结构
+     */
+    public execSaveJson() {
+      
+    }
+
+/**
+ * execSaveComponentJson 保存组件结构
+ */
+    public execSaveComponentJson() {
+      
+    }
 
 
 }

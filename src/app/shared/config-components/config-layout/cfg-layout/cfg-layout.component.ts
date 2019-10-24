@@ -16,6 +16,7 @@ export class CfgLayoutComponent implements OnInit {
   public layoutType = true;
 
   public configType = true;
+  public editTitleState =false;
   public rows = [
   ];
   public customlayout = [
@@ -34,8 +35,8 @@ export class CfgLayoutComponent implements OnInit {
     // const ss = cfgConfig();
     // // console.log('===>>>', ss,  ss.localResourceUrl);
     // console.log('布局ngOnInit',this.config);
-    const fieldIdentity = CommonUtils.uuID(6);
-    const title = '布局' + fieldIdentity;
+    const fieldIdentity = CommonUtils.uuID(36);
+    const title = '布局';
     if (!this.config) {
       this.config = {
         id: fieldIdentity,
@@ -71,11 +72,11 @@ export class CfgLayoutComponent implements OnInit {
    * addRow
    */
   public addRow() {
-    const fieldIdentity = this.uuID(6);
+    const fieldIdentity = CommonUtils.uuID(36);
     const row = {
       cols: []
     };
-    const title = '行' + fieldIdentity;
+    const title = '行';
     row['id'] = fieldIdentity;
     row['type'] = 'row';
     row['title'] = title;
@@ -128,16 +129,6 @@ export class CfgLayoutComponent implements OnInit {
     this.updateLayoutValue.emit(back);
   }
 
-  public uuID(w) {
-    let s = '';
-    const str =
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for (let i = 0; i < w; i++) {
-      s += str.charAt(Math.round(Math.random() * (str.length - 1)));
-    }
-    return s;
-  }
-
 
   /**
    * layoutTypeChange
@@ -150,6 +141,20 @@ export class CfgLayoutComponent implements OnInit {
     }
 
   }
+
+  public editTitle(e?) {
+    this.editTitleState = true;
+  }
+
+  public onblurtitle(e?, type?) {
+      this.editTitleState = false;
+      event.stopPropagation();
+  }
+  public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+      this.editTitleState = false;
+    }
+}
 
 
 }

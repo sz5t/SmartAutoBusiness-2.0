@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { CommonUtils } from '@core/utils/common-utils';
 
 @Component({
   selector: 'cfg-layout-item,[cfg-layout-item]',
@@ -29,7 +30,7 @@ export class CfgLayoutItemComponent implements OnInit {
     console.log('拖动行ondrop临时值', ss);
     this.component = ss;
     this.config.container = 'component';
-    const fieldIdentity =this.uuID(6);
+    const fieldIdentity =CommonUtils.uuID(36);
     const componentTitle=ss+'组件';
     this.config['component'] = {id:fieldIdentity,title: componentTitle,type:ss, container: ss };
     console.log('拖拽后组件状态----》', this.component);
@@ -61,16 +62,6 @@ export class CfgLayoutItemComponent implements OnInit {
   }
 
 
-
-  public uuID(w) {
-    let s = '';
-    const str =
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for (let i = 0; i < w; i++) {
-      s += str.charAt(Math.round(Math.random() * (str.length - 1)));
-    }
-    return s;
-  }
 
 
 

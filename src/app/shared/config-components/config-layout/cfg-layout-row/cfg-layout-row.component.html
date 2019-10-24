@@ -1,4 +1,4 @@
-<nz-card *ngIf="!designStatus" nzTitle="行" style="width:100%; border: 1px solid #999999" [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
+<nz-card *ngIf="!designStatus"  [nzTitle]="titleTemplate"  style="width:100%; border: 1px solid #999999" [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </nz-card>
 <ng-template #extraTemplate>
@@ -9,7 +9,7 @@
         <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="移动行" nz-tooltip>
             <i nz-icon type="drag"></i>
         </button>
-        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置行" nz-tooltip>
+        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置行" (click)="openAttribute()" nz-tooltip>
             <i nz-icon type="setting"></i>
         </button>
         <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="删除行" nz-tooltip (click)="deleteRow()">
@@ -21,6 +21,14 @@
     </ng-container>
 
 </ng-template>
+<ng-template #titleTemplate>
+        <ng-container *ngIf="editTitleState">
+            <input nz-input placeholder="标题" [(ngModel)]="config.title" (blur)="onblurtitle($event,'end')" (keyup)="onKeyPress($event,'end')"
+                autofocus/>
+        </ng-container>
+        <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config.title}}
+        </span>
+    </ng-template>
 <!-- 内容 -->
 <ng-template #content>
     <div nz-row [nzGutter]="6">
@@ -35,3 +43,21 @@
 <div *ngIf="designStatus">
         <ng-container  *ngTemplateOutlet="content"></ng-container>
 </div>
+
+
+<nz-modal [(nzVisible)]="attribute_isVisible" nzTitle="属性设置" (nzOnCancel)="attribute_handleCancel($event)" (nzOnOk)="attribute_handleOk($event)">
+
+    <nz-tabset>
+        <nz-tab nzTitle="标题设置">
+            <nz-row>
+                            <nz-col nzSpan="8">
+                                    行标题:
+                                </nz-col>
+                                <div nz-col nzSpan="16">
+                                    <input nz-input placeholder="标题" [(ngModel)]=" attribute_config.title" />
+                                </div>
+            </nz-row>
+        </nz-tab>
+    </nz-tabset>
+
+</nz-modal>

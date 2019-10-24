@@ -13,6 +13,7 @@ export class CfgLayoutTabsComponent implements OnInit {
   @Output() public updateValue = new EventEmitter();
   public bodystyle = { 'background-color': 'lightgreen' };
   public tabs = [];
+  public editTitleState = false;
   constructor(private modalService: NzModalService) { }
 
   public ngOnInit() {
@@ -42,10 +43,11 @@ export class CfgLayoutTabsComponent implements OnInit {
   }
 
   public newTab(): void {
-    const fieldIdentity = CommonUtils.uuID(6);
-    const fieldIdentitytab = CommonUtils.uuID(6);
-    const title = '布局' + fieldIdentity;
-    const titletab = '标签' + fieldIdentitytab;
+    const fieldIdentity = CommonUtils.uuID(36);
+    const fieldIdentitytab = CommonUtils.uuID(36);
+    const fieldIdentitytitle = CommonUtils.uuID(6);
+    const title = '布局';
+    const titletab = '标签' + fieldIdentitytitle;
     const tab = {
       id: fieldIdentitytab,
       type: 'tab',
@@ -103,7 +105,23 @@ export class CfgLayoutTabsComponent implements OnInit {
       })
       
     });
+    this.config['title'] =  this.attribute_config['title'];
+    
     this.attribute_isVisible = false;
   }
+
+  public editTitle(e?) {
+    this.editTitleState = true;
+  }
+
+  public onblurtitle(e?, type?) {
+      this.editTitleState = false;
+      event.stopPropagation();
+  }
+  public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+      this.editTitleState = false;
+    }
+}
 
 }

@@ -1,7 +1,7 @@
 <!-- <ng-template #extraTpl>
   <i nz-icon nzType="setting"></i>
 </ng-template> -->
-<nz-card *ngIf="!designStatus" nzTitle="折叠面板" style="width:100%; border: 1px solid darkolivegreen " [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
+<nz-card *ngIf="!designStatus" [nzTitle]=" titleTemplate" style="width:100%; border: 1px solid darkolivegreen " [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </nz-card>
 <ng-template #extraTemplate>
@@ -19,7 +19,14 @@
   </button>
 </ng-template>
 
-
+<ng-template #titleTemplate>
+    <ng-container *ngIf="editTitleState">
+        <input nz-input placeholder="标题" [(ngModel)]="config.title" (blur)="onblurtitle($event,'end')" (keyup)="onKeyPress($event,'end')"
+            autofocus/>
+    </ng-container>
+    <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config.title}}
+    </span>
+</ng-template>
 <ng-template #content>
     <nz-collapse>
         <nz-collapse-panel *ngFor="let panel of panels" [nzHeader]="panel.title" [nzActive]="panel.active" [nzDisabled]="panel.disabled">
@@ -37,11 +44,21 @@
 <nz-modal [(nzVisible)]="attribute_isVisible" nzTitle="属性设置" (nzOnCancel)="attribute_handleCancel($event)" (nzOnOk)="attribute_handleOk($event)">
 
     <nz-tabset>
-        <nz-tab nzTitle="标题设置">
+        <nz-tab nzTitle="collapse标题设置">
+            <nz-row>
+                    <nz-col nzSpan="8">
+                        collapse标题:
+                    </nz-col>
+                    <div nz-col nzSpan="16">
+                        <input nz-input placeholder="标题" [(ngModel)]=" attribute_config.title" />
+                    </div>
+            </nz-row>
+        </nz-tab>
+        <nz-tab nzTitle="折叠面板标题设置">
             <nz-row>
                     <ng-container  *ngFor="let view of attribute_config['collapseContent']">
                             <nz-col nzSpan="8">
-                                    页签标题:
+                                    面板标题:
                                 </nz-col>
                                 <div nz-col nzSpan="16">
                                     <input nz-input placeholder="标题" [(ngModel)]=" view.title" />

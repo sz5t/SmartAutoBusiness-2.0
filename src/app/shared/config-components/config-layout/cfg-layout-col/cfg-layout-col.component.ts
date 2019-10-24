@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, HostListener, Inject } from '@angular/core';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { CommonUtils } from '@core/utils/common-utils';
 
 @Component({
   selector: 'cfg-layout-col,[cfg-layout-col]',
@@ -40,8 +41,9 @@ export class CfgLayoutColComponent implements OnInit {
   public attribute_isVisible = false; // 属性设置弹出标识
   public attribute_config;
   public titlestate = true;
+  public editTitleState = false;
 
-  constructor(   @Inject(BSN_COMPONENT_SERVICES)
+  constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) { }
 
   public ngOnInit() {
@@ -53,7 +55,7 @@ export class CfgLayoutColComponent implements OnInit {
       this[this.config['container']] = this.config[this.config['container']];
     }
 
-     this.attribute_config = JSON.parse(JSON.stringify(this.config));
+    this.attribute_config = JSON.parse(JSON.stringify(this.config));
   }
   /**
    * delCol 删除列
@@ -78,14 +80,14 @@ export class CfgLayoutColComponent implements OnInit {
     if (this.config.container === '' || this.config.container === 'rows') {
       // console.log('**列内添加行**');
       this.config.container = 'rows'
-      const fieldIdentity = this.uuID(6);
+      const fieldIdentity = CommonUtils.uuID(36);
       const row = {
         cols: [],
         container: "cols"
       };
       row['id'] = fieldIdentity;
       row['type'] = 'row';
-      row['title'] = '行'+fieldIdentity;
+      row['title'] = '行';
       this.rows.push(row);
       this.config['rows'] = this.rows;
       this.config.container = 'rows';
@@ -103,7 +105,7 @@ export class CfgLayoutColComponent implements OnInit {
     if (this.config.container === '') {
       this.config.container = 'tabs';
       this.config['tabs'] = this.tabs;
-      const fieldIdentity = this.uuID(6);
+      const fieldIdentity = CommonUtils.uuID(36);
       this.tabs['id'] = fieldIdentity;
     } else {
       // console.log('**列内添加tabs不允许,条件不满足**');
@@ -117,7 +119,7 @@ export class CfgLayoutColComponent implements OnInit {
     if (this.config.container === '') {
       this.config.container = 'collapse';
       this.config['collapse'] = this.collapse;
-      const fieldIdentity = this.uuID(6);
+      const fieldIdentity = CommonUtils.uuID(36);
       this.collapse['id'] = fieldIdentity;
     } else {
       // console.log('**列内添加Collapse折叠面板不允许,条件不满足**');
@@ -166,15 +168,7 @@ export class CfgLayoutColComponent implements OnInit {
   //   }
   // }
 
-  public uuID(w) {
-    let s = '';
-    const str =
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for (let i = 0; i < w; i++) {
-      s += str.charAt(Math.round(Math.random() * (str.length - 1)));
-    }
-    return s;
-  }
+
 
 
   public valueChangeRow(col?) {
@@ -294,7 +288,7 @@ export class CfgLayoutColComponent implements OnInit {
   public openAttribute() {
 
     this.attribute_config = JSON.parse(JSON.stringify(this.config));
-    if (this.attribute_config.titlestate ===1) {
+    if (this.attribute_config.titlestate === 1) {
       this.titlestate = true;
     } else {
       this.titlestate = false;
@@ -328,5 +322,23 @@ export class CfgLayoutColComponent implements OnInit {
 
   }
 
+
+
+  /**
+   * editTitle
+   */
+  public editTitle(e?) {
+    this.editTitleState = true;
+  }
+
+  public onblurtitle(e?, type?) {
+      this.editTitleState = false;
+      event.stopPropagation();
+  }
+  public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+      this.editTitleState = false;
+    }
+}
 
 }

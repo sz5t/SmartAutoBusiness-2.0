@@ -569,6 +569,36 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         //     "senderId": "afterCitySaveValidation"
                                         // },
                                     ]
+                                },
+                                {
+                                    "id": "cancel_sql_model",
+                                    "url": "sql/cancelModel",
+                                    "urlType": "inner",
+                                    "ajaxType": "post",
+                                    "params": [
+                                        {
+                                            "name": "id",
+                                            "type": "item",
+                                            "valueName": "ID"
+                                        }
+                                    ],
+                                    "outputParameters": [
+
+                                    ],
+                                    "result": [
+                                        {
+                                            "name": "data",
+                                            "showMessageWithNext": 0,
+                                            "message": "message.ajax.state.success",
+                                            "senderId": "afterSQLModelSuccess"
+                                        },
+                                        // {
+                                        //     "name": "validation",
+                                        //     "showMessageWithNext": 0,
+                                        //     "message": "message.ajax.state.success",
+                                        //     "senderId": "afterCitySaveValidation"
+                                        // },
+                                    ]
                                 }
                             ],
                             "builtinConfig": [
@@ -800,6 +830,23 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 }
                                             ]
                                         },
+                                        {
+                                            "id": "M_cancelRows",
+                                            "text": "取消资源",
+                                            "icon": "build",
+                                            "color": "text-success",
+                                            "hidden": false,
+                                            "disabled": false,
+                                            "state": "text",
+                                            "execute": [
+                                                {
+                                                    "triggerType": "OPERATION",
+                                                    "trigger": "EXECUTE_SELECTED_ROW",
+                                                    // "builtinId": "cancel_state_1",
+                                                    "ajaxId": "cancel_sql_model"
+                                                }
+                                            ]
+                                        }
                                     ]
                                 }
                             ]

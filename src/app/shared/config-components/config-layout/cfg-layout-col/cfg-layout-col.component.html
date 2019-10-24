@@ -52,9 +52,14 @@
 </ng-container>
 
 <ng-template #titleTemplate>
-    <span>{{config.title}}
+    <ng-container *ngIf="editTitleState">
+        <input nz-input placeholder="标题" [(ngModel)]="config.title" (blur)="onblurtitle($event,'end')"  (keyup)="onKeyPress($event,'end')" autofocus/>
+    </ng-container>
+    <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config.title}}
         <a *ngIf="!designStatus && config.titlestate ===0"> [隐藏]</a>
     </span>
+
+    
 </ng-template>
 <ng-template #extraTemplate>
   <!-- -->

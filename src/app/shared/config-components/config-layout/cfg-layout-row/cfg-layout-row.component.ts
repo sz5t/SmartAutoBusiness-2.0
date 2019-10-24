@@ -11,6 +11,7 @@ export class CfgLayoutRowComponent implements OnInit {
   @Output() public updateValue = new EventEmitter();
 
   public bodystyle = { 'background-color': '#efefef' };
+  public editTitleState = false;
   constructor() { }
 
   public ngOnInit() {
@@ -23,14 +24,15 @@ export class CfgLayoutRowComponent implements OnInit {
     } else {
       this.addCol();
     }
+    this.attribute_config = JSON.parse(JSON.stringify(this.config));
 
   }
   /**
    * addCol
    */
   public addCol() {
-    const fieldIdentity = CommonUtils.uuID(6);
-    const title = '列' + fieldIdentity;
+    const fieldIdentity = CommonUtils.uuID(36);
+    const title = '列';
     const col = {
       id: fieldIdentity,
       col: 'cc',
@@ -99,14 +101,39 @@ export class CfgLayoutRowComponent implements OnInit {
 
   }
 
-  public uuID(w) {
-    let s = '';
-    const str =
-      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for (let i = 0; i < w; i++) {
-      s += str.charAt(Math.round(Math.random() * (str.length - 1)));
-    }
-    return s;
+
+  attribute_config;
+  attribute_isVisible =false;
+
+  public openAttribute() {
+
+    this.attribute_config = JSON.parse(JSON.stringify(this.config));
+    this.attribute_isVisible = true;
+
   }
 
+  public attribute_handleCancel() {
+    this.attribute_isVisible = false;
+  }
+  /**
+   * attribute_handleOk
+   */
+  public attribute_handleOk() {
+    this.config['title'] =  this.attribute_config['title'];
+    this.attribute_isVisible = false;
+  }
+
+  public editTitle(e?) {
+    this.editTitleState = true;
+  }
+
+  public onblurtitle(e?, type?) {
+      this.editTitleState = false;
+      event.stopPropagation();
+  }
+  public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+      this.editTitleState = false;
+    }
+}
 }

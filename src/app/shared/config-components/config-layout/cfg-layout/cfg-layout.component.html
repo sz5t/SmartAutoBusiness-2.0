@@ -1,4 +1,4 @@
-<nz-card *ngIf="!designStatus" [nzTitle]="config.title" style="width:100%; " [nzExtra]="extraTemplate">
+<nz-card *ngIf="!designStatus" [nzTitle]="titleTemplate" style="width:100%; " [nzExtra]="extraTemplate">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </nz-card>
 <ng-template #content>
@@ -36,7 +36,14 @@
 
 
 </ng-template>
-
+<ng-template #titleTemplate>
+    <ng-container *ngIf="editTitleState">
+        <input nz-input placeholder="标题" [(ngModel)]="config.title" (blur)="onblurtitle($event,'end')" (keyup)="onKeyPress($event,'end')"
+            autofocus/>
+    </ng-container>
+    <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config.title}}
+    </span>
+</ng-template>
 <div *ngIf="designStatus">
     <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
