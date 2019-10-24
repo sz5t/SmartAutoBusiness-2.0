@@ -14,6 +14,8 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
   public config; // dataTables 的配置参数
   @Input() initData;
   @Input() tempData;
+  @Input() public changeValue;
+
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider
@@ -26,6 +28,7 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
 
   ngOnInit() {
     this._initInnerValue();
+    this.setChangeValue(this.changeValue);
   }
   private _initInnerValue() {
     if (this.tempData) {
@@ -38,6 +41,27 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
     } else {
         this.initValue = {};
     }
+}
+public setChangeValue(ChangeValues?) {
+  console.log('changeValue', ChangeValues);
+  // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+  if (ChangeValues && ChangeValues.length > 0) {
+    ChangeValues.forEach(p => {
+      switch (p.valueTo) {
+        case 'tempValue':
+          this.tempValue[p.name] = p.value;
+          break;
+        case 'initValue':
+          this.initValue[p.name] = p.value;
+          break;
+        case 'staticComponentValue':
+          this.staticComponentValue[p.name] = p.value;
+          break;
+
+      }
+    });
+  }
+
 }
   index = 0;
   disable = false;
