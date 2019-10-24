@@ -22,7 +22,7 @@ const components: { [type: string]: Type<any> } = {
     cnStatistic: CnStatisticComponent,
     cnProgress: CnProgressComponent,
     cnCalendar: CnCalendarComponent,
-    CfgLayoutPage:CfgLayoutPageComponent
+    cfgLayoutPage:CfgLayoutPageComponent
 };
 
 @Directive({
