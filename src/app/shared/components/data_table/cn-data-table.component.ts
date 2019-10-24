@@ -1,3 +1,4 @@
+import { CfgLayoutPageComponent } from './../../config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
 import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
 import { BSN_TOOLBAR_TRIGGER } from './../../../core/relations/bsn-trigger/toolbar.trigger.interface';
 import { BSN_DATAGRID_TRIGGER } from './../../../core/relations/bsn-trigger/data-grid.trigger.interface';
@@ -32,6 +33,25 @@ import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 //     upload: BsnUploadComponent,
 //     importExcel: BsnImportExcelComponent
 // };
+const components: { [type: string]: Type<any> } = {
+    form: CnDataFormComponent,
+    cfgLayoutPage: CfgLayoutPageComponent
+    // label: ,
+    // selectMultiple:,
+    // datePicker:,
+    // yearPicker:,
+    // weekPicke:,
+    // rangePicker:,
+    // monthPicker:,
+    // switch:,
+    // radio:,
+    // checkbox:,
+    // treeSelect:,
+    // transfer: ,
+    // gridSelect:,
+    // textarea: ,
+    // customSelect: ,
+  };
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -1149,7 +1169,8 @@ export class CnDataTableComponent extends CnComponentBase
 
         const dialogOptional = {
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
-            nzContent: CnDataFormComponent,
+            nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+            nzContent: components[dialogCfg.form.type],
             nzComponentParams: {
                 config: dialogCfg.form,
                 changeValue: option.changeValue ? option.changeValue.params : []

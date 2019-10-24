@@ -33,7 +33,7 @@
     },
     {
       "text": "页面管理",
-      "i18n": "menu.page.pagemamange",
+      "i18n": "menu.page.pagemanage",
       "group": true,
       "hideInBreadcrumb": true,
       "level": 1,
@@ -41,7 +41,7 @@
       "children": [{
         "text": "页面设计",
         "i18n": "menu.page.design",
-        "icon": "database",
+        "icon": "file",
         "level": 2,
         "link": "/template/pageDesign"
       }]
