@@ -1170,6 +1170,7 @@ export class CnDataTableComponent extends CnComponentBase
         const dialogOptional = {
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+            nzStyle: dialogCfg.style ? dialogCfg.style :null, // style{top:'1px'},
             nzContent: components[dialogCfg.form.type],
             nzComponentParams: {
                 config: dialogCfg.form,

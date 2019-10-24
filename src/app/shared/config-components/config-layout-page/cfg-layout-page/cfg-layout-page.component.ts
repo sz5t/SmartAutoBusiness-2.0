@@ -1,21 +1,23 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, AfterViewInit } from '@angular/core';
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
+import { isArray } from 'util';
 
 @Component({
   selector: 'cfg-layout-page,[cfg-layout-page]',
   templateUrl: './cfg-layout-page.component.html',
   styleUrls: ['./cfg-layout-page.component.less']
 })
-export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
+export class CfgLayoutPageComponent extends CnComponentBase implements OnInit,AfterViewInit {
   @Input()
   public config; // dataTables 的配置参数
   @Input() initData;
   @Input() tempData;
   @Input() public changeValue;
 
+  public modelstyle={'min-height':(window.document.body.clientHeight-160).toString()+'px'};
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider
@@ -26,9 +28,17 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit {
     // init cacheValue
 }
 
-  ngOnInit() {
+  async ngOnInit() {
     this._initInnerValue();
     this.setChangeValue(this.changeValue);
+
+  }
+
+  async ngAfterViewInit(): Promise<void> {
+    console.log('*******ngAfterViewInit********', window.document.body.clientHeight,this.modelstyle);
+  
+    await this.load();
+    this.onIndexChange(0);
   }
   private _initInnerValue() {
     if (this.tempData) {
@@ -63,7 +73,7 @@ public setChangeValue(ChangeValues?) {
   }
 
 }
-  index = 0;
+  index = 4;
   disable = false;
   onIndexChange(index: number): void {
     this.index = index;
@@ -121,7 +131,7 @@ public setChangeValue(ChangeValues?) {
    * jxlayout
    */
   public jxlayout(layoutconfig?, parentid?) {
-    console.log('xxx:',layoutconfig);
+   // console.log('xxx:',layoutconfig);
     if (layoutconfig instanceof Array) { // 数组
       layoutconfig.forEach(item => {
         if (item.hasOwnProperty('container')  ) {
@@ -160,7 +170,7 @@ public setChangeValue(ChangeValues?) {
       });
     }
   
-    loadingConfig = {
+    loadingConfig1 = {
       "url": "sd/B_P_D_CONFIG_JSON_P/procedure",  // operation 操作 query
       "ajaxType": "post",
       "params": [
@@ -182,6 +192,28 @@ public setChangeValue(ChangeValues?) {
   
       ]
     }
+
+    loadingConfig = 
+      {
+        "id": "loadform",
+        "url": "td/SMT_SETTING_LAYOUT/query",
+        "urlType": "inner",
+        "ajaxType": "get",
+        "params": [
+            {
+                "name": "ID",
+                "type": "tempValue",
+                "valueName": "ID"
+            }
+        ],
+        "outputParameters": [
+
+        ],
+        "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
+
+        ]
+    }
+    
     // 加载数据
     public async load() {
   
@@ -191,8 +223,32 @@ public setChangeValue(ChangeValues?) {
         ...this.buildParameters(this.loadingConfig.params)
       };
       // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
-      const response = await this.componentService.apiService.post(url, params).toPromise();
+      // post
+      const response = await this.componentService.apiService.get(url, params).toPromise();
        console.log("页面数据json加载", response.data);
+       let pageV ={};
+       if (isArray(response.data)) {
+        if (response.data && response.data.length > 0) {
+          pageV = response.data[0];
+        }
+      } else {
+        if (response.data) {
+          pageV = response.data;
+        }
+      }
+
+      if(pageV['JSON']){
+    
+          this.c_config =null;
+          this.c_config =JSON.parse( pageV['JSON']);
+          this.ts_new = [];
+          this.jxlayout(this.c_config,'NULL');
+       
+
+
+      
+      }
+      console.log("***",this.c_config );
       // if (response.data._procedure_resultset_1[0]['W'] === "") { 
       //   this.dataList={};
       // }

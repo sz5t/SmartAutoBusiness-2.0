@@ -1,6 +1,7 @@
-<p>页面设计</p>
-<nz-steps [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
-    <nz-step nzTitle="布局设计" [nzDisabled]="disable" nzDescription="设计当前页面的布局结构."></nz-step>
+
+<div  [ngStyle]="modelstyle">
+  <nz-steps [nzCurrent]="index" (nzIndexChange)="onIndexChange($event)">
+    <nz-step nzTitle="布局设计" nzDescription="设计当前页面的布局结构."></nz-step>
     <nz-step nzTitle="组件拖拽" nzDescription="给布局上放置组件."></nz-step>
     <nz-step nzTitle="组件设置" nzDescription="设置每个组件的详细配置信息."></nz-step>
   </nz-steps>
@@ -22,7 +23,7 @@
     
       </div>
       <div nz-col [nzSpan]="18">
-        <cfg-layout [(config)]="c_config" [configStatus]="true"  (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout> 
+        <cfg-layout  [config]="c_config"   [configStatus]="true"  (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout> 
       </div>
     </div> 
     
@@ -51,14 +52,14 @@
       
         </div>
         <div nz-col [nzSpan]="20" style=" height: 600px; overflow:auto;">
-          <cfg-layout #child1 [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
+          <cfg-layout #child1 *ngIf="c_config" [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
         </div>
       </div> 
   </ng-container>
   <ng-container *ngIf="index ===2">
         <div nz-row [nzGutter]="6">
                 <div nz-col [nzSpan]="16">
-                      <cfg-layout  [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
+                      <cfg-layout  *ngIf="c_config"  [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
                 </div>
                 <div nz-col [nzSpan]="8" style=" height: 600px; overflow:auto;">
                         <cn-attribute></cn-attribute>
@@ -68,5 +69,7 @@
   </ng-container>
 
 </div>
+</div>
+
 
   

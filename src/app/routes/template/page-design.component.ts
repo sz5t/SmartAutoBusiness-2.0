@@ -2811,6 +2811,7 @@ export class PageDesignComponent implements OnInit {
                                                         "type": "confirm",
                                                         "title": "版本编辑",
                                                         "width": "100%",
+                                                        "style":{"top":"0px"},
                                                         "cancelText": "取消",
                                                         "okText": "确定",
                                                         "form": {

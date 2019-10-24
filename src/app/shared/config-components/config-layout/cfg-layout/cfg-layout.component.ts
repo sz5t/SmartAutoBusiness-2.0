@@ -12,11 +12,12 @@ export class CfgLayoutComponent implements OnInit {
   @Output() public updateValue = new EventEmitter();
   @Output() public updateLayoutValue = new EventEmitter();
   @Input() public configStatus;      // 配置信息
+  @Input() public configJsonStatus;      // 配置信息
 
   public layoutType = true;
 
   public configType = true;
-  public editTitleState =false;
+  public editTitleState = false;
   public rows = [
   ];
   public customlayout = [
@@ -31,38 +32,39 @@ export class CfgLayoutComponent implements OnInit {
     } else {
 
     }
+    // console.log('===>>>', ss,  ss.localResourceUrl);
+    console.log('布局ngOnInit',this.config);
 
-    // const ss = cfgConfig();
-    // // console.log('===>>>', ss,  ss.localResourceUrl);
-    // console.log('布局ngOnInit',this.config);
-    const fieldIdentity = CommonUtils.uuID(36);
-    const title = '布局';
-    if (!this.config) {
-      this.config = {
-        id: fieldIdentity,
-        type: 'layout',
-        title: title,
-        container: 'rows',
-        rows: this.rows,
-        customlayout: this.customlayout
-      }
-    } else {
-      if (this.config.container) {
-        if (this.config.container === 'rows') {
-          this.layoutType = true;
-        } else {
-          this.layoutType = false;
+      const fieldIdentity = CommonUtils.uuID(36);
+      const title = '布局';
+      if (!this.config) {
+        this.config = {
+          id: fieldIdentity,
+          type: 'layout',
+          title: title,
+          container: 'rows',
+          rows: this.rows,
+          customlayout: this.customlayout
         }
+      } else {
+        if (this.config.container) {
+          if (this.config.container === 'rows') {
+            this.layoutType = true;
+          } else {
+            this.layoutType = false;
+          }
+        }
+        this.configType = false;
+        this.rows = this.config.rows;
+        this.customlayout = this.config.customlayout
       }
-      this.configType = false;
-      this.rows = this.config.rows;
-      this.customlayout = this.config.customlayout
-    }
-    if (this.config.rows.length < 1) {
-      this.addRow();
-    }
+      if (this.config.rows.length < 1) {
+        this.addRow();
+      }
+    
 
-    if(this.configStatus){
+
+    if (this.configStatus) {
       this.configType = true;
     }
 
@@ -147,14 +149,14 @@ export class CfgLayoutComponent implements OnInit {
   }
 
   public onblurtitle(e?, type?) {
-      this.editTitleState = false;
-      event.stopPropagation();
+    this.editTitleState = false;
+    event.stopPropagation();
   }
   public onKeyPress(e?, type?) {
     if (e.code === 'Enter') {
       this.editTitleState = false;
     }
-}
+  }
 
 
 }
