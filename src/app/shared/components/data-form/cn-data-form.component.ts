@@ -527,6 +527,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     //   this.validateForm.controls[key].markAsPristine();
     //   this.validateForm.controls[key].updateValueAndValidity();
     // }
+   console.log("当前表单最新值：", this.validateForm.value); 
   }
 
 

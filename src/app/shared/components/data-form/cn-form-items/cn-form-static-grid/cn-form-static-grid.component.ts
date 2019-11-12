@@ -171,7 +171,10 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   }
 
   public async valueChange(v?) {
-    console.log('valueChange', v);
+    console.log('表单静态表格数据：', v);
+  }
+  public  valueChangeTable(v?) {
+    console.log('valueChangeTable', v);
     //  labelName: 'provinceName',
     // valueName: 'id',
     // ,dataItem: item
@@ -200,6 +203,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     // this.table.selectedRowValue = v;
     if (v && v.length > 0) {
       this.addedRowsData = v;
+      this.value = v;
       const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: this.selectedRowItem };
       this.updateValue.emit(backValue);
       console.log('backValue=>', backValue)
