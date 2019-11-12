@@ -1,0 +1,2160 @@
+{
+  "id": "4K0naM",
+  "type": "layout",
+  "title": "布局4K0naM",
+  "container": "rows",
+  "rows": [
+    {
+      "cols": [
+        {
+          "id": "layout_component_form",
+          "col": "cc",
+          "type": "col",
+          "title": "",
+          "span": 24,
+          "container": "rows",
+          "size": {
+            "nzXs": 24,
+            "nzSm": 24,
+            "nzMd": 24,
+            "nzLg": 24,
+            "nzXl": 24,
+            "nzXXl": 24
+          },
+          "rows": [
+            {
+              "cols": [
+                {
+                  "id": "r5zDHB2-1",
+                  "col": "cc",
+                  "type": "col",
+                  "title": "",
+                  "span": 24,
+                  "container": "component",
+                  "size": {
+                    "nzXs": 24,
+                    "nzSm": 24,
+                    "nzMd": 24,
+                    "nzLg": 24,
+                    "nzXl": 24,
+                    "nzXXl": 24
+                  },
+                  "component": {
+                    "id": "toolbar_edit_component",
+                    "component": "cnToolbar",
+                    "size": "default",
+                    "cascade": {
+                      "messageSender": []
+                    },
+                    "changeValue": [
+                      {
+                        "id": "edit_form_changeValue",
+                        "params": [
+                          {
+                            "name": "CMPT_ID",
+                            "type": "item",
+                            "valueName": "ID",
+                            "valueTo": "staticComponentValue"
+                          }
+                        ]
+                      }
+                    ],
+                    "condition": [
+                      {
+                        "id": "component_condition_edited_none",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "FORM_VALID",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "",
+                                "matchValue": true,
+                                "match": "eq"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "ajaxConfig": [
+                      {
+                        "id": "toolbar_form_component_base_edit",
+                        "url": "td/SMT_BASE_COMPONENT/update",
+                        "urlType": "inner",
+                        "ajaxType": "put",
+                        "params": [
+                          {
+                            "name": "ID",
+                            "type": "componentValue",
+                            "valueName": "ID"
+                          },
+                          {
+                            "name": "NAME",
+                            "type": "componentValue",
+                            "valueName": "NAME",
+                            "dataType": "string"
+                          },
+                          {
+                            "name": "CODE",
+                            "type": "componentValue",
+                            "valueName": "CODE"
+                          },
+                          {
+                            "name": "TYPE",
+                            "type": "componentValue",
+                            "valueName": "TYPE"
+                          },
+                          {
+                            "name": "VERSION",
+                            "type": "componentValue",
+                            "valueName": "VERSION"
+                          },
+                          {
+                            "name": "SORT",
+                            "type": "componentValue",
+                            "valueName": "SORT",
+                            "dataType": "int"
+                          },
+                          {
+                            "name": "STATE",
+                            "type": "componentValue",
+                            "valueName": "STATE"
+                          }
+                        ],
+                        "outputParameters": [],
+                        "result": [
+                          {
+                            "name": "data",
+                            "showMessageWithNext": 0,
+                            "message": "message.ajax.state.success",
+                            "senderId": "afterComponentFormUpdateSuccess"
+                          },
+                          {
+                            "name": "validation",
+                            "showMessageWithNext": 0,
+                            "message": "message.ajax.state.success",
+                            "senderId": "afterCityUpdateFormValidation"
+                          },
+                          {
+                            "name": "error",
+                            "senderId": "toolbar_02"
+                          }
+                        ]
+                      }
+                    ],
+                    "beforeTrigger": [],
+                    "afterTrigger": [
+                      {
+                        "id": "",
+                        "senderId": "view_02",
+                        "sendData": [
+                          {
+                            "beforeSend": [],
+                            "reveicerId": "",
+                            "receiverTriggerType": "BEHAVIOR",
+                            "receiverTrigger": "REFRESH_AS_CHILD",
+                            "params": [
+                              {
+                                "name": "parent_id",
+                                "type": "item",
+                                "valueName": "id"
+                              },
+                              {
+                                "name": "parent_name",
+                                "type": "item",
+                                "valueName": "name"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "builtinConfig": [
+                      {
+                        "id": "edit_state_1",
+                        "event": "formStateChange",
+                        "state": "edit"
+                      },
+                      {
+                        "id": "cancel_state_1",
+                        "event": "formStateChange",
+                        "state": "text"
+                      }
+                    ],
+                    "toolbar": [
+                      {
+                        "targetViewId": "view_business_object_form",
+                        "group": [
+                          {
+                            "id": "toolbar_edit_component_refresh",
+                            "text": "刷新",
+                            "icon": "reload",
+                            "color": "text-primary",
+                            "hidden": false,
+                            "disabled": false,
+                            "execute": [
+                              {
+                                "triggerType": "BEHAVIOR",
+                                "trigger": "REFRESH"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "toolbar_edit_component_edit",
+                            "text": "编辑",
+                            "icon": "edit",
+                            "color": "text-success",
+                            "hidden": false,
+                            "disabled": false,
+                            "state": "text",
+                            "execute": [
+                              {
+                                "triggerType": "STATE",
+                                "trigger": "EDIT_FORM",
+                                "builtinId": "edit_state_1"
+                              }
+                            ],
+                            "toggle": {
+                              "type": "state",
+                              "toggleProperty": "hidden",
+                              "values": [
+                                {
+                                  "name": "edit",
+                                  "value": true
+                                },
+                                {
+                                  "name": "text",
+                                  "value": false
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "id": "toolbar_edit_component_save",
+                            "text": "保存",
+                            "state": "text",
+                            "icon": "save",
+                            "color": "text-primary",
+                            "hidden": false,
+                            "disabled": false,
+                            "execute": [
+                              {
+                                "triggerType": "OPERATION",
+                                "trigger": "EXECUTE",
+                                "ajaxId": "toolbar_form_component_base_edit"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "toolbar_edit_component_cancel",
+                            "text": "取消",
+                            "state": "text",
+                            "icon": "rollback",
+                            "color": "text-grey-darker",
+                            "hidden": false,
+                            "disabled": null,
+                            "execute": [
+                              {
+                                "triggerType": "STATE",
+                                "trigger": "CANCEL",
+                                "builtinId": "cancel_state_1"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "layout_form_component",
+                  "col": "cc",
+                  "type": "col",
+                  "title": "",
+                  "span": 24,
+                  "container": "component",
+                  "size": {
+                    "nzXs": 24,
+                    "nzSm": 24,
+                    "nzMd": 24,
+                    "nzLg": 24,
+                    "nzXl": 24,
+                    "nzXXl": 24
+                  },
+                  "component": {
+                    "id": "view_business_object_form",
+                    "type": "form",
+                    "component": "form",
+                    "state": "new",
+                    "loadingConfig": {
+                      "id": "loadform"
+                    },
+                    "cascade": {
+                      "messageSender": [
+                        {
+                          "id": "afterComponentFormUpdateSuccess",
+                          "senderId": "view_business_object_form",
+                          "sendData": [
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "MESSAGE",
+                              "params": [
+                                {
+                                  "name": "type",
+                                  "type": "value",
+                                  "value": "success"
+                                },
+                                {
+                                  "name": "code",
+                                  "type": "value",
+                                  "value": "message.operation.success"
+                                }
+                              ]
+                            },
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "UPDATE_SELECTED_NODE",
+                              "params": [
+                                {
+                                  "name": "ID",
+                                  "type": "returnValue",
+                                  "valueName": "ID"
+                                },
+                                {
+                                  "name": "NAME",
+                                  "type": "returnValue",
+                                  "valueName": "NAME"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "messageReceiver": [
+                        {
+                          "id": "",
+                          "senderId": "view_tree_component_base",
+                          "receiveData": [
+                            {
+                              "beforeReceive": [],
+                              "triggerType": "BEHAVIOR",
+                              "trigger": "REFRESH_AS_CHILD",
+                              "params": [
+                                {
+                                  "pname": "_ID",
+                                  "cname": "_ID",
+                                  "valueTo": "tempValue"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "formLayout": {
+                      "id": "b86s2i",
+                      "type": "layout",
+                      "title": "表单布局b86s2i",
+                      "rows": [
+                        {
+                          "id": "MefhXa",
+                          "type": "row",
+                          "cols": [
+                            {
+                              "id": "iHspYn",
+                              "col": "cc",
+                              "type": "col",
+                              "title": "列iHspYn",
+                              "span": 24,
+                              "layoutContain": "select",
+                              "size": {
+                                "nzXs": 24,
+                                "nzSm": 24,
+                                "nzMd": 24,
+                                "nzLg": 24,
+                                "ngXl": 24,
+                                "nzXXl": 24
+                              },
+                              "control": {
+                                "id": "res_type"
+                              }
+                            },
+                            {
+                              "id": "ioj0mV1",
+                              "col": "cc",
+                              "type": "col",
+                              "title": "列ioj0mV",
+                              "span": 24,
+                              "layoutContain": "select",
+                              "size": {
+                                "nzXs": 24,
+                                "nzSm": 24,
+                                "nzMd": 24,
+                                "nzLg": 24,
+                                "ngXl": 24,
+                                "nzXXl": 24
+                              },
+                              "control": {
+                                "id": "res_ref_id"
+                              }
+                            },
+                            {
+                              "id": "ioj0mV2",
+                              "col": "cc",
+                              "type": "col",
+                              "title": "列ioj0mV",
+                              "span": 12,
+                              "layoutContain": "select",
+                              "size": {
+                                "nzXs": 24,
+                                "nzSm": 24,
+                                "nzMd": 12,
+                                "nzLg": 12,
+                                "ngXl": 12,
+                                "nzXXl": 12
+                              },
+                              "control": {
+                                "id": "res_refField"
+                              }
+                            },
+                            {
+                              "id": "ioj0mV3",
+                              "col": "cc",
+                              "type": "col",
+                              "title": "列ioj0mV",
+                              "span": 12,
+                              "layoutContain": "select",
+                              "size": {
+                                "nzXs": 24,
+                                "nzSm": 24,
+                                "nzMd": 12,
+                                "nzLg": 12,
+                                "ngXl": 12,
+                                "nzXXl": 12
+                              },
+                              "control": {
+                                "id": "res_refProperty"
+                              }
+                            },
+                            {
+                              "id": "ioj0mV4",
+                              "col": "cc",
+                              "type": "col",
+                              "title": "列ioj0mV",
+                              "span": 12,
+                              "layoutContain": "select",
+                              "size": {
+                                "nzXs": 24,
+                                "nzSm": 24,
+                                "nzMd": 12,
+                                "nzLg": 12,
+                                "ngXl": 12,
+                                "nzXXl": 12
+                              },
+                              "control": {
+                                "id": "res_cascade_del"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "formControls": [
+                      {
+                        "id": "res_type",
+                        "hidden": false,
+                        "title": "资源类型",
+                        "titleConfig": {
+                          "required": true
+                        },
+                        "field": "refResourceType",
+                        "labelSize": {
+                          "span": 3,
+                          "nzXs": {
+                            "span": 3
+                          },
+                          "nzSm": {
+                            "span": 3
+                          },
+                          "nzMd": {
+                            "span": 3
+                          },
+                          "nzLg": {
+                            "span": 3
+                          },
+                          "ngXl": {
+                            "span": 3
+                          },
+                          "nzXXl": {
+                            "span": 3
+                          }
+                        },
+                        "controlSize": {
+                          "span": 18,
+                          "nzXs": 18,
+                          "nzSm": 18,
+                          "nzMd": 18,
+                          "nzLg": 18,
+                          "ngXl": 18,
+                          "nzXXl": 18
+                        },
+                        "state": "edit",
+                        "text": {
+                          "type": "label",
+                          "field": "refResourceType"
+                        },
+                        "editor": {
+                          "type": "select",
+                          "field": "refResourceType",
+                          "placeholder": "请选择",
+                          "options": [
+                            {
+                              "label": "表资源",
+                              "value": 0
+                            },
+                            {
+                              "label": "SQL 资源",
+                              "value": 1
+                            }
+                          ],
+                          "defaultValue": 0,
+                          "labelName": "label",
+                          "valueName": "value"
+                        }
+                      },
+                      {
+                        "id": "res_ref_id",
+                        "hidden": true,
+                        "title": "引用资源",
+                        "titleConfig": {
+                          "required": false
+                        },
+                        "field": "refResourceId",
+                        "labelSize": {
+                          "span": 3,
+                          "nzXs": 3,
+                          "nzSm": 3,
+                          "nzMd": 3,
+                          "nzLg": 3,
+                          "ngXl": 3,
+                          "nzXXl": 3
+                        },
+                        "controlSize": {
+                          "span": 18,
+                          "nzXs": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzSm": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzMd": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzLg": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "ngXl": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzXXl": {
+                            "span": 18,
+                            "offset": 0
+                          }
+                        },
+                        "state": "edit",
+                        "text": {
+                          "type": "label",
+                          "field": "refResourceId"
+                        },
+                        "editor": {
+                          "type": "gridSelect",
+                          "field": "refResourceId",
+                          "layoutName": "resourceList",
+                          "placeholder": "请选择",
+                          "loadingItemConfig": {
+                            "id": "loadformgrid"
+                          },
+                          "defaultValue": "v2.0",
+                          "labelName": "label",
+                          "valueName": "value"
+                        }
+                      },
+                      {
+                        "id": "res_refProperty",
+                        "hidden": true,
+                        "title": "关联属性",
+                        "titleConfig": {
+                          "required": false
+                        },
+                        "field": "refResourceKeyName",
+                        "labelSize": {
+                          "span": 6,
+                          "nzXs": 6,
+                          "nzSm": 6,
+                          "nzMd": 6,
+                          "nzLg": 6,
+                          "ngXl": 6,
+                          "nzXXl": 6
+                        },
+                        "controlSize": {
+                          "span": 18,
+                          "nzXs": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzSm": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzMd": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzLg": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "ngXl": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzXXl": {
+                            "span": 18,
+                            "offset": 0
+                          }
+                        },
+                        "state": "edit",
+                        "text": {
+                          "type": "label",
+                          "field": "refResourceKeyName"
+                        },
+                        "editor": {
+                          "type": "input",
+                          "field": "refResourceKeyName",
+                          "placeholder": "请输入",
+                          "validations": []
+                        }
+                      },
+                      {
+                        "id": "res_refField",
+                        "hidden": true,
+                        "title": "关联列名",
+                        "titleConfig": {
+                          "required": false
+                        },
+                        "field": "refParentResourcePropId",
+                        "labelSize": {
+                          "span": 6,
+                          "nzXs": 6,
+                          "nzSm": 6,
+                          "nzMd": 6,
+                          "nzLg": 6,
+                          "ngXl": 6,
+                          "nzXXl": 6
+                        },
+                        "controlSize": {
+                          "span": 18,
+                          "nzXs": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzSm": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzMd": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzLg": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "ngXl": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzXXl": {
+                            "span": 18,
+                            "offset": 0
+                          }
+                        },
+                        "state": "edit",
+                        "text": {
+                          "type": "label",
+                          "field": "refParentResourcePropId"
+                        },
+                        "editor": {
+                          "type": "input",
+                          "field": "refParentResourcePropId",
+                          "placeholder": "请输入",
+                          "validations": []
+                        }
+                      },
+                      {
+                        "id": "res_cascade_del",
+                        "hidden": true,
+                        "title": "及联删除",
+                        "titleConfig": {
+                          "required": false
+                        },
+                        "field": "isCascadeDelete",
+                        "labelSize": {
+                          "span": 6,
+                          "nzXs": 6,
+                          "nzSm": 6,
+                          "nzMd": 6,
+                          "nzLg": 6,
+                          "ngXl": 6,
+                          "nzXXl": 6
+                        },
+                        "controlSize": {
+                          "span": 18,
+                          "nzXs": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzSm": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzMd": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzLg": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "ngXl": {
+                            "span": 18,
+                            "offset": 0
+                          },
+                          "nzXXl": {
+                            "span": 18,
+                            "offset": 0
+                          }
+                        },
+                        "state": "edit",
+                        "text": {
+                          "type": "label",
+                          "field": "isCascadeDelete"
+                        },
+                        "editor": {
+                          "type": "select",
+                          "field": "isCascadeDelete",
+                          "placeholder": "请输入",
+                          "options": [
+                            {
+                              "label": "是",
+                              "value": 1
+                            },
+                            {
+                              "label": "否",
+                              "value": 0
+                            }
+                          ],
+                          "defaultValue": 0,
+                          "labelName": "label"
+                        }
+                      }
+                    ],
+                    "formControlsPermissions": [
+                      {
+                        "formState": "new",
+                        "formStateContent": {
+                          "isLoad": false,
+                          "loadAjax": {},
+                          "isDefault": true
+                        },
+                        "Controls": [
+                          {
+                            "id": "res_type",
+                            "state": "edit",
+                            "hidden": false,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "ctl_code",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_refField",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_refProperty",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_cascade_del",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "ctl_state",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          }
+                        ]
+                      },
+                      {
+                        "formState": "edit",
+                        "Controls": [
+                          {
+                            "id": "res_type",
+                            "state": "edit",
+                            "hidden": false,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "ctl_code",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_refField",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_refProperty",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_cascade_del",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "ctl_state",
+                            "state": "edit",
+                            "hidden": true,
+                            "readOnly": false
+                          }
+                        ]
+                      },
+                      {
+                        "formState": "text",
+                        "Controls": [
+                          {
+                            "id": "res_type",
+                            "state": "text",
+                            "hidden": false,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "ctl_code",
+                            "state": "text",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_refField",
+                            "state": "text",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_refProperty",
+                            "state": "text",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "res_cascade_del",
+                            "state": "text",
+                            "hidden": true,
+                            "readOnly": false
+                          },
+                          {
+                            "id": "ctl_state",
+                            "state": "text",
+                            "hidden": true,
+                            "readOnly": false
+                          }
+                        ]
+                      }
+                    ],
+                    "ajaxConfig": [
+                      {
+                        "id": "loadform",
+                        "url": "td/SMT_BASE_COMPONENT/query",
+                        "urlType": "inner",
+                        "ajaxType": "get",
+                        "params": [
+                          {
+                            "name": "ID",
+                            "type": "tempValue",
+                            "valueName": "_ID"
+                          }
+                        ],
+                        "outputParameters": [],
+                        "result": []
+                      },
+                      {
+                        "id": "loadformgrid",
+                        "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                        "urlType": "inner",
+                        "ajaxType": "get",
+                        "params": [
+                          {
+                            "name": "ID",
+                            "type": "componentValue",
+                            "valueName": "value"
+                          }
+                        ],
+                        "outputParameters": [],
+                        "result": []
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "4K0naM",
+          "type": "layout",
+          "title": "",
+          "container": "rows",
+          "span": 24,
+          "size": {
+            "nzXs": 24,
+            "nzSm": 24,
+            "nzMd": 24,
+            "nzLg": 24,
+            "nzXl": 24,
+            "nzXXl": 24
+          },
+          "rows": [
+            {
+              "cols": [
+                {
+                  "id": "r5zDHB2-1",
+                  "col": "cc",
+                  "type": "col",
+                  "title": "",
+                  "span": 24,
+                  "container": "component",
+                  "size": {
+                    "nzXs": 24,
+                    "nzSm": 24,
+                    "nzMd": 24,
+                    "nzLg": 24,
+                    "nzXl": 24,
+                    "nzXXl": 24
+                  },
+                  "component": {
+                    "id": "toolbar_002",
+                    "component": "cnToolbar",
+                    "size": "default",
+                    "cascade": {
+                      "messageSender": [
+                        {
+                          "id": "toolbar_02",
+                          "senderId": "view_02",
+                          "triggerType": "OPERATION",
+                          "trigger": "EXECUTE_CHECKED_ROWS",
+                          "triggerMoment": "after",
+                          "sendData": [
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "BEHAVIOR",
+                              "receiverTrigger": "REFRESH_AS_CHILD",
+                              "params": [
+                                {
+                                  "name": "parent_id",
+                                  "type": "item",
+                                  "valueName": "id"
+                                },
+                                {
+                                  "name": "parent_name",
+                                  "type": "item",
+                                  "valueName": "name"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "changeValue": [
+                      {
+                        "id": "edit_form_changeValue",
+                        "params": [
+                          {
+                            "name": "id",
+                            "type": "item",
+                            "valueName": "id",
+                            "valueTo": "tempValue"
+                          }
+                        ]
+                      }
+                    ],
+                    "condition": [
+                      {
+                        "id": "add_state_2",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_CHECKED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              },
+                              {
+                                "type": "element",
+                                "name": "name",
+                                "matchValue": "1",
+                                "match": "eq"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "edit_state_2",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_CHECKED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "city_condition_added_none",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_CHECKED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_ADDED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "city_condition_edited_none",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_EDITED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_CHECKED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "cancel_edit_rows_2_2",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_EDITED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "ajaxConfig": [
+                      {
+                        "id": "add_methods",
+                        "url": "td/SMT_BASE_INNER_METHOD/batchInsert",
+                        "urlType": "inner",
+                        "ajaxType": "post",
+                        "params": [
+                          {
+                            "name": "ID",
+                            "type": "GUID"
+                          },
+                          {
+                            "name": "NAME",
+                            "type": "componentValue",
+                            "valueName": "NAME",
+                            "dataType": "string"
+                          },
+                          {
+                            "name": "CODE",
+                            "type": "componentValue",
+                            "valueName": "CODE"
+                          },
+                          {
+                            "name": "METHOD",
+                            "type": "componentValue",
+                            "valueName": "METHOD"
+                          },
+                          {
+                            "name": "METHOD_TYPE",
+                            "type": "componentValue",
+                            "valueName": "METHOD_TYPE"
+                          },
+                          {
+                            "name": "CMPT_ID",
+                            "type": "tempValue",
+                            "valueName": "_PID"
+                          },
+                          {
+                            "name": "REMARK",
+                            "type": "componentValue",
+                            "valueName": "REMARK"
+                          }
+                        ],
+                        "outputParameters": [],
+                        "result": [
+                          {
+                            "name": "data",
+                            "showMessageWithNext": 0,
+                            "message": "message.ajax.state.success",
+                            "senderId": "afterMethodSaveSuccess"
+                          },
+                          {
+                            "name": "validation",
+                            "message": "message.ajax.state.success",
+                            "senderId": "afterProvinceSaveValidation"
+                          },
+                          {
+                            "name": "error",
+                            "senderId": "toolbar_02"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "edit_methods",
+                        "url": "td/SMT_BASE_INNER_METHOD/batchUpdate",
+                        "urlType": "inner",
+                        "ajaxType": "put",
+                        "params": [
+                          {
+                            "name": "ID",
+                            "type": "componentValue",
+                            "valueName": "ID"
+                          },
+                          {
+                            "name": "NAME",
+                            "type": "componentValue",
+                            "valueName": "NAME",
+                            "dataType": "string"
+                          },
+                          {
+                            "name": "CODE",
+                            "type": "componentValue",
+                            "valueName": "CODE"
+                          },
+                          {
+                            "name": "METHOD",
+                            "type": "componentValue",
+                            "valueName": "METHOD"
+                          },
+                          {
+                            "name": "METHOD_TYPE",
+                            "type": "componentValue",
+                            "valueName": "METHOD_TYPE"
+                          },
+                          {
+                            "name": "CMPT_ID",
+                            "type": "componentValue",
+                            "valueName": "_PID"
+                          },
+                          {
+                            "name": "REMARK",
+                            "type": "componentValue",
+                            "valueName": "REMARK"
+                          }
+                        ],
+                        "outputParameters": [],
+                        "result": [
+                          {
+                            "name": "data",
+                            "showMessageWithNext": 0,
+                            "message": "message.ajax.state.success",
+                            "senderId": "afterComponentSaveSuccess"
+                          },
+                          {
+                            "name": "validation",
+                            "message": "message.ajax.state.success",
+                            "senderId": "aftetProvinceUpdateValidation"
+                          },
+                          {
+                            "name": "error",
+                            "senderId": "toolbar_02"
+                          }
+                        ]
+                      }
+                    ],
+                    "beforeTrigger": [],
+                    "afterTrigger": [
+                      {
+                        "id": "",
+                        "senderId": "view_02",
+                        "sendData": [
+                          {
+                            "beforeSend": [],
+                            "reveicerId": "",
+                            "receiverTriggerType": "BEHAVIOR",
+                            "receiverTrigger": "REFRESH_AS_CHILD",
+                            "params": [
+                              {
+                                "name": "parent_id",
+                                "type": "item",
+                                "valueName": "id"
+                              },
+                              {
+                                "name": "parent_name",
+                                "type": "item",
+                                "valueName": "name"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "toolbar": [
+                      {
+                        "targetViewId": "view_02",
+                        "group": [
+                          {
+                            "id": "M_refresh",
+                            "text": "刷新",
+                            "icon": "reload",
+                            "color": "text-primary",
+                            "hidden": false,
+                            "disabled": false,
+                            "execute": [
+                              {
+                                "triggerType": "BEHAVIOR",
+                                "trigger": "REFRESH"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "M_addRow",
+                            "text": "新增操作",
+                            "icon": "plus",
+                            "color": "text-primary",
+                            "hidden": false,
+                            "disabled": false,
+                            "execute": [
+                              {
+                                "triggerType": "STATE",
+                                "trigger": "ADD_ROW"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "M_updateRow",
+                            "text": "修改操作",
+                            "icon": "edit",
+                            "color": "text-success",
+                            "hidden": false,
+                            "disabled": false,
+                            "state": "text",
+                            "execute": [
+                              {
+                                "triggerType": "STATE",
+                                "trigger": "EDIT_ROWS"
+                              }
+                            ],
+                            "toggle": {
+                              "type": "state",
+                              "toggleProperty": "hidden",
+                              "values": [
+                                {
+                                  "name": "edit",
+                                  "value": true
+                                },
+                                {
+                                  "name": "text",
+                                  "value": false
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "id": "M_deleteRow",
+                            "text": "删除操作",
+                            "icon": "delete",
+                            "color": "text-red-light",
+                            "hidden": false,
+                            "disabled": false,
+                            "execute": [
+                              {
+                                "triggerType": "OPERATION",
+                                "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                "conditionId": "delete_operation_2",
+                                "ajaxId": "delete_row_2"
+                              }
+                            ]
+                          },
+                          {
+                            "id": "M_saveRow",
+                            "text": "保存",
+                            "state": "edit",
+                            "icon": "save",
+                            "color": "text-primary",
+                            "hidden": true,
+                            "disabled": false,
+                            "execute": [
+                              {
+                                "triggerType": "OPERATION",
+                                "trigger": "SAVE_ROWS",
+                                "ajaxId": "add_methods",
+                                "conditionId": "city_condition_added_none"
+                              },
+                              {
+                                "triggerType": "OPERATION",
+                                "trigger": "SAVE_ROWS",
+                                "ajaxId": "edit_methods",
+                                "conditionId": "city_condition_edited_none"
+                              }
+                            ],
+                            "toggle": {
+                              "type": "state",
+                              "toggleProperty": "hidden",
+                              "values": [
+                                {
+                                  "name": "edit",
+                                  "value": false
+                                },
+                                {
+                                  "name": "text",
+                                  "value": true
+                                },
+                                {
+                                  "name": "new",
+                                  "value": false
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "id": "M_cancelrow",
+                            "text": "取消1",
+                            "state": "edit",
+                            "icon": "rollback",
+                            "color": "text-grey-darker",
+                            "hidden": true,
+                            "disabled": null,
+                            "execute": [
+                              {
+                                "triggerType": "STATE",
+                                "trigger": "CANCEL_EDIT_ROWS",
+                                "conditionId": "cancel_edit_rows_2_2"
+                              },
+                              {
+                                "triggerType": "STATE",
+                                "trigger": "CANCEL_NEW_ROWS"
+                              }
+                            ],
+                            "toggle": {
+                              "type": "state",
+                              "toggleProperty": "hidden",
+                              "values": [
+                                {
+                                  "name": "edit",
+                                  "value": false
+                                },
+                                {
+                                  "name": "text",
+                                  "value": true
+                                },
+                                {
+                                  "name": "new",
+                                  "value": false
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "targetViewId": "view_02",
+                        "group": [
+                          {
+                            "name": "M_addSearchRow",
+                            "text": "查询",
+                            "triggerType": "STATE",
+                            "trigger": "SEARCH_ROW",
+                            "actionName": "addSearchRow",
+                            "icon": "search",
+                            "color": "text-primary",
+                            "hidden": false,
+                            "disabled": false,
+                            "execute": [
+                              {
+                                "triggerType": "STATE",
+                                "trigger": "SEARCH_ROW"
+                              }
+                            ]
+                          },
+                          {
+                            "name": "M_cancelSearchRow",
+                            "text": "取消查询",
+                            "icon": "rollback",
+                            "triggerType": "STATE",
+                            "trigger": "CANCEL_SEARCH_ROW",
+                            "actionName": "cancelSearchRow",
+                            "color": "text-grey-darker",
+                            "hidden": false,
+                            "disabled": false,
+                            "execute": [
+                              {
+                                "triggerType": "STATE",
+                                "trigger": "SEARCH_ROW"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "r5zDHB2-1",
+                  "col": "cc",
+                  "type": "col",
+                  "title": "",
+                  "span": 24,
+                  "container": "component",
+                  "size": {
+                    "nzXs": 24,
+                    "nzSm": 24,
+                    "nzMd": 24,
+                    "nzLg": 24,
+                    "nzXl": 24,
+                    "nzXXl": 24
+                  },
+                  "component": {
+                    "id": "view_02",
+                    "title": "操作列表",
+                    "titleIcon": "right-circle",
+                    "component": "cnDataTable",
+                    "keyId": "ID",
+                    "size": "middle",
+                    "isBordered": true,
+                    "isFrontPagination": false,
+                    "isPagination": true,
+                    "isShowSizeChanger": true,
+                    "showTotal": true,
+                    "pageSize": 5,
+                    "showCheckBox": true,
+                    "pageSizeOptions": [
+                      10,
+                      20,
+                      50,
+                      100
+                    ],
+                    "loadingOnInit": false,
+                    "loadingConfig": {
+                      "url": "td/SMT_BASE_INNER_METHOD/query",
+                      "method": "get",
+                      "params": [
+                        {
+                          "name": "CMPT_ID",
+                          "type": "tempValue",
+                          "valueName": "_PID"
+                        }
+                      ],
+                      "filter": []
+                    },
+                    "columns": [
+                      {
+                        "title": "ID",
+                        "type": "field",
+                        "field": "ID",
+                        "hidden": true,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "50px",
+                        "style": {}
+                      },
+                      {
+                        "title": "PID",
+                        "type": "field",
+                        "field": "PID",
+                        "hidden": true,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "50px",
+                        "style": {}
+                      },
+                      {
+                        "title": "操作名称",
+                        "type": "field",
+                        "field": "NAME",
+                        "hidden": false,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "100px",
+                        "style": {},
+                        "editor": {
+                          "type": "input",
+                          "field": "NAME"
+                        }
+                      },
+                      {
+                        "title": "操作编码",
+                        "type": "field",
+                        "field": "CODE",
+                        "hidden": false,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "100px",
+                        "style": {},
+                        "editor": {
+                          "type": "input",
+                          "field": "CODE"
+                        }
+                      },
+                      {
+                        "title": "操作类型",
+                        "type": "field",
+                        "field": "METHOD_TYPE",
+                        "hidden": false,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "100px",
+                        "style": {},
+                        "editor": {
+                          "type": "select",
+                          "field": "METHOD_TYPE",
+                          "placeholder": "请选择",
+                          "defaultValue": "STATE",
+                          "options": [
+                            {
+                              "label": "状态改变",
+                              "value": "STATE"
+                            },
+                            {
+                              "label": "动作",
+                              "value": "ACTION"
+                            },
+                            {
+                              "label": "行为",
+                              "value": "BEHAVIOR"
+                            },
+                            {
+                              "label": "操作",
+                              "value": "OPERATION"
+                            }
+                          ],
+                          "labelName": "label",
+                          "valueName": "value"
+                        }
+                      },
+                      {
+                        "title": "操作",
+                        "type": "field",
+                        "field": "METHOD",
+                        "hidden": false,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "100px",
+                        "style": {},
+                        "editor": {
+                          "type": "input",
+                          "field": "METHOD"
+                        }
+                      },
+                      {
+                        "title": "操作说明",
+                        "type": "field",
+                        "field": "REMARK",
+                        "hidden": false,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "100px",
+                        "style": {},
+                        "editor": {
+                          "type": "input",
+                          "field": "REMARK"
+                        }
+                      }
+                    ],
+                    "cascade": {
+                      "messageSender": [
+                        {
+                          "id": "view2_sender_1",
+                          "senderId": "view_02",
+                          "triggerType": "OPERATION",
+                          "trigger": "SAVE_ROW",
+                          "triggerMoment": "asyncAfter",
+                          "sendData": [
+                            {
+                              "reveicerId": "",
+                              "receiverTriggerType": "STATE",
+                              "receiverTrigger": "STATE_TO_TEXT",
+                              "params": [
+                                {
+                                  "name": "targetViewId",
+                                  "value": "view_02",
+                                  "type": "value"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "view2_sender_2",
+                          "senderId": "view_02",
+                          "triggerType": "OPERATION",
+                          "trigger": "SAVE_ROWS",
+                          "triggerMoment": "asyncAfter",
+                          "sendData": [
+                            {
+                              "reveicerId": "",
+                              "receiverTriggerType": "STATE",
+                              "receiverTrigger": "STATE_TO_TEXT",
+                              "params": [
+                                {
+                                  "name": "targetViewId",
+                                  "value": "view_02",
+                                  "type": "value"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "view2_sender_3",
+                          "senderId": "view_02",
+                          "triggerType": "STATE",
+                          "trigger": "CANCEL_EDIT_ROW",
+                          "triggerMoment": "after",
+                          "sendData": [
+                            {
+                              "reveicerId": "",
+                              "receiverTriggerType": "STATE",
+                              "receiverTrigger": "STATE_TO_TEXT",
+                              "conditionId": "cancel_edit_cities",
+                              "params": [
+                                {
+                                  "name": "targetViewId",
+                                  "value": "view_02",
+                                  "type": "value"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "view2_sender_04",
+                          "senderId": "view_02",
+                          "triggerType": "STATE",
+                          "trigger": "CANCEL_NEW_ROW",
+                          "triggerMoment": "after",
+                          "sendData": [
+                            {
+                              "reveicerId": "",
+                              "receiverTriggerType": "STATE",
+                              "receiverTrigger": "STATE_TO_TEXT",
+                              "conditionId": "cancel_add_cities",
+                              "params": [
+                                {
+                                  "name": "targetViewId",
+                                  "value": "view_02",
+                                  "type": "value"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "grid_sender_05",
+                          "senderId": "view_02",
+                          "triggerType": "STATE",
+                          "trigger": "EDIT_ROW",
+                          "triggerMoment": "after",
+                          "sendData": [
+                            {
+                              "reveicerId": "",
+                              "receiverTriggerType": "STATE",
+                              "receiverTrigger": "STATE_TO_EDIT",
+                              "params": [
+                                {
+                                  "name": "targetViewId",
+                                  "value": "view_02",
+                                  "type": "value"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "grid_sender_08",
+                          "senderId": "view_02",
+                          "triggerType": "ACTION",
+                          "trigger": "CONFIRM",
+                          "triggerMoment": "after",
+                          "sendData": [
+                            {
+                              "reveicerId": "",
+                              "receiverTriggerType": "STATE",
+                              "receiverTrigger": "STATE_TO_TEXT",
+                              "params": [
+                                {
+                                  "name": "targetViewId",
+                                  "value": "view_tree_component_base",
+                                  "type": "value"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "afterComponentSaveSuccess",
+                          "senderId": "view_02",
+                          "sendData": [
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "MESSAGE",
+                              "params": [
+                                {
+                                  "name": "type",
+                                  "type": "value",
+                                  "value": "success"
+                                },
+                                {
+                                  "name": "code",
+                                  "type": "value",
+                                  "value": "message.operation.success"
+                                }
+                              ]
+                            },
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "APPEND_CHILD_TO_SELECTED_NODE",
+                              "params": [
+                                {
+                                  "name": "key",
+                                  "type": "addedRows",
+                                  "valueName": "ID"
+                                },
+                                {
+                                  "name": "parentId",
+                                  "type": "addedRows",
+                                  "valueName": "PID"
+                                },
+                                {
+                                  "name": "parentId",
+                                  "type": "addedRows",
+                                  "valueName": "PID"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "afterCityUpdateSuccessfully",
+                          "senderId": "view_02",
+                          "sendData": [
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "MESSAGE",
+                              "params": [
+                                {
+                                  "name": "type",
+                                  "type": "value",
+                                  "value": "success"
+                                },
+                                {
+                                  "name": "message",
+                                  "type": "value",
+                                  "value": "操作完成!"
+                                }
+                              ]
+                            },
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+                              "params": [
+                                {
+                                  "name": "id",
+                                  "type": "editedRows",
+                                  "valueName": "id"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "afterCitySaveValidation",
+                          "senderId": "view_02",
+                          "sendData": [
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "SHOW_INVALIDATE_ADDED_ROWS"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "afterCityUpdateValidation",
+                          "senderId": "view_02",
+                          "sendData": [
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
+                            }
+                          ]
+                        },
+                        {
+                          "id": "afterComponentFormUpdateSuccess",
+                          "senderId": "view_02",
+                          "sendData": [
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "MESSAGE",
+                              "params": [
+                                {
+                                  "name": "type",
+                                  "type": "value",
+                                  "value": "success"
+                                },
+                                {
+                                  "name": "code",
+                                  "type": "value",
+                                  "value": "operation.code.success"
+                                }
+                              ]
+                            },
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "LOAD_REFRESH_DATA",
+                              "params": [
+                                {
+                                  "name": "id",
+                                  "type": "addedRows",
+                                  "valueName": "id"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "afterCityUpdateFormValidation",
+                          "senderId": "view_02",
+                          "sendData": [
+                            {
+                              "beforeSend": {},
+                              "reveicerId": "",
+                              "receiverTriggerType": "ACTION",
+                              "receiverTrigger": "MESSAGE",
+                              "params": [
+                                {
+                                  "name": "type",
+                                  "type": "value",
+                                  "value": "warning"
+                                },
+                                {
+                                  "name": "message",
+                                  "type": "validation",
+                                  "valueName": "code"
+                                },
+                                {
+                                  "name": "field",
+                                  "type": "validation",
+                                  "valueName": "field"
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ],
+                      "messageReceiver": [
+                        {
+                          "id": "",
+                          "senderId": "view_tree_component_base",
+                          "receiveData": [
+                            {
+                              "beforeReceive": [],
+                              "triggerType": "BEHAVIOR",
+                              "trigger": "REFRESH_AS_CHILD",
+                              "params": [
+                                {
+                                  "pname": "_PID",
+                                  "cname": "_PID",
+                                  "valueTo": "tempValue"
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "id": "",
+                          "senderId": "view_02",
+                          "receiveData": [
+                            {
+                              "beforeReceive": [],
+                              "triggerType": "ACTION",
+                              "trigger": "MESSAGE"
+                            },
+                            {
+                              "beforeReceive": [],
+                              "triggerType": "ACTION",
+                              "trigger": "APPEND_CHILD_TO_SELECTED_NODE"
+                            },
+                            {
+                              "beforeReceive": [],
+                              "triggerType": "ACTION",
+                              "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
+                            },
+                            {
+                              "beforeReceive": [],
+                              "triggerType": "ACTION",
+                              "trigger": "SHOW_INVALIDATE_ADDED_ROWS"
+                            },
+                            {
+                              "beforeReceive": [],
+                              "triggerType": "ACTION",
+                              "trigger": "SHOW_INVALIDATE_EDITED_ROWS"
+                            },
+                            {
+                              "beforeReceive": [],
+                              "triggerType": "ACTION",
+                              "trigger": "LOAD_REFRESH_DATA"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "condition": [
+                      {
+                        "id": "add_cities_state",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_CHECKED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              },
+                              {
+                                "type": "element",
+                                "name": "name",
+                                "matchValue": "1",
+                                "match": "eq"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "edit_cities_state",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_CHECKED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "add_cities",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_CHECKED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_ADDED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "edit_cities",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_EDITED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_CHECKED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "gt"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "cancel_edit_cities",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_EDITED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "eq"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "id": "cancel_add_cities",
+                        "state": [
+                          {
+                            "type": "component",
+                            "valueName": "ROWS_ADDED",
+                            "expression": [
+                              {
+                                "type": "property",
+                                "name": "length",
+                                "matchValue": 0,
+                                "match": "eq"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "ajaxConfig": []
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "id": "3vlDRq",
+      "type": "row"
+    }
+  ]
+}

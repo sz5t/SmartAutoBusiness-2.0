@@ -28,6 +28,13 @@
           "icon": "database",
           "level": 2,
           "link": "/template/sqlmodeling"
+        },
+        {
+          "text": "业务建模",
+          "i18n": "menu.data.businessmodeling",
+          "icon": "database",
+          "level": 2,
+          "link": "/template/businessmodeling"
         }
       ]
     },

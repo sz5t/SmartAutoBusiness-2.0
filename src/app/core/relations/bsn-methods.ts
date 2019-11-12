@@ -23,6 +23,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     UPLOAD: 'showUpload',
     DIALOG_BATCH: 'showBatchDialog',
     CONFIRM: 'showConfirm',
+    CHECKED_ITEMS_IDS_CONFIRM: "showCheckedItemsIdsConfirm",
     MESSAGE: 'showMessage',
     LOAD_REFRESH_DATA: 'loadRefreshData',
 

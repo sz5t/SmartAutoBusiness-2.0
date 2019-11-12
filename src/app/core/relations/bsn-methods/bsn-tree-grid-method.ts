@@ -23,6 +23,7 @@ export const CN_TREE_GRID_METHOD: ITreeGridTrigger = {
     UPLOAD: 'showUpload',
     DIALOG_BATCH: 'showBatchDialog',
     CONFIRM: 'showConfirm',
+    LAYOUT_DIALOG: 'showLayoutDialog',
     MESSAGE: 'showMessage',
     LOAD_REFRESH_DATA: 'loadRefreshData',
 

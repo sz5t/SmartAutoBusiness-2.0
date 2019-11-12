@@ -14,6 +14,7 @@ import { CfgFormDemoComponent } from './cfg-form-demo.component';
 import { TreeDemoComponent } from './tree-demo.component';
 import { TreeTableDemoComponent } from './tree-table-demo.component';
 import { StepsDemoComponent } from './steps-demo.component';
+import { DataBusinessModelingComponent } from './data-business-modeling.component';
 
 
 const routes: Routes = [
@@ -30,7 +31,8 @@ const routes: Routes = [
   { path: 'configPropertyManager', component: BaseCfgPropertyManagerComponent },
   { path: 'innerMethodManager', component: BaseInnerMethodManagerComponent },
   { path: 'calendarDemo', component: CalendarDemoComponent },
-  { path: 'pageDesign', component: PageDesignComponent }
+  { path: 'pageDesign', component: PageDesignComponent },
+  { path: 'businessmodeling', component: DataBusinessModelingComponent },
 ];
 
 @NgModule({

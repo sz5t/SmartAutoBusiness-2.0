@@ -88,6 +88,8 @@ import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { CnStatisticComponent } from './components/cn-statistic/cn-statistic.component';
 import { CnProgressComponent } from './components/cn-progress/cn-progress.component';
 import { CfgLayoutPageComponent } from './config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
+import { CnStaticTableComponent } from './components/data_table/cn-static-table.component';
+import { CnFormStaticGridComponent } from './components/data-form/cn-form-items/cn-form-static-grid/cn-form-static-grid.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -161,7 +163,9 @@ const COMPONENTS = [
   CnStepsComponent,
   CnStatisticComponent,
   CnProgressComponent,
-  CnCalendarComponent
+  CnCalendarComponent,
+  CnStaticTableComponent,
+  CnFormStaticGridComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [

@@ -2061,7 +2061,7 @@ export class CfgFormDemoComponent implements OnInit {
               "pageSize": 5,
               "showCheckBox": true,
               "pageSizeOptions": [10, 20, 50, 100],
-              "loadingOnInit": true,
+              "loadingOnInit": false,
               // "scroll": {
               //     "y": "300px"
               // },
@@ -2069,7 +2069,7 @@ export class CfgFormDemoComponent implements OnInit {
                 '50px', '100px', '200px', '200px', '200px'
               ],
               "loadingConfig": {
-                "url": "province/page",
+                "url": "",
                 "method": "get",
                 "params": [
 
@@ -2102,7 +2102,7 @@ export class CfgFormDemoComponent implements OnInit {
                   editor: {
                     "type": "input",
                     "field": "provinceName",
-                    "defaultValue":'默认值'
+                    "defaultValue": '默认值'
                   }
                 },
                 {
@@ -2139,12 +2139,12 @@ export class CfgFormDemoComponent implements OnInit {
                     "field": "areaCode",
                     "placeholder": "请输入",
                     options: [
-                      { label: '东方不败', value:0 },
-                      { label: '独孤求败', value:1 },
+                      { label: '东方不败', value: 0 },
+                      { label: '独孤求败', value: 1 },
                       { label: '西门吹雪', value: 2 },
                       { label: '陆小凤', value: 3 },
                     ],
-                    "defaultValue":3,
+                    "defaultValue": 3,
                     labelName: 'label',
                     valueName: 'value',
                   }
@@ -2989,17 +2989,17 @@ export class CfgFormDemoComponent implements OnInit {
                 {
                   "id": "add_state_1",
                   event: "formStateChange", // 内置方法
-                  state:"insert",
+                  state: "insert",
                 },
                 {
                   "id": "edit_state_1",
                   event: "formStateChange", // 内置方法
-                  state:"update",
+                  state: "update",
                 },
                 {
                   "id": "cancel_state_1",
                   event: "formStateChange", // 内置方法
-                  state:"text",
+                  state: "text",
                 },
               ],
               "beforeTrigger": [
@@ -4143,9 +4143,9 @@ export class CfgFormDemoComponent implements OnInit {
                   "text": { // 文本展示字段
                     "type": "codeEdit",
                     "field": "remark17",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                    "mode":"text/x-sql",
-                    "autofocus":false,
-                    "readOnly":true,
+                    "mode": "text/x-sql",
+                    "autofocus": false,
+                    "readOnly": true,
                     "placeholder": "请输入",
                     "autosize": {
                       minRows: 2, maxRows: 6
@@ -4157,11 +4157,11 @@ export class CfgFormDemoComponent implements OnInit {
                   "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                     "type": "codeEdit",
                     "field": "remark17",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                    "mode":"text/x-sql",
+                    "mode": "text/x-sql",
                     "placeholder": "请输入",
-                    "autofocus":true,
-                    "readOnly":false,
-                    "height":800,
+                    "autofocus": true,
+                    "readOnly": false,
+                    "height": 800,
                     "autosize": {
                       minRows: 2, maxRows: 6
                     },
@@ -4171,7 +4171,7 @@ export class CfgFormDemoComponent implements OnInit {
                   }
                 },
 
-                
+
 
 
 

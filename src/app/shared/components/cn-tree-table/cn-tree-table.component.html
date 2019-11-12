@@ -4,7 +4,7 @@
   <button nz-button (click)="executeCheckedRows($event)">Click ChechedRows</button>
 </div>-->
 
-<nz-table #dataTable [nzLoading]="isLoading" [nzShowSizeChanger]="config.isShowSizeChanger"
+<nz-table #dataTable [nzLoading]="false" [nzShowSizeChanger]="config.isShowSizeChanger"
   [nzFrontPagination]="config.isFrontPagination" [nzShowPagination]="config.isPagination" [nzTotal]="total"
   [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
   (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="config.pageSizeOptions" [nzData]="dataList"

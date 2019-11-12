@@ -1,3 +1,5 @@
+import { CnStaticTableComponent } from './../../../data_table/cn-static-table.component';
+
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, Inject } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CnDataTableComponent } from '@shared/components/data_table/cn-data-table.component';
@@ -8,11 +10,11 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
 import { isArray } from 'util';
 
 @Component({
-  selector: 'app-cn-form-grid-select',
-  templateUrl: './cn-form-grid-select.component.html',
-  styleUrls: ['./cn-form-grid-select.component.less']
+  selector: 'app-cn-form-static-grid',
+  templateUrl: './cn-form-static-grid.component.html',
+  styleUrls: ['./cn-form-static-grid.component.less']
 })
-export class CnFormGridSelectComponent extends CnComponentBase implements OnInit {
+export class CnFormStaticGridComponent extends CnComponentBase implements OnInit {
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
@@ -25,8 +27,9 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
 
   selectedRowValue;
   selectedRowItem;
+  public addedRowsData: [];
   public cascadeOptions: any;
-  @ViewChild('table', { static: true }) public table: CnDataTableComponent;
+  @ViewChild('table', { static: true }) public table: CnStaticTableComponent;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
@@ -111,16 +114,16 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
   /**
    * 数据清空
    */
-  public valueClear() {
-    console.log('valueClear');
-    this._value = null;
-    this.value = null;
-    this._ifocus = false;
-    this.value = null;
-    this.selectedRowItem = null;
-    this.table.selectedRowValue = null;
-    this.table.clearSelectRow('selectedOrchecked');
-  }
+  // public valueClear() {
+  //   console.log('valueClear');
+  //   this._value = null;
+  //   this.value = null;
+  //   this._ifocus = false;
+  //   this.value = null;
+  //   this.selectedRowItem = null;
+  //   this.table.selectedRowValue = null;
+  //   this.table.clearSelectRow('selectedOrchecked');
+  // }
 
   // 构建参数-》下拉选择自加载数据
   public buildParameters(paramsCfg) {
@@ -165,43 +168,45 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
         this.selectedRowItem = null;
       }
     }
-
-
-
   }
 
   public async valueChange(v?) {
+    console.log('valueChange', v);
     //  labelName: 'provinceName',
     // valueName: 'id',
     // ,dataItem: item
     // tslint:disable-next-line:forin
-    if (!v) {
-      this.selectedRowItem = null;
+    // if (!v) {
+    //   this.selectedRowItem = null;
+    // }
+    // if (v) {
+    //   if (!this.selectedRowItem) {
+    //     await this.load();
+    //   }
+    //   if (this.selectedRowItem && !this.selectedRowItem.hasOwnProperty(this.config.valueName)) {
+    //     await this.load();
+    //   }
+    // }
+    // if (this.selectedRowItem) {
+    //   const labelName = this.selectedRowItem[this.config.labelName];
+    //   if (labelName) {
+    //     this._value = labelName;
+    //   } else {
+    //     this._value = v;
+    //   }
+    // } else {
+    //   this._value = v;
+    // }
+    // this.table.selectedRowValue = v;
+    if (v && v.length > 0) {
+      this.addedRowsData = v;
+      const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: this.selectedRowItem };
+      this.updateValue.emit(backValue);
+      console.log('backValue=>', backValue)
     }
-    if (v) {
-      if (!this.selectedRowItem) {
-        await this.load();
-      }
-      if (this.selectedRowItem && !this.selectedRowItem.hasOwnProperty(this.config.valueName)) {
-        await this.load();
-      }
-    }
-    if (this.selectedRowItem) {
-      const labelName = this.selectedRowItem[this.config.labelName];
-      if (labelName) {
-        this._value = labelName;
-      } else {
-        this._value = v;
-      }
-    } else {
-      this._value = v;
-    }
-    this.table.selectedRowValue = v;
-    const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: this.selectedRowItem };
-    this.updateValue.emit(backValue);
 
-    console.log('backValue=>', backValue)
-    // 3 青海
+
+
 
   }
   /**

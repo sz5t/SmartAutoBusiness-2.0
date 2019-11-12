@@ -4761,5 +4761,7 @@ export class BaseInnerMethodManagerComponent implements OnInit {
         ]
     };
 
-    public ngOnInit() { }
+    public ngOnInit() {
+        console.log(JSON.stringify(this.config));
+    }
 }

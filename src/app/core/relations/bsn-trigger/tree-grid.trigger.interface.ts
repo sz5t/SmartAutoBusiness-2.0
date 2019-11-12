@@ -20,6 +20,7 @@ export interface ITreeGridTrigger {
     UPLOAD: string,
     DIALOG_BATCH: string,
     CONFIRM: string,
+    LAYOUT_DIALOG: string,
     MESSAGE: string,
     LOAD_REFRESH_DATA: string,
 
@@ -73,6 +74,7 @@ export const BSN_TREEGRID_TRIGGER: ITreeGridTrigger = {
     UPLOAD: 'UPLOAD',
     DIALOG_BATCH: 'DIALOG_BATCH',
     CONFIRM: 'CONFIRM',
+    LAYOUT_DIALOG: "LAYOUT_DIALOG",
     MESSAGE: 'MESSAGE',
     LOAD_REFRESH_DATA: 'LOAD_REFRESH_DATA',
 

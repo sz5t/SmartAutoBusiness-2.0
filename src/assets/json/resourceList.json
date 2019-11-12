@@ -1,0 +1,109 @@
+{
+  "id": "r5zDHB",
+  "col": "cc",
+  "type": "col",
+  "title": "",
+  "span": 24,
+  "container": "component",
+  "size": {
+    "nzXs": 24,
+    "nzSm": 24,
+    "nzMd": 24,
+    "nzLg": 24,
+    "nzXl": 24,
+    "nzXXl": 24
+  },
+  "component": {
+    "id": "view_01",
+    "title": "资源列表",
+    "titleIcon": "right-circle",
+    "component": "cnDataTable",
+    "keyId": "id",
+    "size": "middle",
+    "isBordered": true,
+    "isFrontPagination": false,
+    "isPagination": true,
+    "isShowSizeChanger": true,
+    "showTotal": true,
+    "pageSize": 5,
+    "showCheckBox": true,
+    "pageSizeOptions": [
+      10,
+      20,
+      50,
+      100
+    ],
+    "loadingOnInit": true,
+    "spanWidthConfig": [
+      "50px",
+      "100px",
+      "200px",
+      "200px",
+      "200px"
+    ],
+    "loadingConfig": {
+      "url": "sd/GET_ALL_RESOURCE_LIST/query",
+      "method": "get",
+      "params": [],
+      "filter": []
+    },
+    "columns": [{
+        "title": "ID",
+        "type": "field",
+        "field": "id",
+        "hidden": true,
+        "showFilter": false,
+        "showSort": false,
+        "isShowExpand": false,
+        "width": "50px",
+        "style": {}
+      },
+      {
+        "title": "资源名称",
+        "type": "field",
+        "field": "RES_NAME",
+        "hidden": false,
+        "showFilter": false,
+        "showSort": false,
+        "width": "50px",
+        "style": {}
+      },
+      {
+        "title": "资源描述",
+        "type": "field",
+        "field": "DESC_NAME",
+        "hidden": false,
+        "showFilter": false,
+        "showSort": false,
+        "width": "100px",
+        "style": {}
+      }
+    ],
+    "cascade": {
+      "messageSender": [{
+        "id": "grid_sender_02",
+        "senderId": "view_01",
+        "triggerType": "BEHAVIOR",
+        "trigger": "SET_SELECT_ROW",
+        "triggerMoment": "after",
+        "sendData": [{
+          "beforeSend": {},
+          "reveicerId": "",
+          "receiverTriggerType": "BEHAVIOR",
+          "receiverTrigger": "REFRESH_AS_CHILD",
+          "params": [{
+            "name": "_PID",
+            "type": "item",
+            "valueName": "id"
+          }]
+        }]
+      }]
+    },
+    "rowActions": [],
+    "dialog": [],
+    "condition": [],
+    "ajaxConfig": [],
+    "beforeTrigger": [],
+    "afterTrigger": []
+  }
+}

@@ -409,7 +409,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * 考虑，如何解决1.0的问题，控制级联状态的分割，级联参数的优先级
    */
   public valueChange(v?) {
-    console.log('===valueChange==', v);
+    console.log('===valueChange==', v, this.validateForm.value);
     if (!this.formCascade) {
       this.formCascade = {};
     }
@@ -422,7 +422,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
     // 做配置转化，否则需要不断循环处理，转化为对象，则直接访问属性
     const triggerKey = v.name;
-
     if (this.config.cascadeValue)
       this.config.cascadeValue.forEach(cascade => {
         // 满足应答触发
@@ -517,17 +516,10 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               // 【大招】 某条件下，将级联阻止
 
             }
-
-
-
           });
           this.formCascade[cascadeObj.controlId] = JSON.parse(JSON.stringify(this.formCascade[cascadeObj.controlId]));
           // console.log('==表单内值变化反馈==', this.formCascade);
         });
-
-
-
-
       });
 
     // tslint:disable-next-line:forin liu 自定义

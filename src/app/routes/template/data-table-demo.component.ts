@@ -1221,7 +1221,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                             "pageSize": 5,
                             "showCheckBox": true,
                             "pageSizeOptions": [10, 20, 50, 100],
-                            "loadingOnInit": true,
+                            "loadingOnInit": false,
                             // "scroll": {
                             //     "y": "300px"
                             // },
@@ -1229,7 +1229,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                 '50px', '100px', '200px', '200px', '200px'
                             ],
                             "loadingConfig": {
-                                "url": "province/page",
+                                "url": "",
                                 "method": "get",
                                 "params": [
 

@@ -1,3 +1,4 @@
+import { CommonUtils } from './../../utils/common-utils';
 import { CacheService } from '@delon/cache';
 import { Injectable, Inject } from '@angular/core';
 import { TokenService, DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
@@ -6,6 +7,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpEvent, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { BeforeOperationResolver } from '@shared/resolver/beforeOperation/before-operation.resolver';
+import { environment } from '@env/environment';
 // import { Http, XHRBackend, Headers, Request, RequestMethod, RequestOptionsArgs, ResponseOptionsArgs, ConnectionBackend, RequestOptions } from '@angular/common/http';
 @Injectable()
 export class ApiServiceConfiguration {
@@ -165,6 +167,11 @@ export class ApiService extends _HttpClient {
   ) {
     super(clientHttp, new AlainThemeConfig());
     this.configuration = _configuration;
+  }
+
+  public getLocalData(name) {
+    const url = `assets/json/${name}.json?rtc=${CommonUtils.uuID(10)}`;
+    return this.clientHttp.request('GET', url);
   }
 
   /**

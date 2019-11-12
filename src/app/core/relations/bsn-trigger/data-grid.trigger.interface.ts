@@ -20,6 +20,7 @@ export interface IDataGridTrigger {
     UPLOAD: string,
     DIALOG_BATCH: string,
     CONFIRM: string,
+    CHECKED_ITEMS_IDS_CONFIRM: string,
     MESSAGE: string,
     LOAD_REFRESH_DATA
 
@@ -73,6 +74,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     UPLOAD: 'UPLOAD',
     DIALOG_BATCH: 'DIALOG_BATCH',
     CONFIRM: 'CONFIRM',
+    CHECKED_ITEMS_IDS_CONFIRM: 'CHECKED_ITEMS_IDS_CONFIRM',
     MESSAGE: 'MESSAGE',
     LOAD_REFRESH_DATA: 'LOAD_REFRESH_DATA',
 

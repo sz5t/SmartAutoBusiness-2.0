@@ -16,6 +16,7 @@ import { TreeTableDemoComponent } from './tree-table-demo.component';
 import { DataModelingComponent } from './data-modeling.component';
 import { DataSqlModelingComponent } from './data-sql-modeling.component';
 import { StepsDemoComponent } from './steps-demo.component';
+import { DataBusinessModelingComponent } from './data-business-modeling.component';
 
 const COMPONENTS = [
   LayoutDemoComponent,
@@ -31,7 +32,8 @@ const COMPONENTS = [
   BaseInnerMethodManagerComponent,
   StepsDemoComponent,
   CalendarDemoComponent,
-  PageDesignComponent
+  PageDesignComponent,
+  DataBusinessModelingComponent
 ];
 
 const COMPONENTS_NOROUNT = [];
