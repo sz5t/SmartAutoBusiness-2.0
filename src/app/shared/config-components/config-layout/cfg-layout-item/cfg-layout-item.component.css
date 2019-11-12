@@ -1,0 +1,10 @@
+.keleyi
+{
+    border: 2px  dashed rgb(255, 255, 255) ;
+    height: 100%;
+    width: 100%;
+}
+.keleyi:hover
+{
+border: 2px dashed rgb(247, 4, 4);
+}

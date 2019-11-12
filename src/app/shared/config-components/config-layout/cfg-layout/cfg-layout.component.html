@@ -8,7 +8,7 @@
         </ng-container>
     </ng-container>
     <ng-container *ngIf="!layoutType">
-        <cfg-custom-layout [config]="config"></cfg-custom-layout>
+        <cfg-custom-layout [config]="config"  [designStatus]="designStatus"></cfg-custom-layout>
     </ng-container>
 </ng-template>
 <ng-template #extraTemplate>
@@ -28,10 +28,10 @@
                 <i nz-icon type="plus"></i>添加行</button>
         </ng-container>
 
-        <ng-container *ngIf="configType">
+        <!-- <ng-container *ngIf="configType">
             <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="保存json" (click)="SaveJson()" nz-tooltip>
                 <i nz-icon type="download"></i>保存json</button>
-        </ng-container>
+        </ng-container> -->
     </ng-container>
 
 

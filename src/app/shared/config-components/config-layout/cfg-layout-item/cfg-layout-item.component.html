@@ -1,12 +1,15 @@
 <nz-card style="width:100%;height: 100%;" (drop)="f_ondrop($event,config)" (dragover)="f_ondragover($event,config)" (dragenter)="f_ondragenter($event,config)"
       (dragleave)="f_ondragleave(event)">
-      <ng-container *ngIf="!component">
-            <p>
-                  将内容拖动到此处
-            </p>
-      </ng-container>
-      <ng-container *ngIf="component">
-             <ng-container CfgLayoutItemContent [config]="config['component'] "> </ng-container> 
-      </ng-container>
-  
+      <div   class="keleyi" (click)="divClick()"  [ngStyle]="modelstyle"> <!-- [ngStyle]="modelstyle" -->
+            <ng-container *ngIf="!component">
+                        <p>
+                              将内容拖动到此处
+                        </p>
+                  </ng-container>
+                  <ng-container *ngIf="component">
+                         <ng-container CfgLayoutItemContent [config]="config['component'] "> </ng-container> 
+                  </ng-container>
+              
+      </div>
+    
 </nz-card>

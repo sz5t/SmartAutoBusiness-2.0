@@ -1,15 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { CnComponentBase } from '@shared/components/cn-component.base';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 
 @Component({
   selector: 'app-cn-attribute-property-grid',
   templateUrl: './cn-attribute-property-grid.component.html',
   styleUrls: ['./cn-attribute-property-grid.component.less']
 })
-export class CnAttributePropertyGridComponent implements OnInit {
+export class CnAttributePropertyGridComponent extends CnComponentBase implements OnInit {
 
-  constructor() { }
+  constructor(@Inject(BSN_COMPONENT_SERVICES)
+  public componentService: ComponentServiceProvider) {
+    super(componentService);
+  }
 
   ngOnInit() {
+    this.setChangeValue(this.cacheValue);
+  }
+  public setChangeValue(ChangeValues?) {
+    console.log('changeValue', ChangeValues);
+    // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+    if (ChangeValues && ChangeValues.length > 0) {
+      ChangeValues.forEach(p => {
+        switch (p.valueTo) {
+          case 'tempValue':
+            this.tempValue[p.name] = p.value;
+            break;
+          case 'initValue':
+            this.initValue[p.name] = p.value;
+            break;
+          case 'staticComponentValue':
+            this.staticComponentValue[p.name] = p.value;
+            break;
+  
+        }
+      });
+    }
+  
   }
 
   mapOfExpandData: { [key: string]: boolean } = {};

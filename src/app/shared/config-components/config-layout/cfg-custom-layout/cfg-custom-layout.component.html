@@ -10,7 +10,7 @@
             <h3 class="liutitle">{{contenttitle['west']}}</h3>
           </ng-container>
           <div  [ngStyle]="!isCollapsed['west'] ? { }: {'display': 'none'} ">
-            <cfg-layout  [config]="cl.layout"></cfg-layout>
+            <cfg-layout  [config]="cl.layout"  [designStatus]="designStatus"></cfg-layout>
           </div>
 
         </nz-card>
@@ -29,7 +29,7 @@
       </div>
       <div #center *ngIf="cl.layoutType==='center' "   [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}"  >
         <nz-card [nzTitle]="title['center']" [ngStyle]=" {'height': '100%'} ">
-            <cfg-layout  [config]="cl.layout"></cfg-layout>
+            <cfg-layout  [config]="cl.layout"  [designStatus]="designStatus"></cfg-layout>
         </nz-card>
 
       </div>
@@ -39,7 +39,7 @@
             <h3 class="cfgtitle">{{contenttitle['east']}}</h3>
           </ng-container>
           <div *ngIf="!isCollapsed['east']"  >
-            <cfg-layout  [config]="cl.layout"></cfg-layout>
+            <cfg-layout  [config]="cl.layout"  [designStatus]="designStatus"></cfg-layout>
           </div>
 
         </nz-card>

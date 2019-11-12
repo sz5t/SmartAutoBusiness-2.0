@@ -40,8 +40,13 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
   @Input() public formCascade;
   @Input() public state;
   @Input() public valueConfig;
+  @Input() public typeConfig;
+  @Input() public changeValue;
+  @Input() public attributeType;
+
 
   @Output() public updateValue = new EventEmitter();
+  @Output() public execOperation = new EventEmitter();
   public component: ComponentRef<any>;
   public componentConfig;
   constructor(
@@ -50,8 +55,10 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
   ) {
 
   }
+
+  
   public ngOnInit() {
-    console.log('**********', this.valueConfig)
+   //  console.log('**********', this.valueConfig)
     if (!components[this.config.type]) {
       const supportedTypes = Object.keys(components).join(', ');
       throw new Error(
@@ -70,6 +77,9 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
     this.component.instance.valueConfig = this.valueConfig;
     this.component.instance.state = this.state;
     this.component.instance.attributeConfig = this.attributeConfig;
+    this.component.instance.typeConfig = this.typeConfig;
+    this.component.instance.changeValue = this.changeValue;
+    this.component.instance.attributeType = this.attributeType;
     
     
     // 级联数据接受 liu
@@ -78,6 +88,13 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
         this.setValue(event);
       });
     }
+    if (this.component.instance.execOperation) {
+      this.component.instance.execOperation.subscribe(event => {
+        this.setOperation(event);
+      });
+    }
+
+    
     // console.log('创建表单内部组件。。。', _config);
   }
 
@@ -85,9 +102,12 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
   public setValue(data?) {
     this.updateValue.emit(data);
   }
+  public setOperation(data?) {
+    this.execOperation.emit(data);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
-   // console.log('****ngOnChanges******', changes, this.formGroup)
+   // console.log('****ngOnChanges******', changes, this.valueConfig)
     // ngOnChanges只有在输入值改变的时候才会触发，
     // 如果输入值(@Input)是一个对象，改变对象内的属性的话是不会触发ngOnChanges的。
     // 部分级联需要此处中转，主要是参数等，取值赋值，隐藏显示等功能需要form表单处理。
@@ -127,14 +147,32 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
         this.component.instance.valueConfig = this.valueConfig;
         this.component.instance.state = this.state;
         this.component.instance.attributeConfig = this.attributeConfig;
+        this.component.instance.typeConfig = this.typeConfig;
+        this.component.instance.attributeType = this.attributeType;
         // 级联数据接受 liu
         if (this.component.instance.updateValue) {
           this.component.instance.updateValue.subscribe(event => {
             this.setValue(event);
           });
         }
+        if (this.component.instance.execOperation) {
+          this.component.instance.execOperation.subscribe(event => {
+            this.setOperation(event);
+          });
+        }
        // if(this.config.field ==='inputname4')
        // this.formGroup.setValue(this.value);
+      }
+    }
+    if (changes.hasOwnProperty('valueConfig')) {
+      if (!changes['valueConfig'].firstChange) { // 处理后续变化，初始变化不处理
+        if (this.valueConfig) {
+          //  console.log('触发级联', this.formCascade, this.componentConfig);
+
+        }
+  
+        this.component.instance.valueConfig = this.valueConfig;
+        this.component.instance.remoteOperation();
       }
     }
 
@@ -146,5 +184,7 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
       this.component.destroy();
     }
   }
+
+
 
 }

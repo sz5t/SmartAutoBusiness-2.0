@@ -16,8 +16,9 @@
         </tbody>
       </nz-table>
       <ng-template #footer>
-            <button nz-button nzType="primary"  style="width: 48%" (click)="createModal()"><i nz-icon nzType="file-add" ></i>添加(A)</button>
-            <button nz-button nzType="primary"  style="width: 48%" (click)="createModal()"><i nz-icon nzType="delete"></i>移除(R)</button>
+            <button nz-button nzType="primary"  style="width: 31%" (click)="createModal()"><i nz-icon nzType="file-add" ></i>添加(A)</button>
+            <button nz-button *ngIf="!typeConfig" nzType="primary"  style="width: 31%" (click)="editModal()"><i nz-icon nzType="file-add" ></i>编辑(U)</button>
+            <button nz-button nzType="primary"  style="width: 31%" (click)="deleteRow()"><i nz-icon nzType="delete"></i>移除(R)</button>
           </ng-template>
 
         

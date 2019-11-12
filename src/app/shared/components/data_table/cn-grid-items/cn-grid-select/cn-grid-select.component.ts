@@ -20,6 +20,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
   public selectItems = [];
   public cascadeOptions: any;
   public myControl;
+  count = 0;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
@@ -71,7 +72,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
    */
   public async valueChange(v?) {
 
-    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v };
+    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v,count:this.count };
     if (this.selectItems.length < 1) {
       await this.load();
     }
@@ -83,7 +84,9 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
       // myControl.setValue(null, { emitEvent: true });
     }
     console.log('select 值变化', v, this.config.field, this.selectItems);
+
     this.updateValue.emit(backValue);
+    this.count +=1;
   }
 
   // 构建参数-》下拉选择自加载数据

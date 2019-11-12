@@ -10,7 +10,7 @@ import { CfgCarouselComponent } from '@shared/config-components/config-layout/cf
 const components: { [type: string]: Type<any> } = {
    input: CfgFormInputComponent,
    select: CfgFormSelectComponent,
-   table:CfgDataTableComponent,
+   cnDataTable:CfgDataTableComponent,
    tree: CfgTreeComponent,
    form:CfgFormComponent,
    calendar:CfgCalendarComponent,
