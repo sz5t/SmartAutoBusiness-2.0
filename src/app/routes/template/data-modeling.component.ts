@@ -755,13 +755,13 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "cancel_create_modeling",
-                                            "url": "dmtable/cancelModel",
+                                            "url": "table/cancelModel",
                                             "urlType": "inner",
-                                            "ajaxType": "put",
+                                            "ajaxType": "post",
                                             "params": [
                                                 {
                                                     "name": "id",
-                                                    "type": "checkedId",
+                                                    "type": "item",
                                                     "valueName": "id"
                                                 }
                                             ],
@@ -945,7 +945,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "execute": [
                                                         {
                                                             "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                            "trigger": "EXECUTE_SELECTED_ROW",
                                                             // "conditionId": "delete_operation_1",
                                                             "ajaxId": "cancel_create_modeling"
                                                         }

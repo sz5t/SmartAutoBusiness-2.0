@@ -8,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 export class CfgDataTableComponent implements OnInit {
 
   constructor() { }
-
   ngOnInit() {
   }
 
@@ -32,5 +31,7 @@ export class CfgDataTableComponent implements OnInit {
       address: 'Sidney No. 1 Lake Park'
     }
   ];
+
+
 
 }

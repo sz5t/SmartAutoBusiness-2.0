@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
 import { moveItemInArray, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
@@ -13,31 +13,103 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
 export class CnAttributeTableComponent extends CnComponentBase implements OnInit {
   @Input() public config;
   @Input() public attributeConfig;
+  @Input() public typeConfig;
+  @Input() public changeValue;
+  @Input() public attributeType;
+  @Output() public execOperation = new EventEmitter();
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
+    this.tempValue ={}
   }
 
   public dataList = [];
+  public arrData={};
+  public SelectRow;
   async ngOnInit() {
+    this.tempValue['ParentType'] =  this.attributeType?this.attributeType:2;
+    this.setChangeValue(this.changeValue);
     console.log("table配置", this.config, this.attributeConfig);
     await this.load();
+  }
+
+  public setChangeValue(ChangeValues?) {
+    console.log('changeValue', ChangeValues);
+    // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+    if (ChangeValues && ChangeValues.length > 0) {
+      ChangeValues.forEach(p => {
+        switch (p.valueTo) {
+          case 'tempValue':
+            this.tempValue[p.name] = p.value;
+            break;
+          case 'initValue':
+            this.initValue[p.name] = p.value;
+            break;
+          case 'staticComponentValue':
+            this.staticComponentValue[p.name] = p.value;
+            break;
+  
+        }
+      });
+    }
+  
   }
 
   drop(event: CdkDragDrop<string[]>): void {
    // moveItemInArray(this.listOfData, event.previousIndex, event.currentIndex);
   }
 
-  createModal(): void {
+  async createModal(): Promise<void> {
     console.log('createModal');
+    const isAdd = await this.addObject();
+    if(!isAdd){
+      return;
+    }else {
+      await this.load();
+      this.dataList.forEach(d=>{
+        if( d['rowId'] ===isAdd) {
+          this.setSelectRow(d);
+        }
+      });
+     
+    }
+    if(this.typeConfig){
+      if(this.typeConfig.componentType==='table_from'){
+         // 有消息过来加载数据
+      }
+      this.addRow();
+    } else { 
+      this.addForm()
+    }
+  }
+  editModal(): void {
+    if(!this.SelectRow){
+      console.log("选中编辑");
+      return;
+    }
+    if(this.typeConfig){
+      if(this.typeConfig.componentType==='table_from'){
+         // 有消息过来加载数据
+      }
+      this.editRow();
+    } else { 
+      this.editForm()
+    }
+  }
+
+  addForm(){
+    console.log('新增行addForm', this.arrData,this.dataList, this.config);
     this.componentService.modalService.create({
       nzWidth: '85%',
+      nzMaskClosable:false,
       nzBodyStyle: { overflow: 'auto' },
       nzTitle: '对象属性',
       //  nzContent: '',
       nzContent: CnAttributeFormComponent,
       nzComponentParams: {
-        config: this.attributeConfig
+        config: this.attributeConfig,
+        changeValue:this.changeValue,
+        loadConfigValue:{PID:  this.SelectRow['rowId']}
       },
       nzClosable: false,
       nzOnOk: componentInstance => {
@@ -45,6 +117,60 @@ export class CnAttributeTableComponent extends CnComponentBase implements OnInit
 
 
       }
+    });
+  }
+  editForm(){
+    console.log('编辑行addForm', this.arrData,this.dataList, this.config);
+    this.componentService.modalService.create({
+      nzWidth: '85%',
+      nzMaskClosable:false,
+      nzBodyStyle: { overflow: 'auto' },
+      nzTitle: '对象属性',
+      //  nzContent: '',
+      nzContent: CnAttributeFormComponent,
+      nzComponentParams: {
+        config: this.attributeConfig,
+        changeValue:this.changeValue,
+        loadConfigValue:{PID:  this.SelectRow['rowId']}
+      },
+      nzClosable: false,
+      nzOnOk: componentInstance => {
+        console.log('OK', );
+
+
+      }
+    });
+  }
+  addRow(){
+    // 点击新增，表单数据新增
+    // 点击移除，表单数据变化
+    // 新增，首先数据库新增一条记录，返回回来，执行成功后将数据发送给表单
+   console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
+//  this.arrData['keyId'] 【数组id标识】
+
+  }
+  editRow(){
+    // 点击新增，表单数据新增
+    // 点击移除，表单数据变化
+    // 新增，首先数据库新增一条记录，返回回来，执行成功后将数据发送给表单
+console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
+//  this.arrData['keyId'] 【数组id标识】
+
+  }
+
+  deleteRow(){
+    if(!this.SelectRow){
+      console.log("选中编辑");
+      return;
+    }
+    this.componentService.modalService.confirm({
+      nzTitle: '删除确认框?',
+      nzContent: '<b style="color: red;">你确定要删除吗？</b>',
+      nzOkText: '确定',
+      nzOkType: 'danger',
+      nzOnOk: () => console.log('OK'),
+      nzCancelText: '取消',
+      nzOnCancel: () => console.log('Cancel')
     });
   }
 
@@ -78,6 +204,27 @@ export class CnAttributeTableComponent extends CnComponentBase implements OnInit
         "dataType": "int",
         "value":2
       },
+      {
+        "name": "PageId",
+        "type": "tempValue",
+        "valueName": "ID",
+        "dataType": "string",
+        "value": ""
+      },
+      {
+        "name": "CMTId",
+        "type": "tempValue",
+        "valueName": "CMTId",
+        "dataType": "string",
+        "value": ""
+      },
+      {
+        "name": "ParentType",
+        "type": "tempValue",
+        "valueName": "ParentType",
+        "dataType": "int",
+        "value": this.attributeType?this.attributeType:2
+      },
     ],
     "filter": [
 
@@ -99,6 +246,8 @@ export class CnAttributeTableComponent extends CnComponentBase implements OnInit
     if(response.data._procedure_resultset_1[0]['W']===""){}
     else{
       const d = JSON.parse(response.data._procedure_resultset_1[0]['W']) ;
+      this.arrData =d;
+      this.tempValue['ARRYID'] = this.arrData['keyId'];
       this.convertData(d);
     }
 
@@ -106,9 +255,45 @@ export class CnAttributeTableComponent extends CnComponentBase implements OnInit
 
   }
 
+  // @COMID nvarchar(50), -- 引用组件库标识
+	// @PAGEID  nvarchar(50), -- 所在页面标识
+	// @TYPE  nvarchar(50), -- ARRY_OBJECT  PROPERTY_OBJECT  PROPERTY_ARRY 数组下的对象、属性下对象、属性下数组
+	// @PARENTID  nvarchar(50),  -- 所属父节点标识【数组标识、对象标识、属性标识】
+	// @CURRENTCOMID  nvarchar(50),--生成组件标识
+	// @LAYOUTCOMPONENTID nvarchar(50) -- 引用标识
+  addObjectConfig = {
+    "url": "sd/B_P_DOWN_NODE/procedure",  // operation 操作 query
+    "ajaxType": "post",
+    "params": [
+      {
+        "name": "ARRYID",
+        "type": "tempValue",
+        "valueName": "ARRYID",
+        "dataType": "string",
+        "value":""
+      },
+    ],
+    "filter": [
 
+    ]
+  }
+  public async addObject() {
+
+    const url = this.addObjectConfig.url;
+    const method = this.addObjectConfig.ajaxType;
+    const params = {
+      ...this.buildParameters(this.addObjectConfig.params)
+    };
+    // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+    const response = await this.componentService.apiService.post(url, params).toPromise();
+    console.log("执行新增后", response.data,response.data._procedure_resultset_1[0].W);
+    return response.data._procedure_resultset_1[0].W;
+  }
+
+  loadData;
   convertData(d?) {
-
+    this.loadData =d;
+    this.dataList =[];
       d.data.forEach(item => {
       const datalistitem = {};
       datalistitem['rowId'] = item['keyId'];
@@ -120,6 +305,9 @@ export class CnAttributeTableComponent extends CnComponentBase implements OnInit
     });
 
     this.dataList=this.dataList.filter(item=> item.rowId!=='');
+    if(this.dataList.length<=0){
+      this.SelectRow =null;
+    }
 
     console.log('最终数据集', this.dataList, this.config.columns);
 
@@ -148,7 +336,8 @@ export class CnAttributeTableComponent extends CnComponentBase implements OnInit
         }
       });
     }
-
+    this.SelectRow = rowData;
+    this.execOperation.emit(rowData);
     return true;
   }
 

@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, Input } from '@angular/core';
+import { CnComponentBase } from '@shared/components/cn-component.base';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 
 @Component({
   selector: 'cn-attribute',
   templateUrl: './cn-attribute.component.html',
   styleUrls: ['./cn-attribute.component.less']
 })
-export class CnAttributeComponent implements OnInit {
+export class CnAttributeComponent extends CnComponentBase implements OnInit, OnDestroy {
+  @Input() public changeValue;
+  constructor(@Inject(BSN_COMPONENT_SERVICES)
+  public componentService: ComponentServiceProvider) {
+    super(componentService);
+  }
 
-  constructor() { }
-
+  attributeType = 3;
   ngOnInit() {
+    this.setChangeValue(this.cacheValue);
+    this.js();
   }
   tabs = [
     {
@@ -374,21 +384,6 @@ export class CnAttributeComponent implements OnInit {
 
    */
 
-  /**
-   * load
-   */
-  public load() {
-    // 数据集结构   业务对象？数据列表
-
-    // 目前已数据列表解决
-    // 单样 tab ，tab 和 折叠分组的关系
-    // tabsajaxconfig
-    // groupconfig
-    // attributeconfig
-
-
-
-  }
 
 
   public config = {
@@ -1928,8 +1923,9 @@ export class CnAttributeComponent implements OnInit {
     return (Object.prototype.toString.call(a) === '[object Array]');
   }
 
-
-  public M1_config = [
+  public COM_ID = "";
+  public M1_config = [];
+  public M12_config = [
     {
       "feild": "cascade",
       "active": true,
@@ -1938,7 +1934,7 @@ export class CnAttributeComponent implements OnInit {
       "layout": "horizontal",
       "size": "default",
       "panelsform": {
-        "jsonType": "object", "keyId": "9C2B2CE3-6E51-4B1D-A24B-74FAAD515B94", 
+        "jsonType": "object", "keyId": "9C2B2CE3-6E51-4B1D-A24B-74FAAD515B94",
         "objectJson": [{
           "title": "消息发送器",
           "field": "messageSender",
@@ -3413,6 +3409,155 @@ export class CnAttributeComponent implements OnInit {
 
 
 
+  // B_P_EDIT_ATTRIBUTE_TYPE
 
+  public buildParameters(paramsCfg, RcomponentValue?) {
+    if (!RcomponentValue) {
+      RcomponentValue = {};
+    }
+    console.log('RcomponentValue', RcomponentValue);
+    return ParameterResolver.resolve({
+      params: paramsCfg,
+      tempValue: this.tempValue,
+      componentValue: RcomponentValue, //  组件值？返回值？级联值，需要三值参数
+      initValue: this.initValue,
+      cacheValue: this.cacheValue,
+      router: this.routerValue,
+      cascadeValue: this.cascadeValue
+    });
+  }
+
+  loadingConfig = {
+    "url": "sd/B_P_EDIT_ATTRIBUTE_TYPE/procedure",  // operation 操作 query
+    "ajaxType": "post",
+    "params": [
+      {
+        "name": "CODE",
+        "type": "componentValue",
+        "valueName": "CODE",
+        "dataType": "string"
+      }
+    ],
+    "filter": [
+
+    ]
+  }
+  public async load(componentValue?) {
+
+    const url = this.loadingConfig.url;
+    const method = this.loadingConfig.ajaxType;
+    const params = {
+      ...this.buildParameters(this.loadingConfig.params, componentValue)
+    };
+    // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+    const response = await this.componentService.apiService.post(url, params).toPromise();
+    console.log("组件编辑配置加载", response.data);
+
+    if (response.data._procedure_resultset_1[0]['W'] === "") {
+      this.M1_config = [];
+    }
+    else {
+      const CMTId = {
+        name: "CMTId",
+        type: "item",
+        value:  this.COM_ID ,
+        valueName: "CMTId",
+        valueTo: "tempValue",
+      };
+      const ParentType = {
+        name: "ParentType",
+        type: "value",
+        value: 3,
+        valueName: "ParentType",
+        valueTo: "tempValue",
+      };
+      let is_chang = true;
+      this.changeValue.forEach(element => {
+           if(element.name ==='CMTId'){
+            element['value'] = this.COM_ID;
+            is_chang =false;
+           }
+      });
+      if(is_chang){
+        this.changeValue = [...this.changeValue,CMTId];
+      }
+     
+
+      console.log("******");
+      console.log("changeValue:", this.changeValue );
+      console.log("******");
+      this.M1_config = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+     
+     
+
+
+
+    }
+
+
+
+  }
+
+
+  public js() {
+    if (!this.subscription$) {
+      this.subscription$ = this.componentService.commonRelationSubject.subscribe(
+        data => {
+          console.log('attribute 接收消息', data, this.config.id);
+
+          if (data.options) {
+            if (data.options.component) {
+              if (data.options.component.type) {
+                if (this.COM_ID !== data.options.component.id) {
+                  this.COM_ID = data.options.component.id;
+                  console.log('attribute 接收消息组件标识', data.options.component.id , this.COM_ID);
+                  this.load({ CODE: data.options.component.type });
+                  // 根据 标识加载数据
+                  // M1_config =[];
+                  // this.M1_config = this.M12_config;
+                }
+                else {
+                  this.COM_ID = "";
+                  this.M1_config = [];
+                }
+
+              }
+            } else {
+
+            }
+          }
+        });
+
+    }
+  }
+
+  public setChangeValue(ChangeValues?) {
+    console.log('changeValue', ChangeValues);
+    // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+    if (ChangeValues && ChangeValues.length > 0) {
+      ChangeValues.forEach(p => {
+        switch (p.valueTo) {
+          case 'tempValue':
+            this.tempValue[p.name] = p.value;
+            break;
+          case 'initValue':
+            this.initValue[p.name] = p.value;
+            break;
+          case 'staticComponentValue':
+            this.staticComponentValue[p.name] = p.value;
+            break;
+
+        }
+      });
+    }
+
+  }
+  public ngOnDestroy() {
+    // 释放级联对象
+    this.unsubscribeRelation();
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+  }
 
 }

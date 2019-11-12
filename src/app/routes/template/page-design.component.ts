@@ -2809,9 +2809,9 @@ export class PageDesignComponent implements OnInit {
                                                     {
                                                         "id": "cfg_page_layout",
                                                         "type": "confirm",
-                                                        "title": "版本编辑",
+                                                        "title": "页面设置",
                                                         "width": "100%",
-                                                        "style":{"top":"0px"},
+                                                        "style":{"top":"0px","padding-bottom": "0px"},
                                                         "cancelText": "取消",
                                                         "okText": "确定",
                                                         "form": {

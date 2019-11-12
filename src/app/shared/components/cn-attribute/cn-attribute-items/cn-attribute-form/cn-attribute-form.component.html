@@ -1,14 +1,14 @@
 <!-- { xxl: 4, xl: 3, lg: 3, md: 2, sm: 1, xs: 1 } -->
 <ng-container *ngIf="config.jsonType==='object'">
-    <nz-descriptions nzTitle="" nzBordered [nzLayout]="'horizontal'" [nzSize]="'default'" [nzColumn]="{ xxl: 2, xl: 2, lg: 1, md: 1, sm: 1, xs: 1 }">
+    <nz-descriptions nzTitle="" nzBordered [nzLayout]="'horizontal'" [nzSize]="'default'" [nzColumn]="{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }">
         <ng-container *ngFor="let c of config.objectJson">
             <nz-descriptions-item [nzTitle]="c.title" nzSpan="2">
-                <ng-container *ngIf="c.type === 'ARRAY'" CnAttributeItemDirective [state]="'edit'" [config]="c.editor"  [attributeConfig] = "c.array" [valueConfig]="{'id':'','value':''}" >
+                <ng-container *ngIf="c.type === 'ARRAY'&& dataList" CnAttributeItemDirective [state]="'edit'" [changeValue]="changeValue" [config]="c.editor"  [attributeConfig] = "c.array" [valueConfig]="{'id':'','value':''}" >
                     <!-- <nz-input-group [nzAddOnAfterIcon]="'setting'"   style="width: 100%">
                         <input type="text" nz-input [(ngModel)]="inputValue" />
                       </nz-input-group> -->
                 </ng-container>
-                <ng-container *ngIf="c.type === 'OBJECT'" CnAttributeItemDirective [state]="'edit'" [config]="c.editor"  [attributeConfig] = "c.object" [valueConfig]="{'id':'','value':''}" >
+                <ng-container *ngIf="c.type === 'OBJECT'&& dataList" CnAttributeItemDirective [state]="'edit'"[changeValue]="changeValue" [config]="c.editor"  [attributeConfig] = "c.object" [valueConfig]="{'id':'','value':''}" >
                     <!-- <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
                         <input type="text" nz-input placeholder="input search text" />
                       </nz-input-group>
@@ -17,7 +17,7 @@
                       </ng-template> -->
                   </ng-container>
              
-                <ng-container  *ngIf="!c.type && dataList" CnAttributeItemDirective [state]="'edit'" [config]="c.editor" [valueConfig]="{'id':config.keyId?config.keyId:'','value':dataList[c.field]?dataList[c.field]:null}" (updateValue)="valueChange($event)">
+                <ng-container  *ngIf="!c.type && dataList" CnAttributeItemDirective [state]="'edit'"[changeValue]="changeValue" [config]="c.editor" [valueConfig]="{'id':config.keyId?config.keyId:'','value':dataList[c.field]?dataList[c.field]:null}" (updateValue)="valueChange($event)">
                 </ng-container>
               </nz-descriptions-item>
         </ng-container>
@@ -29,7 +29,7 @@
     [attributeConfig] = "config.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
       </ng-container> -->
 
-      <ng-container   CnAttributeItemDirective [state]="'edit'"
+      <ng-container   CnAttributeItemDirective [state]="'edit'" [changeValue]="changeValue"
       [config]="{  type: 'AttributeTableForm',keyId:config.keyId, field: 'params',columns:config.arrayJson.objectJson}" 
        [attributeConfig] = "config.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
         </ng-container>

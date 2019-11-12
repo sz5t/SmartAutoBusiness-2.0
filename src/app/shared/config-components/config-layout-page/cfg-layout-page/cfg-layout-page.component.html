@@ -14,6 +14,12 @@
   </ng-container> -->
   <ng-container *ngIf="index ===0">
   
+      <div nz-row [nzGutter]="6">
+          <div nz-col [nzSpan]="24">
+              <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="保存json" (click)="SaveJson()" nz-tooltip>
+                  <i nz-icon type="download"></i>保存json</button>
+            </div>
+  </div>
     <div nz-row [nzGutter]="6">
       <div nz-col [nzSpan]="6">
         <nz-card nzTitle="组件布局树">
@@ -23,19 +29,26 @@
     
       </div>
       <div nz-col [nzSpan]="18">
-        <cfg-layout  [config]="c_config"   [configStatus]="true"  (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout> 
+     
+        <cfg-layout #child0  [config]="c_config"   [configStatus]="true"  (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout> 
       </div>
     </div> 
     
   </ng-container>
   <ng-container *ngIf="index ===1">
+      <div nz-row [nzGutter]="6">
+          <div nz-col [nzSpan]="24">
+              <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="保存json" (click)="SaveJson1()" nz-tooltip>
+                  <i nz-icon type="download"></i>保存json</button>
+            </div>
+  </div>
     <div nz-row [nzGutter]="6">
         <div nz-col [nzSpan]="4">
           <nz-card nzTitle="组件选项">
             <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'form')">
               表单组件
             </div>
-            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'table')">
+            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'cnDataTable')">
               表格组件
             </div>
             <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'tree')">
@@ -62,7 +75,8 @@
                       <cfg-layout  *ngIf="c_config"  [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
                 </div>
                 <div nz-col [nzSpan]="8" style=" height: 600px; overflow:auto;">
-                        <cn-attribute></cn-attribute>
+       <!--              [ngStyle]="{'max-height':(window.document.body.clientHeight-360).toString()+'px','overflow':'auto'}" -->
+                        <cn-attribute [(changeValue)]="changeValue"></cn-attribute>
                 </div>
               </div> 
 
