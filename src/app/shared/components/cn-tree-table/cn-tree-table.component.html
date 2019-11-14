@@ -55,20 +55,55 @@
             <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
               <ng-container *ngSwitchCase="'field'">
                 <ng-container [ngSwitch]="item['state']">
-                  <td *ngSwitchCase="'new'" [nzIndentSize]="item.level * 20"
-                    [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
-                    (nzExpandChange)="expandRow(item[KEY_ID], item, $event)">
-                    <input style="width: 150px" type="text" nz-input nzSize="default"
-                      [(ngModel)]="item['data'][col.field]" /></td>
-                  <td *ngSwitchCase="'edit'" [nzIndentSize]="item.level * 20"
-                    [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
-                    (nzExpandChange)="expandRow(item[item[KEY_ID]], item, $event)">
-                    <input style="width: 150px" type="text" nz-input [(ngModel)]="item['data'][col.field]" /></td>
-                  <td [nzIndentSize]="item.level * 20" [nzShowExpand]="!!item.children && col.expand"
-                    [(nzExpand)]="item.expand" (nzExpandChange)="expandRow(item, $event)" *ngSwitchDefault>
-                    {{ item['originData'][col.field] }}</td>
-                </ng-container>
+
+                    <ng-container *ngIf="col.expand">
+                        <td *ngSwitchCase="'new'" [nzIndentSize]="item.level * 20 "
+                        [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
+                        (nzExpandChange)="expandRow(item[KEY_ID], item, $event)">
+                          <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'new'" [config]="col.editor"
+                          [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                          (updateValue)="valueChange($event)"  [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
+      
+                        </td>
+                      <td *ngSwitchCase="'edit'" [nzIndentSize]="item.level * 20 "
+                        [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
+                        (nzExpandChange)="expandRow(item[item[KEY_ID]], item, $event)">
+                   
+                        <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'edit'" [config]="col.editor"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                        (updateValue)="valueChange($event)"  [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
+    
+                      </td>
+                      <td  *ngSwitchDefault [nzIndentSize]="item.level * 20  " [nzShowExpand]="!!item.children && col.expand"
+                        [(nzExpand)]="item.expand" (nzExpandChange)="expandRow(item, $event)">
+                         {{ item['originData'][col.field] }}</td>
+                    </ng-container>
+                   
+                    <ng-container *ngIf="!col.expand">
+                        <td *ngSwitchCase="'new'">
+                          <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'new'" [config]="col.editor"
+                          [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                          (updateValue)="valueChange($event)"  [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
+      
+                        </td>
+                      <td *ngSwitchCase="'edit'">
+                        <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'edit'" [config]="col.editor"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                        (updateValue)="valueChange($event)"  [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
+    
+                      </td>
+                      <td  *ngSwitchDefault >
+                         {{ item['originData'][col.field] }}
+                      </td>
+                    </ng-container>
+
+                    </ng-container>
+
+               
               </ng-container>
+              <ng-template #text>
+                  {{ item['originData'][col.field] }}
+                </ng-template>
               <ng-container *ngSwitchCase="'action'">
                 <td>
                   <ng-template ngFor let-act [ngForOf]="item['actions']">
