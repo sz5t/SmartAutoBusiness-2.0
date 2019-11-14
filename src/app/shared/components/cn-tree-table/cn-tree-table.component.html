@@ -35,7 +35,8 @@
         <th nzWidth="50px" nzShowCheckbox="true" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
           (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-header [ngForOf]="tableColumns">
-          <th [nzWidth]="header.width" *ngIf="!header.hidden" nzShowSort [nzSortKey]="header.field">
+          <th style="text-align: center" [nzWidth]="header.width" *ngIf="!header.hidden" nzShowSort
+            [nzSortKey]="header.field">
             {{ header.title }}
           </th>
         </ng-template>

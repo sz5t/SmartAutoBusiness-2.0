@@ -851,7 +851,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "receiverTrigger": "REFRESH_AS_CHILD",
                                                         "params": [
                                                             {
-                                                                "name": "ID",
+                                                                "name": "_BUSI_ID",
                                                                 "type": "item",
                                                                 "valueName": "ID"
                                                             }
@@ -1658,9 +1658,9 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             "id": "add_business_object_changeValue",
                                             "params": [
                                                 {
-                                                    "name": "_BUS_ID",
+                                                    "name": "_BUSI_ID",
                                                     "type": "tempValue",
-                                                    "valueName": "_BUS_ID",
+                                                    "valueName": "_BUSI_ID",
                                                     "valueTo": "tempValue"
                                                 }
                                             ]
@@ -1669,9 +1669,15 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             "id": "add_sub_business_object_changeValue",
                                             "params": [
                                                 {
-                                                    "name": "_BUS_ID",
+                                                    "name": "_BUSI_ID",
                                                     "type": "tempValue",
-                                                    "valueName": "_BUS_ID",
+                                                    "valueName": "_BUSI_ID",
+                                                    "valueTo": "tempValue"
+                                                },
+                                                {
+                                                    "name": "_parent_id",
+                                                    "type": "item",
+                                                    "valueName": "parentId",
                                                     "valueTo": "tempValue"
                                                 }
                                             ]
@@ -1691,12 +1697,844 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "dialog": [
                                         {
                                             "id": "business_object_layout",
-                                            "layoutName": "businessObjectForm",
+                                            // "layoutName": "businessObjectForm",
                                             "type": "confirm",
-                                            "width": "60%",
+                                            "width": "80%",
                                             "title": "业务对象",
                                             "cancelText": "取消",
-                                            "okText": "提交"
+                                            "okText": "提交",
+                                            "form": {
+                                                "id": "view_business_object_form",
+                                                "type": "form",
+                                                "component": "form",
+                                                "state": "new",
+                                                "loadingConfig": {
+                                                    "id": "loadform"
+                                                },
+                                                "cascade": {
+                                                    "messageSender": [
+                                                        {
+                                                            "id": "afterComponentFormUpdateSuccess",
+                                                            "senderId": "view_business_object_form",
+                                                            "sendData": [
+                                                                {
+                                                                    "beforeSend": {},
+                                                                    "reveicerId": "",
+                                                                    "receiverTriggerType": "ACTION",
+                                                                    "receiverTrigger": "MESSAGE",
+                                                                    "params": [
+                                                                        {
+                                                                            "name": "type",
+                                                                            "type": "value",
+                                                                            "value": "success"
+                                                                        },
+                                                                        {
+                                                                            "name": "code",
+                                                                            "type": "value",
+                                                                            "value": "message.operation.success"
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "beforeSend": {},
+                                                                    "reveicerId": "",
+                                                                    "receiverTriggerType": "ACTION",
+                                                                    "receiverTrigger": "UPDATE_SELECTED_NODE",
+                                                                    "params": [
+                                                                        {
+                                                                            "name": "ID",
+                                                                            "type": "returnValue",
+                                                                            "valueName": "ID"
+                                                                        },
+                                                                        {
+                                                                            "name": "NAME",
+                                                                            "type": "returnValue",
+                                                                            "valueName": "NAME"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ],
+                                                    "messageReceiver": [
+                                                        {
+                                                            "id": "",
+                                                            "senderId": "view_tree_component_base",
+                                                            "receiveData": [
+                                                                {
+                                                                    "beforeReceive": [],
+                                                                    "triggerType": "BEHAVIOR",
+                                                                    "trigger": "REFRESH_AS_CHILD",
+                                                                    "params": [
+                                                                        {
+                                                                            "pname": "_ID",
+                                                                            "cname": "_ID",
+                                                                            "valueTo": "tempValue"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                "cascadeValue": [
+                                                    {
+                                                        "type": "",
+                                                        "controlId": "res_type",
+                                                        "name": "refResourceType",
+                                                        "CascadeObjects": [
+                                                            {
+                                                                "controlId": "res_ref_id",
+                                                                "cascadeName": "refResourceId",
+                                                                "cascadeItems": [
+                                                                    {
+                                                                        "type": "default",
+                                                                        "caseValue": {
+                                                                            "type": "selectObjectValue",
+                                                                            "valueName": "value",
+                                                                            "regular": "^0$"
+                                                                        },
+                                                                        "content": {
+                                                                            "type": "ajax",
+                                                                            "data": {
+                                                                                "option": [
+                                                                                    {
+                                                                                        "name": "_TYPE",
+                                                                                        "type": "selectValue",
+                                                                                        "valueName": "refResourceType"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                ]
+                                                            }
+                                                        ],
+                                                    },
+                                                    {
+                                                        "type": "",
+                                                        "controlId": "res_ref_id",
+                                                        "name": "refResourceId",
+                                                        "CascadeObjects": [
+                                                            {
+                                                                "controlId": "res_refField",
+                                                                "cascadeName": "refParentResourcePropId",
+                                                                "cascadeItems": [
+                                                                    {
+                                                                        "type": "default",
+                                                                        "content": {
+                                                                            "type": "ajax",
+                                                                            "data": {
+                                                                                "option": [
+                                                                                    {
+                                                                                        "name": "_TABLE_ID",
+                                                                                        "type": "selectValue",
+                                                                                        "valueName": "ID"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    }
+
+                                                                ]
+                                                            }
+                                                        ],
+                                                    },
+                                                    // {
+                                                    //     "type": "",
+                                                    //     "controlId": "res_refSQL",
+                                                    //     "name": "sqlList",
+                                                    //     "CascadeObjects": [
+                                                    //         {
+                                                    //             "controlId": "res_refSQL",
+                                                    //             "cascadeName": "sqlList",
+                                                    //             "cascadeItems": [
+                                                    //                 {
+                                                    //                     "type": "default",
+                                                    //                     "content": {
+                                                    //                         "type": "setValue",
+                                                    //                         "data": {
+                                                    //                             "option": [
+                                                    //                                 {
+                                                    //                                     // "name": "_TYPE",
+                                                    //                                     "type": "dataList",
+                                                    //                                     // "valueName": "refResourceType"
+                                                    //                                 }
+                                                    //                             ]
+                                                    //                         }
+                                                    //                     }
+                                                    //                 }
+
+                                                    //             ]
+                                                    //         }
+                                                    //     ]
+                                                    // }
+                                                ],
+                                                "cascadeLayout": [
+                                                    {
+                                                        "field": "refResourceType",
+                                                        "mapping": [
+                                                            {
+                                                                "value": 0,
+                                                                "layout": [
+                                                                    "col_1",
+                                                                    "col_2",
+                                                                    "col_3",
+                                                                    "col_4",
+                                                                    "col_5",
+                                                                ]
+                                                            },
+                                                            {
+                                                                "value": 1,
+                                                                "layout": [
+                                                                    "col_1",
+                                                                    "col_2",
+                                                                    "col_3",
+                                                                    "col_4",
+                                                                    "col_6",
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "formLayout": {
+                                                    "id": "b86s2i",
+                                                    "type": "layout",
+                                                    "title": "表单布局b86s2i",
+                                                    "rows": [
+                                                        {
+                                                            "id": "MefhXa",
+                                                            "type": "row",
+                                                            "cols": [
+                                                                {
+                                                                    "id": "col_2",
+                                                                    "col": "cc",
+                                                                    "type": "col",
+                                                                    "title": "列ioj0mV",
+                                                                    "span": 12,
+                                                                    "layoutContain": "select",
+                                                                    "size": {
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 12,
+                                                                        "nzLg": 12,
+                                                                        "ngXl": 12,
+                                                                        "nzXXl": 12
+                                                                    },
+                                                                    "control": {
+                                                                        "id": "res_refProperty"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "id": "col_3",
+                                                                    "col": "cc",
+                                                                    "type": "col",
+                                                                    "title": "列ioj0mV",
+                                                                    "span": 12,
+                                                                    "layoutContain": "select",
+                                                                    "size": {
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 12,
+                                                                        "nzLg": 12,
+                                                                        "ngXl": 12,
+                                                                        "nzXXl": 12
+                                                                    },
+                                                                    "control": {
+                                                                        "id": "res_cascade_del"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "id": "col_4",
+                                                                    "col": "cc",
+                                                                    "type": "col",
+                                                                    "title": "列iHspYn",
+                                                                    "span": 24,
+                                                                    "layoutContain": "select",
+                                                                    "size": {
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 24,
+                                                                        "nzLg": 24,
+                                                                        "ngXl": 24,
+                                                                        "nzXXl": 24
+                                                                    },
+                                                                    "control": {
+                                                                        "id": "res_type"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "id": "col_5",
+                                                                    "col": "cc",
+                                                                    "type": "col",
+                                                                    "title": "列ioj0mV",
+                                                                    "span": 24,
+                                                                    "layoutContain": "select",
+                                                                    "size": {
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 24,
+                                                                        "nzLg": 24,
+                                                                        "ngXl": 24,
+                                                                        "nzXXl": 24
+                                                                    },
+                                                                    "control": {
+                                                                        "id": "res_ref_id"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "id": "col_6",
+                                                                    "col": "cc",
+                                                                    "type": "col",
+                                                                    "title": "列ioj0mV",
+                                                                    "span": 24,
+                                                                    "layoutContain": "select",
+                                                                    "size": {
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 24,
+                                                                        "nzLg": 24,
+                                                                        "ngXl": 24,
+                                                                        "nzXXl": 24
+                                                                    },
+                                                                    "control": {
+                                                                        "id": "res_refSQL"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "id": "col_1",
+                                                                    "col": "cc",
+                                                                    "type": "col",
+                                                                    "title": "列ioj0mV",
+                                                                    "span": 12,
+                                                                    "layoutContain": "select",
+                                                                    "size": {
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 12,
+                                                                        "nzLg": 12,
+                                                                        "ngXl": 12,
+                                                                        "nzXXl": 12
+                                                                    },
+                                                                    "control": {
+                                                                        "id": "res_refField"
+                                                                    }
+                                                                },
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                "formControls": [
+                                                    {
+                                                        "id": "res_refProperty",
+                                                        "hidden": true,
+                                                        "title": "关联属性",
+                                                        "titleConfig": {
+                                                            "required": false
+                                                        },
+                                                        "field": "refResourceKeyName",
+                                                        "labelSize": {
+                                                            "span": 6,
+                                                            "nzXs": 6,
+                                                            "nzSm": 6,
+                                                            "nzMd": 6,
+                                                            "nzLg": 6,
+                                                            "ngXl": 6,
+                                                            "nzXXl": 6
+                                                        },
+                                                        "controlSize": {
+                                                            "span": 18,
+                                                            "nzXs": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzSm": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzMd": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzLg": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "ngXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzXXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            }
+                                                        },
+                                                        "state": "edit",
+                                                        "text": {
+                                                            "type": "label",
+                                                            "field": "refResourceKeyName"
+                                                        },
+                                                        "editor": {
+                                                            "type": "input",
+                                                            "field": "refResourceKeyName",
+                                                            "placeholder": "请输入..."
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "res_refField",
+                                                        "hidden": true,
+                                                        "title": "关联列名",
+                                                        "titleConfig": {
+                                                            "required": false
+                                                        },
+                                                        "field": "refParentResourcePropId",
+                                                        "labelSize": {
+                                                            "span": 6,
+                                                            "nzXs": 6,
+                                                            "nzSm": 6,
+                                                            "nzMd": 6,
+                                                            "nzLg": 6,
+                                                            "ngXl": 6,
+                                                            "nzXXl": 6
+                                                        },
+                                                        "controlSize": {
+                                                            "span": 18,
+                                                            "nzXs": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzSm": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzMd": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzLg": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "ngXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzXXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            }
+                                                        },
+                                                        "state": "edit",
+                                                        "text": {
+                                                            "type": "label",
+                                                            "field": "refParentResourcePropId"
+                                                        },
+                                                        "editor": {
+                                                            "type": "gridSelect",
+                                                            "field": "refParentResourcePropId",
+                                                            "layoutName": "tableColumnsList",
+                                                            "placeholder": "请选择",
+                                                            "loadingItemConfig": {
+                                                                "id": "loadformgrid1"
+                                                            },
+                                                            "labelName": "DESC_NAME",
+                                                            "valueName": "CNAME"
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "res_cascade_del",
+                                                        "hidden": true,
+                                                        "title": "及联删除",
+                                                        "titleConfig": {
+                                                            "required": false
+                                                        },
+                                                        "field": "isCascadeDelete",
+                                                        "labelSize": {
+                                                            "span": 6,
+                                                            "nzXs": 6,
+                                                            "nzSm": 6,
+                                                            "nzMd": 6,
+                                                            "nzLg": 6,
+                                                            "ngXl": 6,
+                                                            "nzXXl": 6
+                                                        },
+                                                        "controlSize": {
+                                                            "span": 18,
+                                                            "nzXs": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzSm": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzMd": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzLg": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "ngXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzXXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            }
+                                                        },
+                                                        "state": "edit",
+                                                        "text": {
+                                                            "type": "label",
+                                                            "field": "isCascadeDelete"
+                                                        },
+                                                        "editor": {
+                                                            "type": "select",
+                                                            "field": "isCascadeDelete",
+                                                            "placeholder": "请输入",
+                                                            "options": [
+                                                                {
+                                                                    "label": "是",
+                                                                    "value": 1
+                                                                },
+                                                                {
+                                                                    "label": "否",
+                                                                    "value": 0
+                                                                }
+                                                            ],
+                                                            "defaultValue": 0,
+                                                            "labelName": "label"
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "res_type",
+                                                        "hidden": false,
+                                                        "title": "资源类型",
+                                                        "titleConfig": {
+                                                            "required": false
+                                                        },
+                                                        "field": "refResourceType",
+                                                        "labelSize": {
+                                                            "span": 3,
+                                                            "nzXs": {
+                                                                "span": 3
+                                                            },
+                                                            "nzSm": {
+                                                                "span": 3
+                                                            },
+                                                            "nzMd": {
+                                                                "span": 3
+                                                            },
+                                                            "nzLg": {
+                                                                "span": 3
+                                                            },
+                                                            "ngXl": {
+                                                                "span": 3
+                                                            },
+                                                            "nzXXl": {
+                                                                "span": 3
+                                                            }
+                                                        },
+                                                        "controlSize": {
+                                                            "span": 18,
+                                                            "nzXs": 18,
+                                                            "nzSm": 18,
+                                                            "nzMd": 18,
+                                                            "nzLg": 18,
+                                                            "ngXl": 18,
+                                                            "nzXXl": 18
+                                                        },
+                                                        "state": "edit",
+                                                        "text": {
+                                                            "type": "label",
+                                                            "field": "refResourceType"
+                                                        },
+                                                        "editor": {
+                                                            "type": "select",
+                                                            "field": "refResourceType",
+                                                            "placeholder": "请选择",
+                                                            "options": [
+                                                                {
+                                                                    "label": "表资源",
+                                                                    "value": 0
+                                                                },
+                                                                {
+                                                                    "label": "SQL 资源",
+                                                                    "value": 1
+                                                                }
+                                                            ],
+                                                            "defaultValue": 0,
+                                                            "labelName": "label",
+                                                            "valueName": "value"
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "res_ref_id",
+                                                        "hidden": true,
+                                                        "title": "关联表资源",
+                                                        "titleConfig": {
+                                                            "required": false
+                                                        },
+                                                        "field": "refResourceId",
+                                                        "labelSize": {
+                                                            "span": 3,
+                                                            "nzXs": 3,
+                                                            "nzSm": 3,
+                                                            "nzMd": 3,
+                                                            "nzLg": 3,
+                                                            "ngXl": 3,
+                                                            "nzXXl": 3
+                                                        },
+                                                        "controlSize": {
+                                                            "span": 18,
+                                                            "nzXs": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzSm": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzMd": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzLg": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "ngXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzXXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            }
+                                                        },
+                                                        "state": "edit",
+                                                        "text": {
+                                                            "type": "label",
+                                                            "field": "refResourceId"
+                                                        },
+                                                        "editor": {
+                                                            "type": "gridSelect",
+                                                            "field": "refResourceId",
+                                                            "layoutName": "apiResourceList",
+                                                            "placeholder": "请选择",
+                                                            "loadingItemConfig": {
+                                                                "id": "loadformgrid"
+                                                            },
+                                                            "labelName": "DESC_NAME",
+                                                            "valueName": "ID"
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "res_refSQL",
+                                                        "hidden": true,
+                                                        "title": "关联SQL资源",
+                                                        "titleConfig": {
+                                                            "required": false
+                                                        },
+                                                        "field": "sqlList",
+                                                        "labelSize": {
+                                                            "span": 3,
+                                                            "nzXs": 3,
+                                                            "nzSm": 3,
+                                                            "nzMd": 3,
+                                                            "nzLg": 3,
+                                                            "ngXl": 3,
+                                                            "nzXXl": 3
+                                                        },
+                                                        "controlSize": {
+                                                            "span": 21,
+                                                            "nzXs": {
+                                                                "span": 12,
+                                                                "offset": 0
+                                                            },
+                                                            "nzSm": {
+                                                                "span": 21,
+                                                                "offset": 0
+                                                            },
+                                                            "nzMd": {
+                                                                "span": 21,
+                                                                "offset": 0
+                                                            },
+                                                            "nzLg": {
+                                                                "span": 21,
+                                                                "offset": 0
+                                                            },
+                                                            "ngXl": {
+                                                                "span": 21,
+                                                                "offset": 0
+                                                            },
+                                                            "nzXXl": {
+                                                                "span": 21,
+                                                                "offset": 0
+                                                            }
+                                                        },
+                                                        "state": "edit",
+                                                        "text": {
+                                                            "type": "label",
+                                                            "field": "sqlList"
+                                                        },
+                                                        "editor": {
+                                                            "type": "staticGrid",
+                                                            "field": "sqlList",
+                                                            "placeholder": "",
+                                                            "validations": []
+                                                        }
+                                                    }
+                                                ],
+                                                "formControlsPermissions": [
+                                                    {
+                                                        "formState": "new",
+                                                        "formStateContent": {
+                                                            "isLoad": false,
+                                                            "loadAjax": {},
+                                                            "isDefault": true
+                                                        },
+                                                        "Controls": [
+                                                            {
+                                                                "id": "res_type",
+                                                                "state": "edit",
+                                                                "hidden": false,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_refField",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_refProperty",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_cascade_del",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_ref_id",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            }
+
+                                                        ]
+                                                    },
+                                                    {
+                                                        "formState": "edit",
+                                                        "Controls": [
+                                                            {
+                                                                "id": "res_type",
+                                                                "state": "edit",
+                                                                "hidden": false,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_refField",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_refProperty",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_cascade_del",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_ref_id",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "formState": "text",
+                                                        "Controls": [
+                                                            {
+                                                                "id": "res_type",
+                                                                "state": "text",
+                                                                "hidden": false,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_refField",
+                                                                "state": "text",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_refProperty",
+                                                                "state": "text",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_cascade_del",
+                                                                "state": "text",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            },
+                                                            {
+                                                                "id": "res_ref_id",
+                                                                "state": "edit",
+                                                                "hidden": true,
+                                                                "readOnly": false
+                                                            }
+                                                        ]
+                                                    }
+                                                ],
+                                                "ajaxConfig": [
+                                                    {
+                                                        "id": "loadform",
+                                                        "url": "td/SMT_BASE_COMPONENT/query",
+                                                        "urlType": "inner",
+                                                        "ajaxType": "get",
+                                                        "params": [
+                                                            {
+                                                                "name": "ID",
+                                                                "type": "tempValue",
+                                                                "valueName": "_ID"
+                                                            }
+                                                        ],
+                                                        "outputParameters": [],
+                                                        "result": []
+                                                    },
+                                                    {
+                                                        "id": "loadformgrid",
+                                                        "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                                                        "urlType": "inner",
+                                                        "ajaxType": "get",
+                                                        "params": [
+                                                            {
+                                                                "name": "ID",
+                                                                "type": "tempValue",
+                                                                "valueName": "_ID",
+                                                            }
+                                                        ],
+                                                        "outputParameters": [],
+                                                        "result": []
+                                                    }
+                                                ]
+                                            }
                                         },
                                         {
                                             "id": "edit_city_form",
@@ -2017,26 +2855,55 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     ],
                                     "ajaxConfig": [
                                         {
-                                            "id": "add_offices_1",
-                                            "url": "office/insertMany/OFFICE_SHEET",
+                                            "id": "add_business_sub_object",
+                                            "url": "cfgBusiModelResRelations/insert",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
                                                 {
-                                                    "name": "OFFICENAME",
-                                                    "type": "componentValue",
-                                                    "valueName": "OFFICENAME",
-                                                    "dataType": "string"
+                                                    "name": "id",
+                                                    "type": "GUID"
                                                 },
                                                 {
-                                                    "name": "ID",
-                                                    "type": "componentValue",
-                                                    "valueName": "ID"
+                                                    "name": "refBusiModelId",
+                                                    "type": "tempValue",
+                                                    "valueName": "_BUSI_ID"
                                                 },
                                                 {
-                                                    "name": "PID",
+                                                    "name": "refResourceId",
                                                     "type": "componentValue",
-                                                    "valueName": "PID"
+                                                    "valueName": "refResourceId"
+                                                },
+                                                {
+                                                    "name": "refResourceType",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceType"
+                                                },
+                                                {
+                                                    "name": "parentId",
+                                                    "type": "tempValue",
+                                                    "valueName": "_parentId"
+                                                },
+                                                {
+                                                    "name": "refResourceKeyName",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceKeyName"
+                                                },
+                                                {
+                                                    "name": "refParentResourcePropId",
+                                                    "type": "componentValue",
+                                                    "valueName": "refParentResourcePropId"
+                                                },
+                                                {
+                                                    "name": "isCascadeDelete",
+                                                    "type": "componentValue",
+                                                    "valueName": "isCascadeDelete"
+
+                                                },
+                                                {
+                                                    "name": "sqlList",
+                                                    "type": "componentValue",
+                                                    "valueName": "sqlList"
                                                 }
                                             ],
                                             "outputParameters": [
@@ -2047,12 +2914,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "name": "data",
                                                     "showMessageWithNext": 0,
                                                     "message": "message.ajax.state.success",
-                                                    "senderId": "afterOfficeSaveSuccessfully"
+                                                    "senderId": "afterAddBusinessSubObjectSuccess"
                                                 },
                                                 {
                                                     "name": "validation",
                                                     "message": "message.ajax.state.success",
-                                                    "senderId": "afterOfficeSaveValidation"
+                                                    "senderId": "afterAddBusinessSubObjectValidation"
                                                 },
                                                 {
                                                     "name": "error",
@@ -2197,11 +3064,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "execute": [
                                                         {
                                                             "triggerType": "ACTION",
-                                                            "trigger": "LAYOUT_DIALOG",
+                                                            // "trigger": "LAYOUT_DIALOG",
+                                                            "trigger": "DIALOG",
                                                             "changeValueId": "add_business_object_changeValue",
                                                             // "conditionId": "add_state_1"
                                                             "dialogId": "business_object_layout",
-                                                            "ajaxId": "tree_add_office",
+                                                            "ajaxId": "add_business_sub_object",
                                                         }
                                                     ]
                                                 },
@@ -2390,7 +3258,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "title": "树表",
                                     "titleIcon": "right-circle",
                                     "component": "cnTreeTable",
-                                    "keyId": "ID",
+                                    "keyId": "id",
                                     "size": "middle",
                                     "isBordered": true,
                                     "isFrontPagination": false,
@@ -2421,9 +3289,15 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "value": "PARENT_ID"
                                             },
                                             {
-                                                "name": "PARENT_ID",
+                                                // "name": "_root.REF_BUSI_MODEL_ID",
+                                                "name": "_root.refBusiModelId",
                                                 "type": "tempValue",
-                                                "valueName": "_BUS_ID"
+                                                "valueName": "_BUSI_ID"
+                                            },
+                                            {
+                                                "name": "_mapToObject",
+                                                "type": "value",
+                                                "value": true
                                             }
                                         ],
                                         "filter": [
@@ -2442,7 +3316,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             {
                                                 "name": "REF_BUSI_MODEL_ID",
                                                 "type": "tempValue",
-                                                "valueName": "_BUS_ID"
+                                                "valueName": "_BUSI_ID"
                                             },
                                             // {
                                             //     "name": "_deep",
@@ -2460,60 +3334,40 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "ID",
                                             "type": "field",
-                                            "field": "ID",
+                                            "field": "id",
                                             "hidden": true,
                                             "showFilter": false,
                                             "showSort": false,
-                                            "isExpand": true,
+                                            "isExpand": false,
                                             "width": "400px",
                                             "style": {}
                                         },
                                         {
                                             "title": "ID",
                                             "type": "field",
-                                            "field": "PARENT_ID",
+                                            "field": "parentId",
                                             "hidden": true,
                                             "showFilter": false,
                                             "showSort": false,
-                                            "isExpand": true,
+                                            "isExpand": false,
                                             "width": "400px",
                                             "style": {}
                                         },
                                         {
                                             "title": "ID",
                                             "type": "field",
-                                            "field": "REF_BUSI_MODEL_ID",
+                                            "field": "refBusiModelId",
                                             "hidden": true,
                                             "showFilter": false,
                                             "showSort": false,
-                                            "isExpand": true,
+                                            "isExpand": false,
                                             "width": "400px",
-                                            "style": {}
-                                        },
-                                        {
-                                            "title": "OFFICE_NAME",
-                                            "type": "field",
-                                            "field": "REF_RESOURCE_TYPE",
-                                            "hidden": true,
-                                            "showFilter": false,
-                                            "showSort": false,
-                                            "expand": true,
                                             "style": {}
                                         },
                                         {
                                             "title": "资源名称",
                                             "type": "field",
-                                            "field": "RES_NAME",
-                                            "hidden": false,
-                                            "showFilter": false,
-                                            "showSort": false,
-                                            "expand": true,
-                                            "style": {}
-                                        },
-                                        {
-                                            "title": "资源描述",
-                                            "type": "field",
-                                            "field": "DESC_NAME",
+                                            "field": "resName",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -2523,31 +3377,51 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "资源类型",
                                             "type": "field",
-                                            "field": "REF_RESOURCE_TYPE_TEXT",
+                                            "field": "refResourceType",
+                                            "hidden": true,
+                                            "showFilter": false,
+                                            "showSort": false,
+                                            "expand": false,
+                                            "style": {}
+                                        },
+                                        {
+                                            "title": "资源描述",
+                                            "type": "field",
+                                            "field": "descName",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
-                                            "expand": true,
+                                            "expand": false,
+                                            "style": {}
+                                        },
+                                        {
+                                            "title": "资源类型",
+                                            "type": "field",
+                                            "field": "refResourceTypeText",
+                                            "hidden": false,
+                                            "showFilter": false,
+                                            "showSort": false,
+                                            "expand": false,
                                             "style": {}
                                         },
                                         {
                                             "title": "关联属性",
                                             "type": "field",
-                                            "field": "REF_RESOURCE_KEY_NAME",
+                                            "field": "refResourceKeyName",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
-                                            "expand": true,
+                                            "expand": false,
                                             "style": {}
                                         },
                                         {
                                             "title": "关联列名",
                                             "type": "field",
-                                            "field": "REF_PARENT_RESOURCE_PROP_ID",
+                                            "field": "refParentResourcePropId",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
-                                            "expand": true,
+                                            "expand": false,
                                             "style": {}
                                         },
                                         {
@@ -2711,7 +3585,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 ]
                                             },
                                             {
-                                                "id": "afterOfficeSaveSuccessfully",
+                                                "id": "afterAddBusinessSubObjectSuccess",
                                                 "senderId": "view_business_object",
                                                 // "triggerType": "ACTION",
                                                 // "trigger": "MESSAGE0",
@@ -2739,12 +3613,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "beforeSend": {},
                                                         "reveicerId": "",
                                                         "receiverTriggerType": "ACTION",
-                                                        "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
                                                         "params": [
                                                             {
-                                                                "name": "ID",
+                                                                "name": "id",
                                                                 "type": "addedRows",
-                                                                "valueName": "ID"
+                                                                "valueName": "id"
                                                             }
                                                         ]
                                                     }
@@ -2779,19 +3653,19 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "beforeSend": {},
                                                         "reveicerId": "",
                                                         "receiverTriggerType": "ACTION",
-                                                        "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+                                                        "receiverTrigger": "REPLACE_ROW_DATA",
                                                         "params": [
                                                             {
-                                                                "name": "ID",
+                                                                "name": "id",
                                                                 "type": "editedRows",
-                                                                "valueName": "ID"
+                                                                "valueName": "id"
                                                             }
                                                         ]
                                                     }
                                                 ]
                                             },
                                             {
-                                                "id": "afterOfficeSaveValidation",
+                                                "id": "afterAddBusinessSubObjectValidation",
                                                 "senderId": "view_business_object",
                                                 "sendData": [
                                                     {
@@ -2911,8 +3785,8 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "trigger": "REFRESH_AS_CHILD",
                                                         "params": [
                                                             {
-                                                                "pname": "ID",
-                                                                "cname": "_BUS_ID",
+                                                                "pname": "_BUSI_ID",
+                                                                "cname": "_BUSI_ID",
                                                                 "valueTo": "tempValue"
                                                             }
                                                         ]
@@ -3356,7 +4230,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "name": "data",
                                                     "showMessageWithNext": 0,
                                                     "message": "message.ajax.state.success",
-                                                    "senderId": "afterOfficeSaveSuccessfully"
+                                                    "senderId": "afterAddBusinessSubObjectSuccess"
                                                 },
                                                 {
                                                     "name": "validation",
@@ -3643,7 +4517,34 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
 
                                                                 ]
                                                             }
-                                                        ],
+                                                        ]
+                                                    }
+                                                ],
+                                                "cascadeLayout": [
+                                                    {
+                                                        "field": "refResourceType",
+                                                        "mapping": [
+                                                            {
+                                                                "value": 0,
+                                                                "layout": [
+                                                                    "col_1",
+                                                                    "col_2",
+                                                                    "col_3",
+                                                                    "col_4",
+                                                                    "col_5",
+                                                                ]
+                                                            },
+                                                            {
+                                                                "value": 1,
+                                                                "layout": [
+                                                                    "col_1",
+                                                                    "col_2",
+                                                                    "col_3",
+                                                                    "col_4",
+                                                                    "col_6",
+                                                                ]
+                                                            }
+                                                        ]
                                                     }
                                                 ],
                                                 "formLayout": {
@@ -3656,7 +4557,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "type": "row",
                                                             "cols": [
                                                                 {
-                                                                    "id": "ioj0mV2",
+                                                                    "id": "col_1",
                                                                     "col": "cc",
                                                                     "type": "col",
                                                                     "title": "列ioj0mV",
@@ -3675,7 +4576,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     }
                                                                 },
                                                                 {
-                                                                    "id": "ioj0mV3",
+                                                                    "id": "col_2",
                                                                     "col": "cc",
                                                                     "type": "col",
                                                                     "title": "列ioj0mV",
@@ -3694,7 +4595,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     }
                                                                 },
                                                                 {
-                                                                    "id": "ioj0mV4",
+                                                                    "id": "col_3",
                                                                     "col": "cc",
                                                                     "type": "col",
                                                                     "title": "列ioj0mV",
@@ -3713,7 +4614,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     }
                                                                 },
                                                                 {
-                                                                    "id": "iHspYn",
+                                                                    "id": "col_4",
                                                                     "col": "cc",
                                                                     "type": "col",
                                                                     "title": "列iHspYn",
@@ -3732,7 +4633,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     }
                                                                 },
                                                                 {
-                                                                    "id": "ioj0mV1",
+                                                                    "id": "col_5",
                                                                     "col": "cc",
                                                                     "type": "col",
                                                                     "title": "列ioj0mV",
@@ -3751,7 +4652,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     }
                                                                 },
                                                                 {
-                                                                    "id": "ioj0mV3",
+                                                                    "id": "col_6",
                                                                     "col": "cc",
                                                                     "type": "col",
                                                                     "title": "列ioj0mV",
@@ -3768,7 +4669,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     "control": {
                                                                         "id": "res_refSQL"
                                                                     }
-                                                                },
+                                                                }
                                                             ]
                                                         }
                                                     ]
@@ -3776,8 +4677,8 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "formControls": [
                                                     {
                                                         "id": "res_refProperty",
-                                                        "hidden": true,
-                                                        "title": "关联属性",
+                                                        "hidden": false,
+                                                        "title": "关联属性1",
                                                         "titleConfig": {
                                                             "required": false
                                                         },
@@ -3824,15 +4725,20 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "field": "refResourceKeyName"
                                                         },
                                                         "editor": {
-                                                            "type": "input",
+                                                            "type": "gridSelect",
                                                             "field": "refResourceKeyName",
-                                                            "placeholder": "请输入",
-                                                            "validations": []
+                                                            "layoutName": "tableColumnsList",
+                                                            "placeholder": "请选择",
+                                                            "loadingItemConfig": {
+                                                                "id": "loadformgrid1"
+                                                            },
+                                                            "labelName": "DESC_NAME",
+                                                            "valueName": "CNAME"
                                                         }
                                                     },
                                                     {
                                                         "id": "res_refField",
-                                                        "hidden": true,
+                                                        "hidden": false,
                                                         "title": "关联列名",
                                                         "titleConfig": {
                                                             "required": false
@@ -4326,7 +5232,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     50,
                     100
                 ],
-                "loadingOnInit": false,
+                "loadingOnInit": true,
                 "spanWidthConfig": [
                     "50px",
                     "100px",
@@ -4341,7 +5247,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                         {
                             "name": "TYPE",
                             "type": "initValue",
-                            "valueName": "_TYPE"
+                            "valueName": "refResourceType"
                         }
                     ],
                     "filter": []
@@ -4405,6 +5311,112 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                 "beforeTrigger": [],
                 "afterTrigger": []
             }
+        },
+        "tableColumnsList": {
+            "id": "r5zDHB",
+            "col": "cc",
+            "type": "col",
+            "title": "",
+            "span": 24,
+            "container": "component",
+            "size": {
+                "nzXs": 24,
+                "nzSm": 24,
+                "nzMd": 24,
+                "nzLg": 24,
+                "nzXl": 24,
+                "nzXXl": 24
+            },
+            "component": {
+                "id": "view_table_column",
+                "title": "资源字段列表",
+                "titleIcon": "right-circle",
+                "component": "cnDataTable",
+                "keyId": "ID",
+                "size": "small",
+                "isBordered": true,
+                "isFrontPagination": false,
+                "isPagination": true,
+                "isShowSizeChanger": true,
+                "showTotal": true,
+                "pageSize": 5,
+                "isSelected": true,
+                "showCheckBox": false,
+                "pageSizeOptions": [
+                    10,
+                    20,
+                    50,
+                    100
+                ],
+                "loadingOnInit": false,
+                "spanWidthConfig": [
+                    "50px",
+                    "100px",
+                    "200px",
+                    "200px",
+                    "200px"
+                ],
+                "loadingConfig": {
+                    "url": "td/DM_COLUMN/query",
+                    "method": "get",
+                    "params": [
+                        {
+                            "name": "TABLE_ID",
+                            "type": "initValue",
+                            "valueName": "_TABLE_ID"
+                        }
+                    ],
+                    "filter": []
+                },
+                "columns": [
+                    {
+                        "title": "列名称",
+                        "type": "field",
+                        "field": "CNAME",
+                        "hidden": false,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "100px",
+                        "style": {}
+                    },
+                    {
+                        "title": "列描述",
+                        "type": "field",
+                        "field": "DESC_NAME",
+                        "hidden": false,
+                        "showFilter": false,
+                        "showSort": false,
+                        "width": "100px",
+                        "style": {}
+                    }
+                ],
+                "cascade": {
+                    "messageSender": [{
+                        "id": "grid_sender_02",
+                        "senderId": "view_01",
+                        "triggerType": "BEHAVIOR",
+                        "trigger": "SET_SELECT_ROW",
+                        "triggerMoment": "after",
+                        "sendData": [{
+                            "beforeSend": {},
+                            "reveicerId": "",
+                            "receiverTriggerType": "BEHAVIOR",
+                            "receiverTrigger": "REFRESH_AS_CHILD",
+                            "params": [{
+                                "name": "_PID",
+                                "type": "item",
+                                "valueName": "id"
+                            }]
+                        }]
+                    }]
+                },
+                "rowActions": [],
+                "dialog": [],
+                "condition": [],
+                "ajaxConfig": [],
+                "beforeTrigger": [],
+                "afterTrigger": []
+            }
         }
 
     }
@@ -4417,5 +5429,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
     public ngOnInit() {
         this.componentService.cacheService.set('businessObjectForm', this.subPageConfig.businessObjectForm);
         this.componentService.cacheService.set('apiResourceList', this.subPageConfig.apiResourceList);
+        this.componentService.cacheService.set('tableColumnsList', this.subPageConfig.tableColumnsList);
     }
 }

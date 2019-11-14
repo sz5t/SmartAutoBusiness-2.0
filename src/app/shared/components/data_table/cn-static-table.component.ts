@@ -104,7 +104,7 @@ export class CnStaticTableComponent extends CnComponentBase
             {
                 "title": "ID",
                 "type": "field",
-                "field": "ID",
+                "field": "id",
                 "hidden": true,
                 "showFilter": false,
                 "showSort": false,
@@ -123,7 +123,7 @@ export class CnStaticTableComponent extends CnComponentBase
                 "style": {},
                 "editor": {
                     "type": "input",
-                    "field": "name"
+                    "field": "sqlId"
                 }
             },
             {

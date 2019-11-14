@@ -1090,7 +1090,6 @@ export class CnTreeComponent extends CnComponentBase
             appendNodeData[col['type']] = option[col['field']];
         });
 
-        // debugger;
         // const addChildNode = new NzTreeNode({
         //     key: appendNodeData['key'],
         //     title: appendNodeData['title'],

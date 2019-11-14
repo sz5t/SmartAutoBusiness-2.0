@@ -431,9 +431,9 @@ export class CnTreeTableComponent extends CnComponentBase
             option.map(opt => {
                 rids.push(opt[this.KEY_ID]);
             })
-            param1['ids'] = `in(${rids.join(',')})`;
+            param1[`_root.${this.KEY_ID}`] = `in(${rids.join(',')})`;
         } else if (option) {
-            param1['ids'] = `in(${option[this.KEY_ID]})`
+            param1[`_root.${this.KEY_ID}`] = `in(${option[this.KEY_ID]})`
         }
 
         // 页面其他参数
@@ -1466,6 +1466,8 @@ export class CnTreeTableComponent extends CnComponentBase
         const dialogOptional = {
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzContent: CnDataFormComponent,
+            nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+            nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
             nzComponentParams: {
                 config: dialogCfg.form,
                 changeValue: option.changeValue ? option.changeValue.params : []

@@ -26,6 +26,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   @Input() public changeValue;
   @Input() public tempData;
   @Input() public initData;
+  layoutRowsCfg: any[];
   validateForm: FormGroup;
   controlArray: any[] = [];
   value;
@@ -65,6 +66,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
   ngOnInit() {
+    this.layoutRowsCfg = this.config.formLayout.rows.filter(r => r.id);
     if (this.initData) {
       this.initValue = this.initData;
     } else {
@@ -219,7 +221,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   private ControlsPermissions(state?) {
     // const ob = JSON.parse(JSON.stringify( this.formControlObj));
     this.config.formControlsPermissions.forEach(items => {
-      //  debugger;
       if (items.formState === state) {
         items.Controls.forEach(Control => {
           this.formControlObj[Control.id].state = Control.state;
@@ -414,6 +415,30 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       this.formCascade = {};
     }
 
+
+    if (this.config.cascadeLayout && this.config.cascadeLayout.length > 0) {
+      this.config.cascadeLayout.forEach(cascade => {
+        if (cascade.field === v.name) {
+          cascade.mapping.forEach(m => {
+            if (m.value === v.value) {
+              const oldRows = this.config.formLayout.rows;
+              const newRows = [];
+              // const newCols = [];
+              oldRows.forEach(r => {
+                const newCols = r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) > -1);
+                newRows.push({
+                  "id": r.id,
+                  "type": "row",
+                  "cols": newCols
+                });
+              })
+              this.layoutRowsCfg = newRows;
+            }
+          });
+        }
+      });
+    }
+
     // 1. 循环发出对象
 
     // 2. 解析应答对象（应答策略） 本次优化，将1.0里的data value 变化合并为一种策略，
@@ -522,12 +547,13 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         });
       });
 
+
     // tslint:disable-next-line:forin liu 自定义
     // for (const key in this.validateForm.controls) {
     //   this.validateForm.controls[key].markAsPristine();
     //   this.validateForm.controls[key].updateValueAndValidity();
     // }
-   console.log("当前表单最新值：", this.validateForm.value); 
+    console.log("当前表单最新值：", this.validateForm.value);
   }
 
 
@@ -582,7 +608,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
   }
   public cancel(v?) {
-    // debugger;
     const ss = JSON.parse(JSON.stringify(this.validateForm.value));
     console.log(this.config.id + '-------------cancel【开始】------------');
 

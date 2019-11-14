@@ -109,7 +109,6 @@ export class ButtonOperationResolver {
         switch (cfg.triggerType) {
             // 状态触发
             case BSN_TRIGGER_TYPE.STATE:
-                // debugger;
                 if (this.currentData) {
                     this.setDataState(cfg.trigger, this.currentData);
                     this.setToggle(this.currentData);

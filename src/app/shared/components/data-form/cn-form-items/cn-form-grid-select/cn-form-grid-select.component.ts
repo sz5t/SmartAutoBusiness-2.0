@@ -208,7 +208,6 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
    * 级联分析
    */
   public cascadeAnalysis(c?) {
-
     // 分类完善信息，此处完善的信息为 异步参数处理
     // cascadeValue
     if (c.hasOwnProperty(this.config.field)) {
@@ -222,6 +221,7 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'ajax') {
           this.load();
+
           this.table.setInitValue(this.cascadeValue);
           this.table.load();
         }

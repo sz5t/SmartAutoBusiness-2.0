@@ -64,27 +64,27 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
       ]
     }
   ];
-  
+
 
   async valueChange(v: string): Promise<void> {
     // v = "6IkDKuH1iXCnC5xiszniEVbbUWnOLRKm";
     // this.value = v;
-    console.log("树valueChange",v);
+    console.log("树valueChange", v);
     if (!this.nodes || (this.nodes && this.nodes.length <= 0))
       await this.load();
 
     let item = null;
-    if (v){
-       item = this.getChidlren(v);
-       if(!item){
-         // 异步执行 loaditem
-         item =  await this.loadItem();
-       }
+    if (v) {
+      item = this.getChidlren(v);
+      if (!item) {
+        // 异步执行 loaditem
+        item = await this.loadItem();
+      }
     }
 
     const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: item };
     this.updateValue.emit(backValue);
-   // console.log('下拉树返回', backValue);
+    // console.log('下拉树返回', backValue);
   }
 
   ngOnInit(): void {
@@ -110,7 +110,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
     });
   }
   public async loadItem() {
-    if( !this.config.loadingItemConfig){
+    if (!this.config.loadingItemConfig) {
       return null;
     }
     let selectedRowItem = null;
@@ -131,7 +131,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
       }
     } else {
       if (response.data) {
-        selectedRowItem= response.data;
+        selectedRowItem = response.data;
       } else {
         selectedRowItem = null;
       }
@@ -174,7 +174,6 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
       cacheValue: this.cacheValue,
       item: nodeValue
     });
-    // debugger;
     const ajaxData = await this.componentService.apiService
       .getRequest(
         ajaxConfig.url,
@@ -259,7 +258,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
     return result;
   }
 
-  public cascadeAnalysis(c?) {}
+  public cascadeAnalysis(c?) { }
 
 
   // 树加载

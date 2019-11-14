@@ -883,7 +883,7 @@ export class CnDataTableComponent extends CnComponentBase
 
 
             // 勾选/取消当前行勾选状态            
-            
+
             this.dataCheckedStatusChange();
         }
 
