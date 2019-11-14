@@ -238,8 +238,8 @@ class TempValueParameter extends BaseParameter implements IParameter {
       } else {
         this._result = this._model.tempValue[this._param.valueName];
       }
-    }else if(!this._param.valueName){
-       this._result = this._model.tempValue;  // 不配valueName，则将当前属性给他 object
+    } else if (!this._param.valueName) {
+      this._result = this._model.tempValue;  // 不配valueName，则将当前属性给他 object
     } else {
       if (this._param.value === null || this._param.value === '' || this._param.value === 0) {
         if (this._param.dataType) {
@@ -265,7 +265,7 @@ class TempValueParameter extends BaseParameter implements IParameter {
  * 构建固定值参数
  */
 class ValueParamParameter extends BaseParameter implements IParameter {
-  private _result: any = {};
+  private _result: any;
   constructor(private _param, private _model) {
     super();
   }
@@ -287,7 +287,8 @@ class ValueParamParameter extends BaseParameter implements IParameter {
  * 构建数据项参数
  */
 class ItemParameter extends BaseParameter implements IParameter {
-  private _result: any = {};
+  debugger;
+  private _result: any;
   constructor(private _param, private _model) {
     super();
   }
@@ -304,9 +305,9 @@ class ItemParameter extends BaseParameter implements IParameter {
           } else {
             this._result = this._param.value;
           }
-        }else if(!this._param.valueName){
+        } else if (!this._param.valueName) {
           this._result = this._model.item;  // 不配valueName，则将当前属性给他 object
-       }
+        }
       } else {
         if (this._param.dataType) {
           this._result = this.getParameter(
@@ -327,7 +328,7 @@ class ItemParameter extends BaseParameter implements IParameter {
  * 构建数据项参数
  */
 class ValidationParameter extends BaseParameter implements IParameter {
-  private _result: any = {};
+  private _result: any;
   constructor(private _param, private _model) {
     super();
   }
@@ -362,7 +363,7 @@ class ValidationParameter extends BaseParameter implements IParameter {
 }
 
 class AddedRows extends BaseParameter implements IParameter {
-  private _result: any = {};
+  private _result: any;
   constructor(private _param, private _model) {
     super();
   }
@@ -397,7 +398,7 @@ class AddedRows extends BaseParameter implements IParameter {
 }
 
 class EditedRows extends BaseParameter implements IParameter {
-  private _result: any = {};
+  private _result: any;
   constructor(private _param, private _model) {
     super();
   }

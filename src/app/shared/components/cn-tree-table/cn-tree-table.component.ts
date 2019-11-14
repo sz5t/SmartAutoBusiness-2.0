@@ -431,14 +431,14 @@ export class CnTreeTableComponent extends CnComponentBase
             option.map(opt => {
                 rids.push(opt[this.KEY_ID]);
             })
-            param1[`_root.${this.KEY_ID}`] = `in(${rids.join(',')})`;
+            param1[this.KEY_ID] = `in(${rids.join(',')})`;
         } else if (option) {
-            param1[`_root.${this.KEY_ID}`] = `in(${option[this.KEY_ID]})`
+            param1[this.KEY_ID] = `in(${option[this.KEY_ID]})`;
         }
 
         // 页面其他参数
         const params = {
-            ...this.buildParameters(this.config.loadingConfig.params),
+            ...this.buildParameters(this.config.loadingConfig.reloadParams),
             // ...this._buildPaging(),
             ...param1
         }
@@ -453,7 +453,6 @@ export class CnTreeTableComponent extends CnComponentBase
         }, error => {
             console.log(error);
         });
-
     }
 
     /**
@@ -1116,22 +1115,25 @@ export class CnTreeTableComponent extends CnComponentBase
     // #region action
 
     public refreshData(loadNewData) {
+        debugger;
         if (loadNewData && Array.isArray(loadNewData)) {
-            loadNewData.map(newData => {
+            loadNewData.map((newData, newIndex) => {
                 const index = this.dataList.findIndex(d => d[this.KEY_ID] === newData[this.KEY_ID]);
                 if (index > -1) {
                     this.dataList.splice(index, 1, newData);
                     this.dataList = [...this.dataList];
                 } else {
-                    this.dataList = [loadNewData[index], ...this.dataList];
+                    this.dataList = [loadNewData[newIndex], ...this.dataList];
                 }
-                const mapData = this.mapOfDataState[newData[this.KEY_ID]];
+                const mapData: any = this.mapOfDataExpanded[newData[this.KEY_ID]];
                 if (mapData) {
-                    mapData.data = newData;
-                    mapData.originData = { ...newData };
+                    mapData.forEach(md => {
+                        md.data = newData;
+                        md.originData = { ...newData };
+                    })
                 } else {
                     // 组装状态数据
-                    this.mapOfDataState[newData[this.KEY_ID]] = {
+                    this.mapOfDataExpanded[newData[this.KEY_ID]] = [{
                         data: newData,
                         originData: { ...newData },
                         disabled: false,
@@ -1139,7 +1141,7 @@ export class CnTreeTableComponent extends CnComponentBase
                         selected: false, // index === 0 ? true : false,
                         state: 'new',
                         actions: this.getRowActions('new')
-                    }
+                    }]
                 }
             })
         }
@@ -1433,6 +1435,7 @@ export class CnTreeTableComponent extends CnComponentBase
      * ajaxConfig
      */
     public showDialog(option: any) {
+        debugger;
         let dialog;
         // 根据按钮类型初始化表单状态
         const dialogCfg = option.dialog;

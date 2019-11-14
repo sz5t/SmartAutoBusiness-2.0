@@ -1675,9 +1675,9 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "valueTo": "tempValue"
                                                 },
                                                 {
-                                                    "name": "_parent_id",
+                                                    "name": "_PARENT_ID",
                                                     "type": "item",
-                                                    "valueName": "parentId",
+                                                    "valueName": "id",
                                                     "valueTo": "tempValue"
                                                 }
                                             ]
@@ -2535,205 +2535,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     }
                                                 ]
                                             }
-                                        },
-                                        {
-                                            "id": "edit_city_form",
-                                            "type": "confirm",
-                                            "title": "数据编辑",
-                                            "cancelText": "取消",
-                                            "okText": "提交",
-                                            "form": {
-                                                "id": "form_office",
-                                                "type": "form",
-                                                "component": "form",
-                                                state: 'text',
-                                                loadingConfig: {
-                                                    id: "loadform" // 将加载配置引用
-                                                },
-                                                formLayout: {
-                                                    "id": "b86s2i11",
-                                                    "type": "layout",
-                                                    "title": "表单布局b86s2i",
-                                                    "rows": [
-                                                        {
-                                                            "id": "MefhXa",
-                                                            "type": "row",
-                                                            // 行列，是否 显示。
-                                                            "cols": [
-                                                                {
-                                                                    "id": "iHspYn", "col": "cc", "type": "col",
-                                                                    "title": "列iHspYn", "span": 24,
-                                                                    "layoutContain": "input",
-                                                                    "size": {
-                                                                        "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                    },
-                                                                    "control": {
-                                                                        "id": "office_name"  // id 和引用id 值相同
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }]
-                                                },
-                                                formControls: [
-                                                    {
-                                                        id: 'office_name',
-                                                        "hidden": true, // 字段是否隐藏
-                                                        "title": '市名称',  // lable 信息
-                                                        "titleConfig": {
-                                                            required: true
-                                                        },
-                                                        "field": "OFFICENAME",  // fromcontrol name  默认的字段
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": { span: 6 },
-                                                            "nzSm": { span: 6 },
-                                                            "nzMd": { span: 6 },
-                                                            "nzLg": { span: 6 },
-                                                            "ngXl": { span: 6 },
-                                                            "nzXXl": { span: 6 }
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": 18,
-                                                            "nzSm": 18,
-                                                            "nzMd": 18,
-                                                            "nzLg": 18,
-                                                            "ngXl": 18,
-                                                            "nzXXl": 18
-                                                        },
-                                                        "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
-                                                        "text": { // 文本展示字段
-                                                            "type": 'label', // 什么组件展示文本 
-                                                            "field": 'OFFICENAME',   // 字段
-                                                        },
-                                                        "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                            "type": "input",
-                                                            "field": "OFFICENAME",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                            "placeholder": "请输入",
-                                                            "validations": [  // 校验
-                                                                { validator: "required", type: "default", "message": "请输入省名称" }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'office_id',
-                                                        "hidden": true, // 字段是否隐藏
-                                                        "title": '区号',  // lable 信息
-                                                        "titleConfig": {
-                                                            required: false
-                                                        },
-                                                        "field": "ID",  // fromcontrol name  默认的字段
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
-                                                        "text": { // 文本展示字段
-                                                            "type": 'label', // 什么组件展示文本 
-                                                            "field": 'ID',   // 字段
-                                                        },
-                                                        "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                            "type": "input",
-                                                            "field": "ID",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                            "placeholder": "请输入",
-                                                            "validations": [  // 校验
-
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'office_pid',
-                                                        "hidden": true, // 字段是否隐藏
-                                                        "title": '区号',  // lable 信息
-                                                        "titleConfig": {
-                                                            required: false
-                                                        },
-                                                        "field": "PID",  // fromcontrol name  默认的字段
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
-                                                        "text": { // 文本展示字段
-                                                            "type": 'label', // 什么组件展示文本 
-                                                            "field": 'PID',   // 字段
-                                                        },
-                                                        "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                            "type": "input",
-                                                            "field": "PID",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                            "placeholder": "请输入",
-                                                            "validations": [  // 校验
-
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
-                                                    {
-                                                        formState: "new", // 新增状态下的Controls 展示与否，是否读写属性设置
-                                                        formStateContent: { // 对当前状态的描述 ，描述当前状态下 表单组件 具备的行为，例如是否自加载，是否启用默认值
-                                                            isLoad: false,
-                                                            loadAjax: {}, // 如果启用load，是否用新的加载地址
-                                                            isDefault: true
-                                                        },
-                                                        Controls: [
-                                                            { id: 'office_name', state: "edit", hidden: false, readOnly: false }
-                                                        ]
-                                                    },
-                                                    {
-                                                        formState: "edit",
-                                                        Controls: [
-                                                            { id: 'office_name', state: "edit", hidden: false, readOnly: false }
-                                                        ]
-                                                    },
-                                                    {
-                                                        formState: "text",
-                                                        Controls: [
-                                                            { id: 'office_name', state: "text", hidden: false, readOnly: false }
-                                                        ]
-                                                    }
-
-                                                ],
-                                                ajaxConfig: [
-                                                    {
-                                                        "id": "loadform",
-                                                        "url": "/province/queryConditionA/CITY_SHEET",
-                                                        "urlType": "inner",
-                                                        "ajaxType": "get",
-                                                        "params": [
-                                                            {
-                                                                "name": "ID",
-                                                                "type": "tempValue",
-                                                                "valueName": "id"
-                                                            }
-                                                        ],
-                                                        "outputParameters": [
-
-                                                        ],
-                                                        "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
-
-                                                        ]
-                                                    }
-                                                ]
-                                            }
                                         }
                                     ],
                                     "condition": [
@@ -2879,11 +2680,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "type": "componentValue",
                                                     "valueName": "refResourceType"
                                                 },
-                                                {
-                                                    "name": "parentId",
-                                                    "type": "tempValue",
-                                                    "valueName": "_parentId"
-                                                },
+                                                // {
+                                                //     "name": "parentId",
+                                                //     "type": "tempValue",
+                                                //     "valueName": "_parentId"
+                                                // },
                                                 {
                                                     "name": "refResourceKeyName",
                                                     "type": "componentValue",
@@ -2928,21 +2729,55 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             ]
                                         },
                                         {
-                                            "id": "edit_offices_1",
-                                            "url": "office/updateMany/OFFICE_SHEET",
+                                            "id": "add_sub_business_sub_object",
+                                            "url": "cfgBusiModelResRelations/insert",
                                             "urlType": "inner",
-                                            "ajaxType": "put",
+                                            "ajaxType": "post",
                                             "params": [
                                                 {
-                                                    "name": "OFFICENAME",
-                                                    "type": "componentValue",
-                                                    "valueName": "OFFICENAME",
-                                                    "dataType": "string"
+                                                    "name": "id",
+                                                    "type": "GUID"
                                                 },
                                                 {
-                                                    "name": "ID",
+                                                    "name": "refBusiModelId",
+                                                    "type": "tempValue",
+                                                    "valueName": "_BUSI_ID"
+                                                },
+                                                {
+                                                    "name": "refResourceId",
                                                     "type": "componentValue",
-                                                    "valueName": "ID"
+                                                    "valueName": "refResourceId"
+                                                },
+                                                {
+                                                    "name": "refResourceType",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceType"
+                                                },
+                                                {
+                                                    "name": "parentId",
+                                                    "type": "tempValue",
+                                                    "valueName": "_PARENT_ID"
+                                                },
+                                                {
+                                                    "name": "refResourceKeyName",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceKeyName"
+                                                },
+                                                {
+                                                    "name": "refParentResourcePropId",
+                                                    "type": "componentValue",
+                                                    "valueName": "refParentResourcePropId"
+                                                },
+                                                {
+                                                    "name": "isCascadeDelete",
+                                                    "type": "componentValue",
+                                                    "valueName": "isCascadeDelete"
+
+                                                },
+                                                {
+                                                    "name": "sqlList",
+                                                    "type": "componentValue",
+                                                    "valueName": "sqlList"
                                                 }
                                             ],
                                             "outputParameters": [
@@ -2953,12 +2788,85 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "name": "data",
                                                     "showMessageWithNext": 0,
                                                     "message": "message.ajax.state.success",
-                                                    "senderId": "afterOfficeUpdateSuccessfully"
+                                                    "senderId": "afterAddSubBusinessSubObjectSuccess"
                                                 },
                                                 {
                                                     "name": "validation",
                                                     "message": "message.ajax.state.success",
-                                                    "senderId": "aftetOfficeUpdateValidation"
+                                                    "senderId": "afterAddSubBusinessSubObjectValidation"
+                                                },
+                                                {
+                                                    "name": "error",
+                                                    "senderId": "toolbar_02"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "edit_business_sub_object",
+                                            "url": "cfgBusiModelResRelations/update",
+                                            "urlType": "inner",
+                                            "ajaxType": "put",
+                                            "params": [
+                                                {
+                                                    "name": "id",
+                                                    "type": "GUID"
+                                                },
+                                                {
+                                                    "name": "refBusiModelId",
+                                                    "type": "tempValue",
+                                                    "valueName": "_BUSI_ID"
+                                                },
+                                                {
+                                                    "name": "refResourceId",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceId"
+                                                },
+                                                {
+                                                    "name": "refResourceType",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceType"
+                                                },
+                                                {
+                                                    "name": "parentId",
+                                                    "type": "tempValue",
+                                                    "valueName": "_PARENT_ID"
+                                                },
+                                                {
+                                                    "name": "refResourceKeyName",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceKeyName"
+                                                },
+                                                {
+                                                    "name": "refParentResourcePropId",
+                                                    "type": "componentValue",
+                                                    "valueName": "refParentResourcePropId"
+                                                },
+                                                {
+                                                    "name": "isCascadeDelete",
+                                                    "type": "componentValue",
+                                                    "valueName": "isCascadeDelete"
+
+                                                },
+                                                {
+                                                    "name": "sqlList",
+                                                    "type": "componentValue",
+                                                    "valueName": "sqlList"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+                                                {
+                                                    "name": "data",
+                                                    "showMessageWithNext": 0,
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterEditBusinessSubObjectSuccess"
+                                                },
+                                                {
+                                                    "name": "validation",
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterEditBusinessSubObjectValidation"
                                                 },
                                                 {
                                                     "name": "error",
@@ -3086,8 +2994,9 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "triggerType": "ACTION",
                                                             "trigger": "DIALOG",
                                                             // "conditionId": "add_state_1"
-                                                            "dialogId": "edit_office_form",
-                                                            "ajaxId": "tree_add_office",
+                                                            "changeValueId": "add_sub_business_object_changeValue",
+                                                            "dialogId": "business_object_layout",
+                                                            "ajaxId": "add_sub_business_sub_object",
                                                         }
                                                     ]
                                                 },
@@ -3103,7 +3012,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         {
                                                             "triggerType": "STATE",
                                                             "trigger": "EDIT_ROWS",
-                                                            "conditionId": "edit_business_main_state"
+                                                            "conditionId": "edit_business_sub_object"
                                                         }
                                                     ],
                                                     "toggle": {
@@ -3255,7 +3164,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 },
                                 "component": {
                                     "id": "view_business_object",
-                                    "title": "树表",
+                                    "title": "业务对象列表",
                                     "titleIcon": "right-circle",
                                     "component": "cnTreeTable",
                                     "keyId": "id",
@@ -3300,6 +3209,13 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "value": true
                                             }
                                         ],
+                                        "reloadParams": [
+                                            {
+                                                "name": "_mapToObject",
+                                                "type": "value",
+                                                "value": true
+                                            }
+                                        ],
                                         "filter": [
 
                                         ]
@@ -3309,15 +3225,20 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         "method": "get",
                                         "params": [
                                             {
-                                                "name": "PARENT_ID",
+                                                "name": "parentId",
                                                 "type": "item",
-                                                "valueName": "ID"
+                                                "valueName": "id"
                                             },
                                             {
-                                                "name": "REF_BUSI_MODEL_ID",
+                                                "name": "refBusiModelId",
                                                 "type": "tempValue",
                                                 "valueName": "_BUSI_ID"
                                             },
+                                            {
+                                                "name": "_mapToObject",
+                                                "type": "value",
+                                                "value": true
+                                            }
                                             // {
                                             //     "name": "_deep",
                                             //     "type": "value",
@@ -3625,7 +3546,47 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 ]
                                             },
                                             {
-                                                "id": "afterOfficeUpdateSuccessfully",
+                                                "id": "afterAddSubBusinessSubObjectSuccess",
+                                                "senderId": "view_business_object",
+                                                // "triggerType": "ACTION",
+                                                // "trigger": "MESSAGE0",
+                                                // "triggerMoment": "after",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "ACTION",
+                                                        "receiverTrigger": "MESSAGE",
+                                                        "params": [
+                                                            {
+                                                                "name": "type",
+                                                                "type": "value",
+                                                                "value": "success"
+                                                            },
+                                                            {
+                                                                "name": "message",
+                                                                "type": "value",
+                                                                "value": "操作完成!"
+                                                            },
+                                                        ]
+                                                    },
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "ACTION",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
+                                                        "params": [
+                                                            {
+                                                                "name": "id",
+                                                                "type": "addedRows",
+                                                                "valueName": "id"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "afterEditBusinessSubObjectSuccess",
                                                 "senderId": "view_business_object",
                                                 // "triggerType": "ACTION",
                                                 // "trigger": "MESSAGE0",
