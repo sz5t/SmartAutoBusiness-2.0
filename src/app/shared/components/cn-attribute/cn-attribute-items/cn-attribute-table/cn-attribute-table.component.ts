@@ -168,18 +168,24 @@ console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
       nzContent: '<b style="color: red;">你确定要删除吗？</b>',
       nzOkText: '确定',
       nzOkType: 'danger',
-      nzOnOk: () => console.log('OK'),
+      nzOnOk: () =>{
+        this.deleteObject();
+      },
       nzCancelText: '取消',
       nzOnCancel: () => console.log('Cancel')
     });
   }
 
   // 构建参数-》下拉选择自加载数据
-  public buildParameters(paramsCfg) {
+  public buildParameters(paramsCfg,comp?) {
+    let c = { PID: this.config.keyId };
+    if(comp){
+      c = {...c,...comp};
+    }
     return ParameterResolver.resolve({
       params: paramsCfg,
       tempValue: this.tempValue,
-      componentValue: { PID: this.config.keyId }, //  组件值？返回值？级联值，需要三值参数
+      componentValue: c, //  组件值？返回值？级联值，需要三值参数
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
@@ -289,6 +295,46 @@ console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
     console.log("执行新增后", response.data,response.data._procedure_resultset_1[0].W);
     return response.data._procedure_resultset_1[0].W;
   }
+
+  deleteObjectConfig = {
+    "url": "sd/B_P_DELETE_NODE/procedure",  // operation 操作 query
+    "ajaxType": "post",
+    "params": [
+      {
+        "name": "ID",
+        "type": "componentValue",
+        "valueName": "ID",
+        "dataType": "string",
+        "value":""
+      },
+    ],
+    "filter": [
+
+    ]
+  }
+  public async deleteObject() {
+
+    const url = this.deleteObjectConfig.url;
+    const method = this.deleteObjectConfig.ajaxType;
+    const params = {
+      ...this.buildParameters(this.deleteObjectConfig.params,{ID:this.SelectRow['rowId']})
+    };
+    // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+    const response = await this.componentService.apiService.post(url, params).toPromise();
+    console.log("执行删除后", response.data);
+    await this.load();
+
+   if( this.dataList.length>0) {
+    this.setSelectRow(this.dataList[0]);
+   }else{
+    this.SelectRow=null;
+    this.execOperation.emit(null);
+   }
+
+
+    
+  }
+  
 
   loadData;
   convertData(d?) {

@@ -90,6 +90,18 @@ import { CnProgressComponent } from './components/cn-progress/cn-progress.compon
 import { CfgLayoutPageComponent } from './config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
 import { CnStaticTableComponent } from './components/data_table/cn-static-table.component';
 import { CnFormStaticGridComponent } from './components/data-form/cn-form-items/cn-form-static-grid/cn-form-static-grid.component';
+import { CnGridSwitchComponent } from './components/data_table/cn-grid-items/cn-grid-switch/cn-grid-switch.component';
+import { CnGridRadioComponent } from './components/data_table/cn-grid-items/cn-grid-radio/cn-grid-radio.component';
+import { CnGridCheckboxComponent } from './components/data_table/cn-grid-items/cn-grid-checkbox/cn-grid-checkbox.component';
+import { CnGridGridSelectComponent } from './components/data_table/cn-grid-items/cn-grid-grid-select/cn-grid-grid-select.component';
+import { CnGridDatePickerComponent } from './components/data_table/cn-grid-items/cn-grid-date-picker/cn-grid-date-picker.component';
+import { CnGridMonthPickerComponent } from './components/data_table/cn-grid-items/cn-grid-month-picker/cn-grid-month-picker.component';
+import { CnGridWeekPickerComponent } from './components/data_table/cn-grid-items/cn-grid-week-picker/cn-grid-week-picker.component';
+import { CnGridYearPickerComponent } from './components/data_table/cn-grid-items/cn-grid-year-picker/cn-grid-year-picker.component';
+import { CnGridRangePickerComponent } from './components/data_table/cn-grid-items/cn-grid-range-picker/cn-grid-range-picker.component';
+import { CnGridCustomSelectComponent } from './components/data_table/cn-grid-items/cn-grid-custom-select/cn-grid-custom-select.component';
+import { CnGridCodeEditComponent } from './components/data_table/cn-grid-items/cn-grid-code-edit/cn-grid-code-edit.component';
+import { CnGridTextareaComponent } from './components/data_table/cn-grid-items/cn-grid-textarea/cn-grid-textarea.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -165,7 +177,19 @@ const COMPONENTS = [
   CnProgressComponent,
   CnCalendarComponent,
   CnStaticTableComponent,
-  CnFormStaticGridComponent
+  CnFormStaticGridComponent,
+  CnGridSwitchComponent,
+    CnGridRadioComponent,
+    CnGridCheckboxComponent,
+    CnGridGridSelectComponent,
+    CnGridDatePickerComponent,
+    CnGridMonthPickerComponent,
+    CnGridWeekPickerComponent,
+    CnGridYearPickerComponent,
+    CnGridRangePickerComponent,
+    CnGridCustomSelectComponent,
+    CnGridCodeEditComponent,
+    CnGridTextareaComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -198,6 +222,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
+    
 
 
 

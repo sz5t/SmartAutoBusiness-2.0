@@ -1,0 +1,11 @@
+<p>cn-grid-switch works!</p>
+
+
+<nz-switch
+[(ngModel)]="value" 
+(ngModelChange)="valueChange($event)"
+[nzCheckedChildren]="checkedTemplate"
+[nzUnCheckedChildren]="unCheckedTemplate"
+></nz-switch>
+<ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
+<ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>

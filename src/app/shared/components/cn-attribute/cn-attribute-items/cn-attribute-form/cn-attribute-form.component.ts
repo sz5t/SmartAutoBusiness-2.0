@@ -244,8 +244,13 @@ export class CnAttributeFormComponent extends CnComponentBase implements OnInit,
 
     console.log(r);
 
-    const componentValue={PID: r['rowId']};
-    await this.load(componentValue);
+    if(r){
+      const componentValue={PID: r['rowId']};
+      await this.load(componentValue);
+    }else {
+      this.dataList =null;
+    }
+
   }
   
 }

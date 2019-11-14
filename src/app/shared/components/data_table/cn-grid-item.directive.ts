@@ -7,6 +7,18 @@ import { CnAttributeObjectComponent } from '@shared/components/cn-attribute/cn-a
 import { CnAttributeArrayComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-array/cn-attribute-array.component';
 import { CnAttributeTableComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-table/cn-attribute-table.component';
 import { CnAttributePropertyGridComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-property-grid/cn-attribute-property-grid.component';
+import { CnGridSwitchComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-switch/cn-grid-switch.component';
+import { CnGridRadioComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-radio/cn-grid-radio.component';
+import { CnGridCheckboxComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-checkbox/cn-grid-checkbox.component';
+import { CnGridGridSelectComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-grid-select/cn-grid-grid-select.component';
+import { CnGridDatePickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-date-picker/cn-grid-date-picker.component';
+import { CnGridWeekPickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-week-picker/cn-grid-week-picker.component';
+import { CnGridCodeEditComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-code-edit/cn-grid-code-edit.component';
+import { CnGridTextareaComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-textarea/cn-grid-textarea.component';
+import { CnGridCustomSelectComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-custom-select/cn-grid-custom-select.component';
+import { CnGridRangePickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-range-picker/cn-grid-range-picker.component';
+import { CnGridYearPickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-year-picker/cn-grid-year-picker.component';
+import { CnGridMonthPickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-month-picker/cn-grid-month-picker.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnGridInputComponent,
@@ -16,7 +28,19 @@ const components: { [type: string]: Type<any> } = {
   AttributeTable: CnAttributeTableComponent,
   AttributePropertyGrid: CnAttributePropertyGridComponent,
   progress: CnProgressComponent,
-  tag: CnGridTagComponent
+  tag: CnGridTagComponent,
+  switch:CnGridSwitchComponent,
+  radio: CnGridRadioComponent,
+  checkbox:  CnGridCheckboxComponent,
+  datePicker:  CnGridGridSelectComponent,
+  gridSelect:  CnGridDatePickerComponent,
+  monthPicker:  CnGridMonthPickerComponent,
+  weekPicke:  CnGridWeekPickerComponent,
+  yearPicker:  CnGridYearPickerComponent,
+  rangePicker: CnGridRangePickerComponent,
+  customSelect:  CnGridCustomSelectComponent,
+  codeEdit:  CnGridCodeEditComponent,
+  textarea:  CnGridTextareaComponent,
   // label: ,
   // selectMultiple:,
   // datePicker:,

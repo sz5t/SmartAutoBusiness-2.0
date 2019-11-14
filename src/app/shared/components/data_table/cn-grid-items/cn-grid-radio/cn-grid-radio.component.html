@@ -1,0 +1,14 @@
+
+<nz-radio-group [(ngModel)]="radioValue" nzName="radiogroup"   (ngModelChange)="valueChange($event)">
+    <ng-container  *ngFor="let c of selectOptions" > 
+        <label nz-radio [nzValue]="c.value"  (click)="radioClick(c.value)">{{c.label}}</label>
+    </ng-container>
+  </nz-radio-group>
+<ng-template #combineTpl let-control>
+        <ng-container nz-col *ngFor="let c of config.validations" > 
+                <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>
+    </ng-container>
+    <ng-container *ngIf="control.hasError('_subscribe')">
+            The username is redundant!
+          </ng-container>
+</ng-template>
