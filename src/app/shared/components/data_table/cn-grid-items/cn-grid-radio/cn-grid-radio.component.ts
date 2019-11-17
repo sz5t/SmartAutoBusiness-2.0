@@ -44,6 +44,23 @@ export class CnGridRadioComponent extends CnComponentBase implements OnInit {
       }
     }
 
+    let v_value;
+   if (this.valueConfig) {
+     v_value = this.valueConfig.value;
+   }
+   if(this.state ==='new'){
+     if (this.config.defaultValue) {
+       if (!this.value) {
+         v_value = this.config.defaultValue;
+       }
+     }
+   }
+
+   setTimeout(() => {
+     this.value =v_value;
+     this.valueChange( this.value);
+   });
+
   }
 
 

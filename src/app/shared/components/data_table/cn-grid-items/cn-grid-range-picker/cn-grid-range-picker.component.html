@@ -1,1 +1,2 @@
-<p>cn-grid-range-picker works!</p>
+<input nz-input   hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
+<nz-range-picker [(ngModel)]="dateRange" (ngModelChange)="onChange($event)" [ngModelOptions]="{standalone: true}"></nz-range-picker>

@@ -11,6 +11,8 @@ export class CnGridCodeEditComponent implements OnInit,AfterViewInit {
 
   @ViewChild('CodeMirror', { static: true }) codeEditor: ElementRef;
   @Input() public config;
+  @Input() public valueConfig;
+  @Input() public state;
   @Output() public updateValue = new EventEmitter();
   value = null;
   _value = null;
@@ -25,6 +27,23 @@ export class CnGridCodeEditComponent implements OnInit,AfterViewInit {
    if( this.config.height){
    this. divstyle.height = this.interpret( this.config.height);
    }
+
+   let v_value;
+   if (this.valueConfig) {
+     v_value = this.valueConfig.value;
+   }
+   if(this.state ==='new'){
+     if (this.config.defaultValue) {
+       if (!this.value) {
+         v_value = this.config.defaultValue;
+       }
+     }
+   }
+
+   setTimeout(() => {
+     this.value =v_value;
+     this.valueChange( this.value);
+   });
   }
    interpret(val) {
     return typeof val === "number" || /^\d+$/.test(String(val)) ? val + "px" : val;
