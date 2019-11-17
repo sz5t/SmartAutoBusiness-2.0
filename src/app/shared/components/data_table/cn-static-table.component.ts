@@ -65,7 +65,7 @@ export class CnStaticTableComponent extends CnComponentBase
     @Input()
     public config = {
         "id": "view_static_demo",
-        "title": "资源列表",
+        "title": "SQL资源列表",
         "titleIcon": "right-circle",
         "component": "cnDataTable",
         "keyId": "id",
@@ -87,14 +87,14 @@ export class CnStaticTableComponent extends CnComponentBase
         //     '50px', '100px', '100px', '100px', '100px'
         // ],
         "loadingConfig": {
-            "url": "sd/GET_BUSINESS_MAIN_LIST/query",
+            "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
             "method": "get",
             "params": [
-                // {
-                //     "name": "_mapToObject",
-                //     "type": "value",
-                //     "value": true
-                // }
+                {
+                    "name": "_mapToObject",
+                    "type": "value",
+                    "value": true
+                }
             ],
             "filter": [
 
@@ -122,8 +122,16 @@ export class CnStaticTableComponent extends CnComponentBase
                 "width": "400px",
                 "style": {},
                 "editor": {
-                    "type": "input",
-                    "field": "sqlId"
+                    "type": "gridSelect",
+                    "field": "sqlId",
+                    "loadingOnInit": true,
+                    "layoutName": "apiResourceList",
+                    "placeholder": "请选择",
+                    "loadingItemConfig": {
+                        "id": "loadResourceValue"
+                    },
+                    "labelName": "descName",
+                    "valueName": "id"
                 }
             },
             {
@@ -2190,118 +2198,118 @@ export class CnStaticTableComponent extends CnComponentBase
         return copyAction;
     }
 
-    
-    formCascade={};
-    public valueChange(v?){
+
+    formCascade = {};
+    public valueChange(v?) {
         console.log('行返回', v);
         this.mapOfDataState[v.id]['data'][v.name] = v.value;
-        if(v['id']){
-            if( !this.formCascade[v['id']]){
-                this.formCascade[v['id']]={};
+        if (v['id']) {
+            if (!this.formCascade[v['id']]) {
+                this.formCascade[v['id']] = {};
             }
-            this.formCascade[v['id']][v['name']]={};
+            this.formCascade[v['id']][v['name']] = {};
         }
 
         const triggerKey = v.name;
         if (this.config['cascadeValue'])
-          this.config['cascadeValue'].forEach(cascade => {
-            if (cascade.name !== triggerKey) {
-              return true;
-            }
-            // console.log('==****开始应答解析*****==', cascade);
-            cascade.CascadeObjects.forEach(cascadeObj => {
-                if( !this.formCascade[v['id']][cascadeObj.cascadeName] ){
-                    this.formCascade[v['id']][cascadeObj.cascadeName] ={};
+            this.config['cascadeValue'].forEach(cascade => {
+                if (cascade.name !== triggerKey) {
+                    return true;
                 }
-              const cascadeResult = this.formCascade[v['id']][cascadeObj.cascadeName] ;  // 单个应答对象
-              cascadeResult[cascadeObj.cascadeName] = {};
-              cascadeObj.cascadeItems.forEach(item => {
-    
-                // 满足前置条件、或者 类型是default
-                if (item.content.type === 'ajax') {
-                    
-                  const _cascadeValue = {};
-                  item.content.data['option'].forEach(ajaxItem => {
-                    if (ajaxItem['type'] === 'value') {
-                      _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                // console.log('==****开始应答解析*****==', cascade);
+                cascade.CascadeObjects.forEach(cascadeObj => {
+                    if (!this.formCascade[v['id']][cascadeObj.cascadeName]) {
+                        this.formCascade[v['id']][cascadeObj.cascadeName] = {};
                     }
-                    if (ajaxItem['type'] === 'selectValue') {
-                      // 选中行数据[这个是单值]
-                      _cascadeValue[ajaxItem['name']] = v['value'];
-                    }
-                    if (ajaxItem['type'] === 'selectObjectValue') {
-                      // 选中行对象数据
-                      if (v.dataItem) {
-                        _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
-                      }
-                    }
-                    // 其他取值【日后扩展部分】
-                  });
-                  if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeValue')) {
-                    cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ...cascadeResult[cascadeObj.cascadeName]['cascadeValue'], ..._cascadeValue };
-                  } else {
-                    cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ..._cascadeValue };
-                  }
-                  cascadeResult[cascadeObj.cascadeName]['exec'] = 'ajax';
-                  // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
-                }
-                if (item.content.type === 'setOptions') {
-                  // 小组件静态数据集 , 目前静态数据，支持 多字段
-                  const _cascadeOptions = item.content.data['option'];
-    
-                  if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeOptions')) {
-                    cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
-                  } else {
-                    cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
-                  }
-                  cascadeResult[cascadeObj.cascadeName]['exec'] = 'setOptions';
-                 // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
-                }
-                if (item.content.type === 'setValue') {
-                  let __setValue;
-                  item.content.data['option'].forEach(ajaxItem => {
-                    if (ajaxItem['type'] === 'value') {
-                      __setValue = ajaxItem['value'];
-                    }
-                    if (ajaxItem['type'] === 'selectValue') {
-                      // 选中行数据[这个是单值]
-                      __setValue = v['value'];
-                    }
-                    if (ajaxItem['type'] === 'selectObjectValue') {
-                      // 选中行对象数据
-                      if (v.dataItem) {
-                        __setValue = v.dataItem[ajaxItem['valueName']];
-                      }
-                    }
-                    // 其他取值【日后扩展部分】
-                  });
-                  // 赋值
-                 // this.setValue(cascadeObj.cascadeName, __setValue);
-    
-                }
-                if (item.content.type === 'display') {
-                  // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
-    
-                }
-                if (item.content.type === 'message') {
-                  // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
-    
-                }
-                if (item.content.type === 'relation') {
-                  // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构
-                  // 提供 消息配置名称，发送参数组合
-    
-                }
-                if (item.content.type === 'preventCascade') {
-    
-                  // 【大招】 某条件下，将级联阻止
-    
-                }
-              });
-               this.formCascade[v['id']][cascadeObj.cascadeName] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.cascadeName]));
-              // console.log('==树表内值变化反馈==', this.formCascade);
+                    const cascadeResult = this.formCascade[v['id']][cascadeObj.cascadeName];  // 单个应答对象
+                    cascadeResult[cascadeObj.cascadeName] = {};
+                    cascadeObj.cascadeItems.forEach(item => {
+
+                        // 满足前置条件、或者 类型是default
+                        if (item.content.type === 'ajax') {
+
+                            const _cascadeValue = {};
+                            item.content.data['option'].forEach(ajaxItem => {
+                                if (ajaxItem['type'] === 'value') {
+                                    _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectValue') {
+                                    // 选中行数据[这个是单值]
+                                    _cascadeValue[ajaxItem['name']] = v['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectObjectValue') {
+                                    // 选中行对象数据
+                                    if (v.dataItem) {
+                                        _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                                    }
+                                }
+                                // 其他取值【日后扩展部分】
+                            });
+                            if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeValue')) {
+                                cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ...cascadeResult[cascadeObj.cascadeName]['cascadeValue'], ..._cascadeValue };
+                            } else {
+                                cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ..._cascadeValue };
+                            }
+                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'ajax';
+                            // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+                        }
+                        if (item.content.type === 'setOptions') {
+                            // 小组件静态数据集 , 目前静态数据，支持 多字段
+                            const _cascadeOptions = item.content.data['option'];
+
+                            if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeOptions')) {
+                                cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
+                            } else {
+                                cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
+                            }
+                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'setOptions';
+                            // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+                        }
+                        if (item.content.type === 'setValue') {
+                            let __setValue;
+                            item.content.data['option'].forEach(ajaxItem => {
+                                if (ajaxItem['type'] === 'value') {
+                                    __setValue = ajaxItem['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectValue') {
+                                    // 选中行数据[这个是单值]
+                                    __setValue = v['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectObjectValue') {
+                                    // 选中行对象数据
+                                    if (v.dataItem) {
+                                        __setValue = v.dataItem[ajaxItem['valueName']];
+                                    }
+                                }
+                                // 其他取值【日后扩展部分】
+                            });
+                            // 赋值
+                            // this.setValue(cascadeObj.cascadeName, __setValue);
+
+                        }
+                        if (item.content.type === 'display') {
+                            // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
+
+                        }
+                        if (item.content.type === 'message') {
+                            // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
+
+                        }
+                        if (item.content.type === 'relation') {
+                            // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构
+                            // 提供 消息配置名称，发送参数组合
+
+                        }
+                        if (item.content.type === 'preventCascade') {
+
+                            // 【大招】 某条件下，将级联阻止
+
+                        }
+                    });
+                    this.formCascade[v['id']][cascadeObj.cascadeName] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.cascadeName]));
+                    // console.log('==树表内值变化反馈==', this.formCascade);
+                });
             });
-          });
     }
 
 

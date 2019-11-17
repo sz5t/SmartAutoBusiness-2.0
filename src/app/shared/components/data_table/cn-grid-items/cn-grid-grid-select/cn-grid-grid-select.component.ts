@@ -11,7 +11,7 @@ import { isArray } from 'util';
   templateUrl: './cn-grid-grid-select.component.html',
   styleUrls: ['./cn-grid-grid-select.component.less']
 })
-export class CnGridGridSelectComponent  extends CnComponentBase implements OnInit {
+export class CnGridGridSelectComponent extends CnComponentBase implements OnInit {
 
   @Input() public config;
   @Input() public valueConfig;
@@ -23,7 +23,7 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
   _value = null;
   _focus = false;
   _ifocus = false;
-  count=0;
+  count = 0;
   selectedRowValue;
   selectedRowItem;
   public cascadeOptions: any;
@@ -35,6 +35,9 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
 
   ngOnInit() {
     this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+    if (this.config.loadingOnInit) {
+      this.tableConfig.component['loadingOnInit'] = this.config.loadingOnInit;
+    }
     // this._componentRef.instance.config = this.config;
 
     // console.log('组件实例数组+++', this.componentService.com );
@@ -50,7 +53,7 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
     if (this.valueConfig) {
       v_value = this.valueConfig.value;
     }
-    if(this.state ==='new'){
+    if (this.state === 'new') {
       if (this.config.defaultValue) {
         if (!this.value) {
           v_value = this.config.defaultValue;
@@ -59,8 +62,8 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
     }
 
     setTimeout(() => {
-      this.value =v_value;
-      this.valueChange1( this.value);
+      this.value = v_value;
+      this.valueChange1(this.value);
     });
   }
 
@@ -91,7 +94,7 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
       this.selectedRowItem = null;
     }
     this.visible = false;
-    this.valueChange1( this.value);
+    this.valueChange1(this.value);
     console.log('ok', xz);
   }
 
@@ -169,7 +172,7 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
     // 【参数不全是否阻止加载！】
     // 对后续业务判断有影响
     //  console.log('===select 自加载====>load');
-    if(!this.config.loadingItemConfig['ajaxConfig']){
+    if (!this.config.loadingItemConfig['ajaxConfig']) {
       this.selectedRowItem = null;
       return;
     }
@@ -202,7 +205,7 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
   }
 
   public async valueChange(v?) {
-    console.log("xxx",v);
+    console.log("xxx", v);
   }
   public async valueChange1(v?) {
     //  labelName: 'provinceName',
@@ -231,8 +234,8 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
       this._value = v;
     }
     this.table.selectedRowValue = v;
-    const backValue ={id:this.valueConfig.id,name:this.config.field,value:v,count:this.count,dataItem: this.selectedRowItem};
-   // const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: this.selectedRowItem };
+    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v, count: this.count, dataItem: this.selectedRowItem };
+    // const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: this.selectedRowItem };
     this.updateValue.emit(backValue);
 
     console.log('backValue=>', backValue)
@@ -255,7 +258,7 @@ export class CnGridGridSelectComponent  extends CnComponentBase implements OnIni
       }
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'ajax') {
-         
+
           this.load();
 
           this.table.setInitValue(this.cascadeValue);

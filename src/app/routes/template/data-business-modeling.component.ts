@@ -427,6 +427,102 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "senderId": "afterDeleteBusinessMainSuccess"
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "id": "build_model_business_main",
+                                            "url": "cfgBusiModel/batchCreateModel",
+                                            "urlType": "inner",
+                                            "ajaxType": "post",
+                                            "params": [
+                                                {
+                                                    "name": "id",
+                                                    "type": "checkedItem",
+                                                    "valueName": "id"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+                                                {
+                                                    "name": "data",
+                                                    "showMessageWithNext": 0,
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterBuildModelBusinessMainSuccess"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "build_model_business_main_single",
+                                            "url": "cfgBusiModel/createModel",
+                                            "urlType": "inner",
+                                            "ajaxType": "post",
+                                            "params": [
+                                                {
+                                                    "name": "id",
+                                                    "type": "item",
+                                                    "valueName": "id"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+                                                {
+                                                    "name": "data",
+                                                    "showMessageWithNext": 0,
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterBuildModelBusinessMainSuccess"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "cancel_model_business_main_single",
+                                            "url": "cfgBusiModel/cancelModel",
+                                            "urlType": "inner",
+                                            "ajaxType": "post",
+                                            "params": [
+                                                {
+                                                    "name": "id",
+                                                    "type": "item",
+                                                    "valueName": "id"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+                                                {
+                                                    "name": "data",
+                                                    "showMessageWithNext": 0,
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterBuildModelBusinessMainSuccess"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "cancel_model_business_main",
+                                            "url": "cfgBusiModel/cancelModel",
+                                            "urlType": "inner",
+                                            "ajaxType": "post",
+                                            "params": [
+                                                {
+                                                    "name": "id",
+                                                    "type": "item",
+                                                    "valueName": "id"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+                                                {
+                                                    "name": "data",
+                                                    "showMessageWithNext": 0,
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterCancelModelBusinessMainSuccess"
+                                                }
+                                            ]
                                         }
                                     ],
                                     "beforeTrigger": [
@@ -549,6 +645,70 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "conditionId": "delete_business_main_condition",
                                                             "ajaxId": "delete_business_main",
                                                             "dialogId": "delete_business_main_confirm"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "M_deleteRow1",
+                                                    "text": "建模",
+                                                    "icon": "build",
+                                                    "color": "text-red-light",
+                                                    "hidden": false,
+                                                    "disabled": false,
+                                                    "execute": [
+                                                        {
+                                                            "triggerType": "OPERATION",
+                                                            "trigger": "EXECUTE_SELECTED_ROW",
+                                                            // "conditionId": "delete_business_main_condition",
+                                                            "ajaxId": "build_model_business_main_single"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "M_deleteRow1",
+                                                    "text": "取消建模",
+                                                    "icon": "build",
+                                                    "color": "text-red-light",
+                                                    "hidden": false,
+                                                    "disabled": false,
+                                                    "execute": [
+                                                        {
+                                                            "triggerType": "OPERATION",
+                                                            "trigger": "EXECUTE_SELECTED_ROW",
+                                                            // "conditionId": "delete_business_main_condition",
+                                                            "ajaxId": "cancel_model_business_main_single"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "M_deleteRow1",
+                                                    "text": "多选建模",
+                                                    "icon": "build",
+                                                    "color": "text-red-light",
+                                                    "hidden": false,
+                                                    "disabled": false,
+                                                    "execute": [
+                                                        {
+                                                            "triggerType": "OPERATION",
+                                                            "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                            // "conditionId": "delete_business_main_condition",
+                                                            "ajaxId": "build_model_business_main"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "M_cancel_build",
+                                                    "text": "取消建模",
+                                                    "icon": "build",
+                                                    "color": "text-red-light",
+                                                    "hidden": false,
+                                                    "disabled": false,
+                                                    "execute": [
+                                                        {
+                                                            "triggerType": "OPERATION",
+                                                            "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                            // "conditionId": "delete_business_main_condition",
+                                                            "ajaxId": "cancel_model_business_main"
                                                         }
                                                     ]
                                                 },
@@ -696,7 +856,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "title": "业务描述",
                                     "titleIcon": "right-circle",
                                     "component": "cnDataTable",
-                                    "keyId": "ID",
+                                    "keyId": "id",
                                     "size": "middle",
                                     "isBordered": true,
                                     "isFrontPagination": false,
@@ -717,11 +877,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         "url": "sd/GET_BUSINESS_MAIN_LIST/query",
                                         "method": "get",
                                         "params": [
-                                            // {
-                                            //     "name": "_mapToObject",
-                                            //     "type": "value",
-                                            //     "value": true
-                                            // }
+                                            {
+                                                "name": "_mapToObject",
+                                                "type": "value",
+                                                "value": true
+                                            }
                                         ],
                                         "filter": [
 
@@ -731,7 +891,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "ID",
                                             "type": "field",
-                                            "field": "ID",
+                                            "field": "id",
                                             "hidden": true,
                                             "showFilter": false,
                                             "showSort": false,
@@ -742,7 +902,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "业务名称",
                                             "type": "field",
-                                            "field": "NAME",
+                                            "field": "name",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -756,7 +916,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "资源名称",
                                             "type": "field",
-                                            "field": "RESOURCE_NAME",
+                                            "field": "resourceName",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -770,7 +930,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "备注",
                                             "type": "field",
-                                            "field": "REMARK",
+                                            "field": "remark",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -784,7 +944,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "是否建模",
                                             "type": "field",
-                                            "field": "IS_BUILD_MODEL",
+                                            "field": "isBuildModel",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -792,16 +952,16 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             "style": {},
                                             "custom": {
                                                 "type": "tag",
-                                                "field": "IS_BUILD_MODEL_TEXT",
+                                                "field": "isBuildModelText",
                                                 "dataMapping": [
                                                     {
                                                         "color": "#87d068",
-                                                        "field": "IS_BUILD_MODEL_TEXT",
+                                                        "field": "isBuildModelText",
                                                         "value": "已建模"
                                                     },
                                                     {
                                                         "color": "#2db7f5",
-                                                        "field": "IS_BUILD_MODEL_TEXT",
+                                                        "field": "isBuildModelText",
                                                         "value": "无"
                                                     }
                                                 ]
@@ -853,7 +1013,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             {
                                                                 "name": "_BUSI_ID",
                                                                 "type": "item",
-                                                                "valueName": "ID"
+                                                                "valueName": "id"
                                                             }
                                                         ]
                                                     }
@@ -1118,6 +1278,80 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "reveicerId": "",
                                                         "receiverTriggerType": "ACTION",
                                                         "receiverTrigger": "DELETE_CHECKED_ROWS",
+                                                        "params": [
+                                                            {
+                                                                "name": "ids",
+                                                                "type": "returnValue",
+                                                                "valueName": "ids"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "afterBuildModelBusinessMainSuccess",
+                                                "senderId": "view_business_main",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "ACTION",
+                                                        "receiverTrigger": "MESSAGE",
+                                                        "params": [
+                                                            {
+                                                                "name": "type",
+                                                                "type": "value",
+                                                                "value": "success"
+                                                            },
+                                                            {
+                                                                "name": "code",
+                                                                "type": "value",
+                                                                "value": "message.operation.success"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "ACTION",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
+                                                        "params": [
+                                                            {
+                                                                "name": "id",
+                                                                "type": "addedRows",
+                                                                "valueName": "id"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "afterCancelModelBusinessMainSuccess",
+                                                "senderId": "view_business_main",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "ACTION",
+                                                        "receiverTrigger": "MESSAGE",
+                                                        "params": [
+                                                            {
+                                                                "name": "type",
+                                                                "type": "value",
+                                                                "value": "success"
+                                                            },
+                                                            {
+                                                                "name": "code",
+                                                                "type": "value",
+                                                                "value": "message.operation.success"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "ACTION",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
                                                         "params": [
                                                             {
                                                                 "name": "ids",
@@ -5100,7 +5334,8 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                         {
                             "name": "type",
                             "type": "initValue",
-                            "valueName": "_TYPE"
+                            "valueName": "_TYPE",
+                            "value": 1
                         },
                         {
                             "name": "_mapToObject",
