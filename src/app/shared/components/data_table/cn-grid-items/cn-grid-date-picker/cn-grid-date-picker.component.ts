@@ -12,4 +12,8 @@ export class CnGridDatePickerComponent implements OnInit {
   ngOnInit() {
   }
 
+  public cascadeAnalysis (c?){
+
+  }
+
 }

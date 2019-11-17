@@ -12,4 +12,7 @@ export class CnGridCustomSelectComponent implements OnInit {
   ngOnInit() {
   }
 
+  public cascadeAnalysis (c?){
+
+  }
 }

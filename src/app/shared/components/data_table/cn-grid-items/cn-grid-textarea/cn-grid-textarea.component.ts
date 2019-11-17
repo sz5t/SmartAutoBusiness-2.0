@@ -11,5 +11,7 @@ export class CnGridTextareaComponent implements OnInit {
 
   ngOnInit() {
   }
+  public cascadeAnalysis (c?){
 
+  }
 }

@@ -48,25 +48,25 @@
             <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
               <ng-container *ngIf="col.editor">
                 <td *ngSwitchCase="'new'">
-                  <ng-container CnGridItemDirective [state]="'new'" [config]="col.editor"
+                  <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else text" [config]="col.editor"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
                     (updateValue)="valueChange($event)" [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
                 </td>
                 <td *ngSwitchCase="'edit'">
-                  <ng-container CnGridItemDirective [state]="'edit'" [config]="col.editor"
+                  <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else text" [config]="col.editor"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
                     (updateValue)="valueChange($event)" [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
                 </td>
                 <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
               </ng-container>
               <ng-container *ngIf="!col.editor">
-                <td *ngIf="col.custom; else text">
-                  <ng-container CnGridItemDirective [state]="'edit'" [config]="col.custom"
+                <td >
+                  <ng-container CnGridItemDirective *ngIf="col.custom; else text" [state]="'edit'" [config]="col.custom"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
-                    (updateValue)="valueChange($event)" [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
+                    (updateValue)="valueChange($event)" [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null"> </ng-container>
                 </td>
                 <ng-template #text>
-                  <td>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
+                  {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
                 </ng-template>
               </ng-container>
 

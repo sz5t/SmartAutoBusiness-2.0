@@ -147,7 +147,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
 
     // 分类完善信息，此处完善的信息为 异步参数处理
     // cascadeValue
-    if (c.hasOwnProperty(this.config.field)) {
+    if (c && c.hasOwnProperty(this.config.field)) {
       if (c[this.config.field].hasOwnProperty('cascadeValue')) {
         this.cascadeValue = c[this.config.field].cascadeValue;
       }

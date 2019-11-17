@@ -28,4 +28,8 @@ export class CnGridTagComponent implements OnInit {
       })
     }
   }
+
+  public cascadeAnalysis (c?){
+
+  }
 }
