@@ -1,1 +1,3 @@
-<p>cn-grid-year-picker works!</p>
+<input nz-input   hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
+<nz-year-picker [(ngModel)]="date"    (ngModelChange)="onChange($event)" nzPlaceHolder="Select year"  [ngModelOptions]="{standalone: true}"></nz-year-picker>
+
