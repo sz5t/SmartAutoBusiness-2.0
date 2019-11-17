@@ -1,1 +1,8 @@
-<p>cn-grid-code-edit works!</p>
+<input nz-input   hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
+<nz-spin [nzSpinning]="isSpinning" [nzDelay]="300">
+        <div style="border:1px solid #d9d9d9;border-radius: 4px; width:100%; ">
+           
+                <textarea #CodeMirror name="code"  [ngStyle]="divstyle"></textarea> 
+                <div style="height: 3px;"></div>
+            </div>
+ </nz-spin>

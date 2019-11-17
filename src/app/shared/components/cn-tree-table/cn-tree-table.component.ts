@@ -1624,10 +1624,15 @@ export class CnTreeTableComponent extends CnComponentBase
 
     formCascade={};
     public valueChange(v?){
+
+        this.mapOfDataState[v.id]['data'][v.name] = v.value;
         if(v['id']){
+            if( !this.formCascade[v['id']]){
+                this.formCascade[v['id']]={};
+            }
             this.formCascade[v['id']][v['name']]={};
         }
-        console.log('树表返回',v);
+        // console.log('树表返回',v);
 
         const triggerKey = v.name;
         if (this.config.cascadeValue)
@@ -1637,12 +1642,16 @@ export class CnTreeTableComponent extends CnComponentBase
             }
             // console.log('==****开始应答解析*****==', cascade);
             cascade.CascadeObjects.forEach(cascadeObj => {
-              const cascadeResult = this.formCascade[v['id']][cascadeObj.controlId] ? this.formCascade[v['id']][cascadeObj.controlId] : {};  // 单个应答对象
+                if( !this.formCascade[v['id']][cascadeObj.cascadeName] ){
+                    this.formCascade[v['id']][cascadeObj.cascadeName] ={};
+                }
+              const cascadeResult = this.formCascade[v['id']][cascadeObj.cascadeName] ;  // 单个应答对象
               cascadeResult[cascadeObj.cascadeName] = {};
               cascadeObj.cascadeItems.forEach(item => {
     
                 // 满足前置条件、或者 类型是default
                 if (item.content.type === 'ajax') {
+                    
                   const _cascadeValue = {};
                   item.content.data['option'].forEach(ajaxItem => {
                     if (ajaxItem['type'] === 'value') {
@@ -1721,8 +1730,8 @@ export class CnTreeTableComponent extends CnComponentBase
     
                 }
               });
-              this.formCascade[v['id']][cascadeObj.controlId] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.controlId]));
-              // console.log('==表单内值变化反馈==', this.formCascade);
+               this.formCascade[v['id']][cascadeObj.cascadeName] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.cascadeName]));
+              // console.log('==树表内值变化反馈==', this.formCascade);
             });
           });
     }

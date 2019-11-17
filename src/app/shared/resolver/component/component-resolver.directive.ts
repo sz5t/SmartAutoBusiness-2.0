@@ -7,9 +7,11 @@ import { CnTreeTableComponent } from './../../components/cn-tree-table/cn-tree-t
 import { CnTreeComponent } from './../../components/cn-tree/cn-tree.component';
 import { CnToolbarComponent } from './../../components/toolbar/cn-toolbar.component';
 import { CnDataTableComponent } from './../../components/data_table/cn-data-table.component';
-import { Directive, OnInit, Input, OnDestroy, ComponentFactoryResolver, ViewContainerRef, ComponentRef, Type } from '@angular/core';
+import { Directive, OnInit, Input, OnDestroy, ComponentFactoryResolver, ViewContainerRef, ComponentRef, Type, Inject } from '@angular/core';
 import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
 import { CfgLayoutPageComponent } from '@shared/config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -36,17 +38,23 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
     private _componentRef: ComponentRef<any>;
     constructor(
         private _resolver: ComponentFactoryResolver,
-        private _container: ViewContainerRef
+        private _container: ViewContainerRef,
+        @Inject(BSN_COMPONENT_SERVICES)
+    public componentService: ComponentServiceProvider
     ) {
 
     }
+
+  
 
     ngOnInit() {
         this.resolve();
     }
 
     ngOnDestroy(): void {
-
+      //  console.log('销毁前',  this.componentService.com,this.config.id);
+      //  this.componentService.com=this.componentService.com.filter(e=>!e.hasOwnProperty(this.config.id));
+      //  console.log('销毁后',  this.componentService.com);
     }
 
     private resolve() {
@@ -69,6 +77,10 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
         this._componentRef.instance.config = this.config;
         this._componentRef.instance.initData = this.initData;
         this._componentRef.instance.tempData = this.tempData;
+       // console.log('创建创建创建', this._componentRef );
+      //  this.componentService.com.push({[this.config.id]:this._componentRef});
+      //  console.log('创建创建创建+++', this.componentService.com );
+
     }
 
 

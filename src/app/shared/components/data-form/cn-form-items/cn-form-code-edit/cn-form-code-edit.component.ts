@@ -5,9 +5,10 @@ declare let CodeMirror: any;
 @Component({
   selector: 'cn-code-edit,[cn-code-edit]',
   templateUrl: './cn-form-code-edit.component.html',
-  encapsulation: ViewEncapsulation.None,
+  encapsulation: ViewEncapsulation.None ,
   styleUrls: ['./cn-form-code-edit.component.css']
 })
+// encapsulation: ViewEncapsulation.None Native Emulated ,
 export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
   @ViewChild('CodeMirror', { static: true }) codeEditor: ElementRef;
   @Input() public config;
