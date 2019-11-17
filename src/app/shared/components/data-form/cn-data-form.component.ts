@@ -350,7 +350,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         }
       }
       this.validateForm.setValue(this.formValue);
-
+      console.log('------------------formValue', this.validateForm.value)
     }, error => {
       console.log(error);
     });
@@ -421,18 +421,24 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         if (cascade.field === v.name) {
           cascade.mapping.forEach(m => {
             if (m.value === v.value) {
-              const oldRows = this.config.formLayout.rows;
-              const newRows = [];
+              // const oldRows = this.config.formLayout.rows;
+              // const newRows = [];
               // const newCols = [];
-              oldRows.forEach(r => {
-                const newCols = r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) > -1);
-                newRows.push({
-                  "id": r.id,
-                  "type": "row",
-                  "cols": newCols
-                });
+              // oldRows.forEach(r => {
+              //   const newCols = r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) > -1);
+              //   newRows.push({
+              //     "id": r.id,
+              //     "type": "row",
+              //     "cols": newCols
+              //   });
+              // })
+              // this.layoutRowsCfg = newRows;
+              this.config.formLayout.rows.forEach(r => {
+                r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) > -1)
+                  .forEach(_c => _c['display'] = false);
+                r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) < 0)
+                  .forEach(_c => _c['display'] = 'none');
               })
-              this.layoutRowsCfg = newRows;
             }
           });
         }
@@ -464,6 +470,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
             // 满足前置条件、或者 类型是default
             if (item.content.type === 'ajax') {
+
               const _cascadeValue = {};
               item.content.data['option'].forEach(ajaxItem => {
                 if (ajaxItem['type'] === 'value') {

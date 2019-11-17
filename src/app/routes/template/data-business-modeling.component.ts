@@ -1653,6 +1653,23 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
 
                                         ]
                                     },
+                                    "builtinConfig": [
+                                        {
+                                            "id": "add_state",
+                                            "event": "formStateChange", // 内置方法
+                                            "state": "new"
+                                        },
+                                        {
+                                            "id": "edit_state",
+                                            "event": "formStateChange", // 内置方法
+                                            "state": "edit"
+                                        },
+                                        {
+                                            "id": "text_state",
+                                            "event": "formStateChange", // 内置方法
+                                            "state": "text"
+                                        }
+                                    ],
                                     "changeValue": [
                                         {
                                             "id": "add_business_object_changeValue",
@@ -1688,7 +1705,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 {
                                                     "name": "_BUS_OBJ_ID",
                                                     "type": "item",
-                                                    "valueName": "ID",
+                                                    "valueName": "id",
                                                     "valueTo": "tempValue"
                                                 }
                                             ]
@@ -1707,9 +1724,9 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "id": "view_business_object_form",
                                                 "type": "form",
                                                 "component": "form",
-                                                "state": "new",
+                                                "state": "edit",
                                                 "loadingConfig": {
-                                                    "id": "loadform"
+                                                    "id": "loadBusinessObject"
                                                 },
                                                 "cascade": {
                                                     "messageSender": [
@@ -1800,8 +1817,8 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                                 "option": [
                                                                                     {
                                                                                         "name": "_TYPE",
-                                                                                        "type": "selectValue",
-                                                                                        "valueName": "refResourceType"
+                                                                                        "type": "selectObjectValue",
+                                                                                        "valueName": "value"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -1810,7 +1827,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
 
                                                                 ]
                                                             }
-                                                        ],
+                                                        ]
                                                     },
                                                     {
                                                         "type": "",
@@ -1830,7 +1847,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                                     {
                                                                                         "name": "_TABLE_ID",
                                                                                         "type": "selectValue",
-                                                                                        "valueName": "ID"
+                                                                                        "valueName": "id"
                                                                                     }
                                                                                 ]
                                                                             }
@@ -1888,7 +1905,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             {
                                                                 "value": 1,
                                                                 "layout": [
-                                                                    "col_1",
                                                                     "col_2",
                                                                     "col_3",
                                                                     "col_4",
@@ -2028,10 +2044,10 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "formControls": [
                                                     {
                                                         "id": "res_refProperty",
-                                                        "hidden": true,
+                                                        "hidden": false,
                                                         "title": "关联属性",
                                                         "titleConfig": {
-                                                            "required": false
+                                                            "required": true
                                                         },
                                                         "field": "refResourceKeyName",
                                                         "labelSize": {
@@ -2083,10 +2099,10 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     },
                                                     {
                                                         "id": "res_refField",
-                                                        "hidden": true,
+                                                        "hidden": false,
                                                         "title": "关联列名",
                                                         "titleConfig": {
-                                                            "required": false
+                                                            "required": true
                                                         },
                                                         "field": "refParentResourcePropId",
                                                         "labelSize": {
@@ -2136,15 +2152,15 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "layoutName": "tableColumnsList",
                                                             "placeholder": "请选择",
                                                             "loadingItemConfig": {
-                                                                "id": "loadformgrid1"
+                                                                "id": "loadTableColumnValue"
                                                             },
-                                                            "labelName": "DESC_NAME",
-                                                            "valueName": "CNAME"
+                                                            "labelName": "descName",
+                                                            "valueName": "cname"
                                                         }
                                                     },
                                                     {
                                                         "id": "res_cascade_del",
-                                                        "hidden": true,
+                                                        "hidden": false,
                                                         "title": "及联删除",
                                                         "titleConfig": {
                                                             "required": false
@@ -2273,10 +2289,10 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     },
                                                     {
                                                         "id": "res_ref_id",
-                                                        "hidden": true,
+                                                        "hidden": false,
                                                         "title": "关联表资源",
                                                         "titleConfig": {
-                                                            "required": false
+                                                            "required": true
                                                         },
                                                         "field": "refResourceId",
                                                         "labelSize": {
@@ -2326,18 +2342,18 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "layoutName": "apiResourceList",
                                                             "placeholder": "请选择",
                                                             "loadingItemConfig": {
-                                                                "id": "loadformgrid"
+                                                                "id": "loadResourceValue"
                                                             },
-                                                            "labelName": "DESC_NAME",
-                                                            "valueName": "ID"
+                                                            "labelName": "descName",
+                                                            "valueName": "id"
                                                         }
                                                     },
                                                     {
                                                         "id": "res_refSQL",
-                                                        "hidden": true,
+                                                        "hidden": false,
                                                         "title": "关联SQL资源",
                                                         "titleConfig": {
-                                                            "required": false
+                                                            "required": true
                                                         },
                                                         "field": "sqlList",
                                                         "labelSize": {
@@ -2407,25 +2423,25 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             {
                                                                 "id": "res_refField",
                                                                 "state": "edit",
-                                                                "hidden": true,
+                                                                "hidden": false,
                                                                 "readOnly": false
                                                             },
                                                             {
                                                                 "id": "res_refProperty",
                                                                 "state": "edit",
-                                                                "hidden": true,
+                                                                "hidden": false,
                                                                 "readOnly": false
                                                             },
                                                             {
                                                                 "id": "res_cascade_del",
                                                                 "state": "edit",
-                                                                "hidden": true,
+                                                                "hidden": false,
                                                                 "readOnly": false
                                                             },
                                                             {
                                                                 "id": "res_ref_id",
                                                                 "state": "edit",
-                                                                "hidden": true,
+                                                                "hidden": false,
                                                                 "readOnly": false
                                                             }
 
@@ -2443,25 +2459,25 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             {
                                                                 "id": "res_refField",
                                                                 "state": "edit",
-                                                                "hidden": true,
+                                                                "hidden": false,
                                                                 "readOnly": false
                                                             },
                                                             {
                                                                 "id": "res_refProperty",
                                                                 "state": "edit",
-                                                                "hidden": true,
+                                                                "hidden": false,
                                                                 "readOnly": false
                                                             },
                                                             {
                                                                 "id": "res_cascade_del",
                                                                 "state": "edit",
-                                                                "hidden": true,
+                                                                "hidden": false,
                                                                 "readOnly": false
                                                             },
                                                             {
                                                                 "id": "res_ref_id",
                                                                 "state": "edit",
-                                                                "hidden": true,
+                                                                "hidden": false,
                                                                 "readOnly": false
                                                             }
                                                         ]
@@ -2504,30 +2520,61 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 ],
                                                 "ajaxConfig": [
                                                     {
-                                                        "id": "loadform",
-                                                        "url": "td/SMT_BASE_COMPONENT/query",
+                                                        "id": "loadBusinessObject",
+                                                        "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
                                                         "urlType": "inner",
                                                         "ajaxType": "get",
                                                         "params": [
                                                             {
-                                                                "name": "ID",
+                                                                "name": "id",
                                                                 "type": "tempValue",
-                                                                "valueName": "_ID"
+                                                                "valueName": "_BUS_OBJ_ID",
+                                                            },
+                                                            {
+                                                                "name": "_mapToObject",
+                                                                "type": "value",
+                                                                "value": true
+                                                            }
+                                                        ],
+                                                        "outputParameters": [],
+                                                        "result": []
+
+                                                    },
+                                                    {
+                                                        "id": "loadResourceValue",
+                                                        "url": "td/DM_TABLE/query",
+                                                        "urlType": "inner",
+                                                        "ajaxType": "get",
+                                                        "params": [
+                                                            {
+                                                                "name": "id",
+                                                                "type": "componentValue",
+                                                                "valueName": "value",
+                                                            },
+                                                            {
+                                                                "name": "_mapToObject",
+                                                                "type": "value",
+                                                                "value": true
                                                             }
                                                         ],
                                                         "outputParameters": [],
                                                         "result": []
                                                     },
                                                     {
-                                                        "id": "loadformgrid",
-                                                        "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                                                        "id": "loadTableColumnValue",
+                                                        "url": "td/DM_COLUMN/query",
                                                         "urlType": "inner",
                                                         "ajaxType": "get",
                                                         "params": [
                                                             {
-                                                                "name": "ID",
-                                                                "type": "tempValue",
-                                                                "valueName": "_ID",
+                                                                "name": "cname",
+                                                                "type": "componentValue",
+                                                                "valueName": "value",
+                                                            },
+                                                            {
+                                                                "name": "_mapToObject",
+                                                                "type": "value",
+                                                                "value": true
                                                             }
                                                         ],
                                                         "outputParameters": [],
@@ -2809,7 +2856,8 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             "params": [
                                                 {
                                                     "name": "id",
-                                                    "type": "GUID"
+                                                    "type": "componentValue",
+                                                    "valueName": "id"
                                                 },
                                                 {
                                                     "name": "refBusiModelId",
@@ -2875,21 +2923,15 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             ]
                                         },
                                         {
-                                            "id": "execute_checked_offices_1",
-                                            "url": "office/updateMany/OFFICE_SHEET",
+                                            "id": "delete_business_sub_object",
+                                            "url": "/cfgBusiModelResRelations/delete",
                                             "urlType": "inner",
-                                            "ajaxType": "put",
+                                            "ajaxType": "delete",
                                             "params": [
                                                 {
-                                                    "name": "OFFICENAME",
-                                                    "type": "value",
-                                                    "value": "text3",
-                                                    "dataType": "string"
-                                                },
-                                                {
-                                                    "name": "ID",
+                                                    "name": "id",
                                                     "type": "item",
-                                                    "valueName": "ID"
+                                                    "valueName": "id"
                                                 }
                                             ],
                                             "outputParameters": [
@@ -2900,7 +2942,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "name": "data",
                                                     "showMessageWithNext": 0,
                                                     "message": "message.ajax.state.success",
-                                                    "senderId": "afterOfficeBatchChangeSuccessfully"
+                                                    "senderId": "afterBusinessDeleteSuccess"
                                                 },
                                                 // {
                                                 //     "name": "validation",
@@ -2975,6 +3017,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             // "trigger": "LAYOUT_DIALOG",
                                                             "trigger": "DIALOG",
                                                             "changeValueId": "add_business_object_changeValue",
+                                                            "builtinId": "add_state",
                                                             // "conditionId": "add_state_1"
                                                             "dialogId": "business_object_layout",
                                                             "ajaxId": "add_business_sub_object",
@@ -2997,6 +3040,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "changeValueId": "add_sub_business_object_changeValue",
                                                             "dialogId": "business_object_layout",
                                                             "ajaxId": "add_sub_business_sub_object",
+                                                            "builtinId": "add_state",
                                                         }
                                                     ]
                                                 },
@@ -3007,28 +3051,18 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "color": "text-success",
                                                     "hidden": false,
                                                     "disabled": false,
-                                                    "state": "text",
+                                                    "state": "edit",
                                                     "execute": [
                                                         {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "EDIT_ROWS",
-                                                            "conditionId": "edit_business_sub_object"
+                                                            "triggerType": "ACTION",
+                                                            "trigger": "DIALOG",
+                                                            // "conditionId": "edit_business_object_changeValue",
+                                                            "changeValueId": "edit_business_object_changeValue",
+                                                            "dialogId": "business_object_layout",
+                                                            "ajaxId": "edit_business_sub_object",
+                                                            "builtinId": "edit_state",
                                                         }
-                                                    ],
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": false
-                                                            }
-                                                        ]
-                                                    }
+                                                    ]
                                                 },
                                                 {
                                                     "id": "M_deleteRow",
@@ -3042,7 +3076,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "triggerType": "OPERATION",
                                                             "trigger": "EXECUTE_CHECKED_ROWS_IDS",
                                                             // "conditionId": "delete_business_main_condition",
-                                                            "ajaxId": "delete_office_1"
+                                                            "ajaxId": "delete_business_sub_object"
                                                         }
                                                     ]
                                                 },
@@ -3168,6 +3202,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "titleIcon": "right-circle",
                                     "component": "cnTreeTable",
                                     "keyId": "id",
+                                    "parentKey": "parentId",
                                     "size": "middle",
                                     "isBordered": true,
                                     "isFrontPagination": false,
@@ -3202,6 +3237,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "name": "_root.refBusiModelId",
                                                 "type": "tempValue",
                                                 "valueName": "_BUSI_ID"
+                                            },
+                                            {
+                                                "name": "_root.parentId",
+                                                "type": "value",
+                                                "value": null
                                             },
                                             {
                                                 "name": "_mapToObject",
@@ -3355,162 +3395,9 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     ],
                                     "cascade": {
                                         "messageSender": [
-                                            // {
-                                            //     "id": "grid_sender_02",
-                                            //     "senderId": "view_business_object",
-                                            //     "triggerType": "BEHAVIOR",
-                                            //     "trigger": "SET_SELECT_ROW",
-                                            //     "triggerMoment": "after",
-                                            //     "sendData": [
-                                            //         {
-                                            //             "beforeSend": {},
-                                            //             "reveicerId": "",
-                                            //             "receiverTriggerType": "BEHAVIOR",
-                                            //             "receiverTrigger": "REFRESH_AS_CHILD",
-                                            //             "params": [
-                                            //                 {
-                                            //                     "name": "_PID",
-                                            //                     "type": "item",
-                                            //                     "valueName": "ID"
-                                            //                 }
-                                            //             ]
-                                            //         }
-                                            //     ]
-                                            // },
-                                            {
-                                                "id": "grid_sender_03",
-                                                "senderId": "view_business_object",
-                                                "triggerType": "STATE",
-                                                "trigger": "CANCEL_EDIT_ROW",
-                                                "triggerMoment": "after",
-                                                "sendData": [
-                                                    {
-                                                        "reveicerId": "",
-                                                        "receiverTriggerType": "STATE",
-                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                        "conditionId": "cancel_edit_1",
-                                                        "params": [
-                                                            {
-                                                                "name": "targetViewId",
-                                                                "value": "view_business_object",
-                                                                "type": "value"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "id": "grid_sender_04",
-                                                "senderId": "view_business_object",
-                                                "triggerType": "STATE",
-                                                "trigger": "CANCEL_NEW_ROW",
-                                                "triggerMoment": "after",
-                                                "sendData": [
-                                                    {
-                                                        "reveicerId": "",
-                                                        "receiverTriggerType": "STATE",
-                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                        "conditionId": "cancel_edit_2",
-                                                        "params": [
-                                                            {
-                                                                "name": "targetViewId",
-                                                                "value": "view_business_object",
-                                                                "type": "value"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "id": "grid_sender_05",
-                                                "senderId": "view_business_object",
-                                                "triggerType": "STATE",
-                                                "trigger": "EDIT_ROW",
-                                                "triggerMoment": "after",
-                                                "sendData": [
-                                                    {
-                                                        "reveicerId": "",
-                                                        "receiverTriggerType": "STATE",
-                                                        "receiverTrigger": "STATE_TO_EDIT",
-                                                        "params": [
-                                                            {
-                                                                "name": "targetViewId",
-                                                                "value": "view_business_object",
-                                                                "type": "value"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "id": "grid_sender_06",
-                                                "senderId": "view_business_object",
-                                                "triggerType": "OPERATION",
-                                                "trigger": "SAVE_ROW",
-                                                "triggerMoment": "after",
-                                                "sendData": [
-                                                    {
-                                                        "reveicerId": "",
-                                                        "receiverTriggerType": "STATE",
-                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                        "params": [
-                                                            {
-                                                                "name": "targetViewId",
-                                                                "value": "view_business_object",
-                                                                "type": "value"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "id": "grid_sender_07",
-                                                "senderId": "view_business_object",
-                                                "triggerType": "OPERATION",
-                                                "trigger": "SAVE_ROWS",
-                                                "triggerMoment": "after",
-                                                "sendData": [
-                                                    {
-                                                        "reveicerId": "",
-                                                        "receiverTriggerType": "STATE",
-                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                        "params": [
-                                                            {
-                                                                "name": "targetViewId",
-                                                                "value": "view_business_object",
-                                                                "type": "value"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "id": "grid_sender_08",
-                                                "senderId": "view_business_object",
-                                                "triggerType": "ACTION",
-                                                "trigger": "CONFIRM",
-                                                "triggerMoment": "after",
-                                                "sendData": [
-                                                    {
-                                                        "reveicerId": "",
-                                                        "receiverTriggerType": "STATE",
-                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                        "params": [
-                                                            {
-                                                                "name": "targetViewId",
-                                                                "value": "view_business_object",
-                                                                "type": "value"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            },
                                             {
                                                 "id": "afterAddBusinessSubObjectSuccess",
                                                 "senderId": "view_business_object",
-                                                // "triggerType": "ACTION",
-                                                // "trigger": "MESSAGE0",
-                                                // "triggerMoment": "after",
                                                 "sendData": [
                                                     {
                                                         "beforeSend": {},
@@ -3548,9 +3435,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             {
                                                 "id": "afterAddSubBusinessSubObjectSuccess",
                                                 "senderId": "view_business_object",
-                                                // "triggerType": "ACTION",
-                                                // "trigger": "MESSAGE0",
-                                                // "triggerMoment": "after",
                                                 "sendData": [
                                                     {
                                                         "beforeSend": {},
@@ -3574,7 +3458,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "beforeSend": {},
                                                         "reveicerId": "",
                                                         "receiverTriggerType": "ACTION",
-                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
+                                                        "receiverTrigger": "LOAD_REFRESH_CHILDREN_DATA",
                                                         "params": [
                                                             {
                                                                 "name": "id",
@@ -3588,9 +3472,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             {
                                                 "id": "afterEditBusinessSubObjectSuccess",
                                                 "senderId": "view_business_object",
-                                                // "triggerType": "ACTION",
-                                                // "trigger": "MESSAGE0",
-                                                // "triggerMoment": "after",
                                                 "sendData": [
                                                     {
                                                         "beforeSend": {},
@@ -3650,7 +3531,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 ]
                                             },
                                             {
-                                                "id": "afterOfficeDeleteSuccessfully",
+                                                "id": "afterBusinessDeleteSuccess",
                                                 "senderId": "view_business_object",
                                                 // "triggerType": "ACTION",
                                                 // "trigger": "MESSAGE0",
@@ -3677,11 +3558,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     {
                                                         "beforeSend": {},
                                                         "reveicerId": "",
-                                                        "receiverTriggerType": "ACTION",
-                                                        "receiverTrigger": "DELETE_CURRENT_ROW",
+                                                        "receiverTriggerType": "BEHAVIOR",
+                                                        "receiverTrigger": "DELETE_CHECKED_ROWS",
                                                         "params": [
                                                             {
-                                                                "name": "ID",
+                                                                "name": "ids",
                                                                 "type": "returnValue",
                                                                 "valueName": "ids"
                                                             }
@@ -3690,7 +3571,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 ]
                                             },
                                             {
-                                                "id": "afterOfficeBatchChangeSuccessfully",
+                                                "id": "afterBusinessDeleteSuccess1",
                                                 "senderId": "view_business_object",
                                                 // "triggerType": "ACTION",
                                                 // "trigger": "MESSAGE0",
@@ -3822,7 +3703,18 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     {
                                                         "beforeReceive": [],
                                                         "triggerType": "ACTION",
+                                                        "trigger": "LOAD_REFRESH_CHILDREN_DATA"
+                                                    },
+                                                    {
+                                                        "beforeReceive": [],
+                                                        "triggerType": "ACTION",
                                                         "trigger": "DELETE_CURRENT_ROW"
+                                                    },
+                                                    {
+                                                        "beforeReceive": [],
+                                                        "triggerType": "BEHAVIOR",
+                                                        "trigger": "DELETE_CHECKED_ROWS"
+
                                                     }
                                                 ]
                                             }
@@ -5177,7 +5069,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                 "title": "资源列表",
                 "titleIcon": "right-circle",
                 "component": "cnDataTable",
-                "keyId": "ID",
+                "keyId": "id",
                 "size": "small",
                 "isBordered": true,
                 "isFrontPagination": false,
@@ -5193,7 +5085,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     50,
                     100
                 ],
-                "loadingOnInit": true,
+                "loadingOnInit": false,
                 "spanWidthConfig": [
                     "50px",
                     "100px",
@@ -5206,9 +5098,14 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     "method": "get",
                     "params": [
                         {
-                            "name": "TYPE",
+                            "name": "type",
                             "type": "initValue",
-                            "valueName": "refResourceType"
+                            "valueName": "_TYPE"
+                        },
+                        {
+                            "name": "_mapToObject",
+                            "type": "value",
+                            "value": true
                         }
                     ],
                     "filter": []
@@ -5216,7 +5113,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                 "columns": [{
                     "title": "ID",
                     "type": "field",
-                    "field": "ID",
+                    "field": "id",
                     "hidden": true,
                     "showFilter": false,
                     "showSort": false,
@@ -5227,7 +5124,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                 {
                     "title": "资源名称",
                     "type": "field",
-                    "field": "RES_NAME",
+                    "field": "resName",
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
@@ -5237,7 +5134,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                 {
                     "title": "资源描述",
                     "type": "field",
-                    "field": "DESC_NAME",
+                    "field": "descName",
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
@@ -5293,7 +5190,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                 "title": "资源字段列表",
                 "titleIcon": "right-circle",
                 "component": "cnDataTable",
-                "keyId": "ID",
+                "keyId": "id",
                 "size": "small",
                 "isBordered": true,
                 "isFrontPagination": false,
@@ -5322,9 +5219,14 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     "method": "get",
                     "params": [
                         {
-                            "name": "TABLE_ID",
+                            "name": "tableId",
                             "type": "initValue",
                             "valueName": "_TABLE_ID"
+                        },
+                        {
+                            "name": "_mapToObject",
+                            "type": "value",
+                            "value": true
                         }
                     ],
                     "filter": []
@@ -5333,7 +5235,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     {
                         "title": "列名称",
                         "type": "field",
-                        "field": "CNAME",
+                        "field": "cname",
                         "hidden": false,
                         "showFilter": false,
                         "showSort": false,
@@ -5343,7 +5245,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     {
                         "title": "列描述",
                         "type": "field",
-                        "field": "DESC_NAME",
+                        "field": "descName",
                         "hidden": false,
                         "showFilter": false,
                         "showSort": false,

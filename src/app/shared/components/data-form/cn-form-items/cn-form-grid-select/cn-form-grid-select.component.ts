@@ -127,7 +127,7 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
     return ParameterResolver.resolve({
       params: paramsCfg,
       tempValue: this.tempValue,
-      componentValue: { value: this._value }, //  组件值？返回值？级联值，需要三值参数
+      componentValue: { value: this.value }, //  组件值？返回值？级联值，需要三值参数
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
@@ -175,6 +175,7 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
     // valueName: 'id',
     // ,dataItem: item
     // tslint:disable-next-line:forin
+    this.value = v;
     if (!v) {
       this.selectedRowItem = null;
     }

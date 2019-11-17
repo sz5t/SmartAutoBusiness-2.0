@@ -93,7 +93,9 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
         this.setValue(event);
       });
     }
-    // console.log('创建表单内部组件。。。', _config);
+
+
+    console.log('创建表单内部组件。。。-----------------------------', this.formGroup);
   }
 
   // 组件将值写回、级联数据-》回写 
@@ -122,7 +124,7 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
     }
     if (changes.hasOwnProperty('formState')) {
       if (!changes['formState'].firstChange) {
-        //    console.log('****formState******',this.config.field, this.formState);
+        console.log('****formState******', this.config.field, this.formState);
         // console.log('****formState******',this.config.field, this.value,this.formState, this.config, JSON.stringify(this.formGroup.value));
         let _config
         if (this.config.state === 'text') {

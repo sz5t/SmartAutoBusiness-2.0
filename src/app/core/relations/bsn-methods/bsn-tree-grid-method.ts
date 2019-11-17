@@ -26,6 +26,7 @@ export const CN_TREE_GRID_METHOD: ITreeGridTrigger = {
     LAYOUT_DIALOG: 'showLayoutDialog',
     MESSAGE: 'showMessage',
     LOAD_REFRESH_DATA: 'loadRefreshData',
+    LOAD_REFRESH_CHILDREN_DATA: 'loadRefreshChildrenData',
 
 
 
@@ -53,5 +54,6 @@ export const CN_TREE_GRID_METHOD: ITreeGridTrigger = {
     EXECUTE_CURRENT_ROW: 'executeCurrentRow',
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
-    EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds'
+    EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds',
+    DELETE_CHECKED_ROWS: 'deleteCheckedRows'
 }

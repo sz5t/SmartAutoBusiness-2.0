@@ -16,12 +16,12 @@ export class CnFormInputComponent implements OnInit {
     // console.log('input=>:', this.config,this.formGroup);
   }
 
-  
+
   /**
    * valueChange
    */
   public valueChange(v?) {
-    //  console.log('input 值变化', v,this.formGroup);
+    console.log('input 值变化', v, this.formGroup);
     // tslint:disable-next-line:forin
     for (const key in this.formGroup.controls) {
       this.formGroup.controls[key].markAsPristine();

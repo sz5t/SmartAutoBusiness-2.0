@@ -101,6 +101,7 @@ export class CnTreeTableComponent extends CnComponentBase
     public checkedNumber = 0;
 
     public KEY_ID: string;
+    public PARENT_ID: string;
 
     public _sortName;
     public _sortValue;
@@ -146,6 +147,7 @@ export class CnTreeTableComponent extends CnComponentBase
     public ngOnInit() {
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
+        this.PARENT_ID = this.config.parentKey ? this.config.parentKey : 'parentId';
 
         // 初始化默认分页大小
         this.config.pageSize && (this.pageSize = this.config.pageSize);
@@ -265,7 +267,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 originData: { ..._root },
                 validation: true,
                 actions: this.getRowActions('text'),
-                children: []
+                children: [],
+                isNewRow: false
             });
 
         while (stack.length !== 0) {
@@ -420,7 +423,7 @@ export class CnTreeTableComponent extends CnComponentBase
         }
     }
 
-    public loadRefreshData(option) {
+    private _buildReloadAjax(option, callback) {
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
@@ -445,7 +448,7 @@ export class CnTreeTableComponent extends CnComponentBase
 
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
             if (response && response.data && response.data) {
-                this.refreshData(response.data)
+                callback(response.data);
                 this.isLoading = false;
             } else {
                 this.isLoading = false;
@@ -453,6 +456,50 @@ export class CnTreeTableComponent extends CnComponentBase
         }, error => {
             console.log(error);
         });
+    }
+
+    public loadRefreshChildrenData(option) {
+        this._buildReloadAjax(option, (data) => {
+            this.refreshChildrenData(data);
+        })
+    }
+
+    public loadRefreshData(option) {
+        this._buildReloadAjax(option, (data) => {
+            this.refreshData(data);
+        })
+        // this.isLoading = true;
+        // const url = this.config.loadingConfig.url;
+        // const method = this.config.loadingConfig.method;
+        // // 返回结果解析id参数,构建ids
+        // const param1: any = {};
+        // if (option && Array.isArray(option)) {
+        //     const rids = [];
+        //     option.map(opt => {
+        //         rids.push(opt[this.KEY_ID]);
+        //     })
+        //     param1[this.KEY_ID] = `in(${rids.join(',')})`;
+        // } else if (option) {
+        //     param1[this.KEY_ID] = `in(${option[this.KEY_ID]})`;
+        // }
+
+        // // 页面其他参数
+        // const params = {
+        //     ...this.buildParameters(this.config.loadingConfig.reloadParams),
+        //     // ...this._buildPaging(),
+        //     ...param1
+        // }
+
+        // this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
+        //     if (response && response.data && response.data) {
+        //         this.refreshData(response.data)
+        //         this.isLoading = false;
+        //     } else {
+        //         this.isLoading = false;
+        //     }
+        // }, error => {
+        //     console.log(error);
+        // });
     }
 
     /**
@@ -624,7 +671,7 @@ export class CnTreeTableComponent extends CnComponentBase
         const newId = CommonUtils.uuID(32);
         const parentId = this.ROW_SELECTED[this.KEY_ID];
         const newData = this.createNewRowData();
-        newData['PID'] = parentId;
+        newData[this.PARENT_ID] = parentId;
         newData[this.KEY_ID] = newId;
 
         // 新增数据加入原始列表,才能够动态新增一行编辑数据
@@ -864,6 +911,17 @@ export class CnTreeTableComponent extends CnComponentBase
         return this.componentService.apiService[method](url, paramData).toPromise();
     }
 
+    public deleteCheckedRows(option) {
+        if (option['ids'] && option['ids'].length > 0) {
+            option['ids'].split(',').forEach(id => {
+                const rowId = {};
+                rowId[this.KEY_ID] = id;
+                this.deleteCurrentRow(rowId);
+            });
+        }
+
+    }
+
     public deleteCurrentRow(option) {
         if (option[this.KEY_ID]) {
             // 为了保证树表在数据内容的一致性 , 需要递归删除所有子节点数据
@@ -877,13 +935,13 @@ export class CnTreeTableComponent extends CnComponentBase
                 delete this.mapOfDataExpanded[option[this.KEY_ID]];
 
                 // 如果选中的是根结点
-                if (!this.ROW_SELECTED['PID'] || this.ROW_SELECTED['PID'] === '') {
+                if (!this.ROW_SELECTED[this.PARENT_ID] || this.ROW_SELECTED[this.PARENT_ID] === '') {
                     // parentMapOfData['selected'] = true;
-                    const parentList = this.dataList.filter(d => (!d['PID'] || d['PID'] === ''));
+                    const parentList = this.dataList.filter(d => (!d[this.PARENT_ID] || d[this.PARENT_ID] === ''));
                     parentList && parentList.length > 0 && this.setSelectRow(parentList[0]);
                 } else { // 选中的子节点
 
-                    const parentMapOfData = this.mapOfDataExpanded[this.ROW_SELECTED['PID']][0];
+                    const parentMapOfData = this.mapOfDataExpanded[this.ROW_SELECTED[this.PARENT_ID]][0];
                     const parentData = parentMapOfData.data;
                     const deleteItemIndex = parentMapOfData.children.findIndex(c => c[this.KEY_ID] === option[this.KEY_ID]);
                     if (deleteItemIndex > -1) {
@@ -904,8 +962,8 @@ export class CnTreeTableComponent extends CnComponentBase
             } else {
                 this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== option[this.KEY_ID]);
                 delete this.mapOfDataExpanded[option[this.KEY_ID]];
-                if (option['PID'] && option['PID'].length > 0) {
-                    const parentMapOfData = this.mapOfDataExpanded[option['PID']][0];
+                if (option[this.PARENT_ID] && option[this.PARENT_ID].length > 0) {
+                    const parentMapOfData = this.mapOfDataExpanded[option[this.PARENT_ID]][0];
                     const deleteItemIndex = parentMapOfData.children.findIndex(c => c[this.KEY_ID] === option[this.KEY_ID]);
                     if (deleteItemIndex > -1) {
                         parentMapOfData.children.splice(deleteItemIndex, 0);
@@ -918,7 +976,8 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     private _recursiveDeleteRow(recID) {
-        if (this.mapOfDataExpanded[recID] && this.mapOfDataExpanded[recID][0].children.length > 0) {
+
+        if (this.mapOfDataExpanded[recID] && this.mapOfDataExpanded[recID][0].children) {
             this.mapOfDataExpanded[recID][0].children.forEach(d => {
                 this._recursiveDeleteRow(d[this.KEY_ID]);
                 this.dataList = this.dataList.filter(s => s[this.KEY_ID] !== recID);
@@ -1104,8 +1163,6 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public selectRow(rowData) {
-
-
         console.log(this.config.id + '-----------' + rowData, arguments);
         // this.ROW_SELECTED = rowData;
     }
@@ -1114,8 +1171,51 @@ export class CnTreeTableComponent extends CnComponentBase
 
     // #region action
 
+
+    private createNewRowByLoadedData(loadData) {
+        const newData = { ...loadData };
+        // this.config.columns.filter(c => c.type === 'field').map(col => {
+        //     newData[col.field] = loadData[col.field];
+        // });
+        return newData;
+    }
+
+    public refreshChildrenData(loadNewData) {
+
+        if (loadNewData && Array.isArray(loadNewData)) {
+            const parentId = this.ROW_SELECTED[this.KEY_ID];
+            loadNewData.map((loadData, newIndex) => {
+                const newData = this.createNewRowByLoadedData(loadData);
+                this.dataList = this._setNewChildRow(newData, parentId);
+                const parentLevel = this.mapOfDataExpanded[parentId][0].level;
+                this.mapOfDataExpanded[newData[this.KEY_ID]] = [
+                    {
+                        data: newData,
+                        originData: { ...newData },
+                        disabled: false,
+                        checked: false, // index === 0 ? true : false,
+                        selected: false, // index === 0 ? true : false,
+                        state: 'text',
+                        level: parentLevel + 1,
+                        actions: this.getRowActions('text'),
+                        // children: [],
+                        validation: true,
+                        isNewRow: true,
+                        // expand: false
+                    }
+                ]
+                if (!this.mapOfDataExpanded[parentId][0]['children']) {
+                    this.mapOfDataExpanded[parentId][0]['children'] = [];
+                }
+                this.mapOfDataExpanded[parentId][0]['children'].push(newData);
+                this.mapOfDataExpanded[parentId][0]['expand'] = true;
+            })
+        }
+        // 刷新dataList
+        // 刷新mapOfDataState
+    }
+
     public refreshData(loadNewData) {
-        debugger;
         if (loadNewData && Array.isArray(loadNewData)) {
             loadNewData.map((newData, newIndex) => {
                 const index = this.dataList.findIndex(d => d[this.KEY_ID] === newData[this.KEY_ID]);
@@ -1133,14 +1233,18 @@ export class CnTreeTableComponent extends CnComponentBase
                     })
                 } else {
                     // 组装状态数据
+
                     this.mapOfDataExpanded[newData[this.KEY_ID]] = [{
                         data: newData,
                         originData: { ...newData },
                         disabled: false,
-                        checked: true, // index === 0 ? true : false,
-                        selected: false, // index === 0 ? true : false,
-                        state: 'new',
-                        actions: this.getRowActions('new')
+                        checked: false,
+                        selected: false,
+                        state: 'text',
+                        level: 0,
+                        actions: this.getRowActions('text'),
+                        validation: true,
+                        isNewRow: true
                     }]
                 }
             })
@@ -1283,14 +1387,14 @@ export class CnTreeTableComponent extends CnComponentBase
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
         const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
-        const data = this.ROW_SELECTED;
+        const data = this.ROWS_CHECKED;
         const parameterResult = [];
         let paramData;
         if (data && data.length > 0) {
             data.map(d => {
                 const p = paramData = ParameterResolver.resolve({
                     params: ajaxParams,
-                    item: d,
+                    item: d.data,
                     tempValue: this.tempValue,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue
@@ -1435,7 +1539,6 @@ export class CnTreeTableComponent extends CnComponentBase
      * ajaxConfig
      */
     public showDialog(option: any) {
-        debugger;
         let dialog;
         // 根据按钮类型初始化表单状态
         const dialogCfg = option.dialog;
@@ -1625,109 +1728,109 @@ export class CnTreeTableComponent extends CnComponentBase
         return copyAction;
     }
 
-    formCascade={};
-    public valueChange(v?){
-        if(v['id']){
-            this.formCascade[v['id']][v['name']]={};
+    formCascade = {};
+    public valueChange(v?) {
+        if (v['id']) {
+            this.formCascade[v['id']][v['name']] = {};
         }
-        console.log('树表返回',v);
+        console.log('树表返回', v);
 
         const triggerKey = v.name;
         if (this.config.cascadeValue)
-          this.config.cascadeValue.forEach(cascade => {
-            if (cascade.name !== triggerKey) {
-              return true;
-            }
-            // console.log('==****开始应答解析*****==', cascade);
-            cascade.CascadeObjects.forEach(cascadeObj => {
-              const cascadeResult = this.formCascade[v['id']][cascadeObj.controlId] ? this.formCascade[v['id']][cascadeObj.controlId] : {};  // 单个应答对象
-              cascadeResult[cascadeObj.cascadeName] = {};
-              cascadeObj.cascadeItems.forEach(item => {
-    
-                // 满足前置条件、或者 类型是default
-                if (item.content.type === 'ajax') {
-                  const _cascadeValue = {};
-                  item.content.data['option'].forEach(ajaxItem => {
-                    if (ajaxItem['type'] === 'value') {
-                      _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
-                    }
-                    if (ajaxItem['type'] === 'selectValue') {
-                      // 选中行数据[这个是单值]
-                      _cascadeValue[ajaxItem['name']] = v['value'];
-                    }
-                    if (ajaxItem['type'] === 'selectObjectValue') {
-                      // 选中行对象数据
-                      if (v.dataItem) {
-                        _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
-                      }
-                    }
-                    // 其他取值【日后扩展部分】
-                  });
-                  if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeValue')) {
-                    cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ...cascadeResult[cascadeObj.cascadeName]['cascadeValue'], ..._cascadeValue };
-                  } else {
-                    cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ..._cascadeValue };
-                  }
-                  cascadeResult[cascadeObj.cascadeName]['exec'] = 'ajax';
-                  // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+            this.config.cascadeValue.forEach(cascade => {
+                if (cascade.name !== triggerKey) {
+                    return true;
                 }
-                if (item.content.type === 'setOptions') {
-                  // 小组件静态数据集 , 目前静态数据，支持 多字段
-                  const _cascadeOptions = item.content.data['option'];
-    
-                  if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeOptions')) {
-                    cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
-                  } else {
-                    cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
-                  }
-                  cascadeResult[cascadeObj.cascadeName]['exec'] = 'setOptions';
-                 // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
-                }
-                if (item.content.type === 'setValue') {
-                  let __setValue;
-                  item.content.data['option'].forEach(ajaxItem => {
-                    if (ajaxItem['type'] === 'value') {
-                      __setValue = ajaxItem['value'];
-                    }
-                    if (ajaxItem['type'] === 'selectValue') {
-                      // 选中行数据[这个是单值]
-                      __setValue = v['value'];
-                    }
-                    if (ajaxItem['type'] === 'selectObjectValue') {
-                      // 选中行对象数据
-                      if (v.dataItem) {
-                        __setValue = v.dataItem[ajaxItem['valueName']];
-                      }
-                    }
-                    // 其他取值【日后扩展部分】
-                  });
-                  // 赋值
-                 // this.setValue(cascadeObj.cascadeName, __setValue);
-    
-                }
-                if (item.content.type === 'display') {
-                  // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
-    
-                }
-                if (item.content.type === 'message') {
-                  // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
-    
-                }
-                if (item.content.type === 'relation') {
-                  // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构
-                  // 提供 消息配置名称，发送参数组合
-    
-                }
-                if (item.content.type === 'preventCascade') {
-    
-                  // 【大招】 某条件下，将级联阻止
-    
-                }
-              });
-              this.formCascade[v['id']][cascadeObj.controlId] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.controlId]));
-              // console.log('==表单内值变化反馈==', this.formCascade);
+                // console.log('==****开始应答解析*****==', cascade);
+                cascade.CascadeObjects.forEach(cascadeObj => {
+                    const cascadeResult = this.formCascade[v['id']][cascadeObj.controlId] ? this.formCascade[v['id']][cascadeObj.controlId] : {};  // 单个应答对象
+                    cascadeResult[cascadeObj.cascadeName] = {};
+                    cascadeObj.cascadeItems.forEach(item => {
+
+                        // 满足前置条件、或者 类型是default
+                        if (item.content.type === 'ajax') {
+                            const _cascadeValue = {};
+                            item.content.data['option'].forEach(ajaxItem => {
+                                if (ajaxItem['type'] === 'value') {
+                                    _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectValue') {
+                                    // 选中行数据[这个是单值]
+                                    _cascadeValue[ajaxItem['name']] = v['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectObjectValue') {
+                                    // 选中行对象数据
+                                    if (v.dataItem) {
+                                        _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                                    }
+                                }
+                                // 其他取值【日后扩展部分】
+                            });
+                            if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeValue')) {
+                                cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ...cascadeResult[cascadeObj.cascadeName]['cascadeValue'], ..._cascadeValue };
+                            } else {
+                                cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ..._cascadeValue };
+                            }
+                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'ajax';
+                            // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+                        }
+                        if (item.content.type === 'setOptions') {
+                            // 小组件静态数据集 , 目前静态数据，支持 多字段
+                            const _cascadeOptions = item.content.data['option'];
+
+                            if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeOptions')) {
+                                cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
+                            } else {
+                                cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
+                            }
+                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'setOptions';
+                            // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+                        }
+                        if (item.content.type === 'setValue') {
+                            let __setValue;
+                            item.content.data['option'].forEach(ajaxItem => {
+                                if (ajaxItem['type'] === 'value') {
+                                    __setValue = ajaxItem['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectValue') {
+                                    // 选中行数据[这个是单值]
+                                    __setValue = v['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectObjectValue') {
+                                    // 选中行对象数据
+                                    if (v.dataItem) {
+                                        __setValue = v.dataItem[ajaxItem['valueName']];
+                                    }
+                                }
+                                // 其他取值【日后扩展部分】
+                            });
+                            // 赋值
+                            // this.setValue(cascadeObj.cascadeName, __setValue);
+
+                        }
+                        if (item.content.type === 'display') {
+                            // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
+
+                        }
+                        if (item.content.type === 'message') {
+                            // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
+
+                        }
+                        if (item.content.type === 'relation') {
+                            // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构
+                            // 提供 消息配置名称，发送参数组合
+
+                        }
+                        if (item.content.type === 'preventCascade') {
+
+                            // 【大招】 某条件下，将级联阻止
+
+                        }
+                    });
+                    this.formCascade[v['id']][cascadeObj.controlId] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.controlId]));
+                    // console.log('==表单内值变化反馈==', this.formCascade);
+                });
             });
-          });
     }
 
 
