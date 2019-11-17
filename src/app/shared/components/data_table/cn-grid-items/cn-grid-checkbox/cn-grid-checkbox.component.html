@@ -1,1 +1,15 @@
-<p>cn-grid-checkbox works!</p>
+<input nz-input placeholder="placeholder"  hidden="hidden" [ngModel]="value" (ngModelChange)="valueChange($event)"/> 
+<ng-container *ngIf="config.displayMode ==='wrapper'">
+    <nz-checkbox-wrapper style="width: 100%;"   (nzOnChange)="log($event)">
+        <div nz-row>
+                
+                <div nz-col [nzSpan]="config.span" *ngFor="let c of checkOptions">
+                        <label nz-checkbox [nzValue]="c['value']" [ngModel] = "c['checked']" [ngModelOptions]="{standalone: true}">{{c['label']}}</label>
+                </div>
+      
+        </div>
+      </nz-checkbox-wrapper>
+</ng-container>
+<ng-container *ngIf="config.displayMode !=='wrapper'">
+          <nz-checkbox-group [(ngModel)]="checkOptions" (ngModelChange)="log($event)" [ngModelOptions]="{standalone: true}"></nz-checkbox-group>
+</ng-container>

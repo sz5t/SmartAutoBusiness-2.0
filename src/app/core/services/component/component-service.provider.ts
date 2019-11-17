@@ -10,6 +10,7 @@ import { Subject, BehaviorSubject } from 'rxjs';
 @Injectable()
 export class ComponentServiceProvider {
 
+    public com=[];
     public apiService: ApiService;
     public cacheService: CacheService;
     public msgService: NzMessageService;

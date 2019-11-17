@@ -53,12 +53,12 @@
                 <td *ngSwitchCase="'new'">
                   <ng-container CnGridItemDirective [state]="'new'" [config]="col.editor"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
-                    (updateValue)="valueChange($event)"> </ng-container>
+                    (updateValue)="valueChange($event)"  [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
                 </td>
                 <td *ngSwitchCase="'edit'">
                   <ng-container CnGridItemDirective [state]="'edit'" [config]="col.editor"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
-                    (updateValue)="valueChange($event)"> </ng-container>
+                    (updateValue)="valueChange($event)"  [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
                 </td>
                 <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
               </ng-container>
@@ -66,7 +66,7 @@
                 <td *ngIf="col.custom; else text">
                   <ng-container CnGridItemDirective [state]="'edit'" [config]="col.custom"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
-                    (updateValue)="valueChange($event)"> </ng-container>
+                    (updateValue)="valueChange($event)"  [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
                 </td>
                 <ng-template #text>
                   <td>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
