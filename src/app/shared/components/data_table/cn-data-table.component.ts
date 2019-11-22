@@ -306,15 +306,15 @@ export class CnDataTableComponent extends CnComponentBase
             // ...this._buildSearch()
         };
 
-        this.load(filterParams);
+        this.load();
     }
 
-    public load(filterParams?) {
+    public load() {
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
 
-        const params = filterParams ? filterParams : {
+        const params = {
             ...this.buildParameters(this.config.loadingConfig.params),
             ...this._buildPaging(),
             // ...this._buildFilter(this.config.ajaxConfig.filter),
