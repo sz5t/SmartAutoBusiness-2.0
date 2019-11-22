@@ -295,11 +295,26 @@ export class CnDataTableComponent extends CnComponentBase
         this.ROW_SELECTED = JSON.parse(`{"${this.KEY_ID}": ""}`);
     }
 
-    public load() {
+    public loadByFilter() {
+        const filterParams = {
+            ...this.buildParameters(this.config.loadingConfig.filter),
+            ...this._buildPaging(),
+            // ...this._buildFilter(this.config.ajaxConfig.filter),
+            ...this._buildSort(),
+            // ...this._buildColumnFilter(),
+            // ...this._buildFocusId(),
+            // ...this._buildSearch()
+        };
+
+        this.load(filterParams);
+    }
+
+    public load(filterParams?) {
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
-        const params = {
+
+        const params = filterParams ? filterParams : {
             ...this.buildParameters(this.config.loadingConfig.params),
             ...this._buildPaging(),
             // ...this._buildFilter(this.config.ajaxConfig.filter),
@@ -1080,8 +1095,30 @@ export class CnDataTableComponent extends CnComponentBase
 
 
 
-    public executeCheckedRows() {
-        console.log(this.config.id + '-------------executeCheckedRows');
+    public async executeCheckedRows(option) {
+        console.log(this.config.id + '-------------executeCheckedRows', option);
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        const paramData = this._createCheckedRowsParameter(ajaxParams);
+        console.log('executeCheckedRows params', paramData);
+        const result = await this._executeAjax(option, paramData);
+        return result;
+    }
+
+    private _createCheckedRowsParameter(ajaxParams) {
+        const params = [];
+        if (this.ROWS_CHECKED.length > 0) {
+            this.ROWS_CHECKED.map(cr => {
+                const p = ParameterResolver.resolve({
+                    params: ajaxParams,
+                    checkedItem: cr,
+                    tempValue: this.tempValue,
+                    initValue: this.initValue,
+                    cacheValue: this.cacheValue
+                });
+                params.push(p);
+            });
+        }
+        return params;
     }
 
     public async executeCheckedRowsIds(option) {
@@ -1152,9 +1189,9 @@ export class CnDataTableComponent extends CnComponentBase
      * @param option 
      */
     public showCheckedItems(option: any) {
-        this.confirm(option.dialog, () => { this.executeCheckedRows() })
+        this.confirm(option.dialog, () => { this.executeCheckedRows(option) })
     }
-
+    0
     /**
      * 显示表单对话框
      * @param option 配置参数

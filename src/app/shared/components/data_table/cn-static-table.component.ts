@@ -147,12 +147,13 @@ export class CnStaticTableComponent extends CnComponentBase
                     "type": "select",
                     "field": "type",
                     // "placeholder": "请输入",
-                    "defaultValue": 1,
+                    "defaultValue": "insert",
                     "options": [
                         { "label": '新增', "value": "insert" },
                         { "label": '修改', "value": "update" },
                         { "label": '删除', "value": "delete" },
-                        { "label": '查询', "value": "select" }
+                        { "label": '查询', "value": "select" },
+                        { "label": '查询并删除', "value": "sele_dele" }
                     ],
                     "labelName": 'label',
                     "valueName": 'value',
@@ -858,6 +859,24 @@ export class CnStaticTableComponent extends CnComponentBase
 
         ],
         "ajaxConfig": [
+            {
+                "id": "loadResourceValue",
+                "url": "sd/GET_DM_SQL_DROPDOWN_LIST/query",
+                "ajaxType": "get",
+                "params": [
+                    {
+                        "name": "_mapToObject",
+                        "type": "value",
+                        "value": true
+                    },
+                    {
+                        "name": "id",
+                        "type": "componentValue",
+                        "valueName": "value",
+                        "value": "null"
+                    }
+                ]
+            }
         ],
         "beforeTrigger": [
             {
@@ -995,6 +1014,8 @@ export class CnStaticTableComponent extends CnComponentBase
 
     // 前置条件集合
     public beforeOperation;
+
+    private _ajaxConfigObj: any = {};
     constructor(
         @Inject(BSN_COMPONENT_SERVICES)
         public componentService: ComponentServiceProvider
@@ -1011,6 +1032,10 @@ export class CnStaticTableComponent extends CnComponentBase
 
         // 初始化默认分页大小
         this.config.pageSize && (this.pageSize = this.config.pageSize);
+
+        this.config.ajaxConfig.forEach(ajax => {
+            this._ajaxConfigObj[ajax.id] = ajax;
+        });
 
         // 构建表格列及列标题
         this._buildColumns(this.config.columns);
@@ -1106,6 +1131,22 @@ export class CnStaticTableComponent extends CnComponentBase
         if (Array.isArray(columns) && columns.length > 0) {
             const colObjs = columns.filter(item => item.type === 'field');
             const actionCfgs = columns.filter(item => item.type === 'action');
+
+            colObjs.forEach(col => {
+                if (col.editor) {
+                    if (col.editor.loadingConfig) {
+                        col.editor['loadingConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.loadingConfig.id];
+                    }
+                    if (col.editor.loadingItemConfig) {
+                        col.editor['loadingItemConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.loadingItemConfig.id];
+                    }
+                    if (col.editor.expandConfig) {
+                        col.editor['expandConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.expandConfig.id];
+                    }
+
+                }
+            });
+
             if (actionCfgs && actionCfgs.length > 0) {
                 actionCfgs.map(cfg => {
                     const colActions = [];
@@ -1151,6 +1192,47 @@ export class CnStaticTableComponent extends CnComponentBase
 
     public getAddedNewRowsData() {
         return this.ROWS_ADDED;
+
+    }
+
+    public loadStaticData(data) {
+        this._initComponentData();
+        if (data && Array.isArray(data) && data.length > 0) {
+
+            data.map((d, index) => {
+                this.mapOfDataState[d[this.KEY_ID]] = {
+                    disabled: false,
+                    checked: false, // index === 0 ? true : false,
+                    selected: false, // index === 0 ? true : false,
+                    state: 'edit',
+                    data: d,
+                    originData: { ...d },
+                    validation: true,
+                    actions: this.getRowActions('edit')
+                };
+                if (!this.config.isSelected) {
+                    index === 0 && (this.ROW_SELECTED = d);
+                } else {
+                    if (d[this.KEY_ID] === this.selectedRowValue) {
+                        this.ROW_SELECTED = d
+                    }
+                }
+
+                // formCascade
+                this.formCascade[d[this.KEY_ID]] = d;
+
+            });
+
+            this.dataList = data;
+            this.total = data.length;
+            // 更新
+            // this.dataCheckedStatusChange();
+            // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
+            // this.dataList.length > 0 && this.setSelectRow(this.ROW_SELECTED);
+
+            this.setSelectRow(this.ROW_SELECTED);
+            this.isLoading = false;
+        }
 
     }
 
@@ -1366,7 +1448,7 @@ export class CnStaticTableComponent extends CnComponentBase
     // #region state 状态切换
     private createNewRowData() {
         const newData = {}
-        this.config.columns.map(col => {
+        this.config.columns.filter(c => c.type !== 'action').map(col => {
             newData[col.field] = null
         });
         return newData;
@@ -1391,6 +1473,10 @@ export class CnStaticTableComponent extends CnComponentBase
             state: 'new',
             actions: this.getRowActions('new')
         }
+
+
+        // formCascade
+        this.formCascade[newId] = newData;
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
 

@@ -30,11 +30,12 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
     // console.log('select 初始化ngOnInit=>当前表单的值',this.formGroup.value , this.config);
     // console.log('select required',this.myControl);
 
-  
+
 
   }
 
   ngAfterViewInit() {
+
     // console.log('ngAfterViewInit ==>' , this.config.field);
     if (this.config.loadingConfig) {
       // this.load();
@@ -52,8 +53,8 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
       s_value = this.valueConfig.value;
     }
 
-    if(this.state ==='new'){
-      if (this.config.hasOwnProperty('defaultValue') ) {
+    if (this.state === 'new') {
+      if (this.config.hasOwnProperty('defaultValue')) {
         if (!this.selectedValue) {
           s_value = this.config.defaultValue;
         }
@@ -61,7 +62,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
     }
 
     setTimeout(() => {
-      this.selectedValue= s_value;
+      this.selectedValue = s_value;
       this.valueChange(this.selectedValue);
     });
 
@@ -71,8 +72,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
    * valueChange
    */
   public async valueChange(v?) {
-
-    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v,count:this.count };
+    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v, count: this.count };
     if (this.selectItems.length < 1) {
       await this.load();
     }
@@ -86,7 +86,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
     console.log('select 值变化', v, this.config.field, this.selectItems);
 
     this.updateValue.emit(backValue);
-    this.count +=1;
+    this.count += 1;
   }
 
   // 构建参数-》下拉选择自加载数据

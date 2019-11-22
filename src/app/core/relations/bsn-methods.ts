@@ -39,6 +39,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     SET_SELECT_ROW: 'setSelectRow',
     CHECK_ROW: 'checkRow',
     REFRESH_AS_CHILD: 'load',
+    LOAD_BY_FILTER: 'loadByFilter',
 
     // link
     LINK: 'link',

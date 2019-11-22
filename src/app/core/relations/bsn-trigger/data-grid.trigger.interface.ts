@@ -22,7 +22,7 @@ export interface IDataGridTrigger {
     CONFIRM: string,
     CHECKED_ITEMS_IDS_CONFIRM: string,
     MESSAGE: string,
-    LOAD_REFRESH_DATA
+    LOAD_REFRESH_DATA: string,
 
     REFRESH: string,
     HIDDEN: string,
@@ -32,14 +32,15 @@ export interface IDataGridTrigger {
     DOWNLOAD: string,
     SELECT_ROW: string,
     CHECK_ROW: string,
-    REFRESH_AS_CHILD: string
+    REFRESH_AS_CHILD: string,
+    LOAD_BY_FILTER: string,
     SET_SELECT_ROW: string,
 
     LINK: string,
     LINK_TO: string,
 
     SAVE_ROW: string,
-    SAVE_ROWS: string
+    SAVE_ROWS: string,
     DELETE_CURRENT_ROW: string,
     DELETE_CHECKED_ROWS: string,
     EXECUTE_CURRENT_ROW: string,
@@ -78,9 +79,11 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     MESSAGE: 'MESSAGE',
     LOAD_REFRESH_DATA: 'LOAD_REFRESH_DATA',
 
+
     // behavior
     REFRESH: 'REFRESH',
     REFRESH_AS_CHILD: 'REFRESH_AS_CHILD',
+    LOAD_BY_FILTER: 'LOAD_BY_FILTER',
     HIDDEN: 'HIDDEN',
     SHOW: 'SHOW',
     EXPORT: 'EXPORT',

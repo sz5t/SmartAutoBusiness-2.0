@@ -61,9 +61,10 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
       }
     }
 
+    this.value = v_value;
+    this.valueChange1(this.value);
     setTimeout(() => {
-      this.value = v_value;
-      this.valueChange1(this.value);
+
     });
   }
 
@@ -154,10 +155,13 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
 
   // 构建参数-》下拉选择自加载数据
   public buildParameters(paramsCfg) {
+    const _componentValue = {};
+    _componentValue['value'] = this.value;
+    console.log(_componentValue['value']);
     return ParameterResolver.resolve({
       params: paramsCfg,
       tempValue: this.tempValue,
-      componentValue: { value: this._value }, //  组件值？返回值？级联值，需要三值参数
+      componentValue: _componentValue, //  组件值？返回值？级联值，需要三值参数
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
@@ -181,9 +185,11 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
     const params = {
       ...this.buildParameters(this.config.loadingItemConfig['ajaxConfig'].params)
     };
+
+
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     const response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
-    console.log('--da---' + this.config.field, response);
+    console.log('--da---' + this.config.field, response, params, this.value, this.config.loadingItemConfig['ajaxConfig'].params);
     if (isArray(response.data)) {
       if (response.data && response.data.length > 0) {
         const data_form = response.data;
@@ -208,6 +214,7 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
     console.log("xxx", v);
   }
   public async valueChange1(v?) {
+    console.log('select ---------- valueChange 1', v);
     //  labelName: 'provinceName',
     // valueName: 'id',
     // ,dataItem: item
@@ -224,6 +231,7 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
       }
     }
     if (this.selectedRowItem) {
+
       const labelName = this.selectedRowItem[this.config.labelName];
       if (labelName) {
         this._value = labelName;

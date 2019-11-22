@@ -355,6 +355,7 @@ export class ComponentSenderResolver {
                 return false;
             }
 
+
             const options = this.getOptionParamsObj(c.params, data, isArray);
             console.log('send message', cfg.senderId, options);
             this._componentInstance.componentService.commonRelationSubject.next(

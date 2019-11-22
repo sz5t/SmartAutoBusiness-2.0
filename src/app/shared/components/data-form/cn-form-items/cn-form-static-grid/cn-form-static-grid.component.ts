@@ -172,8 +172,11 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
 
   public async valueChange(v?) {
     console.log('表单静态表格数据：', v);
+    this.table.loadStaticData(v);
+    // this.addedRowsData = v;
+    // this.value = v;
   }
-  public  valueChangeTable(v?) {
+  public valueChangeTable(v?) {
     console.log('valueChangeTable', v);
     //  labelName: 'provinceName',
     // valueName: 'id',
