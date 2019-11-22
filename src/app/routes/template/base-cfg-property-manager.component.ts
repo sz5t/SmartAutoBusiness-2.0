@@ -2075,6 +2075,11 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                 "pname": "_CMPT_ID",
                                                                                 "cname": "_CMPT_ID",
                                                                                 "valueTo": "tempValue"
+                                                                            },
+                                                                            {
+                                                                                "pname": "_NODE_TYPE",
+                                                                                "cname": "_NODE_TYPE",
+                                                                                "valueTo": "tempValue"
                                                                             }
                                                                         ]
                                                                     }
@@ -2491,11 +2496,11 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                     "type": "componentValue",
                                                                                                     "valueName": "CODE"
                                                                                                 },
-                                                                                                {
-                                                                                                    "name": "PROPERTY_TYPE",
-                                                                                                    "type": "componentValue",
-                                                                                                    "valueName": "PROPERTY_TYPE"
-                                                                                                },
+                                                                                                // {
+                                                                                                //     "name": "PROPERTY_TYPE",
+                                                                                                //     "type": "componentValue",
+                                                                                                //     "valueName": "PROPERTY_TYPE"
+                                                                                                // },
                                                                                                 {
                                                                                                     "name": "CMPT_ID",
                                                                                                     "type": "tempValue",
@@ -2509,7 +2514,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                 {
                                                                                                     "name": "PROPERTY_TYPE",
                                                                                                     "type": "componentValue",
-                                                                                                    "valueName": "PROPERTY_TYPE"
+                                                                                                    "valueName": "TYPE"
                                                                                                 },
                                                                                                 {
                                                                                                     "name": "REF_TYPE",

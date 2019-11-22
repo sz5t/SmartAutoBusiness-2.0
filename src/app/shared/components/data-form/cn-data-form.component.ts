@@ -137,8 +137,18 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
   ngAfterViewInit(): void {
-    console.log('*******ngAfterViewInit********');
-    this.load();
+
+    const permission = this.config.formControlsPermissions.find(p => p.formState === this.config.state);
+    if (permission && permission.formStateContent) {
+      const isload = permission.formStateContent.isLoad;
+      if (isload) {
+        this.load();
+      }
+    } else {
+      this.load();
+    }
+
+
     this.FORM_VALID = this.validateForm.valid;
   }
 
@@ -155,6 +165,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // controls.forEach(control => this.validateForm.removeControl(control));
 
     this.config.formControls.forEach(Control => {
+
       if (Control.text && Control.editor) {
         if (Control.text.field === Control.editor.field) {
           f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
@@ -541,6 +552,32 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
             if (item.content.type === 'relation') {
               // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构
               // 提供 消息配置名称，发送参数组合
+              const _cascadeValue = {};
+              item.content.data['option'].forEach(ajaxItem => {
+                if (ajaxItem['type'] === 'value') {
+                  _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                }
+                if (ajaxItem['type'] === 'selectValue') {
+                  // 选中行数据[这个是单值]
+                  _cascadeValue[ajaxItem['name']] = v['value'];
+                }
+                if (ajaxItem['type'] === 'selectObjectValue') {
+                  // 选中行对象数据
+                  if (v.dataItem) {
+                    _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                  }
+                }
+                // 其他取值【日后扩展部分】
+              });
+              if (item.content.sender) {
+                new RelationResolver(this)
+                  .resolveInnerSender(
+                    item.content.sender, // 消息泪痣
+                    _cascadeValue, // 消息数据
+                    Array.isArray(_cascadeValue) // 是否数组
+                  );
+              }
+
 
             }
             if (item.content.type === 'preventCascade') {
@@ -561,6 +598,21 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     //   this.validateForm.controls[key].updateValueAndValidity();
     // }
     console.log("当前表单最新值：", this.validateForm.value);
+
+    // const msgCfg = this.config.cascade.messageSender;
+    // if (msgCfg) {
+    //   const sender = msgCfg.find(m => m.trigger === 'VALUE_CHANGE');
+    //   if (sender) {
+    //     debugger;
+    //     new RelationResolver(this)
+    //       .resolveInnerSender(
+    //         sender.sendData,
+    //         this.validateForm.value,
+    //         Array.isArray(this.validateForm.value)
+    //       );
+    //   }
+    // }
+
   }
 
 
@@ -676,6 +728,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // 构建业务对象
     // 执行异步操作
     // this.componentService.apiService.doPost();
+
     const url = execConfig.ajaxConfig.url;
     const params = this.buildParameters(execConfig.ajaxConfig.params);
     console.log(this.config.id + '-------------执行sql params:', params);
