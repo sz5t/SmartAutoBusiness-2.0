@@ -1191,7 +1191,8 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     public getAddedNewRowsData() {
-        return this.ROWS_ADDED;
+      //  return this.ROWS_ADDED;
+      return this.dataList;
 
     }
 
@@ -1219,7 +1220,7 @@ export class CnStaticTableComponent extends CnComponentBase
                 }
 
                 // formCascade
-                this.formCascade[d[this.KEY_ID]] = d;
+                this.formCascade[d[this.KEY_ID]] = {};
 
             });
 
@@ -1476,10 +1477,15 @@ export class CnStaticTableComponent extends CnComponentBase
 
 
         // formCascade
-        this.formCascade[newId] = newData;
+        setTimeout(()=>{
+            this.formCascade[newId] = {};
+        });
+     
+        
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
 
+        console.log('+++++++++++新增行后的数据+++++++++++',this.dataList, this.mapOfDataState);
         // 更新状态
     }
 
