@@ -1,5 +1,3 @@
-<p>cn-grid-switch works!</p>
-
 
 <nz-switch
 [(ngModel)]="value" 
@@ -7,5 +5,5 @@
 [nzCheckedChildren]="checkedTemplate"
 [nzUnCheckedChildren]="unCheckedTemplate"
 ></nz-switch>
-<ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
-<ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+<ng-template #checkedTemplate><i nz-icon nzType="check"></i>{{this.selectOptions['check']['lable']?this.selectOptions['check']['lable']:''}}</ng-template>
+<ng-template #unCheckedTemplate><i nz-icon nzType="close"></i>{{this.selectOptions['close']['lable']?this.selectOptions['close']['lable']:''}}</ng-template>

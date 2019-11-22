@@ -3,7 +3,7 @@
     <nz-descriptions nzTitle="" nzBordered [nzLayout]="'horizontal'" [nzSize]="'default'" [nzColumn]="{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }">
         <ng-container *ngFor="let c of config.objectJson">
             <nz-descriptions-item [nzTitle]="c.title" nzSpan="2">
-                <ng-container *ngIf="c.type === 'ARRAY'&& dataList" CnAttributeItemDirective [state]="'edit'" [changeValue]="changeValue" [config]="c.editor"  [attributeConfig] = "c.array" [valueConfig]="{'id':'','value':''}" >
+                <ng-container *ngIf="c.type === 'ARRAY'&& dataList" CnAttributeItemDirective [state]="'edit'" [changeValue]="changeValue" [config]="c.editor"  [attributeConfig] = "c.array" [valueConfig]="{'id':'','value':''}" [loadConfigValue]="objectCompont">
                     <!-- <nz-input-group [nzAddOnAfterIcon]="'setting'"   style="width: 100%">
                         <input type="text" nz-input [(ngModel)]="inputValue" />
                       </nz-input-group> -->
@@ -31,7 +31,7 @@
 
       <ng-container   CnAttributeItemDirective [state]="'edit'" [changeValue]="changeValue"
       [config]="{  type: 'AttributeTableForm',keyId:config.keyId, field: 'params',columns:config.arrayJson.objectJson}" 
-       [attributeConfig] = "config.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
+       [attributeConfig] = "config.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)"  [loadConfigValue]="loadConfigValue">
         </ng-container>
    
   </ng-container>

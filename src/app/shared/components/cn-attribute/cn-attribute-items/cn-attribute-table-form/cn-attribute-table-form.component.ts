@@ -3,6 +3,8 @@ import { CnAttributeFormComponent } from '@shared/components/cn-attribute/cn-att
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { CnAttributeTableComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-table/cn-attribute-table.component';
+import { CnAttributeItemDirective } from '@shared/components/cn-attribute/cn-attribute-item.directive';
 
 @Component({
   selector: 'cn-attribute-table-form,[cn-attribute-table-form]',
@@ -13,8 +15,10 @@ export class CnAttributeTableFormComponent  extends CnComponentBase  implements 
   @Input() public config;
   @Input() public attributeConfig;
   @Input() public changeValue;
+  @Input() public loadConfigValue;
 
   @ViewChild('AttributeForm',{ static: false})  public AttributeForm: CnAttributeFormComponent;
+  @ViewChild('AttributeTable',{ static: false})  public AttributeTable: CnAttributeTableComponent;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
@@ -87,6 +91,12 @@ export class CnAttributeTableFormComponent  extends CnComponentBase  implements 
 
     this. AttributeForm.changData(d);
 
+  }
+
+  public changeData_formTotable(d?) {
+
+    this. AttributeTable.changeData(d);
+  
   }
 
 

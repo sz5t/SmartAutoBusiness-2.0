@@ -29,6 +29,8 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit,Af
   // @ViewChildren(ChildComponent) componentChildList: QueryList<ChildComponent>; // 获取所有的
 
   public modelstyle={'min-height':(window.document.body.clientHeight-160).toString()+'px'};
+
+  public modelstyle1={'max-height':(window.document.body.clientHeight-90).toString()+'px','overflow':'auto'};
   public _componentValue={};
   constructor(
     @Inject(BSN_COMPONENT_SERVICES)

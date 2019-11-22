@@ -59,14 +59,20 @@
 <div nz-row>
     <div nz-col nzSpan="12">
         <nz-card [nzBordered]="true" nzTitle="数组列表">
-            <ng-container CnAttributeItemDirective [state]="'edit'" [config]="{  type: 'AttributeTable',keyId:config.keyId, field: 'params',columns:config.columns}"
+            <!-- <ng-container #AttributeTable CnAttributeItemDirective [state]="'edit'" [config]="{  type: 'AttributeTable',keyId:config.keyId, field: 'params',columns:config.columns}"
             [changeValue]="changeValue" [attributeConfig]="attributeConfig" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)"  (execOperation)="changeData($event)" [typeConfig]="{'componentType':'table_from'}">
-            </ng-container>
+            </ng-container> -->
+
+             <div #AttributeTable cn-attribute-table  [config]="{  type: 'AttributeTable',keyId:config.keyId, field: 'params',columns:config.columns}"
+            [changeValue]="changeValue"   [loadConfigValue]="loadConfigValue" [attributeConfig]="attributeConfig"  (updateValue)="valueChange($event)"  (execOperation)="changeData($event)" [typeConfig]="{'componentType':'table_from'}">
+            </div>
+
+            
             </nz-card>
     </div>
     <div nz-col nzSpan="12">
 
-        <div #AttributeForm cn-attribute-form  [changeValue]="changeValue" [config]="attributeConfig" [typeConfig]="{'componentType':'table_from'}" ></div>
+        <div #AttributeForm cn-attribute-form  [changeValue]="changeValue" [config]="attributeConfig" [typeConfig]="{'componentType':'table_from'}"   (execOperation)="changeData_formTotable($event)"></div>
 
     </div>
 </div>

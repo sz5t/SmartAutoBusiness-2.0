@@ -102,6 +102,13 @@ import { CnGridRangePickerComponent } from './components/data_table/cn-grid-item
 import { CnGridCustomSelectComponent } from './components/data_table/cn-grid-items/cn-grid-custom-select/cn-grid-custom-select.component';
 import { CnGridCodeEditComponent } from './components/data_table/cn-grid-items/cn-grid-code-edit/cn-grid-code-edit.component';
 import { CnGridTextareaComponent } from './components/data_table/cn-grid-items/cn-grid-textarea/cn-grid-textarea.component';
+import { CfgAttributeComponent } from './config-components/config-attribute/cfg-attribute/cfg-attribute.component';
+import { CfgAttributeFormComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-form/cfg-attribute-form.component';
+import { CfgAttributeTableComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-table/cfg-attribute-table.component';
+import { CfgAttributeObjectComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-object/cfg-attribute-object.component';
+import { CfgAttributeArrayComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-array/cfg-attribute-array.component';
+import { CfgAttributeTableFormComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-table-form/cfg-attribute-table-form.component';
+import { CfgAttributeItemDirective } from '@shared/config-components/config-attribute/cfg-attribute/cfg-attribute-item.directive';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -190,6 +197,12 @@ const COMPONENTS = [
     CnGridCustomSelectComponent,
     CnGridCodeEditComponent,
     CnGridTextareaComponent,
+    CfgAttributeComponent,
+    CfgAttributeFormComponent,
+    CfgAttributeTableComponent,
+    CfgAttributeObjectComponent,
+    CfgAttributeArrayComponent,
+    CfgAttributeTableFormComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -199,7 +212,8 @@ const DIRECTIVES = [
   CfgLayoutItemContentDirective,
   CnFormItemDirective,
   CnGridItemDirective,
-  CnAttributeItemDirective
+  CnAttributeItemDirective,
+  CfgAttributeItemDirective
 ];
 // #endregion
 
@@ -222,6 +236,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
+
     
 
 

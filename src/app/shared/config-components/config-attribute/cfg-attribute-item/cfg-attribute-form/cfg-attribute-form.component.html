@@ -1,0 +1,28 @@
+
+<!-- 表单 弹出 数组、对象 ，参数是 数组对象的父节点，ParentType  父节点  1 父节点，2.自身节点  -->
+
+
+<ng-container *ngIf="config.jsonType==='object'">
+    <nz-descriptions nzTitle="" nzBordered [nzLayout]="'horizontal'" [nzSize]="'default'" [nzColumn]="{ xxl: 2, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }">
+        <ng-container *ngFor="let c of config.objectJson">
+            <nz-descriptions-item [nzTitle]="c.title" nzSpan="2">
+                <ng-container *ngIf="c.type === 'ARRAY'&& dataList" CfgAttributeItemDirective [state]="'edit'" [changeValue]="changeValue" [config]="c.editor"  [attributeConfig] = "c.array" [valueConfig]="{'id':'','value':''}" [initData]="dataListObj[c.field]">
+                </ng-container>
+                <ng-container *ngIf="c.type === 'OBJECT'&& dataList" CfgAttributeItemDirective [state]="'edit'"[changeValue]="changeValue" [config]="c.editor"  [attributeConfig] = "c.object" [valueConfig]="{'id':'','value':''}" [initData]="dataListObj[c.field]" >
+                  </ng-container>
+             
+                <ng-container  *ngIf="!c.type && dataList" CnAttributeItemDirective [state]="'edit'"[changeValue]="changeValue" [config]="c.editor" [valueConfig]="{'id':config.keyId?config.keyId:'','value':dataList[c.field]?dataList[c.field]:null}" (updateValue)="valueChange($event)">
+                </ng-container>
+              </nz-descriptions-item>
+        </ng-container>
+
+      </nz-descriptions>
+ </ng-container>
+ <ng-container *ngIf="config.jsonType==='array'">
+
+      <ng-container   CnAttributeItemDirective [state]="'edit'" [changeValue]="changeValue"
+      [config]="{  type: 'AttributeTableForm',keyId:config.keyId, field: 'params',columns:config.arrayJson.objectJson}" 
+       [attributeConfig] = "config.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)"  [loadConfigValue]="loadConfigValue">
+        </ng-container>
+   
+  </ng-container>

@@ -1,19 +1,19 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
-import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
-import { CnComponentBase } from '@shared/components/cn-component.base';
-import { CnAttributeFormComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-form/cn-attribute-form.component';
+import { CfgAttributeFormComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-form/cfg-attribute-form.component';
 
 @Component({
-  selector: 'app-cn-attribute-array',
-  templateUrl: './cn-attribute-array.component.html',
-  styleUrls: ['./cn-attribute-array.component.less']
+  selector: 'app-cfg-attribute-object',
+  templateUrl: './cfg-attribute-object.component.html',
+  styleUrls: ['./cfg-attribute-object.component.less']
 })
-export class CnAttributeArrayComponent extends CnComponentBase  implements OnInit {
+export class CfgAttributeObjectComponent extends CnComponentBase implements OnInit {
+  @Input() public config;
   @Input() public attributeConfig;
+  @Input() public initData;
   @Input() public changeValue;
-  @Input() public loadConfigValue;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
@@ -21,7 +21,7 @@ export class CnAttributeArrayComponent extends CnComponentBase  implements OnIni
   }
 
   ngOnInit() {
-    this.setChangeValue(this.changeValue);
+    this.setChangeValue(this.cacheValue);
   }
   public setChangeValue(ChangeValues?) {
     console.log('changeValue', ChangeValues);
@@ -46,36 +46,29 @@ export class CnAttributeArrayComponent extends CnComponentBase  implements OnIni
   }
 
 
+  
   createModal(): void {
-    console.log('createModal弹出数组配置',this.loadConfigValue,this.attributeConfig,this.changeValue);
+    console.log('createModal');
     this.componentService.modalService.create({
       nzWidth: '85%',
       nzMaskClosable:false,
       nzBodyStyle: { overflow: 'auto' },
-      nzTitle: '组件数组属性',
+      nzTitle: '组件对象属性',
       //  nzContent: '',
-      nzContent: CnAttributeFormComponent,
+      nzContent: CfgAttributeFormComponent,
       nzComponentParams: {
-        config: this. attributeConfig,
+        config: this.attributeConfig,
         changeValue:this.changeValue,
-        attributeType:1,
-        loadConfigValue:this.loadConfigValue
-       //  attributeType:1
+        initData:this.initData,
+        attributeType:1
       },
       nzClosable: false,
       nzOnOk: componentInstance => {
-        console.log('OK',);
+        console.log('OK');
       
 
       }
     });
-  }
-
-
-  public arrayConfig={
-    objectJson:{
-
-    }
   }
 
 }

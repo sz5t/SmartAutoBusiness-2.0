@@ -21,7 +21,7 @@
             </div>
   </div>
     <div nz-row [nzGutter]="6">
-      <div nz-col [nzSpan]="6">
+      <div nz-col [nzSpan]="6" >
         <nz-card nzTitle="组件布局树">
 
           <cfg-tree [dataList]="ts_new"> </cfg-tree> 
@@ -64,19 +64,21 @@
           </nz-card>
       
         </div>
-        <div nz-col [nzSpan]="20" style=" height: 600px; overflow:auto;">
+        <div nz-col [nzSpan]="20"  [ngStyle]="modelstyle1">
           <cfg-layout #child1 *ngIf="c_config" [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
         </div>
       </div> 
   </ng-container>
   <ng-container *ngIf="index ===2">
         <div nz-row [nzGutter]="6">
-                <div nz-col [nzSpan]="16">
+                <div nz-col [nzSpan]="16" [ngStyle]="modelstyle1" >
                       <cfg-layout  *ngIf="c_config"  [(config)]="c_config"  [designStatus]="designStatus" (updateLayoutValue)="valueChangeLayout($event)"></cfg-layout>
                 </div>
-                <div nz-col [nzSpan]="8" style=" height: 600px; overflow:auto;">
+                <div nz-col [nzSpan]="8" [ngStyle]="modelstyle1" >
        <!--              [ngStyle]="{'max-height':(window.document.body.clientHeight-360).toString()+'px','overflow':'auto'}" -->
-                        <cn-attribute [(changeValue)]="changeValue"></cn-attribute>
+                        <!-- <cn-attribute [(changeValue)]="changeValue"></cn-attribute> -->
+
+                        <cfg-attribute  [(changeValue)]="changeValue"></cfg-attribute>
                 </div>
               </div> 
 

@@ -18,7 +18,7 @@ export class CnAttributeComponent extends CnComponentBase implements OnInit, OnD
 
   attributeType = 3;
   ngOnInit() {
-    this.setChangeValue(this.cacheValue);
+    this.setChangeValue(this.changeValue);
     this.js();
   }
   tabs = [

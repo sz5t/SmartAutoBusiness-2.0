@@ -7,15 +7,18 @@ import { CnAttributeTableComponent } from '@shared/components/cn-attribute/cn-at
 import { CnAttributePropertyGridComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-property-grid/cn-attribute-property-grid.component';
 import { CnAttributeTableFormComponent } from '@shared/components/cn-attribute/cn-attribute-items/cn-attribute-table-form/cn-attribute-table-form.component';
 import { CnGridSwitchComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-switch/cn-grid-switch.component';
+import { CfgAttributeArrayComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-array/cfg-attribute-array.component';
+import { CfgAttributeObjectComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-object/cfg-attribute-object.component';
+import { CfgAttributeTableFormComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-table-form/cfg-attribute-table-form.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnGridInputComponent,
   select: CnGridSelectComponent,
-  AttributeObject:CnAttributeObjectComponent,
-  AttributeArray:  CnAttributeArrayComponent,
+  AttributeObject:CfgAttributeObjectComponent,
+  AttributeArray:  CfgAttributeArrayComponent,
   AttributeTable:CnAttributeTableComponent,
   AttributePropertyGrid:CnAttributePropertyGridComponent,
-  AttributeTableForm:CnAttributeTableFormComponent,
+  AttributeTableForm:CfgAttributeTableFormComponent,
   switch:CnGridSwitchComponent,
   // label: ,
   // selectMultiple:,
@@ -34,11 +37,12 @@ const components: { [type: string]: Type<any> } = {
   // customSelect: ,
 };
 @Directive({
-  selector: '[CnAttributeItemDirective]'
+  selector: '[CfgAttributeItemDirective]'
 })
-export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
+export class CfgAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
   @Input() public config;
   @Input() public attributeConfig;
+  @Input() public initData;
   @Input() public formCascade;
   @Input() public state;
   @Input() public valueConfig;
@@ -82,6 +86,7 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
     this.component.instance.typeConfig = this.typeConfig;
     this.component.instance.changeValue = this.changeValue;
     this.component.instance.attributeType = this.attributeType;
+    this.component.instance.initData= this.initData;
     
     if(this.component.instance.hasOwnProperty('loadConfigValue') ){
       this.component.instance.loadConfigValue = this.loadConfigValue;
@@ -153,6 +158,7 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
         this.component.instance.attributeConfig = this.attributeConfig;
         this.component.instance.typeConfig = this.typeConfig;
         this.component.instance.attributeType = this.attributeType;
+        this.component.instance.initData= this.initData;
         // 级联数据接受 liu
         if (this.component.instance.updateValue) {
           this.component.instance.updateValue.subscribe(event => {
@@ -179,6 +185,15 @@ export class CnAttributeItemDirective implements OnInit, OnChanges,OnDestroy {
         this.component.instance.remoteOperation();
       }
     }
+    if (changes.hasOwnProperty('initData')) {
+      if (!changes['initData'].firstChange) { // 处理后续变化，初始变化不处理
+
+        this.component.instance.initData = this.initData;
+     
+      }
+    }
+
+    
 
   }
   // Angular定义SimpleChanges类构造函数三个参数分别为上一个值，当前值和是否第一次变化(firstChange: boolean)，这些changes都可以调用。

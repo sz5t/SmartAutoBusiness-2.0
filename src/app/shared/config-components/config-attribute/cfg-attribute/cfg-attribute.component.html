@@ -1,0 +1,24 @@
+
+
+<nz-collapse>
+    <nz-collapse-panel *ngFor="let panel of M1_config" [nzHeader]="panel.name" [nzActive]="panel.active" [nzDisabled]="panel.disabled">
+      <p style="margin:0;" *ngIf="panel.panelsform">
+         <ng-container *ngIf="panel.panelsform.jsonType==='object'">
+           
+            <div cfg-attribute-form [config]="panel.panelsform"  [changeValue]="changeValue"  [initData]="PROPERTY[panel['keyId']]"></div>
+
+            
+         </ng-container>
+         <ng-container *ngIf="panel.panelsform.jsonType==='array'">
+            <!-- <ng-container   CnAttributeItemDirective [state]="'edit'"  [attributeType]="attributeType" [changeValue]="changeValue" [config]="{  type: 'AttributeTable', keyId:panel.panelsform.keyId, field: 'params',columns:panel.panelsform.arrayJson.objectJson}"  [attributeConfig] = "panel.panelsform.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)">
+              </ng-container> -->
+              <div cfg-attribute-table [config]="{  type: 'AttributeTable', keyId:panel.panelsform.keyId, field: 'params',columns:panel.panelsform.arrayJson.objectJson}"
+              [changeValue]="changeValue"  [initData]="PROPERTY[panel['keyId']]" [attributeType]="'2'" [attributeConfig] = "panel.panelsform.arrayJson"  >
+              </div>
+
+          </ng-container>
+        
+      </p>
+    </nz-collapse-panel>
+  </nz-collapse>
+

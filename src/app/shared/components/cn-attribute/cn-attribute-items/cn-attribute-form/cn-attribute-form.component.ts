@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Inject, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Inject, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
@@ -15,7 +15,11 @@ export class CnAttributeFormComponent extends CnComponentBase implements OnInit,
   @Input() public changeValue;
   @Input() public attributeType;
   @Input() public loadConfigValue;
+  @Output() public execOperation = new EventEmitter();
   dataList:any;
+  rowData;
+  objectCompont;
+
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
@@ -157,7 +161,9 @@ export class CnAttributeFormComponent extends CnComponentBase implements OnInit,
       this.loadData =d;
       this.convertData(d);
     }
-
+    const oc = {PID:this.dataList['rowId']};
+    this.objectCompont = oc;
+    console.log('*****************', this.objectCompont, this.loadData);
 
 
   }
@@ -166,7 +172,7 @@ export class CnAttributeFormComponent extends CnComponentBase implements OnInit,
         datalistitem['rowId'] = d['keyId'];
        
     d.data.forEach(item => {
-      datalistitem[item['feild']] = item['value'] ? item['value'] : '未知';
+      datalistitem[item['feild']] = item['value'] ? item['value'] : '';
     });
 
   
@@ -177,7 +183,7 @@ export class CnAttributeFormComponent extends CnComponentBase implements OnInit,
       // this.config.objectJson.forEach(element => {
       //   element['valueConfig'] = {'id':this.config.keyId?this.config.keyId:'','value':this.dataList[element.field]?this.dataList[element.field]:null}
       // });
-    console.log('object最终数据集', d,this.dataList);
+   // console.log('object最终数据集', d,this.dataList);
 
   }
 
@@ -189,7 +195,7 @@ export class CnAttributeFormComponent extends CnComponentBase implements OnInit,
       if(d['count']>0){
       
           this.save();
-   
+          this.toTableRow(this.dataList);
       }
 
   }
@@ -240,16 +246,25 @@ export class CnAttributeFormComponent extends CnComponentBase implements OnInit,
   /**
    * 变化页面数据
    */
-  public async changData(r) {
-
-    console.log(r);
-
+  public async changData(r?) {
+   this.rowData = r;
     if(r){
       const componentValue={PID: r['rowId']};
       await this.load(componentValue);
     }else {
       this.dataList =null;
     }
+
+  }
+
+  public toTableRow(r){
+    if( this.rowData){
+      const row ={};
+      row['rowId'] =  this.rowData['rowId'];
+      const rowback ={...r,...row};
+      this.execOperation.emit(rowback);
+    }
+   
 
   }
   

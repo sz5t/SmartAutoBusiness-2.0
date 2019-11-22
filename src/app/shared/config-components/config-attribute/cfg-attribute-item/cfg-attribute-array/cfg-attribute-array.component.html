@@ -1,0 +1,7 @@
+
+<nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 100%;">
+    <input type="text" nz-input  />
+  </nz-input-group>
+  <ng-template #suffixIconButton>
+    <button nz-button nzType="primary" nzSearch (click)="createModal()"><i nz-icon nzType="setting"></i>数组</button>
+  </ng-template>
