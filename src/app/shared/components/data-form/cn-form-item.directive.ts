@@ -1,3 +1,4 @@
+import { CnFormSearchSelectComponent } from './cn-form-search-items/cn-form-search-select/cn-form-search-select.component';
 import { Directive, ComponentFactoryResolver, ViewContainerRef, Type, ComponentRef, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { CnFormInputComponent } from '@shared/components/data-form/cn-form-items/cn-form-input/cn-form-input.component';
 import { FormGroup } from '@angular/forms';
@@ -41,7 +42,8 @@ const components: { [type: string]: Type<any> } = {
   customSelect: CnFormCustomSelectComponent,
   codeEdit: CnFormCodeEditComponent,
   staticGrid: CnFormStaticGridComponent,
-  button: CnFormButtonComponent
+  button: CnFormButtonComponent,
+  searchSelect: CnFormSearchSelectComponent
 };
 @Directive({
   selector: '[CnFormItemDirective]'

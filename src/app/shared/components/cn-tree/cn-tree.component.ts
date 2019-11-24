@@ -1084,6 +1084,7 @@ export class CnTreeComponent extends CnComponentBase
     }
 
     public appendChildToSelectedNode(option) {
+        debugger;
         // let appendNode: NzTreeNode;
         const appendNodeData = {}
         this.config.columns.map(col => {

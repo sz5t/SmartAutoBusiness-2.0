@@ -590,52 +590,56 @@ export class CnStaticTableComponent extends CnComponentBase
                         {
                             "name": "text",
                             "value": true
-                        }
-                    ]
-                }
-            },
-            {
-                "id": "grid_edit",
-                "state": "text",
-                "text": "编辑",
-                "icon": "edit",
-                "color": "text-primary",
-                "type": "link",
-                "size": "small",
-                "hidden": false,
-                "execute": [
-                    {
-                        "triggerType": "STATE",
-                        "trigger": "EDIT_ROW",
-                        // "ajaxId": "add_save_1",
-                        // "stateId": "add_save_1",
-                        //  "conditionId": "edit_business_main"
-                    }
-                ],
-                "toggle": {
-                    "type": "state",
-                    "toggleProperty": "hidden",
-                    "values": [
+                        },
                         {
                             "name": "edit",
                             "value": true
-                        },
-                        {
-                            "name": "text",
-                            "value": false
                         }
                     ]
                 }
             },
+            // {
+            //     "id": "grid_edit",
+            //     "state": "text",
+            //     "text": "编辑",
+            //     "icon": "edit",
+            //     "color": "text-primary",
+            //     "type": "link",
+            //     "size": "small",
+            //     "hidden": false,
+            //     "execute": [
+            //         {
+            //             "triggerType": "STATE",
+            //             "trigger": "EDIT_ROW",
+            //             // "ajaxId": "add_save_1",
+            //             // "stateId": "add_save_1",
+            //             //  "conditionId": "edit_business_main"
+            //         }
+            //     ],
+            //     "toggle": {
+            //         "type": "state",
+            //         "toggleProperty": "hidden",
+            //         "values": [
+            //             {
+            //                 "name": "edit",
+            //                 "value": true
+            //             },
+            //             {
+            //                 "name": "text",
+            //                 "value": false
+            //             }
+            //         ]
+            //     }
+            // },
             {
                 "id": "grid_cancel",
-                "state": "text",
+                "state": "edit",
                 "text": "取消",
                 "icon": "rollback",
                 "color": "text-primary",
                 "type": "link",
                 "size": "small",
-                "hidden": true,
+                "hidden": false,
                 "execute": [
                     {
                         "triggerType": "STATE",
@@ -655,6 +659,10 @@ export class CnStaticTableComponent extends CnComponentBase
                         },
                         {
                             "name": "text",
+                            "value": true
+                        },
+                        {
+                            "name": "new",
                             "value": true
                         }
                     ]
@@ -1191,8 +1199,8 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     public getAddedNewRowsData() {
-      //  return this.ROWS_ADDED;
-      return this.dataList;
+        //  return this.ROWS_ADDED;
+        return [...this.ROWS_ADDED, ...this.ROWS_EDITED];
 
     }
 
@@ -1225,6 +1233,7 @@ export class CnStaticTableComponent extends CnComponentBase
             });
 
             this.dataList = data;
+            this.ROWS_EDITED = [...data];
             this.total = data.length;
             // 更新
             // this.dataCheckedStatusChange();
@@ -1477,19 +1486,20 @@ export class CnStaticTableComponent extends CnComponentBase
 
 
         // formCascade
-        setTimeout(()=>{
+        setTimeout(() => {
             this.formCascade[newId] = {};
         });
-     
-        
+
+
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
 
-        console.log('+++++++++++新增行后的数据+++++++++++',this.dataList, this.mapOfDataState);
+        console.log('+++++++++++新增行后的数据+++++++++++', this.dataList, this.mapOfDataState);
         // 更新状态
     }
 
     private removeEditRow(item) {
+        this.dataList = this.dataList.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
         this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
     }
 
@@ -1559,6 +1569,9 @@ export class CnStaticTableComponent extends CnComponentBase
             const itemId = option.data.data[this.KEY_ID];
             if (itemId) {
                 this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== itemId);
+
+                // 静态数据,取消编辑时,同时删除列表数据
+                this.dataList = this.dataList.filter(r => r[this.KEY_ID] !== itemId);
             }
         }
 

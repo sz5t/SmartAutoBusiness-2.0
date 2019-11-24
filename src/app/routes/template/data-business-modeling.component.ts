@@ -301,25 +301,25 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "id": "search_name"
                                                         }
                                                     },
-                                                    {
-                                                        "id": "col_2",
-                                                        "col": "cc",
-                                                        "type": "col",
-                                                        "title": "列ioj0mV",
-                                                        "span": 12,
-                                                        "layoutContain": "select",
-                                                        "size": {
-                                                            "nzXs": 24,
-                                                            "nzSm": 24,
-                                                            "nzMd": 12,
-                                                            "nzLg": 12,
-                                                            "ngXl": 12,
-                                                            "nzXXl": 12
-                                                        },
-                                                        "control": {
-                                                            "id": "search_reset"
-                                                        }
-                                                    }
+                                                    // {
+                                                    //     "id": "col_2",
+                                                    //     "col": "cc",
+                                                    //     "type": "col",
+                                                    //     "title": "列ioj0mV",
+                                                    //     "span": 12,
+                                                    //     "layoutContain": "select",
+                                                    //     "size": {
+                                                    //         "nzXs": 24,
+                                                    //         "nzSm": 24,
+                                                    //         "nzMd": 12,
+                                                    //         "nzLg": 12,
+                                                    //         "ngXl": 12,
+                                                    //         "nzXXl": 12
+                                                    //     },
+                                                    //     "control": {
+                                                    //         "id": "search_reset"
+                                                    //     }
+                                                    // }
                                                 ]
                                             }
                                         ]
@@ -375,7 +375,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "field": "name"
                                             },
                                             "editor": {
-                                                "type": "select",
+                                                "type": "searchSelect",
                                                 "field": "name",
                                                 "showSearch": true,
                                                 "serverSearch": true,
@@ -460,12 +460,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "hidden": false,
                                                     "readOnly": false
                                                 },
-                                                {
-                                                    "id": "search_reset",
-                                                    "state": "edit",
-                                                    "hidden": false,
-                                                    "readOnly": false
-                                                }
+                                                // {
+                                                //     "id": "search_reset",
+                                                //     "state": "edit",
+                                                //     "hidden": false,
+                                                //     "readOnly": false
+                                                // }
                                             ]
                                         },
                                         {
@@ -477,12 +477,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "hidden": false,
                                                     "readOnly": false
                                                 },
-                                                {
-                                                    "id": "search_reset",
-                                                    "state": "edit",
-                                                    "hidden": false,
-                                                    "readOnly": false
-                                                }
+                                                // {
+                                                //     "id": "search_reset",
+                                                //     "state": "edit",
+                                                //     "hidden": false,
+                                                //     "readOnly": false
+                                                // }
                                             ]
                                         },
                                         {
@@ -494,12 +494,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "hidden": false,
                                                     "readOnly": false
                                                 },
-                                                {
-                                                    "id": "search_reset",
-                                                    "state": "edit",
-                                                    "hidden": false,
-                                                    "readOnly": false
-                                                }
+                                                // {
+                                                //     "id": "search_reset",
+                                                //     "state": "edit",
+                                                //     "hidden": false,
+                                                //     "readOnly": false
+                                                // }
                                             ]
                                         }
                                     ],
@@ -1302,7 +1302,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "titleIcon": "right-circle",
                                     "component": "cnDataTable",
                                     "keyId": "id",
-                                    "size": "middle",
+                                    "size": "small",
                                     "isBordered": true,
                                     "isFrontPagination": false,
                                     "isPagination": true,
@@ -2640,6 +2640,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     "col_3",
                                                                     "col_4",
                                                                     "col_6",
+                                                                    "col_7"
                                                                 ]
                                                             }
                                                         ]
@@ -2654,6 +2655,44 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "id": "MefhXa",
                                                             "type": "row",
                                                             "cols": [
+                                                                {
+                                                                    "id": "col_4",
+                                                                    "col": "cc",
+                                                                    "type": "col",
+                                                                    "title": "列iHspYn",
+                                                                    "span": 24,
+                                                                    "layoutContain": "select",
+                                                                    "size": {
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 24,
+                                                                        "nzLg": 24,
+                                                                        "ngXl": 24,
+                                                                        "nzXXl": 24
+                                                                    },
+                                                                    "control": {
+                                                                        "id": "res_type"
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "id": "col_7",
+                                                                    "col": "cc",
+                                                                    "type": "col",
+                                                                    "title": "列iHspYn",
+                                                                    "span": 24,
+                                                                    "layoutContain": "select",
+                                                                    "size": {
+                                                                        "nzXs": 24,
+                                                                        "nzSm": 24,
+                                                                        "nzMd": 24,
+                                                                        "nzLg": 24,
+                                                                        "ngXl": 24,
+                                                                        "nzXXl": 24
+                                                                    },
+                                                                    "control": {
+                                                                        "id": "res_refResourceName"
+                                                                    }
+                                                                },
                                                                 {
                                                                     "id": "col_2",
                                                                     "col": "cc",
@@ -2690,25 +2729,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     },
                                                                     "control": {
                                                                         "id": "res_cascade_del"
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "id": "col_4",
-                                                                    "col": "cc",
-                                                                    "type": "col",
-                                                                    "title": "列iHspYn",
-                                                                    "span": 24,
-                                                                    "layoutContain": "select",
-                                                                    "size": {
-                                                                        "nzXs": 24,
-                                                                        "nzSm": 24,
-                                                                        "nzMd": 24,
-                                                                        "nzLg": 24,
-                                                                        "ngXl": 24,
-                                                                        "nzXXl": 24
-                                                                    },
-                                                                    "control": {
-                                                                        "id": "res_type"
                                                                     }
                                                                 },
                                                                 {
@@ -2826,6 +2846,61 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                             "type": "input",
                                                             "field": "refResourceKeyName",
                                                             "placeholder": "请输入..."
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "res_refResourceName",
+                                                        "hidden": false,
+                                                        "title": "资源名称",
+                                                        "titleConfig": {
+                                                            "required": true
+                                                        },
+                                                        "field": "refResourceName",
+                                                        "labelSize": {
+                                                            "span": 3,
+                                                            "nzXs": 3,
+                                                            "nzSm": 3,
+                                                            "nzMd": 3,
+                                                            "nzLg": 3,
+                                                            "ngXl": 3,
+                                                            "nzXXl": 3
+                                                        },
+                                                        "controlSize": {
+                                                            "span": 18,
+                                                            "nzXs": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzSm": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzMd": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzLg": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "ngXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            },
+                                                            "nzXXl": {
+                                                                "span": 18,
+                                                                "offset": 0
+                                                            }
+                                                        },
+                                                        "state": "edit",
+                                                        "text": {
+                                                            "type": "label",
+                                                            "field": "refResourceName"
+                                                        },
+                                                        "editor": {
+                                                            "type": "input",
+                                                            "field": "refResourceName",
+                                                            "placeholder": "请输入资源..."
                                                         }
                                                     },
                                                     {
@@ -3146,6 +3221,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         },
                                                         "Controls": [
                                                             {
+                                                                "id": "res_refResourceName",
+                                                                "state": "edit",
+                                                                "hidden": false,
+                                                                "readOnly": false
+                                                            },
+                                                            {
                                                                 "id": "res_type",
                                                                 "state": "edit",
                                                                 "hidden": false,
@@ -3182,6 +3263,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "formState": "edit",
                                                         "Controls": [
                                                             {
+                                                                "id": "res_refResourceName",
+                                                                "state": "edit",
+                                                                "hidden": false,
+                                                                "readOnly": false
+                                                            },
+                                                            {
                                                                 "id": "res_type",
                                                                 "state": "edit",
                                                                 "hidden": false,
@@ -3216,6 +3303,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     {
                                                         "formState": "text",
                                                         "Controls": [
+                                                            {
+                                                                "id": "res_refResourceName",
+                                                                "state": "edit",
+                                                                "hidden": false,
+                                                                "readOnly": false
+                                                            },
                                                             {
                                                                 "id": "res_type",
                                                                 "state": "text",
@@ -3461,6 +3554,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "type": "componentValue",
                                                     "valueName": "refResourceType"
                                                 },
+                                                {
+                                                    "name": "refResourceName",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceName"
+                                                },
                                                 // {
                                                 //     "name": "parentId",
                                                 //     "type": "tempValue",
@@ -3540,6 +3638,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "valueName": "_PARENT_ID"
                                                 },
                                                 {
+                                                    "name": "refResourceName",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceName"
+                                                },
+                                                {
                                                     "name": "refResourceKeyName",
                                                     "type": "componentValue",
                                                     "valueName": "refResourceKeyName"
@@ -3617,6 +3720,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "name": "refResourceKeyName",
                                                     "type": "componentValue",
                                                     "valueName": "refResourceKeyName"
+                                                },
+                                                {
+                                                    "name": "refResourceName",
+                                                    "type": "componentValue",
+                                                    "valueName": "refResourceName"
                                                 },
                                                 {
                                                     "name": "refParentResourcePropId",
@@ -3920,15 +4028,15 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "col": "cc",
                                 "type": "col",
                                 "title": "",
-                                "span": 24,
+                                "span": 16,
                                 "container": "component",
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
-                                    "nzMd": 24,
-                                    "nzLg": 24,
-                                    "nzXl": 24,
-                                    "nzXXl": 24
+                                    "nzMd": 16,
+                                    "nzLg": 16,
+                                    "nzXl": 16,
+                                    "nzXXl": 16
                                 },
                                 "component": {
                                     "id": "view_business_object",
@@ -3937,7 +4045,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "component": "cnTreeTable",
                                     "keyId": "id",
                                     "parentKey": "parentId",
-                                    "size": "middle",
+                                    "size": "small",
                                     "isBordered": true,
                                     "isFrontPagination": false,
                                     "isPagination": true,
@@ -4119,16 +4227,38 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             "expand": false,
                                             "style": {}
                                         },
-                                        {
-                                            "title": "ACTION",
-                                            "type": "action",
-                                            "actionIds": [
-                                                "treegrid_edit", "treegrid_cancel", "treegrid_save", "treegrid_delete", "treegrid_new", "treegrid_new_cancel"
-                                            ]
-                                        }
+                                        // {
+                                        //     "title": "ACTION",
+                                        //     "type": "action",
+                                        //     "actionIds": [
+                                        //         "treegrid_edit", "treegrid_cancel", "treegrid_save", "treegrid_delete", "treegrid_new", "treegrid_new_cancel"
+                                        //     ]
+                                        // }
                                     ],
                                     "cascade": {
                                         "messageSender": [
+                                            {
+                                                "id": "refresh_sql",
+                                                "senderId": "view_business_object",
+                                                "triggerType": "BEHAVIOR",
+                                                "trigger": "SET_SELECT_ROW",
+                                                "triggerMoment": "after",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "BEHAVIOR",
+                                                        "receiverTrigger": "REFRESH_AS_CHILD",
+                                                        "params": [
+                                                            {
+                                                                "name": "_RELATION_ID",
+                                                                "type": "item",
+                                                                "valueName": "id"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
                                             {
                                                 "id": "afterAddBusinessSubObjectSuccess",
                                                 "senderId": "view_business_object",
@@ -4229,7 +4359,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "beforeSend": {},
                                                         "reveicerId": "",
                                                         "receiverTriggerType": "ACTION",
-                                                        "receiverTrigger": "REPLACE_ROW_DATA",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
                                                         "params": [
                                                             {
                                                                 "name": "id",
@@ -4946,7 +5076,251 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         }
                                     ]
                                 }
-                            }],
+                            },
+                            {
+                                "id": "r5zDHB",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 8,
+                                "container": "component",
+                                "size": {
+                                    "nzXs": 24,
+                                    "nzSm": 24,
+                                    "nzMd": 8,
+                                    "nzLg": 8,
+                                    "nzXl": 8,
+                                    "nzXXl": 8
+                                },
+                                "component": {
+                                    "id": "view_business_relation_sql",
+                                    "title": "关联SQL语句列表",
+                                    "titleIcon": "right-circle",
+                                    "component": "cnDataTable",
+                                    "keyId": "id",
+                                    "size": "small",
+                                    "isBordered": true,
+                                    "isFrontPagination": false,
+                                    "isPagination": true,
+                                    "isShowSizeChanger": true,
+                                    "showTotal": true,
+                                    "pageSize": 5,
+                                    "showCheckBox": false,
+                                    "pageSizeOptions": [10, 20, 50, 100],
+                                    "loadingOnInit": false,
+                                    "loadingConfig": {
+                                        "url": "sd/GET_SQL_LIST_BY_RELATION/query",
+                                        "method": "get",
+                                        "params": [
+                                            {
+                                                "name": "relationId",
+                                                "type": "tempValue",
+                                                "valueName": "_RELATION_ID",
+                                                "value": "-999"
+                                            },
+                                            {
+                                                "name": "_mapToObject",
+                                                "type": "value",
+                                                "value": true
+                                            }
+                                        ]
+                                    },
+                                    "columns": [
+                                        {
+                                            "title": "ID",
+                                            "type": "field",
+                                            "field": "id",
+                                            "hidden": true,
+                                            "showFilter": false,
+                                            "showSort": false,
+                                            "width": "400px",
+                                            "style": {}
+                                        },
+                                        {
+                                            "title": "资源名称",
+                                            "type": "field",
+                                            "field": "resName",
+                                            "hidden": false,
+                                            "showFilter": false,
+                                            "showSort": false,
+                                            "style": {}
+                                        },
+                                        {
+                                            "title": "资源描述",
+                                            "type": "field",
+                                            "field": "descName",
+                                            "hidden": false,
+                                            "showFilter": false,
+                                            "showSort": false,
+                                            "expand": false,
+                                            "style": {}
+                                        }
+                                    ],
+                                    "cascade": {
+                                        "messageSender": [
+                                        ],
+                                        "messageReceiver": [
+                                            {
+                                                "id": "",
+                                                "senderId": "view_business_object",
+                                                "receiveData": [
+                                                    {
+                                                        "beforeReceive": [],
+                                                        "triggerType": "BEHAVIOR",
+                                                        "trigger": "REFRESH_AS_CHILD",
+                                                        "params": [
+                                                            {
+                                                                "pname": "_RELATION_ID",
+                                                                "cname": "_RELATION_ID",
+                                                                "valueTo": "tempValue"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "condition": [
+                                        {
+                                            "id": "add_cities_state",
+                                            "state": [
+                                                {
+                                                    "type": "component",
+                                                    "valueName": "ROWS_CHECKED",
+                                                    "expression": [
+                                                        {
+                                                            "type": "property",
+                                                            "name": "length",
+                                                            "matchValue": 0,
+                                                            "match": "gt"
+                                                        },
+                                                        {
+                                                            "type": "element",
+                                                            "name": "name",
+                                                            "matchValue": "1",
+                                                            "match": "eq",
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "edit_cities_state",
+                                            "state": [
+                                                {
+                                                    "type": "component",
+                                                    "valueName": "ROWS_CHECKED",
+                                                    "expression": [
+                                                        {
+                                                            "type": "property",
+                                                            "name": "length",
+                                                            "matchValue": 0,
+                                                            "match": "gt"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "add_offices",
+                                            "state": [
+                                                {
+                                                    "type": "component",
+                                                    "valueName": "ROWS_CHECKED",
+                                                    "expression": [
+                                                        {
+                                                            "type": "property",
+                                                            "name": "length",
+                                                            "matchValue": 0,
+                                                            "match": "gt"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "component",
+                                                    "valueName": "ROWS_ADDED",
+                                                    "expression": [
+                                                        {
+                                                            "type": "property",
+                                                            "name": "length",
+                                                            "matchValue": 0,
+                                                            "match": "gt"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "edit_offices",
+                                            "state": [
+                                                {
+                                                    "type": "component",
+                                                    "valueName": "ROWS_EDITED",
+                                                    "expression": [
+                                                        {
+                                                            "type": "property",
+                                                            "name": "length",
+                                                            "matchValue": 0,
+                                                            "match": "gt"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "component",
+                                                    "valueName": "ROWS_CHECKED",
+                                                    "expression": [
+                                                        {
+                                                            "type": "property",
+                                                            "name": "length",
+                                                            "matchValue": 0,
+                                                            "match": "gt"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "cancel_edit_cities",
+                                            "state": [
+                                                {
+                                                    "type": "component",
+                                                    "valueName": "ROWS_EDITED",
+                                                    "expression": [
+                                                        {
+                                                            "type": "property",
+                                                            "name": "length",
+                                                            "matchValue": 0,
+                                                            "match": "eq"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "cancel_add_cities",
+                                            "state": [
+                                                {
+                                                    "type": "component",
+                                                    "valueName": "ROWS_ADDED",
+                                                    "expression": [
+                                                        {
+                                                            "type": "property",
+                                                            "name": "length",
+                                                            "matchValue": 0,
+                                                            "match": "eq"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+
+                                    ],
+                                    "ajaxConfig": [],
+                                    "beforeTrigger": [],
+                                    "afterTrigger": []
+                                }
+                            },
+                        ],
                         id: "3vlDRq",
                         type: "row"
                     }
