@@ -18,14 +18,14 @@ export class CnGridCodeEditComponent implements OnInit,AfterViewInit {
   _value = null;
   isSpinning = true;
   editor;
-  divstyle={width:'100%',height:'330px'};
+  divstyle={width:'100%','min-height':(window.document.body.clientHeight-260).toString()+'px'};
   constructor(
     private http: _HttpClient
   ) { }
 
   ngOnInit() {
    if( this.config.height){
-   this. divstyle.height = this.interpret( this.config.height);
+   this. divstyle['height'] = this.interpret( this.config.height);
    }
 
    let v_value;

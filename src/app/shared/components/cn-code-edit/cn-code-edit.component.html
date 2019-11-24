@@ -1,6 +1,14 @@
 <p>cn-code-edit works!</p>
-<div nz-row>
+<!-- <div nz-row>
     <div nz-col [nzSpan]='24'>
             <textarea #CodeMirror name="code"></textarea>
     </div>
-</div>
+</div> -->
+
+<nz-spin [nzSpinning]="isSpinning" [nzDelay]="300">
+        <div style="border:1px solid #d9d9d9;border-radius: 4px; width:100%; ">
+           
+                <textarea #CodeMirror name="code"  [ngStyle]="divstyle"></textarea> 
+                <div style="height: 3px;"></div>
+            </div>
+ </nz-spin>

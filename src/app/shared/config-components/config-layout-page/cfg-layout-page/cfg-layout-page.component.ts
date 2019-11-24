@@ -5,6 +5,7 @@ import { ComponentServiceProvider } from '@core/services/component/component-ser
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 import { isArray } from 'util';
 import { CfgLayoutComponent } from '@shared/config-components/config-layout/cfg-layout/cfg-layout.component';
+import { CnCodeEditComponent } from '@shared/components/cn-code-edit/cn-code-edit.component';
 
 @Component({
   selector: 'cfg-layout-page,[cfg-layout-page]',
@@ -310,6 +311,43 @@ public setChangeValue(ChangeValues?) {
     }
 
 
+  //  PROCEDURE B_P_C_CONFIG_PAGE
+  
+  loadingPageJson = {
+    "url": "sd/B_P_C_CONFIG_PAGE/procedure",  // operation 操作 query
+    "ajaxType": "post",
+    "params": [
+      {
+        "name": "PageId",
+        "type": "tempValue",
+        "valueName": "ID"
+      }
+    ],
+    "filter": [
+
+    ]
+  }
+
+  PageJson;
+  public async loadPageJson() {
+    const url = this.loadingPageJson.url;
+    const method = this.loadingPageJson.ajaxType;
+    const params = {
+      ...this.buildParameters(this.loadingPageJson.params)
+    };
+    // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+    const response = await this.componentService.apiService.post(url, params).toPromise();
+   // console.log("页面组件编辑配置加载", response.data);
+
+    if (response.data._procedure_resultset_1[0]['W'] === "") {
+     this.PageJson =null;
+    }
+    else {
+
+       this.PageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+    }
+    console.log('表格的配置生成如下：', this.PageJson);
+  }
 
 /**
  * execSaveComponentJson 保存组件结构
@@ -342,6 +380,35 @@ public setChangeValue(ChangeValues?) {
 
     }
 
+    // 导出当前页json
+    public async DOWN_JSON(){
+      await this.loadPageJson();
+      console.log('++++++++++++++++++++++');
+      console.log('当前页配置：', this.PageJson);
+      this.componentService.modalService.create({
+        nzWidth: '85%',
+        nzMaskClosable:false,
+        nzBodyStyle: { overflow: 'auto' },
+        nzTitle: '组件数组属性',
+        nzContent: CnCodeEditComponent,
+        nzComponentParams: {
+          config:{mode:"application/json", "autofocus": true,},
+          value: JSON.stringify(this.PageJson) 
+      
+        },
+        nzClosable: false,
+        nzOnOk: componentInstance => {
+          console.log('OK',);
+        
+  
+        }
+      });
+      
+      console.log('++++++++++++++++++++++');
+    }
+
+
+    // CnCodeEditComponent
     
 
 }

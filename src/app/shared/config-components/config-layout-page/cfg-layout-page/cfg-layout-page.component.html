@@ -92,6 +92,9 @@
   <ng-container *ngIf="index ===3">
       <div nz-row [nzGutter]="6">
               <div nz-col [nzSpan]="24" [ngStyle]="modelstyle1" >
+                  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="导出json" (click)="DOWN_JSON()" nz-tooltip>
+                      <i nz-icon type="download"></i>导出JSON</button>
+              
                     <cfg-layout  *ngIf="c_config"  [(config)]="c_config"  [designStatus]="designStatus"></cfg-layout>
               </div>
             </div> 
