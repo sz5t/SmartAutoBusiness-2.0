@@ -1,24 +1,61 @@
 
-<nz-table #basicTable [nzData]="listOfData">
+
+
+<ng-container *ngIf="componentConfig">
+  
+  <nz-table #dataTable  [nzData]="listOfData" >
+    <!-- 常规表头 -->
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Age</th>
-      <th>Address</th>
-      <th>Action</th>
-    </tr>
+      <tr>
+        <th nzWidth="50px" nzShowCheckbox="true"></th>
+        <ng-template ngFor let-header [ngForOf]="componentConfig.columns">
+          <th [nzWidth]="header.width" *ngIf="!header.hidden || header.hidden!=='是'" >
+            {{ header.title }}
+          </th>
+        </ng-template>
+      </tr>
+    <!-- 常规表头 -->
   </thead>
   <tbody>
-    <tr *ngFor="let data of basicTable.data">
-      <td>{{ data.name }}</td>
-      <td>{{ data.age }}</td>
-      <td>{{ data.address }}</td>
-      <td>
-        <a>Action 一 {{ data.name }}</a>
-        <nz-divider nzType="vertical"></nz-divider>
-        <a>Delete</a>
-      </td>
+    <tr *ngFor="let rowData of dataTable.data">
+      <td nzShowCheckbox="true" ></td>
+      <ng-template ngFor let-col [ngForOf]="componentConfig.columns">
+          <td *ngIf="!col.hidden || col.hidden!=='是'" ></td>
+     
+      </ng-template>
+
     </tr>
   </tbody>
+  <tfoot>
+
+
+  </tfoot>
 </nz-table>
+
+</ng-container>
+<!-- <ng-container *ngIf="!componentConfig">
+  <nz-table #basicTable [nzData]="listOfData">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.name }}</td>
+        <td>{{ data.age }}</td>
+        <td>{{ data.address }}</td>
+        <td>
+          <a>Action 一 {{ data.name }}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a>Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+  
+</ng-container> -->
 

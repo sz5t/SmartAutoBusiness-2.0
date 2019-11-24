@@ -4,6 +4,7 @@
     <nz-step nzTitle="布局设计" nzDescription="设计当前页面的布局结构."></nz-step>
     <nz-step nzTitle="组件拖拽" nzDescription="给布局上放置组件."></nz-step>
     <nz-step nzTitle="组件设置" nzDescription="设置每个组件的详细配置信息."></nz-step>
+    <nz-step nzTitle="结构预览" nzDescription="页面配置效果预览."></nz-step>
   </nz-steps>
   <nz-divider></nz-divider>
 
@@ -45,13 +46,18 @@
     <div nz-row [nzGutter]="6">
         <div nz-col [nzSpan]="4">
           <nz-card nzTitle="组件选项">
-            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'form')">
+
+              
+             <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'cnToolbar')">
+              操作组件
+            </div>
+            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'cnForm')">
               表单组件
             </div>
             <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'cnDataTable')">
               表格组件
             </div>
-            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'tree')">
+            <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'cnTree')">
               树组件
             </div>
             <div nz-card-grid [ngStyle]="gridStyle" [draggable]="is_drag" (dragstart)="f_ondragstart($event,'calendar')">
@@ -83,6 +89,13 @@
               </div> 
 
   </ng-container>
+  <ng-container *ngIf="index ===3">
+      <div nz-row [nzGutter]="6">
+              <div nz-col [nzSpan]="24" [ngStyle]="modelstyle1" >
+                    <cfg-layout  *ngIf="c_config"  [(config)]="c_config"  [designStatus]="designStatus"></cfg-layout>
+              </div>
+            </div> 
+</ng-container>
 
 </div>
 </div>

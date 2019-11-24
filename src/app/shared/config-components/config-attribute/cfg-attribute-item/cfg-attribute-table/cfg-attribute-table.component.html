@@ -3,15 +3,29 @@
     <thead>
       <tr>
 
-         <th *ngFor="let c of config.columns">{{c.title}}</th>
+         <!-- <th *ngFor="let c of config.columns">
+           {{c.title}}
+           hidden
+          </th> -->
+
+          <ng-template ngFor let-header [ngForOf]="config.columns">
+              <th  *ngIf="header.isGrid!=='hidden'">
+                {{ header.title }}
+              </th>
+            </ng-template>
         <!-- <th>操作</th> -->
       </tr>
     </thead>
     <tbody cdkDropList (cdkDropListDropped)="drop($event)">
-      <tr *ngFor="let data of dataList" cdkDrag  (click)="setSelectRow(data, $event)"
+      <tr *ngFor="let data of dataList" cdkDrag  (click)="setSelectRow(data, $event)" (dblclick)="editModal()"
       [ngClass]="{ selectedRow: data['rowSelected'] ? data['rowSelected']: false}"
       >
-            <td *ngFor="let c of config.columns">{{data[c.field]}}</td>
+      <ng-template ngFor let-col [ngForOf]="config.columns">
+          <td  *ngIf="col.isGrid!=='hidden'">
+              {{data[col.field]}}
+          </td>
+      </ng-template>
+            <!-- <td *ngFor="let c of config.columns">{{data[c.field]}}</td> -->
         <!-- <td>  <button nz-button nzType="primary"  style="width: 100%"> <i nz-icon nzType="edit" ></i></button></td> -->
       </tr>
     </tbody>

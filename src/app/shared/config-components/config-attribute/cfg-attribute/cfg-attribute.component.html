@@ -1,6 +1,8 @@
 
+ <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="效果预览" (click)="previewComponent()" nz-tooltip>
+  <i nz-icon type="download"></i>效果预览</button>
 
-<nz-collapse>
+<nz-collapse nzAccordion>
     <nz-collapse-panel *ngFor="let panel of M1_config" [nzHeader]="panel.name" [nzActive]="panel.active" [nzDisabled]="panel.disabled">
       <p style="margin:0;" *ngIf="panel.panelsform">
          <ng-container *ngIf="panel.panelsform.jsonType==='object'">

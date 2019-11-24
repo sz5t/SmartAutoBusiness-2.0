@@ -6,15 +6,17 @@ import { CfgTreeComponent } from '@shared/config-components/config-layout/cfg-la
 import { CfgFormComponent } from '@shared/config-components/config-layout/cfg-layout-component/cfg-form/cfg-form.component';
 import { CfgCalendarComponent } from '@shared/config-components/config-layout/cfg-layout-component/cfg-calendar/cfg-calendar.component';
 import { CfgCarouselComponent } from '@shared/config-components/config-layout/cfg-layout-component/cfg-carousel/cfg-carousel.component';
+import { CfgToolbarComponent } from '@shared/config-components/config-layout/cfg-layout-component/cfg-toolbar/cfg-toolbar.component';
 
 const components: { [type: string]: Type<any> } = {
    input: CfgFormInputComponent,
    select: CfgFormSelectComponent,
    cnDataTable:CfgDataTableComponent,
-   tree: CfgTreeComponent,
-   form:CfgFormComponent,
+   cnTree: CfgTreeComponent,
+   cnForm:CfgFormComponent,
    calendar:CfgCalendarComponent,
-   carousel:CfgCarouselComponent
+   carousel:CfgCarouselComponent,
+   cnToolbar:CfgToolbarComponent
 };
 @Directive({
   selector: '[CfgLayoutItemContent]'

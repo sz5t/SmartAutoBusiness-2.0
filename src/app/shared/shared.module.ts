@@ -110,6 +110,7 @@ import { CfgAttributeObjectComponent } from './config-components/config-attribut
 import { CfgAttributeArrayComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-array/cfg-attribute-array.component';
 import { CfgAttributeTableFormComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-table-form/cfg-attribute-table-form.component';
 import { CfgAttributeItemDirective } from '@shared/config-components/config-attribute/cfg-attribute/cfg-attribute-item.directive';
+import { CfgToolbarComponent } from './config-components/config-layout/cfg-layout-component/cfg-toolbar/cfg-toolbar.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -215,7 +216,8 @@ const COMPONENTS = [
   CnGridCustomSelectComponent,
   CnGridCodeEditComponent,
   CnGridTextareaComponent,
-  CnFormButtonComponent
+  CnFormButtonComponent,
+  CfgToolbarComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [

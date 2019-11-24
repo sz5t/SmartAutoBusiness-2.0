@@ -10,7 +10,7 @@ import { CnComponentBase } from '@shared/components/cn-component.base';
   templateUrl: './cfg-layout-item.component.html',
   styleUrls: ['./cfg-layout-item.component.css']
 })
-export class CfgLayoutItemComponent extends CnComponentBase implements OnInit,OnDestroy {
+export class CfgLayoutItemComponent extends CnComponentBase implements OnInit, OnDestroy {
   @Input() public config;
   // public commonRelationSubject: BehaviorSubject<BsnRelativesMessageModel>;
   // public commonRelationTrigger: BehaviorSubject<BsnRelativesMessageModel>;
@@ -31,7 +31,7 @@ export class CfgLayoutItemComponent extends CnComponentBase implements OnInit,On
     } else {
       this.config = {};
     }
-    this.js() ;
+    this.js();
   }
 
   public f_ondrop(e?, d?) {
@@ -82,7 +82,7 @@ export class CfgLayoutItemComponent extends CnComponentBase implements OnInit,On
       this.fs();
     }
     // console.log('点击div', this.config);
-   
+
 
   }
 
@@ -93,14 +93,20 @@ export class CfgLayoutItemComponent extends CnComponentBase implements OnInit,On
     if (!this.subscription$) {
       this.subscription$ = this.componentService.commonRelationSubject.subscribe(
         data => {
-         //  console.log('liu 接收消息', data,this.config.id);
-          if(data.viewId === this.config.id){
+       //  console.log('liu 接收消息', data, this.config.id);
+          if (data.trigger.triggerType === "LAYOUT") {
+            if (data.trigger.trigger === "COMPONENT_SELECTED") {
+              if (data.viewId === this.config.id) {
 
-          }else {
-            if (this.modelstyle.hasOwnProperty('border')) {
-              this.modelstyle = {};
+              } else {
+                if (this.modelstyle.hasOwnProperty('border')) {
+                  this.modelstyle = {};
+                }
+              }
             }
           }
+       
+
         });
 
     }
@@ -112,14 +118,14 @@ export class CfgLayoutItemComponent extends CnComponentBase implements OnInit,On
   public fs() {
     this.componentService.commonRelationSubject.next(
       new BsnRelativesMessageModel(
-          {
-              triggerType: "LAYOUT",
-              trigger: "COMPONENT_SELECTED"
-          },
-          this.config.id,
-          this.config
+        {
+          triggerType: "LAYOUT",
+          trigger: "COMPONENT_SELECTED"
+        },
+        this.config.id,
+        this.config
       )
-  );
+    );
 
 
 

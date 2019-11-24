@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Inject } from '@angular/core';
+import { Component, OnInit, Input, Inject, OnDestroy } from '@angular/core';
 import { CnComponentBase } from '@shared/components/cn-component.base';
-import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { BSN_COMPONENT_SERVICES, BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 import { isArray } from 'util';
@@ -10,7 +10,7 @@ import { isArray } from 'util';
   templateUrl: './cfg-attribute.component.html',
   styleUrls: ['./cfg-attribute.component.less']
 })
-export class CfgAttributeComponent extends CnComponentBase  implements OnInit {
+export class CfgAttributeComponent extends CnComponentBase  implements OnInit,OnDestroy {
   @Input() public changeValue;
 
   COM_ID; // 组件id
@@ -84,6 +84,22 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit {
         });
 
     }
+  }
+  public fs() {
+    console.log("======================",this.COM_ID);
+    this.componentService.commonRelationSubject.next(
+      new BsnRelativesMessageModel(
+          {
+              triggerType: "LAYOUT",
+              trigger: "COMPONENT_LOAD_CONFIG"
+          },
+          this.COM_ID,
+          {id:this.COM_ID}
+      )
+  );
+
+
+
   }
 
   public buildParameters(paramsCfg, RcomponentValue?) {
@@ -1699,5 +1715,19 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit {
   initData={
 
   };
+
+
+  public previewComponent(){
+    console.log('预览配置组件', this.COM_ID);
+    this.fs();
+  }
+
+  public ngOnDestroy() {
+    // 释放级联对象
+    this.unsubscribeRelation();
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+  }
 
 }
