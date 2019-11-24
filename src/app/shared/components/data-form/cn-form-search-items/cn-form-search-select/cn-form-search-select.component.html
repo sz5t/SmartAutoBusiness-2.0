@@ -1,0 +1,26 @@
+<nz-form-item>
+  <nz-form-label [nzFor]="config.field" [nzSpan]="config.config.labelSize.span" [nzSm]="config.config.labelSize.nzSm"
+    [nzXs]="config.config.labelSize.nzXs" [nzMd]="config.config.labelSize.nzMd" [nzLg]="config.config.labelSize.nzLg"
+    [nzXl]="config.config.labelSize.nzXl" [nzRequired]="config.config.titleConfig.required">
+    {{config.config.title}}</nz-form-label>
+  <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm"
+    [nzXs]="config.config.controlSize.nzXs" [nzMd]="config.config.controlSize.nzMd"
+    [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl" [formGroup]="formGroup"
+    [nzErrorTip]="emailErrorTpl">
+    <nz-select [formControlName]="config.field" (ngModelChange)="valueChange($event)" nzAllowClear
+      [nzShowSearch]="config.showSearch" [nzServerSearch]="config.serverSearch" (nzOnSearch)="onSearch($event)"
+      [nzPlaceHolder]="config.placeholder">
+      <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
+        <i nz-icon nzType="loading" class="loading-icon"></i> 加载中...
+      </nz-option>
+      <nz-option *ngFor="let option of selectOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+    </nz-select>
+    <ng-template #emailErrorTpl let-control>
+      <ng-container nz-col *ngFor="let c of config.validations">
+        <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>
+      </ng-container>
+    </ng-template>
+  </nz-form-control>
+</nz-form-item>
+
+<!-- [(ngModel)]="selectedValue" -->

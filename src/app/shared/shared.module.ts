@@ -1,3 +1,4 @@
+import { CnFormSearchSelectComponent } from './components/data-form/cn-form-search-items/cn-form-search-select/cn-form-search-select.component';
 import { CnFormButtonComponent } from './components/data-form/cn-form-items/cn-form-button/cn-form-button.component';
 import { CnCalendarComponent } from './components/cn-calendar/cn-calendar.component';
 import { CnGridTagComponent } from './components/data_table/cn-grid-items/cn-grid-tag/cn-grid-tag.component';
@@ -188,23 +189,6 @@ const COMPONENTS = [
   CnStaticTableComponent,
   CnFormStaticGridComponent,
   CnGridSwitchComponent,
-    CnGridRadioComponent,
-    CnGridCheckboxComponent,
-    CnGridGridSelectComponent,
-    CnGridDatePickerComponent,
-    CnGridMonthPickerComponent,
-    CnGridWeekPickerComponent,
-    CnGridYearPickerComponent,
-    CnGridRangePickerComponent,
-    CnGridCustomSelectComponent,
-    CnGridCodeEditComponent,
-    CnGridTextareaComponent,
-    CfgAttributeComponent,
-    CfgAttributeFormComponent,
-    CfgAttributeTableComponent,
-    CfgAttributeObjectComponent,
-    CfgAttributeArrayComponent,
-    CfgAttributeTableFormComponent,
   CnGridRadioComponent,
   CnGridCheckboxComponent,
   CnGridGridSelectComponent,
@@ -218,6 +202,25 @@ const COMPONENTS = [
   CnGridTextareaComponent,
   CnFormButtonComponent,
   CfgToolbarComponent,
+  CfgAttributeComponent,
+  CfgAttributeFormComponent,
+  CfgAttributeTableComponent,
+  CfgAttributeObjectComponent,
+  CfgAttributeArrayComponent,
+  CfgAttributeTableFormComponent,
+  CnGridRadioComponent,
+  CnGridCheckboxComponent,
+  CnGridGridSelectComponent,
+  CnGridDatePickerComponent,
+  CnGridMonthPickerComponent,
+  CnGridWeekPickerComponent,
+  CnGridYearPickerComponent,
+  CnGridRangePickerComponent,
+  CnGridCustomSelectComponent,
+  CnGridCodeEditComponent,
+  CnGridTextareaComponent,
+  CnFormButtonComponent,
+  CnFormSearchSelectComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -252,7 +255,7 @@ const DIRECTIVES = [
     ...COMPONENTS,
     ...DIRECTIVES,
 
-    
+
 
 
 

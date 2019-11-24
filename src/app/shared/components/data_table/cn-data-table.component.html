@@ -26,8 +26,8 @@
     <!-- 常规表头 -->
     <ng-template #normalHeader>
       <tr>
-        <th nzWidth="50px" nzShowCheckbox="true" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
-          (nzCheckedChange)="checkAll($event)"></th>
+        <th nzWidth="50px" nzShowCheckbox="config.showCheckBox" [(nzChecked)]="isAllChecked"
+          [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-header [ngForOf]="tableColumns">
           <th [nzWidth]="header.width" *ngIf="!header.hidden" nzShowSort [nzSortKey]="header.field">
             {{ header.title }}
@@ -50,20 +50,27 @@
                 <td *ngSwitchCase="'new'">
                   <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else text" [config]="col.editor"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
-                    (updateValue)="valueChange($event)" [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
+                    (updateValue)="valueChange($event)"
+                    [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                  </ng-container>
                 </td>
                 <td *ngSwitchCase="'edit'">
-                  <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else text" [config]="col.editor"
+                  <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else text"
+                    [config]="col.editor"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
-                    (updateValue)="valueChange($event)" [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null"> </ng-container>
+                    (updateValue)="valueChange($event)"
+                    [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                  </ng-container>
                 </td>
                 <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
               </ng-container>
               <ng-container *ngIf="!col.editor">
-                <td >
+                <td>
                   <ng-container CnGridItemDirective *ngIf="col.custom; else text" [state]="'edit'" [config]="col.custom"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
-                    (updateValue)="valueChange($event)" [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null"> </ng-container>
+                    (updateValue)="valueChange($event)"
+                    [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
+                  </ng-container>
                 </td>
                 <ng-template #text>
                   {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}

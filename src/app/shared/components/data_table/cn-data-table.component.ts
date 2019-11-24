@@ -296,7 +296,10 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public loadByFilter() {
-        const filterParams = {
+        this.isLoading = true;
+        const url = this.config.loadingConfig.url;
+        const method = this.config.loadingConfig.method;
+        const params = {
             ...this.buildParameters(this.config.loadingConfig.filter),
             ...this._buildPaging(),
             // ...this._buildFilter(this.config.ajaxConfig.filter),
@@ -306,7 +309,45 @@ export class CnDataTableComponent extends CnComponentBase
             // ...this._buildSearch()
         };
 
-        this.load();
+        this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
+            if (response && response.data && response.data.resultDatas) {
+                this._initComponentData();
+                response.data.resultDatas.map((d, index) => {
+                    this.mapOfDataState[d[this.KEY_ID]] = {
+                        disabled: false,
+                        checked: false, // index === 0 ? true : false,
+                        selected: false, // index === 0 ? true : false,
+                        state: 'text',
+                        data: d,
+                        originData: { ...d },
+                        validation: true,
+                        actions: this.getRowActions('text')
+                    };
+                    if (!this.config.isSelected) {
+                        index === 0 && (this.ROW_SELECTED = d);
+                    } else {
+                        if (d[this.KEY_ID] === this.selectedRowValue) {
+                            this.ROW_SELECTED = d
+                        }
+                    }
+
+                });
+
+                this.dataList = response.data.resultDatas;
+                this.total = response.data.count;
+                // 更新
+                // this.dataCheckedStatusChange();
+                // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
+                // this.dataList.length > 0 && this.setSelectRow(this.ROW_SELECTED);
+
+                this.setSelectRow(this.ROW_SELECTED);
+                this.isLoading = false;
+            } else {
+                this.isLoading = false;
+            }
+        }, error => {
+            console.log(error);
+        });
     }
 
     public load() {
