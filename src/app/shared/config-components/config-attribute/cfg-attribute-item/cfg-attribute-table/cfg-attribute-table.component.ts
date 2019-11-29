@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CfgAttributeFormComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-form/cfg-attribute-form.component';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 
@@ -32,7 +32,11 @@ export class CfgAttributeTableComponent  extends CnComponentBase implements OnIn
     this.tempValue['ParentType'] =  this.attributeType?this.attributeType:2;
     this.setChangeValue(this.changeValue);
     console.log("table配置", this.config, this.attributeConfig,this.initData);
-
+if(!this.config){
+  this.config={};
+   this.config['columns']=[];
+}
+   
       await this.load();
     
    
@@ -61,7 +65,7 @@ export class CfgAttributeTableComponent  extends CnComponentBase implements OnIn
   }
 
   drop(event: CdkDragDrop<string[]>): void {
-   // moveItemInArray(this.listOfData, event.previousIndex, event.currentIndex);
+     moveItemInArray(this.dataList, event.previousIndex, event.currentIndex);
   }
 
   async createModal(): Promise<void> {

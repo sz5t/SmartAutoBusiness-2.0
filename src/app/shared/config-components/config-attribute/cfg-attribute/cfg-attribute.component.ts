@@ -14,6 +14,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
   @Input() public changeValue;
 
   COM_ID; // 组件id
+  CMTCODE;
   ComponentValue;
   PROPERTY = {};
   constructor(@Inject(BSN_COMPONENT_SERVICES)
@@ -61,6 +62,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
               if (data.options.component.type) {
                 if (this.COM_ID !== data.options.component.id) {
                   this.COM_ID = data.options.component.id;
+                  this.CMTCODE = data.options.component.type;
                   this.ComponentValue['CODE'] = data.options.component.type;
                   this.ComponentValue['CMTId'] =  this.COM_ID;
                  // console.log('attribute 接收消息组件标识', data.options.component.id ,  this.ComponentValue);
@@ -73,6 +75,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
                 }
                 else {
                   this.COM_ID = "";
+                  this.CMTCODE ="";
                   this.M1_config = [];
                 }
 
@@ -168,6 +171,13 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
         valueName: "CMTId",
         valueTo: "tempValue",
       };
+      const CMTCODE = {
+        name: "CMTCODE",
+        type: "item",
+        value:  this.CMTCODE ,
+        valueName: "CMTCODE",
+        valueTo: "tempValue",
+      };
       const ParentType = {
         name: "ParentType",
         type: "value",
@@ -176,6 +186,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
         valueTo: "tempValue",
       };
       let is_chang = true;
+      let is_code = true;
       
       if(!this.changeValue){
         this.changeValue=[];
@@ -185,9 +196,16 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
             element['value'] = this.COM_ID;
             is_chang =false;
            }
+           if(element.name ==='CMTCODE'){
+            element['value'] = this.CMTCODE;
+            is_code =false;
+           }
       });
       if(is_chang){
         this.changeValue = [...this.changeValue,CMTId];
+      }
+      if(is_chang){
+        this.changeValue = [...this.changeValue,CMTCODE];
       }
      
 

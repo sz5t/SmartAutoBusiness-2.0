@@ -11,7 +11,7 @@
                 <ng-container *ngIf="c.type === 'OBJECT'&& dataList" CfgAttributeItemDirective [state]="'edit'"[changeValue]="changeValue" [config]="c.editor"  [attributeConfig] = "c.object" [valueConfig]="{'id':'','value':''}" [initData]="dataListObj[c.field]" >
                   </ng-container>
              
-                <ng-container  *ngIf="!c.type && dataList" CnAttributeItemDirective [state]="'edit'"[changeValue]="changeValue" [config]="c.editor" [valueConfig]="{'id':config.keyId?config.keyId:'','value':dataList[c.field]?dataList[c.field]:null}" (updateValue)="valueChange($event)">
+                <ng-container  *ngIf="!c.type && dataList" CfgAttributeItemDirective [state]="'edit'"[changeValue]="changeValue" [config]="c.editor" [valueConfig]="{'id':config.keyId?config.keyId:'','value':dataList[c.field]?dataList[c.field]:null}" (updateValue)="valueChange($event)">
                 </ng-container>
               </nz-descriptions-item>
         </ng-container>
@@ -20,9 +20,11 @@
  </ng-container>
  <ng-container *ngIf="config.jsonType==='array'">
 
-      <ng-container   CnAttributeItemDirective [state]="'edit'" [changeValue]="changeValue"
+      <ng-container   CfgAttributeItemDirective [state]="'edit'" [changeValue]="changeValue"
       [config]="{  type: 'AttributeTableForm',keyId:config.keyId, field: 'params',columns:config.arrayJson.objectJson}" 
        [attributeConfig] = "config.arrayJson" [valueConfig]="{'id':'','value':''}" (updateValue)="valueChange($event)"  [loadConfigValue]="loadConfigValue">
         </ng-container>
    
   </ng-container>
+
+  
