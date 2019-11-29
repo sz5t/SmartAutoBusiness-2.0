@@ -113,6 +113,7 @@ import { CfgAttributeArrayComponent } from './config-components/config-attribute
 import { CfgAttributeTableFormComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-table-form/cfg-attribute-table-form.component';
 import { CfgAttributeItemDirective } from '@shared/config-components/config-attribute/cfg-attribute/cfg-attribute-item.directive';
 import { CfgToolbarComponent } from './config-components/config-layout/cfg-layout-component/cfg-toolbar/cfg-toolbar.component';
+import { CfgAttributeGridSelectComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-grid-select/cfg-attribute-grid-select.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -209,6 +210,7 @@ const COMPONENTS = [
   CfgAttributeObjectComponent,
   CfgAttributeArrayComponent,
   CfgAttributeTableFormComponent,
+  CfgAttributeGridSelectComponent,
   CnGridRadioComponent,
   CnGridCheckboxComponent,
   CnGridGridSelectComponent,

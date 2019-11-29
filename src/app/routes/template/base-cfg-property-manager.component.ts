@@ -2562,6 +2562,16 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                     "valueName": "ISFORM"
                                                                                                 },
                                                                                                 {
+                                                                                                    "name": "DEFAULT_VALUE",
+                                                                                                    "type": "componentValue",
+                                                                                                    "valueName": "DEFAULT_VALUE"
+                                                                                                },
+                                                                                                {
+                                                                                                    "name": "DATA_TYPE",
+                                                                                                    "type": "componentValue",
+                                                                                                    "valueName": "DATA_TYPE"
+                                                                                                },
+                                                                                                {
                                                                                                     "name": "SORT",
                                                                                                     "type": "componentValue",
                                                                                                     "valueName": "SORT"
@@ -2589,14 +2599,14 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                         },
                                                                                         {
                                                                                             "id": "edit_properties_data",
-                                                                                            "url": "td/SMT_BASE_CFG_PROPERTY_DFETAIL/operation",
+                                                                                            "url": "sd/EDIT_PROPERTY_DETAIL/batchOperate",
                                                                                             "urlType": "inner",
                                                                                             "ajaxType": "put",
                                                                                             "params": [
                                                                                                 {
                                                                                                     "name": "ID",
                                                                                                     "type": "componentValue",
-                                                                                                    "valueName": "ID"
+                                                                                                    "valueName": "ID",
                                                                                                 },
                                                                                                 {
                                                                                                     "name": "NAME",
@@ -2613,11 +2623,11 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                 //     "type": "componentValue",
                                                                                                 //     "valueName": "PROPERTY_TYPE"
                                                                                                 // },
-                                                                                                // {
-                                                                                                //     "name": "CMPT_ID",
-                                                                                                //     "type": "tempValue",
-                                                                                                //     "valueName": "_CMPT_ID"
-                                                                                                // },
+                                                                                                {
+                                                                                                    "name": "CMPT_ID",
+                                                                                                    "type": "tempValue",
+                                                                                                    "valueName": "_CMPT_ID"
+                                                                                                },
                                                                                                 {
                                                                                                     "name": "IS_SUB_PROPERTY",
                                                                                                     "type": "componentValue",
@@ -2638,16 +2648,16 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                     "type": "componentValue",
                                                                                                     "valueName": "STATE"
                                                                                                 },
-                                                                                                // {
-                                                                                                //     "name": "PARENT_ID",
-                                                                                                //     "type": "tempValue",
-                                                                                                //     "valueName": "_PID"
-                                                                                                // },
-                                                                                                // {
-                                                                                                //     "name": "NODE_TYPE",
-                                                                                                //     "type": "tempValue",
-                                                                                                //     "valueName": "_NODE_TYPE"
-                                                                                                // },
+                                                                                                {
+                                                                                                    "name": "PARENT_ID",
+                                                                                                    "type": "tempValue",
+                                                                                                    "valueName": "_PID"
+                                                                                                },
+                                                                                                {
+                                                                                                    "name": "NODE_TYPE",
+                                                                                                    "type": "tempValue",
+                                                                                                    "valueName": "_NODE_TYPE"
+                                                                                                },
                                                                                                 {
                                                                                                     "name": "IS_GRID",
                                                                                                     "type": "componentValue",
@@ -2659,12 +2669,22 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                     "valueName": "ISFORM"
                                                                                                 },
                                                                                                 {
+                                                                                                    "name": "DEFAULT_VALUE",
+                                                                                                    "type": "componentValue",
+                                                                                                    "valueName": "DEFAULT_VALUE"
+                                                                                                },
+                                                                                                {
+                                                                                                    "name": "DATA_TYPE",
+                                                                                                    "type": "componentValue",
+                                                                                                    "valueName": "DATA_TYPE"
+                                                                                                },
+                                                                                                {
                                                                                                     "name": "SORT",
                                                                                                     "type": "componentValue",
                                                                                                     "valueName": "SORT"
                                                                                                 }
                                                                                             ],
-                                                                                            "outputParameters": [
+                                                                                           "outputParameters": [
 
                                                                                             ],
                                                                                             "result": [
@@ -2672,18 +2692,16 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                     "name": "data",
                                                                                                     "showMessageWithNext": 0,
                                                                                                     "message": "message.ajax.state.success",
-                                                                                                    "senderId": "afterPropertyDetailUpdateSuccess"
+                                                                                                    "senderId": "afterPropertyDetailSuccess"
                                                                                                 },
-                                                                                                {
-                                                                                                    "name": "validation",
-                                                                                                    "showMessageWithNext": 0,
-                                                                                                    "message": "message.ajax.state.success",
-                                                                                                    "senderId": "afterCityUpdateValidation"
-                                                                                                },
-                                                                                                {
-                                                                                                    "name": "error",
-                                                                                                    "senderId": "toolbar_02"
-                                                                                                }
+                                                                                                // {
+                                                                                                //     "name": "validation",
+                                                                                                //     "senderId": "grid_sender_02"
+                                                                                                // },
+                                                                                                // {
+                                                                                                //     "name": "error",
+                                                                                                //     "senderId": "grid_sender_03"
+                                                                                                // }
                                                                                             ]
                                                                                         }
                                                                                     ],
@@ -3030,7 +3048,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                             "hidden": false,
                                                                                             "showFilter": false,
                                                                                             "showSort": false,
-                                                                                            "width": "100px",
+                                                                                            "width": "80px",
                                                                                             "style": {},
                                                                                             "editor": {
                                                                                                 "type": "select",
@@ -3052,7 +3070,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                             "hidden": false,
                                                                                             "showFilter": false,
                                                                                             "showSort": false,
-                                                                                            "width": "100px",
+                                                                                            "width": "80px",
                                                                                             "style": {},
                                                                                             "editor": {
                                                                                                 "type": "select",
@@ -3074,7 +3092,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                             "hidden": false,
                                                                                             "showFilter": false,
                                                                                             "showSort": false,
-                                                                                            "width": "100px",
+                                                                                            "width": "80px",
                                                                                             "style": {},
                                                                                             "editor": {
                                                                                                 "type": "select",
@@ -3087,6 +3105,46 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                 ],
                                                                                                 "labelName": 'label',
                                                                                                 "valueName": 'value'
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "title": "数据类型",
+                                                                                            "type": "field",
+                                                                                            "field": "DATA_TYPE",
+                                                                                            "hidden": false,
+                                                                                            "showFilter": false,
+                                                                                            "showSort": false,
+                                                                                            "width": "100px",
+                                                                                            "style": {},
+                                                                                            "editor": {
+                                                                                                "type": "select",
+                                                                                                "field": "DATA_TYPE",
+                                                                                                "placeholder": "请选择",
+                                                                                                "defaultValue": 'STRING',
+                                                                                                "options": [
+                                                                                                    { "label": "STRING", "value": 'STRING' },
+                                                                                                    { "label": "INT", "value": 'INT' },
+                                                                                                    { "label": "BOOL", "value": 'BOOL' },
+                                                                                                    { "label": "TEXT", "value": 'TEXT' },
+                                                                                                    { "label": "FLOAT", "value": 'FLOAT' },
+                                                                                                ],
+                                                                                                "labelName": 'label',
+                                                                                                "valueName": 'value'
+                                                                                            }
+                                                                                        },
+                                                                                        {
+                                                                                            "title": "默认值",
+                                                                                            "type": "field",
+                                                                                            "field": "DEFAULT_VALUE",
+                                                                                            "hidden": false,
+                                                                                            "showFilter": false,
+                                                                                            "showSort": false,
+                                                                                            "width": "100px",
+                                                                                            "style": {},
+                                                                                            "editor": {
+                                                                                                "type": "input",
+                                                                                                "field": "DEFAULT_VALUE",
+                                                                                                "placeholder": "请输入"
                                                                                             }
                                                                                         },
                                                                                         {
@@ -3110,7 +3168,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                             "hidden": false,
                                                                                             "showFilter": false,
                                                                                             "showSort": false,
-                                                                                            "width": "100px",
+                                                                                            "width": "80px",
                                                                                             "style": {},
                                                                                             "editor": {
                                                                                                 "type": "select",

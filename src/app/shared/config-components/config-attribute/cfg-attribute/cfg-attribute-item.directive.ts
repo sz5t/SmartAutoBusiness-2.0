@@ -10,6 +10,7 @@ import { CnGridSwitchComponent } from '@shared/components/data_table/cn-grid-ite
 import { CfgAttributeArrayComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-array/cfg-attribute-array.component';
 import { CfgAttributeObjectComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-object/cfg-attribute-object.component';
 import { CfgAttributeTableFormComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-table-form/cfg-attribute-table-form.component';
+import { CfgAttributeGridSelectComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-grid-select/cfg-attribute-grid-select.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnGridInputComponent,
@@ -20,6 +21,7 @@ const components: { [type: string]: Type<any> } = {
   AttributePropertyGrid:CnAttributePropertyGridComponent,
   AttributeTableForm:CfgAttributeTableFormComponent,
   switch:CnGridSwitchComponent,
+  gridSelect:CfgAttributeGridSelectComponent
   // label: ,
   // selectMultiple:,
   // datePicker:,

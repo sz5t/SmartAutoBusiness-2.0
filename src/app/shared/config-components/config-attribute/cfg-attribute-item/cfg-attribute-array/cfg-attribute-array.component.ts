@@ -3,7 +3,6 @@ import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { CfgAttributeTableFormComponent } from '@shared/config-components/config-attribute/cfg-attribute-item/cfg-attribute-table-form/cfg-attribute-table-form.component';
-
 @Component({
   selector: 'cfg-attribute-array,[cfg-attribute-array]',
   templateUrl: './cfg-attribute-array.component.html',
@@ -69,6 +68,4 @@ export class CfgAttributeArrayComponent extends CnComponentBase   implements OnI
       }
     });
   }
-
-
 }

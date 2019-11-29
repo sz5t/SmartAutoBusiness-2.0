@@ -1,0 +1,42 @@
+
+<input nz-input hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
+<nz-input-group [nzSuffix]="suffixTemplate" style="width: 100%">
+  <input type="text" nz-input [(ngModel)]="_value" [ngModelOptions]="{standalone: true}" nz-input
+    [placeholder]="config.placeholder" nz-dropdown [(nzVisible)]="visible" (nzVisibleChange)="VisibleChange($event)"
+    nzTrigger="click" [nzDropdownMenu]="menu1" (mouseover)="_onMouseover()" (mouseout)="_onMouseout()"
+    (blur)="_onBlur()" />
+</nz-input-group>
+<ng-template #suffixTemplate>
+
+  <i nz-icon nz-tooltip class="ant-input-clear-icon" (mouseover)="_ionMouseover()" (mouseout)="_ionMouseout()"
+    nzTheme="fill" nzType="close-circle" *ngIf="_value && _focus && !visible" (click)="valueClear()"></i>
+  <i nz-icon nz-tooltip class="ant-input-clear-icon" nzType="down" nzTheme="outline"
+    *ngIf=" (!_focus && !visible) || ( !_value && !visible )"></i>
+  <i nz-icon nz-tooltip class="ant-input-clear-icon" nzType="up" nzTheme="outline" *ngIf=" !_focus && visible"></i>
+
+</ng-template>
+<nz-dropdown-menu #menu1="nzDropdownMenu">
+  <ul nz-menu nzSelectable>
+    <li>
+      <!--nz-menu-item  [config]="tableConfig.component" -->
+      <div style="min-width: 600px;max-height: 500px; overflow:auto;">
+        <cfg-attribute-table  #table [config]= "tableConfig" [changeValue]="changeValue"  [attributeType]="'2'"  [initData]="_initData"  [attributeConfig] = "_attributeConfig" ></cfg-attribute-table>
+      </div>
+
+    </li>
+    <div class="ant-table-filter-dropdown-btns">
+      <button nz-button nzType="primary" style="float:right;margin-right: 30px;" (click)="onOk()">确定</button>
+      <button nz-button nzType="primary" style="float:right; margin-right: 30px;" (click)="onCancel()">取消</button>
+      <button nz-button nzType="primary" style="float:right;margin-right: 30px;" (click)="onRefresh()">刷新</button>
+    </div>
+  </ul>
+
+</nz-dropdown-menu>
+<ng-template #combineTpl let-control>
+  <ng-container nz-col *ngFor="let c of config.validations">
+    <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>
+  </ng-container>
+  <ng-container *ngIf="control.hasError('_subscribe')">
+    The username is redundant!
+  </ng-container>
+</ng-template>
