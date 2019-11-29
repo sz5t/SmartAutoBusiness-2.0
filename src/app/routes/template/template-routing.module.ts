@@ -1,3 +1,4 @@
+import { BaseComponentMannagerComponent } from './base-component-manager.component';
 import { PageDesignComponent } from './page-design.component';
 import { CalendarDemoComponent } from './calendar-demo.component';
 import { BaseInnerMethodManagerComponent } from './base-inner-method-manager.component';
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'calendarDemo', component: CalendarDemoComponent },
   { path: 'pageDesign', component: PageDesignComponent },
   { path: 'businessmodeling', component: DataBusinessModelingComponent },
+  { path: 'componentManager', component: BaseComponentMannagerComponent },
 ];
 
 @NgModule({

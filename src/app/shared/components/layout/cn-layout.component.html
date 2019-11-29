@@ -12,8 +12,11 @@
           <ng-container *ngSwitchCase="'pageHeader'" cnLayoutResolverDirective [config]="c.pageHeader"
             [tempData]="tempData" [initData]="initData"></ng-container>
 
-          <ng-container *ngSwitchCase="'tabs'" cnLayoutResolverDirective [config]="c.tabs" [tempData]="tempData"
-            [initData]="initData"></ng-container>
+          <nz-card *ngSwitchCase="'tabs'">
+            <ng-container cnLayoutResolverDirective [config]="c.tabs" [tempData]="tempData" [initData]="initData">
+            </ng-container>
+          </nz-card>
+
 
           <ng-container *ngSwitchCase="'layout'" cnLayoutResolverDirective [config]="c.layout" [tempData]="tempData"
             [initData]="initData">

@@ -3,7 +3,7 @@
     <span class="toolbarGroup" *ngIf="toolbar.group">
       <nz-button-group>
         <ng-template ngFor let-btn [ngForOf]="toolbar.group">
-          <button *ngIf="!btn.hidden" [nzSize]="size ? size : 'default'" [nzType]="btn.type ? btn.type : 'default'"
+          <button *ngIf="!btn.hidden" [nzSize]="size ? size : 'default'" [nzType]="btn.color ? btn.color : 'default'"
             nz-button (click)="action(btn, toolbar.targetViewId)">
             <i nz-icon *ngIf="btn.icon" [type]="btn.icon" [theme]="btn.theme ? btn.theme : 'outline'"></i>
             {{btn.text}}

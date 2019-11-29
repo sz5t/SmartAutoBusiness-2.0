@@ -1,15 +1,18 @@
 <nz-form-item>
-  <nz-form-label [nzFor]="config.field" [nzSpan]="config.config.labelSize.span" [nzSm]="config.config.labelSize.nzSm"
-    [nzXs]="config.config.labelSize.nzXs" [nzMd]="config.config.labelSize.nzMd" [nzLg]="config.config.labelSize.nzLg"
-    [nzXl]="config.config.labelSize.nzXl" [nzRequired]="config.config.titleConfig.required">
+  {{config.config.hiddenLable}}
+  <nz-form-label *ngIf="!config.config.hiddenLabel" [nzFor]="config.field" [nzSpan]="config.config.labelSize.span"
+    [nzSm]="config.config.labelSize.nzSm" [nzXs]="config.config.labelSize.nzXs" [nzMd]="config.config.labelSize.nzMd"
+    [nzLg]="config.config.labelSize.nzLg" [nzXl]="config.config.labelSize.nzXl"
+    [nzRequired]="config.config.titleConfig.required" [nzNoColon]="config.config.noColon">
     {{config.config.title}}</nz-form-label>
   <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm"
     [nzXs]="config.config.controlSize.nzXs" [nzMd]="config.config.controlSize.nzMd"
     [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl" [formGroup]="formGroup"
     [nzErrorTip]="emailErrorTpl">
-    <nz-select [formControlName]="config.field" (ngModelChange)="valueChange($event)" nzAllowClear
-      [nzShowSearch]="config.showSearch" [nzServerSearch]="config.serverSearch" (nzOnSearch)="onSearch($event)"
-      [nzPlaceHolder]="config.placeholder">
+
+    <nz-select [nzSuffixIcon]="iconSearchPrefix" [formControlName]="config.field" (ngModelChange)="valueChange($event)"
+      nzAllowClear [nzShowSearch]="config.showSearch" [nzServerSearch]="config.serverSearch"
+      (nzOnSearch)="onSearch($event)" [nzPlaceHolder]="config.placeholder">
       <nz-option *ngIf="isLoading" nzDisabled nzCustomContent>
         <i nz-icon nzType="loading" class="loading-icon"></i> 加载中...
       </nz-option>
@@ -20,6 +23,11 @@
         <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>
       </ng-container>
     </ng-template>
+
+    <ng-template #iconSearchPrefix>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+
   </nz-form-control>
 </nz-form-item>
 

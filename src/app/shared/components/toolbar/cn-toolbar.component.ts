@@ -22,17 +22,19 @@ import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
 @Component({
     // tslint:disable-next-line: component-selector
     selector: 'cn-toolbar',
-    encapsulation: ViewEncapsulation.None,
+    // encapsulation: ViewEncapsulation.None,
     templateUrl: './cn-toolbar.component.html',
     styles: [
         `
             .table-operations {
-                padding-bottom: 3px;
+               // padding-top: 3px;
+               //  padding-bottom: 3px;
             }
 
             .table-operations .ant-btn-group {
                 margin-right: 4px;
                 margin-bottom: 2px;
+                font-weight: 600;
             }
         `
     ]

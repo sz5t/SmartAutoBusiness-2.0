@@ -40,9 +40,12 @@
       </div>
     </div>
   </nz-page-header-content>
-  <nz-page-header-footer>
-    <ng-container *ngIf="headerConfig.layout" cnLayoutResolverDirective [config]="headerConfig.layout"
-      [initData]="initData" [tempData]="tempData">
-    </ng-container>
-  </nz-page-header-footer>
+  <!-- <nz-page-header-footer>
+
+  </nz-page-header-footer> -->
 </nz-page-header>
+<div nz-row class="content">
+  <ng-container *ngIf="headerConfig.layout" cnLayoutResolverDirective [config]="headerConfig.layout"
+    [initData]="initData" [tempData]="tempData">
+  </ng-container>
+</div>

@@ -1,0 +1,68 @@
+<nz-list [nzLoading]="loading" [nzDataSource]="list" [nzRenderItem]="item" [nzSize]="config.size"
+  [nzPagination]="pagination" [nzGrid]="config.gutter">
+  <ng-template #item let-item>
+    <nz-list-item>
+      <button *ngIf="item === null" nz-button (click)="msg.success('add')" [nzType]="'dashed'" nzBlock="true"
+        style="width: 100%; height: 100px;">
+        <i nz-icon nzType="plus"></i>
+        <span>新增组件</span>
+      </button>
+
+
+      <nz-card nzHoverable *ngIf="item !== null" [nzActions]="[op1, op2,op3]">
+
+        <!--操作模版-->
+        <ng-template #op1>
+          <a (click)="msg.success('操作一：' + item.id)"><i nz-icon nzType="edit"></i></a>
+        </ng-template>
+        <ng-template #op2>
+          <a (click)="msg.success('操作二：' + item.id)"><i nz-icon nzType="close-circle"></i></a>
+        </ng-template>
+        <ng-template #op3>
+          <a nz-dropdown [nzDropdownMenu]="menu">
+            <i nz-icon nzType="ellipsis"></i>
+          </a>
+          <nz-dropdown-menu #menu="nzDropdownMenu">
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item>1st menu item</li>
+              <li nz-menu-item>2nd menu item</li>
+              <li nz-menu-item>3rd menu item</li>
+            </ul>
+          </nz-dropdown-menu>
+
+        </ng-template>
+        <!--操作模版-->
+
+        <!--列表模版-->
+        <nz-card-meta [nzAvatar]="nzAvatar" [nzTitle]="nzTitle" [nzDescription]="nzDescription">
+          <ng-template #nzAvatar>
+            <nz-avatar nzSize="large" [nzSrc]="'../../../../assets/tmp/img/' + item.avatar"></nz-avatar>
+          </ng-template>
+          <ng-template #nzTitle>
+            <a>{{ item.title }}</a>
+          </ng-template>
+          <ng-template #nzDescription>
+            <ellipsis>
+              {{ item.desc }}
+            </ellipsis>
+            <div nz-row *ngIf="item.extra && item.extra.length > 0">
+              <div nz-col *ngFor="let extra of item.extra" [nzSpan]="extra.span" [ngStyle]="{'margin-bottom': '5px'}">
+                <span *ngIf="extra.label">{{extra.label}}: </span>
+                <ng-container [ngSwitch]="extra.type">
+                  <nz-tag *ngSwitchCase="'tag'" [nzColor]="extra.color">{{extra.value}}</nz-tag>
+                  <span *ngSwitchCase="'text'">{{extra.value}}</span>
+                </ng-container>
+              </div>
+            </div>
+          </ng-template>
+        </nz-card-meta>
+        <!--列表模版-->
+      </nz-card>
+
+    </nz-list-item>
+  </ng-template>
+
+  <ng-template #pagination>
+    <nz-pagination [nzTotal]="50" [nzPageSize]="5" (nzPageIndexChange)="getData()"></nz-pagination>
+  </ng-template>
+</nz-list>

@@ -12,8 +12,8 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
 
 @Component({
     // tslint:disable-next-line:component-selector
-    selector: 'base-inner-property-manager',
-    templateUrl: './base-inner-property-manager.component.html',
+    selector: 'base-component-manager',
+    templateUrl: './base-component-manager.component.html',
     styles: [
         `
             :host ::ng-deep .ant-card-head {
@@ -41,7 +41,7 @@ import { FastForwardOutline } from '@ant-design/icons-angular/icons/public_api';
         `
     ]
 })
-export class BaseInnerPropertyManagerComponent implements OnInit {
+export class BaseComponentMannagerComponent implements OnInit {
     public config = {
         "id": "4K0naM",
         "type": "pageHeader",
@@ -49,8 +49,8 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
         "container": "pageHeader",
         "pageHeader": {
             "id": "pageheader_1",
-            "title": "组件内置属性管理",
-            "subTitle": "维护组件内置属性, 为组件功能配置提供基础数据",
+            "title": "组件库",
+            "subTitle": "为系统创建并提供组件基本的维护功能",
             "tagColor": "blue",
             "tagText": "系统功能",
             "descColumnsCount": 2,
@@ -71,6 +71,2652 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                 "rows": [
                     {
                         "cols": [
+                            {
+                                "id": "4EnORY",
+                                "col": "cc",
+                                "type": "col",
+                                "titlestate": 1,
+                                "span": 24,
+                                "size": {
+                                    "nzXs": 24,
+                                    "nzSm": 24,
+                                    "nzMd": 24,
+                                    "nzLg": 24,
+                                    "ngXl": 24,
+                                    "nzXXl": 24
+                                },
+                                "container": "component",
+                                "component": {
+                                    "id": "compoment_card_list",
+                                    "component": "cnCardList",
+                                    "title": "",
+                                    "size": "middle",
+                                    "gutter": {
+                                        "gutter": 24,
+                                        "lg": 8, "md": 12, "sm": 24, "xs": 24
+                                    },
+                                    "layout": "vertical",
+                                    "cascade": {
+                                        "messageSender": [],
+                                        "messageReceiver": [
+                                            // {
+                                            //     "id": "",
+                                            //     "senderId": "view_02",
+                                            //     "receiveData": [
+                                            //         {
+                                            //             "beforeReceive": [],
+                                            //             "triggerType": "BEHAVIOR",
+                                            //             "trigger": "REFRESH_AS_CHILD",
+                                            //             "params": [
+                                            //                 {
+                                            //                     "pname": "_ID",
+                                            //                     "cname": "_ID",
+                                            //                     "valueTo": "tempValue"
+                                            //                 }
+                                            //             ]
+                                            //         }
+                                            //     ]
+                                            // },
+                                        ]
+                                    },
+                                    "loadingOnInit": true,
+                                    "loadingConfig": {
+                                        "id": "loadingComponentList"
+                                    },
+                                    "actions": [
+                                        {
+                                            "title": "编辑",
+                                            "icon": "edit",
+                                            "execute": [
+                                                {
+                                                    "triggerType": "ACTION",
+                                                    "trigger": "DIALOG",
+                                                    // "conditionId": "add_state_1"
+                                                    "dialogId": "form_component",
+                                                    "ajaxId": "tree_add_component"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "title": "删除",
+                                            "icon": "remove",
+                                            "execute": [
+                                                {
+                                                    "triggerType": "ACTION",
+                                                    "trigger": "DIALOG",
+                                                    // "conditionId": "add_state_1"
+                                                    "dialogId": "form_component",
+                                                    "ajaxId": "tree_add_component"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "title": "启用/禁用",
+                                            "icon": "cancel",
+                                            "execute": [
+                                                {
+                                                    "triggerType": "ACTION",
+                                                    "trigger": "DIALOG",
+                                                    // "conditionId": "add_state_1"
+                                                    "dialogId": "form_component",
+                                                    "ajaxId": "tree_add_component"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "ajaxConfig": [
+                                        {
+                                            "id": "loadingComponentList",
+                                            "url": "sd/GET_COMPONENT_LIST/query",
+                                            "method": "get",
+                                            "params": [
+                                                // {
+                                                //     "name": "ID",
+                                                //     "type": "tempValue",
+                                                //     "valueName": "_ID"
+                                                // },
+                                                // {
+                                                //     "name": "_onlyOneObject",
+                                                //     "type": "value",
+                                                //     "value": true
+                                                // }
+                                            ],
+                                            "filter": [
+
+                                            ]
+                                        }
+                                    ],
+                                    "dataMapping": [
+                                        {
+                                            "name": "title",
+                                            "field": "NAME"
+                                        },
+                                        {
+                                            "name": "avatar",
+                                            "field": "AVANTA"
+                                        },
+                                        {
+                                            "name": "desc",
+                                            "field": "REMARK"
+                                        },
+                                        {
+                                            "name": "extra",
+                                            "fields": [
+                                                {
+                                                    "label": "组件编码",
+                                                    "field": "CODE",
+                                                    "type": "tag",
+                                                    "color": "#2db7f5",
+                                                    "span": 12
+                                                },
+                                                {
+                                                    "label": "组件类型",
+                                                    "field": "TYPE_TEXT",
+                                                    "type": "tag",
+                                                    "color": "purple",
+                                                    "span": 12
+                                                },
+                                                {
+                                                    "label": "版本编号",
+                                                    "field": "VERSION",
+                                                    "type": "tag",
+                                                    "color": "#2db7f5",
+                                                    "span": 12
+                                                },
+                                                {
+                                                    "label": "组件状态",
+                                                    "type": "tag",
+                                                    "color": "green",
+                                                    "field": "STATE_TEXT",
+                                                    "span": 12
+                                                },
+                                                {
+                                                    "label": "创建日期",
+                                                    "field": "CREATE_DATE",
+                                                    "type": "text",
+                                                    "span": 12
+                                                }
+                                            ]
+                                        }
+
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "r5zDHB2-1",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "通用步骤条",
+                                "span": 24,
+                                "container": "component",
+                                "size": {
+                                    "nzXs": 24,
+                                    "nzSm": 24,
+                                    "nzMd": 24,
+                                    "nzLg": 24,
+                                    "nzXl": 24,
+                                    "nzXXl": 24
+                                },
+                                "component": {
+                                    "id": "steps_001",
+                                    "component": "cnSteps",
+                                    "size": "small",
+                                    "direction": "horizontal",
+                                    "mode": "normal",
+                                    "innerParams": [
+                                        {
+                                            "name": "_SID",
+                                            "valueName": "ID",
+                                            "valueTo": "initData"
+                                        }
+                                    ],
+                                    "stepItems": [
+                                        {
+                                            "title": "步骤 1",
+                                            "subTitle": "子标题 1",
+                                            "desc": "这个是第一个步骤"
+                                        },
+                                        {
+                                            "title": "步骤 2",
+                                            "subTitle": "子标题 2",
+                                            "desc": "这个是第二个步骤"
+                                        },
+                                        {
+                                            "title": "步骤 3",
+                                            "subTitle": "子标题 3",
+                                            "desc": "这个是第三个步骤"
+                                        }
+                                    ],
+                                    "stepViews": [
+                                        {
+                                            "id": "step_1",
+                                            "type": "layout",
+                                            "title": "布局4K0naM",
+                                            "container": "rows",
+                                            "rows": [
+                                                {
+                                                    "cols": [
+                                                        {
+                                                            "id": "r5zDHB2-1",
+                                                            "col": "cc",
+                                                            "type": "col",
+                                                            "title": "",
+                                                            "span": 24,
+                                                            "container": "component",
+                                                            "size": {
+                                                                "nzXs": 24,
+                                                                "nzSm": 24,
+                                                                "nzMd": 24,
+                                                                "nzLg": 24,
+                                                                "nzXl": 24,
+                                                                "nzXXl": 24
+                                                            },
+                                                            "component": {
+                                                                "id": "toolbar_001",
+                                                                "component": "cnToolbar",
+                                                                "size": "default",
+                                                                "cascade": {
+                                                                    "messageSender": [
+                                                                        {
+                                                                            "id": "toolbar_01",
+                                                                            "senderId": "view_01",
+                                                                            "triggerType": "OPERATION",
+                                                                            "trigger": "EXECUTE_CHECKED_ROWS",
+                                                                            "triggerMoment": "after",
+                                                                            "sendData": [
+                                                                                {
+                                                                                    "beforeSend": {},
+                                                                                    "reveicerId": "",
+                                                                                    "receiverTriggerType": "BEHAVIOR",
+                                                                                    "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                                    "params": [
+                                                                                        {
+                                                                                            "name": "parent_id",
+                                                                                            "type": "item",
+                                                                                            "valueName": "id"
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "parent_name",
+                                                                                            "type": "item",
+                                                                                            "valueName": "name"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ],
+                                                                    "messageReceiver": [
+                                                                        {
+                                                                            "id": "s_001",
+                                                                            "senderId": "view_01",
+                                                                            "receiveData": [
+                                                                                {
+                                                                                    "triggerType": "STATE",
+                                                                                    "trigger": "STATE_TO_TEXT"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "id": "s_002",
+                                                                            "senderId": "view_01",
+                                                                            "receiveData": [
+                                                                                {
+                                                                                    "triggerType": "STATE",
+                                                                                    "trigger": "STATE_TO_EDIT"
+                                                                                }
+                                                                            ]
+                                                                        }
+
+                                                                    ]
+                                                                },
+                                                                "changeValue": [
+                                                                    {
+                                                                        "id": "edit_form_changeValue",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "item",
+                                                                                "valueName": "id",
+                                                                                "valueTo": "tempValue"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "condition": [
+                                                                    {
+                                                                        "id": "add_cities_state",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "name": "name",
+                                                                                        "matchValue": "1",
+                                                                                        "match": "eq",
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_cities_state",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "add_cities",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_ADDED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_cities",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_EDITED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "cancel_edit_rows_2",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_EDITED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "ajaxConfig": [
+                                                                    {
+                                                                        "id": "add_provinces_1",
+                                                                        "url": "province/insertMany",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "post",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+                                                                            {
+                                                                                "name": "data",
+                                                                                "showMessageWithNext": 0,
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceSaveSuccessfully"
+                                                                            },
+                                                                            {
+                                                                                "name": "validation",
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceSaveValidation"
+                                                                            },
+                                                                            {
+                                                                                "name": "error",
+                                                                                "senderId": "toolbar_02"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_save_1",
+                                                                        "url": "province/updateMany",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "put",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "id",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+                                                                            {
+                                                                                "name": "data",
+                                                                                "showMessageWithNext": 0,
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceUpdateSuccessfully"
+                                                                            },
+                                                                            {
+                                                                                "name": "validation",
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "aftetProvinceUpdateValidation"
+                                                                            },
+                                                                            {
+                                                                                "name": "error",
+                                                                                "senderId": "toolbar_02"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "form_add_province",
+                                                                        "url": "province/insert",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "post",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "form_edit_province",
+                                                                        "url": "province/update",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "put",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "id",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "beforeTrigger": [
+
+                                                                ],
+                                                                "afterTrigger": [
+                                                                    {
+                                                                        "id": "",
+                                                                        "senderId": "view_01",
+                                                                        "sendData": [
+                                                                            {
+                                                                                "beforeSend": [],
+                                                                                "reveicerId": "",
+                                                                                "receiverTriggerType": "BEHAVIOR",
+                                                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                                "params": [
+                                                                                    {
+                                                                                        "name": "parent_id",
+                                                                                        "type": "item",
+                                                                                        "valueName": "id"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "parent_name",
+                                                                                        "type": "item",
+                                                                                        "valueName": "name"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "toolbar": [
+                                                                    {
+                                                                        "targetViewId": "view_01",
+                                                                        "group": [
+                                                                            {
+                                                                                "id": "M_refresh",
+                                                                                "text": "刷新1",
+                                                                                "icon": "reload",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "BEHAVIOR",
+                                                                                        "trigger": "REFRESH"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_addRow",
+                                                                                "text": "新增1",
+                                                                                "icon": "plus",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "ADD_ROW",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_addRowForm",
+                                                                                "text": "表单新增",
+                                                                                "state": "new",
+                                                                                "icon": "plus",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "ACTION",
+                                                                                        "trigger": "DIALOG",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                        "dialogId": "edit_province_form",
+                                                                                        "ajaxId": "form_add_province",
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_editRowForm",
+                                                                                "text": "表单更新",
+                                                                                "state": "edit",
+                                                                                "icon": "edit",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "ACTION",
+                                                                                        "trigger": "DIALOG",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                        "dialogId": "edit_province_form",
+                                                                                        "ajaxId": "form_edit_province",
+                                                                                        "changeValueId": "edit_form_changeValue"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_updateRow",
+                                                                                "text": "修改",
+                                                                                "icon": "edit",
+                                                                                "color": "text-success",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "state": "text",
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "EDIT_ROWS",
+                                                                                        "conditionId": "edit_cities_state"
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "id": "M_deleteRow",
+                                                                                "text": "删除",
+                                                                                "icon": "delete",
+                                                                                "color": "text-red-light",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                                                        // "conditionId": "delete_operation_1",
+                                                                                        // "ajaxId": "delete_row_1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_saveRow",
+                                                                                "text": "保存",
+                                                                                "icon": "save",
+                                                                                "color": "text-primary",
+                                                                                "hidden": true,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "SAVE_ROWS",
+                                                                                        "ajaxId": "add_provinces_1",
+                                                                                        // "stateId": "add_save_1",
+                                                                                        "conditionId": "add_cities"
+                                                                                    },
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "SAVE_ROWS",
+                                                                                        "ajaxId": "edit_cities",
+                                                                                        // "stateId": "edit_save_1",
+                                                                                        "conditionId": ""
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": false
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "new",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "id": "M_cancelrow",
+                                                                                "text": "取消1",
+                                                                                "state": "edit",
+                                                                                "icon": "rollback",
+                                                                                "color": "text-grey-darker",
+                                                                                "hidden": true,
+                                                                                "disabled": null,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "CANCEL_EDIT_ROWS",
+                                                                                        "conditionId": "cancel_edit_rows_2"
+                                                                                    },
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "CANCEL_NEW_ROWS"
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": false
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "new",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "targetViewId": "view_02",
+                                                                        "group": [
+                                                                            {
+                                                                                "name": "M_addSearchRow",
+                                                                                "text": "查询",
+                                                                                "triggerType": "STATE",
+                                                                                "trigger": "SEARCH_ROW",
+                                                                                "actionName": "addSearchRow",
+                                                                                "icon": "search",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "SEARCH_ROW"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": "M_cancelSearchRow",
+                                                                                "text": "取消查询",
+                                                                                "icon": "rollback",
+                                                                                "triggerType": "STATE",
+                                                                                "trigger": "CANCEL_SEARCH_ROW",
+                                                                                "actionName": "cancelSearchRow",
+                                                                                "color": "text-grey-darker",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "SEARCH_ROW"
+                                                                                    }
+                                                                                ],
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ],
+                                                    id: "3vlDRq",
+                                                    type: "row"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "step_2",
+                                            "type": "layout",
+                                            "title": "布局4K0naM",
+                                            "container": "rows",
+                                            "rows": [
+                                                {
+                                                    "cols": [
+                                                        {
+                                                            "id": "r5zDHB2-1",
+                                                            "col": "cc",
+                                                            "type": "col",
+                                                            "title": "",
+                                                            "span": 24,
+                                                            "container": "component",
+                                                            "size": {
+                                                                "nzXs": 24,
+                                                                "nzSm": 24,
+                                                                "nzMd": 24,
+                                                                "nzLg": 24,
+                                                                "nzXl": 24,
+                                                                "nzXXl": 24
+                                                            },
+                                                            "component": {
+                                                                "id": "toolbar_001",
+                                                                "component": "cnToolbar",
+                                                                "size": "default",
+                                                                "cascade": {
+                                                                    "messageSender": [
+                                                                        {
+                                                                            "id": "toolbar_01",
+                                                                            "senderId": "view_01",
+                                                                            "triggerType": "OPERATION",
+                                                                            "trigger": "EXECUTE_CHECKED_ROWS",
+                                                                            "triggerMoment": "after",
+                                                                            "sendData": [
+                                                                                {
+                                                                                    "beforeSend": {},
+                                                                                    "reveicerId": "",
+                                                                                    "receiverTriggerType": "BEHAVIOR",
+                                                                                    "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                                    "params": [
+                                                                                        {
+                                                                                            "name": "parent_id",
+                                                                                            "type": "item",
+                                                                                            "valueName": "id"
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "parent_name",
+                                                                                            "type": "item",
+                                                                                            "valueName": "name"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ],
+                                                                    "messageReceiver": [
+                                                                        {
+                                                                            "id": "s_001",
+                                                                            "senderId": "view_01",
+                                                                            "receiveData": [
+                                                                                {
+                                                                                    "triggerType": "STATE",
+                                                                                    "trigger": "STATE_TO_TEXT"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "id": "s_002",
+                                                                            "senderId": "view_01",
+                                                                            "receiveData": [
+                                                                                {
+                                                                                    "triggerType": "STATE",
+                                                                                    "trigger": "STATE_TO_EDIT"
+                                                                                }
+                                                                            ]
+                                                                        }
+
+                                                                    ]
+                                                                },
+                                                                "changeValue": [
+                                                                    {
+                                                                        "id": "edit_form_changeValue",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "item",
+                                                                                "valueName": "id",
+                                                                                "valueTo": "tempValue"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "condition": [
+                                                                    {
+                                                                        "id": "add_cities_state",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "name": "name",
+                                                                                        "matchValue": "1",
+                                                                                        "match": "eq",
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_cities_state",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "add_cities",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_ADDED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_cities",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_EDITED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "cancel_edit_rows_2",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_EDITED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "ajaxConfig": [
+                                                                    {
+                                                                        "id": "add_provinces_1",
+                                                                        "url": "province/insertMany",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "post",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+                                                                            {
+                                                                                "name": "data",
+                                                                                "showMessageWithNext": 0,
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceSaveSuccessfully"
+                                                                            },
+                                                                            {
+                                                                                "name": "validation",
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceSaveValidation"
+                                                                            },
+                                                                            {
+                                                                                "name": "error",
+                                                                                "senderId": "toolbar_02"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_save_1",
+                                                                        "url": "province/updateMany",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "put",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "id",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+                                                                            {
+                                                                                "name": "data",
+                                                                                "showMessageWithNext": 0,
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceUpdateSuccessfully"
+                                                                            },
+                                                                            {
+                                                                                "name": "validation",
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "aftetProvinceUpdateValidation"
+                                                                            },
+                                                                            {
+                                                                                "name": "error",
+                                                                                "senderId": "toolbar_02"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "form_add_province",
+                                                                        "url": "province/insert",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "post",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "form_edit_province",
+                                                                        "url": "province/update",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "put",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "id",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "beforeTrigger": [
+
+                                                                ],
+                                                                "afterTrigger": [
+                                                                    {
+                                                                        "id": "",
+                                                                        "senderId": "view_01",
+                                                                        "sendData": [
+                                                                            {
+                                                                                "beforeSend": [],
+                                                                                "reveicerId": "",
+                                                                                "receiverTriggerType": "BEHAVIOR",
+                                                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                                "params": [
+                                                                                    {
+                                                                                        "name": "parent_id",
+                                                                                        "type": "item",
+                                                                                        "valueName": "id"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "parent_name",
+                                                                                        "type": "item",
+                                                                                        "valueName": "name"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "toolbar": [
+                                                                    {
+                                                                        "targetViewId": "view_01",
+                                                                        "group": [
+                                                                            {
+                                                                                "id": "M_refresh",
+                                                                                "text": "刷新2",
+                                                                                "icon": "reload",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "BEHAVIOR",
+                                                                                        "trigger": "REFRESH"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_addRow",
+                                                                                "text": "新增",
+                                                                                "icon": "plus",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "ADD_ROW",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_addRowForm",
+                                                                                "text": "表单新增",
+                                                                                "state": "new",
+                                                                                "icon": "plus",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "ACTION",
+                                                                                        "trigger": "DIALOG",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                        "dialogId": "edit_province_form",
+                                                                                        "ajaxId": "form_add_province",
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_editRowForm",
+                                                                                "text": "表单更新",
+                                                                                "state": "edit",
+                                                                                "icon": "edit",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "ACTION",
+                                                                                        "trigger": "DIALOG",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                        "dialogId": "edit_province_form",
+                                                                                        "ajaxId": "form_edit_province",
+                                                                                        "changeValueId": "edit_form_changeValue"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_updateRow",
+                                                                                "text": "修改",
+                                                                                "icon": "edit",
+                                                                                "color": "text-success",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "state": "text",
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "EDIT_ROWS",
+                                                                                        "conditionId": "edit_cities_state"
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "id": "M_deleteRow",
+                                                                                "text": "删除",
+                                                                                "icon": "delete",
+                                                                                "color": "text-red-light",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                                                        // "conditionId": "delete_operation_1",
+                                                                                        // "ajaxId": "delete_row_1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_saveRow",
+                                                                                "text": "保存",
+                                                                                "icon": "save",
+                                                                                "color": "text-primary",
+                                                                                "hidden": true,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "SAVE_ROWS",
+                                                                                        "ajaxId": "add_provinces_1",
+                                                                                        // "stateId": "add_save_1",
+                                                                                        "conditionId": "add_cities"
+                                                                                    },
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "SAVE_ROWS",
+                                                                                        "ajaxId": "edit_cities",
+                                                                                        // "stateId": "edit_save_1",
+                                                                                        "conditionId": ""
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": false
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "new",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "id": "M_cancelrow",
+                                                                                "text": "取消1",
+                                                                                "state": "edit",
+                                                                                "icon": "rollback",
+                                                                                "color": "text-grey-darker",
+                                                                                "hidden": true,
+                                                                                "disabled": null,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "CANCEL_EDIT_ROWS",
+                                                                                        "conditionId": "cancel_edit_rows_2"
+                                                                                    },
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "CANCEL_NEW_ROWS"
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": false
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "new",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "targetViewId": "view_02",
+                                                                        "group": [
+                                                                            {
+                                                                                "name": "M_addSearchRow",
+                                                                                "text": "查询",
+                                                                                "triggerType": "STATE",
+                                                                                "trigger": "SEARCH_ROW",
+                                                                                "actionName": "addSearchRow",
+                                                                                "icon": "search",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "SEARCH_ROW"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": "M_cancelSearchRow",
+                                                                                "text": "取消查询",
+                                                                                "icon": "rollback",
+                                                                                "triggerType": "STATE",
+                                                                                "trigger": "CANCEL_SEARCH_ROW",
+                                                                                "actionName": "cancelSearchRow",
+                                                                                "color": "text-grey-darker",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "SEARCH_ROW"
+                                                                                    }
+                                                                                ],
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ],
+                                                    id: "3vlDRq",
+                                                    type: "row"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "step_3",
+                                            "type": "layout",
+                                            "title": "布局4K0naM",
+                                            "container": "rows",
+                                            "rows": [
+                                                {
+                                                    "cols": [
+                                                        {
+                                                            "id": "r5zDHB2-1",
+                                                            "col": "cc",
+                                                            "type": "col",
+                                                            "title": "",
+                                                            "span": 24,
+                                                            "container": "component",
+                                                            "size": {
+                                                                "nzXs": 24,
+                                                                "nzSm": 24,
+                                                                "nzMd": 24,
+                                                                "nzLg": 24,
+                                                                "nzXl": 24,
+                                                                "nzXXl": 24
+                                                            },
+                                                            "component": {
+                                                                "id": "toolbar_001",
+                                                                "component": "cnToolbar",
+                                                                "size": "default",
+                                                                "cascade": {
+                                                                    "messageSender": [
+                                                                        {
+                                                                            "id": "toolbar_01",
+                                                                            "senderId": "view_01",
+                                                                            "triggerType": "OPERATION",
+                                                                            "trigger": "EXECUTE_CHECKED_ROWS",
+                                                                            "triggerMoment": "after",
+                                                                            "sendData": [
+                                                                                {
+                                                                                    "beforeSend": {},
+                                                                                    "reveicerId": "",
+                                                                                    "receiverTriggerType": "BEHAVIOR",
+                                                                                    "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                                    "params": [
+                                                                                        {
+                                                                                            "name": "parent_id",
+                                                                                            "type": "item",
+                                                                                            "valueName": "id"
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "parent_name",
+                                                                                            "type": "item",
+                                                                                            "valueName": "name"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ],
+                                                                    "messageReceiver": [
+                                                                        {
+                                                                            "id": "s_001",
+                                                                            "senderId": "view_01",
+                                                                            "receiveData": [
+                                                                                {
+                                                                                    "triggerType": "STATE",
+                                                                                    "trigger": "STATE_TO_TEXT"
+                                                                                }
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "id": "s_002",
+                                                                            "senderId": "view_01",
+                                                                            "receiveData": [
+                                                                                {
+                                                                                    "triggerType": "STATE",
+                                                                                    "trigger": "STATE_TO_EDIT"
+                                                                                }
+                                                                            ]
+                                                                        }
+
+                                                                    ]
+                                                                },
+                                                                "changeValue": [
+                                                                    {
+                                                                        "id": "edit_form_changeValue",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "item",
+                                                                                "valueName": "id",
+                                                                                "valueTo": "tempValue"
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "condition": [
+                                                                    {
+                                                                        "id": "add_cities_state",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    },
+                                                                                    {
+                                                                                        "type": "element",
+                                                                                        "name": "name",
+                                                                                        "matchValue": "1",
+                                                                                        "match": "eq",
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_cities_state",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "add_cities",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_ADDED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_cities",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_EDITED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_CHECKED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "cancel_edit_rows_2",
+                                                                        "state": [
+                                                                            {
+                                                                                "type": "component",
+                                                                                "valueName": "ROWS_EDITED",
+                                                                                "expression": [
+                                                                                    {
+                                                                                        "type": "property",
+                                                                                        "name": "length",
+                                                                                        "matchValue": 0,
+                                                                                        "match": "gt"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "ajaxConfig": [
+                                                                    {
+                                                                        "id": "add_provinces_1",
+                                                                        "url": "province/insertMany",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "post",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+                                                                            {
+                                                                                "name": "data",
+                                                                                "showMessageWithNext": 0,
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceSaveSuccessfully"
+                                                                            },
+                                                                            {
+                                                                                "name": "validation",
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceSaveValidation"
+                                                                            },
+                                                                            {
+                                                                                "name": "error",
+                                                                                "senderId": "toolbar_02"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "edit_save_1",
+                                                                        "url": "province/updateMany",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "put",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "id",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+                                                                            {
+                                                                                "name": "data",
+                                                                                "showMessageWithNext": 0,
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "afterProvinceUpdateSuccessfully"
+                                                                            },
+                                                                            {
+                                                                                "name": "validation",
+                                                                                "message": "message.ajax.state.success",
+                                                                                "senderId": "aftetProvinceUpdateValidation"
+                                                                            },
+                                                                            {
+                                                                                "name": "error",
+                                                                                "senderId": "toolbar_02"
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "form_add_province",
+                                                                        "url": "province/insert",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "post",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "id": "form_edit_province",
+                                                                        "url": "province/update",
+                                                                        "urlType": "inner",
+                                                                        "ajaxType": "put",
+                                                                        "params": [
+                                                                            {
+                                                                                "name": "id",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "id",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "provinceName",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "provinceName",
+                                                                                "dataType": "string"
+                                                                            },
+                                                                            {
+                                                                                "name": "populationSize",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "populationSize",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "directlyUnder",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "directlyUnder",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "areaCode",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "areaCode",
+                                                                                "dataType": "int"
+                                                                            },
+                                                                            {
+                                                                                "name": "createDate",
+                                                                                "type": "componentValue",
+                                                                                "valueName": "createDate",
+                                                                                "dataType": "string"
+                                                                            }
+                                                                        ],
+                                                                        "outputParameters": [
+
+                                                                        ],
+                                                                        "result": [
+
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "beforeTrigger": [
+
+                                                                ],
+                                                                "afterTrigger": [
+                                                                    {
+                                                                        "id": "",
+                                                                        "senderId": "view_01",
+                                                                        "sendData": [
+                                                                            {
+                                                                                "beforeSend": [],
+                                                                                "reveicerId": "",
+                                                                                "receiverTriggerType": "BEHAVIOR",
+                                                                                "receiverTrigger": "REFRESH_AS_CHILD",
+                                                                                "params": [
+                                                                                    {
+                                                                                        "name": "parent_id",
+                                                                                        "type": "item",
+                                                                                        "valueName": "id"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "parent_name",
+                                                                                        "type": "item",
+                                                                                        "valueName": "name"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ],
+                                                                "toolbar": [
+                                                                    {
+                                                                        "targetViewId": "view_01",
+                                                                        "group": [
+                                                                            {
+                                                                                "id": "M_refresh",
+                                                                                "text": "刷新3",
+                                                                                "icon": "reload",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "BEHAVIOR",
+                                                                                        "trigger": "REFRESH"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_addRow",
+                                                                                "text": "新增",
+                                                                                "icon": "plus",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "ADD_ROW",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_addRowForm",
+                                                                                "text": "表单新增",
+                                                                                "state": "new",
+                                                                                "icon": "plus",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "ACTION",
+                                                                                        "trigger": "DIALOG",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                        "dialogId": "edit_province_form",
+                                                                                        "ajaxId": "form_add_province",
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_editRowForm",
+                                                                                "text": "表单更新",
+                                                                                "state": "edit",
+                                                                                "icon": "edit",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "ACTION",
+                                                                                        "trigger": "DIALOG",
+                                                                                        // "conditionId": "add_state_1"
+                                                                                        "dialogId": "edit_province_form",
+                                                                                        "ajaxId": "form_edit_province",
+                                                                                        "changeValueId": "edit_form_changeValue"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_updateRow",
+                                                                                "text": "修改",
+                                                                                "icon": "edit",
+                                                                                "color": "text-success",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "state": "text",
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "EDIT_ROWS",
+                                                                                        "conditionId": "edit_cities_state"
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "id": "M_deleteRow",
+                                                                                "text": "删除",
+                                                                                "icon": "delete",
+                                                                                "color": "text-red-light",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "EXECUTE_CHECKED_ROWS_IDS",
+                                                                                        // "conditionId": "delete_operation_1",
+                                                                                        // "ajaxId": "delete_row_1"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "id": "M_saveRow",
+                                                                                "text": "保存",
+                                                                                "icon": "save",
+                                                                                "color": "text-primary",
+                                                                                "hidden": true,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "SAVE_ROWS",
+                                                                                        "ajaxId": "add_provinces_1",
+                                                                                        // "stateId": "add_save_1",
+                                                                                        "conditionId": "add_cities"
+                                                                                    },
+                                                                                    {
+                                                                                        "triggerType": "OPERATION",
+                                                                                        "trigger": "SAVE_ROWS",
+                                                                                        "ajaxId": "edit_cities",
+                                                                                        // "stateId": "edit_save_1",
+                                                                                        "conditionId": ""
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": false
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "new",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "id": "M_cancelrow",
+                                                                                "text": "取消1",
+                                                                                "state": "edit",
+                                                                                "icon": "rollback",
+                                                                                "color": "text-grey-darker",
+                                                                                "hidden": true,
+                                                                                "disabled": null,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "CANCEL_EDIT_ROWS",
+                                                                                        "conditionId": "cancel_edit_rows_2"
+                                                                                    },
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "CANCEL_NEW_ROWS"
+                                                                                    }
+                                                                                ],
+                                                                                "toggle": {
+                                                                                    "type": "state",
+                                                                                    "toggleProperty": "hidden",
+                                                                                    "values": [
+                                                                                        {
+                                                                                            "name": "edit",
+                                                                                            "value": false
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "text",
+                                                                                            "value": true
+                                                                                        },
+                                                                                        {
+                                                                                            "name": "new",
+                                                                                            "value": false
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "targetViewId": "view_02",
+                                                                        "group": [
+                                                                            {
+                                                                                "name": "M_addSearchRow",
+                                                                                "text": "查询",
+                                                                                "triggerType": "STATE",
+                                                                                "trigger": "SEARCH_ROW",
+                                                                                "actionName": "addSearchRow",
+                                                                                "icon": "search",
+                                                                                "color": "text-primary",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "SEARCH_ROW"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            {
+                                                                                "name": "M_cancelSearchRow",
+                                                                                "text": "取消查询",
+                                                                                "icon": "rollback",
+                                                                                "triggerType": "STATE",
+                                                                                "trigger": "CANCEL_SEARCH_ROW",
+                                                                                "actionName": "cancelSearchRow",
+                                                                                "color": "text-grey-darker",
+                                                                                "hidden": false,
+                                                                                "disabled": false,
+                                                                                "execute": [
+                                                                                    {
+                                                                                        "triggerType": "STATE",
+                                                                                        "trigger": "SEARCH_ROW"
+                                                                                    }
+                                                                                ],
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ],
+                                                    id: "3vlDRq",
+                                                    type: "row"
+                                                }
+                                            ],
+                                        }
+                                    ],
+                                    "cascade": {
+                                        "messageSender": [
+                                            // {
+                                            //     "id": "toolbar_01",
+                                            //     "senderId": "view_01",
+                                            //     "triggerType": "OPERATION",
+                                            //     "trigger": "EXECUTE_CHECKED_ROWS",
+                                            //     "triggerMoment": "after",
+                                            //     "sendData": [
+                                            //         {
+                                            //             "beforeSend": {},
+                                            //             "reveicerId": "",
+                                            //             "receiverTriggerType": "BEHAVIOR",
+                                            //             "receiverTrigger": "REFRESH_AS_CHILD",
+                                            //             "params": [
+                                            //                 {
+                                            //                     "name": "parent_id",
+                                            //                     "type": "item",
+                                            //                     "valueName": "id"
+                                            //                 },
+                                            //                 {
+                                            //                     "name": "parent_name",
+                                            //                     "type": "item",
+                                            //                     "valueName": "name"
+                                            //                 }
+                                            //             ]
+                                            //         }
+                                            //     ]
+                                            // }
+                                        ],
+                                        "messageReceiver": [
+                                            // {
+                                            //     "id": "s_001",
+                                            //     "senderId": "view_01",
+                                            //     "receiveData": [
+                                            //         {
+                                            //             "triggerType": "STATE",
+                                            //             "trigger": "STATE_TO_TEXT"
+                                            //         }
+                                            //     ]
+                                            // },
+                                            // {
+                                            //     "id": "s_002",
+                                            //     "senderId": "view_01",
+                                            //     "receiveData": [
+                                            //         {
+                                            //             "triggerType": "STATE",
+                                            //             "trigger": "STATE_TO_EDIT"
+                                            //         }
+                                            //     ]
+                                            // }
+
+                                        ]
+                                    },
+                                    "changeValue": [
+                                        {
+                                            "id": "edit_form_changeValue",
+                                            "params": [
+                                                {
+                                                    "name": "id",
+                                                    "type": "item",
+                                                    "valueName": "id",
+                                                    "valueTo": "tempValue"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "ajaxConfig": [
+                                        {
+                                            "id": "add_provinces_1",
+                                            "url": "province/insertMany",
+                                            "urlType": "inner",
+                                            "ajaxType": "post",
+                                            "params": [
+                                                {
+                                                    "name": "provinceName",
+                                                    "type": "componentValue",
+                                                    "valueName": "provinceName",
+                                                    "dataType": "string"
+                                                },
+                                                {
+                                                    "name": "populationSize",
+                                                    "type": "componentValue",
+                                                    "valueName": "populationSize",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "directlyUnder",
+                                                    "type": "componentValue",
+                                                    "valueName": "directlyUnder",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "areaCode",
+                                                    "type": "componentValue",
+                                                    "valueName": "areaCode",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "createDate",
+                                                    "type": "componentValue",
+                                                    "valueName": "createDate",
+                                                    "dataType": "string"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+                                                {
+                                                    "name": "data",
+                                                    "showMessageWithNext": 0,
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterProvinceSaveSuccessfully"
+                                                },
+                                                {
+                                                    "name": "validation",
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterProvinceSaveValidation"
+                                                },
+                                                {
+                                                    "name": "error",
+                                                    "senderId": "toolbar_02"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "edit_save_1",
+                                            "url": "province/updateMany",
+                                            "urlType": "inner",
+                                            "ajaxType": "put",
+                                            "params": [
+                                                {
+                                                    "name": "id",
+                                                    "type": "componentValue",
+                                                    "valueName": "id",
+                                                    "dataType": "string"
+                                                },
+                                                {
+                                                    "name": "provinceName",
+                                                    "type": "componentValue",
+                                                    "valueName": "provinceName",
+                                                    "dataType": "string"
+                                                },
+                                                {
+                                                    "name": "populationSize",
+                                                    "type": "componentValue",
+                                                    "valueName": "populationSize",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "directlyUnder",
+                                                    "type": "componentValue",
+                                                    "valueName": "directlyUnder",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "areaCode",
+                                                    "type": "componentValue",
+                                                    "valueName": "areaCode",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "createDate",
+                                                    "type": "componentValue",
+                                                    "valueName": "createDate",
+                                                    "dataType": "string"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+                                                {
+                                                    "name": "data",
+                                                    "showMessageWithNext": 0,
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterProvinceUpdateSuccessfully"
+                                                },
+                                                {
+                                                    "name": "validation",
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "aftetProvinceUpdateValidation"
+                                                },
+                                                {
+                                                    "name": "error",
+                                                    "senderId": "toolbar_02"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "form_add_province",
+                                            "url": "province/insert",
+                                            "urlType": "inner",
+                                            "ajaxType": "post",
+                                            "params": [
+                                                {
+                                                    "name": "provinceName",
+                                                    "type": "componentValue",
+                                                    "valueName": "provinceName",
+                                                    "dataType": "string"
+                                                },
+                                                {
+                                                    "name": "populationSize",
+                                                    "type": "componentValue",
+                                                    "valueName": "populationSize",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "directlyUnder",
+                                                    "type": "componentValue",
+                                                    "valueName": "directlyUnder",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "areaCode",
+                                                    "type": "componentValue",
+                                                    "valueName": "areaCode",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "createDate",
+                                                    "type": "componentValue",
+                                                    "valueName": "createDate",
+                                                    "dataType": "string"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+
+                                            ]
+                                        },
+                                        {
+                                            "id": "form_edit_province",
+                                            "url": "province/update",
+                                            "urlType": "inner",
+                                            "ajaxType": "put",
+                                            "params": [
+                                                {
+                                                    "name": "id",
+                                                    "type": "componentValue",
+                                                    "valueName": "id",
+                                                    "dataType": "string"
+                                                },
+                                                {
+                                                    "name": "provinceName",
+                                                    "type": "componentValue",
+                                                    "valueName": "provinceName",
+                                                    "dataType": "string"
+                                                },
+                                                {
+                                                    "name": "populationSize",
+                                                    "type": "componentValue",
+                                                    "valueName": "populationSize",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "directlyUnder",
+                                                    "type": "componentValue",
+                                                    "valueName": "directlyUnder",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "areaCode",
+                                                    "type": "componentValue",
+                                                    "valueName": "areaCode",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "createDate",
+                                                    "type": "componentValue",
+                                                    "valueName": "createDate",
+                                                    "dataType": "string"
+                                                }
+                                            ],
+                                            "outputParameters": [
+
+                                            ],
+                                            "result": [
+
+                                            ]
+                                        }
+                                    ],
+                                    "beforeTrigger": [
+
+                                    ],
+                                    "afterTrigger": [
+                                        {
+                                            "id": "",
+                                            "senderId": "view_01",
+                                            "sendData": [
+                                                {
+                                                    "beforeSend": [],
+                                                    "reveicerId": "",
+                                                    "receiverTriggerType": "BEHAVIOR",
+                                                    "receiverTrigger": "REFRESH_AS_CHILD",
+                                                    "params": [
+                                                        {
+                                                            "name": "parent_id",
+                                                            "type": "item",
+                                                            "valueName": "id"
+                                                        },
+                                                        {
+                                                            "name": "parent_name",
+                                                            "type": "item",
+                                                            "valueName": "name"
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                }
+                            },
                             {
                                 "id": "r5zDHB2-1",
                                 "col": "cc",
@@ -6183,7 +8829,6 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     }
                                 ]
                             }
-
                         ],
                         id: "3vlDRq",
                         type: "row"

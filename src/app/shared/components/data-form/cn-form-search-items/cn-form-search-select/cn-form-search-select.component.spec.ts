@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CnFormSelectComponent } from './cn-form-search-select.component';
+import { CnFormSearchSelectComponent } from './cn-form-search-select.component';
 
 describe('CnFormSearchSelectComponent', () => {
   let component: CnFormSearchSelectComponent;

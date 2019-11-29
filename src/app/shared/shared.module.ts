@@ -1,3 +1,4 @@
+import { CnCardListComponent } from './components/cn-card-list/cn-card-list.component';
 import { CnFormSearchSelectComponent } from './components/data-form/cn-form-search-items/cn-form-search-select/cn-form-search-select.component';
 import { CnFormButtonComponent } from './components/data-form/cn-form-items/cn-form-button/cn-form-button.component';
 import { CnCalendarComponent } from './components/cn-calendar/cn-calendar.component';
@@ -220,7 +221,8 @@ const COMPONENTS = [
   CnGridCodeEditComponent,
   CnGridTextareaComponent,
   CnFormButtonComponent,
-  CnFormSearchSelectComponent
+  CnFormSearchSelectComponent,
+  CnCardListComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [

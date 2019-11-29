@@ -591,11 +591,14 @@ export class CnDataTableComponent extends CnComponentBase
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
 
+        this.dataCheckedStatusChange();
+
         // 更新状态
     }
 
     private removeEditRow(item) {
         this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
+        this.dataCheckedStatusChange();
     }
 
     private addEditRows(item) {
@@ -627,6 +630,7 @@ export class CnDataTableComponent extends CnComponentBase
         if (option.data) {
             this.removeNewRow(option.data.data);
         }
+        this.dataCheckedStatusChange();
     }
 
     public cancelNewRows(option) {
@@ -638,6 +642,7 @@ export class CnDataTableComponent extends CnComponentBase
 
             }
         )
+        this.dataCheckedStatusChange();
         return true;
     }
 
@@ -683,7 +688,7 @@ export class CnDataTableComponent extends CnComponentBase
 
                     this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== opt[this.KEY_ID]);
                     this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
-                    this.mapOfDataState[opt[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
+                    this.config.rowActions && (this.mapOfDataState[opt[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')]);
                     const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
                     trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
                 }
@@ -692,7 +697,7 @@ export class CnDataTableComponent extends CnComponentBase
             // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
             this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== option[this.KEY_ID]);
             this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
-            this.mapOfDataState[option[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
+            this.config.rowActions && (this.mapOfDataState[option[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')]);
             const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
             trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
         }
@@ -991,6 +996,8 @@ export class CnDataTableComponent extends CnComponentBase
                 }
                 const mapData = this.mapOfDataState[newData[this.KEY_ID]];
                 if (mapData) {
+                    mapData.state = "text";
+                    mapData.actions = this.getRowActions('text');
                     mapData.data = newData;
                     mapData.originData = { ...newData };
                 } else {
@@ -1001,8 +1008,8 @@ export class CnDataTableComponent extends CnComponentBase
                         disabled: false,
                         checked: true, // index === 0 ? true : false,
                         selected: false, // index === 0 ? true : false,
-                        state: 'new',
-                        actions: this.getRowActions('new')
+                        state: 'text',
+                        actions: this.getRowActions('text')
                     }
                 }
             })
@@ -1323,18 +1330,27 @@ export class CnDataTableComponent extends CnComponentBase
      * 显示消息框
      */
     public showMessage(option) {
-        const message: { type: string, message: string, field: string } = { type: '', message: '', field: '' };
+        let msgObj;
         if (option && Array.isArray(option)) {
-            message.message = option[0].code;
-            message.type = option[0].type;
-            message.field = option[0].field;
+            // 后续需要根据具体情况解析批量处理结果
+            msgObj = this.buildMessageContent(option[0]);
         } else if (option) {
-            message.message = option.code ? option.code : '';
-            message.type = option.type;
-            message.field = option.field ? option.field : '';
+            msgObj = this.buildMessageContent(option);
         }
+        option && this.componentService.msgService.create(msgObj.type, `${msgObj.message}`);
+    }
 
-        option && this.componentService.msgService.create(message.type, `${message.field}: ${message.message}`);
+    public buildMessageContent(msgObj) {
+        const message: any = {};
+        if (msgObj.code) {
+            message.message = msgObj.code;
+        } else if (msgObj.message) {
+            message.message = msgObj.message;
+        }
+        // message.message = option.code ? option.code : '';
+        msgObj.field && (message.field = msgObj.field ? msgObj.field : '');
+        message.type = msgObj.type;
+        return message
     }
 
 
@@ -1356,20 +1372,30 @@ export class CnDataTableComponent extends CnComponentBase
      * 更新数据选中状态的CheckBox
      */
     public dataCheckedStatusChange() {
-        this.isAllChecked = this.dataList
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .every(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
+        if (this.dataList.length > 0) {
+            this.isAllChecked = this.dataList
+                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+                .every(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
 
-        this.indeterminate = this.dataList
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .some(item => this.mapOfDataState[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
+            this.indeterminate = this.dataList
+                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+                .some(item => this.mapOfDataState[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
 
-        this.checkedNumber = this.dataList.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
+            this.checkedNumber = this.dataList.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
 
-        // 更新当前选中数据集合
-        this.ROWS_CHECKED = this.dataList
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
+            // 更新当前选中数据集合
+            this.ROWS_CHECKED = this.dataList
+                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+                .filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
+        } else {
+            this.isAllChecked = false;
+            this.indeterminate = false;
+            this.checkedNumber = 0;
+
+        }
+
+
+
     }
 
     /**

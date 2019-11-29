@@ -1,3 +1,4 @@
+import { CnCardListComponent } from './../../components/cn-card-list/cn-card-list.component';
 import { CnCalendarComponent } from './../../components/cn-calendar/cn-calendar.component';
 import { CnProgressComponent } from './../../components/cn-progress/cn-progress.component';
 import { CnStatisticComponent } from './../../components/cn-statistic/cn-statistic.component';
@@ -24,7 +25,8 @@ const components: { [type: string]: Type<any> } = {
     cnStatistic: CnStatisticComponent,
     cnProgress: CnProgressComponent,
     cnCalendar: CnCalendarComponent,
-    cfgLayoutPage:CfgLayoutPageComponent
+    cfgLayoutPage: CfgLayoutPageComponent,
+    cnCardList: CnCardListComponent
 };
 
 @Directive({
@@ -40,21 +42,21 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
         private _resolver: ComponentFactoryResolver,
         private _container: ViewContainerRef,
         @Inject(BSN_COMPONENT_SERVICES)
-    public componentService: ComponentServiceProvider
+        public componentService: ComponentServiceProvider
     ) {
 
     }
 
-  
+
 
     ngOnInit() {
         this.resolve();
     }
 
     ngOnDestroy(): void {
-      //  console.log('销毁前',  this.componentService.com,this.config.id);
-      //  this.componentService.com=this.componentService.com.filter(e=>!e.hasOwnProperty(this.config.id));
-      //  console.log('销毁后',  this.componentService.com);
+        //  console.log('销毁前',  this.componentService.com,this.config.id);
+        //  this.componentService.com=this.componentService.com.filter(e=>!e.hasOwnProperty(this.config.id));
+        //  console.log('销毁后',  this.componentService.com);
     }
 
     private resolve() {
@@ -77,9 +79,9 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
         this._componentRef.instance.config = this.config;
         this._componentRef.instance.initData = this.initData;
         this._componentRef.instance.tempData = this.tempData;
-       // console.log('创建创建创建', this._componentRef );
-      //  this.componentService.com.push({[this.config.id]:this._componentRef});
-      //  console.log('创建创建创建+++', this.componentService.com );
+        // console.log('创建创建创建', this._componentRef );
+        //  this.componentService.com.push({[this.config.id]:this._componentRef});
+        //  console.log('创建创建创建+++', this.componentService.com );
 
     }
 

@@ -54,28 +54,35 @@
       }]
     },
     {
-      "text": "配置项基础数据维护",
+      "text": "组件库",
       "i18n": "menu.cfg.base",
       "group": true,
       "hideInBreadcrumb": true,
       "level": 1,
       "icon": "book",
       "children": [{
-          "text": "内置属性维护",
+          "text": "组件管理",
+          "i18n": "menu.cfg.base.componentManager",
+          "icon": "setting",
+          "level": 2,
+          "link": "/template/componentManager"
+        },
+        {
+          "text": "属性管理",
           "i18n": "menu.cfg.base.innerPropertyManager",
           "icon": "database",
           "level": 2,
           "link": "/template/innerPropertyManager"
         },
         {
-          "text": "内置操作维护",
+          "text": "功能管理",
           "i18n": "menu.cfg.base.innerMethodManager",
           "icon": "database",
           "level": 2,
           "link": "/template/innerMethodManager"
         },
         {
-          "text": "配置属性维护",
+          "text": "配置管理",
           "i18n": "menu.cfg.base.configPropertyManager",
           "icon": "database",
           "level": 2,

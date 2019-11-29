@@ -37,7 +37,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
             "contentItems": [
                 {
                     "title": "注意事项",
-                    "text": "此功能提供了新增组件功能",
+                    "text": "此功能提供了创建组件功能",
                     "span": 2
                 }
             ],
@@ -310,7 +310,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                         {
                                             "id": "form_property_category",
                                             "type": "confirm",
-                                            "title": "新增组件属性分类信息",
+                                            "title": "创建组件属性分类信息",
                                             "cancelText": "取消",
                                             "okText": "提交",
                                             "form": {
@@ -1050,7 +1050,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                 },
                                                 {
                                                     "id": "add_property_category_node",
-                                                    "text": "新增属性分类",
+                                                    "text": "创建分类",
                                                     "state": "new",
                                                     "icon": "plus",
                                                     "color": "text-primary",
@@ -1088,7 +1088,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                 // },
                                                 {
                                                     "id": "M_editTreeNode",
-                                                    "text": "编辑属性分类",
+                                                    "text": "编辑分类",
                                                     "state": "edit",
                                                     "icon": "edit",
                                                     "color": "text-primary",
@@ -1146,7 +1146,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                 "id": "r5zDHB",
                                 "col": "cc",
                                 "type": "col",
-                                "title": "组件属性结构树",
+                                "title": "组件属性分类",
                                 "span": 8,
                                 "container": "component",
                                 "size": {
@@ -2498,7 +2498,8 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                             "params": [
                                                                                                 {
                                                                                                     "name": "ID",
-                                                                                                    "type": "GUID",
+                                                                                                    "type": "componentValue",
+                                                                                                    "valueName": "ID"
                                                                                                 },
                                                                                                 {
                                                                                                     "name": "NAME",
@@ -2733,7 +2734,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                 },
                                                                                                 {
                                                                                                     "id": "M_addRow",
-                                                                                                    "text": "新增属性",
+                                                                                                    "text": "创建属性",
                                                                                                     "icon": "plus",
                                                                                                     "color": "text-primary",
                                                                                                     "hidden": false,
@@ -2748,7 +2749,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                 },
                                                                                                 {
                                                                                                     "id": "M_updateRow",
-                                                                                                    "text": "修改属性",
+                                                                                                    "text": "编辑属性",
                                                                                                     "icon": "edit",
                                                                                                     "color": "text-success",
                                                                                                     "hidden": false,
@@ -3137,113 +3138,113 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                     ],
                                                                                     "cascade": {
                                                                                         "messageSender": [
-                                                                                            {
-                                                                                                "id": "view2_sender_1",
-                                                                                                "senderId": "view_02",
-                                                                                                "triggerType": "OPERATION",
-                                                                                                "trigger": "SAVE_ROW",
-                                                                                                "triggerMoment": "asyncAfter",
-                                                                                                "sendData": [
-                                                                                                    {
-                                                                                                        "reveicerId": "",
-                                                                                                        "receiverTriggerType": "STATE",
-                                                                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                                                                        "params": [
-                                                                                                            {
-                                                                                                                "name": "targetViewId",
-                                                                                                                "value": "view_02",
-                                                                                                                "type": "value"
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                ]
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "view2_sender_2",
-                                                                                                "senderId": "view_02",
-                                                                                                "triggerType": "OPERATION",
-                                                                                                "trigger": "SAVE_ROWS",
-                                                                                                "triggerMoment": "asyncAfter",
-                                                                                                "sendData": [
-                                                                                                    {
-                                                                                                        "reveicerId": "",
-                                                                                                        "receiverTriggerType": "STATE",
-                                                                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                                                                        "params": [
-                                                                                                            {
-                                                                                                                "name": "targetViewId",
-                                                                                                                "value": "view_02",
-                                                                                                                "type": "value"
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                ]
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "view2_sender_3",
-                                                                                                "senderId": "view_02",
-                                                                                                "triggerType": "STATE",
-                                                                                                "trigger": "CANCEL_EDIT_ROW",
-                                                                                                "triggerMoment": "after",
-                                                                                                "sendData": [
-                                                                                                    {
-                                                                                                        "reveicerId": "",
-                                                                                                        "receiverTriggerType": "STATE",
-                                                                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                                                                        "conditionId": "cancel_edit_cities",
-                                                                                                        "params": [
-                                                                                                            {
-                                                                                                                "name": "targetViewId",
-                                                                                                                "value": "view_02",
-                                                                                                                "type": "value"
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                ]
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "view2_sender_04",
-                                                                                                "senderId": "view_02",
-                                                                                                "triggerType": "STATE",
-                                                                                                "trigger": "CANCEL_NEW_ROW",
-                                                                                                "triggerMoment": "after",
-                                                                                                "sendData": [
-                                                                                                    {
-                                                                                                        "reveicerId": "",
-                                                                                                        "receiverTriggerType": "STATE",
-                                                                                                        "receiverTrigger": "STATE_TO_TEXT",
-                                                                                                        "conditionId": "cancel_add_cities",
-                                                                                                        "params": [
-                                                                                                            {
-                                                                                                                "name": "targetViewId",
-                                                                                                                "value": "view_02",
-                                                                                                                "type": "value"
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                ]
-                                                                                            },
-                                                                                            {
-                                                                                                "id": "grid_sender_05",
-                                                                                                "senderId": "view_02",
-                                                                                                "triggerType": "STATE",
-                                                                                                "trigger": "EDIT_ROW",
-                                                                                                "triggerMoment": "after",
-                                                                                                "sendData": [
-                                                                                                    {
-                                                                                                        "reveicerId": "",
-                                                                                                        "receiverTriggerType": "STATE",
-                                                                                                        "receiverTrigger": "STATE_TO_EDIT",
-                                                                                                        "params": [
-                                                                                                            {
-                                                                                                                "name": "targetViewId",
-                                                                                                                "value": "view_02",
-                                                                                                                "type": "value"
-                                                                                                            }
-                                                                                                        ]
-                                                                                                    }
-                                                                                                ]
-                                                                                            },
+                                                                                            // {
+                                                                                            //     "id": "view2_sender_1",
+                                                                                            //     "senderId": "view_02",
+                                                                                            //     "triggerType": "OPERATION",
+                                                                                            //     "trigger": "SAVE_ROW",
+                                                                                            //     "triggerMoment": "asyncAfter",
+                                                                                            //     "sendData": [
+                                                                                            //         {
+                                                                                            //             "reveicerId": "",
+                                                                                            //             "receiverTriggerType": "STATE",
+                                                                                            //             "receiverTrigger": "STATE_TO_TEXT",
+                                                                                            //             "params": [
+                                                                                            //                 {
+                                                                                            //                     "name": "targetViewId",
+                                                                                            //                     "value": "view_02",
+                                                                                            //                     "type": "value"
+                                                                                            //                 }
+                                                                                            //             ]
+                                                                                            //         }
+                                                                                            //     ]
+                                                                                            // },
+                                                                                            // {
+                                                                                            //     "id": "view2_sender_2",
+                                                                                            //     "senderId": "view_02",
+                                                                                            //     "triggerType": "OPERATION",
+                                                                                            //     "trigger": "SAVE_ROWS",
+                                                                                            //     "triggerMoment": "asyncAfter",
+                                                                                            //     "sendData": [
+                                                                                            //         {
+                                                                                            //             "reveicerId": "",
+                                                                                            //             "receiverTriggerType": "STATE",
+                                                                                            //             "receiverTrigger": "STATE_TO_TEXT",
+                                                                                            //             "params": [
+                                                                                            //                 {
+                                                                                            //                     "name": "targetViewId",
+                                                                                            //                     "value": "view_02",
+                                                                                            //                     "type": "value"
+                                                                                            //                 }
+                                                                                            //             ]
+                                                                                            //         }
+                                                                                            //     ]
+                                                                                            // },
+                                                                                            // {
+                                                                                            //     "id": "view2_sender_3",
+                                                                                            //     "senderId": "view_02",
+                                                                                            //     "triggerType": "STATE",
+                                                                                            //     "trigger": "CANCEL_EDIT_ROW",
+                                                                                            //     "triggerMoment": "after",
+                                                                                            //     "sendData": [
+                                                                                            //         {
+                                                                                            //             "reveicerId": "",
+                                                                                            //             "receiverTriggerType": "STATE",
+                                                                                            //             "receiverTrigger": "STATE_TO_TEXT",
+                                                                                            //             "conditionId": "cancel_edit_cities",
+                                                                                            //             "params": [
+                                                                                            //                 {
+                                                                                            //                     "name": "targetViewId",
+                                                                                            //                     "value": "view_02",
+                                                                                            //                     "type": "value"
+                                                                                            //                 }
+                                                                                            //             ]
+                                                                                            //         }
+                                                                                            //     ]
+                                                                                            // },
+                                                                                            // {
+                                                                                            //     "id": "view2_sender_04",
+                                                                                            //     "senderId": "view_02",
+                                                                                            //     "triggerType": "STATE",
+                                                                                            //     "trigger": "CANCEL_NEW_ROW",
+                                                                                            //     "triggerMoment": "after",
+                                                                                            //     "sendData": [
+                                                                                            //         {
+                                                                                            //             "reveicerId": "",
+                                                                                            //             "receiverTriggerType": "STATE",
+                                                                                            //             "receiverTrigger": "STATE_TO_TEXT",
+                                                                                            //             "conditionId": "cancel_add_cities",
+                                                                                            //             "params": [
+                                                                                            //                 {
+                                                                                            //                     "name": "targetViewId",
+                                                                                            //                     "value": "view_02",
+                                                                                            //                     "type": "value"
+                                                                                            //                 }
+                                                                                            //             ]
+                                                                                            //         }
+                                                                                            //     ]
+                                                                                            // },
+                                                                                            // {
+                                                                                            //     "id": "grid_sender_05",
+                                                                                            //     "senderId": "view_02",
+                                                                                            //     "triggerType": "STATE",
+                                                                                            //     "trigger": "EDIT_ROW",
+                                                                                            //     "triggerMoment": "after",
+                                                                                            //     "sendData": [
+                                                                                            //         {
+                                                                                            //             "reveicerId": "",
+                                                                                            //             "receiverTriggerType": "STATE",
+                                                                                            //             "receiverTrigger": "STATE_TO_EDIT",
+                                                                                            //             "params": [
+                                                                                            //                 {
+                                                                                            //                     "name": "targetViewId",
+                                                                                            //                     "value": "view_02",
+                                                                                            //                     "type": "value"
+                                                                                            //                 }
+                                                                                            //             ]
+                                                                                            //         }
+                                                                                            //     ]
+                                                                                            // },
                                                                                             {
                                                                                                 "id": "grid_sender_08",
                                                                                                 "senderId": "view_02",
@@ -3303,8 +3304,8 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                     {
                                                                                                         "beforeSend": {},
                                                                                                         "reveicerId": "",
-                                                                                                        "receiverTriggerType": "STATE",
-                                                                                                        "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+                                                                                                        "receiverTriggerType": "ACTION",
+                                                                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
                                                                                                         "params": [
                                                                                                             {
                                                                                                                 "name": "ID",
@@ -3461,6 +3462,11 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                         "beforeReceive": [],
                                                                                                         "triggerType": "STATE",
                                                                                                         "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
+                                                                                                    },
+                                                                                                    {
+                                                                                                        "beforeReceive": [],
+                                                                                                        "triggerType": "ACTION",
+                                                                                                        "trigger": "LOAD_REFRESH_DATA"
                                                                                                     }
                                                                                                 ]
                                                                                             }

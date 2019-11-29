@@ -10,7 +10,14 @@ import { Observable, BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-cn-form-search-select',
   templateUrl: './cn-form-search-select.component.html',
-  styleUrls: ['./cn-form-search-select.component.less']
+  // styleUrls: ['./cn-form-search-select.component.less'],
+  styles: [
+    `
+    .ant-form-item {
+      margin-bottom: 0px;
+    }
+    `
+  ]
 })
 export class CnFormSearchSelectComponent extends CnComponentBase implements OnInit, AfterViewInit {
 

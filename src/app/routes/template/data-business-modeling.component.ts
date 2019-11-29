@@ -67,18 +67,18 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     "span": 2
                 }
             ],
-            "extraItems": [
-                {
-                    "label": "已建模统计",
-                    "detail": "120",
-                    "span": "12"
-                },
-                {
-                    "label": "未建模统计",
-                    "detail": "1",
-                    "span": "12"
-                }
-            ],
+            // "extraItems": [
+            //     {
+            //         "label": "已建模统计",
+            //         "detail": "120",
+            //         "span": "12"
+            //     },
+            //     {
+            //         "label": "未建模统计",
+            //         "detail": "1",
+            //         "span": "12"
+            //     }
+            // ],
             "defaultLoading": true,
             "layout": {
                 "id": "4K0naM",
@@ -93,455 +93,16 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "col": "cc",
                                 "type": "col",
                                 "title": "",
-                                "span": 24,
+                                "span": 12,
                                 "container": "component",
+                                "noBorder": true,
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
                                     "nzMd": 24,
-                                    "nzLg": 24,
-                                    "nzXl": 24,
-                                    "nzXXl": 24
-                                },
-                                "component": {
-                                    "id": "view_business_search",
-                                    "type": "form",
-                                    "component": "form",
-                                    "state": "edit",
-                                    "loadingConfig": {
-                                        "id": "loadBusinessObject"
-                                    },
-                                    "cascade": {
-                                        "messageSender": [
-                                            // {
-                                            //     "id": "grid_sender_02",
-                                            //     "senderId": "view_business_search",
-                                            //     "triggerType": "ACTION",
-                                            //     "trigger": "VALUE_CHANGE",
-                                            //     "triggerMoment": "after",
-                                            //     "sendData": [
-                                            //         {
-                                            //             "beforeSend": {},
-                                            //             "reveicerId": "",
-                                            //             "receiverTriggerType": "BEHAVIOR",
-                                            //             "receiverTrigger": "REFRESH_AS_CHILD",
-                                            //             "params": [
-                                            //                 {
-                                            //                     "name": "_NAME",
-                                            //                     "type": "componentValue",
-                                            //                     "valueName": "name"
-                                            //                 }
-                                            //             ]
-                                            //         }
-                                            //     ]
-                                            // },
-                                            {
-                                                "id": "afterSelectValueChange",
-                                                "senderId": "view_business_search",
-                                                // "triggerType": "ACTION",
-                                                // "trigger": "VALUE_CHANGE",
-                                                // "triggerMoment": "after",
-                                                "sendData": [
-                                                    {
-                                                        "beforeSend": {},
-                                                        "reveicerId": "",
-                                                        "receiverTriggerType": "BEHAVIOR",
-                                                        "receiverTrigger": "LOAD_BY_FILTER",
-                                                        "params": [
-                                                            {
-                                                                "name": "_NAME",
-                                                                "type": "returnValue",
-                                                                "valueName": "_OPTION_NAME",
-                                                                "valueTo": "tempValue"
-                                                            }
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        ]
-                                        // "messageReceiver": [
-                                        //     {
-                                        //         "id": "",
-                                        //         "senderId": "view_tree_component_base",
-                                        //         "receiveData": [
-                                        //             {
-                                        //                 "beforeReceive": [],
-                                        //                 "triggerType": "BEHAVIOR",
-                                        //                 "trigger": "REFRESH_AS_CHILD",
-                                        //                 "params": [
-                                        //                     {
-                                        //                         "pname": "_ID",
-                                        //                         "cname": "_ID",
-                                        //                         "valueTo": "tempValue"
-                                        //                     }
-                                        //                 ]
-                                        //             }
-                                        //         ]
-                                        //     }
-                                        // ]
-                                    },
-                                    "cascadeValue": [
-                                        {
-                                            "type": "",
-                                            "controlId": "search_name",
-                                            "name": "name",
-                                            "CascadeObjects": [
-                                                {
-                                                    "controlId": "search_name",
-                                                    "cascadeName": "name",
-                                                    "cascadeItems": [
-                                                        {
-                                                            "type": "default",
-                                                            "content": {
-                                                                "type": "relation",
-                                                                "sender": {
-                                                                    "name": "validation",
-                                                                    "message": "message.ajax.state.success",
-                                                                    "senderId": "afterSelectValueChange"
-                                                                },
-                                                                "data": {
-                                                                    "option": [
-                                                                        {
-                                                                            "name": "_OPTION_NAME",
-                                                                            "type": "selectObjectValue",
-                                                                            "valueName": "name"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "",
-                                            "controlId": "res_ref_id",
-                                            "name": "refResourceId",
-                                            "CascadeObjects": [
-                                                {
-                                                    "controlId": "res_refField",
-                                                    "cascadeName": "refParentResourcePropId",
-                                                    "cascadeItems": [
-                                                        {
-                                                            "type": "default",
-                                                            "content": {
-                                                                "type": "ajax",
-                                                                "data": {
-                                                                    "option": [
-                                                                        {
-                                                                            "name": "_TABLE_ID",
-                                                                            "type": "selectValue",
-                                                                            "valueName": "id"
-                                                                        }
-                                                                    ]
-                                                                }
-                                                            }
-                                                        }
-
-                                                    ]
-                                                }
-                                            ],
-                                        },
-                                        // {
-                                        //     "type": "",
-                                        //     "controlId": "res_refSQL",
-                                        //     "name": "sqlList",
-                                        //     "CascadeObjects": [
-                                        //         {
-                                        //             "controlId": "res_refSQL",
-                                        //             "cascadeName": "sqlList",
-                                        //             "cascadeItems": [
-                                        //                 {
-                                        //                     "type": "default",
-                                        //                     "content": {
-                                        //                         "type": "setValue",
-                                        //                         "data": {
-                                        //                             "option": [
-                                        //                                 {
-                                        //                                     // "name": "_TYPE",
-                                        //                                     "type": "dataList",
-                                        //                                     // "valueName": "refResourceType"
-                                        //                                 }
-                                        //                             ]
-                                        //                         }
-                                        //                     }
-                                        //                 }
-
-                                        //             ]
-                                        //         }
-                                        //     ]
-                                        // }
-                                    ],
-                                    "formLayout": {
-                                        "id": "b86s2i",
-                                        "type": "layout",
-                                        "title": "表单布局b86s2i",
-                                        "rows": [
-                                            {
-                                                "id": "MefhXa",
-                                                "type": "row",
-                                                "cols": [
-                                                    {
-                                                        "id": "col_2",
-                                                        "col": "cc",
-                                                        "type": "col",
-                                                        "title": "列ioj0mV",
-                                                        "span": 12,
-                                                        "layoutContain": "select",
-                                                        "size": {
-                                                            "nzXs": 24,
-                                                            "nzSm": 24,
-                                                            "nzMd": 12,
-                                                            "nzLg": 12,
-                                                            "ngXl": 12,
-                                                            "nzXXl": 12
-                                                        },
-                                                        "control": {
-                                                            "id": "search_name"
-                                                        }
-                                                    },
-                                                    // {
-                                                    //     "id": "col_2",
-                                                    //     "col": "cc",
-                                                    //     "type": "col",
-                                                    //     "title": "列ioj0mV",
-                                                    //     "span": 12,
-                                                    //     "layoutContain": "select",
-                                                    //     "size": {
-                                                    //         "nzXs": 24,
-                                                    //         "nzSm": 24,
-                                                    //         "nzMd": 12,
-                                                    //         "nzLg": 12,
-                                                    //         "ngXl": 12,
-                                                    //         "nzXXl": 12
-                                                    //     },
-                                                    //     "control": {
-                                                    //         "id": "search_reset"
-                                                    //     }
-                                                    // }
-                                                ]
-                                            }
-                                        ]
-                                    },
-                                    "formControls": [
-                                        {
-                                            "id": "search_name",
-                                            "hidden": false,
-                                            "title": "业务名称",
-                                            "titleConfig": {
-                                                "required": false
-                                            },
-                                            "field": "name",
-                                            "labelSize": {
-                                                "span": 6,
-                                                "nzXs": 6,
-                                                "nzSm": 6,
-                                                "nzMd": 6,
-                                                "nzLg": 6,
-                                                "ngXl": 6,
-                                                "nzXXl": 6
-                                            },
-                                            "controlSize": {
-                                                "span": 18,
-                                                "nzXs": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "nzSm": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "nzMd": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "nzLg": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "ngXl": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "nzXXl": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                }
-                                            },
-                                            "state": "edit",
-                                            "text": {
-                                                "type": "label",
-                                                "field": "name"
-                                            },
-                                            "editor": {
-                                                "type": "searchSelect",
-                                                "field": "name",
-                                                "showSearch": true,
-                                                "serverSearch": true,
-                                                "loadingConfig": {
-                                                    "id": "loadBusinessNameValue"
-                                                },
-                                                "labelName": "name",
-                                                "valueName": "id",
-                                                "placeholder": "请输入查找内容..."
-                                            }
-                                        },
-                                        {
-                                            "id": "search_reset",
-                                            "hidden": false,
-                                            "title": "重置查询",
-                                            "size": "default",
-                                            "icon": "zoom-in",
-                                            "style": "dashed",
-                                            "titleConfig": {
-                                                "required": true
-                                            },
-                                            "field": "refResourceKeyName",
-                                            "labelSize": {
-                                                "span": 6,
-                                                "nzXs": 6,
-                                                "nzSm": 6,
-                                                "nzMd": 6,
-                                                "nzLg": 6,
-                                                "ngXl": 6,
-                                                "nzXXl": 6
-                                            },
-                                            "controlSize": {
-                                                "span": 18,
-                                                "nzXs": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "nzSm": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "nzMd": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "nzLg": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "ngXl": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                },
-                                                "nzXXl": {
-                                                    "span": 18,
-                                                    "offset": 0
-                                                }
-                                            },
-                                            "state": "edit",
-                                            "text": {
-                                                "type": "button",
-                                                "field": "cancel"
-                                            },
-                                            "editor": {
-                                                "field": "cancel",
-                                                "type": "button",
-                                            }
-                                        }
-                                    ],
-                                    "formControlsPermissions": [
-                                        {
-                                            "formState": "new",
-                                            "formStateContent": {
-                                                "isLoad": false,
-                                                "loadAjax": {},
-                                                "isDefault": true
-                                            },
-                                            "Controls": [
-                                                {
-                                                    "id": "search_name",
-                                                    "state": "edit",
-                                                    "hidden": false,
-                                                    "readOnly": false
-                                                },
-                                                // {
-                                                //     "id": "search_reset",
-                                                //     "state": "edit",
-                                                //     "hidden": false,
-                                                //     "readOnly": false
-                                                // }
-                                            ]
-                                        },
-                                        {
-                                            "formState": "edit",
-                                            "Controls": [
-                                                {
-                                                    "id": "search_name",
-                                                    "state": "edit",
-                                                    "hidden": false,
-                                                    "readOnly": false
-                                                },
-                                                // {
-                                                //     "id": "search_reset",
-                                                //     "state": "edit",
-                                                //     "hidden": false,
-                                                //     "readOnly": false
-                                                // }
-                                            ]
-                                        },
-                                        {
-                                            "formState": "text",
-                                            "Controls": [
-                                                {
-                                                    "id": "search_name",
-                                                    "state": "edit",
-                                                    "hidden": false,
-                                                    "readOnly": false
-                                                },
-                                                // {
-                                                //     "id": "search_reset",
-                                                //     "state": "edit",
-                                                //     "hidden": false,
-                                                //     "readOnly": false
-                                                // }
-                                            ]
-                                        }
-                                    ],
-                                    "ajaxConfig": [
-                                        {
-                                            "id": "loadBusinessNameValue",
-                                            "url": "sd/GET_BUSINESS_MAIN_LIST/query",
-                                            "urlType": "inner",
-                                            "ajaxType": "get",
-                                            "params": [
-                                                {
-                                                    "name": "name",
-                                                    "search": true,
-                                                    "conditionType": "ctn"
-                                                },
-                                                {
-                                                    "name": "_mapToObject",
-                                                    "type": "value",
-                                                    "value": true
-                                                }
-                                            ],
-                                            "outputParameters": [],
-                                            "result": []
-
-                                        }
-                                    ]
-                                }
-                            },
-                            {
-                                "id": "r5zDHB2-1",
-                                "col": "cc",
-                                "type": "col",
-                                "title": "",
-                                "span": 24,
-                                "container": "component",
-                                "size": {
-                                    "nzXs": 24,
-                                    "nzSm": 24,
-                                    "nzMd": 24,
-                                    "nzLg": 24,
-                                    "nzXl": 24,
-                                    "nzXXl": 24
+                                    "nzLg": 14,
+                                    "nzXl": 14,
+                                    "nzXXl": 14
                                 },
                                 "component": {
                                     "id": "toolbar_business_main",
@@ -1014,7 +575,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 },
                                                 {
                                                     "id": "M_addRow",
-                                                    "text": "新增业务资源",
+                                                    "text": "创建资源",
                                                     "icon": "plus",
                                                     "color": "text-primary",
                                                     "hidden": false,
@@ -1043,7 +604,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 },
                                                 {
                                                     "id": "M_updateRow",
-                                                    "text": "修改",
+                                                    "text": "编辑资源",
                                                     "icon": "edit",
                                                     "color": "text-success",
                                                     "hidden": false,
@@ -1090,9 +651,9 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 },
                                                 {
                                                     "id": "M_deleteRow1",
-                                                    "text": "建模",
+                                                    "text": "发布资源",
                                                     "icon": "build",
-                                                    "color": "text-red-light",
+                                                    "color": "primary",
                                                     "hidden": false,
                                                     "disabled": false,
                                                     "execute": [
@@ -1106,9 +667,9 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 },
                                                 {
                                                     "id": "M_deleteRow1",
-                                                    "text": "取消建模",
+                                                    "text": "取消发布",
                                                     "icon": "build",
-                                                    "color": "text-red-light",
+                                                    "color": "dashed",
                                                     "hidden": false,
                                                     "disabled": false,
                                                     "execute": [
@@ -1239,48 +800,436 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         //         },
                                         //     ]
                                         // },
+                                        // {
+                                        //     "targetViewId": "view_02",
+                                        //     "group": [
+                                        //         {
+                                        //             "name": "M_addSearchRow",
+                                        //             "text": "查询",
+                                        //             "triggerType": "STATE",
+                                        //             "trigger": "SEARCH_ROW",
+                                        //             "actionName": "addSearchRow",
+                                        //             "icon": "search",
+                                        //             "color": "text-primary",
+                                        //             "hidden": false,
+                                        //             "disabled": false,
+                                        //             "execute": [
+                                        //                 {
+                                        //                     "triggerType": "STATE",
+                                        //                     "trigger": "SEARCH_ROW"
+                                        //                 }
+                                        //             ]
+                                        //         },
+                                        //         {
+                                        //             "name": "M_cancelSearchRow",
+                                        //             "text": "取消查询",
+                                        //             "icon": "rollback",
+                                        //             "triggerType": "STATE",
+                                        //             "trigger": "CANCEL_SEARCH_ROW",
+                                        //             "actionName": "cancelSearchRow",
+                                        //             "color": "text-grey-darker",
+                                        //             "hidden": false,
+                                        //             "disabled": false,
+                                        //             "execute": [
+                                        //                 {
+                                        //                     "triggerType": "STATE",
+                                        //                     "trigger": "SEARCH_ROW"
+                                        //                 }
+                                        //             ],
+                                        //         }
+                                        //     ]
+                                        // }
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "r5zDHB2-1",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 12,
+                                "noBorder": true,
+                                "container": "component",
+                                "size": {
+                                    "nzXs": 24,
+                                    "nzSm": 24,
+                                    "nzMd": 24,
+                                    "nzLg": 10,
+                                    "nzXl": 10,
+                                    "nzXXl": 10
+                                },
+                                "component": {
+                                    "id": "view_business_search",
+                                    "type": "form",
+                                    "component": "form",
+                                    "state": "edit",
+
+                                    "loadingConfig": {
+                                        "id": "loadBusinessObject"
+                                    },
+                                    "cascade": {
+                                        "messageSender": [
+                                            // {
+                                            //     "id": "grid_sender_02",
+                                            //     "senderId": "view_business_search",
+                                            //     "triggerType": "ACTION",
+                                            //     "trigger": "VALUE_CHANGE",
+                                            //     "triggerMoment": "after",
+                                            //     "sendData": [
+                                            //         {
+                                            //             "beforeSend": {},
+                                            //             "reveicerId": "",
+                                            //             "receiverTriggerType": "BEHAVIOR",
+                                            //             "receiverTrigger": "REFRESH_AS_CHILD",
+                                            //             "params": [
+                                            //                 {
+                                            //                     "name": "_NAME",
+                                            //                     "type": "componentValue",
+                                            //                     "valueName": "name"
+                                            //                 }
+                                            //             ]
+                                            //         }
+                                            //     ]
+                                            // },
+                                            {
+                                                "id": "afterSelectValueChange",
+                                                "senderId": "view_business_search",
+                                                // "triggerType": "ACTION",
+                                                // "trigger": "VALUE_CHANGE",
+                                                // "triggerMoment": "after",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "BEHAVIOR",
+                                                        "receiverTrigger": "LOAD_BY_FILTER",
+                                                        "params": [
+                                                            {
+                                                                "name": "_NAME",
+                                                                "type": "returnValue",
+                                                                "valueName": "_OPTION_NAME",
+                                                                "valueTo": "tempValue"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                        // "messageReceiver": [
+                                        //     {
+                                        //         "id": "",
+                                        //         "senderId": "view_tree_component_base",
+                                        //         "receiveData": [
+                                        //             {
+                                        //                 "beforeReceive": [],
+                                        //                 "triggerType": "BEHAVIOR",
+                                        //                 "trigger": "REFRESH_AS_CHILD",
+                                        //                 "params": [
+                                        //                     {
+                                        //                         "pname": "_ID",
+                                        //                         "cname": "_ID",
+                                        //                         "valueTo": "tempValue"
+                                        //                     }
+                                        //                 ]
+                                        //             }
+                                        //         ]
+                                        //     }
+                                        // ]
+                                    },
+                                    "cascadeValue": [
                                         {
-                                            "targetViewId": "view_02",
-                                            "group": [
+                                            "type": "",
+                                            "controlId": "search_name",
+                                            "name": "name",
+                                            "CascadeObjects": [
                                                 {
-                                                    "name": "M_addSearchRow",
-                                                    "text": "查询",
-                                                    "triggerType": "STATE",
-                                                    "trigger": "SEARCH_ROW",
-                                                    "actionName": "addSearchRow",
-                                                    "icon": "search",
-                                                    "color": "text-primary",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
+                                                    "controlId": "search_name",
+                                                    "cascadeName": "name",
+                                                    "cascadeItems": [
                                                         {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "SEARCH_ROW"
+                                                            "type": "default",
+                                                            "content": {
+                                                                "type": "relation",
+                                                                "sender": {
+                                                                    "name": "validation",
+                                                                    "message": "message.ajax.state.success",
+                                                                    "senderId": "afterSelectValueChange"
+                                                                },
+                                                                "data": {
+                                                                    "option": [
+                                                                        {
+                                                                            "name": "_OPTION_NAME",
+                                                                            "type": "selectObjectValue",
+                                                                            "valueName": "name"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
                                                         }
                                                     ]
-                                                },
-                                                {
-                                                    "name": "M_cancelSearchRow",
-                                                    "text": "取消查询",
-                                                    "icon": "rollback",
-                                                    "triggerType": "STATE",
-                                                    "trigger": "CANCEL_SEARCH_ROW",
-                                                    "actionName": "cancelSearchRow",
-                                                    "color": "text-grey-darker",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "SEARCH_ROW"
-                                                        }
-                                                    ],
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "type": "",
+                                            "controlId": "res_ref_id",
+                                            "name": "refResourceId",
+                                            "CascadeObjects": [
+                                                {
+                                                    "controlId": "res_refField",
+                                                    "cascadeName": "refParentResourcePropId",
+                                                    "cascadeItems": [
+                                                        {
+                                                            "type": "default",
+                                                            "content": {
+                                                                "type": "ajax",
+                                                                "data": {
+                                                                    "option": [
+                                                                        {
+                                                                            "name": "_TABLE_ID",
+                                                                            "type": "selectValue",
+                                                                            "valueName": "id"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        }
+
+                                                    ]
+                                                }
+                                            ],
+                                        },
+                                        // {
+                                        //     "type": "",
+                                        //     "controlId": "res_refSQL",
+                                        //     "name": "sqlList",
+                                        //     "CascadeObjects": [
+                                        //         {
+                                        //             "controlId": "res_refSQL",
+                                        //             "cascadeName": "sqlList",
+                                        //             "cascadeItems": [
+                                        //                 {
+                                        //                     "type": "default",
+                                        //                     "content": {
+                                        //                         "type": "setValue",
+                                        //                         "data": {
+                                        //                             "option": [
+                                        //                                 {
+                                        //                                     // "name": "_TYPE",
+                                        //                                     "type": "dataList",
+                                        //                                     // "valueName": "refResourceType"
+                                        //                                 }
+                                        //                             ]
+                                        //                         }
+                                        //                     }
+                                        //                 }
+
+                                        //             ]
+                                        //         }
+                                        //     ]
+                                        // }
+                                    ],
+                                    "formLayout": {
+                                        "id": "b86s2i",
+                                        "type": "layout",
+                                        "title": "表单布局b86s2i",
+                                        "rows": [
+                                            {
+                                                "id": "MefhXa",
+                                                "type": "row",
+                                                "cols": [
+                                                    {
+                                                        "id": "col_2",
+                                                        "col": "cc",
+                                                        "type": "col",
+                                                        "title": "列ioj0mV",
+                                                        "span": 24,
+                                                        "layoutContain": "select",
+                                                        "size": {
+                                                            "nzXs": 24,
+                                                            "nzSm": 24,
+                                                            "nzMd": 24,
+                                                            "nzLg": 24,
+                                                            "ngXl": 24,
+                                                            "nzXXl": 24
+                                                        },
+                                                        "control": {
+                                                            "id": "search_name"
+                                                        }
+                                                    },
+                                                    // {
+                                                    //     "id": "col_2",
+                                                    //     "col": "cc",
+                                                    //     "type": "col",
+                                                    //     "title": "列ioj0mV",
+                                                    //     "span": 12,
+                                                    //     "layoutContain": "select",
+                                                    //     "size": {
+                                                    //         "nzXs": 24,
+                                                    //         "nzSm": 24,
+                                                    //         "nzMd": 12,
+                                                    //         "nzLg": 12,
+                                                    //         "ngXl": 12,
+                                                    //         "nzXXl": 12
+                                                    //     },
+                                                    //     "control": {
+                                                    //         "id": "search_reset"
+                                                    //     }
+                                                    // }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "formControls": [
+                                        {
+                                            "id": "search_name",
+                                            "hidden": false,
+                                            "title": "查询",
+                                            "noColon": true,
+                                            "hiddenLabel": true,
+                                            "titleConfig": {
+                                                "required": false
+                                            },
+                                            "field": "name",
+                                            "labelSize": {
+                                                "span": 6,
+                                                "nzXs": 6,
+                                                "nzSm": 6,
+                                                "nzMd": 6,
+                                                "nzLg": 6,
+                                                "ngXl": 6,
+                                                "nzXXl": 6
+                                            },
+                                            "controlSize": {
+                                                "span": 24,
+                                                "nzXs": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "nzSm": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "nzMd": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "nzLg": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "ngXl": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "nzXXl": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                }
+                                            },
+                                            "state": "edit",
+                                            "text": {
+                                                "type": "label",
+                                                "field": "name"
+                                            },
+                                            "editor": {
+                                                "type": "searchSelect",
+                                                "field": "name",
+                                                "showSearch": true,
+                                                "serverSearch": true,
+                                                "loadingConfig": {
+                                                    "id": "loadBusinessNameValue"
+                                                },
+                                                "labelName": "name",
+                                                "valueName": "id",
+                                                "placeholder": "请输入查找内容..."
+                                            }
+                                        }
+                                    ],
+                                    "formControlsPermissions": [
+                                        {
+                                            "formState": "new",
+                                            "formStateContent": {
+                                                "isLoad": false,
+                                                "loadAjax": {},
+                                                "isDefault": true
+                                            },
+                                            "Controls": [
+                                                {
+                                                    "id": "search_name",
+                                                    "state": "edit",
+                                                    "hidden": false,
+                                                    "readOnly": false
+                                                },
+                                                // {
+                                                //     "id": "search_reset",
+                                                //     "state": "edit",
+                                                //     "hidden": false,
+                                                //     "readOnly": false
+                                                // }
+                                            ]
+                                        },
+                                        {
+                                            "formState": "edit",
+                                            "Controls": [
+                                                {
+                                                    "id": "search_name",
+                                                    "state": "edit",
+                                                    "hidden": false,
+                                                    "readOnly": false
+                                                },
+                                                // {
+                                                //     "id": "search_reset",
+                                                //     "state": "edit",
+                                                //     "hidden": false,
+                                                //     "readOnly": false
+                                                // }
+                                            ]
+                                        },
+                                        {
+                                            "formState": "text",
+                                            "Controls": [
+                                                {
+                                                    "id": "search_name",
+                                                    "state": "edit",
+                                                    "hidden": false,
+                                                    "readOnly": false
+                                                },
+                                                // {
+                                                //     "id": "search_reset",
+                                                //     "state": "edit",
+                                                //     "hidden": false,
+                                                //     "readOnly": false
+                                                // }
+                                            ]
+                                        }
+                                    ],
+                                    "ajaxConfig": [
+                                        {
+                                            "id": "loadBusinessNameValue",
+                                            "url": "sd/GET_BUSINESS_MAIN_LIST/query",
+                                            "urlType": "inner",
+                                            "ajaxType": "get",
+                                            "params": [
+                                                {
+                                                    "name": "name",
+                                                    "search": true,
+                                                    "conditionType": "ctn"
+                                                },
+                                                {
+                                                    "name": "_mapToObject",
+                                                    "type": "value",
+                                                    "value": true
+                                                }
+                                            ],
+                                            "outputParameters": [],
+                                            "result": []
+
                                         }
                                     ]
                                 }
                             },
+
                             {
                                 "id": "r5zDHB",
                                 "col": "cc",
@@ -1288,6 +1237,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "title": "",
                                 "span": 24,
                                 "container": "component",
+                                "noBorder": true,
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
@@ -2294,6 +2244,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "title": "",
                                 "span": 24,
                                 "container": "component",
+                                "noBorder": true,
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
@@ -4030,6 +3981,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "title": "",
                                 "span": 16,
                                 "container": "component",
+                                "noBorder": true,
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
@@ -5084,6 +5036,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "title": "",
                                 "span": 8,
                                 "container": "component",
+                                "noBorder": true,
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,

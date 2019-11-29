@@ -86,7 +86,7 @@
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: list }"></ng-container>
   <ng-template #menuTpl let-menus>
     <ng-container *ngFor="let menu of menus">
-      <li nz-submenu [nzPaddingLeft]="menu.level * 24"
+      <li nz-submenu [nzPaddingLeft]="menu.level * 16"
         *ngIf="menu.children && menu.children.length > 0; else menuItemTpl">
         <span title>
           <i nz-icon [nzType]="menu.icon.value" *ngIf="menu.icon"></i>
@@ -97,7 +97,7 @@
         </ul>
       </li>
       <ng-template #menuItemTpl>
-        <li nz-menu-item [nzPaddingLeft]="menu.level > 3 ? menu.level * 24 : (menu.level * 24) + 12"
+        <li nz-menu-item [nzPaddingLeft]="menu.level > 3 ? menu.level * 18 : (menu.level * 18 ) + 12"
           (click)="onClick(menu)">
           <span title>
             <i nz-icon [nzType]="menu.icon.value" *ngIf="menu.icon" [theme]="'outline'"></i>

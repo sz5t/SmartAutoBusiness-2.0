@@ -798,7 +798,7 @@ export class StepsDemoComponent extends CnComponentBase implements OnInit {
                                             id: "3vlDRq",
                                             type: "row"
                                         }
-                                    ],
+                                    ]
                                 },
                                 {
                                     "id": "step_2",
@@ -1502,7 +1502,7 @@ export class StepsDemoComponent extends CnComponentBase implements OnInit {
                                             id: "3vlDRq",
                                             type: "row"
                                         }
-                                    ],
+                                    ]
                                 },
                                 {
                                     "id": "step_3",
@@ -3283,7 +3283,7 @@ export class StepsDemoComponent extends CnComponentBase implements OnInit {
                                             id: "3vlDRq",
                                             type: "row"
                                         }
-                                    ],
+                                    ]
                                 },
                                 {
                                     "id": "step_2",

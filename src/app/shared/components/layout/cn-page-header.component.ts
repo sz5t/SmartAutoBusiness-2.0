@@ -22,7 +22,9 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
     
           .content {
             flex: 1;
+            margin-top:8px;
           }
+
     
           .content.padding {
             padding-left: 40px;
@@ -31,6 +33,7 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
           .extra-content {
             min-width: 240px;
             text-align: right;
+   
           }
     
           .extra-content .label {
@@ -44,6 +47,12 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
             color: rgba(0, 0, 0, 0.85);
             line-height: 28px;
           }
+
+          nz-page-header-content{
+            
+          }
+
+
         `
     ]
 })

@@ -5,7 +5,7 @@ declare let CodeMirror: any;
 @Component({
   selector: 'cn-code-edit,[cn-code-edit]',
   templateUrl: './cn-form-code-edit.component.html',
-  encapsulation: ViewEncapsulation.None ,
+  encapsulation: ViewEncapsulation.Native,
   styleUrls: ['./cn-form-code-edit.component.css']
 })
 // encapsulation: ViewEncapsulation.None Native Emulated ,
@@ -18,17 +18,17 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
   _value = null;
   isSpinning = true;
   editor;
-  divstyle={width:'100%',height:'330px'};
+  divstyle = { width: '100%', height: '330px' };
   constructor(
     private http: _HttpClient
   ) { }
 
   ngOnInit() {
-   if( this.config.height){
-   this. divstyle.height = this.interpret( this.config.height);
-   }
+    if (this.config.height) {
+      this.divstyle.height = this.interpret(this.config.height);
+    }
   }
-   interpret(val) {
+  interpret(val) {
     return typeof val === "number" || /^\d+$/.test(String(val)) ? val + "px" : val;
   }
 
@@ -42,7 +42,7 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
       this.editor = CodeMirror.fromTextArea(this.codeEditor.nativeElement, {
         mode: this.config.mode,
         readOnly: this.config.readOnly,
-        styleActiveLine:true,
+        styleActiveLine: true,
         highlightFormatting: true,
         indentWithTabs: true,
         smartIndent: true,
@@ -57,11 +57,11 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
           }
         }
       });
-      if(this.config.height){
-        this.editor.setSize(null,this.config.height);
+      if (this.config.height) {
+        this.editor.setSize(null, this.config.height);
       }
       this.isSpinning = false;
-  
+
       // this.editor.on("cursorActivity",  () =>{
       //   // 调用显示提示
       //  console.log('cursorActivity');
@@ -71,7 +71,7 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
         // console.log('blur',this.getValue());
         this.onblur();
       });
-  
+
       this.setValue(this._value);
     });
 
@@ -79,7 +79,7 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
 
 
   public getValue() {
-    if( this.editor){
+    if (this.editor) {
       return this.editor.getValue();
     } else {
       return this._value;
@@ -88,20 +88,20 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
   }
 
   public setValue(data?) {
-    if(!data) 
-    data="";
-    if( this.editor)
-    this.editor.setValue(data);
+    if (!data)
+      data = "";
+    if (this.editor)
+      this.editor.setValue(data);
   }
 
 
   public valueChange(v?) {
 
-   // console.log('sql', v);
+    // console.log('sql', v);
     if (v) {
       if (v !== this._value) {
         this._value = v;
-          this.setValue(this._value);
+        this.setValue(this._value);
       }
     } else {
       this._value = "";
@@ -126,7 +126,7 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
   // 组装值
   public assemblyValue() {
     this._value = this.getValue();
-  //  console.log('组装值', this._value);
+    //  console.log('组装值', this._value);
     this.value = this._value;
     //  this.valueChange( this._value );
   }

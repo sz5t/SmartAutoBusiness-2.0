@@ -67,18 +67,18 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                     "span": 2
                 }
             ],
-            "extraItems": [
-                {
-                    "label": "已建模统计",
-                    "detail": "120",
-                    "span": "12"
-                },
-                {
-                    "label": "未建模统计",
-                    "detail": "1",
-                    "span": "12"
-                }
-            ],
+            // "extraItems": [
+            //     {
+            //         "label": "已建模统计",
+            //         "detail": "120",
+            //         "span": "12"
+            //     },
+            //     {
+            //         "label": "未建模统计",
+            //         "detail": "1",
+            //         "span": "12"
+            //     }
+            // ],
             "defaultLoading": true,
             "layout": {
                 "id": "4K0naM",
@@ -93,15 +93,16 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 "col": "cc",
                                 "type": "col",
                                 "title": "",
-                                "span": 24,
+                                "span": 14,
+                                "noBorder": true,
                                 "container": "component",
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
                                     "nzMd": 24,
-                                    "nzLg": 24,
-                                    "nzXl": 24,
-                                    "nzXXl": 24
+                                    "nzLg": 14,
+                                    "nzXl": 14,
+                                    "nzXXl": 14
                                 },
                                 "component": {
                                     "id": "toolbar_001",
@@ -837,24 +838,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         }
                                                     ]
                                                 },
-                                                // {
-                                                //     "id": "M_addRow",
-                                                //     "text": "新增表资源",
-                                                //     "icon": "plus",
-                                                //     "color": "text-primary",
-                                                //     "hidden": false,
-                                                //     "disabled": false,
-                                                //     "execute": [
-                                                //         {
-                                                //             "triggerType": "STATE",
-                                                //             "trigger": "ADD_ROW",
-                                                //             // "conditionId": "add_state_1"
-                                                //         }
-                                                //     ]
-                                                // },
                                                 {
                                                     "id": "M_addRowForm",
-                                                    "text": "新增表资源",
+                                                    "text": "创建资源",
                                                     "state": "new",
                                                     "icon": "plus",
                                                     "color": "text-primary",
@@ -872,7 +858,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 },
                                                 {
                                                     "id": "M_editRowForm",
-                                                    "text": "修改表资源",
+                                                    "text": "编辑资源",
                                                     "state": "edit",
                                                     "icon": "edit",
                                                     "color": "text-primary",
@@ -886,68 +872,6 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                             "dialogId": "edit_data_table_form",
                                                             "ajaxId": "form_edit_data_table",
                                                             "changeValueId": "edit_form_data_table_changeValue"
-                                                        }
-                                                    ]
-                                                },
-                                                // {
-                                                //     "id": "M_updateRow",
-                                                //     "text": "修改",
-                                                //     "icon": "edit",
-                                                //     "color": "text-success",
-                                                //     "hidden": false,
-                                                //     "disabled": false,
-                                                //     "state": "text",
-                                                //     "execute": [
-                                                //         {
-                                                //             "triggerType": "STATE",
-                                                //             "trigger": "EDIT_ROWS",
-                                                //             "conditionId": "edit_data_tables_state"
-                                                //         }
-                                                //     ],
-                                                //     "toggle": {
-                                                //         "type": "state",
-                                                //         "toggleProperty": "hidden",
-                                                //         "values": [
-                                                //             {
-                                                //                 "name": "edit",
-                                                //                 "value": true
-                                                //             },
-                                                //             {
-                                                //                 "name": "text",
-                                                //                 "value": false
-                                                //             }
-                                                //         ]
-                                                //     }
-                                                // },
-                                                {
-                                                    "id": "M_modeling",
-                                                    "text": "建模",
-                                                    "icon": "table",
-                                                    "color": "text-red-light",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE_SELECTED_ROW",
-                                                            // "conditionId": "delete_operation_1",
-                                                            "ajaxId": "create_modeling"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "M_cancel_modeling",
-                                                    "text": "取消建模",
-                                                    "icon": "line",
-                                                    "color": "text-red-light",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE_SELECTED_ROW",
-                                                            // "conditionId": "delete_operation_1",
-                                                            "ajaxId": "cancel_create_modeling"
                                                         }
                                                     ]
                                                 },
@@ -967,126 +891,387 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         }
                                                     ]
                                                 },
-                                                // {
-                                                //     "id": "M_saveRow",
-                                                //     "text": "保存",
-                                                //     "icon": "save",
-                                                //     "color": "text-primary",
-                                                //     "hidden": true,
-                                                //     "disabled": false,
-                                                //     "execute": [
-                                                //         {
-                                                //             "triggerType": "OPERATION",
-                                                //             "trigger": "SAVE_ROWS",
-                                                //             "ajaxId": "add_data_tables",
-                                                //             // "stateId": "add_save_1",
-                                                //             "conditionId": "add_data_table_condition"
-                                                //         },
-                                                //         {
-                                                //             "triggerType": "OPERATION",
-                                                //             "trigger": "SAVE_ROWS",
-                                                //             "ajaxId": "edit_data_table_condition",
-                                                //             // "stateId": "edit_data_tables",
-                                                //             "conditionId": ""
-                                                //         }
-                                                //     ],
-                                                //     "toggle": {
-                                                //         "type": "state",
-                                                //         "toggleProperty": "hidden",
-                                                //         "values": [
-                                                //             {
-                                                //                 "name": "edit",
-                                                //                 "value": false
-                                                //             },
-                                                //             {
-                                                //                 "name": "text",
-                                                //                 "value": true
-                                                //             },
-                                                //             {
-                                                //                 "name": "new",
-                                                //                 "value": false
-                                                //             }
-                                                //         ]
-                                                //     }
-                                                // },
-                                                // {
-                                                //     "id": "M_cancelrow",
-                                                //     "text": "取消1",
-                                                //     "state": "edit",
-                                                //     "icon": "rollback",
-                                                //     "color": "text-grey-darker",
-                                                //     "hidden": true,
-                                                //     "disabled": null,
-                                                //     "execute": [
-                                                //         {
-                                                //             "triggerType": "STATE",
-                                                //             "trigger": "CANCEL_EDIT_ROWS",
-                                                //             "conditionId": "edit_data_tables_cancel_2"
-                                                //         },
-                                                //         {
-                                                //             "triggerType": "STATE",
-                                                //             "trigger": "CANCEL_NEW_ROWS"
-                                                //         }
-                                                //     ],
-                                                //     "toggle": {
-                                                //         "type": "state",
-                                                //         "toggleProperty": "hidden",
-                                                //         "values": [
-                                                //             {
-                                                //                 "name": "edit",
-                                                //                 "value": false
-                                                //             },
-                                                //             {
-                                                //                 "name": "text",
-                                                //                 "value": true
-                                                //             },
-                                                //             {
-                                                //                 "name": "new",
-                                                //                 "value": false
-                                                //             }
-                                                //         ]
-                                                //     }
-                                                // }
-                                            ]
-                                        },
-                                        {
-                                            "targetViewId": "view_data_columns",
-                                            "group": [
                                                 {
-                                                    "name": "M_addSearchRow",
-                                                    "text": "查询",
-                                                    "triggerType": "STATE",
-                                                    "trigger": "SEARCH_ROW",
-                                                    "actionName": "addSearchRow",
-                                                    "icon": "search",
-                                                    "color": "text-primary",
+                                                    "id": "M_modeling",
+                                                    "text": "发布资源",
+                                                    "icon": "table",
+                                                    "type": "primary",
+                                                    "color": "primary",
                                                     "hidden": false,
                                                     "disabled": false,
                                                     "execute": [
                                                         {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "SEARCH_ROW"
+                                                            "triggerType": "OPERATION",
+                                                            "trigger": "EXECUTE_SELECTED_ROW",
+                                                            // "conditionId": "delete_operation_1",
+                                                            "ajaxId": "create_modeling"
                                                         }
                                                     ]
                                                 },
                                                 {
-                                                    "name": "M_cancelSearchRow",
-                                                    "text": "取消查询",
-                                                    "icon": "rollback",
-                                                    "triggerType": "STATE",
-                                                    "trigger": "CANCEL_SEARCH_ROW",
-                                                    "actionName": "cancelSearchRow",
-                                                    "color": "text-grey-darker",
+                                                    "id": "M_cancel_modeling",
+                                                    "text": "取消发布",
+                                                    "icon": "line",
+                                                    "color": "text-red-light",
                                                     "hidden": false,
                                                     "disabled": false,
                                                     "execute": [
                                                         {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "SEARCH_ROW"
+                                                            "triggerType": "OPERATION",
+                                                            "trigger": "EXECUTE_SELECTED_ROW",
+                                                            // "conditionId": "delete_operation_1",
+                                                            "ajaxId": "cancel_create_modeling"
                                                         }
-                                                    ],
+                                                    ]
                                                 }
                                             ]
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "id": "r5zDHB2-1",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 10,
+                                "container": "component",
+                                "noBorder": true,
+                                "size": {
+                                    "nzXs": 24,
+                                    "nzSm": 24,
+                                    "nzMd": 24,
+                                    "nzLg": 10,
+                                    "nzXl": 10,
+                                    "nzXXl": 10
+                                },
+                                "component": {
+                                    "id": "view_business_search",
+                                    "type": "form",
+                                    "component": "form",
+                                    "state": "edit",
+                                    "loadingConfig": {
+                                        "id": "loadBusinessObject"
+                                    },
+                                    "cascade": {
+                                        "messageSender": [
+                                            {
+                                                "id": "afterSelectValueChange",
+                                                "senderId": "view_business_search",
+                                                // "triggerType": "ACTION",
+                                                // "trigger": "VALUE_CHANGE",
+                                                // "triggerMoment": "after",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "BEHAVIOR",
+                                                        "receiverTrigger": "LOAD_BY_FILTER",
+                                                        "params": [
+                                                            {
+                                                                "name": "_TABLE_NAME",
+                                                                "type": "returnValue",
+                                                                "valueName": "_OPTION_NAME",
+                                                                "valueTo": "tempValue"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                        // "messageReceiver": [
+                                        //     {
+                                        //         "id": "",
+                                        //         "senderId": "view_tree_component_base",
+                                        //         "receiveData": [
+                                        //             {
+                                        //                 "beforeReceive": [],
+                                        //                 "triggerType": "BEHAVIOR",
+                                        //                 "trigger": "REFRESH_AS_CHILD",
+                                        //                 "params": [
+                                        //                     {
+                                        //                         "pname": "_ID",
+                                        //                         "cname": "_ID",
+                                        //                         "valueTo": "tempValue"
+                                        //                     }
+                                        //                 ]
+                                        //             }
+                                        //         ]
+                                        //     }
+                                        // ]
+                                    },
+                                    "cascadeValue": [
+                                        {
+                                            "type": "",
+                                            "controlId": "search_name",
+                                            "name": "tname",
+                                            "CascadeObjects": [
+                                                {
+                                                    "controlId": "search_name",
+                                                    "cascadeName": "tname",
+                                                    "cascadeItems": [
+                                                        {
+                                                            "type": "default",
+                                                            "content": {
+                                                                "type": "relation",
+                                                                "sender": {
+                                                                    "name": "validation",
+                                                                    "message": "message.ajax.state.success",
+                                                                    "senderId": "afterSelectValueChange"
+                                                                },
+                                                                "data": {
+                                                                    "option": [
+                                                                        {
+                                                                            "name": "_OPTION_NAME",
+                                                                            "type": "selectObjectValue",
+                                                                            "valueName": "tname"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        // {
+                                        //     "type": "",
+                                        //     "controlId": "res_ref_id",
+                                        //     "name": "refResourceId",
+                                        //     "CascadeObjects": [
+                                        //         {
+                                        //             "controlId": "res_refField",
+                                        //             "cascadeName": "refParentResourcePropId",
+                                        //             "cascadeItems": [
+                                        //                 {
+                                        //                     "type": "default",
+                                        //                     "content": {
+                                        //                         "type": "ajax",
+                                        //                         "data": {
+                                        //                             "option": [
+                                        //                                 {
+                                        //                                     "name": "_TABLE_ID",
+                                        //                                     "type": "selectValue",
+                                        //                                     "valueName": "id"
+                                        //                                 }
+                                        //                             ]
+                                        //                         }
+                                        //                     }
+                                        //                 }
+
+                                        //             ]
+                                        //         }
+                                        //     ],
+                                        // },
+                                        // {
+                                        //     "type": "",
+                                        //     "controlId": "res_refSQL",
+                                        //     "name": "sqlList",
+                                        //     "CascadeObjects": [
+                                        //         {
+                                        //             "controlId": "res_refSQL",
+                                        //             "cascadeName": "sqlList",
+                                        //             "cascadeItems": [
+                                        //                 {
+                                        //                     "type": "default",
+                                        //                     "content": {
+                                        //                         "type": "setValue",
+                                        //                         "data": {
+                                        //                             "option": [
+                                        //                                 {
+                                        //                                     // "name": "_TYPE",
+                                        //                                     "type": "dataList",
+                                        //                                     // "valueName": "refResourceType"
+                                        //                                 }
+                                        //                             ]
+                                        //                         }
+                                        //                     }
+                                        //                 }
+
+                                        //             ]
+                                        //         }
+                                        //     ]
+                                        // }
+                                    ],
+                                    "formLayout": {
+                                        "id": "b86s2i",
+                                        "type": "layout",
+                                        "title": "表单布局b86s2i",
+                                        "rows": [
+                                            {
+                                                "id": "MefhXa",
+                                                "type": "row",
+                                                "cols": [
+                                                    {
+                                                        "id": "col_2",
+                                                        "col": "cc",
+                                                        "type": "col",
+                                                        "title": "列ioj0mV",
+                                                        "span": 24,
+                                                        "layoutContain": "select",
+                                                        "size": {
+                                                            "nzXs": 24,
+                                                            "nzSm": 24,
+                                                            "nzMd": 24,
+                                                            "nzLg": 24,
+                                                            "ngXl": 24,
+                                                            "nzXXl": 24
+                                                        },
+                                                        "control": {
+                                                            "id": "search_name"
+                                                        }
+                                                    },
+                                                    // {
+                                                    //     "id": "col_2",
+                                                    //     "col": "cc",
+                                                    //     "type": "col",
+                                                    //     "title": "列ioj0mV",
+                                                    //     "span": 12,
+                                                    //     "layoutContain": "select",
+                                                    //     "size": {
+                                                    //         "nzXs": 24,
+                                                    //         "nzSm": 24,
+                                                    //         "nzMd": 12,
+                                                    //         "nzLg": 12,
+                                                    //         "ngXl": 12,
+                                                    //         "nzXXl": 12
+                                                    //     },
+                                                    //     "control": {
+                                                    //         "id": "search_reset"
+                                                    //     }
+                                                    // }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    "formControls": [
+                                        {
+                                            "id": "search_name",
+                                            "hidden": false,
+                                            "title": "",
+                                            "hiddenLabel": true,
+                                            "titleConfig": {
+                                                "required": false
+                                            },
+                                            "field": "tname",
+                                            "noColon": true,
+                                            "labelSize": {
+                                                "span": 1,
+                                                "nzXs": 1,
+                                                "nzSm": 1,
+                                                "nzMd": 1,
+                                                "nzLg": 1,
+                                                "ngXl": 1,
+                                                "nzXXl": 1
+                                            },
+                                            "controlSize": {
+                                                "span": 24,
+                                                "nzXs": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "nzSm": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "nzMd": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "nzLg": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "ngXl": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                },
+                                                "nzXXl": {
+                                                    "span": 24,
+                                                    "offset": 0
+                                                }
+                                            },
+                                            "state": "edit",
+                                            "text": {
+                                                "type": "label",
+                                                "field": "tname"
+                                            },
+                                            "editor": {
+                                                "type": "searchSelect",
+                                                "field": "tname",
+                                                "showSearch": true,
+                                                "serverSearch": true,
+                                                "loadingConfig": {
+                                                    "id": "loadBusinessNameValue"
+                                                },
+                                                "labelName": "tname",
+                                                "valueName": "id",
+                                                "placeholder": "请输入查找内容..."
+                                            }
+                                        }
+                                    ],
+                                    "formControlsPermissions": [
+                                        {
+                                            "formState": "new",
+                                            "formStateContent": {
+                                                "isLoad": false,
+                                                "loadAjax": {},
+                                                "isDefault": true
+                                            },
+                                            "Controls": [
+                                                {
+                                                    "id": "search_name",
+                                                    "state": "edit",
+                                                    "hidden": false,
+                                                    "readOnly": false
+                                                },
+                                                // {
+                                                //     "id": "search_reset",
+                                                //     "state": "edit",
+                                                //     "hidden": false,
+                                                //     "readOnly": false
+                                                // }
+                                            ]
+                                        },
+                                        {
+                                            "formState": "edit",
+                                            "Controls": [
+                                                {
+                                                    "id": "search_name",
+                                                    "state": "edit",
+                                                    "hidden": false,
+                                                    "readOnly": false
+                                                },
+                                                // {
+                                                //     "id": "search_reset",
+                                                //     "state": "edit",
+                                                //     "hidden": false,
+                                                //     "readOnly": false
+                                                // }
+                                            ]
+                                        }
+                                    ],
+                                    "ajaxConfig": [
+                                        {
+                                            "id": "loadBusinessNameValue",
+                                            "url": "sd/GET_DATA_MODELING_TABLE/query",
+                                            "urlType": "inner",
+                                            "ajaxType": "get",
+                                            "params": [
+                                                {
+                                                    "name": "tname",
+                                                    "search": true,
+                                                    "conditionType": "ctn"
+                                                },
+                                                {
+                                                    "name": "_mapToObject",
+                                                    "type": "value",
+                                                    "value": true
+                                                }
+                                            ],
+                                            "outputParameters": [],
+                                            "result": []
+
                                         }
                                     ]
                                 }
@@ -1098,6 +1283,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 "title": "",
                                 "span": 24,
                                 "container": "component",
+                                "noBorder": true,
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
@@ -1108,26 +1294,26 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 "component": {
                                     "id": "view_data_table",
-                                    "title": "主表",
+                                    "title": "表信息列表",
                                     "titleIcon": "right-circle",
                                     "component": "cnDataTable",
                                     "keyId": "id",
-                                    "size": "large",
+                                    "size": "small",
                                     "isBordered": true,
                                     "isFrontPagination": false,
                                     "isPagination": true,
                                     "isShowSizeChanger": true,
                                     "showTotal": true,
-                                    "pageSize": 10,
+                                    "pageSize": 5,
                                     "showCheckBox": true,
                                     "pageSizeOptions": [10, 20, 50, 100],
                                     "loadingOnInit": true,
                                     // "scroll": {
                                     //     "y": "300px"
                                     // },
-                                    "spanWidthConfig": [
-                                        '50px', '100px', '200px', '200px', '200px'
-                                    ],
+                                    // "spanWidthConfig": [
+                                    //     '50px', '100px', '200px', '200px', '200px'
+                                    // ],
                                     "loadingConfig": {
                                         "url": "sd/GET_DATA_MODELING_TABLE/query",
                                         "method": "get",
@@ -1148,7 +1334,18 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             //     "value": "DESC"
                                             // }
                                         ],
-                                        "filter": []
+                                        "filter": [
+                                            {
+                                                "name": "_mapToObject",
+                                                "type": "value",
+                                                "value": true
+                                            },
+                                            {
+                                                "name": "tname",
+                                                "type": "tempValue",
+                                                "valueName": "_TABLE_NAME"
+                                            }
+                                        ]
                                     },
                                     "columns": [
                                         {
@@ -1168,7 +1365,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
-                                            // "width": "50px",
+                                            // "width": "200px",
                                             "style": {},
                                         },
                                         {
@@ -1178,7 +1375,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
-                                            // "width": "100px",
+                                            // "width": "200px",
                                             "style": {},
                                         },
                                         {
@@ -1188,7 +1385,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
-                                            // "width": "100px",
+                                            "width": "100px",
                                             "style": {},
                                             "custom": {
                                                 "type": "tag",
@@ -1203,6 +1400,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "color": "#2db7f5",
                                                         "field": "buildModelText",
                                                         "value": "无"
+                                                    },
+                                                    {
+                                                        "color": "#5db9f5",
+                                                        "field": "buildModelText",
+                                                        "value": "重新建模"
                                                     }
                                                 ]
                                             }
@@ -1214,7 +1416,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
-                                            // "width": "100px",
+                                            // "width": "200px",
                                             "style": {},
                                             "custom": {
                                                 "type": "progress",
@@ -1237,6 +1439,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "showInfo": true
                                             }
                                         },
+
                                         // {
                                         //     "title": "创建时间",
                                         //     "type": "field",
@@ -1248,8 +1451,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         //     "style": {},
                                         // },
                                         {
-                                            "title": "ACTION",
+                                            "title": "操作",
                                             "type": "action",
+                                            // "width": "150px",
                                             "actionIds": [
                                                 "data_table_edit", "data_table_cancel", "data_table_save", "data_table_delete", "data_table_new", "data_table_new_cancel"
                                             ]
@@ -1450,9 +1654,6 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             {
                                                 "id": "afterTableModelingSaveSuccess",
                                                 "senderId": "view_data_table",
-                                                // "triggerType": "ACTION",
-                                                // "trigger": "MESSAGE0",
-                                                // "triggerMoment": "after",
                                                 "sendData": [
                                                     {
                                                         "beforeSend": {},
@@ -1553,6 +1754,24 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             }
                                         ],
                                         "messageReceiver": [
+                                            {
+                                                "id": "",
+                                                "senderId": "view_business_search",
+                                                "receiveData": [
+                                                    {
+                                                        "beforeReceive": [],
+                                                        "triggerType": "BEHAVIOR",
+                                                        "trigger": "LOAD_BY_FILTER",
+                                                        "params": [
+                                                            {
+                                                                "pname": "_TABLE_NAME",
+                                                                "cname": "_TABLE_NAME",
+                                                                "valueTo": "tempValue"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
                                             {
                                                 "id": "",
                                                 "senderId": "view_data_table",
@@ -2071,6 +2290,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 "title": "",
                                 "span": 24,
                                 "container": "component",
+                                "noBorder": true,
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
@@ -2836,7 +3056,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 },
                                                 {
                                                     "id": "M_addRow",
-                                                    "text": "新增列",
+                                                    "text": "创建列",
                                                     "icon": "plus",
                                                     "color": "text-primary",
                                                     "hidden": false,
@@ -3013,45 +3233,6 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     }
                                                 }
                                             ]
-                                        },
-                                        {
-                                            "targetViewId": "view_data_columns",
-                                            "group": [
-                                                {
-                                                    "name": "M_addSearchRow",
-                                                    "text": "查询",
-                                                    "triggerType": "STATE",
-                                                    "trigger": "SEARCH_ROW",
-                                                    "actionName": "addSearchRow",
-                                                    "icon": "search",
-                                                    "color": "text-primary",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "SEARCH_ROW"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "name": "M_cancelSearchRow",
-                                                    "text": "取消查询",
-                                                    "icon": "rollback",
-                                                    "triggerType": "STATE",
-                                                    "trigger": "CANCEL_SEARCH_ROW",
-                                                    "actionName": "cancelSearchRow",
-                                                    "color": "text-grey-darker",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "SEARCH_ROW"
-                                                        }
-                                                    ],
-                                                }
-                                            ]
                                         }
                                     ]
                                 }
@@ -3063,6 +3244,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 "title": "",
                                 "span": 24,
                                 "container": "component",
+                                "noBorder": true,
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
@@ -3073,7 +3255,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                 },
                                 "component": {
                                     "id": "view_data_columns",
-                                    "title": "建模列",
+                                    "title": "列信息列表",
                                     "titleIcon": "right-circle",
                                     "component": "cnDataTable",
                                     "keyId": "id",
@@ -3088,7 +3270,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "pageSizeOptions": [10, 20, 50, 100],
                                     "loadingOnInit": false,
                                     "loadingConfig": {
-                                        "url": "td/DM_COLUMN/query",
+                                        "url": "sd/GET_DM_COLUMNS_LIST/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -3234,7 +3416,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "title": "是否为空",
                                             "type": "field",
-                                            "field": "isNullable",
+                                            "field": "isNullableText",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -3251,12 +3433,28 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 ],
                                                 "labelName": 'label',
                                                 "valueName": 'value',
+                                            },
+                                            "custom": {
+                                                "type": "tag",
+                                                "field": "isNullableText",
+                                                "dataMapping": [
+                                                    {
+                                                        "color": "#87d068",
+                                                        "field": "isNullableText",
+                                                        "value": "不为空"
+                                                    },
+                                                    {
+                                                        "color": "#2db7f5",
+                                                        "field": "isNullableText",
+                                                        "value": "可为空"
+                                                    }
+                                                ]
                                             }
                                         },
                                         {
                                             "title": "是否唯一",
                                             "type": "field",
-                                            "field": "isUnique",
+                                            "field": "isUniqueText",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -3273,12 +3471,28 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 ],
                                                 "labelName": 'label',
                                                 "valueName": 'value',
+                                            },
+                                            "custom": {
+                                                "type": "tag",
+                                                "field": "isUniqueText",
+                                                "dataMapping": [
+                                                    {
+                                                        "color": "#87d068",
+                                                        "field": "isUniqueText",
+                                                        "value": "不唯一"
+                                                    },
+                                                    {
+                                                        "color": "#2db7f5",
+                                                        "field": "isUniqueText",
+                                                        "value": "唯一"
+                                                    }
+                                                ]
                                             }
                                         },
                                         {
                                             "title": "是否可用",
                                             "type": "field",
-                                            "field": "isValidate",
+                                            "field": "isValidateText",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -3295,6 +3509,22 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 ],
                                                 "labelName": 'label',
                                                 "valueName": 'value',
+                                            },
+                                            "custom": {
+                                                "type": "tag",
+                                                "field": "isValidateText",
+                                                "dataMapping": [
+                                                    {
+                                                        "color": "#87d768",
+                                                        "field": "isValidateText",
+                                                        "value": "可用"
+                                                    },
+                                                    {
+                                                        "color": "#2d27a5",
+                                                        "field": "isValidateText",
+                                                        "value": "不可用"
+                                                    }
+                                                ]
                                             }
                                         },
                                         {
@@ -3312,7 +3542,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             }
                                         },
                                         {
-                                            "title": "ACTION",
+                                            "title": "操作",
                                             "type": "action",
                                             "width": "150px",
                                             "actionIds": [
@@ -3655,7 +3885,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "beforeSend": {},
                                                         "reveicerId": "",
                                                         "receiverTriggerType": "ACTION",
-                                                        "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
                                                         "params": [
                                                             {
                                                                 "name": "id",
@@ -3692,7 +3922,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "beforeSend": {},
                                                         "reveicerId": "",
                                                         "receiverTriggerType": "ACTION",
-                                                        "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
                                                         "params": [
                                                             {
                                                                 "name": "id",
@@ -3872,30 +4102,30 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         //     }
                                                         // ]
                                                     },
-                                                    {
-                                                        "beforeReceive": [],
-                                                        "triggerType": "ACTION",
-                                                        "trigger": "CHANGE_ADDED_ROWS_TO_TEXT"
-                                                        // "params": [
-                                                        //     {
-                                                        //         "pname": "name",
-                                                        //         "cname": "_PID",
-                                                        //         "valueTo": "tempValue"
-                                                        //     }
-                                                        // ]
-                                                    },
-                                                    {
-                                                        "beforeReceive": [],
-                                                        "triggerType": "ACTION",
-                                                        "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
-                                                        // "params": [
-                                                        //     {
-                                                        //         "pname": "name",
-                                                        //         "cname": "_PID",
-                                                        //         "valueTo": "tempValue"
-                                                        //     }
-                                                        // ]
-                                                    },
+                                                    // {
+                                                    //     "beforeReceive": [],
+                                                    //     "triggerType": "ACTION",
+                                                    //     "trigger": "CHANGE_ADDED_ROWS_TO_TEXT"
+                                                    //     // "params": [
+                                                    //     //     {
+                                                    //     //         "pname": "name",
+                                                    //     //         "cname": "_PID",
+                                                    //     //         "valueTo": "tempValue"
+                                                    //     //     }
+                                                    //     // ]
+                                                    // },
+                                                    // {
+                                                    //     "beforeReceive": [],
+                                                    //     "triggerType": "ACTION",
+                                                    //     "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
+                                                    //     // "params": [
+                                                    //     //     {
+                                                    //     //         "pname": "name",
+                                                    //     //         "cname": "_PID",
+                                                    //     //         "valueTo": "tempValue"
+                                                    //     //     }
+                                                    //     // ]
+                                                    // },
                                                     {
                                                         "beforeReceive": [],
                                                         "triggerType": "ACTION",

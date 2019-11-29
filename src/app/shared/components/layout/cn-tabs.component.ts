@@ -11,6 +11,9 @@ import { ComponentServiceProvider } from '@core/services/component/component-ser
     templateUrl: './cn-tabs.component.html',
     styles: [
         `
+        .ant-tabs-bar {
+            margin-bottom: 2px;
+        }
         `
     ]
 })
