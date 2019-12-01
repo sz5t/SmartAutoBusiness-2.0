@@ -27,8 +27,8 @@ import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
     styles: [
         `
             .table-operations {
-               // padding-top: 3px;
-               //  padding-bottom: 3px;
+               padding-top: 3px;
+               padding-bottom: 3px;
             }
 
             .table-operations .ant-btn-group {

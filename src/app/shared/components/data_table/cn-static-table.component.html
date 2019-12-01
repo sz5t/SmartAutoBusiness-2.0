@@ -122,7 +122,7 @@
                     <nz-divider nzType="vertical" *ngIf="!act.hidden"></nz-divider>
                   </ng-container>
                   <ng-container *ngSwitchCase="'button'">
-                    <button (click)="rowAction(act, rowData, $event)" nz-button nzSize="act.size"
+                    <button (click)="rowAction(act, rowData, $event)" nz-button [nzSize]="act.size"
                       [nzType]="act.color ? act.color : 'default'">
                       <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
                     </button>

@@ -63,881 +63,882 @@ export class CnStaticTableComponent extends CnComponentBase
     implements OnInit, AfterViewInit, OnDestroy, IDataGridProperty {
 
     @Input()
-    public config = {
-        "id": "view_static_demo",
-        "title": "SQL资源列表",
-        "titleIcon": "right-circle",
-        "component": "cnDataTable",
-        "keyId": "id",
-        "size": "small",
-        "isSelected": false,
-        "isBordered": true,
-        "isFrontPagination": false,
-        "isPagination": true,
-        "isShowSizeChanger": true,
-        "showTotal": true,
-        "pageSize": 5,
-        "showCheckBox": true,
-        "pageSizeOptions": [10, 20, 50, 100],
-        "loadingOnInit": false,
-        // "scroll": {
-        //     "y": "300px"
-        // },
-        // "spanWidthConfig": [
-        //     '50px', '100px', '100px', '100px', '100px'
-        // ],
-        "loadingConfig": {
-            "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
-            "method": "get",
-            "params": [
-                {
-                    "name": "_mapToObject",
-                    "type": "value",
-                    "value": true
-                }
-            ],
-            "filter": [
+    public config: any;
+    // public config = {
+    //     "id": "view_static_demo",
+    //     "title": "SQL资源列表",
+    //     "titleIcon": "right-circle",
+    //     "component": "cnDataTable",
+    //     "keyId": "id",
+    //     "size": "small",
+    //     "isSelected": false,
+    //     "isBordered": true,
+    //     "isFrontPagination": false,
+    //     "isPagination": true,
+    //     "isShowSizeChanger": true,
+    //     "showTotal": true,
+    //     "pageSize": 5,
+    //     "showCheckBox": true,
+    //     "pageSizeOptions": [10, 20, 50, 100],
+    //     "loadingOnInit": false,
+    //     // "scroll": {
+    //     //     "y": "300px"
+    //     // },
+    //     // "spanWidthConfig": [
+    //     //     '50px', '100px', '100px', '100px', '100px'
+    //     // ],
+    //     "loadingConfig": {
+    //         "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+    //         "method": "get",
+    //         "params": [
+    //             {
+    //                 "name": "_mapToObject",
+    //                 "type": "value",
+    //                 "value": true
+    //             }
+    //         ],
+    //         "filter": [
 
-            ]
-        },
-        "columns": [
-            {
-                "title": "ID",
-                "type": "field",
-                "field": "id",
-                "hidden": true,
-                "showFilter": false,
-                "showSort": false,
-                "isShowExpand": false,
-                "width": "50px",
-                "style": {}
-            },
-            {
-                "title": "SQL 资源",
-                "type": "field",
-                "field": "sqlId",
-                "hidden": false,
-                "showFilter": false,
-                "showSort": false,
-                "width": "400px",
-                "style": {},
-                "editor": {
-                    "type": "gridSelect",
-                    "field": "sqlId",
-                    "loadingOnInit": true,
-                    "layoutName": "apiResourceList",
-                    "placeholder": "请选择",
-                    "loadingItemConfig": {
-                        "id": "loadResourceValue"
-                    },
-                    "labelName": "descName",
-                    "valueName": "id"
-                }
-            },
-            {
-                "title": "操作类型",
-                "type": "field",
-                "field": "type",
-                "hidden": false,
-                "showFilter": false,
-                "showSort": false,
-                "width": "100px",
-                "style": {},
-                "editor": {
-                    "type": "select",
-                    "field": "type",
-                    // "placeholder": "请输入",
-                    "defaultValue": "insert",
-                    "options": [
-                        { "label": '新增', "value": "insert" },
-                        { "label": '修改', "value": "update" },
-                        { "label": '删除', "value": "delete" },
-                        { "label": '查询', "value": "select" },
-                        { "label": '查询并删除', "value": "sele_dele" }
-                    ],
-                    "labelName": 'label',
-                    "valueName": 'value',
-                }
-            },
-            {
-                "title": "操作",
-                "type": "action",
-                "width": "100px",
-                "actionIds": [
-                    "grid_edit", "grid_cancel", "grid_save", "grid_delete", "grid_new", "grid_new_cancel"
-                ]
-            }
-        ],
-        "cascade": {
-            "messageSender": [
-                {
-                    "id": "grid_sender_02",
-                    "senderId": "view_static_demo",
-                    "triggerType": "BEHAVIOR",
-                    "trigger": "SET_SELECT_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "BEHAVIOR",
-                            "receiverTrigger": "REFRESH_AS_CHILD",
-                            "params": [
-                                {
-                                    "name": "ID",
-                                    "type": "item",
-                                    "valueName": "ID"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "grid_sender_03",
-                    "senderId": "view_static_demo",
-                    "triggerType": "STATE",
-                    "trigger": "CANCEL_EDIT_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "reveicerId": "",
-                            "receiverTriggerType": "STATE",
-                            "receiverTrigger": "STATE_TO_TEXT",
-                            "conditionId": "cancel_edit_1",
-                            "params": [
-                                {
-                                    "name": "targetViewId",
-                                    "value": "view_static_demo",
-                                    "type": "value"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "grid_sender_04",
-                    "senderId": "view_static_demo",
-                    "triggerType": "STATE",
-                    "trigger": "CANCEL_NEW_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "reveicerId": "",
-                            "receiverTriggerType": "STATE",
-                            "receiverTrigger": "STATE_TO_TEXT",
-                            "conditionId": "cancel_edit_2",
-                            "params": [
-                                {
-                                    "name": "targetViewId",
-                                    "value": "view_static_demo",
-                                    "type": "value"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "grid_sender_05",
-                    "senderId": "view_static_demo",
-                    "triggerType": "STATE",
-                    "trigger": "EDIT_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "reveicerId": "",
-                            "receiverTriggerType": "STATE",
-                            "receiverTrigger": "STATE_TO_EDIT",
-                            "params": [
-                                {
-                                    "name": "targetViewId",
-                                    "value": "view_static_demo",
-                                    "type": "value"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "grid_sender_06",
-                    "senderId": "view_static_demo",
-                    "triggerType": "OPERATION",
-                    "trigger": "SAVE_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "reveicerId": "",
-                            "receiverTriggerType": "STATE",
-                            "receiverTrigger": "STATE_TO_TEXT",
-                            "params": [
-                                {
-                                    "name": "targetViewId",
-                                    "value": "view_static_demo",
-                                    "type": "value"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "grid_sender_07",
-                    "senderId": "view_static_demo",
-                    "triggerType": "OPERATION",
-                    "trigger": "SAVE_ROWS",
-                    "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "reveicerId": "",
-                            "receiverTriggerType": "STATE",
-                            "receiverTrigger": "STATE_TO_TEXT",
-                            "params": [
-                                {
-                                    "name": "targetViewId",
-                                    "value": "view_static_demo",
-                                    "type": "value"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "grid_sender_08",
-                    "senderId": "view_static_demo",
-                    "triggerType": "ACTION",
-                    "trigger": "CONFIRM",
-                    "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "reveicerId": "",
-                            "receiverTriggerType": "STATE",
-                            "receiverTrigger": "STATE_TO_TEXT",
-                            "params": [
-                                {
-                                    "name": "targetViewId",
-                                    "value": "view_static_demo",
-                                    "type": "value"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "afterBusinessMainSaveSuccessfully",
-                    "senderId": "view_static_demo",
-                    // "triggerType": "ACTION",
-                    // "trigger": "MESSAGE0",
-                    // "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "ACTION",
-                            "receiverTrigger": "MESSAGE",
-                            "params": [
-                                {
-                                    "name": "type",
-                                    "type": "value",
-                                    "value": "success"
-                                },
-                                {
-                                    "name": "message",
-                                    "type": "value",
-                                    "value": "操作完成!"
-                                },
-                            ]
-                        },
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "ACTION",
-                            "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
-                            "params": [
-                                {
-                                    "name": "id",
-                                    "type": "addedRows",
-                                    "valueName": "id"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "afterBusinessMainUpdateSuccessfully",
-                    "senderId": "view_static_demo",
-                    // "triggerType": "ACTION",
-                    // "trigger": "MESSAGE0",
-                    // "triggerMoment": "after",
-                    "sendData": [
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "ACTION",
-                            "receiverTrigger": "MESSAGE",
-                            "params": [
-                                {
-                                    "name": "type",
-                                    "type": "value",
-                                    "value": "success"
-                                },
-                                {
-                                    "name": "message",
-                                    "type": "value",
-                                    "value": "操作完成!"
-                                },
-                            ]
-                        },
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "ACTION",
-                            "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
-                            "params": [
-                                {
-                                    "name": "id",
-                                    "type": "editedRows",
-                                    "valueName": "id"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "afterBusinessMainSaveValidation",
-                    "senderId": "view_static_demo",
-                    "sendData": [
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "ACTION",
-                            "receiverTrigger": "SHOW_INVALIDATE_ADDED_ROWS"
-                        }
-                    ]
-                },
-                {
-                    "id": "afterProvinceUpdateValidation",
-                    "senderId": "view_static_demo",
-                    "sendData": [
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "ACTION",
-                            "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
-                        }
-                    ]
-                },
-                {
-                    "id": "afterDeleteBusinessMainSuccess",
-                    "senderId": "view_static_demo",
-                    "sendData": [
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "ACTION",
-                            "receiverTrigger": "MESSAGE",
-                            "params": [
-                                {
-                                    "name": "type",
-                                    "type": "value",
-                                    "value": "success"
-                                },
-                                {
-                                    "name": "code",
-                                    "type": "value",
-                                    "value": "message.operation.success"
-                                }
-                            ]
-                        },
-                        {
-                            "beforeSend": {},
-                            "reveicerId": "",
-                            "receiverTriggerType": "ACTION",
-                            "receiverTrigger": "DELETE_CHECKED_ROWS",
-                            "params": [
-                                {
-                                    "name": "ids",
-                                    "type": "returnValue",
-                                    "valueName": "ids"
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
-            "messageReceiver": [
-                {
-                    "id": "",
-                    "senderId": "view_static_demo",
-                    "receiveData": [
-                        {
-                            "beforeReceive": [],
-                            "triggerType": "ACTION",
-                            "trigger": "MESSAGE"
-                            // "params": [
-                            //     {
-                            //         "pname": "name",
-                            //         "cname": "_PID",
-                            //         "valueTo": "tempValue"
-                            //     }
-                            // ]
-                        },
-                        {
-                            "beforeReceive": [],
-                            "triggerType": "ACTION",
-                            "trigger": "CHANGE_ADDED_ROWS_TO_TEXT"
-                            // "params": [
-                            //     {
-                            //         "pname": "name",
-                            //         "cname": "_PID",
-                            //         "valueTo": "tempValue"
-                            //     }
-                            // ]
-                        },
-                        {
-                            "beforeReceive": [],
-                            "triggerType": "ACTION",
-                            "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
-                            // "params": [
-                            //     {
-                            //         "pname": "name",
-                            //         "cname": "_PID",
-                            //         "valueTo": "tempValue"
-                            //     }
-                            // ]
-                        },
-                        {
-                            "beforeReceive": [],
-                            "triggerType": "ACTION",
-                            "trigger": "SHOW_INVALIDATE_ADDED_ROWS"
-                        },
-                        {
-                            "beforeReceive": [],
-                            "triggerType": "ACTION",
-                            "trigger": "SHOW_INVALIDATE_EDITED_ROWS"
-                        },
-                        {
-                            "beforeReceive": [],
-                            "triggerType": "ACTION",
-                            "trigger": "LOAD_REFRESH_DATA"
-                        },
-                        {
-                            "beforeReceive": [],
-                            "triggerType": "ACTION",
-                            "trigger": "DELETE_CHECKED_ROWS"
-                        }
-                    ]
-                }
-            ]
-        },
-        "rowActions": [
-            // {
-            //     "id": "grid_new",
-            //     "state": "new",
-            //     "text": "保存",
-            //     "icon": "save",
-            //     "color": "text-primary",
-            //     "type": "link",
-            //     "size": "small",
-            //     "hidden": false,
-            //     "execute": [
-            //         {
-            //             "triggerType": "OPERATION",
-            //             "trigger": "SAVE_ROW",
-            //             "ajaxId": "province_save_1",
-            //             // "stateId": "add_save_1",
-            //             // "conditionId": "add_citiessave_1"
-            //         }
-            //     ],
-            //     "toggle": {
-            //         "type": "state",
-            //         "toggleProperty": "hidden",
-            //         "values": [
-            //             {
-            //                 "name": "new",
-            //                 "value": false
-            //             },
-            //             {
-            //                 "name": "text",
-            //                 "value": true
-            //             }
-            //         ]
-            //     }
-            // },
-            {
-                "id": "grid_new_cancel",
-                "state": "new",
-                "text": "取消",
-                "icon": "rollback",
-                "color": "text-primary",
-                "type": "link",
-                "size": "small",
-                "hidden": false,
-                "execute": [
-                    {
-                        "triggerType": "STATE",
-                        "trigger": "CANCEL_NEW_ROW",
-                        // "ajaxId": "add_save_1",
-                        // "stateId": "add_save_1",
-                        // "conditionId": "add_save_1"
-                    }
-                ],
-                "toggle": {
-                    "type": "state",
-                    "toggleProperty": "hidden",
-                    "values": [
-                        {
-                            "name": "new",
-                            "value": false
-                        },
-                        {
-                            "name": "text",
-                            "value": true
-                        },
-                        {
-                            "name": "edit",
-                            "value": true
-                        }
-                    ]
-                }
-            },
-            // {
-            //     "id": "grid_edit",
-            //     "state": "text",
-            //     "text": "编辑",
-            //     "icon": "edit",
-            //     "color": "text-primary",
-            //     "type": "link",
-            //     "size": "small",
-            //     "hidden": false,
-            //     "execute": [
-            //         {
-            //             "triggerType": "STATE",
-            //             "trigger": "EDIT_ROW",
-            //             // "ajaxId": "add_save_1",
-            //             // "stateId": "add_save_1",
-            //             //  "conditionId": "edit_business_main"
-            //         }
-            //     ],
-            //     "toggle": {
-            //         "type": "state",
-            //         "toggleProperty": "hidden",
-            //         "values": [
-            //             {
-            //                 "name": "edit",
-            //                 "value": true
-            //             },
-            //             {
-            //                 "name": "text",
-            //                 "value": false
-            //             }
-            //         ]
-            //     }
-            // },
-            {
-                "id": "grid_cancel",
-                "state": "edit",
-                "text": "取消",
-                "icon": "rollback",
-                "color": "text-primary",
-                "type": "link",
-                "size": "small",
-                "hidden": false,
-                "execute": [
-                    {
-                        "triggerType": "STATE",
-                        "trigger": "CANCEL_EDIT_ROW",
-                        // "ajaxId": "add_save_1",
-                        // "stateId": "add_save_1",
-                        // "conditionId": "cancel_edit_1"
-                    }
-                ],
-                "toggle": {
-                    "type": "state",
-                    "toggleProperty": "hidden",
-                    "values": [
-                        {
-                            "name": "edit",
-                            "value": false
-                        },
-                        {
-                            "name": "text",
-                            "value": true
-                        },
-                        {
-                            "name": "new",
-                            "value": true
-                        }
-                    ]
-                }
-            },
-            {
-                "id": "grid_save",
-                "state": "text",
-                "text": "保存",
-                "icon": "save",
-                "color": "text-primary",
-                "type": "link",
-                "size": "small",
-                "hidden": true,
-                "execute": [
-                    {
-                        "triggerType": "OPERATION",
-                        "trigger": "SAVE_ROW",
-                        "ajaxId": "province_edit_1",
-                        // "stateId": "add_save_1",
-                        // "conditionId": "add_business_main_condition"
-                    },
-                ],
-                "toggle": {
-                    "type": "state",
-                    "toggleProperty": "hidden",
-                    "values": [
-                        {
-                            "name": "edit",
-                            "value": false
-                        },
-                        {
-                            "name": "text",
-                            "value": true
-                        }
-                    ]
-                }
-            },
-            {
-                "id": "grid_delete",
-                "state": "text",
-                "text": "删除",
-                "icon": "delete",
-                "type": "link",
-                "color": "primary",
-                "size": "small",
-                "execute": [
-                    {
-                        "triggerType": "ACTION",
-                        "trigger": "CONFIRM",
-                        "dialogId": "delete_confirm",
-                        // "conditionId": "delete_operation_1",
-                        "ajaxId": "delete_province",
-                        // "stateId": "before_delete_province"
-                    }
-                ]
-            }
-        ],
-        "dialog": [
-            {
-                "id": "delete_business_main_confirm",
-                "type": "confirm",
-                "title": "确认操作",
-                "content": "是否删除当前操作数据?",
-                "cancelText": "取消",
-                "okText": "确认"
-            }
-        ],
-        "condition": [
-            {
-                "id": "add_cities_state",
-                "state": [
-                    {
-                        "type": "component",
-                        "valueName": "ROWS_CHECKED",
-                        "expression": [
-                            {
-                                "type": "property",
-                                "name": "length",
-                                "matchValue": 0,
-                                "match": "gt"
-                            },
-                            {
-                                "type": "element",
-                                "name": "name",
-                                "matchValue": "1",
-                                "match": "eq",
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": "edit_business_main_state",
-                "state": [
-                    {
-                        "type": "component",
-                        "valueName": "ROWS_CHECKED",
-                        "expression": [
-                            {
-                                "type": "property",
-                                "name": "length",
-                                "matchValue": 0,
-                                "match": "gt"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": "add_business_main_condition",
-                "state": [
-                    {
-                        "type": "component",
-                        "valueName": "ROWS_CHECKED",
-                        "expression": [
-                            {
-                                "type": "property",
-                                "name": "length",
-                                "matchValue": 0,
-                                "match": "gt"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "component",
-                        "valueName": "ROWS_ADDED",
-                        "expression": [
-                            {
-                                "type": "property",
-                                "name": "length",
-                                "matchValue": 0,
-                                "match": "gt"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": "edit_business_main_condition",
-                "state": [
-                    {
-                        "type": "component",
-                        "valueName": "ROWS_EDITED",
-                        "expression": [
-                            {
-                                "type": "property",
-                                "name": "length",
-                                "matchValue": 0,
-                                "match": "gt"
-                            }
-                        ]
-                    },
-                    {
-                        "type": "component",
-                        "valueName": "ROWS_CHECKED",
-                        "expression": [
-                            {
-                                "type": "property",
-                                "name": "length",
-                                "matchValue": 0,
-                                "match": "gt"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": "cancel_edit_cities",
-                "state": [
-                    {
-                        "type": "component",
-                        "valueName": "ROWS_EDITED",
-                        "expression": [
-                            {
-                                "type": "property",
-                                "name": "length",
-                                "matchValue": 0,
-                                "match": "eq"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": "cancel_add_cities",
-                "state": [
-                    {
-                        "type": "component",
-                        "valueName": "ROWS_ADDED",
-                        "expression": [
-                            {
-                                "type": "property",
-                                "name": "length",
-                                "matchValue": 0,
-                                "match": "eq"
-                            }
-                        ]
-                    }
-                ]
-            }
+    //         ]
+    //     },
+    //     "columns": [
+    //         {
+    //             "title": "ID",
+    //             "type": "field",
+    //             "field": "id",
+    //             "hidden": true,
+    //             "showFilter": false,
+    //             "showSort": false,
+    //             "isShowExpand": false,
+    //             "width": "50px",
+    //             "style": {}
+    //         },
+    //         {
+    //             "title": "SQL 资源",
+    //             "type": "field",
+    //             "field": "sqlId",
+    //             "hidden": false,
+    //             "showFilter": false,
+    //             "showSort": false,
+    //             "width": "400px",
+    //             "style": {},
+    //             "editor": {
+    //                 "type": "gridSelect",
+    //                 "field": "sqlId",
+    //                 "loadingOnInit": true,
+    //                 "layoutName": "apiResourceList",
+    //                 "placeholder": "请选择",
+    //                 "loadingItemConfig": {
+    //                     "id": "loadResourceValue"
+    //                 },
+    //                 "labelName": "descName",
+    //                 "valueName": "id"
+    //             }
+    //         },
+    //         {
+    //             "title": "操作类型",
+    //             "type": "field",
+    //             "field": "type",
+    //             "hidden": false,
+    //             "showFilter": false,
+    //             "showSort": false,
+    //             "width": "100px",
+    //             "style": {},
+    //             "editor": {
+    //                 "type": "select",
+    //                 "field": "type",
+    //                 // "placeholder": "请输入",
+    //                 "defaultValue": "insert",
+    //                 "options": [
+    //                     { "label": '新增', "value": "insert" },
+    //                     { "label": '修改', "value": "update" },
+    //                     { "label": '删除', "value": "delete" },
+    //                     { "label": '查询', "value": "select" },
+    //                     { "label": '查询并删除', "value": "sele_dele" }
+    //                 ],
+    //                 "labelName": 'label',
+    //                 "valueName": 'value',
+    //             }
+    //         },
+    //         {
+    //             "title": "操作",
+    //             "type": "action",
+    //             "width": "100px",
+    //             "actionIds": [
+    //                 "grid_edit", "grid_cancel", "grid_save", "grid_delete", "grid_new", "grid_new_cancel"
+    //             ]
+    //         }
+    //     ],
+    //     "cascade": {
+    //         "messageSender": [
+    //             {
+    //                 "id": "grid_sender_02",
+    //                 "senderId": "view_static_demo",
+    //                 "triggerType": "BEHAVIOR",
+    //                 "trigger": "SET_SELECT_ROW",
+    //                 "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "BEHAVIOR",
+    //                         "receiverTrigger": "REFRESH_AS_CHILD",
+    //                         "params": [
+    //                             {
+    //                                 "name": "ID",
+    //                                 "type": "item",
+    //                                 "valueName": "ID"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "grid_sender_03",
+    //                 "senderId": "view_static_demo",
+    //                 "triggerType": "STATE",
+    //                 "trigger": "CANCEL_EDIT_ROW",
+    //                 "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "STATE",
+    //                         "receiverTrigger": "STATE_TO_TEXT",
+    //                         "conditionId": "cancel_edit_1",
+    //                         "params": [
+    //                             {
+    //                                 "name": "targetViewId",
+    //                                 "value": "view_static_demo",
+    //                                 "type": "value"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "grid_sender_04",
+    //                 "senderId": "view_static_demo",
+    //                 "triggerType": "STATE",
+    //                 "trigger": "CANCEL_NEW_ROW",
+    //                 "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "STATE",
+    //                         "receiverTrigger": "STATE_TO_TEXT",
+    //                         "conditionId": "cancel_edit_2",
+    //                         "params": [
+    //                             {
+    //                                 "name": "targetViewId",
+    //                                 "value": "view_static_demo",
+    //                                 "type": "value"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "grid_sender_05",
+    //                 "senderId": "view_static_demo",
+    //                 "triggerType": "STATE",
+    //                 "trigger": "EDIT_ROW",
+    //                 "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "STATE",
+    //                         "receiverTrigger": "STATE_TO_EDIT",
+    //                         "params": [
+    //                             {
+    //                                 "name": "targetViewId",
+    //                                 "value": "view_static_demo",
+    //                                 "type": "value"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "grid_sender_06",
+    //                 "senderId": "view_static_demo",
+    //                 "triggerType": "OPERATION",
+    //                 "trigger": "SAVE_ROW",
+    //                 "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "STATE",
+    //                         "receiverTrigger": "STATE_TO_TEXT",
+    //                         "params": [
+    //                             {
+    //                                 "name": "targetViewId",
+    //                                 "value": "view_static_demo",
+    //                                 "type": "value"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "grid_sender_07",
+    //                 "senderId": "view_static_demo",
+    //                 "triggerType": "OPERATION",
+    //                 "trigger": "SAVE_ROWS",
+    //                 "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "STATE",
+    //                         "receiverTrigger": "STATE_TO_TEXT",
+    //                         "params": [
+    //                             {
+    //                                 "name": "targetViewId",
+    //                                 "value": "view_static_demo",
+    //                                 "type": "value"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "grid_sender_08",
+    //                 "senderId": "view_static_demo",
+    //                 "triggerType": "ACTION",
+    //                 "trigger": "CONFIRM",
+    //                 "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "STATE",
+    //                         "receiverTrigger": "STATE_TO_TEXT",
+    //                         "params": [
+    //                             {
+    //                                 "name": "targetViewId",
+    //                                 "value": "view_static_demo",
+    //                                 "type": "value"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "afterBusinessMainSaveSuccessfully",
+    //                 "senderId": "view_static_demo",
+    //                 // "triggerType": "ACTION",
+    //                 // "trigger": "MESSAGE0",
+    //                 // "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "ACTION",
+    //                         "receiverTrigger": "MESSAGE",
+    //                         "params": [
+    //                             {
+    //                                 "name": "type",
+    //                                 "type": "value",
+    //                                 "value": "success"
+    //                             },
+    //                             {
+    //                                 "name": "message",
+    //                                 "type": "value",
+    //                                 "value": "操作完成!"
+    //                             },
+    //                         ]
+    //                     },
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "ACTION",
+    //                         "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+    //                         "params": [
+    //                             {
+    //                                 "name": "id",
+    //                                 "type": "addedRows",
+    //                                 "valueName": "id"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "afterBusinessMainUpdateSuccessfully",
+    //                 "senderId": "view_static_demo",
+    //                 // "triggerType": "ACTION",
+    //                 // "trigger": "MESSAGE0",
+    //                 // "triggerMoment": "after",
+    //                 "sendData": [
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "ACTION",
+    //                         "receiverTrigger": "MESSAGE",
+    //                         "params": [
+    //                             {
+    //                                 "name": "type",
+    //                                 "type": "value",
+    //                                 "value": "success"
+    //                             },
+    //                             {
+    //                                 "name": "message",
+    //                                 "type": "value",
+    //                                 "value": "操作完成!"
+    //                             },
+    //                         ]
+    //                     },
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "ACTION",
+    //                         "receiverTrigger": "CHANGE_EDITED_ROWS_TO_TEXT",
+    //                         "params": [
+    //                             {
+    //                                 "name": "id",
+    //                                 "type": "editedRows",
+    //                                 "valueName": "id"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "afterBusinessMainSaveValidation",
+    //                 "senderId": "view_static_demo",
+    //                 "sendData": [
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "ACTION",
+    //                         "receiverTrigger": "SHOW_INVALIDATE_ADDED_ROWS"
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "afterProvinceUpdateValidation",
+    //                 "senderId": "view_static_demo",
+    //                 "sendData": [
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "ACTION",
+    //                         "receiverTrigger": "SHOW_INVALIDATE_EDITED_ROWS"
+    //                     }
+    //                 ]
+    //             },
+    //             {
+    //                 "id": "afterDeleteBusinessMainSuccess",
+    //                 "senderId": "view_static_demo",
+    //                 "sendData": [
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "ACTION",
+    //                         "receiverTrigger": "MESSAGE",
+    //                         "params": [
+    //                             {
+    //                                 "name": "type",
+    //                                 "type": "value",
+    //                                 "value": "success"
+    //                             },
+    //                             {
+    //                                 "name": "code",
+    //                                 "type": "value",
+    //                                 "value": "message.operation.success"
+    //                             }
+    //                         ]
+    //                     },
+    //                     {
+    //                         "beforeSend": {},
+    //                         "reveicerId": "",
+    //                         "receiverTriggerType": "ACTION",
+    //                         "receiverTrigger": "DELETE_CHECKED_ROWS",
+    //                         "params": [
+    //                             {
+    //                                 "name": "ids",
+    //                                 "type": "returnValue",
+    //                                 "valueName": "ids"
+    //                             }
+    //                         ]
+    //                     }
+    //                 ]
+    //             }
+    //         ],
+    //         "messageReceiver": [
+    //             {
+    //                 "id": "",
+    //                 "senderId": "view_static_demo",
+    //                 "receiveData": [
+    //                     {
+    //                         "beforeReceive": [],
+    //                         "triggerType": "ACTION",
+    //                         "trigger": "MESSAGE"
+    //                         // "params": [
+    //                         //     {
+    //                         //         "pname": "name",
+    //                         //         "cname": "_PID",
+    //                         //         "valueTo": "tempValue"
+    //                         //     }
+    //                         // ]
+    //                     },
+    //                     {
+    //                         "beforeReceive": [],
+    //                         "triggerType": "ACTION",
+    //                         "trigger": "CHANGE_ADDED_ROWS_TO_TEXT"
+    //                         // "params": [
+    //                         //     {
+    //                         //         "pname": "name",
+    //                         //         "cname": "_PID",
+    //                         //         "valueTo": "tempValue"
+    //                         //     }
+    //                         // ]
+    //                     },
+    //                     {
+    //                         "beforeReceive": [],
+    //                         "triggerType": "ACTION",
+    //                         "trigger": "CHANGE_EDITED_ROWS_TO_TEXT"
+    //                         // "params": [
+    //                         //     {
+    //                         //         "pname": "name",
+    //                         //         "cname": "_PID",
+    //                         //         "valueTo": "tempValue"
+    //                         //     }
+    //                         // ]
+    //                     },
+    //                     {
+    //                         "beforeReceive": [],
+    //                         "triggerType": "ACTION",
+    //                         "trigger": "SHOW_INVALIDATE_ADDED_ROWS"
+    //                     },
+    //                     {
+    //                         "beforeReceive": [],
+    //                         "triggerType": "ACTION",
+    //                         "trigger": "SHOW_INVALIDATE_EDITED_ROWS"
+    //                     },
+    //                     {
+    //                         "beforeReceive": [],
+    //                         "triggerType": "ACTION",
+    //                         "trigger": "LOAD_REFRESH_DATA"
+    //                     },
+    //                     {
+    //                         "beforeReceive": [],
+    //                         "triggerType": "ACTION",
+    //                         "trigger": "DELETE_CHECKED_ROWS"
+    //                     }
+    //                 ]
+    //             }
+    //         ]
+    //     },
+    //     "rowActions": [
+    //         // {
+    //         //     "id": "grid_new",
+    //         //     "state": "new",
+    //         //     "text": "保存",
+    //         //     "icon": "save",
+    //         //     "color": "text-primary",
+    //         //     "type": "link",
+    //         //     "size": "small",
+    //         //     "hidden": false,
+    //         //     "execute": [
+    //         //         {
+    //         //             "triggerType": "OPERATION",
+    //         //             "trigger": "SAVE_ROW",
+    //         //             "ajaxId": "province_save_1",
+    //         //             // "stateId": "add_save_1",
+    //         //             // "conditionId": "add_citiessave_1"
+    //         //         }
+    //         //     ],
+    //         //     "toggle": {
+    //         //         "type": "state",
+    //         //         "toggleProperty": "hidden",
+    //         //         "values": [
+    //         //             {
+    //         //                 "name": "new",
+    //         //                 "value": false
+    //         //             },
+    //         //             {
+    //         //                 "name": "text",
+    //         //                 "value": true
+    //         //             }
+    //         //         ]
+    //         //     }
+    //         // },
+    //         {
+    //             "id": "grid_new_cancel",
+    //             "state": "new",
+    //             "text": "取消",
+    //             "icon": "rollback",
+    //             "color": "text-primary",
+    //             "type": "link",
+    //             "size": "small",
+    //             "hidden": false,
+    //             "execute": [
+    //                 {
+    //                     "triggerType": "STATE",
+    //                     "trigger": "CANCEL_NEW_ROW",
+    //                     // "ajaxId": "add_save_1",
+    //                     // "stateId": "add_save_1",
+    //                     // "conditionId": "add_save_1"
+    //                 }
+    //             ],
+    //             "toggle": {
+    //                 "type": "state",
+    //                 "toggleProperty": "hidden",
+    //                 "values": [
+    //                     {
+    //                         "name": "new",
+    //                         "value": false
+    //                     },
+    //                     {
+    //                         "name": "text",
+    //                         "value": true
+    //                     },
+    //                     {
+    //                         "name": "edit",
+    //                         "value": true
+    //                     }
+    //                 ]
+    //             }
+    //         },
+    //         // {
+    //         //     "id": "grid_edit",
+    //         //     "state": "text",
+    //         //     "text": "编辑",
+    //         //     "icon": "edit",
+    //         //     "color": "text-primary",
+    //         //     "type": "link",
+    //         //     "size": "small",
+    //         //     "hidden": false,
+    //         //     "execute": [
+    //         //         {
+    //         //             "triggerType": "STATE",
+    //         //             "trigger": "EDIT_ROW",
+    //         //             // "ajaxId": "add_save_1",
+    //         //             // "stateId": "add_save_1",
+    //         //             //  "conditionId": "edit_business_main"
+    //         //         }
+    //         //     ],
+    //         //     "toggle": {
+    //         //         "type": "state",
+    //         //         "toggleProperty": "hidden",
+    //         //         "values": [
+    //         //             {
+    //         //                 "name": "edit",
+    //         //                 "value": true
+    //         //             },
+    //         //             {
+    //         //                 "name": "text",
+    //         //                 "value": false
+    //         //             }
+    //         //         ]
+    //         //     }
+    //         // },
+    //         {
+    //             "id": "grid_cancel",
+    //             "state": "edit",
+    //             "text": "取消",
+    //             "icon": "rollback",
+    //             "color": "text-primary",
+    //             "type": "link",
+    //             "size": "small",
+    //             "hidden": false,
+    //             "execute": [
+    //                 {
+    //                     "triggerType": "STATE",
+    //                     "trigger": "CANCEL_EDIT_ROW",
+    //                     // "ajaxId": "add_save_1",
+    //                     // "stateId": "add_save_1",
+    //                     // "conditionId": "cancel_edit_1"
+    //                 }
+    //             ],
+    //             "toggle": {
+    //                 "type": "state",
+    //                 "toggleProperty": "hidden",
+    //                 "values": [
+    //                     {
+    //                         "name": "edit",
+    //                         "value": false
+    //                     },
+    //                     {
+    //                         "name": "text",
+    //                         "value": true
+    //                     },
+    //                     {
+    //                         "name": "new",
+    //                         "value": true
+    //                     }
+    //                 ]
+    //             }
+    //         },
+    //         {
+    //             "id": "grid_save",
+    //             "state": "text",
+    //             "text": "保存",
+    //             "icon": "save",
+    //             "color": "text-primary",
+    //             "type": "link",
+    //             "size": "small",
+    //             "hidden": true,
+    //             "execute": [
+    //                 {
+    //                     "triggerType": "OPERATION",
+    //                     "trigger": "SAVE_ROW",
+    //                     "ajaxId": "province_edit_1",
+    //                     // "stateId": "add_save_1",
+    //                     // "conditionId": "add_business_main_condition"
+    //                 },
+    //             ],
+    //             "toggle": {
+    //                 "type": "state",
+    //                 "toggleProperty": "hidden",
+    //                 "values": [
+    //                     {
+    //                         "name": "edit",
+    //                         "value": false
+    //                     },
+    //                     {
+    //                         "name": "text",
+    //                         "value": true
+    //                     }
+    //                 ]
+    //             }
+    //         },
+    //         {
+    //             "id": "grid_delete",
+    //             "state": "text",
+    //             "text": "删除",
+    //             "icon": "delete",
+    //             "type": "link",
+    //             "color": "primary",
+    //             "size": "small",
+    //             "execute": [
+    //                 {
+    //                     "triggerType": "ACTION",
+    //                     "trigger": "CONFIRM",
+    //                     "dialogId": "delete_confirm",
+    //                     // "conditionId": "delete_operation_1",
+    //                     "ajaxId": "delete_province",
+    //                     // "stateId": "before_delete_province"
+    //                 }
+    //             ]
+    //         }
+    //     ],
+    //     "dialog": [
+    //         {
+    //             "id": "delete_business_main_confirm",
+    //             "type": "confirm",
+    //             "title": "确认操作",
+    //             "content": "是否删除当前操作数据?",
+    //             "cancelText": "取消",
+    //             "okText": "确认"
+    //         }
+    //     ],
+    //     "condition": [
+    //         {
+    //             "id": "add_cities_state",
+    //             "state": [
+    //                 {
+    //                     "type": "component",
+    //                     "valueName": "ROWS_CHECKED",
+    //                     "expression": [
+    //                         {
+    //                             "type": "property",
+    //                             "name": "length",
+    //                             "matchValue": 0,
+    //                             "match": "gt"
+    //                         },
+    //                         {
+    //                             "type": "element",
+    //                             "name": "name",
+    //                             "matchValue": "1",
+    //                             "match": "eq",
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             "id": "edit_business_main_state",
+    //             "state": [
+    //                 {
+    //                     "type": "component",
+    //                     "valueName": "ROWS_CHECKED",
+    //                     "expression": [
+    //                         {
+    //                             "type": "property",
+    //                             "name": "length",
+    //                             "matchValue": 0,
+    //                             "match": "gt"
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             "id": "add_business_main_condition",
+    //             "state": [
+    //                 {
+    //                     "type": "component",
+    //                     "valueName": "ROWS_CHECKED",
+    //                     "expression": [
+    //                         {
+    //                             "type": "property",
+    //                             "name": "length",
+    //                             "matchValue": 0,
+    //                             "match": "gt"
+    //                         }
+    //                     ]
+    //                 },
+    //                 {
+    //                     "type": "component",
+    //                     "valueName": "ROWS_ADDED",
+    //                     "expression": [
+    //                         {
+    //                             "type": "property",
+    //                             "name": "length",
+    //                             "matchValue": 0,
+    //                             "match": "gt"
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             "id": "edit_business_main_condition",
+    //             "state": [
+    //                 {
+    //                     "type": "component",
+    //                     "valueName": "ROWS_EDITED",
+    //                     "expression": [
+    //                         {
+    //                             "type": "property",
+    //                             "name": "length",
+    //                             "matchValue": 0,
+    //                             "match": "gt"
+    //                         }
+    //                     ]
+    //                 },
+    //                 {
+    //                     "type": "component",
+    //                     "valueName": "ROWS_CHECKED",
+    //                     "expression": [
+    //                         {
+    //                             "type": "property",
+    //                             "name": "length",
+    //                             "matchValue": 0,
+    //                             "match": "gt"
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             "id": "cancel_edit_cities",
+    //             "state": [
+    //                 {
+    //                     "type": "component",
+    //                     "valueName": "ROWS_EDITED",
+    //                     "expression": [
+    //                         {
+    //                             "type": "property",
+    //                             "name": "length",
+    //                             "matchValue": 0,
+    //                             "match": "eq"
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             "id": "cancel_add_cities",
+    //             "state": [
+    //                 {
+    //                     "type": "component",
+    //                     "valueName": "ROWS_ADDED",
+    //                     "expression": [
+    //                         {
+    //                             "type": "property",
+    //                             "name": "length",
+    //                             "matchValue": 0,
+    //                             "match": "eq"
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         }
 
-        ],
-        "ajaxConfig": [
-            {
-                "id": "loadResourceValue",
-                "url": "sd/GET_DM_SQL_DROPDOWN_LIST/query",
-                "ajaxType": "get",
-                "params": [
-                    {
-                        "name": "_mapToObject",
-                        "type": "value",
-                        "value": true
-                    },
-                    {
-                        "name": "id",
-                        "type": "componentValue",
-                        "valueName": "value",
-                        "value": "null"
-                    }
-                ]
-            }
-        ],
-        "beforeTrigger": [
-            {
-                "id": "before_delete_province",
-                "senderId": "view_static_demo",
-                "sendData": [
-                    {
-                        "receiverTriggerType": "ACTION",
-                        "receiverTrigger": "CONFIRM",
-                        "params": [
-                            {
-                                "name": "title",
-                                "type": " 确认操作",
-                                "value": "title"
-                            },
-                            {
-                                "name": "content",
-                                "type": "确认删除当前数据",
-                                "value": "content"
-                            }
-                        ]
-                    }
+    //     ],
+    //     "ajaxConfig": [
+    //         {
+    //             "id": "loadResourceValue",
+    //             "url": "sd/GET_DM_SQL_DROPDOWN_LIST/query",
+    //             "ajaxType": "get",
+    //             "params": [
+    //                 {
+    //                     "name": "_mapToObject",
+    //                     "type": "value",
+    //                     "value": true
+    //                 },
+    //                 {
+    //                     "name": "id",
+    //                     "type": "componentValue",
+    //                     "valueName": "value",
+    //                     "value": "null"
+    //                 }
+    //             ]
+    //         }
+    //     ],
+    //     "beforeTrigger": [
+    //         {
+    //             "id": "before_delete_province",
+    //             "senderId": "view_static_demo",
+    //             "sendData": [
+    //                 {
+    //                     "receiverTriggerType": "ACTION",
+    //                     "receiverTrigger": "CONFIRM",
+    //                     "params": [
+    //                         {
+    //                             "name": "title",
+    //                             "type": " 确认操作",
+    //                             "value": "title"
+    //                         },
+    //                         {
+    //                             "name": "content",
+    //                             "type": "确认删除当前数据",
+    //                             "value": "content"
+    //                         }
+    //                     ]
+    //                 }
 
-                ]
-            }
-        ],
-        "afterTrigger": [
-            {
-                "id": "",
-                "senderId": "view_static_demo",
-                "sendData": [
-                    {
-                        "beforeSend": [],
-                        "reveicerId": "",
-                        "receiverTriggerType": "BEHAVIOR",
-                        "receiverTrigger": "REFRESH_AS_CHILD",
-                        "params": [
-                            {
-                                "name": "parent_id",
-                                "type": "item",
-                                "valueName": "id"
-                            },
-                            {
-                                "name": "parent_name",
-                                "type": "item",
-                                "valueName": "name"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    }
+    //             ]
+    //         }
+    //     ],
+    //     "afterTrigger": [
+    //         {
+    //             "id": "",
+    //             "senderId": "view_static_demo",
+    //             "sendData": [
+    //                 {
+    //                     "beforeSend": [],
+    //                     "reveicerId": "",
+    //                     "receiverTriggerType": "BEHAVIOR",
+    //                     "receiverTrigger": "REFRESH_AS_CHILD",
+    //                     "params": [
+    //                         {
+    //                             "name": "parent_id",
+    //                             "type": "item",
+    //                             "valueName": "id"
+    //                         },
+    //                         {
+    //                             "name": "parent_name",
+    //                             "type": "item",
+    //                             "valueName": "name"
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // }
     @Input() initData;
     @Input() tempData;
     @Input()
@@ -949,7 +950,7 @@ export class CnStaticTableComponent extends CnComponentBase
      * 组件名称
      * 所有组件实现此属性 
      */
-    public COMPONENT_NAME = "CnDataTable";
+    public COMPONENT_NAME = "CnStaticTable";
     /**
      * 组件操作对外名称
      * 所有组件实现此属性

@@ -1,16 +1,16 @@
-<nz-list [nzLoading]="loading" [nzDataSource]="list" [nzRenderItem]="item" [nzSize]="config.size"
+<button nz-button (click)="createNewComponent('newComponentForm')" [nzType]="'dashed'" nzBlock="true">
+  <span style="font-size:1em"><i style="font-size:1em" nz-icon nzType="plus"></i> 创建一个新组件</span>
+</button>
+<nz-list [nzLoading]="false" [nzDataSource]="list" [nzRenderItem]="item" [nzSize]="config.size"
   [nzPagination]="pagination" [nzGrid]="config.gutter">
   <ng-template #item let-item>
     <nz-list-item>
-      <button *ngIf="item === null" nz-button (click)="msg.success('add')" [nzType]="'dashed'" nzBlock="true"
+      <!-- <button *ngIf="item === null" nz-button (click)="msg.success('add')" [nzType]="'dashed'"
         style="width: 100%; height: 100px;">
-        <i nz-icon nzType="plus"></i>
-        <span>新增组件</span>
-      </button>
 
-
+        <span style="font-size:1.5em"><i style="font-size:1em" nz-icon nzType="plus"></i> 创建组件</span>
+      </button> -->
       <nz-card nzHoverable *ngIf="item !== null" [nzActions]="[op1, op2,op3]">
-
         <!--操作模版-->
         <ng-template #op1>
           <a (click)="msg.success('操作一：' + item.id)"><i nz-icon nzType="edit"></i></a>
@@ -58,11 +58,12 @@
         </nz-card-meta>
         <!--列表模版-->
       </nz-card>
-
     </nz-list-item>
   </ng-template>
 
   <ng-template #pagination>
-    <nz-pagination [nzTotal]="50" [nzPageSize]="5" (nzPageIndexChange)="getData()"></nz-pagination>
+    <nz-pagination [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)"
+      [nzPageSizeOptions]="config.pageSizeOptions"></nz-pagination>
   </ng-template>
 </nz-list>
