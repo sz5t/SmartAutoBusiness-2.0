@@ -343,8 +343,8 @@ public setChangeValue(ChangeValues?) {
      this.PageJson =null;
     }
     else {
-
-       this.PageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+       this.PageJson=response.data._procedure_resultset_1[0]['W'];
+    //   this.PageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
     }
     console.log('表格的配置生成如下：', this.PageJson);
   }
@@ -384,7 +384,7 @@ public setChangeValue(ChangeValues?) {
     public async DOWN_JSON(){
       await this.loadPageJson();
       console.log('++++++++++++++++++++++');
-      console.log('当前页配置：', this.PageJson);
+      console.log('当前页配置：', this.PageJson );
       this.componentService.modalService.create({
         nzWidth: '85%',
         nzMaskClosable:false,
@@ -393,7 +393,8 @@ public setChangeValue(ChangeValues?) {
         nzContent: CnCodeEditComponent,
         nzComponentParams: {
           config:{mode:"application/json", "autofocus": true,},
-          value: JSON.stringify(this.PageJson) 
+        //  value: JSON.stringify(this.PageJson) 
+        value: this.PageJson
       
         },
         nzClosable: false,
@@ -406,6 +407,8 @@ public setChangeValue(ChangeValues?) {
       
       console.log('++++++++++++++++++++++');
     }
+
+
 
 
     // CnCodeEditComponent

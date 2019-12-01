@@ -428,4 +428,8 @@ console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
    
     }
 
+
+    public onRefresh(){
+      this.load();
+    }
 }
