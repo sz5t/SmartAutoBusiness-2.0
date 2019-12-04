@@ -23,6 +23,7 @@ import { CommonUtils } from '@core/utils/common-utils';
 export class CfgFormLayoutRowComponent implements OnInit {
 
   @Input() public config;
+  @Input() public formState;
   @Output() public updateValue = new EventEmitter();
 
   public bodystyle = { 'background-color': '#efefef' };
@@ -45,7 +46,7 @@ export class CfgFormLayoutRowComponent implements OnInit {
       type: 'col',
       title: title,
       span: 24,
-      layoutContain: '',
+      container: '',
       size: {
         nzXs: 24,
         nzSm: 24,

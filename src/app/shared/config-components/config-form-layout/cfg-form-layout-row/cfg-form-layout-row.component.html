@@ -1,9 +1,9 @@
 
-<nz-card nzTitle="行" style="width:100%; border: 1px solid #999999" [nzExtra]="extraTemplate"  [nzBodyStyle] = "bodystyle">
+<nz-card [nzTitle]="config.title" style="width:100%; border: 1px solid #999999" [nzExtra]="extraTemplate"  [nzBodyStyle] = "bodystyle">
   <div   nz-row [nzGutter]="6">
       <div nz-col *ngFor="let c of config.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
       [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl">
-      <cfg-form-layout-col   [config]="c"    (updateValue)="valueChangeCol($event)"></cfg-form-layout-col>
+      <cfg-form-layout-col   [config]="c"    (updateValue)="valueChangeCol($event)" [formState]="formState"></cfg-form-layout-col>
     </div>
   </div>
 </nz-card>

@@ -1,12 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { CommonUtils } from '@core/utils/common-utils';
+import { CnComponentBase } from '@shared/components/cn-component.base';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 
 @Component({
   selector: 'cfg-form-layout-col',
   templateUrl: './cfg-form-layout-col.component.html',
   styleUrls: ['./cfg-form-layout-col.component.css']
 })
-export class CfgFormLayoutColComponent implements OnInit {
+export class CfgFormLayoutColComponent extends CnComponentBase implements OnInit {
   @Input() public config;
+  @Input() public formState;
   @Output() public updateValue = new EventEmitter();
   public bodystyle = { 'background-color': 'rgba(47, 164, 231, 0.15)' };
   public rows = [
@@ -36,7 +41,10 @@ export class CfgFormLayoutColComponent implements OnInit {
 
 
   public size_isVisible = false;
-  constructor() { }
+  constructor(@Inject(BSN_COMPONENT_SERVICES)
+  public componentService: ComponentServiceProvider) {
+    super(componentService);
+  }
 
   public ngOnInit() {
     // background: #afd5ea;
@@ -166,5 +174,93 @@ public size_handleOk() {
   this.size_isVisible = false;
 }
 
+  /**
+   * addRow 添加行
+   */
+  public addRow() {
+
+    
+    console.log('**列内添加行**',this.config);
+    if (this.config.container === '' || this.config.container === 'rows') {
+      // console.log('**列内添加行**');
+      this.config.container = 'rows'
+      const fieldIdentity = CommonUtils.uuID(36);
+      const row = {
+        cols: [],
+        container: "cols"
+      };
+      row['id'] = fieldIdentity;
+      row['type'] = 'row';
+      row['title'] = '行';
+      this.rows.push(row);
+      this.config['rows'] = this.rows;
+      this.config.container = 'rows';
+    } else {
+      // console.log('**列内添加行不允许,条件不满足**');
+      this.componentService.modalService.confirm({
+        nzTitle: '确认框?',
+        nzContent: '<b style="color: red;">你确定要替换当前组件为布局行吗？</b>',
+        nzOkText: '确定',
+        nzOkType: 'danger',
+        nzOnOk: () => {
+         
+          this.config.container = 'rows'
+          const fieldIdentity = CommonUtils.uuID(36);
+          const row = {
+            cols: [],
+            container: "cols"
+          };
+          row['id'] = fieldIdentity;
+          row['type'] = 'row';
+          row['title'] = '行';
+          this.rows.push(row);
+          this.config['rows'] = this.rows;
+          this.config.container = 'rows';
+          setTimeout(() => {
+
+          });
+        },
+        nzCancelText: '取消',
+        nzOnCancel: () => console.log('Cancel')
+      });
+    }
+
+
+  }
+  public valueChangeRow(col?) {
+
+    console.log('行操作返回信息', col, this.rows);
+
+    if (col) {
+      if (col['operation'] === 'delete') {
+        // 计算出位置
+        let deleteIndex;
+        for (let i = 0; i < this.rows.length; i++) {
+          if (this.rows[i]['id'] === col['data']['id']) {
+            deleteIndex = i;
+          }
+        }
+        console.log('行删除前', this.rows.length, deleteIndex);
+        this.rows.splice(deleteIndex, 1);
+
+        if(this.rows.length<=0){
+          this.config.container = 'component';
+        }
+        //  this.cols = this.cols.slice(deleteIndex + 1);
+        console.log('删除结束后', this.rows);
+      }
+      if (col['operation'] === 'update') {
+        // 计算出位置
+        let updateIndex;
+        for (let i = 0; i < this.rows.length; i++) {
+          if (this.rows[i]['id'] === col['data']['id']) {
+            updateIndex = i;
+          }
+        }
+        this.rows[updateIndex] = col['data']['config'];
+      }
+    }
+
+  }
 
 }

@@ -1,15 +1,32 @@
 <nz-card [nzTitle]="config.title" style="width:100%;" [nzExtra]="extraTemplate">
 
 
-  <ng-container  *ngFor="let r of rows">
-     <cfg-form-layout-row [config]="r"    (updateValue)="valueChangeRow($event)"></cfg-form-layout-row>
+  <ng-container *ngFor="let r of rows">
+    <cfg-form-layout-row [config]="r" (updateValue)="valueChangeRow($event)" [formState]="form_State"></cfg-form-layout-row>
+  </ng-container>
+
+</nz-card>
+<nz-card [nzTitle]="config.hiddenTitle" style="width:100%;" [nzExtra]="extraHiddenTemplate">
+
+
+  <ng-container *ngFor="let r of hiddenRows">
+    <cfg-form-layout-row [config]="r" (updateValue)="valueChangeRow($event)" [formState]="form_State"></cfg-form-layout-row>
   </ng-container>
 
 </nz-card>
 <ng-template #extraTemplate>
-  <button nz-button  [nzSize]="'small'" nzType="primary" nzTitle="添加行" (click)="addRow()" nz-tooltip >    <i nz-icon type="plus" ></i>添加行</button>
+  <nz-switch [(ngModel)]="form_State" (ngModelChange)="form_StateChange($event)" nzCheckedChildren="编辑" nzUnCheckedChildren="展示"
+    style="margin-right: 7px;"></nz-switch>
+
+  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="添加行" (click)="addRow()" nz-tooltip>
+    <i nz-icon type="plus"></i>添加行</button>
   <ng-container *ngIf="configType">
-      <button nz-button  [nzSize]="'small'" nzType="primary" nzTitle="保存json" (click)="SaveJson()" nz-tooltip >    <i nz-icon type="download" ></i>保存json</button>
+    <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="保存json" (click)="SaveJson()" nz-tooltip>
+      <i nz-icon type="download"></i>保存json</button>
   </ng-container>
 
+</ng-template>
+<ng-template #extraHiddenTemplate>
+  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="添加行" (click)="addHiddenRow()" nz-tooltip>
+    <i nz-icon type="plus"></i>添加行</button>
 </ng-template>

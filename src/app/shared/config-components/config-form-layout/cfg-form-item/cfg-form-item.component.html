@@ -1,12 +1,48 @@
-<nz-card style="width:100%;height: 100%;" (drop)="f_ondrop($event,config)" (dragover)="f_ondragover($event,config)" (dragenter)="f_ondragenter($event,config)"
-      (dragleave)="f_ondragleave(event)">
-      <ng-container *ngIf="compont === ''">
-            <p>
-                  将内容拖动到此处
-            </p>
-      </ng-container>
-      <ng-container *ngIf="compont != ''">
-             <ng-container CfgFormItemContent [config]="config['controls'] "> </ng-container> 
-      </ng-container>
-  
+<nz-card style="width:100%;height: 100%;" class="keleyirow">
+
+      <div nz-row nzGutter="8" >
+            <div nz-col nzSpan="6" class="keleyi">
+                  <div style="width:100%;height: 100%; margin-top: 3px;">
+                        <ng-container *ngIf="editTitleState">
+                              <input nz-input placeholder="标题" [(ngModel)]="config['controls']['title']" (blur)="onblurtitle($event,'end')" (keyup)="onKeyPress($event,'end')"
+                                    autofocus/>
+                        </ng-container>
+                        <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config['controls']['title']}}
+                        </span>
+                  </div>
+            </div>
+            <div nz-col nzSpan="18" class="keleyi" (mouseover)="mouseover($event)">
+                  <div style="width:100%;height: 100%; margin-top: 3px;" (drop)="f_ondrop($event,config)" (dragover)="f_ondragover($event,config)"
+                        (dragenter)="f_ondragenter($event,config)" (dragleave)="f_ondragleave(event)">
+
+                        <ng-container *ngIf="formState">
+                              <ng-container *ngIf="compont['editor'] === ''">
+                                    <p>
+                                          将编辑组件拖动到此处
+                                    </p>
+                              </ng-container>
+                              <ng-container *ngIf="compont['editor']  != ''">
+                                    <ng-container CfgFormItemContent [config]="config['controls']" [formState]="formState"> </ng-container>
+                              </ng-container>
+
+                        </ng-container>
+                        <ng-container *ngIf="!formState">
+                              <ng-container *ngIf="compont['text']  === ''">
+                                    <p>
+                                          将展示组件拖动到此处
+                                    </p>
+                              </ng-container>
+                              <ng-container *ngIf="compont['text']  != ''">
+                                    <ng-container CfgFormItemContent [config]="config['controls']" [formState]="formState"> </ng-container>
+                              </ng-container>
+
+                        </ng-container>
+
+
+                  </div>
+            </div>
+
+
+
+      </div>
 </nz-card>

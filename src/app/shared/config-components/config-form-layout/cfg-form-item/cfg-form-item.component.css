@@ -1,0 +1,19 @@
+.keleyi
+{
+    border: 1px  dashed rgb(2, 183, 255);
+    height: 40px;
+}
+.keleyi:hover
+{
+border: 2px dashed rgb(2, 48, 252) ;
+height: 40px;
+}
+
+.keleyirow
+{
+    border: 1px  dashed rgba(204, 2, 255, 0.589);
+}
+.keleyirow1:hover
+{
+border: 2px dashed rgb(252, 2, 2) ;
+}

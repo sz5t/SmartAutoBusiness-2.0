@@ -39,12 +39,43 @@ export class CfgLayoutItemComponent extends CnComponentBase implements OnInit, O
     console.log('拖动行ondrop', e, d);
     const ss = e.dataTransfer.getData('test');
     console.log('拖动行ondrop临时值', ss);
-    this.component = ss;
-    this.config.container = 'component';
-    const fieldIdentity = CommonUtils.uuID(36);
-    const componentTitle = ss + '组件';
-    this.config['component'] = { id: fieldIdentity, title: componentTitle, type: ss, container: ss };
-    console.log('拖拽后组件状态----》', this.component);
+
+    if( this.component){
+      this.componentService.modalService.confirm({
+        nzTitle: '确认框?',
+        nzContent: '<b style="color: red;">你确定要替换当前组件吗？</b>',
+        nzOkText: '确定',
+        nzOkType: 'danger',
+        nzOnOk: () =>{
+          this.component=null;
+          this.config.container = 'component';
+          const fieldIdentity = CommonUtils.uuID(36);
+          const componentTitle = ss + '组件';
+          this.config['component'] = { id: fieldIdentity, title: componentTitle, type: ss, container: ss };
+          console.log('拖拽后组件状态----》', this.component);
+          setTimeout(()=>{
+            this.component = ss;
+          });
+        },
+        nzCancelText: '取消',
+        nzOnCancel: () => console.log('Cancel')
+      });
+    }
+    else {
+      this.component = ss;
+      this.config.container = 'component';
+      const fieldIdentity = CommonUtils.uuID(36);
+      const componentTitle = ss + '组件';
+      this.config['component'] = { id: fieldIdentity, title: componentTitle, type: ss, container: ss };
+      console.log('拖拽后组件状态----》', this.component);
+    }
+    // this.component = ss;
+    // this.config.container = 'component';
+    // const fieldIdentity = CommonUtils.uuID(36);
+    // const componentTitle = ss + '组件';
+    // this.config['component'] = { id: fieldIdentity, title: componentTitle, type: ss, container: ss };
+    // console.log('拖拽后组件状态----》', this.component);
+
   }
   public f_ondragover(e?, d?) {
     // 进入，就设置可以拖放进来（设置不执行默认：【默认的是不可以拖动进来】）

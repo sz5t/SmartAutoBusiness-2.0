@@ -8,43 +8,66 @@ import { CommonUtils } from '@core/utils/common-utils';
 export class CfgFormLayoutComponent implements OnInit {
 
   @Input() public config;
+  @Input() public formState;
   @Output() public updateValue = new EventEmitter();
-  public configType =  true;
+  public configType = true;
+  public form_State = true;
+  public form_State_s = '编辑';
   public rows = [
+  ];
+  public hiddenRows = [
   ];
   constructor() { }
 
   public ngOnInit() {
     const fieldIdentity = CommonUtils.uuID(6);
-    const title = '表单布局' + fieldIdentity;
+    const _title = '表单布局' + fieldIdentity;
+    const _hiddenTitle = '表单隐藏域' + fieldIdentity;
     if (!this.config) {
       this.config = {
         id: fieldIdentity,
         type: 'layout',
-        title: title,
-        rows: this.rows
+        title: _title,
+        hiddenTitle: _hiddenTitle,
+        rows: this.rows,
+        hiddenRows: this.hiddenRows
       }
     } else {
       this.configType = false;
-      this.rows =   this.config.rows;
+      this.rows = this.config.rows;
+      this.hiddenRows = this.config.hiddenRows;
     }
 
-      this.addRow();
+    this.addRow();
+    this.addHiddenRow();
   }
 
   /**
    * addRow
    */
-  public addRow() {
+  public addRow(_title?) {
     const fieldIdentity = this.uuID(6);
     const row = {
       cols: []
     };
     row['id'] = fieldIdentity;
     row['type'] = 'row';
+    row['title'] = _title ? _title : '行';
     console.log('新增行信息', row);
     this.rows.push(row);
     console.log('当前所有行：', this.rows);
+  }
+  public addHiddenRow(_title?) {
+    const fieldIdentity = this.uuID(6);
+    const row = {
+      cols: []
+    };
+    row['id'] = fieldIdentity;
+    row['type'] = 'row';
+    row['title'] = _title ? _title : '行';
+    console.log('新增行信息', row);
+    this.hiddenRows.push(row);
+    console.log('当前所有行：', this.hiddenRows);
   }
 
   public valueChangeRow(col?) {
@@ -83,6 +106,35 @@ export class CfgFormLayoutComponent implements OnInit {
     console.log('当前布局json：', this.config, JSON.stringify(this.config));
   }
 
+  /**
+   * 解析出当前表单明细小组件
+   */
+
+   _Controller=[];
+  public FormComponents(v) {
+
+       if(v.hasOwnProperty('type')){
+         if(v['type'] ==='layout'){
+          v['rows'].forEach(_row => {
+            this.FormComponents(_row);
+          });
+          
+         } else if(v['type'] ==='row'){
+          v['cols'].forEach(_col => {
+            this.FormComponents(_col);
+          });
+        } else if(v['type'] ==='col'){
+           if(v['container']==='' || v['container']==='component'){
+               this._Controller.push(v['controls']);
+           } else {
+             
+           }
+        }
+       }
+
+  }
+
+
   public uuID(w) {
     let s = '';
     const str =
@@ -91,5 +143,12 @@ export class CfgFormLayoutComponent implements OnInit {
       s += str.charAt(Math.round(Math.random() * (str.length - 1)));
     }
     return s;
+  }
+
+  /**
+   * form_StateChange
+   */
+  public form_StateChange(v?) {
+
   }
 }

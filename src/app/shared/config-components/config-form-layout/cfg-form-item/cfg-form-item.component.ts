@@ -1,24 +1,57 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { CnComponentBase } from '@shared/components/cn-component.base';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { CommonUtils } from '@core/utils/common-utils';
 
 @Component({
   selector: 'cfg-form-item,[cfg-form-item]',
   templateUrl: './cfg-form-item.component.html',
   styleUrls: ['./cfg-form-item.component.css']
 })
-export class CfgFormItemComponent implements OnInit {
+export class CfgFormItemComponent extends CnComponentBase implements OnInit {
   @Input() public config;
+  @Input() public formState;
   public is_drag = true;
   public is_dragj = true;
-  public compont = '';
-  constructor() { }
+  public compont = {text:'',editor:''};
+  public editTitleState = false;
+  constructor(@Inject(BSN_COMPONENT_SERVICES)
+  public componentService: ComponentServiceProvider) {
+    super(componentService);
+  }
 
   public ngOnInit() {
     console.log('-->表单列-》', this.config);
-    if(this.config){
+    if (this.config) {
 
-    }else {
-      this.config ={};
+    } else {
+      this.config = {};
     }
+
+    if (!this.config['controls']) {
+      this.config['controls'] = {};
+      const fieldIdentity = CommonUtils.uuID(36);
+      this.config['controls']['id'] = 'fieldIdentity';
+      this.config['controls']['title'] = '标题';
+      this.config['controls']['text'] = {};
+      this.config['controls']['editor'] = {};
+    }
+
+    if (this.formState) {
+      if (this.config['controls']['editor'].hasOwnProperty('type')) {
+        this.compont['editor'] = this.config['controls']['editor']['type'];
+      } else {
+        this.compont['editor'] = '';
+      }
+    } else {
+      if (this.config['controls']['text'].hasOwnProperty('type')) {
+        this.compont['text']= this.config['controls']['text']['type'];
+      } else {
+        this.compont['text'] = '';
+      }
+    }
+
   }
 
   public f_ondrop(e?, d?) {
@@ -26,21 +59,79 @@ export class CfgFormItemComponent implements OnInit {
     console.log('拖动行ondrop', e, d);
     const ss = e.dataTransfer.getData('test');
     console.log('拖动行ondrop临时值', ss);
-    this.compont = ss;
-    this.config.layoutContain = this.compont;
-    this.config['controls'] = { type: ss };
 
+    let _compont;
+    if (this.formState) {
+      _compont=   this.compont['editor'];
+
+    } else {
+      _compont=   this.compont['text'];
+   
+    }
+
+    if (_compont) {
+      this.componentService.modalService.confirm({
+        nzTitle: '确认框?',
+        nzContent: '<b style="color: red;">你确定要替换当前组件吗？</b>',
+        nzOkText: '确定',
+        nzOkType: 'danger',
+        nzOnOk: () => {
+          if (this.formState) {
+            this.compont['editor'] ='';
+      
+          } else {
+             this.compont['text']='';
+         
+          }
+          this.config.container ='component';
+          if (this.formState) {
+            this.config['controls']['editor'] = { type: ss };
+          } else {
+            this.config['controls']['text'] = { type: ss };
+          }
+
+          console.log('拖拽后组件状态----》', this.compont);
+          setTimeout(() => {
+            if (this.formState) {
+              this.compont['editor'] =ss;
+        
+            } else {
+               this.compont['text']=ss;
+           
+            }
+          });
+        },
+        nzCancelText: '取消',
+        nzOnCancel: () => console.log('Cancel')
+      });
+    }
+    else {
+      if (this.formState) {
+        this.compont['editor'] =ss;
+  
+      } else {
+         this.compont['text']=ss;
+     
+      }
+      this.config.container = 'component';
+      if (this.formState) {
+        this.config['controls']['editor'] = { type: ss };
+      } else {
+        this.config['controls']['text'] = { type: ss };
+      }
+      console.log('拖拽后组件状态----》', this.compont);
+    }
     //  【配置信息的生成】
     // 配置信息分两部分，一部分，在表单布局内标识，一部分是在control 里具体详细配置
     // 布局最小记录为contorl 标识的占位，其下分两部分，text、editor 方便组件状态切换，展示切换
     // 默认均为 insert 下取默认值，update下 只读加载值，text 只读加载值
     // 生成control 的内置参数，外部引用配置，独立生成，构建关联关系
-    
-    const c= {
+
+    const c = {
       id: '001',
       "hidden": true, // 字段是否隐藏
       "title": '测试字段1',  // lable 信息
-      "titleConfig":{  // 展示文本的信息
+      "titleConfig": {  // 展示文本的信息
         required: true
       },
       "field": "code",  // fromcontrol name  默认的字段
@@ -103,6 +194,26 @@ export class CfgFormItemComponent implements OnInit {
   public setState() {
     this.is_dragj = true;
     // console.log('进入当前领地++++');
+  }
+
+  public editTitle(e?) {
+    this.editTitleState = true;
+  }
+
+  public onblurtitle(e?, type?) {
+    this.editTitleState = false;
+    event.stopPropagation();
+  }
+  public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+      this.editTitleState = false;
+    }
+  }
+
+  public mouseover(e?){
+   // console.log(e);
+    e.preventDefault();
+    e.stopPropagation();
   }
 
 
@@ -604,10 +715,10 @@ export class CfgFormItemComponent implements OnInit {
     */
     cascade.forEach(s => {
       if (s.type === '') { // 内置行为简析
-          // 将方法注册
-       //   this.after(this, '组件内部方法', () => {
+        // 将方法注册
+        //   this.after(this, '组件内部方法', () => {
 
-         //   });
+        //   });
       }
       if (s.type === '') {
 
