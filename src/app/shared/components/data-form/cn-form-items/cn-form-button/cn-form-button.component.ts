@@ -11,7 +11,7 @@ export class CnFormButtonComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
 
-  public value: any;
+  public value: any = null;
   constructor() { }
 
   ngOnInit() {

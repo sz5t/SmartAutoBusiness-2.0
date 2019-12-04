@@ -36,6 +36,8 @@ export class CommonUtils {
           return new Date(value).toDateString();
         case 'datetime':
           return new Date(value).toTimeString();
+        case 'nullable':
+          return null;
       }
     } else {
       return value;

@@ -36,7 +36,6 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   }
 
   ngOnInit() {
-    debugger;
     this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
     // 静态数据，动态数据
   }
@@ -173,7 +172,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
 
   public async valueChange(v?) {
     console.log('表单静态表格数据：', v);
-    this.table.loadStaticData(v);
+    // this.table.loadStaticData(v);
     // this.addedRowsData = v;
     // this.value = v;
   }

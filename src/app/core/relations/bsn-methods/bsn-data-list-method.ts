@@ -40,6 +40,7 @@ export const CN_DATA_LIST_METHOD: IDataListTrigger = {
     CHECK_ROW: 'checkRow',
     REFRESH_AS_CHILD: 'load',
     LOAD_BY_FILTER: 'loadByFilter',
+    ADD_LIST_ITEM: 'addListItem',
 
     // link
     LINK: 'link',

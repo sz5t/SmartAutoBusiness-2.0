@@ -1,6 +1,10 @@
-<button nz-button (click)="createNewComponent('newComponentForm')" [nzType]="'dashed'" nzBlock="true">
-  <span style="font-size:1em"><i style="font-size:1em" nz-icon nzType="plus"></i> 创建一个新组件</span>
-</button>
+<!-- <nz-button-group *ngIf="innerToolbars">
+  <button *ngFor="let btn of outerToolbars" nz-button (click)="btnClick(btn)" [nzType]="btn.style" nzBlock="true">
+    <span style="font-size:1em"><i style="font-size:1em" nz-icon [nzType]="btn.icon"></i> {{btn.title}}</span>
+  </button>
+</nz-button-group> -->
+
+
 <nz-list [nzLoading]="false" [nzDataSource]="list" [nzRenderItem]="item" [nzSize]="config.size"
   [nzPagination]="pagination" [nzGrid]="config.gutter">
   <ng-template #item let-item>
@@ -10,6 +14,13 @@
 
         <span style="font-size:1.5em"><i style="font-size:1em" nz-icon nzType="plus"></i> 创建组件</span>
       </button> -->
+
+      <div *ngIf="innerToolbars && item === null">
+        <button *ngFor="let btn of outerToolbars" nz-button (click)="btnClick(btn)" [nzType]="btn.style"
+          style="width: 100%; min-height: 200px;">
+          <span style="font-size:1em"><i style="font-size:1em" nz-icon [nzType]="btn.icon"></i> {{btn.title}}</span>
+        </button>
+      </div>
       <nz-card nzHoverable *ngIf="item !== null" [nzActions]="[op1, op2,op3]">
         <!--操作模版-->
         <ng-template #op1>

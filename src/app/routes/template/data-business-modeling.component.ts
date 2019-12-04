@@ -3671,12 +3671,14 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 {
                                                     "name": "refResourceKeyName",
                                                     "type": "componentValue",
-                                                    "valueName": "refResourceKeyName"
+                                                    "valueName": "refResourceKeyName",
+                                                    "value": "",
                                                 },
                                                 {
                                                     "name": "refResourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "refResourceName"
+                                                    "valueName": "refResourceName",
+                                                    "value": ""
                                                 },
                                                 {
                                                     "name": "refParentResourcePropId",
@@ -4036,7 +4038,8 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             {
                                                 "name": "_root.parentId",
                                                 "type": "value",
-                                                "value": null
+                                                "value": null,
+                                                "dataType": "nullable"
                                             },
                                             {
                                                 "name": "_mapToObject",

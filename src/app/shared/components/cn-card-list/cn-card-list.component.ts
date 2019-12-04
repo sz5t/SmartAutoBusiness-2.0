@@ -23,6 +23,7 @@ import { ComponentServiceProvider } from '@core/services/component/component-ser
 import { CN_DATA_LIST_METHOD } from '@core/relations/bsn-methods/bsn-data-list-method';
 import { CnPageComponent } from '../cn-page/cn-page.component';
 import { CnDataFormComponent } from '../data-form/cn-data-form.component';
+import { ButtonOperationResolver } from '@shared/resolver/buttonOperation/buttonOperation.resolver';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -52,6 +53,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
     public loading = false;
     public list: any[] = [null];
 
+    public outerToolbars: any;
+    public innerToolbars: any
 
 
 
@@ -94,6 +97,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
     ngOnInit(): void {
         this._initInnerValue();
         this.resolveRelations();
+        this._createToolbars();
 
         // 初始化默认分页大小
         this.config.pageSize && (this.pageSize = this.config.pageSize);
@@ -131,6 +135,18 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         }
     }
 
+    private _createToolbars() {
+        if (this.config.actions) {
+            this.outerToolbars = this.config.actions.filter(s => s.type === 'outer');
+            this.innerToolbars = this.config.actions.filter(s => s.type === 'inner');
+        }
+    }
+
+    public btnClick(btn) {
+        const btnResolver = new ButtonOperationResolver(this.componentService, this.config);
+        btnResolver.toolbarAction(btn, this.config.id);
+    }
+
     public load() {
         this.loading = true;
         const ajaxObj = this._findAjaxById(this.config.loadingConfig.id);
@@ -142,7 +158,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         // this.list = [null];
         this.componentService.apiService.getRequest(ajaxObj.url, ajaxObj.method, { params }).subscribe(response => {
             if (response.data && response.data && response.data.resultDatas) {
-                const innerList: any[] = [];
+                const innerList: any[] = [null];
                 response.data.resultDatas.forEach(d => {
                     const itm = this._listMappingResolve(d);
                     itm && innerList.push(itm);
@@ -340,17 +356,19 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         let item;
         if (this.config.dataMapping && this.config.dataMapping.length > 0) {
             item = {};
+            item['extra'] = [];
+
             this.config.dataMapping.forEach(d => {
-                item['extra'] = [];
-                if (data[d['field']]) {
+
+                if (d['name'] !== 'extra' && data[d['field']]) {
                     item[d['name']] = data[d['field']];
                 }
-                if (d['name'] === 'extra') {
+                else if (d['name'] === 'extra') {
                     d['fields'].forEach(f => {
                         if (data[f['field']]) {
                             f['value'] = data[f['field']];
                         }
-                        item['extra'].push(f);
+                        item['extra'].push({...f});
                     });
                 }
             })
@@ -362,7 +380,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         const formCfg = this.config.dialog.find(d => d.id === formName);
         if (formCfg) {
             this.showDialog({ dialog: formCfg, btnCfg: { state: 'new' } });
-        } 0
+        }
 
     }
 
@@ -423,6 +441,10 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
             result = false;
         }
         return result;
+    }
+
+    public addListItem(option) {
+        debugger;
     }
 
     public showLayoutDialog(option: any) {
@@ -574,4 +596,5 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         }
         dialog = this.componentService.modalService.create(dialogOptional);
     }
+
 }

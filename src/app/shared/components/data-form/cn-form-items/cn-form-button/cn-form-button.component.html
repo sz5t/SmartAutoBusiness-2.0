@@ -5,9 +5,15 @@
   <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm"
     [nzXs]="config.config.controlSize.nzXs" [nzMd]="config.config.controlSize.nzMd"
     [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl" [formGroup]="formGroup">
-    <button nz-button [nzType]="config.config.style" [nzSize]="config.config.size">
+    <button *ngIf="config.config.editor.buttonType === 'submit'" nz-button [nzType]="config.config.style"
+      [nzSize]="config.config.size">
       <i nz-icon [nzType]="config.config.icon"></i> {{config.config.title}}
     </button>
+
+    <nz-radio-group *ngIf="config.config.editor.buttonType === 'radio'" [(ngModel)]="value">
+      <label *ngFor="let rbtn of config.config.editor.group" nz-radio-button
+        [nzValue]="rbtn.value">{{rbtn.title}}</label>
+    </nz-radio-group>
   </nz-form-control>
 </nz-form-item>
 <!-- hidden="hidden" -->

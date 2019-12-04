@@ -1206,6 +1206,7 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     public loadStaticData(data) {
+        debugger;
         this._initComponentData();
         if (data && Array.isArray(data) && data.length > 0) {
 
@@ -1458,7 +1459,8 @@ export class CnStaticTableComponent extends CnComponentBase
 
     // #region state 状态切换
     private createNewRowData() {
-        const newData = {}
+        // 创建数据原型,并且初始化对象状态为 new;
+        const newData = { "$state$": "insert" };
         this.config.columns.filter(c => c.type !== 'action').map(col => {
             newData[col.field] = null
         });
@@ -2295,6 +2297,7 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     getRowActions(state): any[] {
+        debugger;
         const orginAction = this.tableColumns.find(c => c.type === 'action');
         const copyAction = [];
         if (orginAction) {

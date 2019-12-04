@@ -22,7 +22,7 @@ export interface IDataListTrigger {
     CONFIRM: string,
     CHECKED_ITEMS_IDS_CONFIRM: string,
     MESSAGE: string,
-    LOAD_REFRESH_DATA: string,
+    LOAD_REFRESH_DATA: string
 
     REFRESH: string,
     HIDDEN: string,
@@ -35,6 +35,7 @@ export interface IDataListTrigger {
     REFRESH_AS_CHILD: string,
     LOAD_BY_FILTER: string,
     SET_SELECT_ROW: string,
+    ADD_LIST_ITEM: string,
 
     LINK: string,
     LINK_TO: string,
@@ -93,6 +94,7 @@ export const BSN_DATAGRID_TRIGGER: IDataListTrigger = {
     SELECT_ROW: 'SELECT_ROW',
     SET_SELECT_ROW: 'SET_SELECT_ROW',
     CHECK_ROW: 'CHECK_ROW',
+    ADD_LIST_ITEM: "ADD_LIST_ITEM",
 
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',
