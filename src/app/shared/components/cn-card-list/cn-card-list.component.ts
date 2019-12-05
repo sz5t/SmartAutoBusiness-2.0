@@ -65,6 +65,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
     public _sortName;
     public _sortValue;
 
+    private KEY_ID;
 
     public ITEM_ADDED: any;
     public ITEM_EDITED: any;
@@ -95,6 +96,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
     }
 
     ngOnInit(): void {
+        this.KEY_ID = this.config.keyId;
         this._initInnerValue();
         this.resolveRelations();
         this._createToolbars();
@@ -142,7 +144,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         }
     }
 
-    public btnClick(btn) {
+    public btnClick(btn, item) {
+        this.ITEM_SELECTED = item ? item : null;
         const btnResolver = new ButtonOperationResolver(this.componentService, this.config);
         btnResolver.toolbarAction(btn, this.config.id);
     }
@@ -152,6 +155,34 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         const ajaxObj = this._findAjaxById(this.config.loadingConfig.id);
         const params = {
             ...this._buildParameters(ajaxObj.params),
+            ...this._buildPaging(),
+            ...this._buildSort()
+        };
+        // this.list = [null];
+        this.componentService.apiService.getRequest(ajaxObj.url, ajaxObj.method, { params }).subscribe(response => {
+            if (response.data && response.data && response.data.resultDatas) {
+                const innerList: any[] = [null];
+                response.data.resultDatas.forEach(d => {
+                    const itm = this._listMappingResolve(d);
+                    itm[this.KEY_ID] = d[this.KEY_ID];
+                    itm && innerList.push(itm);
+                });
+                this.list = innerList;
+                this.total = response.data.count;
+
+            } else {
+                // this._initDescription();
+            }
+            this.loading = false;
+            this.cdr.detectChanges();
+        })
+    }
+
+    public loadByFilter() {
+        this.loading = true;
+        const ajaxObj = this._findAjaxById(this.config.loadingConfig.id);
+        const params = {
+            ...this._buildParameters(ajaxObj.filter),
             ...this._buildPaging(),
             ...this._buildSort()
         };
@@ -368,7 +399,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                         if (data[f['field']]) {
                             f['value'] = data[f['field']];
                         }
-                        item['extra'].push({...f});
+                        item['extra'].push({ ...f });
                     });
                 }
             })

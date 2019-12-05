@@ -10,7 +10,8 @@
       <i nz-icon [nzType]="config.config.icon"></i> {{config.config.title}}
     </button>
 
-    <nz-radio-group *ngIf="config.config.editor.buttonType === 'radio'" [(ngModel)]="value">
+    <nz-radio-group [formControlName]="config.field" class="mr-md" *ngIf="config.config.editor.buttonType === 'radio'"
+      [(ngModel)]="value" (ngModelChange)="valueChange($event)">
       <label *ngFor="let rbtn of config.config.editor.group" nz-radio-button
         [nzValue]="rbtn.value">{{rbtn.title}}</label>
     </nz-radio-group>

@@ -4,7 +4,7 @@
 <nz-table #dataTable [nzShowSizeChanger]="config.isShowSizeChanger" [nzLoadingDelay]="300" [nzFrontPagination]="true"
   [nzShowPagination]="config.isPagination" [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
   [nzPageSizeOptions]="config.pageSizeOptions" [nzData]="dataList" [nzShowTotal]="showTotal"
-  [nzBordered]="config.isBordered" [nzSize]="config.size" [nzTitle]="config.title ? title : null"
+  [nzBordered]="config.isBordered" [nzSize]="'small'" [nzTitle]="config.title ? title : null"
   [nzScroll]="config.scroll ? config.scroll : null"
   [nzWidthConfig]="config.spanWidthConfig ? config.spanWidthConfig : null">
   <thead (nzSortChange)="sort($event)" nzSingleSort="true">

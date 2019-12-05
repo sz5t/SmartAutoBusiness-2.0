@@ -254,20 +254,20 @@ export class ApiService extends _HttpClient {
     if (!options) {
       options = { headers: HttpHeaders };
       options.headers = new HttpHeaders()
-        .set("_log", '{"clientType": 1,"type": 1}')
+        .append("_log", '{"clientType": 1,"type": 1}')
         // .set("Pragma", "no-cache")
         // .set("Cache-Control", "no-cache")
         // .set("Expires", "Sat, 01 Jan 2000 00:00:00 GMT")
-        .set("x-Requested-With", "XMLHttpRequest")
+        .append("x-Requested-With", "XMLHttpRequest")
       // .set();
     }
     if (!options.headers) {
       options.headers = new HttpHeaders()
-        .set("_log", '{"clientType": 1,"type": 1}')
+        .append("_log", '{"clientType": 1,"type": 1}')
         // .set("Pragma", "no-cache")
         // .set("Cache-Control", "no-cache")
         // .set("Expires", "Sat, 01 Jan 2000 00:00:00 GMT")
-        .set("x-Requested-With", "XMLHttpRequest");
+        .append("x-Requested-With", "XMLHttpRequest");
     }
 
     // options.headers.append();

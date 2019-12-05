@@ -2,8 +2,9 @@
 
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
     <div nz-row [nzGutter]="24" *ngFor="let r of layoutRowsCfg">
-      <div nz-col [nzSpan]="c.span"  [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
-      [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl"  *ngFor="let c of r.cols" [ngStyle]="{'display': c.display ? c.display : null}">
+      <div nz-col [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs" [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg"
+        [nzXl]="c.size.nzXl" [nzXXl]="c.size.nzXXl" *ngFor="let c of r.cols"
+        [ngStyle]="{'display': c.display ? c.display : null}">
         <ng-container CnFormItemDirective [formGroup]="validateForm" [formCascade]="formCascade[c.control.id]"
           [config]="formControlObj[c.control.id]" [formState]="FORM_STATE" (updateValue)="valueChange($event)">
         </ng-container>

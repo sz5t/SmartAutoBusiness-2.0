@@ -24,7 +24,7 @@ export class CnFormButtonComponent implements OnInit {
     this.value = v;
     // console.log('label 值变化', v);
     const backValue = { name: this.config.field, value: v, id: this.config.config.id };
-    // this.updateValue.emit(backValue);
+    this.updateValue.emit(backValue);
   }
 
   public cascadeAnalysis(c?) {

@@ -462,7 +462,6 @@ class ComponentValueParameter extends BaseParameter implements IParameter {
       cmpVal[this._param.valueName] === undefined
     ) {
       if (this._param.value !== undefined) {
-        debugger;
         if (this._param.conditionType) {
           this._result = this.getParameter(this._param.conditionType, this._param.value);
         } else if (this._param.defaultDate) {

@@ -1036,6 +1036,7 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     public ngOnInit() {
+        console.log('-----------------------');
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
 
@@ -1206,7 +1207,7 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     public loadStaticData(data) {
-        debugger;
+        console.log('-----------------ddddddddd', data);
         this._initComponentData();
         if (data && Array.isArray(data) && data.length > 0) {
 
@@ -1233,8 +1234,9 @@ export class CnStaticTableComponent extends CnComponentBase
                 this.formCascade[d[this.KEY_ID]] = {};
 
             });
-
-            this.dataList = data;
+            setTimeout(() => {
+                this.dataList = data;
+            })
             this.ROWS_EDITED = [...data];
             this.total = data.length;
             // 更新
@@ -2297,7 +2299,6 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     getRowActions(state): any[] {
-        debugger;
         const orginAction = this.tableColumns.find(c => c.type === 'action');
         const copyAction = [];
         if (orginAction) {

@@ -343,7 +343,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     };
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     let data_form;
-    this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
+    this.componentService.apiService[method](url, params).subscribe(response => {
       if (isArray(response.data)) {
         if (response.data && response.data.length > 0) {
           data_form = response.data[0];
@@ -569,6 +569,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                 }
                 // 其他取值【日后扩展部分】
               });
+
               if (item.content.sender) {
                 new RelationResolver(this)
                   .resolveInnerSender(

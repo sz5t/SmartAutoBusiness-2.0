@@ -88,10 +88,11 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                     "nzXXl": { offset: 0, span: 24 }
                                 },
                                 "component": {
-                                    "id": "view_sql_search",
+                                    "id": "view_component_search",
                                     "type": "form",
                                     "component": "form",
                                     "state": "edit",
+                                    "loadingOnInit": false,
                                     "loadingConfig": {
                                         "id": "loadBusinessObject"
                                     },
@@ -99,7 +100,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                         "messageSender": [
                                             {
                                                 "id": "afterSelectValueChange",
-                                                "senderId": "view_sql_search",
+                                                "senderId": "view_component_search",
                                                 "sendData": [
                                                     {
                                                         "beforeSend": {},
@@ -108,9 +109,29 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "receiverTrigger": "LOAD_BY_FILTER",
                                                         "params": [
                                                             {
-                                                                "name": "_SNAME",
+                                                                "name": "_NAME",
                                                                 "type": "returnValue",
-                                                                "valueName": "_SNAME",
+                                                                "valueName": "_NAME",
+                                                                "valueTo": "tempValue"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "afterClickValueChange",
+                                                "senderId": "view_component_search",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "BEHAVIOR",
+                                                        "receiverTrigger": "LOAD_BY_FILTER",
+                                                        "params": [
+                                                            {
+                                                                "name": "_TYPE",
+                                                                "type": "returnValue",
+                                                                "valueName": "_TYPE",
                                                                 "valueTo": "tempValue"
                                                             }
                                                         ]
@@ -122,12 +143,50 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                     "cascadeValue": [
                                         {
                                             "type": "",
+                                            "controlId": "search_type",
+                                            "name": "TYPE",
+                                            "CascadeObjects": [
+                                                {
+                                                    "controlId": "search_type",
+                                                    "cascadeName": "TYPE",
+                                                    "cascadeItems": [
+                                                        {
+                                                            "type": "default",
+                                                            "content": {
+                                                                "type": "relation",
+                                                                "sender": {
+                                                                    "name": "validation",
+                                                                    "message": "message.ajax.state.success",
+                                                                    "senderId": "afterClickValueChange"
+                                                                },
+                                                                "data": {
+                                                                    "option": [
+                                                                        {
+                                                                            "name": "_TYPE",
+                                                                            "type": "selectValue",
+                                                                            "valueName": "value"
+                                                                        },
+                                                                        {
+                                                                            "name": "_NAME",
+                                                                            "type": "selectObjectValue",
+                                                                            "valueName": "NAME"
+                                                                        },
+                                                                    ]
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "",
                                             "controlId": "search_name",
-                                            "name": "SNAME",
+                                            "name": "NAME",
                                             "CascadeObjects": [
                                                 {
                                                     "controlId": "search_name",
-                                                    "cascadeName": "SNAME",
+                                                    "cascadeName": "NAME",
                                                     "cascadeItems": [
                                                         {
                                                             "type": "default",
@@ -141,9 +200,14 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                                 "data": {
                                                                     "option": [
                                                                         {
-                                                                            "name": "_SNAME",
+                                                                            "name": "_NAME",
                                                                             "type": "selectObjectValue",
-                                                                            "valueName": "SNAME"
+                                                                            "valueName": "NAME"
+                                                                        },
+                                                                        {
+                                                                            "name": "_TYPE",
+                                                                            "type": "selectValue",
+                                                                            "valueName": "value"
                                                                         }
                                                                     ]
                                                                 }
@@ -153,64 +217,6 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                 }
                                             ]
                                         },
-                                        // {
-                                        //     "type": "",
-                                        //     "controlId": "res_ref_id",
-                                        //     "name": "refResourceId",
-                                        //     "CascadeObjects": [
-                                        //         {
-                                        //             "controlId": "res_refField",
-                                        //             "cascadeName": "refParentResourcePropId",
-                                        //             "cascadeItems": [
-                                        //                 {
-                                        //                     "type": "default",
-                                        //                     "content": {
-                                        //                         "type": "ajax",
-                                        //                         "data": {
-                                        //                             "option": [
-                                        //                                 {
-                                        //                                     "name": "_TABLE_ID",
-                                        //                                     "type": "selectValue",
-                                        //                                     "valueName": "id"
-                                        //                                 }
-                                        //                             ]
-                                        //                         }
-                                        //                     }
-                                        //                 }
-
-                                        //             ]
-                                        //         }
-                                        //     ],
-                                        // },
-                                        // {
-                                        //     "type": "",
-                                        //     "controlId": "res_refSQL",
-                                        //     "name": "sqlList",
-                                        //     "CascadeObjects": [
-                                        //         {
-                                        //             "controlId": "res_refSQL",
-                                        //             "cascadeName": "sqlList",
-                                        //             "cascadeItems": [
-                                        //                 {
-                                        //                     "type": "default",
-                                        //                     "content": {
-                                        //                         "type": "setValue",
-                                        //                         "data": {
-                                        //                             "option": [
-                                        //                                 {
-                                        //                                     // "name": "_TYPE",
-                                        //                                     "type": "dataList",
-                                        //                                     // "valueName": "refResourceType"
-                                        //                                 }
-                                        //                             ]
-                                        //                         }
-                                        //                     }
-                                        //                 }
-
-                                        //             ]
-                                        //         }
-                                        //     ]
-                                        // }
                                     ],
                                     "formLayout": {
                                         "id": "b86s2i",
@@ -232,13 +238,13 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                             // "span": 18,
                                                             "nzXs": { span: 24 },
                                                             "nzSm": { span: 24 },
-                                                            "nzMd": { offset: 12, span: 6 },
-                                                            "nzLg": { offset: 12, span: 6 },
-                                                            "ngXl": { offset: 12, span: 6 },
-                                                            "nzXXl": { offset: 12, span: 6 }
+                                                            "nzMd": { span: 12 },
+                                                            "nzLg": { offset: 6, span: 8 },
+                                                            "ngXl": { offset: 12, span: 5 },
+                                                            "nzXXl": { offset: 12, span: 5 }
                                                         },
                                                         "control": {
-                                                            "id": "search_state"
+                                                            "id": "search_type"
                                                         }
                                                     },
                                                     {
@@ -251,10 +257,10 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "size": {
                                                             "nzXs": 24,
                                                             "nzSm": 24,
-                                                            "nzMd": 6,
-                                                            "nzLg": 6,
-                                                            "ngXl": 6,
-                                                            "nzXXl": 6
+                                                            "nzMd": 12,
+                                                            "nzLg": 10,
+                                                            "ngXl": 7,
+                                                            "nzXXl": 7
                                                         },
                                                         "control": {
                                                             "id": "search_name"
@@ -266,7 +272,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                     },
                                     "formControls": [
                                         {
-                                            "id": "search_state",
+                                            "id": "search_type",
                                             "hidden": false,
                                             "title": "",
                                             "hiddenLabel": true,
@@ -276,39 +282,39 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                             },
                                             "field": "TYPE",
                                             "labelSize": {
-                                                "span": 4,
-                                                "nzXs": 4,
-                                                "nzSm": 4,
-                                                "nzMd": 4,
-                                                "nzLg": 4,
-                                                "ngXl": 4,
-                                                "nzXXl": 4
+                                                "span": 0,
+                                                "nzXs": 0,
+                                                "nzSm": 0,
+                                                "nzMd": 0,
+                                                "nzLg": 0,
+                                                "ngXl": 0,
+                                                "nzXXl": 0
                                             },
                                             "controlSize": {
-                                                "span": 18,
+                                                "span": 24,
                                                 "nzXs": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "nzSm": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "nzMd": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "nzLg": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "ngXl": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "nzXXl": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 }
                                             },
                                             "state": "edit",
@@ -346,58 +352,58 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                             "titleConfig": {
                                                 "required": false
                                             },
-                                            "field": "SNAME",
+                                            "field": "NAME",
                                             "labelSize": {
-                                                "span": 4,
-                                                "nzXs": 4,
-                                                "nzSm": 4,
-                                                "nzMd": 4,
-                                                "nzLg": 4,
-                                                "ngXl": 4,
-                                                "nzXXl": 4
+                                                "span": 0,
+                                                "nzXs": 0,
+                                                "nzSm": 0,
+                                                "nzMd": 0,
+                                                "nzLg": 0,
+                                                "ngXl": 0,
+                                                "nzXXl": 0
                                             },
                                             "controlSize": {
-                                                "span": 18,
+                                                "span": 24,
                                                 "nzXs": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "nzSm": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "nzMd": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "nzLg": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "ngXl": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 },
                                                 "nzXXl": {
-                                                    "span": 18,
-                                                    "offset": 6
+                                                    "span": 24,
+                                                    // "offset": 6
                                                 }
                                             },
                                             "state": "edit",
                                             "text": {
                                                 "type": "label",
-                                                "field": "SNAME"
+                                                "field": "NAME"
                                             },
                                             "editor": {
                                                 "type": "searchSelect",
-                                                "field": "SNAME",
+                                                "field": "NAME",
                                                 "showSearch": true,
                                                 "serverSearch": true,
                                                 "loadingConfig": {
                                                     "id": "loadBusinessNameValue"
                                                 },
-                                                "labelName": "SNAME",
-                                                "valueName": "SNAME",
+                                                "labelName": "NAME",
+                                                "valueName": "NAME",
                                                 "placeholder": "请输入查找内容..."
                                             }
                                         }
@@ -418,7 +424,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                     "readOnly": false
                                                 },
                                                 {
-                                                    "id": "search_state",
+                                                    "id": "search_type",
                                                     "state": "edit",
                                                     "hidden": false,
                                                     "readOnly": false
@@ -435,7 +441,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                     "readOnly": false
                                                 },
                                                 {
-                                                    "id": "search_state",
+                                                    "id": "search_type",
                                                     "state": "edit",
                                                     "hidden": false,
                                                     "readOnly": false
@@ -452,7 +458,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                     "readOnly": false
                                                 },
                                                 {
-                                                    "id": "search_state",
+                                                    "id": "search_type",
                                                     "state": "edit",
                                                     "hidden": false,
                                                     "readOnly": false
@@ -463,12 +469,12 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                     "ajaxConfig": [
                                         {
                                             "id": "loadBusinessNameValue",
-                                            "url": "sd/GET_DM_SQL_LIST/query",
+                                            "url": "sd/GET_COMPONENT_LIST/query",
                                             "urlType": "inner",
                                             "ajaxType": "get",
                                             "params": [
                                                 {
-                                                    "name": "SNAME",
+                                                    "name": "NAME",
                                                     "search": true,
                                                     "conditionType": "ctn"
                                                 },
@@ -505,6 +511,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                     "component": "cnCardList",
                                     "title": "",
                                     "size": "middle",
+                                    "keyId": "ID",
                                     "gutter": {
                                         "gutter": 24,
                                         "lg": 8, "md": 12, "sm": 24, "xs": 24
@@ -558,6 +565,29 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                         "messageReceiver": [
                                             {
                                                 "id": "",
+                                                "senderId": "view_component_search",
+                                                "receiveData": [
+                                                    {
+                                                        "beforeReceive": [],
+                                                        "triggerType": "BEHAVIOR",
+                                                        "trigger": "LOAD_BY_FILTER",
+                                                        "params": [
+                                                            {
+                                                                "pname": "_TYPE",
+                                                                "cname": "_TYPE",
+                                                                "valueTo": "tempValue"
+                                                            },
+                                                            {
+                                                                "pname": "_NAME",
+                                                                "cname": "_NAME",
+                                                                "valueTo": "tempValue"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "",
                                                 "senderId": "compoment_card_list",
                                                 "receiveData": [
                                                     {
@@ -594,6 +624,26 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                             }
                                         ]
                                     },
+                                    "changeValue": [
+                                        {
+                                            "id": "edit_component_changeValue",
+                                            "params": [
+                                                // {
+                                                //     "name": "id",
+                                                //     "type": "item",
+                                                //     "valueName": "id",
+                                                //     "valueTo": "tempValue"
+                                                // },
+                                                {
+                                                    "name": "_COMPONENT_ID",
+                                                    "type": "item",
+                                                    "valueName": "ID",
+                                                    "valueTo": "tempValue"
+                                                }
+
+                                            ]
+                                        }
+                                    ],
                                     "dialog": [
                                         {
                                             "id": "newComponentForm",
@@ -608,7 +658,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                 "component": "form",
                                                 "state": "new",
                                                 "loadingConfig": {
-                                                    // "id": "loadform"
+                                                    "id": "loadform"
                                                 },
                                                 "formLayout": {
                                                     "id": "b86s2i",
@@ -955,7 +1005,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "titleConfig": {
                                                             "required": true
                                                         },
-                                                        "field": "cmptProperty",
+                                                        "field": "CMPT_PROPERTY",
                                                         "labelSize": {
                                                             "span": 3,
                                                             "nzXs": 3,
@@ -995,11 +1045,11 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "state": "new",
                                                         "text": {
                                                             "type": "label",
-                                                            "field": "cmptProperty"
+                                                            "field": "CMPT_PROPERTY"
                                                         },
                                                         "editor": {
                                                             "type": "staticGrid",
-                                                            "field": "cmptProperty",
+                                                            "field": "CMPT_PROPERTY",
                                                             "placeholder": "",
                                                             "layoutName": "ctlProperties",
                                                             "validations": []
@@ -1012,7 +1062,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "titleConfig": {
                                                             "required": true
                                                         },
-                                                        "field": "cmptMethod",
+                                                        "field": "CMPT_METHOD",
                                                         "labelSize": {
                                                             "span": 3,
                                                             "nzXs": 3,
@@ -1052,11 +1102,11 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "state": "new",
                                                         "text": {
                                                             "type": "label",
-                                                            "field": "cmptMethod"
+                                                            "field": "CMPT_METHOD"
                                                         },
                                                         "editor": {
                                                             "type": "staticGrid",
-                                                            "field": "cmptMethod",
+                                                            "field": "CMPT_METHOD",
                                                             "placeholder": "",
                                                             "layoutName": "ctlMethod",
                                                             "validations": []
@@ -1116,452 +1166,13 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "id": "loadform",
                                                         "url": "cfgBusiModel/CREATE_COMPONENT/query",
                                                         "urlType": "inner",
-                                                        "ajaxType": "get",
+                                                        "ajaxType": "post",
                                                         "params": [
                                                             {
                                                                 "name": "ID",
                                                                 "type": "tempValue",
-                                                                "valueName": "ID"
+                                                                "valueName": "_COMPONENT_ID"
                                                             }
-                                                        ],
-                                                        "outputParameters": [
-
-                                                        ],
-                                                        "result": [
-
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "id": "form_property",
-                                            "type": "confirm",
-                                            "title": "创建组件内置属性信息",
-                                            "cancelText": "取消",
-                                            "okText": "提交",
-                                            "form": {
-                                                "id": "form_property_new",
-                                                "type": "form",
-                                                "component": "form",
-                                                state: 'text',
-                                                loadingConfig: {
-                                                    id: "loadform"
-                                                },
-                                                formLayout: {
-                                                    "id": "b86s2i",
-                                                    "type": "layout",
-                                                    "title": "表单布局b86s2i",
-                                                    "rows": [
-                                                        {
-                                                            "id": "MefhXa",
-                                                            "type": "row",
-                                                            // 行列，是否 显示。
-                                                            "cols": [
-                                                                {
-                                                                    "id": "iHspYn", "col": "cc", "type": "col",
-                                                                    "title": "列iHspYn", "span": 24,
-                                                                    "layoutContain": "input",
-                                                                    "size": {
-                                                                        "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                    },
-                                                                    "control": {
-                                                                        "id": "prop_name"  // id 和引用id 值相同
-                                                                    }
-                                                                },
-                                                                {
-                                                                    "id": "ioj0mV1", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                    "size": {
-                                                                        "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                    },
-                                                                    "control": { "id": "prop_code" }
-                                                                },
-                                                                {
-                                                                    "id": "ioj0mV2", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                    "size": {
-                                                                        "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                    },
-                                                                    "control": { "id": "prop_type" }
-                                                                },
-                                                                {
-                                                                    "id": "ioj0mV3", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                    "size": {
-                                                                        "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                    },
-                                                                    "control": { "id": "prop_datatype" }
-                                                                },
-                                                                {
-                                                                    "id": "ioj0mV4", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                    "size": {
-                                                                        "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                    },
-                                                                    "control": { "id": "prop_remark" }
-                                                                },
-                                                                {
-                                                                    "id": "ioj0mV5", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
-                                                                    "size": {
-                                                                        "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                    },
-                                                                    "control": { "id": "prop_cmptId" }
-                                                                },
-                                                                // {
-                                                                //     "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
-                                                                //     "size": {
-                                                                //         "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
-                                                                //     },
-                                                                //     "control": { "id": "004" }
-                                                                // }
-                                                            ]
-                                                        }]
-                                                },
-                                                formControls: [
-                                                    {
-                                                        id: 'prop_id',
-                                                        "hidden": true,
-                                                        "title": "ID",
-                                                        "titleConfig": {
-                                                            required: false
-                                                        },
-                                                        "field": "ID",
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": { span: 6 },
-                                                            "nzSm": { span: 6 },
-                                                            "nzMd": { span: 6 },
-                                                            "nzLg": { span: 6 },
-                                                            "ngXl": { span: 6 },
-                                                            "nzXXl": { span: 6 }
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": 18,
-                                                            "nzSm": 18,
-                                                            "nzMd": 18,
-                                                            "nzLg": 18,
-                                                            "ngXl": 18,
-                                                            "nzXXl": 18
-                                                        },
-                                                        "state": "edit",
-                                                        "text": {
-                                                            "type": 'label',
-                                                            "field": 'ID',
-                                                        },
-                                                        "editor": {
-                                                            "type": "input",
-                                                            "field": "ID",
-                                                            "placeholder": "请输入",
-                                                            "validations": [
-
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'prop_name',
-                                                        "hidden": true,
-                                                        "title": "属性名称",
-                                                        "titleConfig": {
-                                                            required: true
-                                                        },
-                                                        "field": "NAME",
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": { span: 6 },
-                                                            "nzSm": { span: 6 },
-                                                            "nzMd": { span: 6 },
-                                                            "nzLg": { span: 6 },
-                                                            "ngXl": { span: 6 },
-                                                            "nzXXl": { span: 6 }
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": 18,
-                                                            "nzSm": 18,
-                                                            "nzMd": 18,
-                                                            "nzLg": 18,
-                                                            "ngXl": 18,
-                                                            "nzXXl": 18
-                                                        },
-                                                        "state": "edit",
-                                                        "text": {
-                                                            "type": 'label',
-                                                            "field": 'NAME',
-                                                        },
-                                                        "editor": {
-                                                            "type": "input",
-                                                            "field": "NAME",
-                                                            "placeholder": "请输入",
-                                                            "validations": [
-                                                                { validator: "required", type: "default", "message": "请输入属性名称" }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'prop_code',
-                                                        "hidden": true,
-                                                        "title": "属性编码",
-                                                        "titleConfig": {
-                                                            required: true
-                                                        },
-                                                        "field": "CODE",
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit",
-                                                        "text": {
-                                                            "type": 'label',
-                                                            "field": 'CODE',
-                                                        },
-                                                        "editor": {
-                                                            "type": "input",
-                                                            "field": "CODE",
-                                                            "placeholder": "请输入",
-                                                            "validations": [
-                                                                { validator: "required", type: "default", "message": "请输入属性编码" }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'prop_type',
-                                                        "hidden": true,
-                                                        "title": "属性类型",
-                                                        "titleConfig": {
-                                                            required: true
-                                                        },
-                                                        "field": "TYPE",
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit",
-                                                        "text": {
-                                                            "type": 'label',
-                                                            "field": 'TYPE',
-                                                        },
-                                                        "editor": {
-                                                            "type": "select",
-                                                            "field": "TYPE",
-                                                            "placeholder": "请输入",
-                                                            "options": [
-                                                                { "label": "属性", "value": "property" },
-                                                                { "label": "方法", "value": "method" }
-                                                            ],
-                                                            "validations": [
-                                                                { validator: "required", type: "default", "message": "请选择属性类型" }
-                                                            ],
-                                                            "defaultValue": "1",
-                                                            "labelName": "label",
-                                                            "valueName": "value"
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'prop_remark',
-                                                        "hidden": true,
-                                                        "title": "属性说明",
-                                                        "titleConfig": {
-                                                            required: false
-                                                        },
-                                                        "field": "REMARK",
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit",
-                                                        "text": {
-                                                            "type": 'label',
-                                                            "field": 'REMARK',
-                                                        },
-                                                        "editor": {
-                                                            "type": "input",
-                                                            "field": "REMARK",
-                                                            "placeholder": "请输入"
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'prop_datatype',
-                                                        "hidden": true,
-                                                        "title": "属性数据类型",
-                                                        "titleConfig": {
-                                                            required: true
-                                                        },
-                                                        "field": "DATA_TYPE",
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit",
-                                                        "text": {
-                                                            "type": 'label',
-                                                            "field": 'DATA_TYPE',
-                                                        },
-                                                        "editor": {
-                                                            "type": "select",
-                                                            "field": "DATA_TYPE",
-                                                            "placeholder": "请输入",
-                                                            "options": [
-                                                                { "label": "值", "value": "value" },
-                                                                { "label": "对象", "value": "object" },
-                                                                { "label": "数组", "value": "array" }
-                                                            ],
-                                                            "validations": [
-                                                                { validator: "required", type: "default", "message": "请选择属性数据类型" }
-                                                            ],
-                                                            "defaultValue": "object",
-                                                            "labelName": "label",
-                                                            "valueName": "value"
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'prop_cmptId',
-                                                        "hidden": true,
-                                                        "title": "所属组件",
-                                                        "titleConfig": {
-                                                            required: true
-                                                        },
-                                                        "field": "CMPT_ID",
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit",
-                                                        "text": {
-                                                            "type": 'label',
-                                                            "field": 'CMPT_ID',
-                                                        },
-                                                        "editor": {
-                                                            "type": "select",
-                                                            "field": "CMPT_ID",
-                                                            "placeholder": "请输入",
-                                                            loadingConfig: {
-                                                                id: "loadformselectcmpt" // 将加载配置引用
-                                                            },
-                                                            "validations": [
-                                                                { validator: "required", type: "default", "message": "属性不能没有所属组件" }
-                                                            ],
-                                                            "defaultValue": "v2.0",
-                                                            "labelName": "NAME",
-                                                            "valueName": "ID"
-                                                        }
-                                                    }
-                                                ],
-                                                formControlsPermissions: [
-                                                    {
-                                                        formState: "new",
-                                                        formStateContent: {
-                                                            isLoad: false,
-                                                            loadAjax: {},
-                                                            isDefault: true
-                                                        },
-                                                        Controls: [
-                                                            { id: 'prop_name', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_code', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_type', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_remark', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_datatype', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_cmptId', state: "edit", hidden: false, readOnly: false }
-
-                                                        ]
-                                                    },
-                                                    {
-                                                        formState: "edit",
-                                                        Controls: [
-                                                            { id: 'prop_name', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_code', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_type', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_remark', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_datatype', state: "edit", hidden: false, readOnly: false },
-                                                            { id: 'prop_cmptId', state: "edit", hidden: false, readOnly: false }
-                                                        ]
-                                                    },
-                                                    {
-                                                        formState: "text",
-                                                        Controls: [
-                                                            { id: 'prop_name', state: "text", hidden: false, readOnly: true },
-                                                            { id: 'prop_code', state: "text", hidden: false, readOnly: true },
-                                                            { id: 'prop_type', state: "text", hidden: false, readOnly: true },
-                                                            { id: 'prop_remark', state: "text", hidden: false, readOnly: true },
-                                                            { id: 'prop_datatype', state: "text", hidden: false, readOnly: true },
-                                                            { id: 'prop_cmptId', state: "text", hidden: false, readOnly: true }
-                                                        ]
-                                                    }
-
-                                                ],
-                                                ajaxConfig: [
-                                                    {
-                                                        "id": "loadform",
-                                                        "url": "td/SMT_BASE_COMPONENT_PROPERTY/query",
-                                                        "urlType": "inner",
-                                                        "ajaxType": "get",
-                                                        "params": [
-                                                            {
-                                                                "name": "ID",
-                                                                "type": "tempValue",
-                                                                "valueName": "ID"
-                                                            }
-                                                        ],
-                                                        "outputParameters": [
-
-                                                        ],
-                                                        "result": [
-
-                                                        ]
-                                                    },
-                                                    {
-                                                        "id": "loadformselectcmpt",
-                                                        "url": "td/SMT_BASE_COMPONENT/query",
-                                                        "urlType": "inner",
-                                                        "ajaxType": "get",
-                                                        "params": [
-                                                            // {
-                                                            //     "name": "ID",
-                                                            //     "type": "tempValue",
-                                                            //     "valueName": "_ID"
-                                                            // }
                                                         ],
                                                         "outputParameters": [
 
@@ -1601,19 +1212,21 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                             "title": "编辑",
                                             "icon": "edit",
                                             "type": "inner",
+                                            "state": "edit",
                                             "execute": [
                                                 {
                                                     "triggerType": "ACTION",
                                                     "trigger": "DIALOG",
                                                     // "conditionId": "add_state_1"
-                                                    "dialogId": "form_component",
-                                                    "ajaxId": "tree_add_component"
+                                                    "changeValueId": "edit_component_changeValue",
+                                                    "dialogId": "newComponentForm",
+                                                    "ajaxId": "updateNewComponent"
                                                 }
                                             ]
                                         },
                                         {
                                             "title": "删除",
-                                            "icon": "remove",
+                                            "icon": "close-circle",
                                             "type": "inner",
                                             "execute": [
                                                 {
@@ -1647,9 +1260,9 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                             "method": "get",
                                             "params": [
                                                 // {
-                                                //     "name": "ID",
+                                                //     "name": "TYPE",
                                                 //     "type": "tempValue",
-                                                //     "valueName": "_ID"
+                                                //     "valueName": "_TYPE"
                                                 // },
                                                 // {
                                                 //     "name": "_onlyOneObject",
@@ -1658,7 +1271,16 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                 // }
                                             ],
                                             "filter": [
-
+                                                {
+                                                    "name": "TYPE",
+                                                    "type": "tempValue",
+                                                    "valueName": "_TYPE"
+                                                },
+                                                {
+                                                    "name": "NAME",
+                                                    "type": "tempValue",
+                                                    "valueName": "_NAME"
+                                                }
                                             ]
                                         },
                                         {
@@ -1706,6 +1328,83 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                     "name": "$state$",
                                                     "type": "value",
                                                     "value": "insert"
+                                                },
+                                                {
+                                                    "name": "CMPT_PROPERTY",
+                                                    "type": "componentValue",
+                                                    "valueName": "cmptProperty"
+                                                },
+                                                {
+                                                    "name": "CMPT_METHOD",
+                                                    "type": "componentValue",
+                                                    "valueName": "cmptMethod"
+                                                }
+
+                                            ],
+                                            "outputParameters": [],
+                                            "result": [
+                                                {
+                                                    "name": "data",
+                                                    "showMessageWithNext": 0,
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterComponentAddedSuccess"
+                                                },
+                                                {
+                                                    "name": "validation",
+                                                    "message": "message.ajax.state.success",
+                                                    "senderId": "afterComponentAddedValidation"
+                                                },
+                                                {
+                                                    "name": "error",
+                                                    "senderId": "toolbar_02"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "id": "updateNewComponent",
+                                            "url": "cfgBusiModel/CREATE_COMPONENT/operate",
+                                            "ajaxType": "post",
+                                            "params": [
+                                                {
+                                                    "name": "ID",
+                                                    "type": "GUID"
+                                                },
+                                                {
+                                                    "name": "NAME",
+                                                    "type": "componentValue",
+                                                    "valueName": "NAME",
+                                                    "dataType": "string"
+                                                },
+                                                {
+                                                    "name": "CODE",
+                                                    "type": "componentValue",
+                                                    "valueName": "CODE"
+                                                },
+                                                {
+                                                    "name": "TYPE",
+                                                    "type": "componentValue",
+                                                    "valueName": "TYPE"
+                                                },
+                                                {
+                                                    "name": "VERSION",
+                                                    "type": "componentValue",
+                                                    "valueName": "VERSION"
+                                                },
+                                                {
+                                                    "name": "SORT",
+                                                    "type": "componentValue",
+                                                    "valueName": "SORT",
+                                                    "dataType": "int"
+                                                },
+                                                {
+                                                    "name": "STATE",
+                                                    "type": "componentValue",
+                                                    "valueName": "STATE"
+                                                },
+                                                {
+                                                    "name": "$state$",
+                                                    "type": "value",
+                                                    "value": "update"
                                                 },
                                                 {
                                                     "name": "CMPT_PROPERTY",
@@ -2465,7 +2164,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                             }
                         ]
                     }
-                },
+                }
             ],
             "condition": [
                 {
