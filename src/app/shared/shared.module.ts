@@ -114,6 +114,9 @@ import { CfgAttributeTableFormComponent } from './config-components/config-attri
 import { CfgAttributeItemDirective } from '@shared/config-components/config-attribute/cfg-attribute/cfg-attribute-item.directive';
 import { CfgToolbarComponent } from './config-components/config-layout/cfg-layout-component/cfg-toolbar/cfg-toolbar.component';
 import { CfgAttributeGridSelectComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-grid-select/cfg-attribute-grid-select.component';
+import { CfgAttributeMasterDataComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-master-data/cfg-attribute-master-data.component';
+import { CfgAttrAjaxConfigComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attr-ajax-config/cfg-attr-ajax-config.component';
+import { CfgAttrCascadeComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attr-cascade/cfg-attr-cascade.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -224,7 +227,10 @@ const COMPONENTS = [
   CnGridTextareaComponent,
   CnFormButtonComponent,
   CnFormSearchSelectComponent,
-  CnCardListComponent
+  CnCardListComponent,
+  CfgAttributeMasterDataComponent,
+  CfgAttrAjaxConfigComponent,
+  CfgAttrCascadeComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -258,10 +264,6 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
-
-
-
-
 
 
   ],

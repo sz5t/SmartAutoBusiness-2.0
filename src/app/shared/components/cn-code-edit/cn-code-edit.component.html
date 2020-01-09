@@ -1,14 +1,36 @@
-<p>cn-code-edit works!</p>
 <!-- <div nz-row>
     <div nz-col [nzSpan]='24'>
             <textarea #CodeMirror name="code"></textarea>
     </div>
 </div> -->
 
-<nz-spin [nzSpinning]="isSpinning" [nzDelay]="300">
+<!-- <div [ngStyle]="modelstyle">
+        <nz-spin [nzSpinning]="isSpinning" [nzDelay]="100"> 
         <div style="border:1px solid #d9d9d9;border-radius: 4px; width:100%; ">
-           
-                <textarea #CodeMirror name="code"  [ngStyle]="divstyle"></textarea> 
+                <form>
+                        <textarea #CodeMirror name="code" [ngStyle]="divstyle"></textarea>
+                </form>
                 <div style="height: 3px;"></div>
-            </div>
- </nz-spin>
+        </div>
+      </nz-spin> 
+</div> -->
+<div [ngStyle]="modelstyle">
+        <div [ngStyle]="divstyle" #divTarget>
+                <nz-spin [nzSpinning]="isSpinning" [nzDelay]="600">
+                        <textarea #CodeMirror name="code" [ngStyle]="divstyle"></textarea>
+                </nz-spin>
+        </div>
+
+</div>
+<nz-back-top [nzTarget]="divTarget" nzVisibilityHeight="20"></nz-back-top>
+<!-- <form nz-form [formGroup]="validateForm" class="login-form">
+                <nz-form-item>
+                                <textarea #CodeMirror  name="code" ></textarea>
+                  <nz-form-control nzErrorTip="Please input your username!">
+                    <nz-input-group nzPrefixIcon="user">
+                      <textarea #CodeMirror  name="code" [ngStyle]="divstyle"></textarea>
+                    </nz-input-group>
+                  </nz-form-control>
+                </nz-form-item>
+           
+              </form> -->

@@ -42,9 +42,17 @@
               "node_modules/qrious/dist/qrious.min.js",
               "src/assets/vender/code-edit/lib/codemirror.js",
               "src/assets/vender/code-edit/mode/sql/sql.js",
+              "src/assets/vender/code-edit/mode/javascript/javascript.js",
               "src/assets/vender/code-edit/mode/markdown/markdown.js",
               "src/assets/vender/code-edit/addon/hint/show-hint.js",
               "src/assets/vender/code-edit/addon/hint/sql-hint.js",
+              "src/assets/vender/code-edit/addon/hint/javascript-hint.js",
+
+              "src/assets/vender/code-edit/addon/fold/foldcode.js",
+              "src/assets/vender/code-edit/addon/fold/foldgutter.js",
+              "src/assets/vender/code-edit/addon/fold/brace-fold.js",
+              "src/assets/vender/code-edit/addon/fold/comment-fold.js",
+   
             ]
           },
           "configurations": {

@@ -3,6 +3,7 @@ import { CnComponentBase } from '@shared/components/cn-component.base';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { CommonUtils } from '@core/utils/common-utils';
+import { valueFunctionProp } from 'ng-zorro-antd';
 
 @Component({
   selector: 'cfg-form-item,[cfg-form-item]',
@@ -32,7 +33,7 @@ export class CfgFormItemComponent extends CnComponentBase implements OnInit {
     if (!this.config['controls']) {
       this.config['controls'] = {};
       const fieldIdentity = CommonUtils.uuID(36);
-      this.config['controls']['id'] = 'fieldIdentity';
+      this.config['controls']['id'] = fieldIdentity;
       this.config['controls']['title'] = '标题';
       this.config['controls']['text'] = {};
       this.config['controls']['editor'] = {};
@@ -59,7 +60,7 @@ export class CfgFormItemComponent extends CnComponentBase implements OnInit {
     console.log('拖动行ondrop', e, d);
     const ss = e.dataTransfer.getData('test');
     console.log('拖动行ondrop临时值', ss);
-
+    const fieldIdentity = CommonUtils.uuID(36);
     let _compont;
     if (this.formState) {
       _compont=   this.compont['editor'];
@@ -85,9 +86,9 @@ export class CfgFormItemComponent extends CnComponentBase implements OnInit {
           }
           this.config.container ='component';
           if (this.formState) {
-            this.config['controls']['editor'] = { type: ss };
+            this.config['controls']['editor'] = {id:fieldIdentity, type: ss };
           } else {
-            this.config['controls']['text'] = { type: ss };
+            this.config['controls']['text'] = {id:fieldIdentity,  type: ss };
           }
 
           console.log('拖拽后组件状态----》', this.compont);
@@ -115,9 +116,9 @@ export class CfgFormItemComponent extends CnComponentBase implements OnInit {
       }
       this.config.container = 'component';
       if (this.formState) {
-        this.config['controls']['editor'] = { type: ss };
+        this.config['controls']['editor'] = { id:fieldIdentity, type: ss };
       } else {
-        this.config['controls']['text'] = { type: ss };
+        this.config['controls']['text'] = {id:fieldIdentity,  type: ss };
       }
       console.log('拖拽后组件状态----》', this.compont);
     }
@@ -451,7 +452,7 @@ export class CfgFormItemComponent extends CnComponentBase implements OnInit {
   级联：[
     {
       类型：值变化、行为变化
-      级联对象:[
+      级联对象:[ 
 
       ]
 
@@ -730,7 +731,48 @@ export class CfgFormItemComponent extends CnComponentBase implements OnInit {
   }
 
 
+ public pageComponentConfig(){
 
+  // 组件设置
+  // 交互信息定义一份，发出和接受方共同维护，避免数据同步
+  const c = {
+        data:{
+
+        },
+  }
+
+  // edit：组件信息  所属页，所属组件，所属属性明细component
+  // 
+
+  
+  /*
+      全局基类属性（大属性）
+         描述大属性，以及大属性下数据格式等信息
+
+      组件库，创建每个组件的时候，选择当前组件的基础属性+自定义属性
+
+      大属性：类型（自定义、固定表结构），版本都有版本控制
+      每个大属性的的编辑——都是一段完整配置页面，配置生成也是，按照大属性规格分段生成
+      
+      
+
+
+
+   */
+
+
+  {key:name}
+   [
+     {
+       field:11
+
+     },
+     {}
+   ]
+
+   
+
+ }
 
 
 }

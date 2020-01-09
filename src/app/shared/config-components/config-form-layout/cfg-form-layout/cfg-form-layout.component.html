@@ -10,7 +10,7 @@
 
 
   <ng-container *ngFor="let r of hiddenRows">
-    <cfg-form-layout-row [config]="r" (updateValue)="valueChangeRow($event)" [formState]="form_State"></cfg-form-layout-row>
+    <cfg-form-layout-row [config]="r" (updateValue)="valueChangeHiddenRow($event)" [formState]="form_State"></cfg-form-layout-row>
   </ng-container>
 
 </nz-card>

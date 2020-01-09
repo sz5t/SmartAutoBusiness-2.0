@@ -1,0 +1,27 @@
+<p>cfg-attr-cascade works!</p>
+<nz-tabset [nzType]="'card'">
+    <nz-tab nzTitle="发出消息">
+      Content of Tab Pane 1
+        发出消息，分两部分，组件内部行为事件触发，其他请求动作触发
+
+      组件事件：
+                    当前事件触发发送消息
+    
+    其他部分调用的消息（例如在级联内调用的消息）
+
+    </nz-tab>
+    <nz-tab nzTitle="接收消息">
+      Content of Tab Pane 2
+     
+      消息已发送方为主，如果子组件拒绝接受，则将是否接受设置为否
+
+      将参数合并后的结果，内置到组件数据里，供过程选择（目前版本不支持对象等复杂结果，没有设计）
+
+
+      json 生成： 按结构+扩充(自定义结构)=》组合
+
+      只有创建具体的结果时，自动下载扩充数据
+      
+
+    </nz-tab>
+  </nz-tabset>

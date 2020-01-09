@@ -102,35 +102,90 @@ export class CfgFormLayoutComponent implements OnInit {
 
   }
 
+  public valueChangeHiddenRow(col?) {
+
+    console.log('行操作返回信息', col, this.hiddenRows);
+
+    if (col) {
+      if (col['operation'] === 'delete') {
+        // 计算出位置
+        let deleteIndex;
+        for (let i = 0; i < this.hiddenRows.length; i++) {
+          if (this.hiddenRows[i]['id'] === col['data']['id']) {
+            deleteIndex = i;
+          }
+        }
+        console.log('行删除前', this.hiddenRows.length, deleteIndex);
+        this.hiddenRows.splice(deleteIndex, 1);
+        //  this.cols = this.cols.slice(deleteIndex + 1);
+        console.log('删除结束后', this.hiddenRows);
+      }
+      if (col['operation'] === 'update') {
+        // 计算出位置
+        let updateIndex;
+        for (let i = 0; i < this.hiddenRows.length; i++) {
+          if (this.hiddenRows[i]['id'] === col['data']['id']) {
+            updateIndex = i;
+          }
+        }
+        this.hiddenRows[updateIndex] = col['data']['config'];
+      }
+    }
+
+  }
+
   public SaveJson() {
-    console.log('当前布局json：', this.config, JSON.stringify(this.config));
+    this._Controller=[];
+    this.FormComponents(this.config);
+    console.log('当前布局json：', this.config,'当前表单组件：', this._Controller);
   }
 
   /**
    * 解析出当前表单明细小组件
    */
 
-   _Controller=[];
-  public FormComponents(v) {
+  _Controller = [];
+  public FormComponents(v,type?) {
 
-       if(v.hasOwnProperty('type')){
-         if(v['type'] ==='layout'){
-          v['rows'].forEach(_row => {
-            this.FormComponents(_row);
-          });
-          
-         } else if(v['type'] ==='row'){
-          v['cols'].forEach(_col => {
-            this.FormComponents(_col);
-          });
-        } else if(v['type'] ==='col'){
-           if(v['container']==='' || v['container']==='component'){
-               this._Controller.push(v['controls']);
-           } else {
-             
-           }
+    if (v.hasOwnProperty('type')) {
+      if (v['type'] === 'layout') {
+        v['rows'].forEach(_row => {
+          this.FormComponents(_row);
+        });
+        v['hiddenRows'].forEach(_row => {
+          this.FormComponents(_row,'hiddenController');
+        });
+
+      } else if (v['type'] === 'row') {
+        v['cols'].forEach(_col => {
+          this.FormComponents(_col,type);
+        });
+      } else if (v['type'] === 'col') {
+        if (v['container'] === '' || v['container'] === 'component') {
+          const _c =  v['controls'];
+          if(type){
+            _c ['hiddenController'] = true;
+          } else {
+            _c ['hiddenController'] = false;
+          }
+        //   this._Controller.push(_c);
+        if(_c.text.hasOwnProperty('id')){
+          this._Controller.push( {"id":_c.text.id,"controlId":_c.id,"controlType":"text","componentCode":_c.text.type});
         }
-       }
+        if(_c.editor.hasOwnProperty('id')){
+          this._Controller.push( {"id":_c.editor.id,"controlId":_c.id,"controlType":"editor","componentCode":_c.editor.type});
+        }
+         
+         
+
+        } else {
+          v['rows'].forEach(_row => {
+            this.FormComponents(_row,type);
+          });
+
+        }
+      }
+    }
 
   }
 
