@@ -340,7 +340,6 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit, A
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     const response = await this.componentService.apiService.post(url, params).toPromise();
     // console.log("页面组件编辑配置加载", response.data);
-
     if (response.data._procedure_resultset_1[0]['W'] === "") {
       this.PageJson = null;
     }

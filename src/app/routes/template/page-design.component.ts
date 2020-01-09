@@ -2807,6 +2807,147 @@ export class PageDesignComponent implements OnInit {
                                                         }
                                                     },
                                                     {
+                                                        "id": "edit_layout_version_form_json",
+                                                        "type": "confirm",
+                                                        "title": "版本JSON编辑",
+                                                        "width": "100%",
+                                                        "style":{"top":"0px","padding-bottom": "0px"},
+                                                        "cancelText": "取消",
+                                                        "okText": "提交",
+                                                        "form": {
+                                                            "id": "form_city",
+                                                            "type": "form",
+                                                            "component": "form",
+                                                            state: 'text',
+                                                            loadingConfig: {
+                                                                id: "loadform"
+                                                            },
+                                                            formLayout: {
+                                                                "id": "b86s2i11",
+                                                                "type": "layout",
+                                                                "title": "表单布局b86s2i",
+                                                                "rows": [
+                                                                    {
+                                                                        "id": "MefhXa",
+                                                                        "type": "row",
+                                                                        // 行列，是否 显示。
+                                                                        "cols": [
+                                                                            {
+                                                                                "id": "iHspYn", "col": "cc", "type": "col",
+                                                                                "title": "列iHspYn", "span": 24,
+                                                                                "layoutContain": "input",
+                                                                                "size": {
+                                                                                    "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
+                                                                                },
+                                                                                "control": {
+                                                                                    "id": "layout_version_pagejson"  // id 和引用id 值相同
+                                                                                }
+                                                                            }
+                                                                        ]
+                                                                    }]
+                                                            },
+                                                            formControls: [
+                                                                {
+                                                                    id: 'layout_version_pagejson',
+                                                                    "hidden": true,
+                                                                    "title": '版本页面json',
+                                                                    "titleConfig": {
+                                                                        required: true
+                                                                    },
+                                                                    "field": "PAGE_JSON",
+                                                                    "labelSize": {
+                                                                        "span": 6,
+                                                                        "nzXs": { span: 6 },
+                                                                        "nzSm": { span: 6 },
+                                                                        "nzMd": { span: 6 },
+                                                                        "nzLg": { span: 6 },
+                                                                        "ngXl": { span: 6 },
+                                                                        "nzXXl": { span: 6 }
+                                                                    },  // 
+                                                                    "controlSize": {
+                                                                        "span": 18,
+                                                                        "nzXs": 18,
+                                                                        "nzSm": 18,
+                                                                        "nzMd": 18,
+                                                                        "nzLg": 18,
+                                                                        "ngXl": 18,
+                                                                        "nzXXl": 18
+                                                                    },
+                                                                    "state": "edit",
+                                                                    "text": {
+                                                                        "type": "codeEdit",
+                                                                        "field": "PAGE_JSON",
+                                                                        "autofocus": false,
+                                                                        "mode": "text/javascript",
+                                                                        "readOnly": true,
+                                                                        "height": 650
+                                                                    },
+                                                                    "editor": {
+                                                                        "type": "codeEdit",
+                                                                        "field": "PAGE_JSON",
+                                                                        "mode": "text/javascript",
+                                                                        "placeholder": "请输入",
+                                                                        "autofocus": true,
+                                                                        "readOnly": false,
+                                                                        "height": 650,
+                                                                        "nzWidth": '100%',
+                                                                        "width": '100%',
+                                                                    }
+                                                                }
+                                                            ],
+                                                            formControlsPermissions: [
+                                                                {
+                                                                    formState: "new",
+                                                                    formStateContent: {
+                                                                        isLoad: false,
+                                                                        loadAjax: {},
+                                                                        isDefault: true
+                                                                    },
+                                                                    Controls: [
+                                                                        { id: 'layout_version_pagejson', state: "edit", hidden: false, readOnly: false }
+                                                                 
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    formState: "edit",
+                                                                    Controls: [
+                                                                        { id: 'layout_version_pagejson', state: "edit", hidden: false, readOnly: false }
+                                                                     
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    formState: "text",
+                                                                    Controls: [
+                                                                        { id: 'layout_version_pagejson', state: "edit", hidden: false, readOnly: false }
+                                                                     
+                                                                    ]
+                                                                }
+
+                                                            ],
+                                                            ajaxConfig: [
+                                                                {
+                                                                    "id": "loadform",
+                                                                    "url": "td/SMT_SETTING_LAYOUT/query",
+                                                                    "urlType": "inner",
+                                                                    "ajaxType": "get",
+                                                                    "params": [
+                                                                        {
+                                                                            "name": "ID",
+                                                                            "type": "tempValue",
+                                                                            "valueName": "ID"
+                                                                        }
+                                                                    ],
+                                                                    "outputParameters": [
+
+                                                                    ],
+                                                                    "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
+
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
                                                         "id": "cfg_page_layout",
                                                         "type": "confirm",
                                                         "title": "页面设置",
@@ -3038,6 +3179,45 @@ export class PageDesignComponent implements OnInit {
                                                                 "senderId": "toolbar_02"
                                                             }
                                                         ]
+                                                    },
+                                                    {
+                                                        "id": "form_edit_layout_version_json",
+                                                        "url": "td/SMT_SETTING_LAYOUT/update",
+                                                        "urlType": "inner",
+                                                        "ajaxType": "put",
+                                                        "params": [
+                                                            {
+                                                                "name": "ID",
+                                                                "type": "tempValue",
+                                                                "valueName": "ID"
+                                                            },
+                                                            {
+                                                                "name": "PAGE_JSON",
+                                                                "type": "componentValue",
+                                                                "valueName": "PAGE_JSON"
+                                                            }
+                                                        ],
+                                                        "outputParameters": [
+
+                                                        ],
+                                                        "result": [
+                                                            {
+                                                                "name": "data",
+                                                                "showMessageWithNext": 0,
+                                                                "message": "message.ajax.state.success",
+                                                                "senderId": "afterCityUpdateFormSuccessfully"
+                                                            },
+                                                            {
+                                                                "name": "validation",
+                                                                "showMessageWithNext": 0,
+                                                                "message": "message.ajax.state.success",
+                                                                "senderId": "afterCityUpdateFormValidation"
+                                                            },
+                                                            {
+                                                                "name": "error",
+                                                                "senderId": "toolbar_02"
+                                                            }
+                                                        ]
                                                     }
                                                 ],
                                                 "beforeTrigger": [
@@ -3141,6 +3321,7 @@ export class PageDesignComponent implements OnInit {
                                                                     }
                                                                 ]
                                                             },
+                                                            
                                                             {
                                                                 "id": "M_deleteRow",
                                                                 "text": "页面设置",
@@ -3157,7 +3338,26 @@ export class PageDesignComponent implements OnInit {
                                                                         "changeValueId": "edit_form_changeValue"
                                                                     }
                                                                 ]
-                                                            }
+                                                            },
+                                                            {
+                                                                "id": "M_editRowFormjson",
+                                                                "text": "编辑页面JSON",
+                                                                "state": "edit",
+                                                                "icon": "edit",
+                                                                "color": "text-primary",
+                                                                "hidden": false,
+                                                                "disabled": false,
+                                                                "execute": [
+                                                                    {
+                                                                        "triggerType": "ACTION",
+                                                                        "trigger": "DIALOG",
+                                                                        // "conditionId": "add_state_1"
+                                                                        "dialogId": "edit_layout_version_form_json",
+                                                                        "ajaxId": "form_edit_layout_version_json",
+                                                                        "changeValueId": "edit_form_changeValue"
+                                                                    }
+                                                                ]
+                                                            },
                                                         ]
                                                     }
                                                 ]
