@@ -61,28 +61,62 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
 
     private resolve() {
         if (this.config) {
-            if (!components[this.config.component]) {
-                const supportedTypes = Object.keys(components).join(', ');
-                throw new Error(
-                    `Trying to use an unsupported types (${
-                    this.config.component
-                    }).Supported types: ${supportedTypes}`
-                );
+            if (this.config.component && components[this.config.component]) {
+                this._buildComponent(this.config);
+            } else {
+                const cmptObj: any = this._getComponentObjectById(this.config.id);
+                cmptObj['component'] = this.config.container;
+                console.log(cmptObj);
+                if (!components[cmptObj.component]) {
+                    const supportedTypes = Object.keys(components).join(', ');
+                    throw new Error(
+                        `Trying to use an unsupported types (${
+                        this.config.component
+                        }).Supported types: ${supportedTypes}`
+                    );
+                } else {
+                    console.log(cmptObj);
+                    this._buildComponent(cmptObj);
+                }
+
+
             }
+
         }
 
-        const comp = this._resolver.resolveComponentFactory<any>(
-            components[this.config.component]
-        );
+        // const comp = this._resolver.resolveComponentFactory<any>(
+        //     components[this.config.component]
+        // );
 
-        this._componentRef = this._container.createComponent(comp);
-        this._componentRef.instance.config = this.config;
-        this._componentRef.instance.initData = this.initData;
-        this._componentRef.instance.tempData = this.tempData;
+        // this._componentRef = this._container.createComponent(comp);
+        // console.log(this.config);
+        // if (this.config.component) {
+        //     this._componentRef.instance.config = this.config;
+        // } else {
+        //     this._componentRef.instance.config = this.getComponentObjectById(this.config.id);
+        // }
+
+        // this._componentRef.instance.initData = this.initData;
+        // this._componentRef.instance.tempData = this.tempData;
         // console.log('创建创建创建', this._componentRef );
         //  this.componentService.com.push({[this.config.id]:this._componentRef});
         //  console.log('创建创建创建+++', this.componentService.com );
 
+    }
+
+    private _buildComponent(componentObj) {
+        const comp = this._resolver.resolveComponentFactory<any>(
+            components[componentObj.component]
+        );
+
+        this._componentRef = this._container.createComponent(comp);
+        this._componentRef.instance.config = componentObj;
+        this._componentRef.instance.initData = this.initData;
+        this._componentRef.instance.tempData = this.tempData;
+    }
+
+    private _getComponentObjectById(id) {
+        return this.componentService.cacheService.getNone(id);
     }
 
 

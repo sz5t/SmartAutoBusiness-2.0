@@ -117,6 +117,8 @@ import { CfgAttributeGridSelectComponent } from './config-components/config-attr
 import { CfgAttributeMasterDataComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attribute-master-data/cfg-attribute-master-data.component';
 import { CfgAttrAjaxConfigComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attr-ajax-config/cfg-attr-ajax-config.component';
 import { CfgAttrCascadeComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attr-cascade/cfg-attr-cascade.component';
+import { CnDynamicLayoutResolverDirective } from './resolver/layout/dynamic-layout-resolver.directive';
+import { CnDynamicLayoutComponent } from './components/layout/cn-dynamic-layout.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -231,10 +233,12 @@ const COMPONENTS = [
   CfgAttributeMasterDataComponent,
   CfgAttrAjaxConfigComponent,
   CfgAttrCascadeComponent,
+  CnDynamicLayoutComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [
   CnLayoutResolverDirective,
+  CnDynamicLayoutResolverDirective,
   CnComponentResolverDirective,
   CfgFormItemContentDirective,
   CfgLayoutItemContentDirective,
