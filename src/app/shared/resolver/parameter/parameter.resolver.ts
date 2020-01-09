@@ -220,7 +220,7 @@ class BaseParameter {
       case 'defaultWeek':
         dValue = `${getISOYear(Date.now())}-${getISOWeek(Date.now())}`;
         break;
-      case 'defaultDay':
+      case 'defaultDate':
         dValue = `${getISOYear(Date.now())}-${getMonth(Date.now()) + 1}-${getDate(Date.now())}`;
         break;
       case 'defaultMonth':
@@ -684,7 +684,7 @@ class CascadeValueParameter extends BaseParameter implements IParameter {
       if (this._param.conditionType) {
         this._result = this.getParameter(
           this._param.conditionType,
-          this._model.cascadeValue[this._param.valueName],
+          this._model.cascadeValue[this._param.valueName]
         );
       } else {
         this._result = this._model.cascadeValue[this._param.valueName];

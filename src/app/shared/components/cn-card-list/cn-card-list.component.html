@@ -4,34 +4,18 @@
   </button>
 </nz-button-group> -->
 
-<nz-list
-  [nzLoading]="false"
-  [nzDataSource]="list"
-  [nzRenderItem]="item"
-  [nzSize]="config.size"
-  [nzPagination]="pagination"
-  [nzGrid]="config.gutter"
->
+<nz-list [nzLoading]="false" [nzDataSource]="list" [nzRenderItem]="item" [nzSize]="config.size"
+  [nzPagination]="pagination" [nzGrid]="config.gutter">
   <ng-template #item let-item>
     <nz-list-item>
-      <!-- <button *ngIf="item === null" nz-button (click)="msg.success('add')" [nzType]="'dashed'"
-        style="width: 100%; height: 100px;">
-
-        <span style="font-size:1.5em"><i style="font-size:1em" nz-icon nzType="plus"></i> 创建组件</span>
-      </button> -->
-
       <div *ngIf="innerToolbars && item === null">
-        <button
-          *ngFor="let btn of outerToolbars"
-          nz-button
-          (click)="btnClick(btn)"
-          [nzType]="btn.style"
-          style="width: 100%; min-height: 180px;"
-        >
+        <button *ngFor="let btn of outerToolbars" nz-button (click)="btnClick(btn)" [nzType]="btn.style"
+          style="width: 100%; min-height: 180px;">
           <span style="font-size:1em"><i style="font-size:1em" nz-icon [nzType]="btn.icon"></i> {{ btn.title }}</span>
         </button>
       </div>
-      <nz-card nzHoverable *ngIf="item !== null" [nzActions]="innerToolbars && [op1, op2, op3]">
+      <nz-card nzHoverable *ngIf="item !== null" [nzActions]="innerToolbars && [op1, op2, op3]"
+        [ngClass]="{'new_item': (item.state && item.state === 'new'), 'edit_item': (item.state && item.state === 'edit')}">
         <!--操作模版-->
         <ng-template #op1>
           <a (click)="btnClick(innerToolbars[0], item)"><i nz-icon [nzType]="innerToolbars[0].icon"></i></a>
@@ -80,13 +64,8 @@
   </ng-template>
 
   <ng-template #pagination>
-    <nz-pagination
-      [nzTotal]="total"
-      [(nzPageIndex)]="pageIndex"
-      [(nzPageSize)]="pageSize"
-      (nzPageIndexChange)="searchData()"
-      (nzPageSizeChange)="searchData(true)"
-      [nzPageSizeOptions]="config.pageSizeOptions"
-    ></nz-pagination>
+    <nz-pagination [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
+      (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)"
+      [nzPageSizeOptions]="config.pageSizeOptions"></nz-pagination>
   </ng-template>
 </nz-list>

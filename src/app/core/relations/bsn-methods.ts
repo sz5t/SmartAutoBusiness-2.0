@@ -25,7 +25,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     CONFIRM: 'showConfirm',
     CHECKED_ITEMS_IDS_CONFIRM: "showCheckedItemsIdsConfirm",
     MESSAGE: 'showMessage',
-    LOAD_REFRESH_DATA: 'loadRefreshData',
+    
 
 
     // behavior
@@ -40,7 +40,9 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     CHECK_ROW: 'checkRow',
     REFRESH_AS_CHILD: 'load',
     LOAD_BY_FILTER: 'loadByFilter',
+    LOAD_REFRESH_DATA: 'loadRefreshData',
 
+    
     // link
     LINK: 'link',
     LINK_TO: 'linkTo',

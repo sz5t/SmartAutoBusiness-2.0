@@ -535,9 +535,9 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                                 "value": "success"
                                                             },
                                                             {
-                                                                "name": "code",
+                                                                "name": "message",
                                                                 "type": "value",
-                                                                "value": "message.operation.success"
+                                                                "value": "组件创建成功"
                                                             }
                                                         ]
                                                     },
@@ -545,17 +545,49 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "beforeSend": {},
                                                         "reveicerId": "",
                                                         "receiverTriggerType": "ACTION",
-                                                        "receiverTrigger": "ADD_LIST_ITEM",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
                                                         "params": [
                                                             {
                                                                 "name": "ID",
-                                                                "type": "addedItem",
+                                                                "type": "returnValue",
                                                                 "valueName": "ID"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "afterComponentUpdateSuccess",
+                                                "senderId": "compoment_card_list",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "ACTION",
+                                                        "receiverTrigger": "MESSAGE",
+                                                        "params": [
+                                                            {
+                                                                "name": "type",
+                                                                "type": "value",
+                                                                "value": "success"
                                                             },
                                                             {
-                                                                "name": "NAME",
-                                                                "type": "addedItem",
-                                                                "valueName": "NAME"
+                                                                "name": "message",
+                                                                "type": "value",
+                                                                "value": "编辑成功"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "ACTION",
+                                                        "receiverTrigger": "LOAD_REFRESH_DATA",
+                                                        "params": [
+                                                            {
+                                                                "name": "ID",
+                                                                "type": "returnValue",
+                                                                "valueName": "ID"
                                                             }
                                                         ]
                                                     }
@@ -599,6 +631,11 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                         "beforeReceive": [],
                                                         "triggerType": "ACTION",
                                                         "trigger": "ADD_LIST_ITEM"
+                                                    },
+                                                    {
+                                                        "beforeReceive": [],
+                                                        "triggerType": "ACTION",
+                                                        "trigger": "EDIT_LIST_ITEM"
                                                     },
                                                     {
                                                         "beforeReceive": [],
@@ -1183,6 +1220,14 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                     }
                                                 ]
                                             }
+                                        },
+                                        {
+                                            "id": "delete_component_dialog",
+                                            "type": "confirm",
+                                            "title": "操作提示",
+                                            "content": "删除当前组件, 将会影响所有涉及到组件的页面和功能,是否继续删除?",
+                                            "cancelText": "取消",
+                                            "okText": "确认"
                                         }
                                     ],
                                     "isPagination": true,
@@ -1231,9 +1276,9 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                             "execute": [
                                                 {
                                                     "triggerType": "ACTION",
-                                                    "trigger": "DIALOG",
+                                                    "trigger": "CONFIRM",
                                                     // "conditionId": "add_state_1"
-                                                    "dialogId": "form_component",
+                                                    "dialogId": "delete_component_dialog",
                                                     "ajaxId": "tree_add_component"
                                                 }
                                             ]
@@ -1245,7 +1290,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                             "execute": [
                                                 {
                                                     "triggerType": "ACTION",
-                                                    "trigger": "DIALOG",
+                                                    "trigger": "CONFIRM",
                                                     // "conditionId": "add_state_1"
                                                     "dialogId": "form_component",
                                                     "ajaxId": "tree_add_component"
@@ -1332,12 +1377,12 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                 {
                                                     "name": "CMPT_PROPERTY",
                                                     "type": "componentValue",
-                                                    "valueName": "cmptProperty"
+                                                    "valueName": "CMPT_PROPERTY"
                                                 },
                                                 {
                                                     "name": "CMPT_METHOD",
                                                     "type": "componentValue",
-                                                    "valueName": "cmptMethod"
+                                                    "valueName": "CMPT_PROPERTY"
                                                 }
 
                                             ],
@@ -1363,11 +1408,12 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                         {
                                             "id": "updateNewComponent",
                                             "url": "cfgBusiModel/CREATE_COMPONENT/operate",
-                                            "ajaxType": "post",
+                                            "ajaxType": "put",
                                             "params": [
                                                 {
                                                     "name": "ID",
-                                                    "type": "GUID"
+                                                    "type": "componentValue",
+                                                    "valueName": "ID"
                                                 },
                                                 {
                                                     "name": "NAME",
@@ -1409,12 +1455,12 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                 {
                                                     "name": "CMPT_PROPERTY",
                                                     "type": "componentValue",
-                                                    "valueName": "cmptProperty"
+                                                    "valueName": "CMPT_PROPERTY"
                                                 },
                                                 {
                                                     "name": "CMPT_METHOD",
                                                     "type": "componentValue",
-                                                    "valueName": "cmptMethod"
+                                                    "valueName": "CMPT_METHOD"
                                                 }
 
                                             ],
@@ -1424,7 +1470,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                     "name": "data",
                                                     "showMessageWithNext": 0,
                                                     "message": "message.ajax.state.success",
-                                                    "senderId": "afterComponentAddedSuccess"
+                                                    "senderId": "afterComponentUpdateSuccess"
                                                 },
                                                 {
                                                     "name": "validation",
@@ -1436,7 +1482,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                                     "senderId": "toolbar_02"
                                                 }
                                             ]
-                                        }
+                                        },
                                     ],
                                     "dataMapping": [
                                         {
@@ -1510,14 +1556,14 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
             "titleIcon": "right-circle",
             "component": "cnDataTable",
             "keyId": "ID",
-            "size": "middle",
+            "size": "small",
             "isBordered": true,
             "isFrontPagination": false,
             "isPagination": true,
             "isShowSizeChanger": true,
             "showTotal": true,
             "pageSize": 5,
-            "showCheckBox": false,
+            "showCheckBox": null,
             "pageSizeOptions": [10, 20, 50, 100],
             "loadingOnInit": false,
             "loadingConfig": {
@@ -1562,7 +1608,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "input",
@@ -1576,7 +1622,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "input",
@@ -1590,7 +1636,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "select",
@@ -1612,7 +1658,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "select",
@@ -1657,7 +1703,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "input",
@@ -2070,7 +2116,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "id": "grid_new_cancel",
                     "state": "new",
                     "text": "取消",
-                    "icon": "rollback",
+                    "icon": "close",
                     "color": "text-primary",
                     "type": "link",
                     "size": "small",
@@ -2134,13 +2180,13 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                 },
                 {
                     "id": "grid_cancel",
-                    "state": "text",
-                    "text": "取消",
-                    "icon": "rollback",
+                    "state": "edit",
+                    "text": "删除",
+                    "icon": "close",
                     "color": "text-primary",
                     "type": "link",
                     "size": "small",
-                    "hidden": true,
+                    "hidden": false,
                     "execute": [
                         {
                             "triggerType": "STATE",
@@ -2316,7 +2362,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
             "isShowSizeChanger": true,
             "showTotal": true,
             "pageSize": 5,
-            "showCheckBox": true,
+            "showCheckBox": false,
             "pageSizeOptions": [10, 20, 50, 100],
             "loadingOnInit": false,
             "loadingConfig": {
@@ -2361,7 +2407,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "input",
@@ -2375,7 +2421,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "input",
@@ -2389,7 +2435,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "select",
@@ -2413,7 +2459,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "input",
@@ -2449,7 +2495,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
-                    "width": "100px",
+                    // "width": "100px",
                     "style": {},
                     "editor": {
                         "type": "input",
@@ -2861,7 +2907,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                     "id": "grid_new_cancel",
                     "state": "new",
                     "text": "取消",
-                    "icon": "rollback",
+                    "icon": "close",
                     "color": "text-primary",
                     "type": "link",
                     "size": "small",
@@ -2892,7 +2938,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                 },
                 {
                     "id": "grid_edit",
-                    "state": "edit",
+                    "state": "text",
                     "text": "编辑",
                     "icon": "edit",
                     "color": "text-primary",
@@ -2926,12 +2972,12 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                 {
                     "id": "grid_cancel",
                     "state": "edit",
-                    "text": "取消",
-                    "icon": "rollback",
+                    "text": "删除",
+                    "icon": "close",
                     "color": "text-primary",
                     "type": "link",
                     "size": "small",
-                    "hidden": true,
+                    "hidden": false,
                     "execute": [
                         {
                             "triggerType": "STATE",

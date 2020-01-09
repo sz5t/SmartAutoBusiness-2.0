@@ -41,6 +41,7 @@ export const CN_DATA_LIST_METHOD: IDataListTrigger = {
     REFRESH_AS_CHILD: 'load',
     LOAD_BY_FILTER: 'loadByFilter',
     ADD_LIST_ITEM: 'addListItem',
+    EDIT_LIST_ITEM: 'editListItem',
 
     // link
     LINK: 'link',

@@ -162,6 +162,12 @@
               "link": "/template/calendarDemo",
               "i18n": "menu.component.calendar",
               "level": 3
+            },
+            {
+              "text": "页面测试",
+              "link": "/template/dynamic/6TeBXEdCdVKYmrNh3MY6zmm5mJsNBaeP",
+              "i18n": "menu.demo.pageTest",
+              "level": 3
             }
           ]
         }

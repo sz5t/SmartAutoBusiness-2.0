@@ -29,13 +29,7 @@ import { ButtonOperationResolver } from '@shared/resolver/buttonOperation/button
     // tslint:disable-next-line:component-selector
     selector: 'cn-card-list,[cn-card-list]',
     templateUrl: './cn-card-list.component.html',
-    styles: [
-        `
-        nz-list {
-            padding: 12px;
-        }
-        `
-    ]
+    styleUrls: ['./cn-card-list.component.less']
 })
 
 export class CnCardListComponent extends CnComponentBase implements OnInit, OnDestroy, IDataListProperty {
@@ -154,7 +148,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         this.loading = true;
         const ajaxObj = this._findAjaxById(this.config.loadingConfig.id);
         const params = {
-            ...this._buildParameters(ajaxObj.params),
+            ...this.buildParameters(ajaxObj.params),
             ...this._buildPaging(),
             ...this._buildSort()
         };
@@ -182,7 +176,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         this.loading = true;
         const ajaxObj = this._findAjaxById(this.config.loadingConfig.id);
         const params = {
-            ...this._buildParameters(ajaxObj.filter),
+            ...this.buildParameters(ajaxObj.filter),
             ...this._buildPaging(),
             ...this._buildSort()
         };
@@ -192,6 +186,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                 const innerList: any[] = [null];
                 response.data.resultDatas.forEach(d => {
                     const itm = this._listMappingResolve(d);
+                    itm[this.KEY_ID] = d[this.KEY_ID];
                     itm && innerList.push(itm);
                 });
                 this.list = innerList;
@@ -248,14 +243,43 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         }
     }
 
-    private _buildParameters(paramsCfg) {
-        return ParameterResolver.resolve({
-            params: paramsCfg,
-            tempValue: this.tempValue,
-            initValue: this.initValue,
-            cacheValue: this.cacheValue,
-            item: this.CURRENT_DATA
-        })
+    public buildParameters(paramsCfg, data?, isArray = false) {
+        let parameterResult: any | any[];
+        if (!isArray && !data) {
+            parameterResult = ParameterResolver.resolve({
+                params: paramsCfg,
+                tempValue: this.tempValue,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                item: this.CURRENT_DATA
+            });
+        } else if (!isArray && data) {
+            parameterResult = ParameterResolver.resolve({
+                params: paramsCfg,
+                tempValue: this.tempValue,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                item: this.CURRENT_DATA,
+                returnValue: data
+            });
+        } else if (isArray && data && Array.isArray(data)) {
+            parameterResult = [];
+            data.map(d => {
+                const param = ParameterResolver.resolve({
+                    params: paramsCfg,
+                    tempValue: this.tempValue,
+                    componentValue: d,
+                    item: this.ITEM_SELECTED,
+                    initValue: this.initValue,
+                    cacheValue: this.cacheValue,
+                    router: this.routerValue,
+                    validation: d,
+                    returnValue: d
+                });
+                parameterResult.push(param);
+            })
+        }
+        return parameterResult;
     }
 
     searchData(reset: boolean = false) {
@@ -404,6 +428,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                 }
             })
         }
+        data[this.KEY_ID] && (item[this.KEY_ID] = data[this.KEY_ID]);
         return item;
     }
 
@@ -474,9 +499,58 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         return result;
     }
 
-    public addListItem(option) {
-        debugger;
+    public loadRefreshData(option) {
+        const ajax = this._findAjaxById(this.config.loadingConfig.id);
+        const url = ajax.url;
+        const method = ajax.method;
+        const param: any = {};
+        if (option && Array.isArray(option)) {
+            const rids = [];
+            option.map(opt => {
+                rids.push(opt[this.KEY_ID]);
+            });
+            param[this.KEY_ID] = `in(${rids.join(',')})`;
+            const params = {
+                ...this.buildParameters(ajax.params),
+                ...param
+            }
+
+            this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
+                if (response && response.data && response.data) {
+                    this.refreshData(response.data)
+                    // this.isLoading = false;
+                } else {
+                    // this.isLoading = false;
+                }
+            }, error => {
+                console.log(error);
+            });
+        }
     }
+
+    public refreshData(loadNewData) {
+        if (loadNewData && Array.isArray(loadNewData)) {
+            loadNewData.map((newData, ind) => {
+                const index = this.list
+                    .filter(d => d !== null)
+                    .findIndex(d => d[this.KEY_ID] === newData[this.KEY_ID]);
+
+                if (index > -1) {
+                    const nd = this._listMappingResolve(newData);
+                    nd['state'] = 'edit';
+                    this.list.splice(index + 1, 1, nd);
+                    this.list = [...this.list];
+                } else {
+                    const ld = this._listMappingResolve(loadNewData[ind]);
+                    ld['state'] = 'new';
+                    const notNullList = this.list.filter(d => d !== null);
+                    this.list = [null, ld, ...notNullList];
+                }
+            })
+        }
+    }
+
+
 
     public showLayoutDialog(option: any) {
         let dialog;
@@ -626,6 +700,69 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
             ]
         }
         dialog = this.componentService.modalService.create(dialogOptional);
+    }
+
+    /**
+     * 显示消息框
+     */
+    public showMessage(option) {
+        let msgObj;
+        if (option && Array.isArray(option)) {
+            // 后续需要根据具体情况解析批量处理结果
+            msgObj = this.buildMessageContent(option[0]);
+        } else if (option) {
+            msgObj = this.buildMessageContent(option);
+        }
+        option && this.componentService.msgService.create(msgObj.type, `${msgObj.message}`);
+    }
+
+    public buildMessageContent(msgObj) {
+        const message: any = {};
+        if (msgObj.code) {
+            message.message = msgObj.code;
+        } else if (msgObj.message) {
+            message.message = msgObj.message;
+        }
+        // message.message = option.code ? option.code : '';
+        msgObj.field && (message.field = msgObj.field ? msgObj.field : '');
+        message.type = msgObj.type;
+        return message
+    }
+
+
+    public showConfirm(option) {
+        this.confirm(option.dialog, () => { this.execute(this.ITEM_SELECTED) });
+    }
+
+    public async execute(option) {
+        const url = option.ajaxConfig.url;
+        const method = option.ajaxConfig.ajaxType;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        let paramData;
+        if (option.data) {
+            paramData = ParameterResolver.resolve({
+                params: ajaxParams,
+                item: option.data.data,
+                tempValue: this.tempValue,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue
+            });
+        }
+        const response = await this.executeHttpRequest(url, method, paramData);
+        // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+        this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+        // 处理validation结果
+        const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+        // 处理error结果
+        const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+        return validationResult && errorResult;
+    }
+
+    public async executeHttpRequest(url, method, paramData) {
+        return this.componentService.apiService[method](url, paramData).toPromise();
     }
 
 }

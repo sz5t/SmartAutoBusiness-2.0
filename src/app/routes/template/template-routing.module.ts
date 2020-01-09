@@ -16,6 +16,7 @@ import { TreeDemoComponent } from './tree-demo.component';
 import { TreeTableDemoComponent } from './tree-table-demo.component';
 import { StepsDemoComponent } from './steps-demo.component';
 import { DataBusinessModelingComponent } from './data-business-modeling.component';
+import { CnDynamicTemplateComponent } from './dynamic-template/dynamic-template.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'pageDesign', component: PageDesignComponent },
   { path: 'businessmodeling', component: DataBusinessModelingComponent },
   { path: 'componentManager', component: BaseComponentMannagerComponent },
+  { path: 'dynamic/:name', component: CnDynamicTemplateComponent }
 ];
 
 @NgModule({

@@ -100,7 +100,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "nzXs": 24,
                                     "nzSm": 24,
                                     "nzMd": 24,
-                                    "nzLg": 14,
+                                    "nzLg": 16,
                                     "nzXl": 14,
                                     "nzXXl": 14
                                 },
@@ -854,7 +854,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "nzXs": 24,
                                     "nzSm": 24,
                                     "nzMd": 24,
-                                    "nzLg": 10,
+                                    "nzLg": 8,
                                     "nzXl": 10,
                                     "nzXXl": 10
                                 },
@@ -1229,7 +1229,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     ]
                                 }
                             },
-
                             {
                                 "id": "r5zDHB",
                                 "col": "cc",
@@ -2802,11 +2801,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     {
                                                         "id": "res_refResourceName",
                                                         "hidden": false,
-                                                        "title": "资源名称",
+                                                        "title": "SQL描述",
                                                         "titleConfig": {
                                                             "required": true
                                                         },
-                                                        "field": "refResourceName",
+                                                        "field": "refDescName",
                                                         "labelSize": {
                                                             "span": 3,
                                                             "nzXs": 3,
@@ -2846,11 +2845,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         "state": "edit",
                                                         "text": {
                                                             "type": "label",
-                                                            "field": "refResourceName"
+                                                            "field": "refDescName"
                                                         },
                                                         "editor": {
                                                             "type": "input",
-                                                            "field": "refResourceName",
+                                                            "field": "refDescName",
                                                             "placeholder": "请输入资源..."
                                                         }
                                                     },
@@ -3521,6 +3520,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "type": "componentValue",
                                                     "valueName": "refResourceKeyName"
                                                 },
+                                                // {
+                                                //     "name": "refDescName",
+                                                //     "type": "componentValue",
+                                                //     "valueName": "refDescName"
+                                                // },
                                                 {
                                                     "name": "refParentResourcePropId",
                                                     "type": "componentValue",
@@ -3595,6 +3599,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "valueName": "refResourceName"
                                                 },
                                                 {
+                                                    "name": "refDescName",
+                                                    "type": "componentValue",
+                                                    "valueName": "refDescName"
+                                                },
+                                                {
                                                     "name": "refResourceKeyName",
                                                     "type": "componentValue",
                                                     "valueName": "refResourceKeyName"
@@ -3614,7 +3623,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "name": "sqlList",
                                                     "type": "componentValue",
                                                     "valueName": "sqlList"
-                                                }
+                                                },
+                                                // {
+                                                //     "name": "$state$",
+                                                //     "type": "value",
+                                                //     "value": "insert"
+                                                // }
                                             ],
                                             "outputParameters": [
 
@@ -3675,6 +3689,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "value": "",
                                                 },
                                                 {
+                                                    "name": "refDescName",
+                                                    "type": "componentValue",
+                                                    "valueName": "refDescName"
+                                                },
+                                                {
                                                     "name": "refResourceName",
                                                     "type": "componentValue",
                                                     "valueName": "refResourceName",
@@ -3695,7 +3714,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "name": "sqlList",
                                                     "type": "componentValue",
                                                     "valueName": "sqlList"
-                                                }
+                                                },
+                                                // {
+                                                //     "name": "$state$",
+                                                //     "type": "value",
+                                                //     "value": "update"
+                                                // }
                                             ],
                                             "outputParameters": [
 
@@ -4126,7 +4150,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "资源名称",
                                             "type": "field",
-                                            "field": "resName",
+                                            "field": "refResourceName",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -4146,7 +4170,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         {
                                             "title": "资源描述",
                                             "type": "field",
-                                            "field": "descName",
+                                            "field": "refDescName",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -6400,7 +6424,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                 {
                     "title": "SQL 资源",
                     "type": "field",
-                    "field": "sqlId",
+                    "field": "resourceId",
                     "hidden": false,
                     "showFilter": false,
                     "showSort": false,
@@ -6408,7 +6432,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     "style": {},
                     "editor": {
                         "type": "gridSelect",
-                        "field": "sqlId",
+                        "field": "resourceId",
                         "loadingOnInit": true,
                         "layoutName": "apiResourceList",
                         "placeholder": "请选择",

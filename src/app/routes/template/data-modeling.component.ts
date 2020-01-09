@@ -217,14 +217,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                                         "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
                                                                     },
                                                                     "control": { "id": "002" }
-                                                                },
-                                                                // {
-                                                                //     "id": "ioj0mV1", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "input",
-                                                                //     "size": {
-                                                                //         "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                //     },
-                                                                //     "control": { "id": "003" }
-                                                                // }
+                                                                }
                                                             ]
                                                         }]
                                                 },
@@ -236,7 +229,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "titleConfig": {
                                                             required: true
                                                         },
-                                                        "field": "tname",  // fromcontrol name  默认的字段
+                                                        "field": "resourceName",  // fromcontrol name  默认的字段
                                                         "labelSize": {
                                                             "span": 6,
                                                             "nzXs": { span: 6 },
@@ -258,11 +251,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
                                                         "text": { // 文本展示字段
                                                             "type": 'label', // 什么组件展示文本 
-                                                            "field": 'tname',   // 字段
+                                                            "field": 'resourceName',   // 字段
                                                         },
                                                         "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                                                             "type": "input",
-                                                            "field": "tname",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                                                            "field": "resourceName",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                                                             "placeholder": "请输入",
                                                             "validations": [  // 校验
                                                                 { validator: "required", type: "default", "message": "请输入省名称" }
@@ -303,41 +296,6 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
 
                                                             ]
                                                         }
-                                                    },
-                                                    {
-                                                        id: '003',
-                                                        "hidden": true, // 字段是否隐藏
-                                                        "title": '直属',  // lable 信息
-                                                        "titleConfig": {
-                                                            required: false
-                                                        },
-                                                        "field": "id",  // fromcontrol name  默认的字段
-                                                        "labelSize": {
-                                                            "span": 8,
-                                                            "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 16,
-                                                            "nzXs": { span: 16, offset: 0 },
-                                                            "nzSm": { span: 16, offset: 0 },
-                                                            "nzMd": { span: 16, offset: 0 },
-                                                            "nzLg": { span: 16, offset: 0 },
-                                                            "ngXl": { span: 16, offset: 0 },
-                                                            "nzXXl": { span: 16, offset: 0 }
-                                                        },
-                                                        "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
-                                                        "text": { // 文本展示字段
-                                                            "type": 'label', // 什么组件展示文本 
-                                                            "field": 'id',   // 字段
-                                                        },
-                                                        "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                            "type": "input",
-                                                            "field": "id",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                            "placeholder": "请输入",
-                                                            "validations": [  // 校验
-
-                                                            ]
-                                                        }
                                                     }
                                                 ],
                                                 formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
@@ -351,7 +309,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         Controls: [
                                                             { id: '001', state: "edit", hidden: false, readOnly: false },
                                                             { id: '002', state: "edit", hidden: false, readOnly: false },
-                                                            { id: '003', state: "edit", hidden: false, readOnly: false }
+                                                            // { id: '003', state: "edit", hidden: false, readOnly: false }
                                                         ]
                                                     },
                                                     {
@@ -359,7 +317,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         Controls: [
                                                             { id: '001', state: "edit", hidden: false, readOnly: false },
                                                             { id: '002', state: "edit", hidden: false, readOnly: false },
-                                                            { id: '003', state: "edit", hidden: false, readOnly: false }
+                                                            // { id: '003', state: "edit", hidden: false, readOnly: false }
                                                         ]
                                                     },
                                                     {
@@ -367,7 +325,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                         Controls: [
                                                             { id: '001', state: "text", hidden: false, readOnly: false },
                                                             { id: '002', state: "text", hidden: false, readOnly: false },
-                                                            { id: '003', state: "edit", hidden: false, readOnly: false }
+                                                            // { id: '003', state: "edit", hidden: false, readOnly: false }
                                                         ]
                                                     }
 
@@ -375,7 +333,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 ajaxConfig: [
                                                     {
                                                         "id": "loadform",
-                                                        "url": "td/DM_TABLE/query",
+                                                        "url": "td/DM_RESOURCE/query",
                                                         "urlType": "inner",
                                                         "ajaxType": "get",
                                                         "params": [
@@ -390,9 +348,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                                 "value": true
                                                             },
                                                             {
-                                                                "name": "_mapToObject",
+                                                                "name": "resourceType",
                                                                 "type": "value",
-                                                                "value": true
+                                                                "value": 0
                                                             },
                                                         ],
                                                         "outputParameters": [
@@ -429,11 +387,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     {
                                                         "type": '值变化',
                                                         "controlId": '002', //  大的control标识，级联内部
-                                                        "name": 'inputname2',
+                                                        "name": 'inpuresourceName2',
                                                         "CascadeObjects": [
                                                             {
                                                                 "controlId": '003',
-                                                                "cascadeName": 'inputname3',
+                                                                "cascadeName": 'inpuresourceName3',
                                                                 "cascadeItems": [  // 根据值执行
                                                                     {
                                                                         "type": 'default',  // conditions   default  满足条件执行或者默认都执行
@@ -580,19 +538,24 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "ajaxConfig": [
                                         {
                                             "id": "add_data_tables",
-                                            "url": "table/batchInsert",
+                                            "url": "resource/batchInsert",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
                                                 {
-                                                    "name": "tname",
+                                                    "name": "resourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "tname"
+                                                    "valueName": "resourceName"
                                                 },
                                                 {
                                                     "name": "descName",
                                                     "type": "componentValue",
                                                     "valueName": "descName"
+                                                },
+                                                {
+                                                    "name": "resourceType",
+                                                    "type": "value",
+                                                    "value": 0
                                                 },
                                                 {
                                                     "name": "id",
@@ -622,14 +585,14 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "edit_data_tables",
-                                            "url": "table/batchInsert",
+                                            "url": "resource/batchInsert",
                                             "urlType": "inner",
                                             "ajaxType": "put",
                                             "params": [
                                                 {
-                                                    "name": "tname",
+                                                    "name": "resourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "tname"
+                                                    "valueName": "resourceName"
                                                 },
                                                 {
                                                     "name": "descName",
@@ -640,6 +603,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "name": "id",
                                                     "type": "componentValue",
                                                     "valueName": "id"
+                                                },
+                                                {
+                                                    "name": "resourceType",
+                                                    "type": "value",
+                                                    "value": 0
                                                 }
                                             ],
                                             "outputParameters": [
@@ -665,19 +633,24 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "form_add_data_table",
-                                            "url": "table/insert",
+                                            "url": "resource/insert",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
                                                 {
-                                                    "name": "tname",
+                                                    "name": "resourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "tname"
+                                                    "valueName": "resourceName"
                                                 },
                                                 {
                                                     "name": "descName",
                                                     "type": "componentValue",
                                                     "valueName": "descName"
+                                                },
+                                                {
+                                                    "name": "resourceType",
+                                                    "type": "value",
+                                                    "value": 0
                                                 },
                                                 {
                                                     "name": "id",
@@ -698,14 +671,14 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "form_edit_data_table",
-                                            "url": "table/update",
+                                            "url": "resource/update",
                                             "urlType": "inner",
                                             "ajaxType": "put",
                                             "params": [
                                                 {
-                                                    "name": "tname",
+                                                    "name": "resourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "tname"
+                                                    "valueName": "resourceName"
                                                 },
                                                 {
                                                     "name": "descName",
@@ -713,9 +686,14 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "valueName": "descName"
                                                 },
                                                 {
+                                                    "name": "resourceType",
+                                                    "type": "value",
+                                                    "value": 0
+                                                },
+                                                {
                                                     "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
+                                                    "type": "tempValue",
+                                                    "valueName": "_tableId"
                                                 }
                                             ],
                                             "outputParameters": [
@@ -732,7 +710,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "create_modeling",
-                                            "url": "table/createModel",
+                                            "url": "resource/createModel",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
@@ -756,7 +734,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "cancel_create_modeling",
-                                            "url": "table/cancelModel",
+                                            "url": "resource/cancelModel",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
@@ -775,7 +753,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "delete_data_table",
-                                            "url": "table/delete",
+                                            "url": "resource/delete",
                                             "urlType": "inner",
                                             "ajaxType": "delete",
                                             "params": [
@@ -1004,11 +982,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "type": "",
                                             "controlId": "search_name",
-                                            "name": "tname",
+                                            "name": "resourceName",
                                             "CascadeObjects": [
                                                 {
                                                     "controlId": "search_name",
-                                                    "cascadeName": "tname",
+                                                    "cascadeName": "resourceName",
                                                     "cascadeItems": [
                                                         {
                                                             "type": "default",
@@ -1024,7 +1002,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                                         {
                                                                             "name": "_OPTION_NAME",
                                                                             "type": "selectObjectValue",
-                                                                            "valueName": "tname"
+                                                                            "valueName": "resourceName"
                                                                         }
                                                                     ]
                                                                 }
@@ -1153,7 +1131,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "titleConfig": {
                                                 "required": false
                                             },
-                                            "field": "tname",
+                                            "field": "resourceName",
                                             "noColon": true,
                                             "labelSize": {
                                                 "span": 1,
@@ -1194,17 +1172,17 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "state": "edit",
                                             "text": {
                                                 "type": "label",
-                                                "field": "tname"
+                                                "field": "resourceName"
                                             },
                                             "editor": {
                                                 "type": "searchSelect",
-                                                "field": "tname",
+                                                "field": "resourceName",
                                                 "showSearch": true,
                                                 "serverSearch": true,
                                                 "loadingConfig": {
                                                     "id": "loadBusinessNameValue"
                                                 },
-                                                "labelName": "tname",
+                                                "labelName": "resourceName",
                                                 "valueName": "id",
                                                 "placeholder": "请输入查找内容..."
                                             }
@@ -1259,7 +1237,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "ajaxType": "get",
                                             "params": [
                                                 {
-                                                    "name": "tname",
+                                                    "name": "resourceName",
                                                     "search": true,
                                                     "conditionType": "ctn"
                                                 },
@@ -1326,7 +1304,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             // {
                                             //     "name": "_sort",
                                             //     "type": "value",
-                                            //     "value": "TNAME ASC"
+                                            //     "value": "resourceName ASC"
                                             // },
                                             // {
                                             //     "name": "_order",
@@ -1341,7 +1319,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                 "value": true
                                             },
                                             {
-                                                "name": "tname",
+                                                "name": "resourceName",
                                                 "type": "tempValue",
                                                 "valueName": "_TABLE_NAME"
                                             }
@@ -1361,7 +1339,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "title": "表名称",
                                             "type": "field",
-                                            "field": "tname",
+                                            "field": "resourceName",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -2132,7 +2110,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                     "ajaxConfig": [
                                         {
                                             "id": "data_table_save_actions_01",
-                                            "url": "table/insert ",
+                                            "url": "resource/insert ",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
@@ -2141,9 +2119,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "type": "GUID"
                                                 },
                                                 {
-                                                    "name": "tname",
+                                                    "name": "resourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "tname"
+                                                    "valueName": "resourceName"
                                                 },
                                                 {
                                                     "name": "descName",
@@ -2173,7 +2151,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "data_table_edit_actions_02",
-                                            "url": "table/update",
+                                            "url": "resource/update",
                                             "urlType": "inner",
                                             "ajaxType": "put",
                                             "params": [
@@ -2183,9 +2161,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "valueName": "id"
                                                 },
                                                 {
-                                                    "name": "tname",
+                                                    "name": "resourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "tname"
+                                                    "valueName": "resourceName"
                                                 },
                                                 {
                                                     "name": "descName",
@@ -2211,7 +2189,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         },
                                         {
                                             "id": "data_table_delete_actions_03",
-                                            "url": "table/delete",
+                                            "url": "resource/delete",
                                             "urlType": "inner",
                                             "ajaxType": "delete",
                                             "params": [
@@ -2370,207 +2348,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             ]
                                         }
                                     ],
-                                    "dialog": [
-                                        {
-                                            "id": "edit_data_table_form",
-                                            "type": "confirm",
-                                            "title": "数据编辑",
-                                            "cancelText": "取消",
-                                            "okText": "提交",
-                                            "form": {
-                                                "id": "form_data_table",
-                                                "type": "form",
-                                                "component": "form",
-                                                state: 'text',
-                                                loadingConfig: {
-                                                    id: "loadform" // 将加载配置引用
-                                                },
-                                                formLayout: {
-                                                    "id": "b86s2i11",
-                                                    "type": "layout",
-                                                    "title": "表单布局b86s2i",
-                                                    "rows": [
-                                                        {
-                                                            "id": "MefhXa",
-                                                            "type": "row",
-                                                            // 行列，是否 显示。
-                                                            "cols": [
-                                                                {
-                                                                    "id": "iHspYn", "col": "cc", "type": "col",
-                                                                    "title": "列iHspYn", "span": 24,
-                                                                    "layoutContain": "input",
-                                                                    "size": {
-                                                                        "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
-                                                                    },
-                                                                    "control": {
-                                                                        "id": "data_table_name_control"  // id 和引用id 值相同
-                                                                    }
-                                                                }
-                                                            ]
-                                                        }]
-                                                },
-                                                formControls: [
-                                                    {
-                                                        id: 'data_table_name_control',
-                                                        "hidden": true, // 字段是否隐藏
-                                                        "title": '表名称',  // lable 信息
-                                                        "titleConfig": {
-                                                            required: true
-                                                        },
-                                                        "field": "tname",  // fromcontrol name  默认的字段
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": { span: 6 },
-                                                            "nzSm": { span: 6 },
-                                                            "nzMd": { span: 6 },
-                                                            "nzLg": { span: 6 },
-                                                            "ngXl": { span: 6 },
-                                                            "nzXXl": { span: 6 }
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": 18,
-                                                            "nzSm": 18,
-                                                            "nzMd": 18,
-                                                            "nzLg": 18,
-                                                            "ngXl": 18,
-                                                            "nzXXl": 18
-                                                        },
-                                                        "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
-                                                        "text": { // 文本展示字段
-                                                            "type": 'label', // 什么组件展示文本 
-                                                            "field": 'tname',   // 字段
-                                                        },
-                                                        "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                            "type": "input",
-                                                            "field": "tname",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                            "placeholder": "请输入",
-                                                            "validations": [  // 校验
-                                                                { validator: "required", type: "default", "message": "请输入省名称" }
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'data_table_id_control',
-                                                        "hidden": true, // 字段是否隐藏
-                                                        "title": '区号',  // lable 信息
-                                                        "titleConfig": {
-                                                            required: false
-                                                        },
-                                                        "field": "id",  // fromcontrol name  默认的字段
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
-                                                        "text": { // 文本展示字段
-                                                            "type": 'label', // 什么组件展示文本 
-                                                            "field": 'id',   // 字段
-                                                        },
-                                                        "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                            "type": "input",
-                                                            "field": "id",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                            "placeholder": "请输入",
-                                                            "validations": [  // 校验
-
-                                                            ]
-                                                        }
-                                                    },
-                                                    {
-                                                        id: 'data_table_desc_control',
-                                                        "hidden": true, // 字段是否隐藏
-                                                        "title": '描述',  // lable 信息
-                                                        "titleConfig": {
-                                                            required: false
-                                                        },
-                                                        "field": "descName",  // fromcontrol name  默认的字段
-                                                        "labelSize": {
-                                                            "span": 6,
-                                                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
-                                                        },  // 
-                                                        "controlSize": {
-                                                            "span": 18,
-                                                            "nzXs": { span: 18, offset: 0 },
-                                                            "nzSm": { span: 18, offset: 0 },
-                                                            "nzMd": { span: 18, offset: 0 },
-                                                            "nzLg": { span: 18, offset: 0 },
-                                                            "ngXl": { span: 18, offset: 0 },
-                                                            "nzXXl": { span: 18, offset: 0 }
-                                                        },
-                                                        "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
-                                                        "text": { // 文本展示字段
-                                                            "type": 'label', // 什么组件展示文本 
-                                                            "field": 'descName',   // 字段
-                                                        },
-                                                        "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
-                                                            "type": "input",
-                                                            "field": "descName",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                                                            "placeholder": "请输入",
-                                                            "validations": [  // 校验
-
-                                                            ]
-                                                        }
-                                                    }
-                                                ],
-                                                formControlsPermissions: [ // 初始表单字段，描述 新增、编辑、查看 状态下的文本
-                                                    {
-                                                        formState: "new", // 新增状态下的Controls 展示与否，是否读写属性设置
-                                                        formStateContent: { // 对当前状态的描述 ，描述当前状态下 表单组件 具备的行为，例如是否自加载，是否启用默认值
-                                                            isLoad: false,
-                                                            loadAjax: {}, // 如果启用load，是否用新的加载地址
-                                                            isDefault: true
-                                                        },
-                                                        Controls: [
-                                                            { id: 'data_table_name_control', state: "edit", hidden: false, readOnly: false }
-                                                        ]
-                                                    },
-                                                    {
-                                                        formState: "edit",
-                                                        Controls: [
-                                                            { id: 'data_table_name_control', state: "edit", hidden: false, readOnly: false }
-                                                        ]
-                                                    },
-                                                    {
-                                                        formState: "text",
-                                                        Controls: [
-                                                            { id: 'data_table_name_control', state: "text", hidden: false, readOnly: false }
-                                                        ]
-                                                    }
-
-                                                ],
-                                                ajaxConfig: [
-                                                    {
-                                                        "id": "loadform",
-                                                        "url": "td/DM_TABLE/query",
-                                                        "urlType": "inner",
-                                                        "ajaxType": "get",
-                                                        "params": [
-                                                            {
-                                                                "name": "id",
-                                                                "type": "tempValue",
-                                                                "valueName": "id"
-                                                            }
-                                                        ],
-                                                        "outputParameters": [
-
-                                                        ],
-                                                        "result": [  // 描述 表单接收参数，将返回的哪些值赋给相应的组件属性
-
-                                                        ]
-                                                    }
-                                                ]
-                                            }
-                                        }
-                                    ],
+                                    "dialog": [],
                                     "condition": [
                                         {
                                             "id": "add_data_table_condition_2",
@@ -2689,112 +2467,6 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         }
                                     ],
                                     "ajaxConfig": [
-                                        // {
-                                        //     "id": "form_add_data_table",
-                                        //     "url": "dmtable/insert",
-                                        //     "urlType": "inner",
-                                        //     "ajaxType": "post",
-                                        //     "params": [
-                                        //         {
-                                        //             "name": "tname",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "tname"
-                                        //         },
-                                        //         {
-                                        //             "name": "descName",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "descName"
-                                        //         },
-                                        //         {
-                                        //             "name": "id",
-                                        //             "type": "GUID"
-                                        //         }
-                                        //     ],
-                                        //     "outputParameters": [
-
-                                        //     ],
-                                        //     "result": [
-                                        //         {
-                                        //             "name": "data",
-                                        //             "showMessageWithNext": 0,
-                                        //             "message": "message.ajax.state.success",
-                                        //             "senderId": "afterTableColumnSaveSuccess"
-                                        //         },
-                                        //         {
-                                        //             "name": "validation",
-                                        //             "message": "message.ajax.state.success",
-                                        //             "senderId": "afterTableColumnSaveValidation"
-                                        //         },
-                                        //         {
-                                        //             "name": "error",
-                                        //             "senderId": "toolbar_data_columns_01"
-                                        //         }
-                                        //     ]
-                                        // },
-                                        // {
-                                        //     "id": "form_edit_city",
-                                        //     "url": "city/update",
-                                        //     "urlType": "inner",
-                                        //     "ajaxType": "put",
-                                        //     "params": [
-                                        //         {
-                                        //             "name": "cityName",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "cityName"
-                                        //         },
-                                        //         {
-                                        //             "name": "zipCode",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "zipCode"
-                                        //         },
-                                        //         {
-                                        //             "name": "populationSize",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "populationSize"
-                                        //         },
-                                        //         {
-                                        //             "name": "directlyUnder",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "directlyUnder"
-                                        //         },
-                                        //         {
-                                        //             "name": "createDate",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "createDate"
-                                        //         },
-                                        //         {
-                                        //             "name": "pId",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "pId"
-                                        //         },
-                                        //         {
-                                        //             "name": "id",
-                                        //             "type": "componentValue",
-                                        //             "valueName": "id"
-                                        //         }
-                                        //     ],
-                                        //     "outputParameters": [
-
-                                        //     ],
-                                        //     "result": [
-                                        //         {
-                                        //             "name": "data",
-                                        //             "showMessageWithNext": 0,
-                                        //             "message": "message.ajax.state.success",
-                                        //             "senderId": "afterCityUpdateFormSuccessfully"
-                                        //         },
-                                        //         {
-                                        //             "name": "validation",
-                                        //             "showMessageWithNext": 0,
-                                        //             "message": "message.ajax.state.success",
-                                        //             "senderId": "afterCityUpdateFormValidation"
-                                        //         },
-                                        //         {
-                                        //             "name": "error",
-                                        //             "senderId": "toolbar_data_columns_01"
-                                        //         }
-                                        //     ]
-                                        // },
                                         {
                                             "id": "add_table_columns",
                                             "url": "column/batchInsert",
@@ -2807,14 +2479,14 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "valueName": "id"
                                                 },
                                                 {
-                                                    "name": "tableId",
+                                                    "name": "resourceId",
                                                     "type": "tempValue",
                                                     "valueName": "_tableId"
                                                 },
                                                 {
-                                                    "name": "cname",
+                                                    "name": "paramName",
                                                     "type": "componentValue",
-                                                    "valueName": "cname"
+                                                    "valueName": "paramName"
                                                 },
                                                 {
                                                     "name": "isNullable",
@@ -2900,14 +2572,14 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                                     "valueName": "id"
                                                 },
                                                 {
-                                                    "name": "tableId",
+                                                    "name": "resourceId",
                                                     "type": "tempValue",
                                                     "valueName": "_tableId"
                                                 },
                                                 {
-                                                    "name": "cname",
+                                                    "name": "paramName",
                                                     "type": "componentValue",
-                                                    "valueName": "cname"
+                                                    "valueName": "paramName"
                                                 },
                                                 {
                                                     "name": "isNullable",
@@ -3274,7 +2946,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         "method": "get",
                                         "params": [
                                             {
-                                                "name": "tableId",
+                                                "name": "resourceId",
                                                 "type": "tempValue",
                                                 "valueName": "_tableId"
                                             },
@@ -3303,7 +2975,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "title": "tableId",
                                             "type": "field",
-                                            "field": "tableId",
+                                            "field": "resourceId",
                                             "hidden": true,
                                             "showFilter": false,
                                             "showSort": false,
@@ -3314,7 +2986,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         {
                                             "title": "列名",
                                             "type": "field",
-                                            "field": "cname",
+                                            "field": "paramName",
                                             "hidden": false,
                                             "showFilter": false,
                                             "showSort": false,
@@ -3322,7 +2994,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                             "style": {},
                                             "editor": {
                                                 "type": "input",
-                                                "field": "cname"
+                                                "field": "paramName"
                                             }
                                         },
                                         {
@@ -4285,373 +3957,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         }
 
                                     ],
-                                    "ajaxConfig": [
-                                        {
-                                            "id": "add_column_1",
-                                            "url": "column/insert",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
-                                                },
-                                                {
-                                                    "name": "tableId",
-                                                    "type": "tempValue",
-                                                    "valueName": "_tableId"
-                                                },
-                                                {
-                                                    "name": "cname",
-                                                    "type": "componentValue",
-                                                    "valueName": "cname"
-                                                },
-                                                {
-                                                    "name": "isNullable",
-                                                    "type": "componentValue",
-                                                    "valueName": "isNullable"
-                                                },
-                                                {
-                                                    "name": "isUnique",
-                                                    "type": "componentValue",
-                                                    "valueName": "isUnique"
-                                                },
-                                                {
-                                                    "name": "isValidate",
-                                                    "type": "componentValue",
-                                                    "valueName": "isValidate"
-                                                },
-                                                {
-                                                    "name": "defaultValue",
-                                                    "type": "componentValue",
-                                                    "valueName": "defaultValue"
-                                                },
-                                                {
-                                                    "name": "descName",
-                                                    "type": "componentValue",
-                                                    "valueName": "descName"
-                                                },
-                                                {
-                                                    "name": "datatype",
-                                                    "type": "componentValue",
-                                                    "valueName": "datatype"
-                                                },
-                                                {
-                                                    "name": "orderCode",
-                                                    "type": "componentValue",
-                                                    "valueName": "orderCode"
-                                                },
-                                                {
-                                                    "name": "precision",
-                                                    "type": "componentValue",
-                                                    "valueName": "precision"
-                                                },
-                                                {
-                                                    "name": "length",
-                                                    "type": "componentValue",
-                                                    "valueName": "length"
-                                                }
-
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterTableColumnSaveSuccess"
-                                                },
-                                                {
-                                                    "name": "validation",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterTableColumnSaveValidation"
-                                                },
-                                                // {
-                                                //     "name": "error",
-                                                //     "senderId": "data_table_sender_02"
-                                                // }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_column_1",
-                                            "url": "column/update",
-                                            "urlType": "inner",
-                                            "ajaxType": "put",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
-                                                },
-                                                {
-                                                    "name": "tableId",
-                                                    "type": "tempValue",
-                                                    "valueName": "tableId"
-                                                },
-                                                {
-                                                    "name": "cname",
-                                                    "type": "componentValue",
-                                                    "valueName": "cname"
-                                                },
-                                                {
-                                                    "name": "isNullable",
-                                                    "type": "componentValue",
-                                                    "valueName": "isNullable"
-                                                },
-                                                {
-                                                    "name": "isUnique",
-                                                    "type": "componentValue",
-                                                    "valueName": "isUnique"
-                                                },
-                                                {
-                                                    "name": "isValidate",
-                                                    "type": "componentValue",
-                                                    "valueName": "isValidate"
-                                                },
-                                                {
-                                                    "name": "defaultValue",
-                                                    "type": "componentValue",
-                                                    "valueName": "defaultValue"
-                                                },
-                                                {
-                                                    "name": "descName",
-                                                    "type": "componentValue",
-                                                    "valueName": "descName"
-                                                },
-                                                {
-                                                    "name": "datatype",
-                                                    "type": "componentValue",
-                                                    "valueName": "datatype"
-                                                },
-                                                {
-                                                    "name": "orderCode",
-                                                    "type": "componentValue",
-                                                    "valueName": "orderCode",
-                                                    "dataType": "ingeter"
-                                                },
-                                                {
-                                                    "name": "precision",
-                                                    "type": "componentValue",
-                                                    "valueName": "precision"
-                                                },
-                                                {
-                                                    "name": "length",
-                                                    "type": "componentValue",
-                                                    "valueName": "length"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterTableColumnUpdateSuccess"
-                                                },
-                                                {
-                                                    "name": "validation",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterTableColumnUpdateValidation"
-                                                },
-                                                {
-                                                    "name": "error",
-                                                    "senderId": "toolbar_data_columns_01"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "add_table_column",
-                                            "url": "column/insert",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "GUID"
-                                                },
-                                                {
-                                                    "name": "tableId",
-                                                    "type": "tempValue",
-                                                    "valueName": "tableId"
-                                                },
-                                                {
-                                                    "name": "cname",
-                                                    "type": "componentValue",
-                                                    "valueName": "cname"
-                                                },
-                                                {
-                                                    "name": "isNullable",
-                                                    "type": "componentValue",
-                                                    "valueName": "isNullable"
-                                                },
-                                                {
-                                                    "name": "isUnique",
-                                                    "type": "componentValue",
-                                                    "valueName": "isUnique"
-                                                },
-                                                {
-                                                    "name": "isValidate",
-                                                    "type": "componentValue",
-                                                    "valueName": "isValidate"
-                                                },
-                                                {
-                                                    "name": "defaultValue",
-                                                    "type": "componentValue",
-                                                    "valueName": "defaultValue"
-                                                },
-                                                {
-                                                    "name": "descName",
-                                                    "type": "componentValue",
-                                                    "valueName": "descName"
-                                                },
-                                                {
-                                                    "name": "datatype",
-                                                    "type": "componentValue",
-                                                    "valueName": "datatype"
-                                                },
-                                                {
-                                                    "name": "orderCode",
-                                                    "type": "componentValue",
-                                                    "valueName": "orderCode"
-                                                },
-                                                {
-                                                    "name": "precision",
-                                                    "type": "componentValue",
-                                                    "valueName": "precision"
-                                                },
-                                                {
-                                                    "name": "length",
-                                                    "type": "componentValue",
-                                                    "valueName": "length"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "grid_sender_01"
-                                                },
-                                                // {
-                                                //     "name": "validation",
-                                                //     "senderId": "data_table_sender_01"
-                                                // },
-                                                // {
-                                                //     "name": "error",
-                                                //     "senderId": "data_table_sender_02"
-                                                // }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_table_columns_1",
-                                            "url": "column/batchUpdate",
-                                            "urlType": "inner",
-                                            "ajaxType": "put",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
-                                                },
-                                                {
-                                                    "name": "tableId",
-                                                    "type": "tempValue",
-                                                    "valueName": "tableId"
-                                                },
-                                                {
-                                                    "name": "cname",
-                                                    "type": "componentValue",
-                                                    "valueName": "cname"
-                                                },
-                                                {
-                                                    "name": "isNullable",
-                                                    "type": "componentValue",
-                                                    "valueName": "isNullable"
-                                                },
-                                                {
-                                                    "name": "isUnique",
-                                                    "type": "componentValue",
-                                                    "valueName": "isUnique"
-                                                },
-                                                {
-                                                    "name": "isValidate",
-                                                    "type": "componentValue",
-                                                    "valueName": "isValidate"
-                                                },
-                                                {
-                                                    "name": "defaultValue",
-                                                    "type": "componentValue",
-                                                    "valueName": "defaultValue"
-                                                },
-                                                {
-                                                    "name": "descName",
-                                                    "type": "componentValue",
-                                                    "valueName": "descName"
-                                                },
-                                                {
-                                                    "name": "datatype",
-                                                    "type": "componentValue",
-                                                    "valueName": "datatype"
-                                                },
-                                                {
-                                                    "name": "orderCode",
-                                                    "type": "componentValue",
-                                                    "valueName": "orderCode",
-                                                    "dataType": "integer"
-                                                },
-                                                {
-                                                    "name": "precision",
-                                                    "type": "componentValue",
-                                                    "valueName": "precision"
-                                                },
-                                                {
-                                                    "name": "length",
-                                                    "type": "componentValue",
-                                                    "valueName": "length"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "grid_sender_01"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "column_delete_1",
-                                            "url": "column/delete",
-                                            "urlType": "inner",
-                                            "ajaxType": "delete",
-                                            "params": [
-                                                {
-                                                    "name": "ids",
-                                                    "type": "CHECKED_ROWS_ID",
-                                                    "value": "_ids"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-
-                                            ]
-                                        }
-                                    ]
+                                    "ajaxConfig": []
                                 }
                             }],
                         id: "3vlDRq",
@@ -4818,7 +4124,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                             "titleConfig": {
     //                                                 required: true
     //                                             },
-    //                                             "field": "tname",  // fromcontrol name  默认的字段
+    //                                             "field": "resourceName",  // fromcontrol name  默认的字段
     //                                             "labelSize": {
     //                                                 "span": 6,
     //                                                 "nzXs": { span: 6 },
@@ -4840,11 +4146,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                             "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
     //                                             "text": { // 文本展示字段
     //                                                 "type": 'label', // 什么组件展示文本 
-    //                                                 "field": 'tname',   // 字段
+    //                                                 "field": 'resourceName',   // 字段
     //                                             },
     //                                             "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
     //                                                 "type": "input",
-    //                                                 "field": "tname",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+    //                                                 "field": "resourceName",  // 编辑字段于定义字段一致 （此处定义于表格相反）
     //                                                 "placeholder": "请输入",
     //                                                 "validations": [  // 校验
     //                                                     { validator: "required", type: "default", "message": "请输入省名称" }
@@ -5011,11 +4317,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                         {
     //                                             "type": '值变化',
     //                                             "controlId": '002', //  大的control标识，级联内部
-    //                                             "name": 'inputname2',
+    //                                             "name": 'inpuresourceName2',
     //                                             "CascadeObjects": [
     //                                                 {
     //                                                     "controlId": '003',
-    //                                                     "cascadeName": 'inputname3',
+    //                                                     "cascadeName": 'inpuresourceName3',
     //                                                     "cascadeItems": [  // 根据值执行
     //                                                         {
     //                                                             "type": 'default',  // conditions   default  满足条件执行或者默认都执行
@@ -5167,9 +4473,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                 "ajaxType": "post",
     //                                 "params": [
     //                                     {
-    //                                         "name": "tname",
+    //                                         "name": "resourceName",
     //                                         "type": "componentValue",
-    //                                         "valueName": "tname"
+    //                                         "valueName": "resourceName"
     //                                     },
     //                                     {
     //                                         "name": "descName",
@@ -5209,9 +4515,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                 "ajaxType": "put",
     //                                 "params": [
     //                                     {
-    //                                         "name": "tname",
+    //                                         "name": "resourceName",
     //                                         "type": "componentValue",
-    //                                         "valueName": "tname"
+    //                                         "valueName": "resourceName"
     //                                     },
     //                                     {
     //                                         "name": "descName",
@@ -5252,9 +4558,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                 "ajaxType": "post",
     //                                 "params": [
     //                                     {
-    //                                         "name": "tname",
+    //                                         "name": "resourceName",
     //                                         "type": "componentValue",
-    //                                         "valueName": "tname"
+    //                                         "valueName": "resourceName"
     //                                     },
     //                                     {
     //                                         "name": "descName",
@@ -5285,9 +4591,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                 "ajaxType": "put",
     //                                 "params": [
     //                                     {
-    //                                         "name": "tname",
+    //                                         "name": "resourceName",
     //                                         "type": "componentValue",
-    //                                         "valueName": "tname"
+    //                                         "valueName": "resourceName"
     //                                     },
     //                                     {
     //                                         "name": "descName",
@@ -5723,7 +5029,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                 // {
     //                                 //     "name": "_sort",
     //                                 //     "type": "value",
-    //                                 //     "value": "TNAME ASC"
+    //                                 //     "value": "resourceName ASC"
     //                                 // },
     //                                 // {
     //                                 //     "name": "_order",
@@ -5747,7 +5053,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                             {
     //                                 "title": "表名称",
     //                                 "type": "field",
-    //                                 "field": "tname",
+    //                                 "field": "resourceName",
     //                                 "hidden": false,
     //                                 "showFilter": false,
     //                                 "showSort": false,
@@ -6459,9 +5765,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                         "type": "GUID"
     //                                     },
     //                                     {
-    //                                         "name": "tname",
+    //                                         "name": "resourceName",
     //                                         "type": "componentValue",
-    //                                         "valueName": "tname"
+    //                                         "valueName": "resourceName"
     //                                     },
     //                                     {
     //                                         "name": "descName",
@@ -6501,9 +5807,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                         "valueName": "id"
     //                                     },
     //                                     {
-    //                                         "name": "tname",
+    //                                         "name": "resourceName",
     //                                         "type": "componentValue",
-    //                                         "valueName": "tname"
+    //                                         "valueName": "resourceName"
     //                                     },
     //                                     {
     //                                         "name": "descName",
@@ -6734,7 +6040,7 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                             "titleConfig": {
     //                                                 required: true
     //                                             },
-    //                                             "field": "tname",  // fromcontrol name  默认的字段
+    //                                             "field": "resourceName",  // fromcontrol name  默认的字段
     //                                             "labelSize": {
     //                                                 "span": 6,
     //                                                 "nzXs": { span: 6 },
@@ -6756,11 +6062,11 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                                             "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制text、edit、form
     //                                             "text": { // 文本展示字段
     //                                                 "type": 'label', // 什么组件展示文本 
-    //                                                 "field": 'tname',   // 字段
+    //                                                 "field": 'resourceName',   // 字段
     //                                             },
     //                                             "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
     //                                                 "type": "input",
-    //                                                 "field": "tname",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+    //                                                 "field": "resourceName",  // 编辑字段于定义字段一致 （此处定义于表格相反）
     //                                                 "placeholder": "请输入",
     //                                                 "validations": [  // 校验
     //                                                     { validator: "required", type: "default", "message": "请输入省名称" }
@@ -7013,9 +6319,9 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
     //                             //     "ajaxType": "post",
     //                             //     "params": [
     //                             //         {
-    //                             //             "name": "tname",
+    //                             //             "name": "resourceName",
     //                             //             "type": "componentValue",
-    //                             //             "valueName": "tname"
+    //                             //             "valueName": "resourceName"
     //                             //         },
     //                             //         {
     //                             //             "name": "descName",

@@ -104,7 +104,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                         },
                                                         {
                                                             "type": "element",
-                                                            "name": "name",
+                                                            "name": "descName",
                                                             "matchValue": "1",
                                                             "match": "eq",
                                                         }
@@ -169,24 +169,29 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     "ajaxConfig": [
                                         {
                                             "id": "add_save_1",
-                                            "url": "sql/insert",
+                                            "url": "resource/insert",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
                                                 {
-                                                    "name": "sname",
+                                                    "name": "resourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "SNAME"
+                                                    "valueName": "RESOURCE_NAME"
                                                 },
                                                 {
-                                                    "name": "name",
+                                                    "name": "descName",
                                                     "type": "componentValue",
-                                                    "valueName": "NAME"
+                                                    "valueName": "DESC_NAME"
                                                 },
                                                 {
-                                                    "name": "sqlContent",
+                                                    "name": "content",
                                                     "type": "componentValue",
-                                                    "valueName": "SQL_CONTENT"
+                                                    "valueName": "CONTENT"
+                                                },
+                                                {
+                                                    "name": "resourceType",
+                                                    "type": "value",
+                                                    "value": 1
                                                 }
                                             ],
                                             "outputParameters": [
@@ -209,7 +214,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         },
                                         {
                                             "id": "edit_save_1",
-                                            "url": "sql/update",
+                                            "url": "resource/update",
                                             "urlType": "inner",
                                             "ajaxType": "put",
                                             "params": [
@@ -219,19 +224,24 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                     "valueName": "_ID"
                                                 },
                                                 {
-                                                    "name": "sname",
+                                                    "name": "resourceName",
                                                     "type": "componentValue",
-                                                    "valueName": "SNAME"
+                                                    "valueName": "RESOURCE_NAME"
                                                 },
                                                 {
-                                                    "name": "name",
+                                                    "name": "descName",
                                                     "type": "componentValue",
-                                                    "valueName": "NAME"
+                                                    "valueName": "DESC_NAME"
                                                 },
                                                 {
-                                                    "name": "sqlContent",
+                                                    "name": "content",
                                                     "type": "componentValue",
-                                                    "valueName": "SQL_CONTENT"
+                                                    "valueName": "CONTENT"
+                                                },
+                                                {
+                                                    "name": "resourceType",
+                                                    "type": "value",
+                                                    "value": 1
                                                 }
                                             ],
                                             "outputParameters": [
@@ -254,7 +264,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         },
                                         {
                                             "id": "create_sql_model",
-                                            "url": "sql/createModel",
+                                            "url": "resource/createModel",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
@@ -284,7 +294,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         },
                                         {
                                             "id": "cancel_sql_model",
-                                            "url": "sql/cancelModel",
+                                            "url": "resource/cancelModel",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
@@ -456,7 +466,6 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                             // "afterId": "edit_save_1"
                                                         }
                                                     ],
-
                                                     "toggle": {
                                                         "type": "state",
                                                         "toggleProperty": "hidden",
@@ -1044,7 +1053,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "titleConfig": {
                                                 "required": true
                                             },
-                                            "field": "NAME",
+                                            "field": "DESC_NAME",
                                             "labelSize": {
                                                 "span": 3,
                                                 "nzXs": { "span": 24 },
@@ -1066,11 +1075,11 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "state": "edit",
                                             "text": {
                                                 "type": "label",
-                                                "field": "NAME",
+                                                "field": "DESC_NAME",
                                             },
                                             "editor": {
                                                 "type": "input",
-                                                "field": "NAME",
+                                                "field": "DESC_NAME",
                                                 "placeholder": "请输入",
                                                 "validations": [
                                                     { "validator": "required", "type": "default", "message": "请输入名称" }
@@ -1084,7 +1093,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "titleConfig": {
                                                 "required": true
                                             },
-                                            "field": "SNAME",
+                                            "field": "RESOURCE_NAME",
                                             "labelSize": {
                                                 "span": 4,
                                                 "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 4, "ngXl": 4, "nzXXl": 4
@@ -1101,11 +1110,11 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "state": "edit",
                                             "text": {
                                                 "type": "label",
-                                                "field": "SNAME",
+                                                "field": "RESOURCE_NAME",
                                             },
                                             "editor": {
                                                 "type": "input",
-                                                "field": "SNAME",
+                                                "field": "RESOURCE_NAME",
                                                 "placeholder": "请输入",
                                                 "validations": [
                                                     { "validator": "required", "type": "default", "message": "请输入名称" }
@@ -1119,7 +1128,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "titleConfig": {
                                                 "required": true
                                             },
-                                            "field": "SQL_CONTENT",
+                                            "field": "CONTENT",
                                             "labelSize": {
                                                 "span": 3,
                                                 "nzXs": 24, "nzSm": 24, "nzMd": 3, "nzLg": 3, "ngXl": 3, "nzXXl": 3
@@ -1136,7 +1145,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             "state": "edit",
                                             "text": {
                                                 "type": "codeEdit",
-                                                "field": "SQL_CONTENT",
+                                                "field": "CONTENT",
                                                 "autofocus": false,
                                                 "mode": "text/x-sql",
                                                 "readOnly": true,
@@ -1144,7 +1153,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                             },
                                             "editor": {
                                                 "type": "codeEdit",
-                                                "field": "SQL_CONTENT",
+                                                "field": "CONTENT",
                                                 "mode": "text/x-sql",
                                                 "placeholder": "请输入",
                                                 "autofocus": true,
@@ -1194,7 +1203,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     "ajaxConfig": [
                                         {
                                             "id": "loadform",
-                                            "url": "td/DM_SQL/query",
+                                            "url": "td/DM_RESOURCE/query",
                                             "urlType": "inner",
                                             "ajaxType": "get",
                                             "params": [
@@ -2017,7 +2026,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                         },
                                                         {
                                                             "type": "element",
-                                                            "name": "name",
+                                                            "name": "descName",
                                                             "matchValue": "1",
                                                             "match": "eq",
                                                         }
@@ -2136,271 +2145,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         }
 
                                     ],
-                                    "ajaxConfig": [
-                                        {
-                                            "id": "add_city_1",
-                                            "url": "city/insert",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
-                                                },
-                                                {
-                                                    "name": "cityName",
-                                                    "type": "componentValue",
-                                                    "valueName": "cityName"
-                                                },
-                                                {
-                                                    "name": "zipCode",
-                                                    "type": "componentValue",
-                                                    "valueName": "zipCode"
-                                                },
-                                                {
-                                                    "name": "populationSize",
-                                                    "type": "componentValue",
-                                                    "valueName": "populationSize"
-                                                },
-                                                {
-                                                    "name": "directlyUnder",
-                                                    "type": "componentValue",
-                                                    "valueName": "directlyUnder"
-                                                },
-                                                {
-                                                    "name": "createDate",
-                                                    "type": "componentValue",
-                                                    "valueName": "createDate"
-                                                },
-                                                {
-                                                    "name": "pId",
-                                                    "type": "tempValue",
-                                                    "valueName": "_PID"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterCitySaveSuccessfully"
-                                                },
-                                                {
-                                                    "name": "validation",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterCitySaveValidation"
-                                                },
-                                                // {
-                                                //     "name": "error",
-                                                //     "senderId": "grid_sender_03"
-                                                // }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_city_1",
-                                            "url": "city/update",
-                                            "urlType": "inner",
-                                            "ajaxType": "put",
-                                            "params": [
-                                                {
-                                                    "name": "cityName",
-                                                    "type": "componentValue",
-                                                    "valueName": "cityName"
-                                                },
-                                                {
-                                                    "name": "zipCode",
-                                                    "type": "componentValue",
-                                                    "valueName": "zipCode"
-                                                },
-                                                {
-                                                    "name": "populationSize",
-                                                    "type": "componentValue",
-                                                    "valueName": "populationSize"
-                                                },
-                                                {
-                                                    "name": "directlyUnder",
-                                                    "type": "componentValue",
-                                                    "valueName": "directlyUnder"
-                                                },
-                                                {
-                                                    "name": "createDate",
-                                                    "type": "componentValue",
-                                                    "valueName": "createDate"
-                                                },
-                                                {
-                                                    "name": "pId",
-                                                    "type": "tempValue",
-                                                    "valueName": "_PID"
-                                                },
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterCityUpdateSuccessfully"
-                                                },
-                                                {
-                                                    "name": "validation",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterCityUpdateValidation"
-                                                },
-                                                {
-                                                    "name": "error",
-                                                    "senderId": "toolbar_02"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "add_cities_1",
-                                            "url": "city/insertMany",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
-                                                },
-                                                {
-                                                    "name": "cityName",
-                                                    "type": "componentValue",
-                                                    "valueName": "cityName"
-                                                },
-                                                {
-                                                    "name": "zipCode",
-                                                    "type": "componentValue",
-                                                    "valueName": "zipCode"
-                                                },
-                                                {
-                                                    "name": "populationSize",
-                                                    "type": "componentValue",
-                                                    "valueName": "populationSize"
-                                                },
-                                                {
-                                                    "name": "directlyUnder",
-                                                    "type": "componentValue",
-                                                    "valueName": "directlyUnder"
-                                                },
-                                                {
-                                                    "name": "createDate",
-                                                    "type": "componentValue",
-                                                    "valueName": "createDate"
-                                                },
-                                                {
-                                                    "name": "pId",
-                                                    "type": "tempValue",
-                                                    "valueName": "_PID"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "grid_sender_01"
-                                                },
-                                                // {
-                                                //     "name": "validation",
-                                                //     "senderId": "grid_sender_02"
-                                                // },
-                                                // {
-                                                //     "name": "error",
-                                                //     "senderId": "grid_sender_03"
-                                                // }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_cities_1",
-                                            "url": "city/updateMany",
-                                            "urlType": "inner",
-                                            "ajaxType": "put",
-                                            "params": [
-                                                {
-                                                    "name": "cityName",
-                                                    "type": "componentValue",
-                                                    "valueName": "cityName"
-                                                },
-                                                {
-                                                    "name": "zipCode",
-                                                    "type": "componentValue",
-                                                    "valueName": "zipCode"
-                                                },
-                                                {
-                                                    "name": "populationSize",
-                                                    "type": "componentValue",
-                                                    "valueName": "populationSize"
-                                                },
-                                                {
-                                                    "name": "directlyUnder",
-                                                    "type": "componentValue",
-                                                    "valueName": "directlyUnder"
-                                                },
-                                                {
-                                                    "name": "createDate",
-                                                    "type": "componentValue",
-                                                    "valueName": "createDate"
-                                                },
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
-                                                },
-                                                {
-                                                    "name": "pId",
-                                                    "type": "tempValue",
-                                                    "valueName": "_PID"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "grid_sender_01"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "city_delete_1",
-                                            "url": "city/delete",
-                                            "urlType": "inner",
-                                            "ajaxType": "delete",
-                                            "params": [
-                                                {
-                                                    "name": "ids",
-                                                    "type": "CHECKED_ROWS_ID",
-                                                    "value": "_ids"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-
-                                            ]
-                                        }
-                                    ]
+                                    "ajaxConfig": []
                                 }
                             }],
                         id: "3vlDRq",

@@ -173,15 +173,15 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   private count = 0;
   public async valueChange(v?) {
     console.log('表单静态表格数据：', v);
+    if (v) {
+      this.count++;
+    }
     if (this.count === 1) {
-
+      setTimeout(() => {
+        this.table.loadStaticData(v);
+      });
     }
 
-    setTimeout(() => {
-      this.table.loadStaticData(v);
-    });
-
-    this.count++;
 
 
     // this.addedRowsData = v;

@@ -21,7 +21,7 @@ import { LayoutPageHeader } from './layout.page-header';
     selector: ' [cnLayoutResolverDirective]'
 })
 export class CnLayoutResolverDirective extends CnComponentBase implements OnInit, OnDestroy {
-    @Input() config;
+    @Input() config: any;
     @Input() public tempData;
     @Input() public initData;
 
@@ -68,7 +68,8 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
     * 解析级联消息
     */
     private resolveRelations() {
-        if (this.config.cascade && this.config.cascade.messageSender) {
+        debugger;
+        if (this.config && this.config['cascade'] && this.config.cascade.messageSender) {
             if (!this._sender_source$) {
                 // 解析组件发送消息配置,并注册消息发送对象
                 this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
@@ -76,14 +77,14 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
             }
 
         }
-        if (this.config.cascade && this.config.cascade.messageReceiver) {
+        if (this.config && this.config.cascade && this.config.cascade.messageReceiver) {
             // 解析消息接受配置,并注册消息接收对象
             // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
             // this._receiver_subscription$ = this._receiver_source$.subscribe();
             new RelationResolver(this).resolveReceiver(this.config);
         }
 
-        this._trigger_source$ = new RelationResolver(this).resolve();
+        this.config && (this._trigger_source$ = new RelationResolver(this).resolve());
 
     }
 
