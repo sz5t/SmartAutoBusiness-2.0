@@ -62,7 +62,7 @@
     "@ngx-translate/http-loader": "^4.0.0",
     "ajv": "^6.10.2",
     "file-saver": "^2.0.2",
-    "ng-zorro-antd": "^8.3.1",
+    "ng-zorro-antd": "^8.5.2",
     "ngx-countdown": "^3.2.0",
     "ngx-tinymce": "^7.0.0",
     "ngx-ueditor": "^2.1.3",
