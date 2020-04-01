@@ -56,7 +56,7 @@ export class CfgLayoutTabsComponent implements OnInit {
       layout: {
         id: fieldIdentity,
         type: 'layout',
-        title: title,
+        title,
         rows: [],
         customlayout: [],
         container: 'rows'

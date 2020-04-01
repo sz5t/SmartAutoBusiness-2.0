@@ -119,6 +119,8 @@ import { CfgAttrAjaxConfigComponent } from './config-components/config-attribute
 import { CfgAttrCascadeComponent } from './config-components/config-attribute/cfg-attribute-item/cfg-attr-cascade/cfg-attr-cascade.component';
 import { CnDynamicLayoutResolverDirective } from './resolver/layout/dynamic-layout-resolver.directive';
 import { CnDynamicLayoutComponent } from './components/layout/cn-dynamic-layout.component';
+import { CnDynamicPageHeaderComponent } from './components/layout/cn-dynamic-page-header.component';
+import { CnFormGroupComponent } from './components/data-form/cn-form-items/cn-form-group/cn-form-group.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -233,7 +235,9 @@ const COMPONENTS = [
   CfgAttributeMasterDataComponent,
   CfgAttrAjaxConfigComponent,
   CfgAttrCascadeComponent,
-  CnDynamicLayoutComponent
+  CnDynamicLayoutComponent,
+  CnDynamicPageHeaderComponent,
+  CnFormGroupComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [

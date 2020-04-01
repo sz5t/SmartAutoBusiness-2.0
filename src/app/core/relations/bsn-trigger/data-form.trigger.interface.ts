@@ -8,6 +8,8 @@ export interface IDataFormTrigger {
     VALIDATE: string,
     EXECUTE_MODAL: string,
     VALUE_CHANGE: string,
+    LINK: string,
+    LINK_TO: string
 }
 
 /**
@@ -22,5 +24,7 @@ export const BSN_DATAGRID_TRIGGER: IDataFormTrigger = {
     REFRESH_AS_CHILD: 'REFRESH_AS_CHILD',
     VALIDATE: 'VALIDATE',
     EXECUTE_MODAL: 'EXECUTE_MODAL',
-    VALUE_CHANGE: 'VALUE_CHANGE'
+    VALUE_CHANGE: 'VALUE_CHANGE',
+    LINK: 'LINK',
+    LINK_TO: 'LINK_TO'
 }

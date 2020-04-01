@@ -1,7 +1,6 @@
 <div style=" background-color: #fff">
-
   <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
-    <div nz-row [nzGutter]="24" *ngFor="let r of layoutRowsCfg">
+    <div nz-row [nzGutter]="12" *ngFor="let r of layoutRowsCfg">
       <div nz-col [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs" [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg"
         [nzXl]="c.size.nzXl" [nzXXl]="c.size.nzXXl" *ngFor="let c of r.cols"
         [ngStyle]="{'display': c.display ? c.display : null}">
@@ -10,5 +9,10 @@
         </ng-container>
       </div>
     </div>
+
+
+    <footer-toolbar errorCollect="true">
+      <cn-toolbar style="float: right" *ngIf="config.toolbar" [config]="config.toolbar"></cn-toolbar>
+    </footer-toolbar>
   </form>
 </div>

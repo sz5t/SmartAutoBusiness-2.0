@@ -36,6 +36,11 @@ import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
                 margin-bottom: 2px;
                 font-weight: 600;
             }
+
+            .toolbarGroup {
+                margin-right:8px;
+            }
+            
         `
     ]
 })
@@ -64,6 +69,9 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     private _trigger_receiver_subscription$: Subscription;
 
     public COMPONENT_METHODS = CN_TOOLBAR_METHOD;
+    // public COMPONENT_PROPERTIES =
+
+    public OPREATION_DATA: any | any[];
 
     constructor(
         @Inject(BSN_COMPONENT_SERVICES)
@@ -75,6 +83,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     public ngOnInit() {
 
         this.toolbarConfig = this.config.toolbar;
+        this._initInnerValue();
 
         if (this.config.cascade && this.config.cascade.messageReceiver) {
             // 解析消息接受配置,并注册消息接收对象
@@ -83,6 +92,11 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             new RelationResolver(this).resolveReceiver(this.config);
         }
 
+    }
+
+    private _initInnerValue() {
+        this.tempValue = {};
+        this.initValue = {};
     }
 
     public getPermissions() {
@@ -142,10 +156,67 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         }
     }
 
+
+
+    private checkComponentProperty(btn) {
+        const checkResult = [];
+        const allCheckResult = [];
+        for (const exps of btn.beforeExecute) {
+            const valueName = exps.valueName;
+            for (const exp of exps.expression) {
+                switch (exp.type) {
+                    case 'property':
+                        const valueCompareObj = this.buildMatchObject(this.OPREATION_DATA[valueName], exp);
+                        const valueMatchResult = this.matchResolve(valueCompareObj, exp.match);
+                        allCheckResult.push(valueMatchResult);
+                        break;
+                    case 'element':
+                        const elementResult = [];
+                        for (const element of this.OPREATION_DATA[valueName]) {
+                            const elementCompareObj = this.buildMatchObject(element, exp);
+                            elementResult.push(this.matchResolve(elementCompareObj, exp.match));
+                        }
+                        const elementMatchResult = elementResult.findIndex(res => !res) < 0;
+                        allCheckResult.push(elementMatchResult);
+                }
+            }
+            checkResult.push(allCheckResult.findIndex(res => !res) < 0);
+        }
+        return checkResult.findIndex(res => !res) < 0;
+
+    }
+
     public action(btn, targetViewId) {
+
         setTimeout(_ => {
             this.toolbarsIsLoading[btn.id] = false;
         }, 150);
+
+        if (Array.isArray(btn.beforeExecute) && btn.beforeExecute.length > 0) {
+            const res = this.checkComponentProperty(btn);
+            if (!res) {
+                return false;
+            }
+        }
+        // 判断当前按钮操作,是否需要提前准备操作数据
+        // isHandleData属性标识当前按钮是否协同数据一起操作
+        // debugger;
+        // if (btn.isHandleData && Array.isArray(btn.execute.params) && btn.execute.params.length > 0) {
+
+        //     // 获取initValue或者tempValue内的数据,判断是否存在可编辑的数据对象或者集合
+        //     // 如果存在则可继续执行,如果不存在则无法继续执行
+        //     btn.execute.params.forEach(param => {
+        //         const paramObj = this.tempValue[param['name']];
+        //         if (paramObj && Array.isArray(paramObj) && paramObj.length === 0) {
+        //             isContinue = false;
+        //         } else if (!paramObj) {
+        //             isContinue = false;
+        //         }
+        //     });
+        //     if (!isContinue) {
+        //         return false;
+        //     }
+        // }
 
         if (!this.toolbarsIsLoading[btn.id]) {
             // 根据触发类型发送不同类型的具体消息内容
@@ -167,12 +238,17 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                         break;
                 }
             }
-            const state = '';
 
+            const state = '';
             const btnResolver = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
             btnResolver.toolbarAction(btn, targetViewId);
             this.toolbarsIsLoading[btn.id] = true;
         }
+    }
+
+    public setOperationData(option) {
+        console.log("toolbar -setOperation tempValue", this.tempValue, option);
+        this.OPREATION_DATA = option;
     }
 
     public stateToText(option) {
@@ -216,6 +292,66 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         // 释放触发器对象
         if (this._trigger_receiver_subscription$) {
             this._trigger_receiver_subscription$.unsubscribe();
+        }
+    }
+
+    private buildMatchObject(componentValue, expCfg) {
+        let value;
+        if (expCfg.name) {
+            value = componentValue[expCfg.name];
+        } else {  // 读取自身数据
+            value = componentValue;
+        }
+        const matchValue = expCfg.matchValue;
+        const matchValueFrom = expCfg.matchValueFrom;
+        const matchValueTo = expCfg.matchValueTo;
+        return {
+            'value': value,
+            'matchValue': matchValue,
+            'matchValueFrom': matchValueFrom,
+            'matchValueTo': matchValueTo
+        }
+    }
+
+
+    private matchResolve(compareValue, expression) {
+        switch (expression) {
+            case 'eq': // =
+                return compareValue.value === compareValue.matchValue;
+            case 'neq': // !=
+                return compareValue.value !== compareValue.matchValue;
+            case 'ctn': // like
+                return compareValue.matchValue.indexOf(compareValue.value) > 0;
+            case 'nctn': // not like
+                return compareValue.matchValue.indexOf(compareValue.value) <= 0;
+            case 'in': // in  如果是input 是这样取值，其他则是多选取值
+                let in_result = true;
+                if (Array.isArray(compareValue.matchValue) && compareValue.matchValue.length > 0) {
+                    in_result = compareValue.matchValue.findIndex(compareValue.value) > 0;
+                }
+                return in_result;
+            case 'nin': // not in  如果是input 是这样取值，其他则是多选取值
+                let nin_result = true;
+                if (Array.isArray(compareValue.matchValue) && compareValue.matchValue.length > 0) {
+                    nin_result = compareValue.matchValue.findIndex(compareValue.value) <= 0;
+                }
+                return nin_result;
+            case 'btn': // between
+                return (compareValue.matchValueFrom <= compareValue.value)
+                    && (compareValue.matchValueTo >= compareValue.value);
+            case 'ge': // >=
+                return compareValue.value >= compareValue.matchValue;
+            case 'gt': // >
+                return compareValue.value > compareValue.matchValue;
+            case 'le': // <=
+                return compareValue.value <= compareValue.matchValue;
+            case 'lt': // <
+                return compareValue.value < compareValue.matchValue;
+            default:
+            case 'regexp': // 正在表达式匹配
+                const regexp = new RegExp(compareValue.matchValue);
+                return regexp.test(compareValue.value);
+
         }
     }
 }

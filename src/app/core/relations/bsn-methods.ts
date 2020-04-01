@@ -25,7 +25,8 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     CONFIRM: 'showConfirm',
     CHECKED_ITEMS_IDS_CONFIRM: "showCheckedItemsIdsConfirm",
     MESSAGE: 'showMessage',
-    
+    DATA_CHECKED_STATUS_CHANGE: 'dataCheckedStatusChange',
+
 
 
     // behavior
@@ -42,7 +43,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     LOAD_BY_FILTER: 'loadByFilter',
     LOAD_REFRESH_DATA: 'loadRefreshData',
 
-    
+
     // link
     LINK: 'link',
     LINK_TO: 'linkTo',
@@ -63,5 +64,6 @@ export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
     STATE_TO_EDIT: 'stateToEdit',
     EXECUTE_NONE: 'executeNone',
     EXECUTE_NONE_EDIT: 'executeNoneEdit',
+    SET_OPERATION_DATA: 'setOperationData',
     EXECUTE: 'execute'
 }

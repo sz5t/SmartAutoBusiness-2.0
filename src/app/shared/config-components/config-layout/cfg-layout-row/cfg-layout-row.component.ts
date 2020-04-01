@@ -38,7 +38,7 @@ export class CfgLayoutRowComponent implements OnInit {
       col: 'cc',
       type: 'col',
       titlestate:1,
-      title: title,
+      title,
       span: 24,
       container:'',
       size: {

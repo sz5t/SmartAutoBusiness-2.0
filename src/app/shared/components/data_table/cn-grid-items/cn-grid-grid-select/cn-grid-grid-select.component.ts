@@ -106,35 +106,35 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
     this.visible = false;
   }
 
-  private _onFocus() {
+  public _onFocus() {
     // console.log('_onFocus');
     // if (!this._focus)
     //   this._focus = true;
 
   }
-  private _onBlur() {
+  public _onBlur() {
     // console.log('_onBlur');
     // if (this._focus)
     //   this._focus = false;
   }
-  private _onMouseover() {
+  public _onMouseover() {
     setTimeout(() => {
       if (!this._ifocus)
         this._focus = true;
     }, 50);
   }
-  private _onMouseout() {
+  public _onMouseout() {
 
     setTimeout(() => {
       if (!this._ifocus)
         this._focus = false;
     }, 50);
   }
-  private _ionMouseover() {
+  public _ionMouseover() {
     if (!this._ifocus)
       this._ifocus = true;
   }
-  private _ionMouseout() {
+  public _ionMouseout() {
     if (this._ifocus)
       this._ifocus = false;
   }

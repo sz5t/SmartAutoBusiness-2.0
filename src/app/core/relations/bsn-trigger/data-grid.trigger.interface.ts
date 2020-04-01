@@ -23,6 +23,7 @@ export interface IDataGridTrigger {
     CHECKED_ITEMS_IDS_CONFIRM: string,
     MESSAGE: string,
     LOAD_REFRESH_DATA: string,
+    DATA_CHECKED_STATUS_CHANGE: string,
 
     REFRESH: string,
     HIDDEN: string,
@@ -78,6 +79,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     CHECKED_ITEMS_IDS_CONFIRM: 'CHECKED_ITEMS_IDS_CONFIRM',
     MESSAGE: 'MESSAGE',
     LOAD_REFRESH_DATA: 'LOAD_REFRESH_DATA',
+    DATA_CHECKED_STATUS_CHANGE: 'DATA_CHECKED_STATUS_CHANGE',
 
 
     // behavior

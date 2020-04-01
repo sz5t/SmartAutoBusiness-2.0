@@ -2,6 +2,14 @@ import { LayoutBase, ILayout } from './layout.base';
 
 
 export class LayoutTabs extends LayoutBase implements ILayout {
+
+    private _tabType: string;
+    public get tabType(): string {
+        return this._tabType;
+    }
+    public set tabType(value: string) {
+        this._tabType = value;
+    }
     private _tabContent: LayoutTab[];
     public get tabContent(): LayoutTab[] {
         return this._tabContent;

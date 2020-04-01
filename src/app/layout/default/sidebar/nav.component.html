@@ -82,7 +82,7 @@
     </ul>
   </li>
 </ul> -->
-<ul nz-menu nzMode="inline" [nzInlineCollapsed]="layoutCollapsed">
+<!-- <ul nz-menu nzMode="inline" [nzInlineCollapsed]="layoutCollapsed">
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: list }"></ng-container>
   <ng-template #menuTpl let-menus>
     <ng-container *ngFor="let menu of menus">
@@ -105,6 +105,49 @@
           </span>
         </li>
       </ng-template>
+    </ng-container>
+  </ng-template>
+</ul> -->
+
+
+<ul nz-menu nzMode="vertical" [nzInlineCollapsed]="layoutCollapsed">
+  <ng-container *ngTemplateOutlet="menuTemplate; context: { $implicit: list }"></ng-container>
+  <ng-template #menuTemplate let-menus>
+    <ng-container *ngFor="let menu of menus">
+      <li nz-submenu nz-popover *ngIf="menu.status === 2" [nzPopoverContent]="contentTemplate"
+        nzPopoverPlacement="right" [nzTitle]="titleTemplate" [nzPopoverTitle]="false" [nzIcon]="menu.icon.value">
+        <ng-template #titleTemplate>
+          <span style="font-size:14px;">{{menu.text}}</span>
+        </ng-template>
+        <ng-template #contentTemplate>
+          <div nz-row [nzGutter]="16">
+            <div *ngFor="let group of menu.children" nz-col [nzSpan]="menu.children.length > 1 ? 12 : 24">
+              <nz-card *ngIf="group.status === 2" [nzBodyStyle]="{'width': '200px' }" [nzTitle]="ctitle"
+                nzBordered="false">
+                <!-- <article nz-typography>
+                  <ul>
+                    <li (click)="onClick(link)" *ngFor="let link of group.children">
+                      <a style="display: block"><span nz-text nzType="secondary">{{link.text}}</span></a>
+                    </li>
+                  </ul>
+                </article> -->
+                <nz-list [nzDataSource]="group.children" [nzRenderItem]="renderItemTpl" nzSize="small" nzSplit="false">
+                  <ng-template #renderItemTpl let-item>
+                    <nz-list-item *ngIf="item.status === 2" (click)="onClick(item)">
+                      <a style="display: block"><span nz-text nzType="secondary"> {{ item.text }}</span></a>
+                    </nz-list-item>
+                  </ng-template>
+
+                </nz-list>
+
+                <ng-template #ctitle>
+                  <i *ngIf="group.icon" nz-icon [nzType]="group.icon.value"></i> {{group.text}}
+                </ng-template>
+              </nz-card>
+            </div>
+          </div>
+        </ng-template>
+      </li>
     </ng-container>
   </ng-template>
 </ul>

@@ -329,13 +329,12 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
 
     this.FORM_VALID = this.validateForm.valid;
-
+    return this.validateForm.valid;
   }
   /**
    * load 自加载
    */
   public load() {
-    console.log('======>load', this.tempValue);
     const url = this.config.loadingConfig['ajaxConfig'].url;
     const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
     const params = {
@@ -679,6 +678,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       if (v['builtinConfig'].event === 'formStateChange') {
         this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'text');
       }
+    } else {
+      this.formStateChange('text');
     }
     // this.validateForm.setValue(this.validateForm.value);
     this.load();
@@ -693,49 +694,53 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * @param Config 
    */
   public async execute(execConfig) {
-
-    this.validate(); // 这个方法通过配置来调用
+    const valid = this.validate(); // 这个方法通过配置来调用
     console.log('  this.FORM_VALID', this.FORM_VALID);
     console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
     // 构建业务对象
     // 执行异步操作
     // this.componentService.apiService.doPost();
-    const url = execConfig.ajaxConfig.url;
-    const params = this.buildParameters(execConfig.ajaxConfig.params);
-    console.log(this.config.id + '-------------执行sql params:', params);
-    const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
+    if (valid) {
+      const url = execConfig.ajaxConfig.url;
+      const params = this.buildParameters(execConfig.ajaxConfig.params);
+      console.log(this.config.id + '-------------执行sql params:', params);
+      const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
 
 
-    // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
-    this._sendDataSuccessMessage(response, execConfig.ajaxConfig.result);
+      // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+      this._sendDataSuccessMessage(response, execConfig.ajaxConfig.result);
 
-    // 处理validation结果
-    const validationResult = this._sendDataValidationMessage(response, execConfig.ajaxConfig.result);
+      // 处理validation结果
+      const validationResult = this._sendDataValidationMessage(response, execConfig.ajaxConfig.result);
 
-    // 处理error结果
-    const errorResult = this._sendDataErrorMessage(response, execConfig.ajaxConfig.result);
+      // 处理error结果
+      const errorResult = this._sendDataErrorMessage(response, execConfig.ajaxConfig.result);
 
-    return validationResult && errorResult;
+      return validationResult && errorResult;
+    }
+
 
   }
 
 
 
   public async executeModal(execConfig) {
-
-    this.validate(); // 这个方法通过配置来调用
+    const valid = this.validate(); // 这个方法通过配置来调用
     console.log('  this.FORM_VALID', this.FORM_VALID);
     console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
-    // 构建业务对象
-    // 执行异步操作
-    // this.componentService.apiService.doPost();
+    if (valid) {
+      // 构建业务对象
+      // 执行异步操作
+      // this.componentService.apiService.doPost();
 
-    const url = execConfig.ajaxConfig.url;
-    const params = this.buildParameters(execConfig.ajaxConfig.params);
-    console.log(this.config.id + '-------------执行sql params:', params);
-    const back = false;
-    const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
-    return response;
+      const url = execConfig.ajaxConfig.url;
+      const params = this.buildParameters(execConfig.ajaxConfig.params);
+      console.log(this.config.id + '-------------执行sql params:', params);
+      const back = false;
+      const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
+      return response;
+    }
+
   }
 
   private _sendDataSuccessMessage(response, resultCfg): boolean {
@@ -863,6 +868,41 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     });
 
 
+  /**
+   * 
+   * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
+   */
+  public link(option) {
+    debugger;
+    let url;
+    let params;
+    if (option && option.linkConfig) {
+      if (option.linkConfig.link) {
+        url = option.linkConfig.link;
+      }
+
+      if (option.linkConfig.params && Array.isArray(option.linkConfig.params)) {
+        params = this.buildParameters(option.linkConfig.params, option.data.originData);
+        url = `${url}/${params['ID']}`;
+      }
+
+      if (url && params) {
+        this.componentService.router.navigate([url], { queryParams: { ...params } });
+      }
+      else if (url) {
+        this.componentService.router.navigate([url]);
+      }
+    } else {
+      console.log('error');
+    }
+    // this.componentService.router.navigate([option.link], { queryParams: { ...option.data.originData } });
+    // this.componentService.activeRoute
+    // this.router.navigate(['../home'],{relativeTo:this.route});
+  }
+
+  public linkTo(option) {
+
+  }
 
   // 分组属性表单=》动态读取属性，分布提交
   // 根据属性生成-》折叠+表格+扩展页面=>组合属性

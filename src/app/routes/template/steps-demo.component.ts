@@ -3752,7 +3752,7 @@ export class StepsDemoComponent extends CnComponentBase implements OnInit {
                                                         "ajaxConfig": [
                                                             {
                                                                 "id": "loadform",
-                                                                "url": "td/SMT_BASE_COMPONENT/query",
+                                                                "url": "resource/SMT_BASE_COMPONENT/query",
                                                                 "urlType": "inner",
                                                                 "ajaxType": "get",
                                                                 "params": [
@@ -4556,7 +4556,7 @@ export class StepsDemoComponent extends CnComponentBase implements OnInit {
                             "ajaxConfig": [
                                 {
                                     "id": "loadingData",
-                                    "url": "sd/COMPONENT_TREE_BASE_DATA/query",
+                                    "url": "resource/COMPONENT_TREE_BASE_DATA/query",
                                     "method": "get",
                                     "params": [
                                         {
@@ -6071,7 +6071,7 @@ export class StepsDemoComponent extends CnComponentBase implements OnInit {
                                                         "ajaxConfig": [
                                                             {
                                                                 "id": "loadform",
-                                                                "url": "td/SMT_BASE_COMPONENT/query",
+                                                                "url": "resource/SMT_BASE_COMPONENT/query",
                                                                 "urlType": "inner",
                                                                 "ajaxType": "get",
                                                                 "params": [
@@ -6875,7 +6875,7 @@ export class StepsDemoComponent extends CnComponentBase implements OnInit {
                             "ajaxConfig": [
                                 {
                                     "id": "loadingData",
-                                    "url": "sd/COMPONENT_TREE_BASE_DATA/query",
+                                    "url": "resource/COMPONENT_TREE_BASE_DATA/query",
                                     "method": "get",
                                     "params": [
                                         {

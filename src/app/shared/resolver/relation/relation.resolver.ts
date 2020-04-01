@@ -379,32 +379,48 @@ export class ComponentSenderResolver {
         return this._componentInstance.buildParameters(paramsCfg, data, isArray);
     }
 
+    /**
+     * 条件验证器
+     * 判断当前的操作是否能够被执行
+     * @param condCfg 条件配置
+     */
     private conditionValidator(condCfg): boolean {
         if (!condCfg) {
             return true;
         }
         const result = [];
+        // 根据状态配置进行判断
         for (const cfg of condCfg.state) {
             switch (cfg.type) {
-                case 'component':
+                case 'component':  // 根据组件属性判断
                     const componentResult = this.checkComponentProperty(cfg);
+                    // 将判断后的结果加入到数组当中
                     result.push(componentResult);
                     break;
             }
         }
+        // 根据数组中所有的返回结果,判断最终是否能够继续执行操作
         return result.findIndex(res => !res) < 0;
     }
 
+    /**
+     * 验证组件属性
+     * @param expCfg
+     * 
+     * 目前组件属性的验证属于一个大类别的验证范畴,该验证模式还可以继续进行扩展,以方便后续系统对于数据验证方面的各种要求 
+     */
     private checkComponentProperty(expCfg) {
         // 判断取值的类型
         const allCheckResult = [];
         switch (expCfg.type) {
-            case 'component':
+            case 'component': // 进行组件内部属性的判断
                 const componentValue = this._componentInstance[this._componentInstance.COMPONENT_PROPERTY[expCfg.valueName]];
                 for (const exp of expCfg.expression) {
                     switch (exp.type) {
-                        case 'property':
+                        case 'property': // 属性判断,通过获取当前组件中的属性和属性值,与配置条件相比较进行验证
+                            // 构建比较对象
                             const valueCompareObj = this.buildMatchObject(componentValue, exp);
+                            // 验证数据
                             const valueMatchResult = this.matchResolve(valueCompareObj, exp.match);
                             allCheckResult.push(valueMatchResult);
                             break;
@@ -423,7 +439,13 @@ export class ComponentSenderResolver {
         return allCheckResult.findIndex(res => !res) < 0;
     }
 
+    /**
+     * 构建验证对象
+     * @param componentValue 组件数据
+     * @param expCfg 配置数据
+     */
     private buildMatchObject(componentValue, expCfg) {
+        // 
         const value = componentValue[expCfg.name];
         const matchValue = expCfg.matchValue;
         const matchValueFrom = expCfg.matchValueFrom;
@@ -437,6 +459,13 @@ export class ComponentSenderResolver {
     }
 
 
+    /**
+     * 表单式验证
+     * 通过表达式的方式能够形成一系列的验证规则,有效的快速尽力验证逻辑
+     * 目前表达式给予基本的数学逻辑验证,业务规则等其他方面的验证,有待进一步研发
+     * @param compareValue 
+     * @param expression 
+     */
     private matchResolve(compareValue, expression) {
         switch (expression) {
             case 'eq': // =
@@ -500,7 +529,6 @@ export class ReceiverResolver {
                     receiverCfg.map(cfg => {
                         // 判断发送组件与接受组件是否一致
                         if (data.viewId === cfg.senderId) {
-                            console.log('receiver data:', data);
                             // 判断发送触发器与接受触发起是否一致
                             // new TriggerResolver(
                             //     data,
@@ -535,6 +563,7 @@ export class ReceiverResolver {
                             }
                         }
                     }
+                    console.log('receiver data:', data);
                     new TriggerResolver(data, this._componentInstance).resolve();
                 }
             }

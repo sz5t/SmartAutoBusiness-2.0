@@ -33,8 +33,7 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
   }
 
   ngOnInit() {
-    this._route.params.subscribe(params => {
-
+    this._route.params.subscribe((params: any) => {
       if (params.name) {
         this.componentService.apiService.post('sd/B_P_C_CONFIG_PAGE_ALL/procedure', { "PageId": params.name }).subscribe(response => {
           if (response.data._procedure_resultset_1[0]['W'] === "") {
@@ -49,13 +48,12 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
                 if (pageJson[params.name]) {
                   this.config = pageJson[params.name]['layoutJson'];
                   const componentJson = pageJson[params.name]['componentsJson']
-                  debugger;
                   if (Array.isArray(componentJson) && componentJson.length > 0) {
                     componentJson.forEach(json => {
                       this.componentService.cacheService.set(json['id'], json);
                     });
                   }
-                  this.buildLayout()
+                  this.buildLayout(params.id);
                 } else {
                   // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
                   this.componentService.cacheService.set(key, pageJson[key]);
@@ -109,7 +107,7 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
 
   }
 
-  private buildLayout() {
+  private buildLayout(dataKey) {
     // console.log('buildLayout Receive message --', this.initValue, this.tempValue);
     const cmpt = this._resolver.resolveComponentFactory<any>(
       CnDynamicLayoutComponent
@@ -117,6 +115,9 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
     this._container.clear();
     this._layoutObj = this._container.createComponent(cmpt);
     this._layoutObj.instance.layoutObj = this.config;
+    if (dataKey) {
+      this._layoutObj.instance.initData = { ID: dataKey };
+    }
   }
 
 }

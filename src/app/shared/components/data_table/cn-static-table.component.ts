@@ -264,6 +264,7 @@ export class CnStaticTableComponent extends CnComponentBase
      */
     private _buildColumns(columns) {
         if (Array.isArray(columns) && columns.length > 0) {
+            const colIndex = columns.filter(item => item.type === 'index');
             const colObjs = columns.filter(item => item.type === 'field');
             const actionCfgs = columns.filter(item => item.type === 'action');
 
@@ -278,7 +279,6 @@ export class CnStaticTableComponent extends CnComponentBase
                     if (col.editor.expandConfig) {
                         col.editor['expandConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.expandConfig.id];
                     }
-
                 }
             });
 
@@ -296,6 +296,10 @@ export class CnStaticTableComponent extends CnComponentBase
                     }
 
                 })
+            }
+
+            if (colIndex && colIndex.length > 0) {
+                this.tableColumns.push(...colIndex);
             }
 
             if (colObjs && colObjs.length > 0) {
@@ -332,7 +336,6 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     public loadStaticData(data) {
-        console.log('-----------------ddddddddd', data);
         this._initComponentData();
         if (data && Array.isArray(data) && data.length > 0) {
 
@@ -359,12 +362,22 @@ export class CnStaticTableComponent extends CnComponentBase
                 // formCascade
                 this.formCascade[d[this.KEY_ID]] = {};
 
+                for (const v in d) {
+                    if (d.hasOwnProperty(v)) {
+                        const rItem = { id: d[this.KEY_ID], name: v, value: d[v] };
+                        this.columnSummary(rItem);
+                    }
+
+                }
+
             });
             setTimeout(() => {
                 this.dataList = data;
             })
             this.ROWS_EDITED = [...data];
             this.total = data.length;
+
+
             // 更新
             // this.dataCheckedStatusChange();
             // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
@@ -590,7 +603,12 @@ export class CnStaticTableComponent extends CnComponentBase
         // 创建数据原型,并且初始化对象状态为 new;
         const newData = { "$state$": "insert" };
         this.config.columns.filter(c => c.type !== 'action').map(col => {
-            newData[col.field] = null
+            if (col.type === 'index') {
+                newData[col.field] = this.dataList.length + 1;
+            } else {
+                newData[col.field] = null
+            }
+
         });
         return newData;
     }
@@ -602,7 +620,8 @@ export class CnStaticTableComponent extends CnComponentBase
         newData[this.KEY_ID] = newId;
 
         // 新增数据加入原始列表,才能够动态新增一行编辑数据
-        this.dataList = [newData, ...this.dataList];
+        this.dataList = [...this.dataList, newData];
+        this.total = this.dataList.length;
 
         // 组装状态数据
         this.mapOfDataState[newId] = {
@@ -689,6 +708,18 @@ export class CnStaticTableComponent extends CnComponentBase
         this.dataList = this.dataList.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
         this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
         delete this.mapOfDataState[item[this.KEY_ID]];
+
+        for (const v in item) {
+            if (item.hasOwnProperty(v)) {
+                const rItem = { id: item[this.KEY_ID], name: v, value: item[v] };
+                this.columnSummary(rItem);
+            }
+
+        }
+
+        // 重新计算数据总数
+        this.total = this.dataList.length;
+
     }
 
     public cancelEditRows(option) {
@@ -1454,6 +1485,10 @@ export class CnStaticTableComponent extends CnComponentBase
 
 
     formCascade = {};
+    /**
+     * 
+     * @param v {id, name, value, count}
+     */
     public valueChange(v?) {
         console.log('行返回', v);
         this.mapOfDataState[v.id]['data'][v.name] = v.value;
@@ -1565,9 +1600,72 @@ export class CnStaticTableComponent extends CnComponentBase
                 });
             });
 
+        this.columnSummary(v);
+
+
         this.updateValue.emit(this.dataList);
 
     }
+
+
+    public columnSummary(value) {
+        this.tableColumns.forEach(col => {
+            if (value.name === col.field && col.summary) {
+                switch (col.summary.type) {
+                    case 'sum':
+                        this.tempValue[col.summary.name] = this.colSum(value.name);
+                        break;
+                    case 'avg':
+                        this.tempValue[col.summary.name] = this.colAvg(value.name).toFixed(col.summary.fixed ? col.summary.fixed : 2);
+                        break;
+                    case 'max':
+                        this.tempValue[col.summary.name] = this.colMax(value.name);
+                        break;
+                    case 'min':
+                        this.tempValue[col.summary.name] = this.colMin(value.name);
+                        break;
+                }
+            }
+        });
+    }
+
+    private colSum(colName) {
+        let sum = 0;
+        this.dataList.forEach(d => {
+            if (d[colName]) {
+                const val = d[colName];
+                sum = sum + Number(val);
+            }
+        })
+        return sum;
+    }
+
+    private colAvg(colName) {
+        let sum = 0;
+        if (this.dataList.length > 0) {
+            this.dataList.forEach(d => {
+                if (d[colName]) {
+                    const val = d[colName];
+                    sum = sum + Number(val);
+                }
+            });
+            return Number(sum / this.dataList.length);
+        } else {
+            sum = 0;
+            return sum;
+        }
+    }
+
+    private colMax(colName) {
+
+    }
+
+    private colMin(colName) {
+
+    }
+
+
+
 
 
 }

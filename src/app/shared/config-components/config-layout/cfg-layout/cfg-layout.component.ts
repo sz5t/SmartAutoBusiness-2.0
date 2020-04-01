@@ -41,7 +41,7 @@ export class CfgLayoutComponent implements OnInit {
         this.config = {
           id: fieldIdentity,
           type: 'layout',
-          title: title,
+          title,
           container: 'rows',
           rows: this.rows,
           customlayout: this.customlayout

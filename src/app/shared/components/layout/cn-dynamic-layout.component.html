@@ -25,11 +25,34 @@
           </ng-container>
 
 
-          <nz-card *ngSwitchCase="'component'" [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
-            [nzTitle]="c.title ? c.title : false">
+          <!-- <nz-card *ngSwitchCase="'component'" [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
+            [nzTitle]="c.title ? c.title : false" [nzActions]="[actions]">
             <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
               [initData]="initData"> </ng-container>
+            <ng-template #actions>
+              123
+              <cn-toolbar style="float: right" *ngIf="c.toolbar" [config]="c.toolbar"></cn-toolbar>
+              <div class="clearfix"></div>
+            </ng-template>
+          </nz-card> -->
+
+          <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
+            [nzTitle]="c.header ? titleTmpl : false">
+            <ng-template #titleTmpl>
+              <span><i nz-icon spin style="font-size:16px" [nzType]="c.header.icon" *ngIf="c.header.icon"></i>
+                {{c.header.title}}</span>
+              <span style="float:right">
+                <ng-container cnComponentResolverDirective *ngIf="c.header.toolbar" [config]="c.header.toolbar"
+                  [tempData]="tempData" [initData]="initData">
+                </ng-container>
+              </span>
+              <div class="clearfix"></div>
+            </ng-template>
+            <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
+              [initData]="initData">
+            </ng-container>
           </nz-card>
+
           <ng-container *ngSwitchCase="'rows'" CnDynamicLayoutResolverDirective [config]="c" [tempData]="tempData"
             [initData]="initData">
           </ng-container>
@@ -39,6 +62,11 @@
           </nz-card> -->
         </div>
       </div>
+    </ng-container>
+
+    <ng-container *ngIf="layoutObj.pageHeader" CnDynamicLayoutResolverDirective [config]="layoutObj"
+      [initData]="initData" [tempData]="tempData">
+
     </ng-container>
   </nz-content>
 </nz-layout>

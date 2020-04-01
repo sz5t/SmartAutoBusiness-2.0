@@ -15,7 +15,10 @@ export interface ParametersResolverModel {
   addedRows?: any[],
   editedRows?: any[],
   validation?: any[],
-  checkedItem?: any
+  checkedItem?: any,
+  checkedRow?: any[],
+  selectedRow?: any,
+  outputValue?: any
 }
 
 export interface IParameter {
@@ -147,6 +150,11 @@ export class ParameterResolver {
   public static validation(param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new ValidationParameter(param, model).buildParameter();
+  }
+
+  public static outputValue(param, model) {
+    // tslint:disable-next-line: no-use-before-declare
+    return new OutputValueParameter(param, model).buildParameter();
   }
 }
 
@@ -576,20 +584,22 @@ class CheckedItemParameter extends BaseParameter implements IParameter {
  * 构建勾选表格行数据参数
  */
 class CheckedRowParameter extends BaseParameter implements IParameter {
-  private _result: any;
+
+  private _result: any[];
   constructor(private _param, private _model) {
     super();
   }
   public buildParameter() {
     if (this._model.item) {
-      if (this._param.conditionType) {
-        this._result = this.getParameter(
-          this._param.conditionType,
-          this._model.item[this._param.valueName],
-        );
-      } else {
-        this._result = this._model.item[this._param.valueName];
-      }
+      this._result = this._model.checkedRow;
+      // if (this._param.conditionType) {
+      //   this._result = this.getParameter(
+      //     this._param.conditionType,
+      //     this._model.item[this._param.valueName],
+      //   );
+      // } else {
+      //   this._result = this._model.item[this._param.valueName];
+      // }
     }
     return this._result;
   }
@@ -734,4 +744,20 @@ class RouterParameter extends BaseParameter implements IParameter {
   }
 }
 
+
+/**
+ * 构建存储过程返回参数
+ */
+class OutputValueParameter extends BaseParameter implements IParameter {
+  private _result: any;
+  constructor(private _param, private _model) {
+    super();
+  }
+  public buildParameter() {
+    if (this._model.outputValue) {
+      this._result = this._model.outputValue[this._param.valueName];
+    }
+    return this._result;
+  }
+}
 

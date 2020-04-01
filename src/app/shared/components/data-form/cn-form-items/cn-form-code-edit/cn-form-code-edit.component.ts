@@ -5,12 +5,12 @@ declare let CodeMirror: any;
 @Component({
   selector: 'cn-code-edit,[cn-code-edit]',
   templateUrl: './cn-form-code-edit.component.html',
-  encapsulation: ViewEncapsulation.Native,
+  encapsulation: ViewEncapsulation.ShadowDom,
   styleUrls: ['./cn-form-code-edit.component.css']
 })
 // encapsulation: ViewEncapsulation.None Native Emulated ,
 export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
-  @ViewChild('CodeMirror', { static: true }) codeEditor: ElementRef;
+  @ViewChild('CodeMirror', { static: false }) codeEditor: ElementRef;
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
@@ -40,29 +40,29 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     setTimeout(() => {
       this.editor = CodeMirror.fromTextArea(this.codeEditor.nativeElement, {
-      //   mode: this.config.mode,
-      //   readOnly: this.config.readOnly,
-      //   styleActiveLine: true,
-      //   highlightFormatting: true,
-      //   indentWithTabs: true,
-      //   smartIndent: true,
-      //   lineNumbers: true,
-      //   matchBrackets: true,
-      //   autofocus: this.config.autofocus,
-      //   //  lineWrapping: true, // 代码折叠
-      //     // 代码折叠
-      // // lineWrapping: true,
-      // foldGutter: true,
-      //     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
-      //   extraKeys: { 'Ctrl-Space': 'autocomplete' },
-      //   hintOptions: {
-      //     tables: {
-      //       users: { name: null, score: null, birthDate: null },
-      //       countries: { name: null, population: null, size: null }
-      //     }
-      //   }
+        //   mode: this.config.mode,
+        //   readOnly: this.config.readOnly,
+        //   styleActiveLine: true,
+        //   highlightFormatting: true,
+        //   indentWithTabs: true,
+        //   smartIndent: true,
+        //   lineNumbers: true,
+        //   matchBrackets: true,
+        //   autofocus: this.config.autofocus,
+        //   //  lineWrapping: true, // 代码折叠
+        //     // 代码折叠
+        // // lineWrapping: true,
+        // foldGutter: true,
+        //     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+        //   extraKeys: { 'Ctrl-Space': 'autocomplete' },
+        //   hintOptions: {
+        //     tables: {
+        //       users: { name: null, score: null, birthDate: null },
+        //       countries: { name: null, population: null, size: null }
+        //     }
+        //   }
 
-        mode:  this.config.mode? this.config.mode:"text/javascript",//  this.config.mode ? this.config.mode : "application/json",  // text/x-sql
+        mode: this.config.mode ? this.config.mode : "text/javascript",//  this.config.mode ? this.config.mode : "application/json",  // text/x-sql
         readOnly: this.config.readOnly,
         showCursorWhenSelecting: true, // 在选择时是否显示光标，默认为false。
         //    maxHighlightLength: 1000, //  当需要高亮很长的行时，为了保持响应性能，当到达某些位置时，编辑器会直接将其他行设置为纯文本(plain text)。默认为10000，可以设置为Infinity来关闭此功能。
@@ -72,11 +72,11 @@ export class CnFormCodeEditComponent implements OnInit, AfterViewInit {
         smartIndent: true,
         lineNumbers: true,
         matchBrackets: true, // 括号匹配
-      //  lineWrapping: true, // 代码折叠
+        //  lineWrapping: true, // 代码折叠
         // 代码折叠
-  
-    // lineWrapping: true,
-    foldGutter: true,
+
+        // lineWrapping: true,
+        foldGutter: true,
         gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
 
         autofocus: true,

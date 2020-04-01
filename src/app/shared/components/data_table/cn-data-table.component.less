@@ -1,15 +1,15 @@
-@import '../../../../styles/theme.less';
+// @import '../../../../styles/theme.less';
 
 .selectedRow {
-  background-color: @primary-2;
   color: #000;
+  // background-color: @primary-2;
 }
 
 .validationError {
-  transition-delay: 100ms;
+  color: #000;
   // border: 2px solid #ff3300;
   background-color: #F2F2F2;
-  color: #000;
+  transition-delay: 100ms;
 }
 
 .validationError input {
@@ -17,32 +17,11 @@
 }
 
 .count {
-  color: @primary-color;
+  // color: @primary-color;
   font-weight: 600;
 }
 
-:ng-host {
-  ::nb-deep {
-    .table-operations {
-      margin-bottom: 8px;
-    }
-
-    .table-operations>button {
-      margin-right: 8px;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    .text-right {
-      text-align: right;
-    }
-
-    table {
-      overflow: scroll;
-    }
-
-
-  }
+.header {
+  font-weight: 600;
+  // font-size: @font-size-lg;
 }

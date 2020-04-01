@@ -152,35 +152,35 @@ export class CfgFormLayoutColComponent extends CnComponentBase implements OnInit
   }
 
 
-/**
- * open
- */
-public open() {
+  /**
+   * open
+   */
+  public open() {
 
-  this.size_isVisible = true;
+    this.size_isVisible = true;
 
-}
+  }
 
-/**
- * size_handleCancel
- */
-public size_handleCancel() {
-  this.size_isVisible = false;
-}
-/**
- * size_handleOk
- */
-public size_handleOk() {
-  this.size_isVisible = false;
-}
+  /**
+   * size_handleCancel
+   */
+  public size_handleCancel() {
+    this.size_isVisible = false;
+  }
+  /**
+   * size_handleOk
+   */
+  public size_handleOk() {
+    this.size_isVisible = false;
+  }
 
   /**
    * addRow 添加行
    */
   public addRow() {
 
-    
-    console.log('**列内添加行**',this.config);
+
+    console.log('**列内添加行**', this.config);
     if (this.config.container === '' || this.config.container === 'rows') {
       // console.log('**列内添加行**');
       this.config.container = 'rows'
@@ -203,7 +203,7 @@ public size_handleOk() {
         nzOkText: '确定',
         nzOkType: 'danger',
         nzOnOk: () => {
-         
+
           this.config.container = 'rows'
           const fieldIdentity = CommonUtils.uuID(36);
           const row = {
@@ -243,7 +243,7 @@ public size_handleOk() {
         console.log('行删除前', this.rows.length, deleteIndex);
         this.rows.splice(deleteIndex, 1);
 
-        if(this.rows.length<=0){
+        if (this.rows.length <= 0) {
           this.config.container = 'component';
         }
         //  this.cols = this.cols.slice(deleteIndex + 1);

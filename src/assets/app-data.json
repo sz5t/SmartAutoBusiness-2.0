@@ -9,42 +9,649 @@
     "email": "cipchk@qq.com"
   },
   "menu": [{
-    "text": "DEMO",
-    "i18n": "menu.demo",
-    "group": true,
-    "hideInBreadcrumb": true,
-    "level": 1,
-    "children": [{
-        "text": "布局 Demo",
-        "i18n": "menu.layout",
-        "icon": "anticon-dashboard",
+      "text": "建模",
+      "i18n": "menu.data.modeling",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "status": 2,
+      "icon": "book",
+      "children": [{
+        "text": "管理",
+        "i18n": "menu.data.modeling",
+        "group": true,
+        "hideInBreadcrumb": true,
         "level": 2,
+        "icon": "book",
+        "status": 2,
         "children": [{
-          "text": "布局 1",
-          "link": "/template/demo",
-          "i18n": "menu.layout.drop",
-          "level": 3
-        }]
-      },
-      {
-        "text": "组件 Demo",
-        "i18n": "menu.components",
-        "icon": "anticon-dashboard",
-        "level": 2,
-        "children": [{
-            "text": "表格",
-            "link": "/template/dataTableDemo",
-            "i18n": "menu.component.table",
-            "level": 3
+            "text": "数据建模",
+            "i18n": "menu.data.datamodeling",
+            "icon": "database",
+            "level": 3,
+            "status": 2,
+            "link": "/template/datamodeling"
           },
           {
-            "text": "表单",
-            "link": "/dashboard/analysis",
-            "i18n": "menu.component.form",
-            "level": 3
+            "text": "SQL建模",
+            "i18n": "menu.data.sqlmodeling",
+            "icon": "database",
+            "level": 3,
+            "status": 2,
+            "link": "/template/sqlmodeling"
+          },
+          {
+            "text": "业务建模",
+            "i18n": "menu.data.businessmodeling",
+            "icon": "database",
+            "level": 3,
+            "status": 2,
+            "link": "/template/businessmodeling"
           }
         ]
-      }
-    ]
-  }]
+      }]
+    },
+    {
+      "text": "页面管理",
+      "i18n": "menu.page.pagemanage",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "status": 2,
+      "icon": "book",
+      "children": [{
+        "text": "页面管理",
+        "i18n": "menu.page.pagemanage",
+        "group": true,
+        "status": 2,
+        "hideInBreadcrumb": true,
+        "level": 1,
+        "icon": "book",
+        "children": [{
+          "text": "页面设计",
+          "i18n": "menu.page.design",
+          "icon": "file",
+          "status": 2,
+          "level": 2,
+          "link": "/template/pageDesign"
+        }]
+      }]
+    },
+    {
+      "text": "组件库",
+      "i18n": "menu.cfg.base",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "icon": "book",
+      "status": 2,
+      "children": [{
+        "text": "组件库",
+        "i18n": "menu.cfg.base",
+        "group": true,
+        "status": 2,
+        "hideInBreadcrumb": true,
+        "level": 1,
+        "icon": "book",
+        "children": [{
+            "text": "组件管理",
+            "i18n": "menu.cfg.base.componentManager",
+            "icon": "setting",
+            "level": 2,
+            "status": 2,
+            "link": "/template/componentManager"
+          },
+          {
+            "text": "属性管理",
+            "i18n": "menu.cfg.base.innerPropertyManager",
+            "icon": "database",
+            "level": 2,
+            "status": 2,
+            "link": "/template/innerPropertyManager"
+          },
+          {
+            "text": "功能管理",
+            "i18n": "menu.cfg.base.innerMethodManager",
+            "icon": "database",
+            "level": 2,
+            "status": 2,
+            "link": "/template/innerMethodManager"
+          },
+          {
+            "text": "配置管理",
+            "i18n": "menu.cfg.base.configPropertyManager",
+            "icon": "database",
+            "level": 2,
+            "status": 2,
+            "link": "/template/configPropertyManager"
+          }
+        ]
+      }]
+    },
+    {
+      "text": "DEMO",
+      "i18n": "menu.demo",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "icon": "book",
+      "status": 2,
+      "children": [{
+          "text": "布局 Demo",
+          "i18n": "menu.layout",
+          "icon": "build",
+          "level": 2,
+          "status": 2,
+          "children": [{
+              "text": "布局 拖拽",
+              "link": "/template/cfglayoutdemo",
+              "i18n": "menu.layout.drop",
+              "level": 3,
+              "status": 2
+            },
+            {
+              "text": "表单布局 拖拽",
+              "link": "/template/cfgformdemo",
+              "i18n": "menu.layout.formdrop",
+              "status": 2,
+              "level": 3
+            },
+            {
+              "text": "布局 解析",
+              "link": "/template/demo",
+              "i18n": "menu.layout.analysis",
+              "status": 2,
+              "level": 3
+            }
+          ]
+        },
+        {
+          "text": "组件 Demo",
+          "i18n": "menu.components",
+          "icon": "appstore",
+          "level": 2,
+          "status": 2,
+          "children": [{
+              "text": "表格",
+              "link": "/template/dataTableDemo",
+              "i18n": "menu.component.table",
+              "status": 2,
+              "level": 3
+            },
+            {
+              "text": "树",
+              "link": "/template/treeDemo",
+              "i18n": "menu.component.tree",
+              "status": 2,
+              "level": 3
+            },
+            {
+              "text": "树表",
+              "link": "/template/treeTableDemo",
+              "i18n": "menu.component.treeTable",
+              "status": 2,
+              "level": 3
+            },
+            {
+              "text": "表单",
+              "link": "/dashboard/analysis",
+              "i18n": "menu.component.form",
+              "status": 2,
+              "level": 3
+            },
+            {
+              "text": "步骤",
+              "link": "/template/stepsDemo",
+              "i18n": "menu.component.steps",
+              "status": 2,
+              "level": 3
+            },
+            {
+              "text": "步骤",
+              "link": "/template/calendarDemo",
+              "i18n": "menu.component.calendar",
+              "status": 2,
+              "level": 3
+            },
+            {
+              "text": "页面测试",
+              "link": "/template/dynamic/cyuTJW5vjcYMdT7JC6ylGEX8KTFVIqzL",
+              "i18n": "menu.demo.pageTest",
+              "status": 2,
+              "level": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "text": "主导航",
+      "i18n": "menu.main",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "icon": "home",
+      "status": 2,
+      "children": [{
+          "level": 2,
+          "text": "仪表盘",
+          "i18n": "menu.dashboard",
+          "icon": "dashboard",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "仪表盘V1",
+              "link": "/dashboard/v1",
+              "status": 2,
+              "i18n": "menu.dashboard.v1"
+            },
+            {
+              "level": 3,
+              "text": "分析页",
+              "link": "/dashboard/analysis",
+              "status": 2,
+              "i18n": "menu.dashboard.analysis"
+            },
+            {
+              "level": 3,
+              "text": "监控页",
+              "link": "/dashboard/monitor",
+              "status": 2,
+              "i18n": "menu.dashboard.monitor"
+            },
+            {
+              "level": 3,
+              "text": "工作台",
+              "link": "/dashboard/workplace",
+              "status": 2,
+              "i18n": "menu.dashboard.workplace"
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "text": "小部件",
+          "i18n": "menu.widgets",
+          "link": "/widgets",
+          "icon": "tool",
+          "status": 2,
+          "badge": 2
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "text": "Alain",
+      "i18n": "menu.alain",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "icon": "star",
+      "status": 2,
+      "children": [{
+          "level": 2,
+          "text": "样式",
+          "i18n": "menu.style",
+          "icon": "block",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "Typography",
+              "link": "/style/typography",
+              "status": 2,
+              "i18n": "menu.style.typography"
+            },
+            {
+              "level": 3,
+              "text": "Grid Masonry",
+              "link": "/style/gridmasonry",
+              "status": 2,
+              "i18n": "menu.style.gridmasonry"
+            },
+            {
+              "level": 3,
+              "text": "Colors",
+              "link": "/style/colors",
+              "status": 2,
+              "i18n": "menu.style.colors"
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "text": "Delon",
+          "i18n": "menu.delon",
+          "icon": "loading",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "Dynamic Form",
+              "link": "/delon/form",
+              "status": 2,
+              "i18n": "menu.delon.form"
+            },
+            {
+              "level": 3,
+              "text": "Simple Table",
+              "link": "/delon/st",
+              "status": 2,
+              "i18n": "menu.delon.table"
+            },
+            {
+              "level": 3,
+              "text": "Util",
+              "link": "/delon/util",
+              "status": 2,
+              "i18n": "menu.delon.util",
+              "acl": "role-a"
+            },
+            {
+              "level": 3,
+              "text": "Print",
+              "link": "/delon/print",
+              "status": 2,
+              "i18n": "menu.delon.print",
+              "acl": "role-b"
+            },
+            {
+              "level": 3,
+              "text": "QR",
+              "link": "/delon/qr",
+              "status": 2,
+              "i18n": "menu.delon.qr"
+            },
+            {
+              "level": 3,
+              "text": "ACL",
+              "link": "/delon/acl",
+              "status": 2,
+              "i18n": "menu.delon.acl"
+            },
+            {
+              "level": 3,
+              "text": "Route Guard",
+              "link": "/delon/guard",
+              "status": 2,
+              "i18n": "menu.delon.guard"
+            },
+            {
+              "level": 3,
+              "text": "Cache",
+              "link": "/delon/cache",
+              "status": 2,
+              "i18n": "menu.delon.cache"
+            },
+            {
+              "level": 3,
+              "text": "Down File",
+              "link": "/delon/downfile",
+              "status": 2,
+              "i18n": "menu.delon.downfile"
+            },
+            {
+              "level": 3,
+              "text": "Xlsx",
+              "link": "/delon/xlsx",
+              "status": 2,
+              "i18n": "menu.delon.xlsx"
+            },
+            {
+              "level": 3,
+              "text": "Zip",
+              "link": "/delon/zip",
+              "status": 2,
+              "i18n": "menu.delon.zip"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "text": "Pro",
+      "i18n": "menu.pro",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "icon": "gold",
+      "status": 2,
+      "children": [{
+          "level": 2,
+          "text": "Form Page",
+          "i18n": "menu.form",
+          "link": "/pro/form",
+          "icon": "loading",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "Basic Form",
+              "link": "/pro/form/basic-form",
+              "status": 2,
+              "i18n": "menu.form.basicform"
+            },
+            {
+              "level": 3,
+              "text": "Step Form",
+              "link": "/pro/form/step-form",
+              "status": 2,
+              "i18n": "menu.form.stepform"
+            },
+            {
+              "level": 3,
+              "text": "Advanced Form",
+              "link": "/pro/form/advanced-form",
+              "status": 2,
+              "i18n": "menu.form.advancedform"
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "text": "List",
+          "i18n": "menu.list",
+          "icon": "loading",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "Table List",
+              "link": "/pro/list/table-list",
+              "status": 2,
+              "i18n": "menu.list.searchtable"
+            },
+            {
+              "level": 3,
+              "text": "Basic List",
+              "link": "/pro/list/basic-list",
+              "status": 2,
+              "i18n": "menu.list.basiclist"
+            },
+            {
+              "level": 3,
+              "text": "Card List",
+              "link": "/pro/list/card-list",
+              "status": 2,
+              "i18n": "menu.list.cardlist"
+            },
+            {
+              "level": 3,
+              "text": "Search List",
+              "i18n": "menu.list.searchlist",
+              "status": 2,
+              "children": [{
+                  "level": 4,
+                  "link": "/pro/list/articles",
+                  "status": 2,
+                  "i18n": "menu.list.searchlist.articles"
+                },
+                {
+                  "level": 4,
+                  "link": "/pro/list/projects",
+                  "status": 2,
+                  "i18n": "menu.list.searchlist.projects"
+                },
+                {
+                  "level": 4,
+                  "link": "/pro/list/applications",
+                  "status": 2,
+                  "i18n": "menu.list.searchlist.applications"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "text": "Profile",
+          "i18n": "menu.profile",
+          "icon": "loading",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "Basic",
+              "link": "/pro/profile/basic",
+              "status": 2,
+              "i18n": "menu.profile.basic"
+            },
+            {
+              "level": 3,
+              "text": "Advanced",
+              "link": "/pro/profile/advanced",
+              "status": 2,
+              "i18n": "menu.profile.advanced"
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "text": "Result",
+          "i18n": "menu.result",
+          "icon": "unordered-list",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "Success",
+              "link": "/pro/result/success",
+              "status": 2,
+              "i18n": "menu.result.success"
+            },
+            {
+              "level": 3,
+              "text": "Fail",
+              "link": "/pro/result/fail",
+              "status": 2,
+              "i18n": "menu.result.fail"
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "text": "Exception",
+          "i18n": "menu.exception",
+          "link": "/",
+          "icon": "unordered-list",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "403",
+              "link": "/exception/403",
+              "i18n": "menu.exception.not-permission",
+              "status": 2,
+              "reuse": false
+            },
+            {
+              "level": 3,
+              "text": "404",
+              "link": "/exception/404",
+              "i18n": "menu.exception.not-find",
+              "status": 2,
+              "reuse": false
+            },
+            {
+              "level": 3,
+              "text": "500",
+              "link": "/exception/500",
+              "i18n": "menu.exception.server-error",
+              "status": 2,
+              "reuse": false
+            }
+          ]
+        },
+        {
+          "level": 2,
+          "text": "Account",
+          "i18n": "menu.account",
+          "icon": "unordered-list",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "center",
+              "link": "/pro/account/center",
+              "status": 2,
+              "i18n": "menu.account.center"
+            },
+            {
+              "level": 3,
+              "text": "settings",
+              "link": "/pro/account/settings",
+              "status": 2,
+              "i18n": "menu.account.settings"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "level": 1,
+      "text": "More",
+      "i18n": "menu.more",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "icon": "menu",
+      "status": 2,
+      "children": [{
+          "level": 2,
+          "text": "Report",
+          "i18n": "menu.report",
+          "icon": "unordered-list",
+          "status": 2,
+          "children": [{
+            "level": 3,
+            "text": "Relation",
+            "link": "/data-v/relation",
+            "i18n": "menu.report.relation",
+            "status": 2,
+            "reuse": false
+          }]
+        },
+        {
+          "level": 2,
+          "text": "Extras",
+          "i18n": "menu.extras",
+          "link": "/extras",
+          "icon": "unordered-list",
+          "status": 2,
+          "children": [{
+              "level": 3,
+              "text": "Help Center",
+              "link": "/extras/helpcenter",
+              "status": 2,
+              "i18n": "menu.extras.helpcenter"
+            },
+            {
+              "level": 3,
+              "text": "Settings",
+              "link": "/extras/settings",
+              "status": 2,
+              "i18n": "menu.extras.settings"
+            },
+            {
+              "level": 3,
+              "text": "Poi",
+              "link": "/extras/poi",
+              "status": 2,
+              "i18n": "menu.extras.poi"
+            }
+          ]
+        }
+      ]
+    }
+  ]
 }

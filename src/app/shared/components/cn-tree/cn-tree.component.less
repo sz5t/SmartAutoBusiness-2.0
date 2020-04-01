@@ -1,4 +1,4 @@
-@import '../../../../styles/theme.less';
+// @import '../../../../styles/theme.less';
 
 :host ::ng-deep .ant-tree {
   overflow: hidden;
@@ -11,24 +11,24 @@
 }
 
 .custom-node {
-  cursor: pointer;
-  line-height: 24px;
-  margin-left: 4px;
   display: inline-block;
   margin: 0 -1000px;
-  padding: 0 1000px;
+  margin-left: 4px;
+  //padding: 0 1000px;
+  line-height: 24px;
+  cursor: pointer;
 }
 
 .active {
-  background-color: @primary-2;
   color: #333;
+  // background-color: @primary-2;
 }
 
 .active .file-desc,
 .active .folder-desc {
-  background: none;
   color: #222;
   font-weight: 500;
+  background: none;
 }
 
 .file-name,
@@ -38,11 +38,11 @@
 
 .file-desc,
 .folder-desc {
-  padding: 0 8px;
-  display: inline-block;
-  background: #e5e9ec;
-  color: #555;
   position: relative;
   left: 10px;
+  display: inline-block;
+  padding: 0 8px;
+  color: #555;
+  background: #e5e9ec;
   border-radius: 3px;
 }

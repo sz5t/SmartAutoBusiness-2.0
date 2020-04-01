@@ -44,7 +44,7 @@ export class CfgFormLayoutRowComponent implements OnInit {
       id: fieldIdentity,
       col: 'cc',
       type: 'col',
-      title: title,
+      title,
       span: 24,
       container: '',
       size: {

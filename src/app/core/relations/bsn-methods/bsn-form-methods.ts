@@ -10,5 +10,9 @@ export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
     REFRESH_AS_CHILD: 'load',
     VALIDATE: 'validate',
     EXECUTE_MODAL: 'executeModal',
-    VALUE_CHANGE: 'valueChange'
+    VALUE_CHANGE: 'valueChange',
+
+    // link
+    LINK: 'link',
+    LINK_TO: 'linkTo'
 }

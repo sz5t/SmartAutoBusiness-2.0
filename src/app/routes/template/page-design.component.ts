@@ -414,7 +414,7 @@ export class PageDesignComponent implements OnInit {
                                         ajaxConfig: [
                                             {
                                                 "id": "loadform",
-                                                "url": "td/SMT_SETTING_FUNC/query",
+                                                "url": "resource/SMT_SETTING_FUNC/query",
                                                 "urlType": "inner",
                                                 "ajaxType": "get",
                                                 "params": [
@@ -810,7 +810,7 @@ export class PageDesignComponent implements OnInit {
                                         ajaxConfig: [
                                             {
                                                 "id": "loadform",
-                                                "url": "td/SMT_SETTING_PAGE/query",
+                                                "url": "resource/SMT_SETTING_PAGE/query",
                                                 "urlType": "inner",
                                                 "ajaxType": "get",
                                                 "params": [
@@ -951,7 +951,7 @@ export class PageDesignComponent implements OnInit {
                             "ajaxConfig": [
                                 {
                                     "id": "tree_add_func",
-                                    "url": "td/SMT_SETTING_FUNC/insert",
+                                    "url": "resource/SMT_SETTING_FUNC/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -991,7 +991,7 @@ export class PageDesignComponent implements OnInit {
                                 },
                                 {
                                     "id": "tree_edit_func",
-                                    "url": "td/SMT_SETTING_FUNC/update",
+                                    "url": "resource/SMT_SETTING_FUNC/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -1027,7 +1027,7 @@ export class PageDesignComponent implements OnInit {
                                 },
                                 {
                                     "id": "tree_add_page",
-                                    "url": "td/SMT_SETTING_PAGE/insert",
+                                    "url": "resource/SMT_SETTING_PAGE/insert",
                                     "urlType": "inner",
                                     "ajaxType": "post",
                                     "params": [
@@ -1078,7 +1078,7 @@ export class PageDesignComponent implements OnInit {
                                 },
                                 {
                                     "id": "tree_edit_page",
-                                    "url": "td/SMT_SETTING_PAGE/update",
+                                    "url": "resource/SMT_SETTING_PAGE/update",
                                     "urlType": "inner",
                                     "ajaxType": "put",
                                     "params": [
@@ -1126,7 +1126,7 @@ export class PageDesignComponent implements OnInit {
                                 },
                                 {
                                     "id": "tree_delete",
-                                    "url": "sd/DEL_FUNC_OR_PAGE/OFFICE_SHEET",
+                                    "url": "resource/DEL_FUNC_OR_PAGE/OFFICE_SHEET",
                                     "urlType": "inner",
                                     "ajaxType": "delete",
                                     "params": [
@@ -1362,7 +1362,7 @@ export class PageDesignComponent implements OnInit {
                             "showLine": false,
                             "rootTitle": '根节点',
                             "loadingConfig": {
-                                "url": "sd/GET_FUNC_TREE/query",
+                                "url": "resource/GET_FUNC_TREE/query",
                                 "method": "get",
                                 "params": [
                                     {
@@ -1373,7 +1373,7 @@ export class PageDesignComponent implements OnInit {
                                     {
                                         "name": "_deep",
                                         "type": "value",
-                                        "value": "1"
+                                        "value": "2"
                                     },
                                     {
                                         "name": "_pcName",
@@ -1386,7 +1386,7 @@ export class PageDesignComponent implements OnInit {
                                 ]
                             },
                             "expandConfig": {
-                                "url": "sd/GET_FUNC_TREE/query",
+                                "url": "resource/GET_FUNC_TREE/query",
                                 "method": "get",
                                 "params": [
                                     {
@@ -1403,7 +1403,7 @@ export class PageDesignComponent implements OnInit {
                                     {
                                         "name": "_deep",
                                         "type": "value",
-                                        "value": "1"
+                                        "value": "2"
                                     },
                                     {
                                         "name": "_pcName",
@@ -2786,7 +2786,7 @@ export class PageDesignComponent implements OnInit {
                                                             ajaxConfig: [
                                                                 {
                                                                     "id": "loadform",
-                                                                    "url": "td/SMT_SETTING_LAYOUT/query",
+                                                                    "url": "resource/SMT_SETTING_LAYOUT/query",
                                                                     "urlType": "inner",
                                                                     "ajaxType": "get",
                                                                     "params": [
@@ -2811,7 +2811,7 @@ export class PageDesignComponent implements OnInit {
                                                         "type": "confirm",
                                                         "title": "版本JSON编辑",
                                                         "width": "100%",
-                                                        "style":{"top":"0px","padding-bottom": "0px"},
+                                                        "style": { "top": "0px", "padding-bottom": "0px" },
                                                         "cancelText": "取消",
                                                         "okText": "提交",
                                                         "form": {
@@ -2905,21 +2905,21 @@ export class PageDesignComponent implements OnInit {
                                                                     },
                                                                     Controls: [
                                                                         { id: 'layout_version_pagejson', state: "edit", hidden: false, readOnly: false }
-                                                                 
+
                                                                     ]
                                                                 },
                                                                 {
                                                                     formState: "edit",
                                                                     Controls: [
                                                                         { id: 'layout_version_pagejson', state: "edit", hidden: false, readOnly: false }
-                                                                     
+
                                                                     ]
                                                                 },
                                                                 {
                                                                     formState: "text",
                                                                     Controls: [
                                                                         { id: 'layout_version_pagejson', state: "edit", hidden: false, readOnly: false }
-                                                                     
+
                                                                     ]
                                                                 }
 
@@ -2927,7 +2927,7 @@ export class PageDesignComponent implements OnInit {
                                                             ajaxConfig: [
                                                                 {
                                                                     "id": "loadform",
-                                                                    "url": "td/SMT_SETTING_LAYOUT/query",
+                                                                    "url": "resource/SMT_SETTING_LAYOUT/query",
                                                                     "urlType": "inner",
                                                                     "ajaxType": "get",
                                                                     "params": [
@@ -2952,7 +2952,7 @@ export class PageDesignComponent implements OnInit {
                                                         "type": "confirm",
                                                         "title": "页面设置",
                                                         "width": "100%",
-                                                        "style":{"top":"0px","padding-bottom": "0px"},
+                                                        "style": { "top": "0px", "padding-bottom": "0px" },
                                                         "cancelText": "取消",
                                                         "okText": "确定",
                                                         "form": {
@@ -3081,7 +3081,7 @@ export class PageDesignComponent implements OnInit {
                                                 "ajaxConfig": [
                                                     {
                                                         "id": "form_add_layout_version",
-                                                        "url": "td/SMT_SETTING_LAYOUT/insert",
+                                                        "url": "resource/SMT_SETTING_LAYOUT/insert",
                                                         "urlType": "inner",
                                                         "ajaxType": "post",
                                                         "params": [
@@ -3133,7 +3133,7 @@ export class PageDesignComponent implements OnInit {
                                                     },
                                                     {
                                                         "id": "form_edit_layout_version",
-                                                        "url": "td/SMT_SETTING_LAYOUT/update",
+                                                        "url": "resource/SMT_SETTING_LAYOUT/update",
                                                         "urlType": "inner",
                                                         "ajaxType": "put",
                                                         "params": [
@@ -3182,7 +3182,7 @@ export class PageDesignComponent implements OnInit {
                                                     },
                                                     {
                                                         "id": "form_edit_layout_version_json",
-                                                        "url": "td/SMT_SETTING_LAYOUT/update",
+                                                        "url": "resource/SMT_SETTING_LAYOUT/update",
                                                         "urlType": "inner",
                                                         "ajaxType": "put",
                                                         "params": [
@@ -3321,7 +3321,7 @@ export class PageDesignComponent implements OnInit {
                                                                     }
                                                                 ]
                                                             },
-                                                            
+
                                                             {
                                                                 "id": "M_deleteRow",
                                                                 "text": "页面设置",
@@ -3395,7 +3395,7 @@ export class PageDesignComponent implements OnInit {
                                                 "pageSizeOptions": [10, 20, 50, 100],
                                                 "loadingOnInit": false,
                                                 "loadingConfig": {
-                                                    "url": "td/SMT_SETTING_LAYOUT/query",
+                                                    "url": "resource/SMT_SETTING_LAYOUT/query",
                                                     "method": "get",
                                                     "params": [
                                                         {
@@ -3413,10 +3413,10 @@ export class PageDesignComponent implements OnInit {
                                                         "title": "ID",
                                                         "type": "field",
                                                         "field": "ID",
-                                                        "hidden": true,
+                                                        "hidden": false,
                                                         "showFilter": false,
                                                         "showSort": false,
-                                                        "width": "50px",
+                                                        // "width": "50px",
                                                         "style": {}
                                                     },
                                                     {
@@ -3426,7 +3426,7 @@ export class PageDesignComponent implements OnInit {
                                                         "hidden": true,
                                                         "showFilter": false,
                                                         "showSort": false,
-                                                        "width": "50px",
+                                                        // "width": "50px",
                                                         "style": {}
                                                     },
                                                     {
@@ -3436,7 +3436,7 @@ export class PageDesignComponent implements OnInit {
                                                         "hidden": false,
                                                         "showFilter": false,
                                                         "showSort": false,
-                                                        "width": "100px",
+                                                        // "width": "100px",
                                                         "style": {}
                                                     },
                                                     {
@@ -3446,7 +3446,7 @@ export class PageDesignComponent implements OnInit {
                                                         "hidden": false,
                                                         "showFilter": false,
                                                         "showSort": false,
-                                                        "width": "100px",
+                                                        // "width": "100px",
                                                         "style": {}
                                                     },
                                                     {
@@ -3456,7 +3456,7 @@ export class PageDesignComponent implements OnInit {
                                                         "hidden": false,
                                                         "showFilter": false,
                                                         "showSort": false,
-                                                        "width": "100px",
+                                                        // "width": "100px",
                                                         "style": {}
                                                     },
                                                 ],

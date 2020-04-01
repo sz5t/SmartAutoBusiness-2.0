@@ -269,6 +269,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
                     for (const c of row.cols) {
                         const newCol = new LayoutColumn();
                         newCol.id = c.id;
+                        newCol.icon = c.icon;
                         newCol.type = c.type;
                         newCol.title = c.title;
                         newCol.span = c.span;
@@ -276,6 +277,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
                         newCol.bodyStyle = c.bodyStyle;
                         newCol.size = new LayoutSize(c.size);
                         newCol.container = c.container;
+                        newCol.header = c.header;
                         this.setContainer(newCol, c);
                         newRow.add(newCol);
                     }
@@ -329,6 +331,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
 
     private buildTabsObj(cfg): any {
         const newTabs = new LayoutTabs();
+        newTabs.tabType = cfg.tabType;
         newTabs.container = cfg.container;
         newTabs.tabContent = cfg.tabContent;
         newTabs.tabActiveMapping = cfg.tabActiveMapping;
@@ -353,6 +356,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
     private buildPageHeaderObj(cfg): any {
         const newPageHeader = new LayoutPageHeader();
         newPageHeader.container = "pageHeader";
+        newPageHeader.type = cfg.type;
         newPageHeader.title = cfg.title;
         newPageHeader.subTitle = cfg.subTitle;
         newPageHeader.tagColor = cfg.tagColor;

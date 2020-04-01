@@ -1,63 +1,66 @@
-<nz-card *ngIf="!designStatus"  [nzTitle]="titleTemplate"  style="width:100%; border: 1px solid #999999" [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
-    <ng-container *ngTemplateOutlet="content"></ng-container>
+<nz-card *ngIf="!designStatus" [nzTitle]="titleTemplate" style="width:100%; border: 1px solid #999999"
+  [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
+  <ng-container *ngTemplateOutlet="content"></ng-container>
 </nz-card>
 <ng-template #extraTemplate>
-    <ng-container *ngIf="designStatus">
+  <ng-container *ngIf="designStatus">
 
-    </ng-container>
-    <ng-container *ngIf="!designStatus">
-        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="移动行" nz-tooltip>
-            <i nz-icon type="drag"></i>
-        </button>
-        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置行" (click)="openAttribute()" nz-tooltip>
-            <i nz-icon type="setting"></i>
-        </button>
-        <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="删除行" nz-tooltip (click)="deleteRow()">
-            <i nz-icon type="delete"></i>
-        </button>
-        <button nz-button [nzSize]="'small'" nzTitle="添加列" nz-tooltip nzShape="circle" (click)="addCol()">
-            <i nz-icon type="plus"></i>
-        </button>
-    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="!designStatus">
+    <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="移动行" nz-tooltip>
+      <i nz-icon type="drag"></i>
+    </button>
+    <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置行" (click)="openAttribute()" nz-tooltip>
+      <i nz-icon type="setting"></i>
+    </button>
+    <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="删除行" nz-tooltip (click)="deleteRow()">
+      <i nz-icon type="delete"></i>
+    </button>
+    <button nz-button [nzSize]="'small'" nzTitle="添加列" nz-tooltip nzShape="circle" (click)="addCol()">
+      <i nz-icon type="plus"></i>
+    </button>
+  </ng-container>
 
 </ng-template>
 <ng-template #titleTemplate>
-        <ng-container *ngIf="editTitleState">
-            <input nz-input placeholder="标题" [(ngModel)]="config.title" (blur)="onblurtitle($event,'end')" (keyup)="onKeyPress($event,'end')"
-                autofocus/>
-        </ng-container>
-        <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config.title}}
-        </span>
-    </ng-template>
+  <ng-container *ngIf="editTitleState">
+    <input nz-input placeholder="标题" [(ngModel)]="config.title" (blur)="onblurtitle($event,'end')"
+      (keyup)="onKeyPress($event,'end')" autofocus />
+  </ng-container>
+  <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config.title}}
+  </span>
+</ng-template>
 <!-- 内容 -->
 <ng-template #content>
-    <div nz-row [nzGutter]="6">
-        <div nz-col *ngFor="let c of config.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs" [nzMd]="c.size.nzMd"
-            [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl">
-            <cfg-layout-col [config]="c" [designStatus]="designStatus" (updateValue)="valueChangeCol($event)"></cfg-layout-col>
-        </div>
+  <div nz-row [nzGutter]="6">
+    <div nz-col *ngFor="let c of config.cols" [nzSpan]="c.span" [nzSm]="c.size.nzSm" [nzXs]="c.size.nzXs"
+      [nzMd]="c.size.nzMd" [nzLg]="c.size.nzLg" [nzXl]="c.size.nzXl">
+      <cfg-layout-col [config]="c" [designStatus]="designStatus" (updateValue)="valueChangeCol($event)">
+      </cfg-layout-col>
     </div>
+  </div>
 </ng-template>
 <!-- 不包卡片 -->
 
 <div *ngIf="designStatus">
-        <ng-container  *ngTemplateOutlet="content"></ng-container>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
 
 
-<nz-modal [(nzVisible)]="attribute_isVisible" nzTitle="属性设置" (nzOnCancel)="attribute_handleCancel($event)" (nzOnOk)="attribute_handleOk($event)">
+<nz-modal [(nzVisible)]="attribute_isVisible" nzTitle="属性设置" (nzOnCancel)="attribute_handleCancel()"
+  (nzOnOk)="attribute_handleOk()">
 
-    <nz-tabset>
-        <nz-tab nzTitle="标题设置">
-            <nz-row>
-                            <nz-col nzSpan="8">
-                                    行标题:
-                                </nz-col>
-                                <div nz-col nzSpan="16">
-                                    <input nz-input placeholder="标题" [(ngModel)]=" attribute_config.title" />
-                                </div>
-            </nz-row>
-        </nz-tab>
-    </nz-tabset>
+  <nz-tabset>
+    <nz-tab nzTitle="标题设置">
+      <nz-row>
+        <nz-col nzSpan="8">
+          行标题:
+        </nz-col>
+        <div nz-col nzSpan="16">
+          <input nz-input placeholder="标题" [(ngModel)]=" attribute_config.title" />
+        </div>
+      </nz-row>
+    </nz-tab>
+  </nz-tabset>
 
 </nz-modal>

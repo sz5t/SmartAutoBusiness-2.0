@@ -190,7 +190,7 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit, A
   }
 
   saveJsonConfig = {
-    "url": "sd/B_P_SET_PAGELAYOUT_JSON/procedure",  // operation 操作 query
+    "url": "resource/B_P_SET_PAGELAYOUT_JSON/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
 
@@ -316,7 +316,7 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit, A
   //  PROCEDURE B_P_C_CONFIG_PAGE
 
   loadingPageJson = {
-    "url": "sd/B_P_C_CONFIG_PAGE/procedure",  // operation 操作 query
+    "url": "resource/B_P_C_CONFIG_PAGE/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {
@@ -344,9 +344,9 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit, A
       this.PageJson = null;
     }
     else {
-     // this.PageJson = response.data._procedure_resultset_1[0]['W'];
-     //  this.PageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
-       this.PageJson =this.formatJson(JSON.parse(response.data._procedure_resultset_1[0]['W']),{})
+      // this.PageJson = response.data._procedure_resultset_1[0]['W'];
+      //  this.PageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+      this.PageJson = this.formatJson(JSON.parse(response.data._procedure_resultset_1[0]['W']), {})
     }
     // console.log('表格的配置生成如下：', this.PageJson);
   }
@@ -386,23 +386,23 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit, A
   public async DOWN_JSON() {
     await this.loadPageJson();
     console.log('++++++++++++++++++++++');
-  //  console.log('当前页配置：', this.PageJson);
+    //  console.log('当前页配置：', this.PageJson);
     this.componentService.modalService.create({
       nzWidth: '100%',
-      nzStyle: {"top":"0px","padding-bottom": "0px"},
+      nzStyle: { "top": "0px", "padding-bottom": "0px" },
       nzMaskClosable: false,
       nzBodyStyle: { overflow: 'auto' },
       nzTitle: '页面配置JSON',
       nzContent: CnCodeEditComponent, // CnCodeEditComponent,
       nzComponentParams: {
-        config: { mode:"text/x-sql" , "autofocus": true, },
+        config: { mode: "text/x-sql", "autofocus": true, },
         //  value: JSON.stringify(this.PageJson)  "application/json"
         value: this.PageJson
 
       },
       nzClosable: true, // 右上角关闭
       nzOnOk: componentInstance => {
-        console.log('OK', );
+        console.log('OK');
 
 
       }
@@ -441,7 +441,7 @@ export class CfgLayoutPageComponent extends CnComponentBase implements OnInit, A
       reg = /\:/g;
       json = json.replace(reg, ':');
     }
-    json.split('\r\n').forEach((node,index) => {
+    json.split('\r\n').forEach((node, index) => {
       let i = 0;
       let indent = 0;
       let padding = '';

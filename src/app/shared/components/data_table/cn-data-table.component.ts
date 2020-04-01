@@ -577,6 +577,7 @@ export class CnDataTableComponent extends CnComponentBase
 
         // 新增数据加入原始列表,才能够动态新增一行编辑数据
         this.dataList = [newData, ...this.dataList];
+        this.total = this.total + 1;
 
         // 组装状态数据
         this.mapOfDataState[newId] = {
@@ -650,6 +651,10 @@ export class CnDataTableComponent extends CnComponentBase
         this.dataList = this.dataList.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
         this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
         delete this.mapOfDataState[item[this.KEY_ID]];
+        if (this.total > 0) {
+            this.total = this.total - 1;
+        }
+
     }
 
     public cancelEditRows(option) {
@@ -935,11 +940,12 @@ export class CnDataTableComponent extends CnComponentBase
         if (this.dataList.length > 0) {
             this.dataList.map(row => {
                 this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
             });
 
             if (rowData[this.KEY_ID] && rowData[this.KEY_ID].length > 0) {
                 this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
-                this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
+                this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = true; // !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
             }
 
 
@@ -1009,6 +1015,7 @@ export class CnDataTableComponent extends CnComponentBase
                         checked: true, // index === 0 ? true : false,
                         selected: false, // index === 0 ? true : false,
                         state: 'text',
+                        validation: true,
                         actions: this.getRowActions('text')
                     }
                 }
@@ -1062,7 +1069,9 @@ export class CnDataTableComponent extends CnComponentBase
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
                 addedRows: this.ROWS_ADDED,
-                editedRows: this.ROWS_EDITED
+                editedRows: this.ROWS_EDITED,
+                checkedRow: this.ROWS_CHECKED,
+                outputValue: data
 
             });
         } else if (!isArray && data) {
@@ -1077,8 +1086,9 @@ export class CnDataTableComponent extends CnComponentBase
                 addedRows: data,
                 editedRows: data,
                 validation: data,
-                returnValue: data
-
+                returnValue: data,
+                checkedRow: this.ROWS_CHECKED,
+                outputValue: data
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1094,7 +1104,9 @@ export class CnDataTableComponent extends CnComponentBase
                     addedRows: d,
                     editedRows: d,
                     validation: d,
-                    returnValue: d
+                    returnValue: d,
+                    checkedRow: this.ROWS_CHECKED,
+                    outputValue: data
                 });
                 parameterResult.push(param);
             })
@@ -1215,6 +1227,41 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     /**
+     * 
+     * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
+     */
+    public link(option) {
+        let url;
+        let params;
+        if (option && option.linkConfig) {
+            if (option.linkConfig.link) {
+                url = option.linkConfig.link;
+            }
+
+            if (option.linkConfig.params && Array.isArray(option.linkConfig.params)) {
+                params = this.buildParameters(option.linkConfig.params, option.data.originData);
+                url = `${url}/${params['ID']}`;
+            }
+
+            if (url && params) {
+                this.componentService.router.navigate([url], { queryParams: { ...params } });
+            }
+            else if (url) {
+                this.componentService.router.navigate([url]);
+            }
+        } else {
+            console.log('error');
+        }
+        // this.componentService.router.navigate([option.link], { queryParams: { ...option.data.originData } });
+        // this.componentService.activeRoute
+        // this.router.navigate(['../home'],{relativeTo:this.route});
+    }
+
+    public linkTo(option) {
+
+    }
+
+    /**
      * ACTION
      * 显示确认对话框
      * @param option 确认参数 
@@ -1239,7 +1286,7 @@ export class CnDataTableComponent extends CnComponentBase
     public showCheckedItems(option: any) {
         this.confirm(option.dialog, () => { this.executeCheckedRows(option) })
     }
-    0
+
     /**
      * 显示表单对话框
      * @param option 配置参数
@@ -1342,17 +1389,28 @@ export class CnDataTableComponent extends CnComponentBase
 
     public buildMessageContent(msgObj) {
         const message: any = {};
-        if (msgObj.code) {
-            message.message = msgObj.code;
-        } else if (msgObj.message) {
-            message.message = msgObj.message;
+        let array: any[];
+        if (msgObj.type) {
+
+        } else {
+            array = msgObj.message.split(':');
         }
-        // message.message = option.code ? option.code : '';
-        msgObj.field && (message.field = msgObj.field ? msgObj.field : '');
-        message.type = msgObj.type;
+
+        if (!array) {
+            if (msgObj.code) {
+                message.message = msgObj.code;
+            } else if (msgObj.message) {
+                message.message = msgObj.message;
+            }
+            // message.message = option.code ? option.code : '';
+            msgObj.field && (message.field = msgObj.field ? msgObj.field : '');
+            message.type = msgObj.type;
+        } else {
+            message.type = array[0];
+            message.message = array[1];
+        }
         return message
     }
-
 
     /**
      * 全选
@@ -1394,7 +1452,7 @@ export class CnDataTableComponent extends CnComponentBase
 
         }
 
-
+        return true;
 
     }
 
@@ -1557,6 +1615,7 @@ export class CnDataTableComponent extends CnComponentBase
                 });
             });
     }
+
 
 
 }

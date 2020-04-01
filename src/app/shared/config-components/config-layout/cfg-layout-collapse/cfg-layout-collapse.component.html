@@ -1,72 +1,79 @@
 <!-- <ng-template #extraTpl>
   <i nz-icon nzType="setting"></i>
 </ng-template> -->
-<nz-card *ngIf="!designStatus" [nzTitle]=" titleTemplate" style="width:100%; border: 1px solid darkolivegreen " [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
-    <ng-container *ngTemplateOutlet="content"></ng-container>
+<nz-card *ngIf="!designStatus" [nzTitle]=" titleTemplate" style="width:100%; border: 1px solid darkolivegreen "
+  [nzExtra]="extraTemplate" [nzBodyStyle]="bodystyle">
+  <ng-container *ngTemplateOutlet="content"></ng-container>
 </nz-card>
 <ng-template #extraTemplate>
-  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="移动折叠面板" nz-tooltip style="background-color:darkolivegreen">
+  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="移动折叠面板" nz-tooltip
+    style="background-color:darkolivegreen">
     <i nz-icon type="drag"></i>
   </button>
-  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置折叠面板"  (click)="openAttribute()" nz-tooltip style="background-color:darkolivegreen">
+  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="设置折叠面板" (click)="openAttribute()" nz-tooltip
+    style="background-color:darkolivegreen">
     <i nz-icon type="setting"></i>
   </button>
-  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="删除折叠面板" nz-tooltip (click)="deleteCollapse()" style="background-color:darkolivegreen">
+  <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="删除折叠面板" nz-tooltip (click)="deleteCollapse()"
+    style="background-color:darkolivegreen">
     <i nz-icon type="delete"></i>
   </button>
-  <button nz-button [nzSize]="'small'" nzTitle="添加面板" nz-tooltip nzShape="circle" (click)="addCollapsePanel()" style="background-color:darkolivegreen">
+  <button nz-button [nzSize]="'small'" nzTitle="添加面板" nz-tooltip nzShape="circle" (click)="addCollapsePanel()"
+    style="background-color:darkolivegreen">
     <i nz-icon type="plus"></i>
   </button>
 </ng-template>
 
 <ng-template #titleTemplate>
-    <ng-container *ngIf="editTitleState">
-        <input nz-input placeholder="标题" [(ngModel)]="config.title" (blur)="onblurtitle($event,'end')" (keyup)="onKeyPress($event,'end')"
-            autofocus/>
-    </ng-container>
-    <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config.title}}
-    </span>
+  <ng-container *ngIf="editTitleState">
+    <input nz-input placeholder="标题" [(ngModel)]="config.title" (blur)="onblurtitle($event,'end')"
+      (keyup)="onKeyPress($event,'end')" autofocus />
+  </ng-container>
+  <span *ngIf="!editTitleState" (dblclick)="editTitle($event)">{{config.title}}
+  </span>
 </ng-template>
 <ng-template #content>
-    <nz-collapse>
-        <nz-collapse-panel *ngFor="let panel of panels" [nzHeader]="panel.title" [nzActive]="panel.active" [nzDisabled]="panel.disabled">
-          <!-- [nzExtra]="extraTpl" -->
-          <cfg-layout  [config]="panel.layout"  [designStatus]="designStatus" ></cfg-layout>
-        </nz-collapse-panel>
-      </nz-collapse>
+  <nz-collapse>
+    <nz-collapse-panel *ngFor="let panel of panels" [nzHeader]="panel.title" [nzActive]="panel.active"
+      [nzDisabled]="panel.disabled">
+      <!-- [nzExtra]="extraTpl" -->
+      <cfg-layout [config]="panel.layout" [designStatus]="designStatus"></cfg-layout>
+    </nz-collapse-panel>
+  </nz-collapse>
 </ng-template>
 <!-- 不包卡片 -->
 
 <div *ngIf="designStatus">
-    <ng-container  *ngTemplateOutlet="content"></ng-container>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
 </div>
 
-<nz-modal [(nzVisible)]="attribute_isVisible" nzTitle="属性设置" (nzOnCancel)="attribute_handleCancel($event)" (nzOnOk)="attribute_handleOk($event)">
+<nz-modal [(nzVisible)]="attribute_isVisible" nzTitle="属性设置" (nzOnCancel)="attribute_handleCancel()"
+  (nzOnOk)="attribute_handleOk()">
 
-    <nz-tabset>
-        <nz-tab nzTitle="collapse标题设置">
-            <nz-row>
-                    <nz-col nzSpan="8">
-                        collapse标题:
-                    </nz-col>
-                    <div nz-col nzSpan="16">
-                        <input nz-input placeholder="标题" [(ngModel)]=" attribute_config.title" />
-                    </div>
-            </nz-row>
-        </nz-tab>
-        <nz-tab nzTitle="折叠面板标题设置">
-            <nz-row>
-                    <ng-container  *ngFor="let view of attribute_config['collapseContent']">
-                            <nz-col nzSpan="8">
-                                    面板标题:
-                                </nz-col>
-                                <div nz-col nzSpan="16">
-                                    <input nz-input placeholder="标题" [(ngModel)]=" view.title" />
-                                </div>
-                  </ng-container>
-               
-            </nz-row>
-        </nz-tab>
-    </nz-tabset>
+  <nz-tabset>
+    <nz-tab nzTitle="collapse标题设置">
+      <nz-row>
+        <nz-col nzSpan="8">
+          collapse标题:
+        </nz-col>
+        <div nz-col nzSpan="16">
+          <input nz-input placeholder="标题" [(ngModel)]=" attribute_config.title" />
+        </div>
+      </nz-row>
+    </nz-tab>
+    <nz-tab nzTitle="折叠面板标题设置">
+      <nz-row>
+        <ng-container *ngFor="let view of attribute_config['collapseContent']">
+          <nz-col nzSpan="8">
+            面板标题:
+          </nz-col>
+          <div nz-col nzSpan="16">
+            <input nz-input placeholder="标题" [(ngModel)]=" view.title" />
+          </div>
+        </ng-container>
+
+      </nz-row>
+    </nz-tab>
+  </nz-tabset>
 
 </nz-modal>

@@ -1617,7 +1617,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                     "rootTitle": '根节点',
                                     "desc": "NAME",
                                     "loadingConfig": {
-                                        "url": "sd/COMPONENT_TREE_BASE_DATA/query",
+                                        "url": "resource/COMPONENT_TREE_BASE_DATA/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -1628,7 +1628,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             {
                                                 "name": "_deep",
                                                 "type": "value",
-                                                "value": "1"
+                                                "value": "2"
                                             },
                                             {
                                                 "name": "_pcName",
@@ -1641,7 +1641,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     "expandConfig": {
-                                        "url": "sd/COMPONENT_TREE_BASE_DATA/query",
+                                        "url": "resource/COMPONENT_TREE_BASE_DATA/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -1658,7 +1658,7 @@ export class BaseInnerPropertyManagerComponent implements OnInit {
                                             {
                                                 "name": "_deep",
                                                 "type": "value",
-                                                "value": "1"
+                                                "value": "2"
                                             },
                                             {
                                                 "name": "_pcName",

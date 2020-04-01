@@ -1,59 +1,21 @@
-// 可以通过 https://ng-alain.github.io/ng-alain/ 获取主题参数代码
-// The theme paraments can be generated at https://ng-alain.github.io/ng-alain/
-@primary-color: #FAAD14;
-@alain-default-header-bg: #FAAD14;
-@alain-default-aside-nav-text-hover-color: #FAAD14;
-@alain-default-aside-nav-selected-text-color: #FAAD14;
-@alain-default-content-heading-bg: #ff0023;
-
-@state-new: rgba(166, 255, 196, 0.7);
-@state-edit: #a0d9f1bb;
-
-// Color used by default to control hover and active backgrounds and for
-// alert info backgrounds.
-@primary-1: color(~`colorPalette('@{primary-color}', 1) `); // replace tint(@primary-color, 90%)
-@primary-2: color(~`colorPalette('@{primary-color}', 2) `); // replace tint(@primary-color, 80%)
-@primary-3: color(~`colorPalette('@{primary-color}', 3) `); // unused
-@primary-4: color(~`colorPalette('@{primary-color}', 4) `); // unused
-@primary-5: color(~`colorPalette('@{primary-color}', 5) `); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
-@primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
-@primary-7: color(~`colorPalette('@{primary-color}', 7) `); // replace shade(@primary-color, 5%)
-@primary-8: color(~`colorPalette('@{primary-color}', 8) `); // unused
-@primary-9: color(~`colorPalette('@{primary-color}', 9) `); // unused
-@primary-10: color(~`colorPalette('@{primary-color}', 10) `); // unused
-
-// 在 [src/styles/theme.less] 配置以下：
-// @primary-color: #2F54EB;
-
-// 在 [src/environments/*] 的 pro 配置以下：
-// export const environment = {
-//   ...
-//   pro: {
-//     theme: 'dark',
-//     menu: 'side',
-//     contentWidth: 'fluid',
-//     fixedHeader: true,
-//     autoHideHeader: true,
-//     fixSiderbar: true,
-//     onlyIcon: false,
-//     colorWeak: false,
-//   }
-// }
-
-@background-color-light: hsv(0, 0, 98%); // background of header and selected item
-@background-color-base: hsv(0, 0, 96%); // Default grey background color
-@heading-color: fade(#000, 85%);
-@component-background: #fff;
-@border-radius-sm: 4px;
+@primary-color: rgb(158, 196, 211);
 
 
-@card-head-color: @heading-color;
-@card-head-background: transparent;
+@router-animation-duration: 0.5;
+@search-form-radius: 0px;
+@nz-table-rep-padding-vertical: 4px;
+@enable-all-colors: true;
+
+// font
+@font-size-base: 12px;
+@font-size-lg: @font-size-base + 2px;
+@font-size-sm: 12px;
+
+// border
+@border-radius-base: 1px;
+@border-radius-md: 1px;
+@border-radius-lg: 1px;
+
+
+// card
 @card-head-padding: 6px;
-@card-inner-head-padding: 6px;
-@card-padding-base: 6px;
-@card-actions-background: @background-color-light;
-@card-skeleton-bg: #cfd8dc;
-@card-background: @component-background;
-@card-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
-@card-radius: @border-radius-sm;

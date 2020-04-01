@@ -1,16 +1,17 @@
-<!-- west 左  east 右  center 中间  North  上  South  下-->
+<!-- west 左 east 右 center 中间 North 上 South 下 -->
 
 <nz-card nzTitle="自定义收缩" [nzExtra]="extraTemplate">
   <div style="display: flex;">
     <!-- customlayout -->
     <ng-container *ngFor="let cl of customlayout">
-      <div #west *ngIf="cl.layoutType==='west'"   [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}" >
-        <nz-card [nzTitle]="title['west']" [nzExtra]="westTemplate"  [ngStyle]=" {'height': '100%'} ">
+      <div #west *ngIf="cl.layoutType==='west'"
+        [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}">
+        <nz-card [nzTitle]="title['west']" [nzExtra]="westTemplate" [ngStyle]=" {'height': '100%'} ">
           <ng-container *ngIf="isCollapsed['west']" [ngStyle]="isCollapsed['west'] ? { }: {'display': 'none'} ">
             <h3 class="liutitle">{{contenttitle['west']}}</h3>
           </ng-container>
-          <div  [ngStyle]="!isCollapsed['west'] ? { }: {'display': 'none'} ">
-            <cfg-layout  [config]="cl.layout"  [designStatus]="designStatus"></cfg-layout>
+          <div [ngStyle]="!isCollapsed['west'] ? { }: {'display': 'none'} ">
+            <cfg-layout [config]="cl.layout" [designStatus]="designStatus"></cfg-layout>
           </div>
 
         </nz-card>
@@ -27,19 +28,21 @@
           </ng-container>
         </ng-template>
       </div>
-      <div #center *ngIf="cl.layoutType==='center' "   [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}"  >
+      <div #center *ngIf="cl.layoutType==='center' "
+        [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}">
         <nz-card [nzTitle]="title['center']" [ngStyle]=" {'height': '100%'} ">
-            <cfg-layout  [config]="cl.layout"  [designStatus]="designStatus"></cfg-layout>
+          <cfg-layout [config]="cl.layout" [designStatus]="designStatus"></cfg-layout>
         </nz-card>
 
       </div>
-      <div #east *ngIf="cl.layoutType==='east' "   [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}">
+      <div #east *ngIf="cl.layoutType==='east' "
+        [ngStyle]="cl.hidden? {'display': 'none'} : {'flex-grow':cl.span,'align-items':'stretch'}">
         <nz-card [nzTitle]="title['east']" [nzExtra]="eastTemplate" [ngStyle]=" {'height': '100%'} ">
           <ng-container *ngIf="isCollapsed['east']">
             <h3 class="cfgtitle">{{contenttitle['east']}}</h3>
           </ng-container>
-          <div *ngIf="!isCollapsed['east']"  >
-            <cfg-layout  [config]="cl.layout"  [designStatus]="designStatus"></cfg-layout>
+          <div *ngIf="!isCollapsed['east']">
+            <cfg-layout [config]="cl.layout" [designStatus]="designStatus"></cfg-layout>
           </div>
 
         </nz-card>
@@ -61,19 +64,19 @@
 </nz-card>
 <ng-template #extraTemplate>
 
-  <button nz-button [nzSize]="'small'" nzTitle="收缩布局设置" nz-tooltip (click)="open()">
+  <!-- <button nz-button [nzSize]="'small'" nzTitle="收缩布局设置" nz-tooltip (click)="open()">
     <i nz-icon type="diff"></i>
   </button>
   <ng-container *ngIf="configType">
     <button nz-button [nzSize]="'small'" nzType="primary" nzTitle="保存json" (click)="SaveJson()" nz-tooltip>
       <i nz-icon type="download"></i>保存json</button>
-  </ng-container>
+  </ng-container> -->
 
 </ng-template>
 
 
 
-<nz-modal [(nzVisible)]="size_isVisible" nzTitle="收缩布局设置" (nzOnCancel)="size_handleCancel($event)" (nzOnOk)="size_handleOk($event)">
+<!-- <nz-modal [(nzVisible)]="size_isVisible" nzTitle="收缩布局设置" (nzOnCancel)="size_handleCancel($event)" (nzOnOk)="size_handleOk($event)">
     <nz-row>
         <nz-col nzSpan="6">
             收缩布局区域:
@@ -102,5 +105,4 @@
           </nz-col>
       </nz-row>
 
-</nz-modal>
-
+</nz-modal> -->

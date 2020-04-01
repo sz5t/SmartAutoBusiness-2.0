@@ -28,6 +28,6 @@ export class CnDynamicLayoutComponent implements OnInit {
 
     public ngOnInit() {
         console.log('layout init---', this.initData, this.tempData);
-        console.log('******', this.layoutObj.layoutJson);
+        console.log('******', this.layoutObj);
     }
 }

@@ -21,6 +21,7 @@ import { CnFormCustomSelectComponent } from '@shared/components/data-form/cn-for
 import { CnFormCodeEditComponent } from '@shared/components/data-form/cn-form-items/cn-form-code-edit/cn-form-code-edit.component';
 import { CnFormStaticGridComponent } from './cn-form-items/cn-form-static-grid/cn-form-static-grid.component';
 import { CnFormButtonComponent } from './cn-form-items/cn-form-button/cn-form-button.component';
+import { CnFormGroupComponent } from './cn-form-items/cn-form-group/cn-form-group.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnFormInputComponent,
@@ -43,7 +44,8 @@ const components: { [type: string]: Type<any> } = {
   codeEdit: CnFormCodeEditComponent,
   staticGrid: CnFormStaticGridComponent,
   button: CnFormButtonComponent,
-  searchSelect: CnFormSearchSelectComponent
+  searchSelect: CnFormSearchSelectComponent,
+  group: CnFormGroupComponent
 };
 @Directive({
   selector: '[CnFormItemDirective]'
@@ -66,11 +68,13 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
   }
   public ngOnInit() {
     // console.log('**********', this.config, this.formCascade)
-    let _config
-    if (this.config.state === 'text') {
+    let _config: any = {};
+    if (this.config.state === 'text' && this.config.text) {
       _config = JSON.parse(JSON.stringify(this.config.text));
+
     }
     if (this.config.state === 'edit') {
+
       _config = JSON.parse(JSON.stringify(this.config.editor));
     }
     _config['config'] = JSON.parse(JSON.stringify(this.config));

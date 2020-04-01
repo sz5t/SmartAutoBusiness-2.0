@@ -1,7 +1,9 @@
 <nz-layout>
   <nz-content>
-    <button nz-button (click)="click()">处理</button>
-    显示结果 {{ testResult | async | json}}
+    <!-- <button nz-button (click)="click()">处理</button>
+    显示结果 {{ testResult | async | json}} -->
     <ng-container cnLayoutResolverDirective [config]="config"></ng-container>
   </nz-content>
 </nz-layout>
+
+<ng-container cnLayoutResolverDirective [config]="config2"></ng-container>

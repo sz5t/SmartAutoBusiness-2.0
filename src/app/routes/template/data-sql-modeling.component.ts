@@ -72,521 +72,521 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                 "rows": [
                     {
                         "cols": [
-                            {
-                                "id": "lsWPaU",
-                                "col": "cc",
-                                "type": "col",
-                                "titlestate": 1,
-                                "title": "",
-                                "span": 11,
-                                "container": "component",
-                                "size": { "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 11, "ngXl": 11, "nzXXl": 11 },
-                                "component": {
-                                    "id": "toolbar_002",
-                                    "component": "cnToolbar",
-                                    "size": "default",
-                                    "cascade": {
+                            // {
+                            //     "id": "lsWPaU",
+                            //     "col": "cc",
+                            //     "type": "col",
+                            //     "titlestate": 1,
+                            //     "title": "",
+                            //     "span": 24,
+                            //     "container": "component",
+                            //     "size": { "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24 },
+                            //     "component": {
+                            //         "id": "toolbar_002",
+                            //         "component": "cnToolbar",
+                            //         "size": "default",
+                            //         "cascade": {
 
-                                    },
-                                    "condition": [
-                                        {
-                                            "id": "add_state_1",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_CHECKED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        },
-                                                        {
-                                                            "type": "element",
-                                                            "name": "descName",
-                                                            "matchValue": "1",
-                                                            "match": "eq",
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_state_1",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_CHECKED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "add_save_1",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "FORM_STATE",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "",
-                                                            "matchValue": "new",
-                                                            "match": "eq"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_save_1",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "FORM_STATE",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "",
-                                                            "matchValue": "edit",
-                                                            "match": "eq"
-                                                        }
-                                                    ]
-                                                }
+                            //         },
+                            //         "condition": [
+                            //             {
+                            //                 "id": "add_state_1",
+                            //                 "state": [
+                            //                     {
+                            //                         "type": "component",
+                            //                         "valueName": "ROWS_CHECKED",
+                            //                         "expression": [
+                            //                             {
+                            //                                 "type": "property",
+                            //                                 "name": "length",
+                            //                                 "matchValue": 0,
+                            //                                 "match": "gt"
+                            //                             },
+                            //                             {
+                            //                                 "type": "element",
+                            //                                 "name": "descName",
+                            //                                 "matchValue": "1",
+                            //                                 "match": "eq",
+                            //                             }
+                            //                         ]
+                            //                     }
+                            //                 ]
+                            //             },
+                            //             {
+                            //                 "id": "edit_state_1",
+                            //                 "state": [
+                            //                     {
+                            //                         "type": "component",
+                            //                         "valueName": "ROWS_CHECKED",
+                            //                         "expression": [
+                            //                             {
+                            //                                 "type": "property",
+                            //                                 "name": "length",
+                            //                                 "matchValue": 0,
+                            //                                 "match": "gt"
+                            //                             }
+                            //                         ]
+                            //                     }
+                            //                 ]
+                            //             },
+                            //             {
+                            //                 "id": "add_save_1",
+                            //                 "state": [
+                            //                     {
+                            //                         "type": "component",
+                            //                         "valueName": "FORM_STATE",
+                            //                         "expression": [
+                            //                             {
+                            //                                 "type": "property",
+                            //                                 "name": "",
+                            //                                 "matchValue": "new",
+                            //                                 "match": "eq"
+                            //                             }
+                            //                         ]
+                            //                     }
+                            //                 ]
+                            //             },
+                            //             {
+                            //                 "id": "edit_save_1",
+                            //                 "state": [
+                            //                     {
+                            //                         "type": "component",
+                            //                         "valueName": "FORM_STATE",
+                            //                         "expression": [
+                            //                             {
+                            //                                 "type": "property",
+                            //                                 "name": "",
+                            //                                 "matchValue": "edit",
+                            //                                 "match": "eq"
+                            //                             }
+                            //                         ]
+                            //                     }
 
-                                            ]
-                                        }
+                            //                 ]
+                            //             }
 
-                                    ],
-                                    "ajaxConfig": [
-                                        {
-                                            "id": "add_save_1",
-                                            "url": "resource/insert",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "resourceName",
-                                                    "type": "componentValue",
-                                                    "valueName": "RESOURCE_NAME"
-                                                },
-                                                {
-                                                    "name": "descName",
-                                                    "type": "componentValue",
-                                                    "valueName": "DESC_NAME"
-                                                },
-                                                {
-                                                    "name": "content",
-                                                    "type": "componentValue",
-                                                    "valueName": "CONTENT"
-                                                },
-                                                {
-                                                    "name": "resourceType",
-                                                    "type": "value",
-                                                    "value": 1
-                                                }
-                                            ],
-                                            "outputParameters": [
+                            //         ],
+                            //         "ajaxConfig": [
+                            //             {
+                            //                 "id": "add_save_1",
+                            //                 "url": "resource/insert",
+                            //                 "urlType": "inner",
+                            //                 "ajaxType": "post",
+                            //                 "params": [
+                            //                     {
+                            //                         "name": "resourceName",
+                            //                         "type": "componentValue",
+                            //                         "valueName": "RESOURCE_NAME"
+                            //                     },
+                            //                     {
+                            //                         "name": "descName",
+                            //                         "type": "componentValue",
+                            //                         "valueName": "DESC_NAME"
+                            //                     },
+                            //                     {
+                            //                         "name": "content",
+                            //                         "type": "componentValue",
+                            //                         "valueName": "CONTENT"
+                            //                     },
+                            //                     {
+                            //                         "name": "resourceType",
+                            //                         "type": "value",
+                            //                         "value": 1
+                            //                     }
+                            //                 ],
+                            //                 "outputParameters": [
 
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterSQLSaveSuccess"
-                                                },
-                                                // {
-                                                //     "name": "validation",
-                                                //     "showMessageWithNext": 0,
-                                                //     "message": "message.ajax.state.success",
-                                                //     "senderId": "afterCitySaveValidation"
-                                                // },
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_save_1",
-                                            "url": "resource/update",
-                                            "urlType": "inner",
-                                            "ajaxType": "put",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "tempValue",
-                                                    "valueName": "_ID"
-                                                },
-                                                {
-                                                    "name": "resourceName",
-                                                    "type": "componentValue",
-                                                    "valueName": "RESOURCE_NAME"
-                                                },
-                                                {
-                                                    "name": "descName",
-                                                    "type": "componentValue",
-                                                    "valueName": "DESC_NAME"
-                                                },
-                                                {
-                                                    "name": "content",
-                                                    "type": "componentValue",
-                                                    "valueName": "CONTENT"
-                                                },
-                                                {
-                                                    "name": "resourceType",
-                                                    "type": "value",
-                                                    "value": 1
-                                                }
-                                            ],
-                                            "outputParameters": [
+                            //                 ],
+                            //                 "result": [
+                            //                     {
+                            //                         "name": "data",
+                            //                         "showMessageWithNext": 0,
+                            //                         "message": "message.ajax.state.success",
+                            //                         "senderId": "afterSQLSaveSuccess"
+                            //                     },
+                            //                     // {
+                            //                     //     "name": "validation",
+                            //                     //     "showMessageWithNext": 0,
+                            //                     //     "message": "message.ajax.state.success",
+                            //                     //     "senderId": "afterCitySaveValidation"
+                            //                     // },
+                            //                 ]
+                            //             },
+                            //             {
+                            //                 "id": "edit_save_1",
+                            //                 "url": "resource/update",
+                            //                 "urlType": "inner",
+                            //                 "ajaxType": "put",
+                            //                 "params": [
+                            //                     {
+                            //                         "name": "id",
+                            //                         "type": "tempValue",
+                            //                         "valueName": "_ID"
+                            //                     },
+                            //                     {
+                            //                         "name": "resourceName",
+                            //                         "type": "componentValue",
+                            //                         "valueName": "RESOURCE_NAME"
+                            //                     },
+                            //                     {
+                            //                         "name": "descName",
+                            //                         "type": "componentValue",
+                            //                         "valueName": "DESC_NAME"
+                            //                     },
+                            //                     {
+                            //                         "name": "content",
+                            //                         "type": "componentValue",
+                            //                         "valueName": "CONTENT"
+                            //                     },
+                            //                     {
+                            //                         "name": "resourceType",
+                            //                         "type": "value",
+                            //                         "value": 1
+                            //                     }
+                            //                 ],
+                            //                 "outputParameters": [
 
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterSQLSaveSuccess"
-                                                },
-                                                // {
-                                                //     "name": "validation",
-                                                //     "showMessageWithNext": 0,
-                                                //     "message": "message.ajax.state.success",
-                                                //     "senderId": "afterCitySaveValidation"
-                                                // },
-                                            ]
-                                        },
-                                        {
-                                            "id": "create_sql_model",
-                                            "url": "resource/createModel",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "item",
-                                                    "valueName": "ID"
-                                                }
-                                            ],
-                                            "outputParameters": [
+                            //                 ],
+                            //                 "result": [
+                            //                     {
+                            //                         "name": "data",
+                            //                         "showMessageWithNext": 0,
+                            //                         "message": "message.ajax.state.success",
+                            //                         "senderId": "afterSQLSaveSuccess"
+                            //                     },
+                            //                     // {
+                            //                     //     "name": "validation",
+                            //                     //     "showMessageWithNext": 0,
+                            //                     //     "message": "message.ajax.state.success",
+                            //                     //     "senderId": "afterCitySaveValidation"
+                            //                     // },
+                            //                 ]
+                            //             },
+                            //             {
+                            //                 "id": "create_sql_model",
+                            //                 "url": "resource/createModel",
+                            //                 "urlType": "inner",
+                            //                 "ajaxType": "post",
+                            //                 "params": [
+                            //                     {
+                            //                         "name": "id",
+                            //                         "type": "item",
+                            //                         "valueName": "ID"
+                            //                     }
+                            //                 ],
+                            //                 "outputParameters": [
 
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterSQLModelSuccess"
-                                                },
-                                                // {
-                                                //     "name": "validation",
-                                                //     "showMessageWithNext": 0,
-                                                //     "message": "message.ajax.state.success",
-                                                //     "senderId": "afterCitySaveValidation"
-                                                // },
-                                            ]
-                                        },
-                                        {
-                                            "id": "cancel_sql_model",
-                                            "url": "resource/cancelModel",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "item",
-                                                    "valueName": "ID"
-                                                }
-                                            ],
-                                            "outputParameters": [
+                            //                 ],
+                            //                 "result": [
+                            //                     {
+                            //                         "name": "data",
+                            //                         "showMessageWithNext": 0,
+                            //                         "message": "message.ajax.state.success",
+                            //                         "senderId": "afterSQLModelSuccess"
+                            //                     },
+                            //                     // {
+                            //                     //     "name": "validation",
+                            //                     //     "showMessageWithNext": 0,
+                            //                     //     "message": "message.ajax.state.success",
+                            //                     //     "senderId": "afterCitySaveValidation"
+                            //                     // },
+                            //                 ]
+                            //             },
+                            //             {
+                            //                 "id": "cancel_sql_model",
+                            //                 "url": "resource/cancelModel",
+                            //                 "urlType": "inner",
+                            //                 "ajaxType": "post",
+                            //                 "params": [
+                            //                     {
+                            //                         "name": "id",
+                            //                         "type": "item",
+                            //                         "valueName": "ID"
+                            //                     }
+                            //                 ],
+                            //                 "outputParameters": [
 
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterSQLModelSuccess"
-                                                },
-                                                // {
-                                                //     "name": "validation",
-                                                //     "showMessageWithNext": 0,
-                                                //     "message": "message.ajax.state.success",
-                                                //     "senderId": "afterCitySaveValidation"
-                                                // },
-                                            ]
-                                        }
-                                    ],
-                                    "builtinConfig": [
-                                        {
-                                            "id": "add_state_1",
-                                            "event": "formStateChange", // 内置方法
-                                            "state": "new",
-                                        },
-                                        {
-                                            "id": "edit_state_1",
-                                            "event": "formStateChange", // 内置方法
-                                            "state": "edit",
-                                        },
-                                        {
-                                            "id": "cancel_state_1",
-                                            "event": "formStateChange", // 内置方法
-                                            "state": "text",
-                                        }
-                                    ],
-                                    "beforeTrigger": [
+                            //                 ],
+                            //                 "result": [
+                            //                     {
+                            //                         "name": "data",
+                            //                         "showMessageWithNext": 0,
+                            //                         "message": "message.ajax.state.success",
+                            //                         "senderId": "afterSQLModelSuccess"
+                            //                     },
+                            //                     // {
+                            //                     //     "name": "validation",
+                            //                     //     "showMessageWithNext": 0,
+                            //                     //     "message": "message.ajax.state.success",
+                            //                     //     "senderId": "afterCitySaveValidation"
+                            //                     // },
+                            //                 ]
+                            //             }
+                            //         ],
+                            //         "builtinConfig": [
+                            //             {
+                            //                 "id": "add_state_1",
+                            //                 "event": "formStateChange", // 内置方法
+                            //                 "state": "new",
+                            //             },
+                            //             {
+                            //                 "id": "edit_state_1",
+                            //                 "event": "formStateChange", // 内置方法
+                            //                 "state": "edit",
+                            //             },
+                            //             {
+                            //                 "id": "cancel_state_1",
+                            //                 "event": "formStateChange", // 内置方法
+                            //                 "state": "text",
+                            //             }
+                            //         ],
+                            //         "beforeTrigger": [
 
-                                    ],
-                                    "afterTrigger": [
-                                        {
-                                            "id": "edit_save_1",
-                                            "senderId": "form_sql",
-                                            "sendData": [
-                                                {
-                                                    "beforeSend": [],
-                                                    "reveicerId": "",
-                                                    "receiverTriggerType": "BEHAVIOR",
-                                                    "receiverTrigger": "REFRESH_AS_CHILD",
-                                                    "params": [
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    "toolbar": [
-                                        {
-                                            "targetViewId": "form_sql",
-                                            "group": [
-                                                {
-                                                    "id": "M_addRow",
-                                                    "text": "创建资源",
-                                                    "icon": "plus",
-                                                    "color": "text-primary",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "state": "new",
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "ADD_FORM",
-                                                            // "conditionId": "add_state_1"
-                                                            "builtinId": "add_state_1"
+                            //         ],
+                            //         "afterTrigger": [
+                            //             {
+                            //                 "id": "edit_save_1",
+                            //                 "senderId": "form_sql",
+                            //                 "sendData": [
+                            //                     {
+                            //                         "beforeSend": [],
+                            //                         "reveicerId": "",
+                            //                         "receiverTriggerType": "BEHAVIOR",
+                            //                         "receiverTrigger": "REFRESH_AS_CHILD",
+                            //                         "params": [
+                            //                         ]
+                            //                     }
+                            //                 ]
+                            //             }
+                            //         ],
+                            //         "toolbar": [
+                            //             {
+                            //                 "targetViewId": "form_sql",
+                            //                 "group": [
+                            //                     {
+                            //                         "id": "M_addRow",
+                            //                         "text": "创建资源",
+                            //                         "icon": "plus",
+                            //                         "color": "text-primary",
+                            //                         "hidden": false,
+                            //                         "disabled": false,
+                            //                         "state": "new",
+                            //                         "execute": [
+                            //                             {
+                            //                                 "triggerType": "STATE",
+                            //                                 "trigger": "ADD_FORM",
+                            //                                 // "conditionId": "add_state_1"
+                            //                                 "builtinId": "add_state_1"
 
-                                                        }
-                                                    ],
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "cancel",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "new",
-                                                                "value": true
-                                                            },
+                            //                             }
+                            //                         ],
+                            //                         "toggle": {
+                            //                             "type": "state",
+                            //                             "toggleProperty": "hidden",
+                            //                             "values": [
+                            //                                 {
+                            //                                     "name": "edit",
+                            //                                     "value": true
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "text",
+                            //                                     "value": false
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "cancel",
+                            //                                     "value": false
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "new",
+                            //                                     "value": true
+                            //                                 },
 
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "id": "M_updateRow",
-                                                    "text": "编辑资源",
-                                                    "icon": "edit",
-                                                    "color": "text-success",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "state": "edit",
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "EDIT_FORM",
-                                                            "builtinId": "edit_state_1"
-                                                        }
-                                                    ],
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "new",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "cancel",
-                                                                "value": false
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "id": "M_saveRow",
-                                                    "text": "保存",
-                                                    "icon": "save",
-                                                    "color": "text-primary",
-                                                    "hidden": true,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE",
-                                                            "ajaxId": "add_save_1",
-                                                            // "stateId": "add_save_1",
-                                                            "conditionId": "add_save_1"
-                                                        },
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE",
-                                                            // "stateId": "edit_save_1",
-                                                            "ajaxId": "edit_save_1",
-                                                            "conditionId": "edit_save_1",
-                                                            // "afterId": "edit_save_1"
-                                                        }
-                                                    ],
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "new",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "cancel",
-                                                                "value": true
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "id": "M_cancelrow",
-                                                    "text": "取消",
-                                                    "triggerType": "STATE",
-                                                    "trigger": "CANCEL",
-                                                    "icon": "rollback",
-                                                    "color": "text-grey-darker",
-                                                    "hidden": true,
-                                                    "disabled": null,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "CANCEL",
-                                                            "builtinId": "cancel_state_1"
-                                                        }
-                                                    ],
-                                                    "state": "cancel",
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "new",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "cancel",
-                                                                "value": true
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "targetViewId": "sql_grid_view",
-                                            "group": [
-                                                {
-                                                    "id": "M_updateRows",
-                                                    "text": "发布资源",
-                                                    "icon": "build",
-                                                    "color": "primary",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "state": "text",
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE_SELECTED_ROW",
-                                                            // "builtinId": "cancel_state_1",
-                                                            "ajaxId": "create_sql_model"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "M_cancelRows",
-                                                    "text": "取消发布",
-                                                    "icon": "build",
-                                                    "color": "dashed",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "state": "text",
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE_SELECTED_ROW",
-                                                            // "builtinId": "cancel_state_1",
-                                                            "ajaxId": "cancel_sql_model"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ]
-                                }
-                            },
+                            //                             ]
+                            //                         }
+                            //                     },
+                            //                     {
+                            //                         "id": "M_updateRow",
+                            //                         "text": "编辑资源",
+                            //                         "icon": "edit",
+                            //                         "color": "text-success",
+                            //                         "hidden": false,
+                            //                         "disabled": false,
+                            //                         "state": "edit",
+                            //                         "execute": [
+                            //                             {
+                            //                                 "triggerType": "STATE",
+                            //                                 "trigger": "EDIT_FORM",
+                            //                                 "builtinId": "edit_state_1"
+                            //                             }
+                            //                         ],
+                            //                         "toggle": {
+                            //                             "type": "state",
+                            //                             "toggleProperty": "hidden",
+                            //                             "values": [
+                            //                                 {
+                            //                                     "name": "edit",
+                            //                                     "value": true
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "new",
+                            //                                     "value": true
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "text",
+                            //                                     "value": false
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "cancel",
+                            //                                     "value": false
+                            //                                 }
+                            //                             ]
+                            //                         }
+                            //                     },
+                            //                     {
+                            //                         "id": "M_saveRow",
+                            //                         "text": "保存",
+                            //                         "icon": "save",
+                            //                         "color": "text-primary",
+                            //                         "hidden": true,
+                            //                         "disabled": false,
+                            //                         "execute": [
+                            //                             {
+                            //                                 "triggerType": "OPERATION",
+                            //                                 "trigger": "EXECUTE",
+                            //                                 "ajaxId": "add_save_1",
+                            //                                 // "stateId": "add_save_1",
+                            //                                 "conditionId": "add_save_1"
+                            //                             },
+                            //                             {
+                            //                                 "triggerType": "OPERATION",
+                            //                                 "trigger": "EXECUTE",
+                            //                                 // "stateId": "edit_save_1",
+                            //                                 "ajaxId": "edit_save_1",
+                            //                                 "conditionId": "edit_save_1",
+                            //                                 // "afterId": "edit_save_1"
+                            //                             }
+                            //                         ],
+                            //                         "toggle": {
+                            //                             "type": "state",
+                            //                             "toggleProperty": "hidden",
+                            //                             "values": [
+                            //                                 {
+                            //                                     "name": "edit",
+                            //                                     "value": false
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "new",
+                            //                                     "value": false
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "text",
+                            //                                     "value": true
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "cancel",
+                            //                                     "value": true
+                            //                                 }
+                            //                             ]
+                            //                         }
+                            //                     },
+                            //                     {
+                            //                         "id": "M_cancelrow",
+                            //                         "text": "取消",
+                            //                         "triggerType": "STATE",
+                            //                         "trigger": "CANCEL",
+                            //                         "icon": "rollback",
+                            //                         "color": "text-grey-darker",
+                            //                         "hidden": true,
+                            //                         "disabled": null,
+                            //                         "execute": [
+                            //                             {
+                            //                                 "triggerType": "STATE",
+                            //                                 "trigger": "CANCEL",
+                            //                                 "builtinId": "cancel_state_1"
+                            //                             }
+                            //                         ],
+                            //                         "state": "cancel",
+                            //                         "toggle": {
+                            //                             "type": "state",
+                            //                             "toggleProperty": "hidden",
+                            //                             "values": [
+                            //                                 {
+                            //                                     "name": "edit",
+                            //                                     "value": false
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "new",
+                            //                                     "value": false
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "text",
+                            //                                     "value": true
+                            //                                 },
+                            //                                 {
+                            //                                     "name": "cancel",
+                            //                                     "value": true
+                            //                                 }
+                            //                             ]
+                            //                         }
+                            //                     }
+                            //                 ]
+                            //             },
+                            //             {
+                            //                 "targetViewId": "sql_grid_view",
+                            //                 "group": [
+                            //                     {
+                            //                         "id": "M_updateRows",
+                            //                         "text": "发布资源",
+                            //                         "icon": "build",
+                            //                         "color": "primary",
+                            //                         "hidden": false,
+                            //                         "disabled": false,
+                            //                         "state": "text",
+                            //                         "execute": [
+                            //                             {
+                            //                                 "triggerType": "OPERATION",
+                            //                                 "trigger": "EXECUTE_SELECTED_ROW",
+                            //                                 // "builtinId": "cancel_state_1",
+                            //                                 "ajaxId": "create_sql_model"
+                            //                             }
+                            //                         ]
+                            //                     },
+                            //                     {
+                            //                         "id": "M_cancelRows",
+                            //                         "text": "取消发布",
+                            //                         "icon": "build",
+                            //                         "color": "dashed",
+                            //                         "hidden": false,
+                            //                         "disabled": false,
+                            //                         "state": "text",
+                            //                         "execute": [
+                            //                             {
+                            //                                 "triggerType": "OPERATION",
+                            //                                 "trigger": "EXECUTE_SELECTED_ROW",
+                            //                                 // "builtinId": "cancel_state_1",
+                            //                                 "ajaxId": "cancel_sql_model"
+                            //                             }
+                            //                         ]
+                            //                     }
+                            //                 ]
+                            //             }
+                            //         ]
+                            //     }
+                            // },
                             {
                                 "id": "r5zDHB2-1",
                                 "col": "cc",
                                 "type": "col",
                                 "title": "",
-                                "span": 14,
+                                "span": 24,
                                 "container": "component",
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
                                     "nzMd": 24,
-                                    "nzLg": 13,
-                                    "nzXl": 13,
-                                    "nzXXl": 13
+                                    "nzLg": 24,
+                                    "nzXl": 24,
+                                    "nzXXl": 24
                                 },
                                 "component": {
                                     "id": "view_sql_search",
@@ -727,15 +727,15 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                         "col": "cc",
                                                         "type": "col",
                                                         "title": "列ioj0mV",
-                                                        "span": 24,
+                                                        "span": 12,
                                                         "layoutContain": "select",
                                                         "size": {
                                                             "nzXs": 24,
                                                             "nzSm": 24,
                                                             "nzMd": 24,
-                                                            "nzLg": 24,
-                                                            "ngXl": 24,
-                                                            "nzXXl": 24
+                                                            "nzLg": { "span": 12, "offset": 12 },
+                                                            "ngXl": { "span": 12, "offset": 12 },
+                                                            "nzXXl": { "span": 12, "offset": 12 }
                                                         },
                                                         "control": {
                                                             "id": "search_name"
@@ -783,29 +783,29 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "nzXXl": 4
                                             },
                                             "controlSize": {
-                                                "span": 18,
+                                                "span": 20,
                                                 "nzXs": {
-                                                    "span": 18,
+                                                    "span": 20,
                                                     "offset": 0
                                                 },
                                                 "nzSm": {
-                                                    "span": 18,
+                                                    "span": 20,
                                                     "offset": 0
                                                 },
                                                 "nzMd": {
-                                                    "span": 18,
+                                                    "span": 20,
                                                     "offset": 0
                                                 },
                                                 "nzLg": {
-                                                    "span": 18,
+                                                    "span": 20,
                                                     "offset": 0
                                                 },
                                                 "ngXl": {
-                                                    "span": 18,
+                                                    "span": 20,
                                                     "offset": 0
                                                 },
                                                 "nzXXl": {
-                                                    "span": 18,
+                                                    "span": 20,
                                                     "offset": 0
                                                 }
                                             },
@@ -889,7 +889,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     "ajaxConfig": [
                                         {
                                             "id": "loadBusinessNameValue",
-                                            "url": "sd/GET_DM_SQL_LIST/query",
+                                            "url": "resource/GET_DM_SQL_LIST/query",
                                             "urlType": "inner",
                                             "ajaxType": "get",
                                             "params": [
@@ -918,6 +918,523 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                 "title": "",
                                 "span": 10,
                                 "container": "component",
+                                "bodyStyle": {
+                                    "min-height": "700px"
+                                },
+                                "header": {
+                                    "title": "SQL 编辑",
+                                    "icon": "edit",
+                                    "toolbar": {
+                                        "id": "toolbar_002",
+                                        "component": "cnToolbar",
+                                        "size": "default",
+                                        "cascade": {
+                                            "messageReceiver": [
+                                                {
+                                                    "id": "",
+                                                    "senderId": "form_sql",
+                                                    "receiveData": [
+                                                        {
+                                                            "beforeReceive": [],
+                                                            "triggerType": "STATE",
+                                                            "trigger": "STATE_TO_TEXT",
+                                                            // "params": [
+                                                            //     {
+                                                            //         "pname": "_ID",
+                                                            //         "cname": "_ID",
+                                                            //         "valueTo": "tempValue"
+                                                            //     }
+                                                            // ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "condition": [
+                                            {
+                                                "id": "add_state_1",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_CHECKED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            },
+                                                            {
+                                                                "type": "element",
+                                                                "name": "descName",
+                                                                "matchValue": "1",
+                                                                "match": "eq",
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "edit_state_1",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_CHECKED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "add_save_1",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "FORM_STATE",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "",
+                                                                "matchValue": "new",
+                                                                "match": "eq"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "edit_save_1",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "FORM_STATE",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "",
+                                                                "matchValue": "edit",
+                                                                "match": "eq"
+                                                            }
+                                                        ]
+                                                    }
+
+                                                ]
+                                            }
+
+                                        ],
+                                        "ajaxConfig": [
+                                            {
+                                                "id": "add_save_1",
+                                                "url": "resource/insert",
+                                                "urlType": "inner",
+                                                "ajaxType": "post",
+                                                "params": [
+                                                    {
+                                                        "name": "resourceName",
+                                                        "type": "componentValue",
+                                                        "valueName": "RESOURCE_NAME"
+                                                    },
+                                                    {
+                                                        "name": "descName",
+                                                        "type": "componentValue",
+                                                        "valueName": "DESC_NAME"
+                                                    },
+                                                    {
+                                                        "name": "content",
+                                                        "type": "componentValue",
+                                                        "valueName": "CONTENT"
+                                                    },
+                                                    {
+                                                        "name": "resourceType",
+                                                        "type": "value",
+                                                        "value": 1
+                                                    }
+                                                ],
+                                                "outputParameters": [
+
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterSQLSaveSuccess"
+                                                    },
+                                                    // {
+                                                    //     "name": "validation",
+                                                    //     "showMessageWithNext": 0,
+                                                    //     "message": "message.ajax.state.success",
+                                                    //     "senderId": "afterCitySaveValidation"
+                                                    // },
+                                                ]
+                                            },
+                                            {
+                                                "id": "edit_save_1",
+                                                "url": "resource/update",
+                                                "urlType": "inner",
+                                                "ajaxType": "put",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "tempValue",
+                                                        "valueName": "_ID"
+                                                    },
+                                                    {
+                                                        "name": "resourceName",
+                                                        "type": "componentValue",
+                                                        "valueName": "RESOURCE_NAME"
+                                                    },
+                                                    {
+                                                        "name": "descName",
+                                                        "type": "componentValue",
+                                                        "valueName": "DESC_NAME"
+                                                    },
+                                                    {
+                                                        "name": "content",
+                                                        "type": "componentValue",
+                                                        "valueName": "CONTENT"
+                                                    },
+                                                    {
+                                                        "name": "resourceType",
+                                                        "type": "value",
+                                                        "value": 1
+                                                    }
+                                                ],
+                                                "outputParameters": [
+
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterSQLSaveSuccess"
+                                                    },
+                                                    // {
+                                                    //     "name": "validation",
+                                                    //     "showMessageWithNext": 0,
+                                                    //     "message": "message.ajax.state.success",
+                                                    //     "senderId": "afterCitySaveValidation"
+                                                    // },
+                                                ]
+                                            },
+                                            {
+                                                "id": "create_sql_model",
+                                                "url": "resource/createModel",
+                                                "urlType": "inner",
+                                                "ajaxType": "post",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "item",
+                                                        "valueName": "ID"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterSQLModelSuccess"
+                                                    },
+                                                    // {
+                                                    //     "name": "validation",
+                                                    //     "showMessageWithNext": 0,
+                                                    //     "message": "message.ajax.state.success",
+                                                    //     "senderId": "afterCitySaveValidation"
+                                                    // },
+                                                ]
+                                            },
+                                            {
+                                                "id": "cancel_sql_model",
+                                                "url": "resource/cancelModel",
+                                                "urlType": "inner",
+                                                "ajaxType": "post",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "item",
+                                                        "valueName": "ID"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterSQLModelSuccess"
+                                                    },
+                                                    // {
+                                                    //     "name": "validation",
+                                                    //     "showMessageWithNext": 0,
+                                                    //     "message": "message.ajax.state.success",
+                                                    //     "senderId": "afterCitySaveValidation"
+                                                    // },
+                                                ]
+                                            }
+                                        ],
+                                        "builtinConfig": [
+                                            {
+                                                "id": "add_state_1",
+                                                "event": "formStateChange", // 内置方法
+                                                "state": "new",
+                                            },
+                                            {
+                                                "id": "edit_state_1",
+                                                "event": "formStateChange", // 内置方法
+                                                "state": "edit",
+                                            },
+                                            {
+                                                "id": "cancel_state_1",
+                                                "event": "formStateChange", // 内置方法
+                                                "state": "text",
+                                            }
+                                        ],
+                                        "beforeTrigger": [
+
+                                        ],
+                                        "afterTrigger": [
+                                            {
+                                                "id": "edit_save_1",
+                                                "senderId": "form_sql",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": [],
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "BEHAVIOR",
+                                                        "receiverTrigger": "REFRESH_AS_CHILD",
+                                                        "params": [
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "toolbar": [
+                                            {
+                                                "targetViewId": "form_sql",
+                                                "group": [
+                                                    {
+                                                        "id": "M_addRow",
+                                                        "text": "创建资源",
+                                                        "icon": "plus",
+                                                        "color": "text-primary",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "state": "new",
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "ADD_FORM",
+                                                                // "conditionId": "add_state_1"
+                                                                "builtinId": "add_state_1"
+
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "cancel",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "new",
+                                                                    "value": true
+                                                                },
+
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "M_updateRow",
+                                                        "text": "编辑资源",
+                                                        "icon": "edit",
+                                                        "color": "text-success",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "state": "edit",
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "EDIT_FORM",
+                                                                "builtinId": "edit_state_1"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "new",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "cancel",
+                                                                    "value": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "M_saveRow",
+                                                        "text": "保存",
+                                                        "icon": "save",
+                                                        "color": "text-primary",
+                                                        "hidden": true,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "EXECUTE",
+                                                                "ajaxId": "add_save_1",
+                                                                // "stateId": "add_save_1",
+                                                                "conditionId": "add_save_1"
+                                                            },
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "EXECUTE",
+                                                                // "stateId": "edit_save_1",
+                                                                "ajaxId": "edit_save_1",
+                                                                "conditionId": "edit_save_1",
+                                                                // "afterId": "edit_save_1"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "new",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "cancel",
+                                                                    "value": true
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "M_cancelrow",
+                                                        "text": "取消",
+                                                        // "triggerType": "STATE",
+                                                        // "trigger": "CANCEL",
+                                                        "icon": "rollback",
+                                                        "color": "text-grey-darker",
+                                                        "hidden": true,
+                                                        "disabled": null,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "CANCEL",
+                                                                "builtinId": "cancel_state_1"
+                                                            }
+                                                        ],
+                                                        "state": "cancel",
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "new",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "cancel",
+                                                                    "value": true
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "targetViewId": "sql_grid_view",
+                                                "group": [
+                                                    {
+                                                        "id": "M_updateRows",
+                                                        "text": "发布资源",
+                                                        "icon": "build",
+                                                        "color": "primary",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "state": "text",
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "EXECUTE_SELECTED_ROW",
+                                                                // "builtinId": "cancel_state_1",
+                                                                "ajaxId": "create_sql_model"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "M_cancelRows",
+                                                        "text": "取消发布",
+                                                        "icon": "build",
+                                                        "color": "dashed",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "state": "text",
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "EXECUTE_SELECTED_ROW",
+                                                                // "builtinId": "cancel_state_1",
+                                                                "ajaxId": "cancel_sql_model"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                },
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
@@ -1019,9 +1536,44 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                                 "valueName": "id"
                                                             }
                                                         ]
+                                                    },
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "STATE",
+                                                        "receiverTrigger": "CANCEL",
+                                                        // "params": [
+                                                        //     {
+                                                        //         "name": "ID",
+                                                        //         "type": "returnValue",
+                                                        //         "valueName": "id"
+                                                        //     }
+                                                        // ]
                                                     }
                                                 ]
                                             },
+                                            {
+                                                "id": "reloadFormState",
+                                                "senderId": "form_sql",
+                                                "triggerType": "STATE",
+                                                "trigger": "CANCEL",
+                                                "triggerMoment": "after",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": {},
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "STATE",
+                                                        "receiverTrigger": "STATE_TO_TEXT",
+                                                        "params": [
+                                                            {
+                                                                "name": "targetViewId",
+                                                                "type": "value",
+                                                                "value": "toolbar_002"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
                                         ],
                                         "messageReceiver": [
                                             {
@@ -1039,6 +1591,36 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                                 "valueTo": "tempValue"
                                                             }
                                                         ]
+                                                    },
+                                                    // {
+                                                    //     "beforeReceive": [],
+                                                    //     "triggerType": "STATE",
+                                                    //     "trigger": "CANCEL",
+                                                    //     // "params": [
+                                                    //     //     {
+                                                    //     //         "pname": "_ID",
+                                                    //     //         "cname": "_ID",
+                                                    //     //         "valueTo": "tempValue"
+                                                    //     //     }
+                                                    //     // ]
+                                                    // }
+                                                ]
+                                            },
+                                            {
+                                                "id": "",
+                                                "senderId": "form_sql",
+                                                "receiveData": [
+                                                    {
+                                                        "beforeReceive": [],
+                                                        "triggerType": "STATE",
+                                                        "trigger": "CANCEL",
+                                                        // "params": [
+                                                        //     {
+                                                        //         "pname": "_ID",
+                                                        //         "cname": "_ID",
+                                                        //         "valueTo": "tempValue"
+                                                        //     }
+                                                        // ]
                                                     }
                                                 ]
                                             }
@@ -1203,7 +1785,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     "ajaxConfig": [
                                         {
                                             "id": "loadform",
-                                            "url": "td/DM_RESOURCE/query",
+                                            "url": "resource/DM_RESOURCE/query",
                                             "urlType": "inner",
                                             "ajaxType": "get",
                                             "params": [
@@ -1230,21 +1812,28 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                 "title": "",
                                 "span": 12,
                                 "container": "component",
+                                "header": {
+                                    "title": "SQL 资源表",
+                                    "icon": "right-circle"
+                                },
+                                "bodyStyle": {
+                                    "min-height": "700px"
+                                },
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
-                                    "nzMd": 13,
+                                    "nzMd": 24,
                                     "nzLg": 13,
                                     "nzXl": 13,
                                     "nzXXl": 13
                                 },
                                 "component": {
                                     "id": "sql_grid_view",
-                                    "title": "SQL 资源表",
-                                    "titleIcon": "right-circle",
+                                    "title": "",
+                                    "titleIcon": "",
                                     "component": "cnDataTable",
                                     "keyId": "ID",
-                                    "size": "small",
+                                    "size": "middle",
                                     "isBordered": true,
                                     "isFrontPagination": false,
                                     "isPagination": true,
@@ -1255,7 +1844,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                     "pageSizeOptions": [10, 20, 50, 100],
                                     "loadingOnInit": true,
                                     "loadingConfig": {
-                                        "url": "sd/GET_DM_SQL_LIST/query",
+                                        "url": "resource/GET_DM_SQL_LIST/query",
                                         "method": "get",
                                         "params": [
                                             // {
@@ -1397,183 +1986,183 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                         // }
                                     ],
                                     "rowActions": [
-                                        {
-                                            "id": "city_new_row",
-                                            "state": "new",
-                                            "text": "保存",
-                                            "icon": "save",
-                                            "color": "text-primary",
-                                            "type": "link",
-                                            "size": "small",
-                                            "hidden": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "OPERATION",
-                                                    "trigger": "SAVE_ROW",
-                                                    "ajaxId": "add_city_1",
-                                                    // "stateId": "add_save_1",
-                                                    // "conditionId": "add_save_1"
-                                                }
-                                            ],
-                                            "toggle": {
-                                                "type": "state",
-                                                "toggleProperty": "hidden",
-                                                "values": [
-                                                    {
-                                                        "name": "new",
-                                                        "value": false
-                                                    },
-                                                    {
-                                                        "name": "text",
-                                                        "value": true
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "id": "city_cancel_new_row",
-                                            "state": "new",
-                                            "text": "取消",
-                                            "icon": "rollback",
-                                            "color": "text-primary",
-                                            "type": "link",
-                                            "size": "small",
-                                            "hidden": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "CANCEL_NEW_ROW",
-                                                    // "ajaxId": "add_save_1",
-                                                    // "stateId": "add_save_1",
-                                                    // "conditionId": "add_save_1"
-                                                }
-                                            ],
-                                            "toggle": {
-                                                "type": "state",
-                                                "toggleProperty": "hidden",
-                                                "values": [
-                                                    {
-                                                        "name": "new",
-                                                        "value": false
-                                                    },
-                                                    {
-                                                        "name": "text",
-                                                        "value": true
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "id": "city_edit",
-                                            "state": "text",
-                                            "text": "编辑",
-                                            "icon": "save",
-                                            "color": "text-primary",
-                                            "type": "link",
-                                            "size": "small",
-                                            "hidden": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "EDIT_ROW"
-                                                }
-                                            ],
-                                            "toggle": {
-                                                "type": "state",
-                                                "toggleProperty": "hidden",
-                                                "values": [
-                                                    {
-                                                        "name": "edit",
-                                                        "value": true
-                                                    },
-                                                    {
-                                                        "name": "text",
-                                                        "value": false
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "id": "city_save",
-                                            "text": "保存",
-                                            "state": "text",
-                                            "icon": "save",
-                                            "color": "text-primary",
-                                            "type": "link",
-                                            "size": "small",
-                                            "hidden": true,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "OPERATION",
-                                                    "trigger": "SAVE_ROW",
-                                                    "ajaxId": "edit_city_1",
-                                                    // "stateId": "add_save_1",
-                                                    // "conditionId": "add_save_1"
-                                                }
-                                            ],
-                                            "toggle": {
-                                                "type": "state",
-                                                "toggleProperty": "hidden",
-                                                "values": [
-                                                    {
-                                                        "name": "edit",
-                                                        "value": false
-                                                    },
-                                                    {
-                                                        "name": "text",
-                                                        "value": true
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "id": "city_cancel",
-                                            "state": "text",
-                                            "text": "取消",
-                                            "icon": "rollback",
-                                            "color": "text-primary",
-                                            "type": "link",
-                                            "size": "small",
-                                            "hidden": true,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "STATE",
-                                                    "trigger": "CANCEL_EDIT_ROW"
-                                                }
-                                            ],
-                                            "toggle": {
-                                                "type": "state",
-                                                "toggleProperty": "hidden",
-                                                "values": [
-                                                    {
-                                                        "name": "edit",
-                                                        "value": false
-                                                    },
-                                                    {
-                                                        "name": "text",
-                                                        "value": true
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        {
-                                            "id": "city_delete",
-                                            "text": "删除",
-                                            "state": "text",
-                                            "icon": "delete",
-                                            "type": "link",
-                                            "color": "primary",
-                                            "size": "small",
-                                            "hidden": false,
-                                            "execute": [
-                                                {
-                                                    "triggerType": "OPERATION",
-                                                    "trigger": "EXECUTE_SELECTED_ROW",
-                                                    // "conditionId": "delete_operation_1",
-                                                    "ajaxId": "city_delete_1"
-                                                }
-                                            ]
-                                        }
+                                        // {
+                                        //     "id": "city_new_row",
+                                        //     "state": "new",
+                                        //     "text": "保存",
+                                        //     "icon": "save",
+                                        //     "color": "text-primary",
+                                        //     "type": "link",
+                                        //     "size": "small",
+                                        //     "hidden": false,
+                                        //     "execute": [
+                                        //         {
+                                        //             "triggerType": "OPERATION",
+                                        //             "trigger": "SAVE_ROW",
+                                        //             "ajaxId": "add_city_1",
+                                        //             // "stateId": "add_save_1",
+                                        //             // "conditionId": "add_save_1"
+                                        //         }
+                                        //     ],
+                                        //     "toggle": {
+                                        //         "type": "state",
+                                        //         "toggleProperty": "hidden",
+                                        //         "values": [
+                                        //             {
+                                        //                 "name": "new",
+                                        //                 "value": false
+                                        //             },
+                                        //             {
+                                        //                 "name": "text",
+                                        //                 "value": true
+                                        //             }
+                                        //         ]
+                                        //     }
+                                        // },
+                                        // {
+                                        //     "id": "city_cancel_new_row",
+                                        //     "state": "new",
+                                        //     "text": "取消",
+                                        //     "icon": "rollback",
+                                        //     "color": "text-primary",
+                                        //     "type": "link",
+                                        //     "size": "small",
+                                        //     "hidden": false,
+                                        //     "execute": [
+                                        //         {
+                                        //             "triggerType": "STATE",
+                                        //             "trigger": "CANCEL_NEW_ROW",
+                                        //             // "ajaxId": "add_save_1",
+                                        //             // "stateId": "add_save_1",
+                                        //             // "conditionId": "add_save_1"
+                                        //         }
+                                        //     ],
+                                        //     "toggle": {
+                                        //         "type": "state",
+                                        //         "toggleProperty": "hidden",
+                                        //         "values": [
+                                        //             {
+                                        //                 "name": "new",
+                                        //                 "value": false
+                                        //             },
+                                        //             {
+                                        //                 "name": "text",
+                                        //                 "value": true
+                                        //             }
+                                        //         ]
+                                        //     }
+                                        // },
+                                        // {
+                                        //     "id": "city_edit",
+                                        //     "state": "text",
+                                        //     "text": "编辑",
+                                        //     "icon": "save",
+                                        //     "color": "text-primary",
+                                        //     "type": "link",
+                                        //     "size": "small",
+                                        //     "hidden": false,
+                                        //     "execute": [
+                                        //         {
+                                        //             "triggerType": "STATE",
+                                        //             "trigger": "EDIT_ROW"
+                                        //         }
+                                        //     ],
+                                        //     "toggle": {
+                                        //         "type": "state",
+                                        //         "toggleProperty": "hidden",
+                                        //         "values": [
+                                        //             {
+                                        //                 "name": "edit",
+                                        //                 "value": true
+                                        //             },
+                                        //             {
+                                        //                 "name": "text",
+                                        //                 "value": false
+                                        //             }
+                                        //         ]
+                                        //     }
+                                        // },
+                                        // {
+                                        //     "id": "city_save",
+                                        //     "text": "保存",
+                                        //     "state": "text",
+                                        //     "icon": "save",
+                                        //     "color": "text-primary",
+                                        //     "type": "link",
+                                        //     "size": "small",
+                                        //     "hidden": true,
+                                        //     "execute": [
+                                        //         {
+                                        //             "triggerType": "OPERATION",
+                                        //             "trigger": "SAVE_ROW",
+                                        //             "ajaxId": "edit_city_1",
+                                        //             // "stateId": "add_save_1",
+                                        //             // "conditionId": "add_save_1"
+                                        //         }
+                                        //     ],
+                                        //     "toggle": {
+                                        //         "type": "state",
+                                        //         "toggleProperty": "hidden",
+                                        //         "values": [
+                                        //             {
+                                        //                 "name": "edit",
+                                        //                 "value": false
+                                        //             },
+                                        //             {
+                                        //                 "name": "text",
+                                        //                 "value": true
+                                        //             }
+                                        //         ]
+                                        //     }
+                                        // },
+                                        // {
+                                        //     "id": "city_cancel",
+                                        //     "state": "text",
+                                        //     "text": "取消",
+                                        //     "icon": "rollback",
+                                        //     "color": "text-primary",
+                                        //     "type": "link",
+                                        //     "size": "small",
+                                        //     "hidden": true,
+                                        //     "execute": [
+                                        //         {
+                                        //             "triggerType": "STATE",
+                                        //             "trigger": "CANCEL_EDIT_ROW"
+                                        //         }
+                                        //     ],
+                                        //     "toggle": {
+                                        //         "type": "state",
+                                        //         "toggleProperty": "hidden",
+                                        //         "values": [
+                                        //             {
+                                        //                 "name": "edit",
+                                        //                 "value": false
+                                        //             },
+                                        //             {
+                                        //                 "name": "text",
+                                        //                 "value": true
+                                        //             }
+                                        //         ]
+                                        //     }
+                                        // },
+                                        // {
+                                        //     "id": "city_delete",
+                                        //     "text": "删除",
+                                        //     "state": "text",
+                                        //     "icon": "delete",
+                                        //     "type": "link",
+                                        //     "color": "primary",
+                                        //     "size": "small",
+                                        //     "hidden": false,
+                                        //     "execute": [
+                                        //         {
+                                        //             "triggerType": "OPERATION",
+                                        //             "trigger": "EXECUTE_SELECTED_ROW",
+                                        //             // "conditionId": "delete_operation_1",
+                                        //             "ajaxId": "city_delete_1"
+                                        //         }
+                                        //     ]
+                                        // }
                                     ],
                                     "cascade": {
                                         "messageSender": [

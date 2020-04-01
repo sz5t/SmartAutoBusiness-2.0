@@ -1,0 +1,37 @@
+<nz-page-header nzBackIcon>
+  <nz-page-header-title>{{title}}</nz-page-header-title>
+  <nz-page-header-subtitle>{{subTitle}}</nz-page-header-subtitle>
+  <nz-page-header-tags>
+    <nz-tag [nzColor]="tagColor">{{tagText}}</nz-tag>
+  </nz-page-header-tags>
+  <nz-page-header-extra>
+    <!-- <button nz-button>建模</button>
+    <button nz-button>取消建模</button>
+    <button nz-button nzType="primary">删除资源</button> -->
+  </nz-page-header-extra>
+  <nz-page-header-content>
+    <div class="wrap">
+      <div nz-row class="content padding">
+        <nz-descriptions [nzColumn]="headerConfig.descColumnCount">
+          <nz-descriptions-item *ngFor="let item of contentItems" [nzTitle]="item.title" [nzSpan]="item.span">
+            {{item.text}}
+          </nz-descriptions-item>
+        </nz-descriptions>
+      </div>
+      <div nz-row class="extra-content">
+        <div *ngFor="let extra of extraItems" nz-col [nzSpan]="extra.span">
+          <span class="label">{{extra.label}}</span>
+          <p class="detail">{{extra.detail}}</p>
+        </div>
+      </div>
+    </div>
+  </nz-page-header-content>
+  <!-- <nz-page-header-footer>
+
+  </nz-page-header-footer> -->
+</nz-page-header>
+<div nz-row class="content">
+  <ng-container *ngIf="headerConfig.layout" CnDynamicLayoutResolverDirective [config]="headerConfig.layout"
+    [initData]="initData" [tempData]="tempData">
+  </ng-container>
+</div>

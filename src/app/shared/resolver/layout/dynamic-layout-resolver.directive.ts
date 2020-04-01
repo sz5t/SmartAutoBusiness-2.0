@@ -15,6 +15,8 @@ import { Subject, Subscription } from 'rxjs';
 import { RelationResolver } from '../relation/relation.resolver';
 import { CnPageHeaderComponent } from '@shared/components/layout/cn-page-header.component';
 import { LayoutPageHeader } from './layout.page-header';
+import { CnDynamicPageHeaderComponent } from '@shared/components/layout/cn-dynamic-page-header.component';
+import { CnDynamicLayoutComponent } from '@shared/components/layout/cn-dynamic-layout.component';
 
 @Directive({
     // tslint:disable-next-line: directive-selector
@@ -73,7 +75,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     * 解析级联消息
     */
     private resolveRelations() {
-        if (this.config && this.config.layoutJson['cascade'] && this.config.layoutJson.cascade.messageSender) {
+        if (this.config && this.config['cascade'] && this.config.cascade.messageSender) {
             if (!this._sender_source$) {
                 // 解析组件发送消息配置,并注册消息发送对象
                 this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
@@ -81,7 +83,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
             }
 
         }
-        if (this.config && this.config.layoutJson.cascade && this.config.layoutJson.cascade.messageReceiver) {
+        if (this.config && this.config.cascade && this.config.cascade.messageReceiver) {
             // 解析消息接受配置,并注册消息接收对象
             // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
             // this._receiver_subscription$ = this._receiver_source$.subscribe();
@@ -93,11 +95,10 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     }
 
     ngOnInit() {
-        console.log(this.config);
         let configObj;
         this.resolveRelations();
         if (this.config) {
-            configObj = this.resolver(this.config.layoutJson);
+            configObj = this.resolver(this.config);
         }
         if (configObj) {
             switch (configObj.container) {
@@ -171,7 +172,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     private buildPageHeader(pageHeaderObj: any) {
         // console.log('buildLayout Receive message --', this.initValue, this.tempValue);
         const cmpt = this._resolver.resolveComponentFactory<any>(
-            CnPageHeaderComponent
+            CnDynamicPageHeaderComponent
         );
         this._container.clear();
         this._pageHeaderObj = this._container.createComponent(cmpt);
@@ -187,7 +188,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     private buildLayout(layoutObj: any) {
         // console.log('buildLayout Receive message --', this.initValue, this.tempValue);
         const cmpt = this._resolver.resolveComponentFactory<any>(
-            CnLayoutComponent
+            CnDynamicLayoutComponent
         );
         this._container.clear();
         this._layoutObj = this._container.createComponent(cmpt);
@@ -203,7 +204,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     private buildLayoutRows(layoutObj: any) {
         // console.log('buildLayoutRows Receive message --', this.initData, this.tempData);
         const cmpt = this._resolver.resolveComponentFactory<any>(
-            CnLayoutComponent
+            CnDynamicLayoutComponent
         );
         this._container.clear();
         this._rowsObj = this._container.createComponent(cmpt);
@@ -282,6 +283,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
                         newCol.bodyStyle = c.bodyStyle;
                         newCol.size = new LayoutSize(c.size);
                         newCol.container = c.container;
+                        c.header && (newCol.header = this.setHeader(c.header));
                         this.setContainer(newCol, c);
                         newRow.add(newCol);
                     }
@@ -317,6 +319,15 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
         // return this.config.componentsJson.find(id);
     }
 
+    private setHeader(headerCfg) {
+        const header: any = headerCfg;
+        if (headerCfg.id) {
+            header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
+        }
+
+        return header;
+    }
+
     private buildCustomerObj(cfg): LayoutBase {
         const newLayout = new LayoutBase();
         newLayout.container = cfg.container;
@@ -339,7 +350,9 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     }
 
     private buildTabsObj(cfg): any {
+        debugger;
         const newTabs = new LayoutTabs();
+        newTabs.tabType = cfg.tabType;
         newTabs.container = cfg.container;
         newTabs.tabContent = cfg.tabContent;
         newTabs.tabActiveMapping = cfg.tabActiveMapping;
@@ -365,6 +378,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
         const newPageHeader = new LayoutPageHeader();
         newPageHeader.container = "pageHeader";
         newPageHeader.title = cfg.title;
+        newPageHeader.type = cfg.type;
         newPageHeader.subTitle = cfg.subTitle;
         newPageHeader.tagColor = cfg.tagColor;
         newPageHeader.tagText = cfg.tagText;

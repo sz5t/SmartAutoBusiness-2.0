@@ -35,16 +35,33 @@ export class LayoutBase implements ILayout {
     private _size: LayoutSize;
     private _hidden: boolean;
     private _layout: any;
+    private _icon: any;
     private _layoutType: string;
     private _rows: LayoutRow[];
     private _tabs: LayoutRow[];
     private _customLayout: any[];
     private _bodyStyle: any;
+    private _header: any;
+    public get header(): any {
+        return this._header;
+    }
+    public set header(value: any) {
+        this._header = value;
+    }
+
+
     public get bodyStyle(): any {
         return this._bodyStyle;
     }
     public set bodyStyle(value: any) {
         this._bodyStyle = value;
+    }
+
+    public get icon(): any {
+        return this._icon;
+    }
+    public set icon(value: any) {
+        this._icon = value;
     }
 
     public get noBorder(): boolean {

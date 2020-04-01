@@ -30,16 +30,17 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
             "id": "pageheader_1",
             "title": "组件配置属性管理",
             "subTitle": "维护组件配置属性, 为组件配置功能提供基础数据",
+            "type": "breadcrumb",
             "tagColor": "blue",
             "tagText": "系统功能",
             "descColumnsCount": 2,
             "operation": [],
             "contentItems": [
-                {
-                    "title": "注意事项",
-                    "text": "此功能提供了创建组件功能",
-                    "span": 2
-                }
+                // {
+                //     "title": "注意事项",
+                //     "text": "此功能提供了创建组件功能",
+                //     "span": 2
+                // }
             ],
             "extraItems": [
                 // {
@@ -2684,7 +2685,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                                     "valueName": "SORT"
                                                                                                 }
                                                                                             ],
-                                                                                           "outputParameters": [
+                                                                                            "outputParameters": [
 
                                                                                             ],
                                                                                             "result": [

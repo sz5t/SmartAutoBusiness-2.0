@@ -53,6 +53,7 @@ export class BaseInnerMethodManagerComponent implements OnInit {
             "subTitle": "内置操作是构成系统级联的重要组成部分,系统功能及操作的基础",
             "tagColor": "blue",
             "tagText": "系统功能",
+            "type": "breadcrumb",
             "descColumnsCount": 2,
             "operation": [],
             "contentItems": [

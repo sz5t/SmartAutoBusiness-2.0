@@ -10,7 +10,7 @@ import { isArray } from 'util';
   templateUrl: './cfg-attribute.component.html',
   styleUrls: ['./cfg-attribute.component.less']
 })
-export class CfgAttributeComponent extends CnComponentBase  implements OnInit,OnDestroy {
+export class CfgAttributeComponent extends CnComponentBase implements OnInit, OnDestroy {
   @Input() public changeValue;
 
   COM_ID; // 组件id
@@ -23,7 +23,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
   }
 
   ngOnInit() {
-    this.ComponentValue={};
+    this.ComponentValue = {};
     this.js();
   }
 
@@ -64,18 +64,18 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
                   this.COM_ID = data.options.component.id;
                   this.CMTCODE = data.options.component.type;
                   this.ComponentValue['CODE'] = data.options.component.type;
-                  this.ComponentValue['CMTId'] =  this.COM_ID;
-                 // console.log('attribute 接收消息组件标识', data.options.component.id ,  this.ComponentValue);
-                 
+                  this.ComponentValue['CMTId'] = this.COM_ID;
+                  // console.log('attribute 接收消息组件标识', data.options.component.id ,  this.ComponentValue);
+
                   await this.load();
-               
+
                   // 根据 标识加载数据
                   // M1_config =[];
                   // this.M1_config = this.M12_config;
                 }
                 else {
                   this.COM_ID = "";
-                  this.CMTCODE ="";
+                  this.CMTCODE = "";
                   this.M1_config = [];
                 }
 
@@ -89,17 +89,17 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
     }
   }
   public fs() {
-    console.log("======================",this.COM_ID);
+    console.log("======================", this.COM_ID);
     this.componentService.commonRelationSubject.next(
       new BsnRelativesMessageModel(
-          {
-              triggerType: "LAYOUT",
-              trigger: "COMPONENT_LOAD_CONFIG"
-          },
-          this.COM_ID,
-          {id:this.COM_ID}
+        {
+          triggerType: "LAYOUT",
+          trigger: "COMPONENT_LOAD_CONFIG"
+        },
+        this.COM_ID,
+        { id: this.COM_ID }
       )
-  );
+    );
 
 
 
@@ -119,7 +119,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
   }
 
   loadingConfig = {
-    "url": "sd/B_P_EDIT_ATTRIBUTE_TYPE/procedure",  // operation 操作 query
+    "url": "resource/B_P_EDIT_ATTRIBUTE_TYPE/procedure",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {
@@ -134,7 +134,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
     ]
   }
   loadingDataConfig = {
-    "url": "sd/B_P_D_CONFIG_PROPERTY_JSON/procedure",  // operation 操作 query
+    "url": "resource/B_P_D_CONFIG_PROPERTY_JSON/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {
@@ -142,7 +142,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
         "type": "componentValue",
         "valueName": "CMTId",
         "dataType": "string",
-        "value":this.COM_ID
+        "value": this.COM_ID
       }
     ],
     "filter": [
@@ -158,7 +158,7 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
     };
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     const response = await this.componentService.apiService.post(url, params).toPromise();
-   // console.log("组件编辑配置加载", response.data);
+    // console.log("组件编辑配置加载", response.data);
 
     if (response.data._procedure_resultset_1[0]['W'] === "") {
       this.M1_config = [];
@@ -167,14 +167,14 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
       const CMTId = {
         name: "CMTId",
         type: "item",
-        value:  this.COM_ID ,
+        value: this.COM_ID,
         valueName: "CMTId",
         valueTo: "tempValue",
       };
       const CMTCODE = {
         name: "CMTCODE",
         type: "item",
-        value:  this.CMTCODE ,
+        value: this.CMTCODE,
         valueName: "CMTCODE",
         valueTo: "tempValue",
       };
@@ -187,27 +187,27 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
       };
       let is_chang = true;
       let is_code = true;
-      
-      if(!this.changeValue){
-        this.changeValue=[];
-      }   
+
+      if (!this.changeValue) {
+        this.changeValue = [];
+      }
       this.changeValue.forEach(element => {
-           if(element.name ==='CMTId'){
-            element['value'] = this.COM_ID;
-            is_chang =false;
-           }
-           if(element.name ==='CMTCODE'){
-            element['value'] = this.CMTCODE;
-            is_code =false;
-           }
+        if (element.name === 'CMTId') {
+          element['value'] = this.COM_ID;
+          is_chang = false;
+        }
+        if (element.name === 'CMTCODE') {
+          element['value'] = this.CMTCODE;
+          is_code = false;
+        }
       });
-      if(is_chang){
-        this.changeValue = [...this.changeValue,CMTId];
+      if (is_chang) {
+        this.changeValue = [...this.changeValue, CMTId];
       }
-      if(is_chang){
-        this.changeValue = [...this.changeValue,CMTCODE];
+      if (is_chang) {
+        this.changeValue = [...this.changeValue, CMTCODE];
       }
-     
+
 
       // console.log("******");
       // console.log("changeValue:", this.changeValue );
@@ -232,21 +232,21 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     const response = await this.componentService.apiService.post(url, params).toPromise();
 
-      let d=[];
-      if (response.data && response.data._procedure_resultset_1) {
-           d = response.data._procedure_resultset_1;
-      }  else {
-          d=[];
-      }
+    let d = [];
+    if (response.data && response.data._procedure_resultset_1) {
+      d = response.data._procedure_resultset_1;
+    } else {
+      d = [];
+    }
 
-     d.forEach(item=>{
-       this.PROPERTY[item['REF_ID']] = item;
-     })
+    d.forEach(item => {
+      this.PROPERTY[item['REF_ID']] = item;
+    })
 
-     console.log("=== this.PROPERTY=====",  this.PROPERTY);
+    console.log("=== this.PROPERTY=====", this.PROPERTY);
 
   }
-  public M1_config=[];
+  public M1_config = [];
   public M12_config = [
     {
       "feild": "cascade",
@@ -1730,12 +1730,12 @@ export class CfgAttributeComponent extends CnComponentBase  implements OnInit,On
   ]
 
   // 存储信息为当前页，当前组件，这部分信息所有组件都有
-  initData={
+  initData = {
 
   };
 
 
-  public previewComponent(){
+  public previewComponent() {
     console.log('预览配置组件', this.COM_ID);
     this.fs();
   }

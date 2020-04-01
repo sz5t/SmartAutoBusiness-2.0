@@ -5,7 +5,7 @@ declare let CodeMirror: any;
   selector: 'app-cn-code-edit',
   templateUrl: './cn-code-edit.component.html',
   styleUrls: ['./cn-code-edit.component.less'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.ShadowDom
 })
 //   encapsulation: ViewEncapsulation.None, Native
 export class CnCodeEditComponent implements OnInit, AfterViewInit {
@@ -18,7 +18,7 @@ export class CnCodeEditComponent implements OnInit, AfterViewInit {
   isSpinning = true;
   public modelstyle = { width: '100%', 'max-height': (window.document.body.clientHeight - 160).toString() + 'px', 'height': (window.document.body.clientHeight - 160).toString() + 'px' };
 
-  divstyle = { width: '100%',  'min-height': (window.document.body.clientHeight - 160).toString() + 'px' };
+  divstyle = { width: '100%', 'min-height': (window.document.body.clientHeight - 160).toString() + 'px' };
   // divstyle = { width: '100%'};
   constructor() { }
 
@@ -63,11 +63,11 @@ export class CnCodeEditComponent implements OnInit, AfterViewInit {
         smartIndent: true,
         lineNumbers: true,
         matchBrackets: true, // 括号匹配
-      //  lineWrapping: true, // 代码折叠
+        //  lineWrapping: true, // 代码折叠
         // 代码折叠
-  
-    // lineWrapping: true,
-    foldGutter: true,
+
+        // lineWrapping: true,
+        foldGutter: true,
         gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
 
         autofocus: true,

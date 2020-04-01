@@ -13,6 +13,7 @@ import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.c
 import { CfgLayoutPageComponent } from '@shared/config-components/config-layout-page/cfg-layout-page/cfg-layout-page.component';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { CnStaticTableComponent } from '@shared/components/data_table/cn-static-table.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -26,7 +27,8 @@ const components: { [type: string]: Type<any> } = {
     cnProgress: CnProgressComponent,
     cnCalendar: CnCalendarComponent,
     cfgLayoutPage: CfgLayoutPageComponent,
-    cnCardList: CnCardListComponent
+    cnCardList: CnCardListComponent,
+    cnStaticTable: CnStaticTableComponent
 };
 
 @Directive({

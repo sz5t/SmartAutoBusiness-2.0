@@ -42,12 +42,12 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
   // 2. 可选择或者添加处理数据
 
   async ngOnInit() {
-    if(this.config.changeValue) {
+    if (this.config.changeValue) {
       this.setChangeValue(this.config.changeValue);
     }
 
     this.setChangeValue(this.changeValue);
-    console.log('++++++',this.changeValue);
+    console.log('++++++', this.changeValue);
     await this.loadinitDataJson();
     await this.loadEditJson();
     this.table.load();
@@ -55,7 +55,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     // if (this.config.loadingOnInit) {
     //   this.tableConfig.component['loadingOnInit'] = this.config.loadingOnInit;
     // }
-   // this.tableConfig['component']=null;
+    // this.tableConfig['component']=null;
 
     let v_value;
     if (this.valueConfig) {
@@ -87,7 +87,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
   }
 
   // B_P_EDIT_ATTRIBUTE_SELECT  @CODE nvarchar(50),	@ACODE nvarchar(50) ajaxConfig
-  loadEditJsonConfig={
+  loadEditJsonConfig = {
     "url": "sd/B_P_EDIT_ATTRIBUTE_SELECT/procedure",  // operation 操作 query
     "ajaxType": "post",
     "params": [
@@ -102,7 +102,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
         "type": "tempValue",
         "valueName": "ACODE",
         "dataType": "string",
-        "value":"ajaxConfig"
+        "value": "ajaxConfig"
       }
     ],
     "filter": [
@@ -110,7 +110,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     ]
   }
 
-  loadDataJsonConfig={
+  loadDataJsonConfig = {
     "url": "sd/B_P_D_CONFIG_PROPERTY_SELECT_JSON/procedure",  // operation 操作 query
     "ajaxType": "post",
     "params": [
@@ -125,7 +125,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
         "type": "tempValue",
         "valueName": "ACODE",
         "dataType": "string",
-        "value":"ajaxConfig"
+        "value": "ajaxConfig"
       }
     ],
     "filter": [
@@ -133,10 +133,10 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     ]
   }
 
-  
+
 
   // 加载匹配数据
-  async loadEditJson(){
+  async loadEditJson() {
 
     const url = this.loadEditJsonConfig.url;
     const method = this.loadEditJsonConfig.ajaxType;
@@ -148,24 +148,24 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     const response = await this.componentService.apiService.post(url, params).toPromise();
     console.log('--selectGrid---' + this.config.field, response, params, this.value, this.loadEditJsonConfig.params);
-   // [config]="{  type: 'AttributeTable', keyId:panel.panelsform.keyId, field: 'params',columns:panel.panelsform.arrayJson.objectJson}
-  
-   if (response.data._procedure_resultset_1[0]['W'] === "") { 
-    this.tableConfig =null;
-    this._attributeConfig  = null;
-  }
-  else {
-    const d = JSON.parse(response.data._procedure_resultset_1[0]['W']);
-    this.tableConfig ={  type: 'AttributeTable', keyId:d.keyId, field: 'params',columns:d.arrayJson.objectJson}
-    this._attributeConfig =  d.arrayJson;
+    // [config]="{  type: 'AttributeTable', keyId:panel.panelsform.keyId, field: 'params',columns:panel.panelsform.arrayJson.objectJson}
+
+    if (response.data._procedure_resultset_1[0]['W'] === "") {
+      this.tableConfig = null;
+      this._attributeConfig = null;
+    }
+    else {
+      const d = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+      this.tableConfig = { type: 'AttributeTable', keyId: d.keyId, field: 'params', columns: d.arrayJson.objectJson }
+      this._attributeConfig = d.arrayJson;
+    }
+
+    this.table.attributeConfig = this._attributeConfig;
+    this.table.config = this.tableConfig;
+
   }
 
-  this.table.attributeConfig =  this._attributeConfig;
-  this.table.config =   this.tableConfig ;
-
-  }
-
-  async loadinitDataJson(){
+  async loadinitDataJson() {
 
     const url = this.loadDataJsonConfig.url;
     const method = this.loadDataJsonConfig.ajaxType;
@@ -177,22 +177,22 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     const response = await this.componentService.apiService.post(url, params).toPromise();
     console.log('--selectGridinitData---' + this.config.field, response, params, this.value, this.loadDataJsonConfig.params);
-   // [config]="{  type: 'AttributeTable', keyId:panel.panelsform.keyId, field: 'params',columns:panel.panelsform.arrayJson.objectJson}
-  
-   // tslint:disable-next-line:prefer-conditional-expression
-   if (response.data._procedure_resultset_1[0]) { 
-    this._initData =response.data._procedure_resultset_1[0];
-  }
-  else {
-    this._initData =null;
-  }
-  this.table.initData =   this._initData ;
+    // [config]="{  type: 'AttributeTable', keyId:panel.panelsform.keyId, field: 'params',columns:panel.panelsform.arrayJson.objectJson}
+
+    // tslint:disable-next-line:prefer-conditional-expression
+    if (response.data._procedure_resultset_1[0]) {
+      this._initData = response.data._procedure_resultset_1[0];
+    }
+    else {
+      this._initData = null;
+    }
+    this.table.initData = this._initData;
 
   }
 
 
 
-  
+
   /**
    * VisibleChange
    */
@@ -201,18 +201,18 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     // console.log('VisibleChange', v, this.visible);
 
   }
-  public onRefresh(){
+  public onRefresh() {
     this.table.load();
   }
   /**
    * onOk
    */
   public onOk() {
-    console.log('ok_table',  this.table);
+    console.log('ok_table', this.table);
     const xz = this.table.SelectRow;
     if (xz) {
-      const labelName = xz[this.config.labelName?this.config.labelName:'id'];
-      const valueName = xz[this.config.valueName?this.config.valueName:'id'];
+      const labelName = xz[this.config.labelName ? this.config.labelName : 'id'];
+      const valueName = xz[this.config.valueName ? this.config.valueName : 'id'];
       this.value = valueName;
       this._value = labelName ? labelName : valueName;
       this.selectedRowItem = xz;
@@ -221,8 +221,8 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
       this._value = null;
       this.selectedRowItem = null;
     }
-     this.visible = false;
-     this.valueChange1(this.value);
+    this.visible = false;
+    this.valueChange1(this.value);
     console.log('ok', xz);
   }
 
@@ -233,35 +233,35 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     this.visible = false;
   }
 
-  private _onFocus() {
+  public _onFocus() {
     // console.log('_onFocus');
     // if (!this._focus)
     //   this._focus = true;
 
   }
-  private _onBlur() {
+  public _onBlur() {
     // console.log('_onBlur');
     // if (this._focus)
     //   this._focus = false;
   }
-  private _onMouseover() {
+  public _onMouseover() {
     setTimeout(() => {
       if (!this._ifocus)
         this._focus = true;
     }, 50);
   }
-  private _onMouseout() {
+  public _onMouseout() {
 
     setTimeout(() => {
       if (!this._ifocus)
         this._focus = false;
     }, 50);
   }
-  private _ionMouseover() {
+  public _ionMouseover() {
     if (!this._ifocus)
       this._ifocus = true;
   }
-  private _ionMouseout() {
+  public _ionMouseout() {
     if (this._ifocus)
       this._ifocus = false;
   }
@@ -277,7 +277,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     this.value = null;
     this.selectedRowItem = null;
     this.table.SelectRow = null;
-   //  this.table.clearSelectRow('selectedOrchecked');
+    //  this.table.clearSelectRow('selectedOrchecked');
   }
 
   // 构建参数-》下拉选择自加载数据
@@ -302,9 +302,9 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
   public async load() {
     // 【参数不全是否阻止加载！】
     // 对后续业务判断有影响
-      console.log('===select 自加载====>load');
-      this.selectedRowItem = null;
-      return;
+    console.log('===select 自加载====>load');
+    this.selectedRowItem = null;
+    return;
     if (!this.config.loadingItemConfig['ajaxConfig']) {
       this.selectedRowItem = null;
       return;
@@ -374,10 +374,10 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     const backValue = { id: this.valueConfig.id, name: this.config.field, value: v, count: this.count, dataItem: this.selectedRowItem };
     // const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: this.selectedRowItem };
     this.updateValue.emit(backValue);
-    this.count +=1;
+    this.count += 1;
     console.log('backValue=>', backValue)
     // 3 青海
-    
+
   }
   /**
    * 级联分析
@@ -419,7 +419,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
     }
   }
 
-  public remoteOperation(){
+  public remoteOperation() {
 
   }
 

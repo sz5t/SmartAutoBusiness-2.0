@@ -1145,12 +1145,18 @@ export class CnTreeTableComponent extends CnComponentBase
         this.dataList.map(row => {
             this.mapOfDataExpanded[row[this.KEY_ID]].map(mItem => {
                 mItem['selected'] = false;
-            })
+            });
+            this.mapOfDataExpanded[row[this.KEY_ID]].map(mItem => {
+                mItem['checked'] = false;
+            });
         });
 
         this.mapOfDataExpanded[rowData[this.KEY_ID]].map(mItem => {
             if (mItem.data[this.KEY_ID] === rowData[this.KEY_ID]) {
                 mItem['selected'] = true;
+            }
+            if (mItem.data[this.KEY_ID] === rowData[this.KEY_ID]) {
+                mItem['checked'] = true;
             }
         });
 

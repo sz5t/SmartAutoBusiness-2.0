@@ -36,7 +36,8 @@ const routes: Routes = [
   { path: 'pageDesign', component: PageDesignComponent },
   { path: 'businessmodeling', component: DataBusinessModelingComponent },
   { path: 'componentManager', component: BaseComponentMannagerComponent },
-  { path: 'dynamic/:name', component: CnDynamicTemplateComponent }
+  { path: 'dynamic/:name', component: CnDynamicTemplateComponent },
+  { path: 'dynamic/:name/:id', component: CnDynamicTemplateComponent }
 ];
 
 @NgModule({

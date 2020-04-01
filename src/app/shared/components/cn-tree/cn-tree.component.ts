@@ -30,6 +30,7 @@ import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 import { arraysEqual, NzFormatEmitEvent, NzTreeNode, NzTreeComponent } from 'ng-zorro-antd';
 import { ITreeProperty, CN_TREE_PROPERTY } from '@core/relations/bsn-property/tree.property.interface';
 import { CN_TREE_METHOD } from '@core/relations/bsn-methods/bsn-tree-methods';
+import { ChildrenOutletContexts } from '@angular/router';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -296,9 +297,13 @@ export class CnTreeComponent extends CnComponentBase
 
 
         if (node.children && node.children.length > 0) {
-            node.children.map(n => {
-                this._setTreeNode(n);
-            })
+            node['isLeaf'] = false;
+            node['children'] = [];
+            // node.children.map(n => {
+            //     // this._setTreeNode(n);
+            // })
+        } else {
+            node['isLeaf'] = true;
         }
     }
 
@@ -314,8 +319,10 @@ export class CnTreeComponent extends CnComponentBase
             if (response && response.data && response.data.length > 0) {
                 response.data.map(d => {
                     this._setTreeNode(d);
-                    d['isLeaf'] = false;
-                    d['children'] = [];
+                    if (d.children && d.children.length > 0) {
+                        d['isLeaf'] = true;
+                        // d['children'] = [];
+                    }
                 });
                 node.addChildren(response.data);
             } else {

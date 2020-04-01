@@ -23,11 +23,54 @@
           </ng-container>
 
 
-          <nz-card *ngSwitchCase="'component'" [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
-            [nzTitle]="c.title ? c.title : false">
-            <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
-              [initData]="initData"> </ng-container>
-          </nz-card>
+
+          <ng-container *ngSwitchCase="'component'">
+            <!-- <ng-container *ngIf="c.component.component === 'cnToolbar'; else tmplComponent">
+              <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true" [nzTitle]="titleTmpl">
+                <ng-template #titleTmpl>
+                  <span><i nz-icon spin style="font-size:16px" [nzType]="c.icon" *ngIf="c.icon"></i> {{c.title}}</span>
+                  <span style="float:right">
+                    <ng-container cnComponentResolverDirective [config]="c.header.toolbar" [tempData]="tempData"
+                      [initData]="initData">
+                    </ng-container>
+                  </span>
+                  <div class="clearfix"></div>
+                </ng-template>
+
+              </nz-card>
+
+
+            </ng-container>
+            <ng-template #tmplComponent>
+              <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
+                [nzTitle]="c.title ? c.title : false">
+                <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
+                  [initData]="initData">
+                </ng-container>
+              </nz-card>
+            </ng-template> -->
+
+            <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
+              [nzTitle]="c.header ? titleTmpl : ''">
+              <ng-template #titleTmpl>
+                <span><i nz-icon spin style="font-size:16px" [nzType]="c.header.icon" *ngIf="c.header.icon"></i>
+                  {{c.header.title}}</span>
+                <span style="float:right">
+                  <ng-container cnComponentResolverDirective *ngIf="c.header.toolbar" [config]="c.header.toolbar"
+                    [tempData]="tempData" [initData]="initData">
+                  </ng-container>
+                </span>
+                <div class="clearfix"></div>
+              </ng-template>
+              <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
+                [initData]="initData">
+              </ng-container>
+            </nz-card>
+          </ng-container>
+
+
+
+
           <ng-container *ngSwitchCase="'rows'" cnLayoutResolverDirective [config]="c" [tempData]="tempData"
             [initData]="initData">
           </ng-container>

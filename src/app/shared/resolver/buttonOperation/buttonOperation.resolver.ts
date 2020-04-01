@@ -77,6 +77,14 @@ export class ButtonOperationResolver {
         this._changeValueCfg = value;
     }
 
+    private _linkConfig;
+    public get linkConfig() {
+        return this._linkConfig;
+    }
+    public set linkConfig(value) {
+        this._linkConfig = value;
+    }
+
     constructor(private componentService: ComponentServiceProvider, private config, private data?) {
         config.ajaxConfig && (this.ajaxCfg = config.ajaxConfig);
         config.beforeTrigger && (this.beforeTriggerCfg = config.beforeTrigger);
@@ -87,6 +95,7 @@ export class ButtonOperationResolver {
         config.builtinConfig && (this.builtinCfg = config.builtinConfig);
         config.dialog && (this.dialogCfg = config.dialog);
         config.changeValue && (this.changeValueCfg = config.changeValue);
+        config.linkConfig && (this.linkConfig = config.linkConfig);
     }
     public toolbarAction(btn, targetViewId) {
         // 按钮区分具体的,状态(STATE)、行为(BEHAVIOR)、动作(ACTION)、操作(OPERATION),跳转(LINK)
@@ -177,9 +186,11 @@ export class ButtonOperationResolver {
             // 链接跳转触发
             case BSN_TRIGGER_TYPE.LINK:
                 const linkOptions = {};
-                linkOptions['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
+                // linkOptions['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
                 linkOptions['beforeOperation'] = this.findBeforeOperationConfig(cfg.stateId);
                 linkOptions['condition'] = this.findConditionConfig(cfg.conditionId);
+                linkOptions['linkConfig'] = this.findLinkConfig(cfg.linkId);
+                linkOptions['data'] = this.currentData;
                 const linkMsg = new BsnRelativesMessageModel(
                     triggerObj,
                     targetViewId,
@@ -277,7 +288,7 @@ export class ButtonOperationResolver {
 
     private findAjaxConfig(ajaxId) {
         let ajaxConfig;
-        if (this.ajaxCfg && Array(this.ajaxCfg) && this.ajaxCfg.length > 0) {
+        if (this.ajaxCfg && Array.isArray(this.ajaxCfg) && this.ajaxCfg.length > 0) {
             const c = this.ajaxCfg.find(cfg => cfg.id === ajaxId);
             if (c) {
                 ajaxConfig = c;
@@ -299,7 +310,7 @@ export class ButtonOperationResolver {
 
     private findbuiltinConfig(builtinId) {
         let builtinConfig;
-        if (this.builtinCfg && Array(this.builtinCfg) && this.builtinCfg.length > 0) {
+        if (this.builtinCfg && Array.isArray(this.builtinCfg) && this.builtinCfg.length > 0) {
             const c = this.builtinCfg.filter(cfg => cfg.id === builtinId);
             if (c && c.length > 0) {
                 builtinConfig = c[0];
@@ -311,7 +322,7 @@ export class ButtonOperationResolver {
 
     private findBeforeOperationConfig(stateId) {
         let beforeConfig;
-        if (this.beforeTriggerCfg && Array(this.beforeTriggerCfg) && this.beforeTriggerCfg.length > 0) {
+        if (this.beforeTriggerCfg && Array.isArray(this.beforeTriggerCfg) && this.beforeTriggerCfg.length > 0) {
             const b = this.beforeTriggerCfg.filter(cfg => cfg.id === stateId);
             if (b && b.length > 0) {
                 beforeConfig = b[0];
@@ -323,7 +334,7 @@ export class ButtonOperationResolver {
 
     private findConditionConfig(conditionId) {
         let conditionConfig;
-        if (this.conditionCfg && Array(this.conditionCfg) && this.conditionCfg.length > 0) {
+        if (this.conditionCfg && Array.isArray(this.conditionCfg) && this.conditionCfg.length > 0) {
             const c = this.conditionCfg.filter(cfg => cfg.id === conditionId);
             if (c && c.length > 0) {
                 conditionConfig = c[0];
@@ -334,7 +345,7 @@ export class ButtonOperationResolver {
 
     private findConfirmConfig(confirmId) {
         let confirmConfig;
-        if (this.dialogCfg && Array(this.dialogCfg) && this.dialogCfg.length > 0) {
+        if (this.dialogCfg && Array.isArray(this.dialogCfg) && this.dialogCfg.length > 0) {
             const c = this.dialogCfg.find(cfg => cfg.id === confirmId);
             if (c) {
                 confirmConfig = c;
@@ -345,12 +356,23 @@ export class ButtonOperationResolver {
 
     private findChangeValueConfig(changeValueId) {
         let changeValueConfig;
-        if (this.changeValueCfg && Array(this.changeValueCfg) && this.changeValueCfg.length > 0) {
+        if (this.changeValueCfg && Array.isArray(this.changeValueCfg) && this.changeValueCfg.length > 0) {
             const c = this.changeValueCfg.find(cfg => cfg.id === changeValueId);
             if (c) {
                 changeValueConfig = c;
             }
         }
         return changeValueConfig;
+    }
+
+    private findLinkConfig(linkId) {
+        let linkConfig;
+        if (this.linkConfig && Array.isArray(this.linkConfig) && this.linkConfig.length > 0) {
+            const c = this.linkConfig.find(cfg => cfg.id === linkId);
+            if (c) {
+                linkConfig = c;
+            }
+        }
+        return linkConfig;
     }
 }
