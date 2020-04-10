@@ -1243,6 +1243,7 @@ export class CnDataTableComponent extends CnComponentBase
                 url = `${url}/${params['ID']}`;
             }
 
+            debugger;
             if (url && params) {
                 this.componentService.router.navigate([url], { queryParams: { ...params } });
             }

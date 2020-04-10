@@ -37,17 +37,21 @@
           </nz-card> -->
 
           <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
-            [nzTitle]="c.header ? titleTmpl : false">
+            [nzTitle]="c.header ? titleTmpl : false" [nzExtra]="extraTemplate">
             <ng-template #titleTmpl>
-              <span><i nz-icon spin style="font-size:16px" [nzType]="c.header.icon" *ngIf="c.header.icon"></i>
-                {{c.header.title}}</span>
-              <span style="float:right">
-                <ng-container cnComponentResolverDirective *ngIf="c.header.toolbar" [config]="c.header.toolbar"
-                  [tempData]="tempData" [initData]="initData">
-                </ng-container>
-              </span>
-              <div class="clearfix"></div>
+                <i nz-icon spin style="font-size:14px" [nzType]="c.header.icon" *ngIf="c.header.icon"></i>
+                {{c.header.title}}
+              </ng-template>
+
+            <ng-template #extraTemplate>
+              <ng-container cnComponentResolverDirective *ngIf="c.header.toolbar" [config]="c.header.toolbar"
+               [tempData]="tempData" [initData]="initData">
+              </ng-container>
             </ng-template>
+
+              
+               
+          
             <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
               [initData]="initData">
             </ng-container>

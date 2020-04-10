@@ -113,7 +113,6 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit, Af
     };
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     const response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
-    console.log('--da---' + this.config.field, response);
     if (response.data && response.data.length > 0) {
       const data_form = response.data;
       this.selectItems = data_form;
@@ -128,7 +127,7 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit, Af
 
       //   console.log('下拉选择的最终数据集===》', this.selectOptions);
       // for (const item in this.formValue) {
-      //   if (data_form.hasOwnProperty(item)) {
+      //   if (data_form.hasOwnProperty(item)) {s
       //     this.formValue[item] = data_form[item];
       //   }
       // }

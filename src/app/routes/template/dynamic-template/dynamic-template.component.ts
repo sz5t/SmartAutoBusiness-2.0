@@ -53,7 +53,10 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
                       this.componentService.cacheService.set(json['id'], json);
                     });
                   }
-                  this.buildLayout(params.id);
+                  this._route.queryParams.subscribe(queryParam => {
+                    this.buildLayout({...params, ...queryParam});
+                  })
+                  
                 } else {
                   // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
                   this.componentService.cacheService.set(key, pageJson[key]);
@@ -107,7 +110,7 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
 
   }
 
-  private buildLayout(dataKey) {
+  private buildLayout(params) {
     // console.log('buildLayout Receive message --', this.initValue, this.tempValue);
     const cmpt = this._resolver.resolveComponentFactory<any>(
       CnDynamicLayoutComponent
@@ -115,8 +118,8 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
     this._container.clear();
     this._layoutObj = this._container.createComponent(cmpt);
     this._layoutObj.instance.layoutObj = this.config;
-    if (dataKey) {
-      this._layoutObj.instance.initData = { ID: dataKey };
+    if (params) {
+      this._layoutObj.instance.initData = params;
     }
   }
 

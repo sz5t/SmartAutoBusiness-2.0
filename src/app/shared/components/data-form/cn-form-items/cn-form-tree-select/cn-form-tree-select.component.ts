@@ -15,7 +15,10 @@ import { isArray } from 'util';
 export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit {
   @Input() public config;
   @Input() formGroup: FormGroup;
+  @Input() tempData;
+  @Input() initData;
   @Output() public updateValue = new EventEmitter();
+
   isLoading;
   public mapOfDataState: {
     [key: string]: {
@@ -36,7 +39,6 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
   ) {
     super(componentService);
     this.cacheValue = this.componentService.cacheService;
-    this.tempValue = {};
     this.initValue = {};
     // init cacheValue
   }
@@ -88,12 +90,8 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
   }
 
   ngOnInit(): void {
-    // this.load();
-    // console.log("树树树&&&&&&&&&&&&&&",  this.nodes );
-    // mock async
-    // setTimeout(() => {
-    //   this.value = '1001';
-    // }, 1000);
+    this.tempValue = this.tempValue;
+    this.initValue = this.initData;
   }
 
 
@@ -167,6 +165,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
   }
 
   private async _getAsyncTreeData(ajaxConfig = null, nodeValue = null) {
+    debugger;
     const params = ParameterResolver.resolve({
       params: ajaxConfig.params,
       tempValue: this.tempValue,

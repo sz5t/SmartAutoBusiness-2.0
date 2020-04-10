@@ -873,7 +873,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
    */
   public link(option) {
-    debugger;
     let url;
     let params;
     if (option && option.linkConfig) {

@@ -1,4 +1,4 @@
-// @import '../../../../styles/theme.less';
+@import '../../../../styles/theme.less';
 
 :host ::ng-deep .ant-tree {
   overflow: hidden;
@@ -6,22 +6,36 @@
   // padding: 0 24px;
 }
 
-:host ::ng-deep .ant-tree li {
-  padding: 4px 0 0 0;
-}
+// :host ::ng-deep .tree-container {
+//   overflow: auto;
+//   height: 300px;
+// }
+
+// :host ::ng-deep .ant-tree li {
+   // padding: 4px 0 0 0;
+// }
+
+// .custom-node {
+//   display: inline-block;
+//   margin: 0 -1000px;
+//   margin-left: 4px;
+//   padding: 0 5px;
+//   line-height: 24px;
+//   cursor: pointer;
+// }
 
 .custom-node {
+  cursor: pointer;
+  line-height: 26px;
+  margin-left: 4px;
   display: inline-block;
   margin: 0 -1000px;
-  margin-left: 4px;
-  //padding: 0 1000px;
-  line-height: 24px;
-  cursor: pointer;
+  padding: 0 1000px;
 }
 
 .active {
-  color: #333;
-  // background-color: @primary-2;
+  color: #111;
+  background-color: #00996633;
 }
 
 .active .file-desc,

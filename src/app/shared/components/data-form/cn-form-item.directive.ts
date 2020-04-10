@@ -55,6 +55,8 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
   @Input() formGroup: FormGroup;
   @Input() public formCascade;
   @Input() public formState;
+  @Input() public tempData;
+  @Input() public initData
   // @Input() public value;
 
   @Output() public updateValue = new EventEmitter();
@@ -73,7 +75,7 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
       _config = JSON.parse(JSON.stringify(this.config.text));
 
     }
-    if (this.config.state === 'edit') {
+    if (this.config.state === 'edit' && this.config.editor) {
 
       _config = JSON.parse(JSON.stringify(this.config.editor));
     }
@@ -95,6 +97,8 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
     this.component = this.container.createComponent(comp);
     this.component.instance.formGroup = this.formGroup;
     this.component.instance.config = _config;
+    this.component.instance.tempData = this.tempData;
+    this.component.instance.initData = this.initData;
     // 级联数据接受 liu
     if (this.component.instance.updateValue) {
       this.component.instance.updateValue.subscribe(event => {
@@ -103,7 +107,7 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    console.log('创建表单内部组件。。。-----------------------------', this.formGroup);
+    console.log('创建表单内部组件。。。-----------------------------', this.tempData,);
   }
 
   // 组件将值写回、级联数据-》回写 
@@ -135,10 +139,10 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
         console.log('****formState******', this.config.field, this.formState);
         // console.log('****formState******',this.config.field, this.value,this.formState, this.config, JSON.stringify(this.formGroup.value));
         let _config
-        if (this.config.state === 'text') {
+        if (this.config.state === 'text' && this.config.text) {
           _config = JSON.parse(JSON.stringify(this.config.text));
         }
-        if (this.config.state === 'edit') {
+        if (this.config.state === 'edit' && this.config.editor) {
           _config = JSON.parse(JSON.stringify(this.config.editor));
         }
         _config['config'] = JSON.parse(JSON.stringify(this.config));
@@ -159,6 +163,8 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
         this.component = this.container.createComponent(comp);
         this.component.instance.formGroup = this.formGroup;
         this.component.instance.config = _config;
+        this.component.instance.tempData = this.tempData;
+        this.component.instance.initData = this.initData;
         // 级联数据接受 liu
         if (this.component.instance.updateValue) {
           this.component.instance.updateValue.subscribe(event => {

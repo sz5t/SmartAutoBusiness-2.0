@@ -5,7 +5,9 @@
         [nzXl]="c.size.nzXl" [nzXXl]="c.size.nzXXl" *ngFor="let c of r.cols"
         [ngStyle]="{'display': c.display ? c.display : null}">
         <ng-container CnFormItemDirective [formGroup]="validateForm" [formCascade]="formCascade[c.control.id]"
-          [config]="formControlObj[c.control.id]" [formState]="FORM_STATE" (updateValue)="valueChange($event)">
+          [config]="formControlObj[c.control.id]" [formState]="FORM_STATE" (updateValue)="valueChange($event)"
+          [tempData] = "tempValue" [initData] = "initValue"
+          >
         </ng-container>
       </div>
     </div>
