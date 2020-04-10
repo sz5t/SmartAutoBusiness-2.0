@@ -42,7 +42,7 @@ export class CnGridSwitchComponent implements OnInit {
         }
       }
     }
-this.config
+// this.config
     setTimeout(() => {
       if(this.selectOptions['check'].hasOwnProperty('value') ){
          if(v_value===this.selectOptions['check']['value']){

@@ -7,15 +7,19 @@
             [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
             [formGroup]="formGroup" [nzErrorTip]="combineTpl"  nzValidatingTip="Validating...">
  
+
+            <input nz-input [formControlName]="config.field" hidden="hidden" [(ngModel)]="value"
+            (ngModelChange)="valueChange($event)" />
+
                     <nz-switch
-                    [formControlName]="config.field"
-                    [ngModel]="true"
-                    (ngModelChange)="valueChange($event)"
+                    [ngModel]="switchvalue"
+                    (ngModelChange)="switchvalueChange($event)"
                     [nzCheckedChildren]="checkedTemplate"
                     [nzUnCheckedChildren]="unCheckedTemplate"
+                    [ngModelOptions]="{standalone: true}"
                   ></nz-switch>
-                  <ng-template #checkedTemplate><i nz-icon nzType="check"></i></ng-template>
-                  <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i></ng-template>
+                  <ng-template #checkedTemplate><i nz-icon nzType="check"></i>{{selectOptions['check']['lable']?selectOptions['check']['lable']:''}}</ng-template>
+                  <ng-template #unCheckedTemplate><i nz-icon nzType="close"></i>{{selectOptions['close']['lable']?selectOptions['close']['lable']:''}}</ng-template>
 
           
        

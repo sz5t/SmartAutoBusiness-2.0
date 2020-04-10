@@ -11,8 +11,41 @@ export class CnFormSwitchComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
   constructor() { }
+  switchvalue = true;
+  value;
 
+  off = 0;
+  on = 1;
+
+  selectOptions={
+    check:{},
+    close:{}
+  };
   ngOnInit() {
+
+    // off  关闭
+    // on   打开
+    if (this.config.hasOwnProperty('off')) {
+      this.off = this.config.off;
+    }
+    if (this.config.hasOwnProperty('on')) {
+      this.on = this.config.on;
+    }
+
+
+
+    if(this.config.options){
+      this.config.options.forEach(element => {
+        if(element['type']==='check') {
+          this.selectOptions['check'] = element;
+        }
+        if(element['type']==='close') {
+          this.selectOptions['close'] = element;
+        }
+      });
+      this.on =this.selectOptions['check']['value'];
+      this.off=this.selectOptions['close']['value'];
+    }
   }
 
   /**
@@ -20,8 +53,24 @@ export class CnFormSwitchComponent implements OnInit {
    */
   public valueChange(v?) {
 
-    console.log('switch',v);
-    
+    console.log('switch_value', v);
+    if (v ===  this.off) {
+      this.switchvalue = true;
+    }
+    else {
+      this.switchvalue = false;
+    }
+
   }
-  public cascadeAnalysis(c?) {}
+
+  public switchvalueChange(v?) {
+    console.log('switch', v);
+    if (v) {
+      this.value =  this.off;
+    } else {
+      this.value = this.on;
+    }
+  }
+
+  public cascadeAnalysis(c?) { }
 }

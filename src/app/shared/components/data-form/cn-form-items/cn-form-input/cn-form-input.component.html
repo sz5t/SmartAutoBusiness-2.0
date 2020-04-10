@@ -10,7 +10,7 @@
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
         [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
 
-        <input nz-input [placeholder] = "config.placeholder"  [ngModel]="value" [formControlName]="config.field" (ngModelChange)="valueChange($event)"
+        <input nz-input [placeholder] = "config.placeholder" [type]="config.displayType?config.displayType:'text'" [ngModel]="value" [formControlName]="config.field" (ngModelChange)="valueChange($event)"
         />
         <ng-template #combineTpl let-control>
                 <ng-container nz-col *ngFor="let c of config.validations" > 
