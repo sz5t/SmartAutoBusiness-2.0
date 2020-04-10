@@ -11,7 +11,8 @@ export class CnFormSwitchComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
   constructor() { }
-
+  switchvalue=true;
+  value;
   ngOnInit() {
   }
 
@@ -20,8 +21,24 @@ export class CnFormSwitchComponent implements OnInit {
    */
   public valueChange(v?) {
 
-    console.log('switch',v);
+    console.log('switch_value',v);
+    if(v===1){
+      this.switchvalue = true;
+    }
+    else {
+      this.switchvalue = false;
+    }
     
   }
+
+public switchvalueChange(v?){
+  console.log('switch',v);
+  if(v){
+    this.value = 1;
+  }else{
+    this.value = 0;
+  }
+}
+
   public cascadeAnalysis(c?) {}
 }
