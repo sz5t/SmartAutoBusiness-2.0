@@ -16,6 +16,11 @@ export class CnFormSwitchComponent implements OnInit {
 
   off = 0;
   on = 1;
+
+  selectOptions={
+    check:{},
+    close:{}
+  };
   ngOnInit() {
 
     // off  关闭
@@ -27,6 +32,20 @@ export class CnFormSwitchComponent implements OnInit {
       this.on = this.config.on;
     }
 
+
+
+    if(this.config.options){
+      this.config.options.forEach(element => {
+        if(element['type']==='check') {
+          this.selectOptions['check'] = element;
+        }
+        if(element['type']==='close') {
+          this.selectOptions['close'] = element;
+        }
+      });
+      this.on =this.selectOptions['check']['value'];
+      this.off=this.selectOptions['close']['value'];
+    }
   }
 
   /**

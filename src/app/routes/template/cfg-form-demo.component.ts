@@ -3917,7 +3917,10 @@ export class CfgFormDemoComponent implements OnInit {
                     "type": "switch",
                     "field": "remark10",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
-
+                    "options":[
+                      {"type":"check","lable":"是","value":"是"},
+                      {"type":"close","lable":"否","value":"否"}
+                   ],
                     "validations": [  // 校验
                       { validator: "required" }
                     ]
