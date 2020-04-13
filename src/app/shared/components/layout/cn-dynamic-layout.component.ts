@@ -15,6 +15,9 @@ import { Component, Input, OnInit, Output, EventEmitter, Inject, TemplateRef, Vi
         [nz-col] {
             padding-right: 0px;
         }
+        .ant-layout {
+            background: none;
+        }
         `
     ]
 })

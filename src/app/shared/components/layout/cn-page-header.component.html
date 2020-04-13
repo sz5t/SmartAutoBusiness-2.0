@@ -1,17 +1,3 @@
-<!-- <nz-tabset [nzType]="tabsObj.tabType ? tabsObj.tabType :'card'" [nzTabPosition]="'top'"
-  [nzSize]="tabsObj.size ? tabsObj.size : 'default'" [nzAnimated]="true" (nzSelectChange)="tabChange($event)"
-  [(nzSelectedIndex)]="selectedIndex" (nzSelectedIndexChange)="selectedIndexEvent($event)">
-  <nz-tab *ngFor="let tab of tabsConfig" [nzTitle]="header" (nzDeselect)="tabDisactive(tab)"
-    (nzSelect)="tabActive(tab)">
-
-    <ng-container *ngIf="tab.active" cnLayoutResolverDirective [config]="tab.layout" [initData]="initData"
-      [tempData]="tempData">
-    </ng-container>
-    <ng-template #header>
-      <span><i nz-icon spin type="tag" theme="outline"></i> {{ tab.title }}</span>
-    </ng-template>
-  </nz-tab>
-</nz-tabset> -->
 <page-header style="margin-bottom:0px" *ngIf="headerConfig.type === 'breadcrumb'; else detailHeader" [title]="title" [content]="content"
   [extra]="extra">
   <ng-template #content>

@@ -52,6 +52,9 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
             
           }
 
+          .page-header__title {
+            font-weight:600;
+        }
 
         `
     ]

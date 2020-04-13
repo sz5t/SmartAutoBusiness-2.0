@@ -25,47 +25,6 @@
 
 
           <ng-container *ngSwitchCase="'component'">
-            <!-- <ng-container *ngIf="c.component.component === 'cnToolbar'; else tmplComponent">
-              <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true" [nzTitle]="titleTmpl">
-                <ng-template #titleTmpl>
-                  <span><i nz-icon spin style="font-size:16px" [nzType]="c.icon" *ngIf="c.icon"></i> {{c.title}}</span>
-                  <span style="float:right">
-                    <ng-container cnComponentResolverDirective [config]="c.header.toolbar" [tempData]="tempData"
-                      [initData]="initData">
-                    </ng-container>
-                  </span>
-                  <div class="clearfix"></div>
-                </ng-template>
-
-              </nz-card>
-
-
-            </ng-container>
-            <ng-template #tmplComponent>
-              <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
-                [nzTitle]="c.title ? c.title : false">
-                <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
-                  [initData]="initData">
-                </ng-container>
-              </nz-card>
-            </ng-template> -->
-
-            <!-- <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
-              [nzTitle]="c.header ? titleTmpl : ''">
-              <ng-template #titleTmpl>
-                <span><i nz-icon spin style="font-size:16px" [nzType]="c.header.icon" *ngIf="c.header.icon"></i>
-                  {{c.header.title}}</span>
-                <span style="float:right">
-                  <ng-container cnComponentResolverDirective *ngIf="c.header.toolbar" [config]="c.header.toolbar"
-                    [tempData]="tempData" [initData]="initData">
-                  </ng-container>
-                </span>
-                <div class="clearfix"></div>
-              </ng-template>
-              <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
-                [initData]="initData">
-              </ng-container>
-            </nz-card> -->
             <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
             [nzTitle]="c.header ? titleTmpl : false" [nzExtra]="c.header ? extraTemplate : false">
             <ng-template #titleTmpl>
@@ -95,40 +54,8 @@
             [initData]="initData">
           </ng-container>
 
-          <!-- <nz-card [ngSwitch]="c.container" >
-            
-          </nz-card> -->
         </div>
       </div>
     </ng-container>
   </nz-content>
 </nz-layout>
-
-
-
-
-<!-- <cn-layout-resolver [initData]="initData" [layoutId]="layoutId" [permissions]="permissions" [config]="c"
-[tempValue]="tempValue" (updateValue)="valueChange($event)"></cn-layout-resolver> -->
-
-
-<!-- <nz-card *ngIf="c.viewCfg" [nzTitle]="c.title ? cardTitle : false" nzBordered="false"
-[nzBodyStyle]="c.bodyStyle ? c.bodyStyle : { padding: '8px'}">
-<ng-template #cardTitle>
-  <ng-container *ngIf="c.titlePaddingleft">
-    <span style="padding-left: 16px;">{{ c.title }} </span>
-  </ng-container>
-  <ng-container *ngIf="!c.titlePaddingleft">
-    {{ c.title }}
-  </ng-container>
-
-</ng-template>
-<div *ngIf="c.handle && c.handle === 'single'; else: elseTemplate">
-  <ng-container cnLayoutResolverDirective [layoutId]="layoutId" [config]="c" [permissions]="permissions"
-    (updateValue)="valueChange($event)"></ng-container>
-</div>
-<ng-template #elseTemplate>
-  <cn-component-resolver *ngFor="let cfg of c.viewCfg" [layoutId]="layoutId" [permissions]="permissions"
-    [config]="cfg" [initData]="initData" [tempValue]="tempValue" (updateValue)="valueChange($event)">
-  </cn-component-resolver>
-</ng-template>
-</nz-card> -->

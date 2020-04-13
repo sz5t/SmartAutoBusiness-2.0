@@ -593,6 +593,7 @@ export class CnDataTableComponent extends CnComponentBase
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
 
         this.dataCheckedStatusChange();
+        //this.setSelectRow(newData);
 
         // 更新状态
     }
@@ -758,6 +759,7 @@ export class CnDataTableComponent extends CnComponentBase
         if (this.dataList.length > 0) {
             this.setSelectRow(this.dataList[0]);
         }
+        this.total = this.dataList.length;
     }
 
     public async deleteCurrentRow(option) {

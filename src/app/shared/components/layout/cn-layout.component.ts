@@ -15,6 +15,17 @@ import { Component, Input, OnInit, Output, EventEmitter, Inject, TemplateRef, Vi
         [nz-col] {
             padding-right: 0px;
         }
+        .ant-layout {
+            background: none;
+        }
+
+        .page-header {
+            margin-bottom:0px;
+        }
+
+        .alain-default .page-header {
+            margin-bottom:0px;
+        }
         `
     ]
 })
