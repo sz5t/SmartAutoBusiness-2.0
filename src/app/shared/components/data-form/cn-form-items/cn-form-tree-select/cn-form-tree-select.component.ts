@@ -165,7 +165,6 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
   }
 
   private async _getAsyncTreeData(ajaxConfig = null, nodeValue = null) {
-    debugger;
     const params = ParameterResolver.resolve({
       params: ajaxConfig.params,
       tempValue: this.tempValue,

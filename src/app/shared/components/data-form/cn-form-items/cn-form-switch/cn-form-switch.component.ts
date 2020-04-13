@@ -12,7 +12,7 @@ export class CnFormSwitchComponent implements OnInit {
   @Output() public updateValue = new EventEmitter();
   constructor() { }
   switchvalue = true;
-  value;
+  value = 2;
 
   off = 0;
   on = 1;
@@ -52,17 +52,18 @@ export class CnFormSwitchComponent implements OnInit {
    * valueChange
    */
   public valueChange(v?) {
-
     console.log('switch_value', v);
+    const backValue = { name: this.config.field, value: v, id: this.config.config.id };
     if (v ===  this.off) {
       this.switchvalue = true;
     }
     else {
       this.switchvalue = false;
     }
-
+    this.updateValue.emit(backValue);
+  
   }
-
+ 
   public switchvalueChange(v?) {
     console.log('switch', v);
     if (v) {
@@ -70,6 +71,7 @@ export class CnFormSwitchComponent implements OnInit {
     } else {
       this.value = this.on;
     }
+    
   }
 
   public cascadeAnalysis(c?) { }

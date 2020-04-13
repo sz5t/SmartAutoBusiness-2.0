@@ -1242,8 +1242,6 @@ export class CnDataTableComponent extends CnComponentBase
                 params = this.buildParameters(option.linkConfig.params, option.data.originData);
                 url = `${url}/${params['ID']}`;
             }
-
-            debugger;
             if (url && params) {
                 this.componentService.router.navigate([url], { queryParams: { ...params } });
             }

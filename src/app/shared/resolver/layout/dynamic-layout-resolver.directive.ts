@@ -350,7 +350,6 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     }
 
     private buildTabsObj(cfg): any {
-        debugger;
         const newTabs = new LayoutTabs();
         newTabs.tabType = cfg.tabType;
         newTabs.container = cfg.container;

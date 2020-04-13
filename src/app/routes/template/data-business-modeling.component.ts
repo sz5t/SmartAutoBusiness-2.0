@@ -94,760 +94,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "type": "col",
                                 "title": "",
                                 "span": 12,
-                                "container": "component",
-                                "noBorder": true,
-                                "size": {
-                                    "nzXs": 24,
-                                    "nzSm": 24,
-                                    "nzMd": 24,
-                                    "nzLg": 16,
-                                    "nzXl": 14,
-                                    "nzXXl": 14
-                                },
-                                "component": {
-                                    "id": "toolbar_business_main",
-                                    "component": "cnToolbar",
-                                    "size": "default",
-                                    "cascade": {
-                                        // "messageSender": [
-                                        //     {
-                                        //         "id": "toolbar_01",
-                                        //         "senderId": "view_business_main",
-                                        //         "triggerType": "OPERATION",
-                                        //         "trigger": "EXECUTE_CHECKED_ROWS",
-                                        //         "triggerMoment": "after",
-                                        //         "sendData": [
-                                        //             {
-                                        //                 "beforeSend": {},
-                                        //                 "reveicerId": "",
-                                        //                 "receiverTriggerType": "BEHAVIOR",
-                                        //                 "receiverTrigger": "REFRESH_AS_CHILD",
-                                        //                 "params": [
-                                        //                     {
-                                        //                         "name": "parent_id",
-                                        //                         "type": "item",
-                                        //                         "valueName": "id"
-                                        //                     },
-                                        //                     {
-                                        //                         "name": "parent_name",
-                                        //                         "type": "item",
-                                        //                         "valueName": "name"
-                                        //                     }
-                                        //                 ]
-                                        //             }
-                                        //         ]
-                                        //     }
-                                        // ],
-                                        "messageReceiver": [
-                                            {
-                                                "id": "s_001",
-                                                "senderId": "view_business_main",
-                                                "receiveData": [
-                                                    {
-                                                        "triggerType": "STATE",
-                                                        "trigger": "STATE_TO_TEXT"
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "id": "s_002",
-                                                "senderId": "view_business_main",
-                                                "receiveData": [
-                                                    {
-                                                        "triggerType": "STATE",
-                                                        "trigger": "STATE_TO_EDIT"
-                                                    }
-                                                ]
-                                            }
-
-                                        ]
-                                    },
-                                    "dialog": [
-                                        {
-                                            "id": "delete_business_main_confirm",
-                                            "type": "confirm",
-                                            "title": "确认操作",
-                                            "content": "是否删除当前操作数据?",
-                                            "cancelText": "取消",
-                                            "okText": "确认"
-                                        }
-                                    ],
-                                    "condition": [
-                                        {
-                                            "id": "add_cities_state",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_CHECKED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        },
-                                                        {
-                                                            "type": "element",
-                                                            "name": "name",
-                                                            "matchValue": "1",
-                                                            "match": "eq",
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_cities_state",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_CHECKED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "add_business_main_condition",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_CHECKED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_ADDED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_business_main_condition",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_EDITED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_CHECKED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "toolbar_business_main_cancel_edit",
-                                            "state": [
-                                                {
-                                                    "type": "component",
-                                                    "valueName": "ROWS_EDITED",
-                                                    "expression": [
-                                                        {
-                                                            "type": "property",
-                                                            "name": "length",
-                                                            "matchValue": 0,
-                                                            "match": "gt"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    "ajaxConfig": [
-                                        {
-                                            "id": "add_business_main",
-                                            "url": "/cfgBusiModel/batchInsert",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id"
-                                                },
-                                                {
-                                                    "name": "name",
-                                                    "type": "componentValue",
-                                                    "valueName": "name",
-                                                    "dataType": "string"
-                                                },
-                                                {
-                                                    "name": "resourceName",
-                                                    "type": "componentValue",
-                                                    "valueName": "resourceName",
-                                                    "dataType": "string"
-                                                },
-                                                {
-                                                    "name": "isBuildModel",
-                                                    "type": "componentValue",
-                                                    "valueName": "isBuildModel",
-                                                    "dataType": "int"
-                                                },
-                                                {
-                                                    "name": "remark",
-                                                    "type": "componentValue",
-                                                    "valueName": "remark",
-                                                    "dataType": "string"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterBusinessMainSaveSuccessfully"
-                                                },
-                                                {
-                                                    "name": "validation",
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterBusinessMainSaveValidation"
-                                                },
-                                                {
-                                                    "name": "error",
-                                                    "senderId": "toolbar_02"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "edit_business_main",
-                                            "url": "/cfgBusiModel/batchUpdate",
-                                            "urlType": "inner",
-                                            "ajaxType": "put",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "componentValue",
-                                                    "valueName": "id",
-                                                    "dataType": "string"
-                                                },
-                                                {
-                                                    "name": "name",
-                                                    "type": "componentValue",
-                                                    "valueName": "name",
-                                                    "dataType": "string"
-                                                },
-                                                {
-                                                    "name": "resourceName",
-                                                    "type": "componentValue",
-                                                    "valueName": "resourceName",
-                                                    "dataType": "string"
-                                                },
-                                                {
-                                                    "name": "isBuildModel",
-                                                    "type": "componentValue",
-                                                    "valueName": "isBuildModel",
-                                                    "dataType": "int"
-                                                },
-                                                {
-                                                    "name": "remark",
-                                                    "type": "componentValue",
-                                                    "valueName": "remark",
-                                                    "dataType": "string"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterBusinessMainUpdateSuccessfully"
-                                                },
-                                                {
-                                                    "name": "validation",
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterBusinessMainSaveValidation"
-                                                },
-                                                {
-                                                    "name": "error",
-                                                    "senderId": "toolbar_02"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "delete_business_main",
-                                            "url": "/cfgBusiModel/delete",
-                                            "urlType": "inner",
-                                            "ajaxType": "delete",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "checkedItem",
-                                                    "valueName": "id"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterDeleteBusinessMainSuccess"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "build_model_business_main",
-                                            "url": "cfgBusiModel/batchCreateModel",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "checkedItem",
-                                                    "valueName": "id"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterBuildModelBusinessMainSuccess"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "build_model_business_main_single",
-                                            "url": "cfgBusiModel/createModel",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "item",
-                                                    "valueName": "id"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterBuildModelBusinessMainSuccess"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "cancel_model_business_main_single",
-                                            "url": "cfgBusiModel/cancelModel",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "item",
-                                                    "valueName": "id"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterBuildModelBusinessMainSuccess"
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "id": "cancel_model_business_main",
-                                            "url": "cfgBusiModel/cancelModel",
-                                            "urlType": "inner",
-                                            "ajaxType": "post",
-                                            "params": [
-                                                {
-                                                    "name": "id",
-                                                    "type": "item",
-                                                    "valueName": "id"
-                                                }
-                                            ],
-                                            "outputParameters": [
-
-                                            ],
-                                            "result": [
-                                                {
-                                                    "name": "data",
-                                                    "showMessageWithNext": 0,
-                                                    "message": "message.ajax.state.success",
-                                                    "senderId": "afterCancelModelBusinessMainSuccess"
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    "beforeTrigger": [
-
-                                    ],
-                                    "afterTrigger": [
-                                        {
-                                            "id": "",
-                                            "senderId": "view_business_main",
-                                            "sendData": [
-                                                {
-                                                    "beforeSend": [],
-                                                    "reveicerId": "",
-                                                    "receiverTriggerType": "BEHAVIOR",
-                                                    "receiverTrigger": "REFRESH_AS_CHILD",
-                                                    "params": [
-                                                        {
-                                                            "name": "parent_id",
-                                                            "type": "item",
-                                                            "valueName": "id"
-                                                        },
-                                                        {
-                                                            "name": "parent_name",
-                                                            "type": "item",
-                                                            "valueName": "name"
-                                                        }
-                                                    ]
-                                                }
-                                            ]
-                                        }
-                                    ],
-                                    "toolbar": [
-                                        {
-                                            "targetViewId": "view_business_main",
-                                            "group": [
-                                                {
-                                                    "id": "M_refresh",
-                                                    "text": "刷新",
-                                                    "icon": "reload",
-                                                    "color": "text-primary",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "BEHAVIOR",
-                                                            "trigger": "REFRESH"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "M_addRow",
-                                                    "text": "创建资源",
-                                                    "icon": "plus",
-                                                    "color": "text-primary",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "ADD_ROW",
-                                                            // "conditionId": "add_state_1"
-                                                        }
-                                                    ],
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": false
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "id": "M_updateRow",
-                                                    "text": "编辑资源",
-                                                    "icon": "edit",
-                                                    "color": "text-success",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "state": "text",
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "EDIT_ROWS",
-                                                            "conditionId": "edit_business_main_state"
-                                                        }
-                                                    ],
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": false
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "id": "M_deleteRow",
-                                                    "text": "删除",
-                                                    "icon": "delete",
-                                                    "color": "text-red-light",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "ACTION",
-                                                            "trigger": "CHECKED_ITEMS_IDS_CONFIRM",
-                                                            "conditionId": "delete_business_main_condition",
-                                                            "ajaxId": "delete_business_main",
-                                                            "dialogId": "delete_business_main_confirm"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "M_deleteRow1",
-                                                    "text": "发布资源",
-                                                    "icon": "build",
-                                                    "color": "primary",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE_SELECTED_ROW",
-                                                            // "conditionId": "delete_business_main_condition",
-                                                            "ajaxId": "build_model_business_main_single"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "M_deleteRow1",
-                                                    "text": "取消发布",
-                                                    "icon": "build",
-                                                    "color": "dashed",
-                                                    "hidden": false,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "EXECUTE_SELECTED_ROW",
-                                                            // "conditionId": "delete_business_main_condition",
-                                                            "ajaxId": "cancel_model_business_main_single"
-                                                        }
-                                                    ]
-                                                },
-                                                {
-                                                    "id": "M_saveRow",
-                                                    "text": "保存",
-                                                    "icon": "save",
-                                                    "color": "text-primary",
-                                                    "hidden": true,
-                                                    "disabled": false,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "SAVE_ROWS",
-                                                            "ajaxId": "add_business_main",
-                                                            // "stateId": "add_save_1",
-                                                            "conditionId": "add_business_main_condition"
-                                                        },
-                                                        {
-                                                            "triggerType": "OPERATION",
-                                                            "trigger": "SAVE_ROWS",
-                                                            "ajaxId": "edit_business_main",
-                                                            // "stateId": "edit_save_1",
-                                                            "conditionId": "edit_business_main_condition"
-                                                        }
-                                                    ],
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "new",
-                                                                "value": false
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "id": "M_cancelrow",
-                                                    "text": "取消1",
-                                                    "state": "edit",
-                                                    "icon": "rollback",
-                                                    "color": "text-grey-darker",
-                                                    "hidden": true,
-                                                    "disabled": null,
-                                                    "execute": [
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "CANCEL_EDIT_ROWS",
-                                                            "conditionId": "toolbar_business_main_cancel_edit"
-                                                        },
-                                                        {
-                                                            "triggerType": "STATE",
-                                                            "trigger": "CANCEL_NEW_ROWS"
-                                                        }
-                                                    ],
-                                                    "toggle": {
-                                                        "type": "state",
-                                                        "toggleProperty": "hidden",
-                                                        "values": [
-                                                            {
-                                                                "name": "edit",
-                                                                "value": false
-                                                            },
-                                                            {
-                                                                "name": "text",
-                                                                "value": true
-                                                            },
-                                                            {
-                                                                "name": "new",
-                                                                "value": false
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        },
-                                        // {
-                                        //     "targetViewId": "view_business_main",
-                                        //     "group": [
-                                        //         {
-                                        //             "id": "M_deleteRow1",
-                                        //             "text": "多选建模",
-                                        //             "icon": "build",
-                                        //             "color": "text-red-light",
-                                        //             "hidden": false,
-                                        //             "disabled": false,
-                                        //             "execute": [
-                                        //                 {
-                                        //                     "triggerType": "OPERATION",
-                                        //                     "trigger": "EXECUTE_CHECKED_ROWS",
-                                        //                     // "conditionId": "delete_business_main_condition",
-                                        //                     "ajaxId": "build_model_business_main"
-                                        //                 }
-                                        //             ]
-                                        //         },
-                                        //         {
-                                        //             "id": "M_cancel_build",
-                                        //             "text": "取消建模",
-                                        //             "icon": "build",
-                                        //             "color": "text-red-light",
-                                        //             "hidden": false,
-                                        //             "disabled": false,
-                                        //             "execute": [
-                                        //                 {
-                                        //                     "triggerType": "OPERATION",
-                                        //                     "trigger": "EXECUTE_CHECKED_ROWS",
-                                        //                     // "conditionId": "delete_business_main_condition",
-                                        //                     "ajaxId": "cancel_model_business_main"
-                                        //                 }
-                                        //             ]
-                                        //         },
-                                        //     ]
-                                        // },
-                                        // {
-                                        //     "targetViewId": "view_02",
-                                        //     "group": [
-                                        //         {
-                                        //             "name": "M_addSearchRow",
-                                        //             "text": "查询",
-                                        //             "triggerType": "STATE",
-                                        //             "trigger": "SEARCH_ROW",
-                                        //             "actionName": "addSearchRow",
-                                        //             "icon": "search",
-                                        //             "color": "text-primary",
-                                        //             "hidden": false,
-                                        //             "disabled": false,
-                                        //             "execute": [
-                                        //                 {
-                                        //                     "triggerType": "STATE",
-                                        //                     "trigger": "SEARCH_ROW"
-                                        //                 }
-                                        //             ]
-                                        //         },
-                                        //         {
-                                        //             "name": "M_cancelSearchRow",
-                                        //             "text": "取消查询",
-                                        //             "icon": "rollback",
-                                        //             "triggerType": "STATE",
-                                        //             "trigger": "CANCEL_SEARCH_ROW",
-                                        //             "actionName": "cancelSearchRow",
-                                        //             "color": "text-grey-darker",
-                                        //             "hidden": false,
-                                        //             "disabled": false,
-                                        //             "execute": [
-                                        //                 {
-                                        //                     "triggerType": "STATE",
-                                        //                     "trigger": "SEARCH_ROW"
-                                        //                 }
-                                        //             ],
-                                        //         }
-                                        //     ]
-                                        // }
-                                    ]
-                                }
-                            },
-                            {
-                                "id": "r5zDHB2-1",
-                                "col": "cc",
-                                "type": "col",
-                                "title": "",
-                                "span": 12,
                                 "noBorder": true,
                                 "container": "component",
                                 "size": {
@@ -1237,6 +483,747 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "span": 24,
                                 "container": "component",
                                 "noBorder": true,
+                                "header": {
+                                    "title":"业务描述",
+                                    "icon": "right-circle",
+                                    "toolbar":{
+                                        "id": "toolbar_business_main",
+                                        "component": "cnToolbar",
+                                        "size": "default",
+                                        "cascade": {
+                                            // "messageSender": [
+                                            //     {
+                                            //         "id": "toolbar_01",
+                                            //         "senderId": "view_business_main",
+                                            //         "triggerType": "OPERATION",
+                                            //         "trigger": "EXECUTE_CHECKED_ROWS",
+                                            //         "triggerMoment": "after",
+                                            //         "sendData": [
+                                            //             {
+                                            //                 "beforeSend": {},
+                                            //                 "reveicerId": "",
+                                            //                 "receiverTriggerType": "BEHAVIOR",
+                                            //                 "receiverTrigger": "REFRESH_AS_CHILD",
+                                            //                 "params": [
+                                            //                     {
+                                            //                         "name": "parent_id",
+                                            //                         "type": "item",
+                                            //                         "valueName": "id"
+                                            //                     },
+                                            //                     {
+                                            //                         "name": "parent_name",
+                                            //                         "type": "item",
+                                            //                         "valueName": "name"
+                                            //                     }
+                                            //                 ]
+                                            //             }
+                                            //         ]
+                                            //     }
+                                            // ],
+                                            "messageReceiver": [
+                                                {
+                                                    "id": "s_001",
+                                                    "senderId": "view_business_main",
+                                                    "receiveData": [
+                                                        {
+                                                            "triggerType": "STATE",
+                                                            "trigger": "STATE_TO_TEXT"
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "id": "s_002",
+                                                    "senderId": "view_business_main",
+                                                    "receiveData": [
+                                                        {
+                                                            "triggerType": "STATE",
+                                                            "trigger": "STATE_TO_EDIT"
+                                                        }
+                                                    ]
+                                                }
+    
+                                            ]
+                                        },
+                                        "dialog": [
+                                            {
+                                                "id": "delete_business_main_confirm",
+                                                "type": "confirm",
+                                                "title": "确认操作",
+                                                "content": "是否删除当前操作数据?",
+                                                "cancelText": "取消",
+                                                "okText": "确认"
+                                            }
+                                        ],
+                                        "condition": [
+                                            {
+                                                "id": "add_cities_state",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_CHECKED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            },
+                                                            {
+                                                                "type": "element",
+                                                                "name": "name",
+                                                                "matchValue": "1",
+                                                                "match": "eq",
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "edit_cities_state",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_CHECKED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "add_business_main_condition",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_CHECKED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_ADDED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "edit_business_main_condition",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_EDITED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_CHECKED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "toolbar_business_main_cancel_edit",
+                                                "state": [
+                                                    {
+                                                        "type": "component",
+                                                        "valueName": "ROWS_EDITED",
+                                                        "expression": [
+                                                            {
+                                                                "type": "property",
+                                                                "name": "length",
+                                                                "matchValue": 0,
+                                                                "match": "gt"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "ajaxConfig": [
+                                            {
+                                                "id": "add_business_main",
+                                                "url": "/cfgBusiModel/batchInsert",
+                                                "urlType": "inner",
+                                                "ajaxType": "post",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "componentValue",
+                                                        "valueName": "id"
+                                                    },
+                                                    {
+                                                        "name": "name",
+                                                        "type": "componentValue",
+                                                        "valueName": "name",
+                                                        "dataType": "string"
+                                                    },
+                                                    {
+                                                        "name": "resourceName",
+                                                        "type": "componentValue",
+                                                        "valueName": "resourceName",
+                                                        "dataType": "string"
+                                                    },
+                                                    {
+                                                        "name": "isBuildModel",
+                                                        "type": "componentValue",
+                                                        "valueName": "isBuildModel",
+                                                        "dataType": "int"
+                                                    },
+                                                    {
+                                                        "name": "remark",
+                                                        "type": "componentValue",
+                                                        "valueName": "remark",
+                                                        "dataType": "string"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+    
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterBusinessMainSaveSuccessfully"
+                                                    },
+                                                    {
+                                                        "name": "validation",
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterBusinessMainSaveValidation"
+                                                    },
+                                                    {
+                                                        "name": "error",
+                                                        "senderId": "toolbar_02"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "edit_business_main",
+                                                "url": "/cfgBusiModel/batchUpdate",
+                                                "urlType": "inner",
+                                                "ajaxType": "put",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "componentValue",
+                                                        "valueName": "id",
+                                                        "dataType": "string"
+                                                    },
+                                                    {
+                                                        "name": "name",
+                                                        "type": "componentValue",
+                                                        "valueName": "name",
+                                                        "dataType": "string"
+                                                    },
+                                                    {
+                                                        "name": "resourceName",
+                                                        "type": "componentValue",
+                                                        "valueName": "resourceName",
+                                                        "dataType": "string"
+                                                    },
+                                                    {
+                                                        "name": "isBuildModel",
+                                                        "type": "componentValue",
+                                                        "valueName": "isBuildModel",
+                                                        "dataType": "int"
+                                                    },
+                                                    {
+                                                        "name": "remark",
+                                                        "type": "componentValue",
+                                                        "valueName": "remark",
+                                                        "dataType": "string"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+    
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterBusinessMainUpdateSuccessfully"
+                                                    },
+                                                    {
+                                                        "name": "validation",
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterBusinessMainSaveValidation"
+                                                    },
+                                                    {
+                                                        "name": "error",
+                                                        "senderId": "toolbar_02"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "delete_business_main",
+                                                "url": "/cfgBusiModel/delete",
+                                                "urlType": "inner",
+                                                "ajaxType": "delete",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "checkedItem",
+                                                        "valueName": "id"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+    
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterDeleteBusinessMainSuccess"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "build_model_business_main",
+                                                "url": "cfgBusiModel/batchCreateModel",
+                                                "urlType": "inner",
+                                                "ajaxType": "post",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "checkedItem",
+                                                        "valueName": "id"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+    
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterBuildModelBusinessMainSuccess"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "build_model_business_main_single",
+                                                "url": "cfgBusiModel/createModel",
+                                                "urlType": "inner",
+                                                "ajaxType": "post",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "item",
+                                                        "valueName": "id"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+    
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterBuildModelBusinessMainSuccess"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "cancel_model_business_main_single",
+                                                "url": "cfgBusiModel/cancelModel",
+                                                "urlType": "inner",
+                                                "ajaxType": "post",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "item",
+                                                        "valueName": "id"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+    
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterBuildModelBusinessMainSuccess"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "id": "cancel_model_business_main",
+                                                "url": "cfgBusiModel/cancelModel",
+                                                "urlType": "inner",
+                                                "ajaxType": "post",
+                                                "params": [
+                                                    {
+                                                        "name": "id",
+                                                        "type": "item",
+                                                        "valueName": "id"
+                                                    }
+                                                ],
+                                                "outputParameters": [
+    
+                                                ],
+                                                "result": [
+                                                    {
+                                                        "name": "data",
+                                                        "showMessageWithNext": 0,
+                                                        "message": "message.ajax.state.success",
+                                                        "senderId": "afterCancelModelBusinessMainSuccess"
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "beforeTrigger": [
+    
+                                        ],
+                                        "afterTrigger": [
+                                            {
+                                                "id": "",
+                                                "senderId": "view_business_main",
+                                                "sendData": [
+                                                    {
+                                                        "beforeSend": [],
+                                                        "reveicerId": "",
+                                                        "receiverTriggerType": "BEHAVIOR",
+                                                        "receiverTrigger": "REFRESH_AS_CHILD",
+                                                        "params": [
+                                                            {
+                                                                "name": "parent_id",
+                                                                "type": "item",
+                                                                "valueName": "id"
+                                                            },
+                                                            {
+                                                                "name": "parent_name",
+                                                                "type": "item",
+                                                                "valueName": "name"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "toolbar": [
+                                            {
+                                                "targetViewId": "view_business_main",
+                                                "group": [
+                                                    {
+                                                        "id": "M_refresh",
+                                                        "text": "刷新",
+                                                        "icon": "reload",
+                                                        "color": "text-primary",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "BEHAVIOR",
+                                                                "trigger": "REFRESH"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "M_addRow",
+                                                        "text": "创建资源",
+                                                        "icon": "plus",
+                                                        "color": "text-primary",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "ADD_ROW",
+                                                                // "conditionId": "add_state_1"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "M_updateRow",
+                                                        "text": "编辑资源",
+                                                        "icon": "edit",
+                                                        "color": "text-success",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "state": "text",
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "EDIT_ROWS",
+                                                                "conditionId": "edit_business_main_state"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "M_deleteRow",
+                                                        "text": "删除",
+                                                        "icon": "delete",
+                                                        "color": "text-red-light",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "ACTION",
+                                                                "trigger": "CHECKED_ITEMS_IDS_CONFIRM",
+                                                                "conditionId": "delete_business_main_condition",
+                                                                "ajaxId": "delete_business_main",
+                                                                "dialogId": "delete_business_main_confirm"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "M_deleteRow1",
+                                                        "text": "发布资源",
+                                                        "icon": "build",
+                                                        "color": "primary",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "EXECUTE_SELECTED_ROW",
+                                                                // "conditionId": "delete_business_main_condition",
+                                                                "ajaxId": "build_model_business_main_single"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "M_deleteRow1",
+                                                        "text": "取消发布",
+                                                        "icon": "build",
+                                                        "color": "dashed",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "EXECUTE_SELECTED_ROW",
+                                                                // "conditionId": "delete_business_main_condition",
+                                                                "ajaxId": "cancel_model_business_main_single"
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "M_saveRow",
+                                                        "text": "保存",
+                                                        "icon": "save",
+                                                        "color": "text-primary",
+                                                        "hidden": true,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "SAVE_ROWS",
+                                                                "ajaxId": "add_business_main",
+                                                                // "stateId": "add_save_1",
+                                                                "conditionId": "add_business_main_condition"
+                                                            },
+                                                            {
+                                                                "triggerType": "OPERATION",
+                                                                "trigger": "SAVE_ROWS",
+                                                                "ajaxId": "edit_business_main",
+                                                                // "stateId": "edit_save_1",
+                                                                "conditionId": "edit_business_main_condition"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "new",
+                                                                    "value": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "id": "M_cancelrow",
+                                                        "text": "取消1",
+                                                        "state": "edit",
+                                                        "icon": "rollback",
+                                                        "color": "text-grey-darker",
+                                                        "hidden": true,
+                                                        "disabled": null,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "CANCEL_EDIT_ROWS",
+                                                                "conditionId": "toolbar_business_main_cancel_edit"
+                                                            },
+                                                            {
+                                                                "triggerType": "STATE",
+                                                                "trigger": "CANCEL_NEW_ROWS"
+                                                            }
+                                                        ],
+                                                        "toggle": {
+                                                            "type": "state",
+                                                            "toggleProperty": "hidden",
+                                                            "values": [
+                                                                {
+                                                                    "name": "edit",
+                                                                    "value": false
+                                                                },
+                                                                {
+                                                                    "name": "text",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "new",
+                                                                    "value": false
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                ]
+                                            },
+                                            // {
+                                            //     "targetViewId": "view_business_main",
+                                            //     "group": [
+                                            //         {
+                                            //             "id": "M_deleteRow1",
+                                            //             "text": "多选建模",
+                                            //             "icon": "build",
+                                            //             "color": "text-red-light",
+                                            //             "hidden": false,
+                                            //             "disabled": false,
+                                            //             "execute": [
+                                            //                 {
+                                            //                     "triggerType": "OPERATION",
+                                            //                     "trigger": "EXECUTE_CHECKED_ROWS",
+                                            //                     // "conditionId": "delete_business_main_condition",
+                                            //                     "ajaxId": "build_model_business_main"
+                                            //                 }
+                                            //             ]
+                                            //         },
+                                            //         {
+                                            //             "id": "M_cancel_build",
+                                            //             "text": "取消建模",
+                                            //             "icon": "build",
+                                            //             "color": "text-red-light",
+                                            //             "hidden": false,
+                                            //             "disabled": false,
+                                            //             "execute": [
+                                            //                 {
+                                            //                     "triggerType": "OPERATION",
+                                            //                     "trigger": "EXECUTE_CHECKED_ROWS",
+                                            //                     // "conditionId": "delete_business_main_condition",
+                                            //                     "ajaxId": "cancel_model_business_main"
+                                            //                 }
+                                            //             ]
+                                            //         },
+                                            //     ]
+                                            // },
+                                            // {
+                                            //     "targetViewId": "view_02",
+                                            //     "group": [
+                                            //         {
+                                            //             "name": "M_addSearchRow",
+                                            //             "text": "查询",
+                                            //             "triggerType": "STATE",
+                                            //             "trigger": "SEARCH_ROW",
+                                            //             "actionName": "addSearchRow",
+                                            //             "icon": "search",
+                                            //             "color": "text-primary",
+                                            //             "hidden": false,
+                                            //             "disabled": false,
+                                            //             "execute": [
+                                            //                 {
+                                            //                     "triggerType": "STATE",
+                                            //                     "trigger": "SEARCH_ROW"
+                                            //                 }
+                                            //             ]
+                                            //         },
+                                            //         {
+                                            //             "name": "M_cancelSearchRow",
+                                            //             "text": "取消查询",
+                                            //             "icon": "rollback",
+                                            //             "triggerType": "STATE",
+                                            //             "trigger": "CANCEL_SEARCH_ROW",
+                                            //             "actionName": "cancelSearchRow",
+                                            //             "color": "text-grey-darker",
+                                            //             "hidden": false,
+                                            //             "disabled": false,
+                                            //             "execute": [
+                                            //                 {
+                                            //                     "triggerType": "STATE",
+                                            //                     "trigger": "SEARCH_ROW"
+                                            //                 }
+                                            //             ],
+                                            //         }
+                                            //     ]
+                                            // }
+                                        ]
+                                    }
+                                },
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
@@ -1247,8 +1234,8 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 },
                                 "component": {
                                     "id": "view_business_main",
-                                    "title": "业务描述",
-                                    "titleIcon": "right-circle",
+                                    // "title": "业务描述",
+                                    // "titleIcon": "right-circle",
                                     "component": "cnDataTable",
                                     "keyId": "id",
                                     "size": "small",
@@ -4012,7 +3999,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "header": {
                                     "title": "业务对象列表",
                                     "icon": "right-circle",
-                                    "header": {
+                                    "toolbar": {
                                         "id": "view_treegrid_toolbar",
                                         "component": "cnToolbar",
                                         "size": "default",
@@ -4236,40 +4223,40 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         ]
                                                     },
                                                     "cascadeValue": [
-                                                        {
-                                                            "type": "",
-                                                            "controlId": "res_type",
-                                                            "name": "refResourceType",
-                                                            "CascadeObjects": [
-                                                                {
-                                                                    "controlId": "res_ref_id",
-                                                                    "cascadeName": "refResourceId",
-                                                                    "cascadeItems": [
-                                                                        {
-                                                                            "type": "default",
-                                                                            "caseValue": {
-                                                                                "type": "selectObjectValue",
-                                                                                "valueName": "value",
-                                                                                "regular": "^0$"
-                                                                            },
-                                                                            "content": {
-                                                                                "type": "ajax",
-                                                                                "data": {
-                                                                                    "option": [
-                                                                                        {
-                                                                                            "name": "_TYPE",
-                                                                                            "type": "selectObjectValue",
-                                                                                            "valueName": "value"
-                                                                                        }
-                                                                                    ]
-                                                                                }
-                                                                            }
-                                                                        }
+                                                        // {
+                                                        //     "type": "",
+                                                        //     "controlId": "res_type",
+                                                        //     "name": "refResourceType",
+                                                        //     "CascadeObjects": [
+                                                        //         {
+                                                        //             "controlId": "res_ref_id",
+                                                        //             "cascadeName": "refResourceId",
+                                                        //             "cascadeItems": [
+                                                        //                 {
+                                                        //                     "type": "default",
+                                                        //                     "caseValue": {
+                                                        //                         "type": "selectObjectValue",
+                                                        //                         "valueName": "value",
+                                                        //                         "regular": "^0$"
+                                                        //                     },
+                                                        //                     "content": {
+                                                        //                         "type": "ajax",
+                                                        //                         "data": {
+                                                        //                             "option": [
+                                                        //                                 {
+                                                        //                                     "name": "_TYPE",
+                                                        //                                     "type": "selectObjectValue",
+                                                        //                                     "valueName": "value"
+                                                        //                                 }
+                                                        //                             ]
+                                                        //                         }
+                                                        //                     }
+                                                        //                 }
 
-                                                                    ]
-                                                                }
-                                                            ]
-                                                        },
+                                                        //             ]
+                                                        //         }
+                                                        //     ]
+                                                        // },
                                                         {
                                                             "type": "",
                                                             "controlId": "res_ref_id",
@@ -5777,7 +5764,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "keyId": "id",
                                     "parentKey": "parentId",
                                     "size": "small",
-                                    "isBordered": true,
+                                    "isBordered": false,
                                     "isFrontPagination": false,
                                     "isPagination": true,
                                     "isShowSizeChanger": true,
