@@ -11,5 +11,5 @@
     nzHasFeedback nzValidatingTip="Validating...">
   </nz-form-control> -->
 </nz-form-item>
-<strong> <span class="text-lg"> <i nz-icon nzType="edit" class="text-lg"></i> {{config.config.title}}</span></strong>
+<strong> <span class="text-lg"> <i nz-icon  [nzType]="config.config.icon?config.config.icon:'edit'" class="text-lg"></i> {{config.config.title}}</span></strong>
 <nz-divider style="margin: 8px 0"></nz-divider>
