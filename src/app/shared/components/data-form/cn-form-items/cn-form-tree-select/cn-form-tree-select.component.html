@@ -5,12 +5,13 @@
         <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm" [nzXs]="config.config.controlSize.nzXs"
             [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
             [formGroup]="formGroup" [nzErrorTip]="combineTpl"  nzValidatingTip="Validating...">
-            <!-- style="width: 250px"        [nzDefaultExpandedKeys]="expandKeys"-->
+            <!-- style="width: 250px"        [nzDefaultExpandedKeys]="expandKeys"    -->
                   <nz-tree-select
             #tree
                   [nzDropdownStyle]="{ 'max-height': '300px' }"
                   [nzNodes]="nodes"
-                  [nzAsyncData]="true"
+                  [nzHideUnMatched]="true"
+                  [nzAsyncData]="config.asyncData?config.asyncData:false"
                   (nzExpandChange)="expandNode($event)"
                   nzShowSearch
                   nzPlaceHolder="Please select"

@@ -428,7 +428,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     if (this.config.cascadeLayout && this.config.cascadeLayout.length > 0) {
       this.config.cascadeLayout.forEach(cascade => {
         if (cascade.field === v.name) {
-          debugger;
+         // debugger;
           cascade.mapping.forEach(m => {
             if (m.value === v.value) {
               // const oldRows = this.config.formLayout.rows;

@@ -121,6 +121,7 @@ import { CnDynamicLayoutResolverDirective } from './resolver/layout/dynamic-layo
 import { CnDynamicLayoutComponent } from './components/layout/cn-dynamic-layout.component';
 import { CnDynamicPageHeaderComponent } from './components/layout/cn-dynamic-page-header.component';
 import { CnFormGroupComponent } from './components/data-form/cn-form-items/cn-form-group/cn-form-group.component';
+import { CnTagComponent } from './components/cn-tag/cn-tag.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -237,7 +238,8 @@ const COMPONENTS = [
   CfgAttrCascadeComponent,
   CnDynamicLayoutComponent,
   CnDynamicPageHeaderComponent,
-  CnFormGroupComponent
+  CnFormGroupComponent,
+  CnTagComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [

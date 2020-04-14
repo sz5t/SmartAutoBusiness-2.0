@@ -18,7 +18,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
   @Input() tempData;
   @Input() initData;
   @Output() public updateValue = new EventEmitter();
-
+  @ViewChild('tree', { static: true }) tree: ElementRef;
   isLoading;
   public mapOfDataState: {
     [key: string]: {
@@ -71,9 +71,12 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
   async valueChange(v: string): Promise<void> {
     // v = "6IkDKuH1iXCnC5xiszniEVbbUWnOLRKm";
     // this.value = v;
-    console.log("树valueChange", v);
-    if (!this.nodes || (this.nodes && this.nodes.length <= 0))
+    // v = 'A2a1BqdtCsLfoLB23YwJpkrRSvTrdHdc';
+   // console.log("树valueChange", v);
+    if (!this.nodes || (this.nodes && this.nodes.length <= 0)) {
       await this.load();
+    }
+
 
     let item = null;
     if (v) {
@@ -81,17 +84,65 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
       if (!item) {
         // 异步执行 loaditem
         item = await this.loadItem();
+
+        const _itemData = {};
+        this.config.columns.map(column => {
+          _itemData[column['type']] = item[column['field']];
+        });
+        _itemData['isLeaf'] = true;
+        _itemData['isSystem_Add'] = true;
+
+
+        this.nodes = [...[_itemData], ... this.nodes];
+
+        // const d: any = {
+        //   key: _itemData['key'],
+        //   title:_itemData['title'],
+        //   level: 1,
+        //   parentNode: null,
+        //   origin: item
+        // };
+        // this.tree['selectedNodes'] = [];
+        // this.tree['value'] = [];
+        // this.tree['selectedNodes'].push(new NzTreeNode(d));
+        // this.tree['value'].push( _itemData['key'] );
+        // this.tree['selectedNodes'][0]['_title'] =  _itemData['title'];
+
+       // console.log('zxzxzxzxzx', this.nodes);
       }
     }
 
     const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: item };
     this.updateValue.emit(backValue);
-    // console.log('下拉树返回', backValue);
+
+
+
+    console.log('下拉树返回', backValue);
+  }
+
+  clicktree() {
+
+    const item = {};
+    item['key'] = "A2a1BqdtCsLfoLB23YwJpkrRSvTrdHdc";
+    item['NAME'] = "开发一部";
+    const d: any = {
+      key: "A2a1BqdtCsLfoLB23YwJpkrRSvTrdHdc",
+      level: 1,
+      parentNode: null,
+      origin: item
+    };
+    // this.tree['selectedNodes'] = [];
+    // this.tree['value'] = [];
+    // this.tree['selectedNodes'].push(new NzTreeNode(d));
+    // this.tree['value'].push( item['key'] );
+    // this.tree['selectedNodes'][0]['_title'] =  item['NAME'];
+    console.log('下拉树返回___CLICK', this.tree);
   }
 
   ngOnInit(): void {
     this.tempValue = this.tempValue;
     this.initValue = this.initData;
+    // this.value = 'A2a1BqdtCsLfoLB23YwJpkrRSvTrdHdc';
   }
 
 
@@ -196,10 +247,25 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
       node[column['type']] = node[column['field']];
     });
 
+    const dd = this.nodes.find(d => d.isSystem_Add);
+    if (dd) {
+      if (node['key'] === dd['key']) {
+          this.nodes = this.nodes.filter(d=>!d.isSystem_Add);
+      }
+    }
+
+
+
     if (node.children && node.children.length > 0) {
-      node.children.map(n => {
-        this._setTreeNode(n);
-      })
+      if (!this.config.asyncData) {
+        // 静态
+        node.children.map(n => {
+          this._setTreeNode(n);
+        })
+      }
+      node['isLeaf'] = false;
+    }else{
+        node['isLeaf'] = true;
     }
   }
 
@@ -210,13 +276,19 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
     } else {
       node = $event['node'];
     }
+
+    if (!this.config.asyncData) {
+      return true;
+    }
+
     if (node && node.isExpanded) {
       const response = await this._getAsyncTreeData(this.config.expandConfig.ajaxConfig, node);
       if (response && response.data && response.data.length > 0) {
+        node.clearChildren();
         response.data.map(d => {
           this._setTreeNode(d);
-          d['isLeaf'] = false;
-          d['children'] = [];
+          // d['isLeaf'] = false;
+         //  d['children'] = [];
         });
         node.addChildren(response.data);
       } else {
