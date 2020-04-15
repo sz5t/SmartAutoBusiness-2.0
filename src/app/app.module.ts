@@ -137,6 +137,7 @@ import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { environment } from '@env/environment';
 import { DelonMockModule } from '@delon/mock';
+import { ConfigureModule } from './configure/configure.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -149,6 +150,7 @@ import { DelonMockModule } from '@delon/mock';
     SharedModule,
     LayoutModule,
     RoutesModule,
+    ConfigureModule,
     ...I18NSERVICE_MODULES,
     ...GLOBAL_THIRD_MODULES,
     ...FORM_MODULES,

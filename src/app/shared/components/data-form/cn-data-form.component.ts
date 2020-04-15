@@ -335,6 +335,9 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * load 自加载
    */
   public load() {
+    if(!this.config.loadingConfig.ajaxConfig) {
+      return;
+    }
     const url = this.config.loadingConfig['ajaxConfig'].url;
     const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
     const params = {

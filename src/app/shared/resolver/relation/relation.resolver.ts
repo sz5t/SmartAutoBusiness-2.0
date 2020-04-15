@@ -130,6 +130,7 @@ export class TriggerReceiverResolver {
         const currentId = this._componentInstance.getCurrentComponentId();
         const trigger_subscribe$ = this._componentInstance.componentService.commonRelationTrigger.subscribe(
             data => {
+                debugger;
                 if (data.viewId === currentId) {
                     new TriggerResolver(
                         data,
