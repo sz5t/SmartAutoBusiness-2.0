@@ -14,4 +14,8 @@ export class ConfigureFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  public submit() {
+    
+  }
+
 }
