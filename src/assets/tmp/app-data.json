@@ -225,6 +225,46 @@
       ]
     },
     {
+      "text": "可视化配置",
+      "i18n": "menu.configure",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "icon": "book",
+      "status": 2,
+      "children": [{
+          "text": "布局",
+          "i18n": "menu.configure.layout",
+          "icon": "build",
+          "level": 2,
+          "status": 2,
+          "children": [{
+              "text": "布局配置",
+              "link": "/configure/layout",
+              "i18n": "menu.configure.layout.home",
+              "level": 3,
+              "status": 2
+            }
+          ]
+        },
+        {
+          "text": "组件",
+          "i18n": "menu.configure.component",
+          "icon": "build",
+          "level": 2,
+          "status": 2,
+          "children": [{
+              "text": "组件配置",
+              "link": "/configure/component",
+              "i18n": "menu.configure.component.home",
+              "level": 3,
+              "status": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
       "level": 1,
       "text": "主导航",
       "i18n": "menu.main",

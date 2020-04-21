@@ -40,6 +40,7 @@ const routes: Routes = [
       { path: 'delon', loadChildren: () => import('./delon/delon.module').then(m => m.DelonModule) },
       { path: 'extras', loadChildren: () => import('./extras/extras.module').then(m => m.ExtrasModule) },
       { path: 'pro', loadChildren: () => import('./pro/pro.module').then(m => m.ProModule) },
+      { path: 'configure', loadChildren: () => import('./../configure/configure.module').then(m => m.ConfigureModule) },
       // Exception
       { path: 'exception', loadChildren: () => import('./exception/exception.module').then(m => m.ExceptionModule) },
       { path: 'template', loadChildren: () => import('./template/template.module').then(m => m.TemplateModule) }
