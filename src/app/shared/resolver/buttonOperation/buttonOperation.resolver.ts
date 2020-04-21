@@ -144,9 +144,15 @@ export class ButtonOperationResolver {
                     this.setDataState(cfg.trigger, this.currentData);
                     this.setToggle(this.currentData);
                 }
+                const behavior_options = {};
+                if (cfg.builtinId) {
+                    const _builtinConfig = this.findbuiltinConfig(cfg.builtinId);
+                    _builtinConfig && (behavior_options['builtinConfig'] = _builtinConfig);
+                }
                 const behaviorMsg = new BsnRelativesMessageModel(
                     triggerObj,
-                    targetViewId
+                    targetViewId,
+                    behavior_options
                 )
                 this.componentService.commonRelationTrigger.next(behaviorMsg);
                 break;
@@ -159,6 +165,10 @@ export class ButtonOperationResolver {
                 action_options['data'] = this.currentData;
                 action_options['btnCfg'] = btn;
                 action_options['changeValue'] = this.findChangeValueConfig(cfg.changeValueId);
+                if (cfg.builtinId) {
+                    const _builtinConfig = this.findbuiltinConfig(cfg.builtinId);
+                    _builtinConfig && (action_options['builtinConfig'] = _builtinConfig);
+                }
                 const actionMsg = new BsnRelativesMessageModel(
                     triggerObj,
                     targetViewId,
@@ -176,6 +186,10 @@ export class ButtonOperationResolver {
                 options['beforeOperation'] = this.findBeforeOperationConfig(cfg.stateId);
                 options['condition'] = this.findConditionConfig(cfg.conditionId);
                 options['data'] = this.currentData;
+                if (cfg.builtinId) {
+                    const _builtinConfig = this.findbuiltinConfig(cfg.builtinId);
+                    _builtinConfig && (options['builtinConfig'] = _builtinConfig);
+                }
                 const operationMsg = new BsnRelativesMessageModel(
                     triggerObj,
                     targetViewId,

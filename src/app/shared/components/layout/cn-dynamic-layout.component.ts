@@ -22,7 +22,7 @@ import { Component, Input, OnInit, Output, EventEmitter, Inject, TemplateRef, Vi
     ]
 })
 export class CnDynamicLayoutComponent implements OnInit {
-    public layoutObj;
+    @Input() public layoutObj;
     @Input() public initData;
     @Input() public tempData;
     constructor() {

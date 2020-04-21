@@ -1,1 +1,5 @@
-<ng-container cnLayoutResolverDirective [config]="config"></ng-container>
+ <ng-container *ngIf="config.isAllJson"  cnLayoutResolverDirective [config]="configdemo"></ng-container> 
+
+<cn-dynamic-layout-resolver  *ngIf="!config.isAllJson"   [layoutObj]="dd_liu['layoutJson']"    [initData]="initData"></cn-dynamic-layout-resolver> 
+
+

@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { Subject, Subscription, config } from 'rxjs';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
@@ -6,16 +6,19 @@ import { ComponentServiceProvider } from '@core/services/component/component-ser
 import { CN_PAGE_METHOD } from '@core/relations/bsn-methods/bsn-page-methods';
 import { CN_PAGE_PROPERTY } from '@core/relations/bsn-property/page.property.interface';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
+import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 
 @Component({
   selector: 'app-cn-page',
   templateUrl: './cn-page.component.html',
   styleUrls: ['./cn-page.component.less']
 })
-export class CnPageComponent extends CnComponentBase implements OnInit {
+export class CnPageComponent extends CnComponentBase implements OnInit, OnDestroy {
 
   @Input() config: any;
   @Input() changeValue: any;
+  @Input() customPageId;
+  @Input() public initData;
   /**
    * 组件名称
    * 所有组件实现此属性 
@@ -46,9 +49,12 @@ export class CnPageComponent extends CnComponentBase implements OnInit {
     this.initValue = {};
   }
 
+  dd_liu={};
   ngOnInit() {
 
 
+     this.dd_liu = this.componentService.cacheService.getNone(this.customPageId);
+     console.log('222222', this.dd_liu,this.initData);
     // 解析及联配置
     this.resolveRelations();
   }
@@ -67,13 +73,14 @@ export class CnPageComponent extends CnComponentBase implements OnInit {
     }
     if (this.config.cascade && this.config.cascade.messageReceiver) {
       // 解析消息接受配置,并注册消息接收对象
-      this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
-      this._receiver_subscription$ = this._receiver_source$.subscribe();
+      // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+      // this._receiver_subscription$ = this._receiver_source$.subscribe();
+      new RelationResolver(this).resolveReceiver(this.config);
     }
 
     this._trigger_source$ = new RelationResolver(this).resolve();
-
   }
+
   public getCurrentComponentId() {
     return this.config.id;
   }
@@ -4877,18 +4884,1590 @@ export class CnPageComponent extends CnComponentBase implements OnInit {
     },
   }
 
+
+  public configdemo = {
+    "id": "demo",
+    "type": "layout",
+    "title": "",
+    "container": "rows",
+    "rows": [
+      {
+
+        "cols": [
+          {
+            "id": "row_2_col_1",
+            "col": "cc",
+            "type": "col",
+            "title": "",
+            "span": 24,
+            "container": "component",
+            "size": {
+              "nzXs": 24,
+              "nzSm": 24,
+              "nzMd": 24,
+              "nzLg": 24,
+              "nzXl": 24,
+              "nzXXl": 24
+            },
+            "component": {
+              "id": "tag_main",
+              "title": "",
+              "titleIcon": "right-circle",
+              "component": "cnTag",
+              "keyId": "ID",
+              "size": "large",
+              "isBordered": false,
+              "isFrontPagination": false,
+              "isPagination": true,
+              "isShowSizeChanger": true,
+              "showTotal": true,
+              "pageSize": 5,
+              "showCheckBox": true,
+              "pageSizeOptions": [10, 20, 50, 100],
+              "loadingOnInit": true,
+              "loadingConfig": {
+                "url": "resource/PROVINCE/query",
+                "method": "get",
+                "params": [],
+                "filter": []
+              },
+              "cascade": {
+                "messageSender": [
+                  {
+                    "id": "tag_sender_liu_1",
+                    "senderId": "tag_main",
+                    "triggerType": "BEHAVIOR",
+                    "trigger": "VALUE_CHANGE",
+                    "triggerMoment": "after",
+                    "sendData": [
+                      {
+                        "beforeSend": {},
+                        "reveicerId": "",
+                        "receiverTriggerType": "BEHAVIOR",
+                        "receiverTrigger": "ADD_SELECTED",
+                        "params": [
+                          {
+                            "name": "value",
+                            "type": "componentValue",
+                            "valueName": "value"
+                          },
+
+                        ]
+                      }
+                    ]
+                  },
+                ],
+                "messageReceiver": [
+                  {
+                    "id": "",
+                    "senderId": "table_main",
+                    "receiveData": [
+                      {
+                        "beforeReceive": [],
+                        "triggerType": "BEHAVIOR",
+                        "trigger": "ADD_MULTIPLE_NODE",
+                        "params": [
+                          {
+                            "pname": "value",
+                            "cname": "_PID",
+                            "valueTo": "tempValue"
+                          },
+                          {
+                            "pname": "label",
+                            "cname": "_PROVINCE_NAME",
+                            "valueTo": "tempValue"
+                          }
+
+                        ]
+                      }
+                    ]
+                  },
+
+                ]
+              },
+              "ajaxConfig": [
+
+              ]
+            }
+          }
+        ],
+        "id": "row_3",
+        "type": "row",
+      },
+      {
+        "cols": [
+          {
+            "id": "row_2_col_1",
+            "col": "cc",
+            "type": "col",
+            "title": "",
+            "span": 24,
+            "container": "component",
+            "header": {
+              "title": "DEMO",
+              "icon": "edit",
+              "toolbar": {
+                "id": "toolbar_main",
+                "component": "cnToolbar",
+                "size": "large",
+                "changeValue": [
+                  {
+                    "id": "edit_form_changeValue",
+                    "params": [
+                      {
+                        "name": "ID",
+                        "type": "item",
+                        "valueName": "ID",
+                        "valueTo": "tempValue"
+                      }
+                    ]
+                  }
+                ],
+                "toolbar": [
+                  {
+                    "targetViewId": "table_main",
+                    "group": [
+                      {
+                        "id": "M_addRow",
+                        "text": "新增",
+                        "icon": "plus",
+                        "color": "primary",
+                        "hidden": false,
+                        "disabled": false,
+                        "size": "default",
+                        "execute": [
+                          {
+                            "triggerType": "STATE",
+                            "trigger": "ADD_ROW",
+                            // "conditionId": "add_state_1"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "M_saveRow",
+                        "text": "保存",
+                        "icon": "save",
+                        "color": "primary",
+                        "hidden": false,
+                        "disabled": false,
+                        "size": "default",
+                        "execute": [
+                          {
+                            "triggerType": "OPERATION",
+                            "trigger": "SAVE_ROWS",
+                            "ajaxId": "add_provinces_1",
+                            // "stateId": "add_save_1",
+                            // "conditionId": "add_province_condition"
+                          },
+                          // {
+                          //     "triggerType": "OPERATION",
+                          //     "trigger": "SAVE_ROWS",
+                          //     "ajaxId": "edit_save_1",
+                          //     // "stateId": "edit_save_1",
+                          //     "conditionId": "edit_province_condition"
+                          // }
+                        ]
+                      },
+                      {
+                        "id": "table_main_new_btn",
+                        "text": "新增表单",
+                        "state": "new",
+                        "icon": "edit",
+                        "color": "primary",
+                        "hidden": false,
+                        "disabled": false,
+                        "size": "default",
+                        "execute": [
+                          {
+                            "triggerType": "ACTION",
+                            "trigger": "DIALOG",
+                            "dialogId": "table_main_edit_btn",
+                            // "changeValueId": "edit_form_changeValue",
+                            "ajaxId": "form_edit_province",
+                            // "stateId": "add_save_1",
+                            // "conditionId": "add_province_condition"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "table_main_edit_btn",
+                        "text": "编辑表单",
+                        "state": "edit",
+                        "icon": "edit",
+                        "color": "primary",
+                        "hidden": false,
+                        "disabled": false,
+                        "size": "default",
+                        "execute": [
+                          {
+                            "triggerType": "ACTION",
+                            "trigger": "DIALOG",
+                            "dialogId": "table_main_edit_btn",
+                            "changeValueId": "edit_form_changeValue",
+                            "ajaxId": "form_edit_province",
+                            // "stateId": "add_save_1",
+                            // "conditionId": "add_province_condition"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "ajaxConfig": [
+                  {
+                    "id": "add_provinces_1",
+                    "url": "resource/PROVINCE/batchInsert",
+                    "urlType": "inner",
+                    "ajaxType": "post",
+                    "params": [
+                      {
+                        "name": "ID",
+                        "type": "componentValue",
+                        "valueName": "ID"
+                      },
+                      {
+                        "name": "PROVINCE_NAME",
+                        "type": "componentValue",
+                        "valueName": "PROVINCE_NAME",
+                        "dataType": "string"
+                      },
+                      {
+                        "name": "AREA_CODE",
+                        "type": "componentValue",
+                        "valueName": "AREA_CODE",
+                        "dataType": "string"
+                      },
+                      {
+                        "name": "DIRECTLY_UNDER",
+                        "type": "componentValue",
+                        "valueName": "DIRECTLY_UNDER",
+                        "dataType": "int"
+                      },
+                      {
+                        "name": "POPULATION",
+                        "type": "componentValue",
+                        "valueName": "POPULATION",
+                        "dataType": "int"
+                      }
+                    ],
+                    "outputParameters": [
+
+                    ],
+                    "result": [
+                      {
+                        "name": "data",
+                        "showMessageWithNext": 0,
+                        "message": "message.ajax.state.success",
+                        "senderId": "afterProvinceSaveSuccessfully"
+                      },
+                      {
+                        "name": "validation",
+                        "message": "message.ajax.state.success",
+                        "senderId": "afterProvinceSaveValidation"
+                      },
+                      {
+                        "name": "error",
+                        "senderId": "toolbar_02"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "form_edit_province",
+                    "url": "resource/PROVINCE/update",
+                    "urlType": "inner",
+                    "ajaxType": "put",
+                    "params": [
+                      {
+                        "name": "ID",
+                        "type": "tempValue",
+                        "valueName": "ID",
+                        "dataType": "string"
+                      },
+                      {
+                        "name": "PROVINCE_NAME",
+                        "type": "componentValue",
+                        "valueName": "PROVINCE_NAME",
+                        "dataType": "string"
+                      },
+                      // {
+                      //     "name": "AREA_CODE",
+                      //     "type": "componentValue",
+                      //     "valueName": "AREA_CODE",
+                      //     "dataType": "string"
+                      // },
+                      {
+                        "name": "DIRECTLY_UNDER",
+                        "type": "componentValue",
+                        "valueName": "DIRECTLY_UNDER",
+                        "dataType": "int"
+                      },
+                      {
+                        "name": "POPULATION",
+                        "type": "componentValue",
+                        "valueName": "POPULATION",
+                        "dataType": "int"
+                      },
+                    ],
+                    "outputParameters": [
+
+                    ],
+                    "result": [
+                      {
+                        "name": "data",
+                        "showMessageWithNext": 0,
+                        "message": "message.ajax.state.success",
+                        "senderId": "afterProvinceSaveSuccessfully"
+                      },
+                      // {
+                      //     "name": "validation",
+                      //     "message": "message.ajax.state.success",
+                      //     "senderId": "afterAddBusinessSubObjectValidation"
+                      // },
+                      // {
+                      //     "name": "error",
+                      //     "senderId": "toolbar_02"
+                      // }
+                    ]
+                  }
+                ],
+                "cascade": {
+                  "messageSender": [],
+                  "messageReceiver": []
+                },
+                "dialog": [
+                  {
+                    "id": "table_main_edit_btn",
+                    "type": "confirm",
+                    "title": "数据编辑",
+                    "cancelText": "取消",
+                    "okText": "提交",
+                    "form": {
+                      "id": "form_province",
+                      "type": "form",
+                      "component": "form",
+                      "state": "edit",
+                      "loadingConfig": {
+                        "id": "loadform"
+                      },
+                      "cascade": {
+                        "messageSender": [],
+                        "messageReceiver": []
+                      },
+                      "formLayout": {
+                        "id": "layout_01",
+                        "type": "layout",
+                        "title": "表单布局b86s2i",
+                        "rows": [
+                          {
+                            "id": "erw",
+                            "type": "row",
+                            "cols": [
+                              {
+                                "id": "iHspYn",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 24,
+                                "layoutContain": "input",
+                                "size": {
+                                  "nzXs": 24, "nzSm": 24, "nzMd": 12, "nzLg": 24, "ngXl": 4, "nzXXl": 4
+                                },
+                                "control": {
+                                  "id": "control_province"  // id 和引用id 值相同
+                                }
+                              },
+                              {
+                                "id": "iHspYn1",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 24,
+                                "layoutContain": "input",
+                                "size": {
+                                  "nzXs": 24, "nzSm": 24, "nzMd": 12, "nzLg": 12, "ngXl": 4, "nzXXl": 4
+                                },
+                                "control": {
+                                  "id": "control_population"  // id 和引用id 值相同
+                                }
+                              },
+                              {
+                                "id": "iHspYn2",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 24,
+                                "layoutContain": "input",
+                                "size": {
+                                  "nzXs": 24, "nzSm": 24, "nzMd": 12, "nzLg": 12, "ngXl": 4, "nzXXl": 4
+                                },
+                                "control": {
+                                  "id": "control_z"  // id 和引用id 值相同
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "formControlsPermissions": [
+                        {
+                          "formState": "new",
+                          "formStateContent": {
+                            "isLoad": false,
+                            "loadAjax": {},
+                            "isDefault": true
+                          },
+                          "Controls": [
+                            { "id": "control_province", "state": "edit", "hidden": false, "readOnly": false },
+                            { "id": "control_population", "state": "edit", "hidden": false, "readOnly": false },
+                            { "id": "control_z", "state": "edit", "hidden": false, "readOnly": false },
+                            // { "id": "004", "state": "edit", "hidden": false, "readOnly": false }
+                          ]
+                        },
+                        {
+                          "formState": "edit",
+                          "formStateContent": {
+                            "isLoad": true,
+                            "loadAjax": {},
+                            "isDefault": true
+                          },
+                          "Controls": [
+                            { "id": "control_province", "state": "edit", "hidden": false, "readOnly": false },
+                            { "id": "control_population", "state": "edit", "hidden": false, "readOnly": false },
+                            { "id": "control_z", "state": "edit", "hidden": false, "readOnly": false },
+                            // { "id": "004", "state": "edit", "hidden": false, "readOnly": false }
+                          ]
+                        },
+                      ],
+                      "formControls": [
+                        {
+                          "id": "control_province",
+                          "hidden": false,
+                          "title": "省名称",
+                          "titleConfig": {
+                            "required": true
+                          },
+                          "field": "PROVINCE_NAME",
+                          "labelSize": {
+                            "span": 3,
+                            "nzXs": { "span": 6 },
+                            "nzSm": { "span": 6 },
+                            "nzMd": { "span": 6 },
+                            "nzLg": { "span": 3 },
+                            "ngXl": { "span": 6 },
+                            "nzXXl": { "span": 6 }
+                          },
+                          "controlSize": {
+                            "span": 18,
+                            "nzXs": 18,
+                            "nzSm": 18,
+                            "nzMd": 18,
+                            "nzLg": 18,
+                            "ngXl": 18,
+                            "nzXXl": 18
+                          },
+                          "state": "edit",
+                          "text": {
+                            "type": "label",
+                            "field": "PROVINCE_NAME",
+                          },
+                          "editor": {
+                            "type": "input",
+                            "field": "PROVINCE_NAME",
+                            "placeholder": "请输入",
+                            "validations": [
+                              { "validator": "required", "type": "default", "message": "请输入省名称" }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "control_population",
+                          "hidden": false,
+                          "title": "人口",
+                          "titleConfig": {
+                            "required": true
+                          },
+                          "field": "POPULATION",
+                          "labelSize": {
+                            "span": 6,
+                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
+                          },
+                          "controlSize": {
+                            "span": 18,
+                            "nzXs": { "span": 18, "offset": 0 },
+                            "nzSm": { "span": 18, "offset": 0 },
+                            "nzMd": { "span": 18, "offset": 0 },
+                            "nzLg": { "span": 18, "offset": 0 },
+                            "nzXl": { "span": 18, "offset": 0 },
+                            "nzXXl": { "span": 18, "offset": 0 }
+                          },
+                          "state": "edit",
+                          "text": {
+                            "type": "label",
+                            "field": "POPULATION",
+                          },
+                          "editor": {
+                            "type": "input",
+                            "field": "POPULATION",
+                            "placeholder": "请输入",
+                            "validations": [
+                              { "validator": "required", type: "default", "message": "请输入人口数量" }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "control_z",
+                          "hidden": false,
+                          "title": "是否直辖市",
+                          "titleConfig": {
+                            "required": false
+                          },
+                          "field": "DIRECTLY_UNDER",
+                          "labelSize": {
+                            "span": 6,
+                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "nzXl": 6, "nzXXl": 6
+                          },
+                          "controlSize": {
+                            "span": 18,
+                            "nzXs": { "span": 18, "offset": 0 },
+                            "nzSm": { "span": 18, "offset": 0 },
+                            "nzMd": { "span": 18, "offset": 0 },
+                            "nzLg": { "span": 18, "offset": 0 },
+                            "ngXl": { "span": 18, "offset": 0 },
+                            "nzXXl": { "span": 18, "offset": 0 }
+                          },
+                          "state": "edit",
+                          "text": {
+                            "type": "label",
+                            "field": "DIRECTLY_UNDER",
+                          },
+                          "editor": {
+                            "type": "select",
+                            "field": "DIRECTLY_UNDER",
+                            "placeholder": "请输入",
+                            "options": [
+                              { "label": "是", "value": 1 },
+                              { "label": "否", "value": 0 }
+                            ],
+                            "defaultValue": 0,
+                            "validate": {
+
+                            }
+                          }
+                        },
+                      ],
+                      "ajaxConfig": [
+                        {
+                          "id": "loadform",
+                          "url": "resource/PROVINCE/query",
+                          "urlType": "inner",
+                          "ajaxType": "get",
+                          "params": [
+                            {
+                              "name": "ID",
+                              "type": "tempValue",
+                              "valueName": "ID"
+                            },
+                            {
+                              "name": "_onlyOneObject",
+                              "type": "value",
+                              "value": true
+                            }
+                          ],
+                          "outputParameters": [
+
+                          ],
+                          "result": [
+
+                          ]
+                        },
+                      ]
+                    }
+                  }
+
+                ]
+              }
+            },
+            "size": {
+              "nzXs": 24,
+              "nzSm": 24,
+              "nzMd": 24,
+              "nzLg": 24,
+              "nzXl": 24,
+              "nzXXl": 24
+            },
+            "component": {
+              "id": "table_main",
+              "title": "",
+              "titleIcon": "right-circle",
+              "component": "cnDataTable",
+              "keyId": "ID",
+              "size": "large",
+              "isBordered": false,
+              "isFrontPagination": false,
+              "isPagination": true,
+              "isShowSizeChanger": true,
+              "showTotal": true,
+              "pageSize": 5,
+              "showCheckBox": true,
+              "pageSizeOptions": [10, 20, 50, 100],
+              "loadingOnInit": true,
+              "isSelected": true,
+              "loadingConfig": {
+                "url": "resource/PROVINCE/query",
+                "method": "get",
+                "params": [],
+                "filter": []
+              },
+              "columns": [
+                {
+                  "title": "ID",
+                  "type": "field",
+                  "field": "ID",
+                  "hidden": true,
+                  "showFilter": false,
+                  "showSort": false,
+                  "isShowExpand": false,
+                  "width": "50px",
+                  "style": {}
+                },
+                {
+                  "title": "省名称",
+                  "type": "field",
+                  "field": "PROVINCE_NAME",
+                  "hidden": false,
+                  "showFilter": false,
+                  "showSort": false,
+                  "width": "200px",
+                  "style": {},
+                  "editor": {
+                    "type": "input",
+                    "field": "PROVINCE_NAME"
+                  }
+                },
+                {
+                  "title": "人口",
+                  "type": "field",
+                  "field": "POPULATION",
+                  "hidden": false,
+                  "showFilter": false,
+                  "showSort": false,
+                  "width": "200px",
+                  "style": {},
+                  "editor": {
+                    "type": "input",
+                    "field": "POPULATION"
+                  }
+                },
+                {
+                  "title": "是否直辖市",
+                  "type": "field",
+                  "field": "DIRECTLY_UNDER",
+                  "hidden": false,
+                  "showFilter": false,
+                  "showSort": false,
+                  "width": "300px",
+                  "style": {},
+                  "editor": {
+                    "type": "select",
+                    "field": "DIRECTLY_UNDER",
+                    "placeholder": "请输入",
+                    "options": [
+                      {
+                        "label": "是",
+                        "value": 1
+                      },
+                      {
+                        "label": "否",
+                        "value": 2
+                      }
+                    ],
+                    "defaultValue": 2,
+                    "labelName": "label"
+                  },
+                  "custom": {
+                    "type": "tag",
+                    "field": "DIRECTLY_UNDER",
+                    "dataMapping": [
+                      {
+                        "color": "#87d068",
+                        "field": "DIRECTLY_UNDER",
+                        "value": 1
+                      },
+                      {
+                        "color": "#ff3367",
+                        "field": "DIRECTLY_UNDER",
+                        "value": 2
+                      }
+                    ]
+                  }
+                },
+                {
+                  "title": "操作",
+                  "type": "action",
+                  "width": "100px",
+                  "actionIds": [
+                    "main_table_new_row",
+                    "main_table_edit_row",
+                    "main_table_cancel_new_row",
+                    "main_table_cancel_edit_row",
+                    "main_table_row_link"
+                  ]
+                }
+              ],
+              "rowActions": [
+                {
+                  "id": "main_table_new_row",
+                  "state": "text",
+                  "text": "",
+                  "icon": "plus",
+                  "color": "primary",
+                  "type": "link",
+                  "size": "large",
+                  "hidden": false,
+                  "execute": [
+                    {
+                      "triggerType": "STATE",
+                      "trigger": "ADD_ROW",
+                    }
+                  ]
+                },
+                {
+                  "id": "main_table_edit_row",
+                  "state": "text",
+                  "text": "编辑",
+                  "icon": "edit",
+                  "color": "primary",
+                  "type": "link",
+                  "size": "large",
+                  "hidden": false,
+                  "execute": [
+                    {
+                      "triggerType": "STATE",
+                      "trigger": "EDIT_ROW",
+                    }
+                  ]
+                },
+                {
+                  "id": "main_table_cancel_new_row",
+                  "state": "text",
+                  "text": "删除",
+                  "icon": "edit",
+                  "color": "primary",
+                  "type": "link",
+                  "size": "large",
+                  "hidden": true,
+                  "execute": [
+                    {
+                      "triggerType": "STATE",
+                      "trigger": "CANCEL_NEW_ROW",
+                    }
+                  ],
+                  "toggle": {
+                    "type": "state",
+                    "toggleProperty": "hidden",
+                    "values": [
+                      {
+                        "name": "new",
+                        "value": false
+                      },
+                      {
+                        "name": "text",
+                        "value": true
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "main_table_cancel_edit_row",
+                  "state": "text",
+                  "text": "取消",
+                  "icon": "edit",
+                  "color": "primary",
+                  "type": "link",
+                  "size": "large",
+                  "hidden": true,
+                  "execute": [
+                    {
+                      "triggerType": "STATE",
+                      "trigger": "CANCEL_EDIT_ROW",
+                    }
+                  ],
+                  "toggle": {
+                    "type": "state",
+                    "toggleProperty": "hidden",
+                    "values": [
+                      {
+                        "name": "edit",
+                        "value": false
+                      },
+                      {
+                        "name": "text",
+                        "value": true
+                      }
+                    ]
+                  }
+                },
+                {
+                  "id": "main_table_row_link",
+                  "state": "text",
+                  "text": "跳转编辑",
+                  "icon": "edit",
+                  "type": "link",
+                  "color": "primary",
+                  "size": "large",
+                  "execute": [
+                    {
+                      "triggerType": "LINK",
+                      "trigger": "LINK",
+                      "linkId": "linkToForm"
+                    }
+                  ]
+                }
+              ],
+              "linkConfig": [
+                {
+                  "id": "linkToForm",
+                  "link": "/template/dynamic/kV1qCkPk8frNWgVHMN0ENslJgji0Mx6U",
+                  "params": [
+                    {
+                      "name": "ID",
+                      "type": "returnValue",
+                      "valueName": "ID"
+                    }
+                  ]
+                }
+              ],
+              "cascade": {
+                "messageSender": [
+                  {
+                    "id": "afterProvinceSaveSuccessfully",
+                    "senderId": "table_main",
+                    "sendData": [
+                      {
+                        "beforeSend": {},
+                        "receiverTriggerType": "ACTION",
+                        "receiverTrigger": "MESSAGE",
+                        "params": [
+                          {
+                            "name": "type",
+                            "type": "value",
+                            "value": "warning"
+                          },
+                          {
+                            "name": "message",
+                            "type": "value",
+                            "value": "操作完成!111111111111"
+                          }
+                        ]
+                      },
+                      {
+                        "beforeSend": {},
+                        "receiverTriggerType": "BEHAVIOR",
+                        "receiverTrigger": "REFRESH",
+                        "params": [
+                          {
+                            "name": "ID",
+                            "type": "editedRows",
+                            "valueName": "ID"
+                          }
+                        ]
+                      },
+                      {
+                        "beforeSend": {},
+                        "receiverTriggerType": "ACTION",
+                        "receiverTrigger": "CHANGE_ADDED_ROWS_TO_TEXT",
+                        "params": [
+                          {
+                            "name": "ID",
+                            "type": "addedRows",
+                            "valueName": "ID"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "id": "view2_sender_liu_1",
+                    "senderId": "table_main",
+                    "triggerType": "BEHAVIOR",
+                    "trigger": "SET_SELECT_ROW",
+                    "triggerMoment": "after",
+                    "sendData": [
+                      {
+                        "beforeSend": {},
+                        "reveicerId": "",
+                        "receiverTriggerType": "BEHAVIOR",
+                        "receiverTrigger": "ADD_MULTIPLE_NODE",
+                        "params": [
+                          {
+                            "name": "value",
+                            "type": "item",
+                            "valueName": "ID"
+                          },
+                          {
+                            "name": "label",
+                            "type": "item",
+                            "valueName": "PROVINCE_NAME"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                ],
+                "messageReceiver": [
+                  {
+                    "id": "",
+                    "senderId": "table_main",
+                    "receiveData": [
+                      {
+                        "beforeReceive": [],
+                        "triggerType": "ACTION",
+                        "trigger": "MESSAGE"
+                      },
+                      // {
+                      //     "beforeReceive": [],
+                      //     "triggerType": "ACTION",
+                      //     "trigger": "LOAD_REFRESH_DATA"
+                      // },
+                      {
+                        "beforeReceive": [],
+                        "triggerType": "BEHAVIOR",
+                        "trigger": "REFRESH"
+                      },
+                      {
+                        "beforeReceive": [],
+                        "triggerType": "ACTION",
+                        "trigger": "CHANGE_ADDED_ROWS_TO_TEXT"
+                      }
+
+                    ]
+                  },
+
+                ]
+              },
+              "toolbar": {
+                "id": "toolbar_main",
+                "component": "cnToolbar",
+                "size": "large",
+                "changeValue": [
+                  {
+                    "id": "edit_form_changeValue",
+                    "params": [
+                      {
+                        "name": "ID",
+                        "type": "item",
+                        "valueName": "ID",
+                        "valueTo": "tempValue"
+                      }
+                    ]
+                  }
+                ],
+                "toolbar": [
+                  {
+                    "targetViewId": "table_main",
+                    "group": [
+                      {
+                        "id": "M_addRow",
+                        "text": "新增",
+                        "icon": "plus",
+                        "color": "primary",
+                        "hidden": false,
+                        "disabled": false,
+                        "size": "large",
+                        "execute": [
+                          {
+                            "triggerType": "STATE",
+                            "trigger": "ADD_ROW",
+                            // "conditionId": "add_state_1"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "M_saveRow",
+                        "text": "保存",
+                        "icon": "save",
+                        "color": "primary",
+                        "hidden": false,
+                        "disabled": false,
+                        "size": "large",
+                        "execute": [
+                          {
+                            "triggerType": "OPERATION",
+                            "trigger": "SAVE_ROWS",
+                            "ajaxId": "add_provinces_1",
+                            // "stateId": "add_save_1",
+                            // "conditionId": "add_province_condition"
+                          },
+                          // {
+                          //     "triggerType": "OPERATION",
+                          //     "trigger": "SAVE_ROWS",
+                          //     "ajaxId": "edit_save_1",
+                          //     // "stateId": "edit_save_1",
+                          //     "conditionId": "edit_province_condition"
+                          // }
+                        ]
+                      },
+                      {
+                        "id": "table_main_new_btn",
+                        "text": "新增表单",
+                        "state": "new",
+                        "icon": "edit",
+                        "color": "primary",
+                        "hidden": false,
+                        "disabled": false,
+                        "size": "large",
+                        "execute": [
+                          {
+                            "triggerType": "ACTION",
+                            "trigger": "DIALOG",
+                            "dialogId": "table_main_edit_btn",
+                            // "changeValueId": "edit_form_changeValue",
+                            "ajaxId": "form_edit_province",
+                            // "stateId": "add_save_1",
+                            // "conditionId": "add_province_condition"
+                          }
+                        ]
+                      },
+                      {
+                        "id": "table_main_edit_btn",
+                        "text": "编辑表单",
+                        "state": "edit",
+                        "icon": "edit",
+                        "color": "primary",
+                        "hidden": false,
+                        "disabled": false,
+                        "size": "large",
+                        "execute": [
+                          {
+                            "triggerType": "ACTION",
+                            "trigger": "DIALOG",
+                            "dialogId": "table_main_edit_btn",
+                            "changeValueId": "edit_form_changeValue",
+                            "ajaxId": "form_edit_province",
+                            // "stateId": "add_save_1",
+                            // "conditionId": "add_province_condition"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "ajaxConfig": [
+                  {
+                    "id": "add_provinces_1",
+                    "url": "resource/PROVINCE/batchInsert",
+                    "urlType": "inner",
+                    "ajaxType": "post",
+                    "params": [
+                      {
+                        "name": "ID",
+                        "type": "componentValue",
+                        "valueName": "ID"
+                      },
+                      {
+                        "name": "PROVINCE_NAME",
+                        "type": "componentValue",
+                        "valueName": "PROVINCE_NAME",
+                        "dataType": "string"
+                      },
+                      {
+                        "name": "AREA_CODE",
+                        "type": "componentValue",
+                        "valueName": "AREA_CODE",
+                        "dataType": "string"
+                      },
+                      {
+                        "name": "DIRECTLY_UNDER",
+                        "type": "componentValue",
+                        "valueName": "DIRECTLY_UNDER",
+                        "dataType": "int"
+                      },
+                      {
+                        "name": "POPULATION",
+                        "type": "componentValue",
+                        "valueName": "POPULATION",
+                        "dataType": "int"
+                      }
+                    ],
+                    "outputParameters": [
+
+                    ],
+                    "result": [
+                      {
+                        "name": "data",
+                        "showMessageWithNext": 0,
+                        "message": "message.ajax.state.success",
+                        "senderId": "afterProvinceSaveSuccessfully"
+                      },
+                      {
+                        "name": "validation",
+                        "message": "message.ajax.state.success",
+                        "senderId": "afterProvinceSaveValidation"
+                      },
+                      {
+                        "name": "error",
+                        "senderId": "toolbar_02"
+                      }
+                    ]
+                  },
+                  {
+                    "id": "form_edit_province",
+                    "url": "resource/PROVINCE/update",
+                    "urlType": "inner",
+                    "ajaxType": "put",
+                    "params": [
+                      {
+                        "name": "ID",
+                        "type": "tempValue",
+                        "valueName": "ID",
+                        "dataType": "string"
+                      },
+                      {
+                        "name": "PROVINCE_NAME",
+                        "type": "componentValue",
+                        "valueName": "PROVINCE_NAME",
+                        "dataType": "string"
+                      },
+                      // {
+                      //     "name": "AREA_CODE",
+                      //     "type": "componentValue",
+                      //     "valueName": "AREA_CODE",
+                      //     "dataType": "string"
+                      // },
+                      {
+                        "name": "DIRECTLY_UNDER",
+                        "type": "componentValue",
+                        "valueName": "DIRECTLY_UNDER",
+                        "dataType": "int"
+                      },
+                      {
+                        "name": "POPULATION",
+                        "type": "componentValue",
+                        "valueName": "POPULATION",
+                        "dataType": "int"
+                      },
+                    ],
+                    "outputParameters": [
+
+                    ],
+                    "result": [
+                      {
+                        "name": "data",
+                        "showMessageWithNext": 0,
+                        "message": "message.ajax.state.success",
+                        "senderId": "afterProvinceSaveSuccessfully"
+                      },
+                      // {
+                      //     "name": "validation",
+                      //     "message": "message.ajax.state.success",
+                      //     "senderId": "afterAddBusinessSubObjectValidation"
+                      // },
+                      // {
+                      //     "name": "error",
+                      //     "senderId": "toolbar_02"
+                      // }
+                    ]
+                  }
+                ],
+                "cascade": {
+                  "messageSender": [],
+                  "messageReceiver": []
+                },
+                "dialog": [
+                  {
+                    "id": "table_main_edit_btn",
+                    "type": "confirm",
+                    "title": "数据编辑",
+                    "cancelText": "取消",
+                    "okText": "提交",
+                    "form": {
+                      "id": "form_province",
+                      "type": "form",
+                      "component": "form",
+                      "state": "edit",
+                      "loadingConfig": {
+                        "id": "loadform"
+                      },
+                      "cascade": {
+                        "messageSender": [],
+                        "messageReceiver": []
+                      },
+                      "formLayout": {
+                        "id": "layout_01",
+                        "type": "layout",
+                        "title": "表单布局b86s2i",
+                        "rows": [
+                          {
+                            "id": "erw",
+                            "type": "row",
+                            "cols": [
+                              {
+                                "id": "iHspYn",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 24,
+                                "layoutContain": "input",
+                                "size": {
+                                  "nzXs": 24, "nzSm": 24, "nzMd": 12, "nzLg": 24, "ngXl": 4, "nzXXl": 4
+                                },
+                                "control": {
+                                  "id": "control_province"  // id 和引用id 值相同
+                                }
+                              },
+                              {
+                                "id": "iHspYn1",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 24,
+                                "layoutContain": "input",
+                                "size": {
+                                  "nzXs": 24, "nzSm": 24, "nzMd": 12, "nzLg": 12, "ngXl": 4, "nzXXl": 4
+                                },
+                                "control": {
+                                  "id": "control_population"  // id 和引用id 值相同
+                                }
+                              },
+                              {
+                                "id": "iHspYn2",
+                                "col": "cc",
+                                "type": "col",
+                                "title": "",
+                                "span": 24,
+                                "layoutContain": "input",
+                                "size": {
+                                  "nzXs": 24, "nzSm": 24, "nzMd": 12, "nzLg": 12, "ngXl": 4, "nzXXl": 4
+                                },
+                                "control": {
+                                  "id": "control_z"  // id 和引用id 值相同
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      "formControlsPermissions": [
+                        {
+                          "formState": "new",
+                          "formStateContent": {
+                            "isLoad": false,
+                            "loadAjax": {},
+                            "isDefault": true
+                          },
+                          "Controls": [
+                            { "id": "control_province", "state": "edit", "hidden": false, "readOnly": false },
+                            { "id": "control_population", "state": "edit", "hidden": false, "readOnly": false },
+                            { "id": "control_z", "state": "edit", "hidden": false, "readOnly": false },
+                            // { "id": "004", "state": "edit", "hidden": false, "readOnly": false }
+                          ]
+                        },
+                        {
+                          "formState": "edit",
+                          "formStateContent": {
+                            "isLoad": true,
+                            "loadAjax": {},
+                            "isDefault": true
+                          },
+                          "Controls": [
+                            { "id": "control_province", "state": "edit", "hidden": false, "readOnly": false },
+                            { "id": "control_population", "state": "edit", "hidden": false, "readOnly": false },
+                            { "id": "control_z", "state": "edit", "hidden": false, "readOnly": false },
+                            // { "id": "004", "state": "edit", "hidden": false, "readOnly": false }
+                          ]
+                        },
+                      ],
+                      "formControls": [
+                        {
+                          "id": "control_province",
+                          "hidden": false,
+                          "title": "省名称",
+                          "titleConfig": {
+                            "required": true
+                          },
+                          "field": "PROVINCE_NAME",
+                          "labelSize": {
+                            "span": 3,
+                            "nzXs": { "span": 6 },
+                            "nzSm": { "span": 6 },
+                            "nzMd": { "span": 6 },
+                            "nzLg": { "span": 3 },
+                            "ngXl": { "span": 6 },
+                            "nzXXl": { "span": 6 }
+                          },
+                          "controlSize": {
+                            "span": 18,
+                            "nzXs": 18,
+                            "nzSm": 18,
+                            "nzMd": 18,
+                            "nzLg": 18,
+                            "ngXl": 18,
+                            "nzXXl": 18
+                          },
+                          "state": "edit",
+                          "text": {
+                            "type": "label",
+                            "field": "PROVINCE_NAME",
+                          },
+                          "editor": {
+                            "type": "input",
+                            "field": "PROVINCE_NAME",
+                            "placeholder": "请输入",
+                            "validations": [
+                              { "validator": "required", "type": "default", "message": "请输入省名称" }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "control_population",
+                          "hidden": false,
+                          "title": "人口",
+                          "titleConfig": {
+                            "required": true
+                          },
+                          "field": "POPULATION",
+                          "labelSize": {
+                            "span": 6,
+                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
+                          },
+                          "controlSize": {
+                            "span": 18,
+                            "nzXs": { "span": 18, "offset": 0 },
+                            "nzSm": { "span": 18, "offset": 0 },
+                            "nzMd": { "span": 18, "offset": 0 },
+                            "nzLg": { "span": 18, "offset": 0 },
+                            "nzXl": { "span": 18, "offset": 0 },
+                            "nzXXl": { "span": 18, "offset": 0 }
+                          },
+                          "state": "edit",
+                          "text": {
+                            "type": "label",
+                            "field": "POPULATION",
+                          },
+                          "editor": {
+                            "type": "input",
+                            "field": "POPULATION",
+                            "placeholder": "请输入",
+                            "validations": [
+                              { "validator": "required", type: "default", "message": "请输入人口数量" }
+                            ]
+                          }
+                        },
+                        {
+                          "id": "control_z",
+                          "hidden": false,
+                          "title": "是否直辖市",
+                          "titleConfig": {
+                            "required": false
+                          },
+                          "field": "DIRECTLY_UNDER",
+                          "labelSize": {
+                            "span": 6,
+                            "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "nzXl": 6, "nzXXl": 6
+                          },
+                          "controlSize": {
+                            "span": 18,
+                            "nzXs": { "span": 18, "offset": 0 },
+                            "nzSm": { "span": 18, "offset": 0 },
+                            "nzMd": { "span": 18, "offset": 0 },
+                            "nzLg": { "span": 18, "offset": 0 },
+                            "ngXl": { "span": 18, "offset": 0 },
+                            "nzXXl": { "span": 18, "offset": 0 }
+                          },
+                          "state": "edit",
+                          "text": {
+                            "type": "label",
+                            "field": "DIRECTLY_UNDER",
+                          },
+                          "editor": {
+                            "type": "select",
+                            "field": "DIRECTLY_UNDER",
+                            "placeholder": "请输入",
+                            "options": [
+                              { "label": "是", "value": 1 },
+                              { "label": "否", "value": 0 }
+                            ],
+                            "defaultValue": 0,
+                            "validate": {
+
+                            }
+                          }
+                        },
+                      ],
+                      "ajaxConfig": [
+                        {
+                          "id": "loadform",
+                          "url": "resource/PROVINCE/query",
+                          "urlType": "inner",
+                          "ajaxType": "get",
+                          "params": [
+                            {
+                              "name": "ID",
+                              "type": "tempValue",
+                              "valueName": "ID"
+                            },
+                            {
+                              "name": "_onlyOneObject",
+                              "type": "value",
+                              "value": true
+                            }
+                          ],
+                          "outputParameters": [
+
+                          ],
+                          "result": [
+
+                          ]
+                        },
+                      ]
+                    }
+                  }
+
+                ]
+              },
+              "ajaxConfig": [
+
+              ],
+              "afterTrigger": [
+
+              ],
+            }
+          }
+        ],
+        "id": "row_2",
+        "type": "row",
+      },
+
+      {
+        "cols": [
+
+        ],
+        "id": "row_4",
+        "type": "row",
+      }
+    ]
+  }
+
   /**
    * addSelected
    */
-  public addSelected() {
+  public addSelected(v?) {
+    // debugger;
+    console.log('执行addSelected', this.tempValue, v);
+      this.SELECTED_VALUE = v['value'];
+    // const ev = this.config.eventConfig['ADD_SELECTED'];
+    // if (ev)
+    //   this[ev.name] = this[ev.type][ev.valueName]
+    return true;
+  }
 
-    console.log('执行addSelected', this.tempValue);
-    //  this.SELECTED_VALUE = this.tempValue['_PIDDD'];
-    const ev = this.config.eventConfig['ADD_SELECTED'];
-    if (ev)
-      this[ev.name] = this[ev.type][ev.valueName]
+
+  // 接受数组值  统一按数组接受
+  public acceptSelectsValue(v) {
+
+    console.log("选中多值反馈至页面容器：", v);
 
   }
+
+  public buildParameters(paramsCfg, data?, isArray = false) {
+    let parameterResult: any | any[];
+    if (!isArray && !data) {
+      parameterResult = ParameterResolver.resolve({
+        params: paramsCfg,
+        tempValue: this.tempValue,
+        //           componentValue: this.COMPONENT_VALUE,
+        //            item: this.ROW_SELECTED,
+        initValue: this.initValue,
+        cacheValue: this.cacheValue,
+        router: this.routerValue,
+        //           addedRows: this.ROWS_ADDED,
+        //           editedRows: this.ROWS_EDITED,
+        //          checkedRow: this.ROWS_CHECKED,
+        outputValue: data
+
+      });
+    } else if (!isArray && data) {
+      parameterResult = ParameterResolver.resolve({
+        params: paramsCfg,
+        tempValue: this.tempValue,
+        //           componentValue: this.COMPONENT_VALUE,
+        //           item: this.ROW_SELECTED,
+        initValue: this.initValue,
+        cacheValue: this.cacheValue,
+        router: this.routerValue,
+        addedRows: data,
+        editedRows: data,
+        validation: data,
+        returnValue: data,
+        //           checkedRow: this.ROWS_CHECKED,
+        outputValue: data
+      });
+    } else if (isArray && data && Array.isArray(data)) {
+      parameterResult = [];
+      data.map(d => {
+        const param = ParameterResolver.resolve({
+          params: paramsCfg,
+          tempValue: this.tempValue,
+          componentValue: d,
+          //               item: this.ROW_SELECTED,
+          initValue: this.initValue,
+          cacheValue: this.cacheValue,
+          router: this.routerValue,
+          addedRows: d,
+          editedRows: d,
+          validation: d,
+          returnValue: d,
+          //               checkedRow: this.ROWS_CHECKED,
+          outputValue: data
+        });
+        parameterResult.push(param);
+      })
+    }
+    return parameterResult;
+  }
+
+  public ngOnDestroy() {
+    // 释放级联对象
+    this.unsubscribeRelation();
+    // 释放及联接受对象
+    if (this._receiver_subscription$) {
+      this._receiver_subscription$.unsubscribe();
+    }
+
+    if (this._sender_subscription$) {
+      this._sender_subscription$.unsubscribe();
+    }
+
+    // 释放触发器对象
+    if (this._trigger_receiver_subscription$) {
+      this._trigger_receiver_subscription$.unsubscribe();
+    }
+
+    if (this._trigger_source$) {
+      this._trigger_source$.unsubscribe();
+    }
+
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+  }
+
+
+  // 自定义弹出，将承载组件的值变化，通过消息发送到弹出页面，弹出页面接收到当前值，弹出自定义页面的
+  // 方法可以通过组件实例取值
+  // 值初始化，也可通过当前page 组件将值发送给承载组件，或者承载组件自加载数据展示
+  // 一般多选，展示的时候，就自加载数据，静态结构赋值的可能比较大
+
+
+  // 单选，多选 都以承载组件作为载体接受数据，承载组件数据变化后将结果发送至容器页面组件，点击确定按钮的时候，
+  // 从页面组件取固定值，页面组件分两部分值，一个是 单值（对象），一个是多值（数组），取值结果后自行转换结果
+  // 反馈至内部小组件，当前操作完成。
+
+  // isSelected 是否启用默认选中第一行
+  // 
+
+
+
 
 
 

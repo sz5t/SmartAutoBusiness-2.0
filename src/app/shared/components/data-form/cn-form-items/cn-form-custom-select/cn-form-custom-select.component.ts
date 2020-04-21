@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Output, EventEmitter, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, Output, EventEmitter, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { FormGroup } from '@angular/forms';
@@ -10,17 +10,20 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
 @Component({
   selector: 'app-cn-form-custom-select',
   templateUrl: './cn-form-custom-select.component.html',
-  styleUrls: ['./cn-form-custom-select.component.less']
+  styleUrls: ['./cn-form-custom-select.component.less'],
+  encapsulation: ViewEncapsulation.None
 })
 export class CnFormCustomSelectComponent extends CnComponentBase implements OnInit {
 
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
+  @Input() public initData; 
   value = null;
   _value = null;
   selectedRowValue;
   selectedRowItem;
+  tableConfig;
   public cascadeOptions: any;
 
   constructor(@Inject(BSN_COMPONENT_SERVICES)
@@ -29,6 +32,11 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
   }
 
   ngOnInit() {
+
+    if(!this.config.layoutName){
+      this.config.layoutName ="xjdKJcJoSqXHOnuIbWziw4yD1NQVAGWs";
+    }
+    this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
   }
 
 
@@ -80,7 +88,11 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
 
 
   }
-
+  handleClose1(removedTag: {}): void {
+    this.tags = this.tags.filter(tag => tag !== removedTag);
+    // this.valueChange(this.tags);
+    console.log('删除节点nodeList===>>>', this.tags);
+  }
 
   createModal(): void {
     console.log('createModal');
@@ -91,7 +103,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
       //  nzContent: '可实现树+表等多种组件组合',
       nzContent: CnPageComponent,
       nzComponentParams: {
-
+        config:this. page_config
       },
       nzClosable: false,
       nzOnOk: componentInstance => {
@@ -105,6 +117,34 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
       }
     });
   }
+
+  createCustomModal(){
+    console.log('createModal');
+    this.initData['tags'] = this.tags; 
+    this.componentService.modalService.create({
+      nzWidth: '85%',
+      nzBodyStyle: { overflow: 'auto' },
+      nzTitle: '自定义组件',
+      //  nzContent: '可实现树+表等多种组件组合',
+      nzContent: CnPageComponent,
+      nzComponentParams: {
+        config:this. tableConfig,
+        customPageId:this.config.layoutName,
+        initData:this.initData
+      },
+      nzClosable: false,
+      nzOnOk: componentInstance => {
+        console.log('OK', componentInstance.SELECTED_VALUE);
+        if (componentInstance.SELECTED_VALUE) {
+        this.tags = componentInstance.SELECTED_VALUE;
+        this.initData['tags'] = this.tags; 
+        }
+
+      }
+    });
+  }
+
+
   public async valueChange(v?) {
     //  console.log('input 值变化', v,this.formGroup);
    // v="6IkDKuH1iXCnC5xiszniEVbbUWnOLRKm";
@@ -154,6 +194,49 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
         }
   }
 
+  tags=[
+    {"label":'一个是阆苑仙葩',value:'01'},
+    {"label":'一个是美玉无瑕',value:'02'},
+    {"label":'若说没奇缘',value:'03'},
+    {"label":'今生偏又遇着他',value:'04'},
+    {"label":'一个枉自嗟呀',value:'05'},
+    {"label":'一个空劳牵挂',value:'06'},
+    {"label":'一个是水中月',value:'07'},
+    {"label":'一个是镜中花',value:'08'},
+    {"label":'测试数据',value:'09'}
+  ];
 
+
+  page_config = {
+    'id':"page_main",
+    "component": "cnPage",
+    "isAllJson":true,
+    cascade: {
+      "messageSender": [
+
+      ],
+      "messageReceiver2":[],
+      "messageReceiver": [
+        {
+          "id": "2",
+          "senderId": "tag_main",
+          "receiveData": [
+            {
+              "beforeReceive": [],
+              "triggerType": "BEHAVIOR",
+              "trigger": "ADD_SELECTED",
+              "params": [
+                {
+                  "pname": "value",
+                  "cname": "_PID",
+                  "valueTo": "tempValue"
+                },
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  };
 
 }

@@ -26,6 +26,7 @@ export class RelationResolver {
      */
     public resolveInnerSender(resultCfg: any, successData, isArrayResult = false) {
         // 查找消息配置
+       // debugger;
         if (resultCfg['senderId']) {
             const senderCfg = this._componentInstance
                 .config
@@ -33,6 +34,7 @@ export class RelationResolver {
                 .messageSender
                 .find(sender => sender.id === resultCfg['senderId']);
             // tslint:disable-next-line: no-use-before-declare
+            console.log('===>>37===senderCfg',senderCfg);
             senderCfg && new ComponentSenderResolver(this._componentInstance)
                 .sendMessage(senderCfg, isArrayResult, successData);
         }
@@ -270,7 +272,6 @@ export class ComponentSenderResolver {
 
     handleActionType(cfg) {
         // 前置条件判断
-
         // 该功能不由组件实现
         // this.sendMessage(cfg);
         this._componentInstance[cfg.triggerMoment](
@@ -355,8 +356,11 @@ export class ComponentSenderResolver {
                 return false;
             }
 
-
             const options = this.getOptionParamsObj(c.params, data, isArray);
+            if (c.builtinId) {
+                const _builtinConfig = this.findbuiltinConfig(c.builtinId);
+                _builtinConfig && (options['builtinConfig'] = _builtinConfig);
+            }
             console.log('send message', cfg.senderId, options);
             this._componentInstance.componentService.commonRelationSubject.next(
                 new BsnRelativesMessageModel(
@@ -369,6 +373,17 @@ export class ComponentSenderResolver {
                 )
             )
         }
+    }
+
+    private findbuiltinConfig(builtinId) {
+        let builtinConfig;
+        if (this._componentInstance.config.builtinConfig && Array.isArray(this._componentInstance.config.builtinConfig) && this._componentInstance.config.builtinConfig.length > 0) {
+            const c = this._componentInstance.config.builtinConfig.filter(cfg => cfg.id === builtinId);
+            if (c && c.length > 0) {
+                builtinConfig = c[0];
+            }
+        }
+        return builtinConfig;
     }
 
     /**

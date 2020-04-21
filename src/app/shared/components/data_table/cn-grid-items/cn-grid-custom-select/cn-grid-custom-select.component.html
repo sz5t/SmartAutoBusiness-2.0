@@ -1,1 +1,18 @@
 <p>cn-grid-custom-select works!</p>
+
+
+
+
+
+
+  <nz-input-group   [nzAddOnAfter]="suffixButton">
+    <input type="hidden" nz-input placeholder="input search text" />
+    <div   style="border:1px solid #d9d9d9; background-color: #fff; min-height: 35px;">
+        <nz-tag *ngFor="let tag of tags; let i = index;">
+                {{ tag['label']}}
+            </nz-tag>
+    </div>
+  </nz-input-group>
+  <ng-template #suffixButton>
+    <button nz-button nzType="primary">Search</button>
+  </ng-template>

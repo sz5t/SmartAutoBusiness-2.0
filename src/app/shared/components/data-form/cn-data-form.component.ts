@@ -667,6 +667,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
   }
   public cancel(v?) {
+    debugger;
     const ss = JSON.parse(JSON.stringify(this.validateForm.value));
     console.log(this.config.id + '-------------cancel【开始】------------');
 
@@ -744,11 +745,13 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
   private _sendDataSuccessMessage(response, resultCfg): boolean {
+
     let result = false;
     if (Array.isArray(response.data) && response.data.length <= 0) {
       return result;
     }
     if (response && response.data) {
+      debugger;
       const successCfg = resultCfg.find(res => res.name === 'data');
       // 弹出提示框
       if (successCfg) {
@@ -901,6 +904,47 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
   public linkTo(option) {
 
+  }
+
+
+/**
+ * 显示消息框
+ * @param option 
+ */
+    public showMessage(option) {
+      let msgObj;
+      if (option && Array.isArray(option)) {
+          // 后续需要根据具体情况解析批量处理结果
+          msgObj = this.buildMessageContent(option[0]);
+      } else if (option) {
+          msgObj = this.buildMessageContent(option);
+      }
+      option && this.componentService.msgService.create(msgObj.type, `${msgObj.message}`);
+  }
+
+  public buildMessageContent(msgObj) {
+      const message: any = {};
+      let array: any[];
+      if (msgObj.type) {
+
+      } else {
+          array = msgObj.message.split(':');
+      }
+
+      if (!array) {
+          if (msgObj.code) {
+              message.message = msgObj.code;
+          } else if (msgObj.message) {
+              message.message = msgObj.message;
+          }
+          // message.message = option.code ? option.code : '';
+          msgObj.field && (message.field = msgObj.field ? msgObj.field : '');
+          message.type = msgObj.type;
+      } else {
+          message.type = array[0];
+          message.message = array[1];
+      }
+      return message
   }
 
   // 分组属性表单=》动态读取属性，分布提交

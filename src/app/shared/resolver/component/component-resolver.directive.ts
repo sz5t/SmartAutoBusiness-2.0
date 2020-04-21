@@ -14,6 +14,7 @@ import { CfgLayoutPageComponent } from '@shared/config-components/config-layout-
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { CnStaticTableComponent } from '@shared/components/data_table/cn-static-table.component';
+import { CnTagComponent } from '@shared/components/cn-tag/cn-tag.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -28,7 +29,8 @@ const components: { [type: string]: Type<any> } = {
     cnCalendar: CnCalendarComponent,
     cfgLayoutPage: CfgLayoutPageComponent,
     cnCardList: CnCardListComponent,
-    cnStaticTable: CnStaticTableComponent
+    cnStaticTable: CnStaticTableComponent,
+    cnTag:CnTagComponent
 };
 
 @Directive({

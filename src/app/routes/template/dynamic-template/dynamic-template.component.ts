@@ -41,11 +41,10 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
           }
           else {
             const pageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
-
             for (const key in pageJson) {
               if (pageJson.hasOwnProperty(key)) {
                 // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
-                if (pageJson[params.name]) {
+                if (key === params.name) {
                   this.config = pageJson[params.name]['layoutJson'];
                   const componentJson = pageJson[params.name]['componentsJson']
                   if (Array.isArray(componentJson) && componentJson.length > 0) {
@@ -56,15 +55,25 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
                   this._route.queryParams.subscribe(queryParam => {
                     this.buildLayout({...params, ...queryParam});
                   })
+
+                  this.componentService.cacheService.set(key, pageJson[params.name]);
                   
                 } else {
                   // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
                   this.componentService.cacheService.set(key, pageJson[key]);
+                  const componentJson = pageJson[params.name]['componentsJson']
+                  if (Array.isArray(componentJson) && componentJson.length > 0) {
+                    componentJson.forEach(json => {
+                      this.componentService.cacheService.set(json['id'], json);
+                    });
+                  }
+
                 }
               }
             }
 
             console.log(this.config);
+         
             // this.PageJson = response.data._procedure_resultset_1[0]['W'];
             //  this.PageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
             //   this.PageJson =this.formatJson(JSON.parse(response.data._procedure_resultset_1[0]['W']),{})
