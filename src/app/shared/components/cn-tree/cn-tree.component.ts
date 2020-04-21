@@ -1289,7 +1289,7 @@ export class CnTreeComponent extends CnComponentBase
      * @param option 确认参数 
      */
     public showConfirm(option: any) {
-        this.confirm(option.dialog, () => { this.executeCurrentRow(option) })
+        this.confirm(option.dialog, () => { this.executeSelectedNode(option) })
 
     }
 

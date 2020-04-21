@@ -670,7 +670,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
   }
   public cancel(v?) {
-    debugger;
     const ss = JSON.parse(JSON.stringify(this.validateForm.value));
     console.log(this.config.id + '-------------cancel【开始】------------');
 
@@ -754,7 +753,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       return result;
     }
     if (response && response.data) {
-      debugger;
       const successCfg = resultCfg.find(res => res.name === 'data');
       // 弹出提示框
       if (successCfg) {

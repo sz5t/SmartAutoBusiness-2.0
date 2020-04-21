@@ -238,8 +238,6 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                         break;
                 }
             }
-
-            debugger;
             const state = '';
             const btnResolver = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
             btnResolver.toolbarAction(btn, targetViewId);

@@ -93,16 +93,16 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "col": "cc",
                                 "type": "col",
                                 "title": "",
-                                "span": 12,
-                                "noBorder": true,
+                                "span": 24,
+                                "noBorder": false,
                                 "container": "component",
                                 "size": {
                                     "nzXs": 24,
                                     "nzSm": 24,
                                     "nzMd": 24,
-                                    "nzLg": 8,
-                                    "nzXl": 10,
-                                    "nzXXl": 10
+                                    "nzLg": 24,
+                                    "nzXl": 24,
+                                    "nzXXl": 24
                                 },
                                 "component": {
                                     "id": "view_business_search",
@@ -453,7 +453,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "ajaxConfig": [
                                         {
                                             "id": "loadBusinessNameValue",
-                                            "url": "sd/GET_BUSINESS_MAIN_LIST/query",
+                                            "url": "resource/GET_BUSINESS_MAIN_LIST/query",
                                             "urlType": "inner",
                                             "ajaxType": "get",
                                             "params": [
@@ -482,11 +482,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "title": "",
                                 "span": 24,
                                 "container": "component",
-                                "noBorder": true,
+                                "noBorder": false,
                                 "header": {
-                                    "title":"业务描述",
+                                    "title": "业务描述",
                                     "icon": "right-circle",
-                                    "toolbar":{
+                                    "toolbar": {
                                         "id": "toolbar_business_main",
                                         "component": "cnToolbar",
                                         "size": "default",
@@ -541,7 +541,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         }
                                                     ]
                                                 }
-    
+
                                             ]
                                         },
                                         "dialog": [
@@ -709,7 +709,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     }
                                                 ],
                                                 "outputParameters": [
-    
+
                                                 ],
                                                 "result": [
                                                     {
@@ -767,7 +767,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     }
                                                 ],
                                                 "outputParameters": [
-    
+
                                                 ],
                                                 "result": [
                                                     {
@@ -800,7 +800,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     }
                                                 ],
                                                 "outputParameters": [
-    
+
                                                 ],
                                                 "result": [
                                                     {
@@ -824,7 +824,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     }
                                                 ],
                                                 "outputParameters": [
-    
+
                                                 ],
                                                 "result": [
                                                     {
@@ -848,7 +848,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     }
                                                 ],
                                                 "outputParameters": [
-    
+
                                                 ],
                                                 "result": [
                                                     {
@@ -872,7 +872,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     }
                                                 ],
                                                 "outputParameters": [
-    
+
                                                 ],
                                                 "result": [
                                                     {
@@ -896,7 +896,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     }
                                                 ],
                                                 "outputParameters": [
-    
+
                                                 ],
                                                 "result": [
                                                     {
@@ -909,7 +909,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             }
                                         ],
                                         "beforeTrigger": [
-    
+
                                         ],
                                         "afterTrigger": [
                                             {
@@ -1255,7 +1255,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         '50px', '100px', '200px', '200px', '200px'
                                     ],
                                     "loadingConfig": {
-                                        "url": "sd/GET_BUSINESS_MAIN_LIST/query",
+                                        "url": "resource/GET_BUSINESS_MAIN_LIST/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -2223,1771 +2223,6 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     ]
                                 }
                             },
-                            // {
-                            //     "id": "r5zDHB2-1",
-                            //     "col": "cc",
-                            //     "type": "col",
-                            //     "title": "",
-                            //     "span": 24,
-                            //     "container": "component",
-                            //     "noBorder": true,
-                            //     "size": {
-                            //         "nzXs": 24,
-                            //         "nzSm": 24,
-                            //         "nzMd": 24,
-                            //         "nzLg": 24,
-                            //         "nzXl": 24,
-                            //         "nzXXl": 24
-                            //     },
-                            //     "component": {
-                            //         "id": "view_treegrid_toolbar",
-                            //         "component": "cnToolbar",
-                            //         "size": "default",
-                            //         "cascade": {
-                            //             "messageSender": [
-                            //                 {
-                            //                     "id": "toolbar_01",
-                            //                     "senderId": "view_treegrid_toolbar",
-                            //                     "triggerType": "OPERATION",
-                            //                     "trigger": "EXECUTE_CHECKED_ROWS",
-                            //                     "triggerMoment": "after",
-                            //                     "sendData": [
-                            //                         {
-                            //                             "beforeSend": {},
-                            //                             "reveicerId": "",
-                            //                             "receiverTriggerType": "BEHAVIOR",
-                            //                             "receiverTrigger": "REFRESH_AS_CHILD",
-                            //                             "params": [
-                            //                                 {
-                            //                                     "name": "parent_id",
-                            //                                     "type": "item",
-                            //                                     "valueName": "id"
-                            //                                 },
-                            //                                 {
-                            //                                     "name": "parent_name",
-                            //                                     "type": "item",
-                            //                                     "valueName": "name"
-                            //                                 }
-                            //                             ]
-                            //                         }
-                            //                     ]
-                            //                 }
-                            //             ],
-                            //             "messageReceiver": [
-                            //                 {
-                            //                     "id": "s_001",
-                            //                     "senderId": "view_business_object",
-                            //                     "receiveData": [
-                            //                         {
-                            //                             "triggerType": "STATE",
-                            //                             "trigger": "STATE_TO_TEXT"
-                            //                         }
-                            //                     ]
-                            //                 },
-                            //                 {
-                            //                     "id": "s_002",
-                            //                     "senderId": "view_business_object",
-                            //                     "receiveData": [
-                            //                         {
-                            //                             "triggerType": "STATE",
-                            //                             "trigger": "STATE_TO_EDIT"
-                            //                         }
-                            //                     ]
-                            //                 }
-
-                            //             ]
-                            //         },
-                            //         "builtinConfig": [
-                            //             {
-                            //                 "id": "add_state",
-                            //                 "event": "formStateChange", // 内置方法
-                            //                 "state": "new"
-                            //             },
-                            //             {
-                            //                 "id": "edit_state",
-                            //                 "event": "formStateChange", // 内置方法
-                            //                 "state": "edit"
-                            //             },
-                            //             {
-                            //                 "id": "text_state",
-                            //                 "event": "formStateChange", // 内置方法
-                            //                 "state": "text"
-                            //             }
-                            //         ],
-                            //         "changeValue": [
-                            //             {
-                            //                 "id": "add_business_object_changeValue",
-                            //                 "params": [
-                            //                     {
-                            //                         "name": "_BUSI_ID",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_BUSI_ID",
-                            //                         "valueTo": "tempValue"
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "add_sub_business_object_changeValue",
-                            //                 "params": [
-                            //                     {
-                            //                         "name": "_BUSI_ID",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_BUSI_ID",
-                            //                         "valueTo": "tempValue"
-                            //                     },
-                            //                     {
-                            //                         "name": "_PARENT_ID",
-                            //                         "type": "item",
-                            //                         "valueName": "id",
-                            //                         "valueTo": "tempValue"
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "edit_business_object_changeValue",
-                            //                 "params": [
-                            //                     {
-                            //                         "name": "_BUS_OBJ_ID",
-                            //                         "type": "item",
-                            //                         "valueName": "id",
-                            //                         "valueTo": "tempValue"
-                            //                     },
-                            //                     {
-                            //                         "name": "_BUSI_ID",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_BUSI_ID",
-                            //                         "valueTo": "tempValue"
-                            //                     }
-                            //                 ]
-                            //             }
-                            //         ],
-                            //         "dialog": [
-                            //             {
-                            //                 "id": "business_object_layout",
-                            //                 // "layoutName": "businessObjectForm",
-                            //                 "type": "confirm",
-                            //                 "width": "80%",
-                            //                 "title": "业务对象",
-                            //                 "cancelText": "取消",
-                            //                 "okText": "提交",
-                            //                 "form": {
-                            //                     "id": "view_business_object_form",
-                            //                     "type": "form",
-                            //                     "component": "form",
-                            //                     "state": "edit",
-                            //                     "loadingConfig": {
-                            //                         "id": "loadBusinessObject"
-                            //                     },
-                            //                     "cascade": {
-                            //                         "messageSender": [
-                            //                             {
-                            //                                 "id": "afterComponentFormUpdateSuccess",
-                            //                                 "senderId": "view_business_object_form",
-                            //                                 "sendData": [
-                            //                                     {
-                            //                                         "beforeSend": {},
-                            //                                         "reveicerId": "",
-                            //                                         "receiverTriggerType": "ACTION",
-                            //                                         "receiverTrigger": "MESSAGE",
-                            //                                         "params": [
-                            //                                             {
-                            //                                                 "name": "type",
-                            //                                                 "type": "value",
-                            //                                                 "value": "success"
-                            //                                             },
-                            //                                             {
-                            //                                                 "name": "code",
-                            //                                                 "type": "value",
-                            //                                                 "value": "message.operation.success"
-                            //                                             }
-                            //                                         ]
-                            //                                     },
-                            //                                     {
-                            //                                         "beforeSend": {},
-                            //                                         "reveicerId": "",
-                            //                                         "receiverTriggerType": "ACTION",
-                            //                                         "receiverTrigger": "UPDATE_SELECTED_NODE",
-                            //                                         "params": [
-                            //                                             {
-                            //                                                 "name": "ID",
-                            //                                                 "type": "returnValue",
-                            //                                                 "valueName": "ID"
-                            //                                             },
-                            //                                             {
-                            //                                                 "name": "NAME",
-                            //                                                 "type": "returnValue",
-                            //                                                 "valueName": "NAME"
-                            //                                             }
-                            //                                         ]
-                            //                                     },
-                            //                                     {
-                            //                                         "beforeSend": {},
-                            //                                         "reveicerId": "",
-                            //                                         "receiverTriggerType": "ACTION",
-                            //                                         "receiverTrigger": "VALUE_CHANGE",
-                            //                                         "params": [
-                            //                                             {
-                            //                                                 "name": "ID",
-                            //                                                 "type": "returnValue",
-                            //                                                 "valueName": "ID"
-                            //                                             },
-                            //                                             {
-                            //                                                 "name": "NAME",
-                            //                                                 "type": "returnValue",
-                            //                                                 "valueName": "NAME"
-                            //                                             }
-                            //                                         ]
-                            //                                     }
-                            //                                 ]
-                            //                             }
-                            //                         ],
-                            //                         "messageReceiver": [
-                            //                             {
-                            //                                 "id": "",
-                            //                                 "senderId": "view_tree_component_base",
-                            //                                 "receiveData": [
-                            //                                     {
-                            //                                         "beforeReceive": [],
-                            //                                         "triggerType": "BEHAVIOR",
-                            //                                         "trigger": "REFRESH_AS_CHILD",
-                            //                                         "params": [
-                            //                                             {
-                            //                                                 "pname": "_ID",
-                            //                                                 "cname": "_ID",
-                            //                                                 "valueTo": "tempValue"
-                            //                                             }
-                            //                                         ]
-                            //                                     }
-                            //                                 ]
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     "cascadeValue": [
-                            //                         {
-                            //                             "type": "",
-                            //                             "controlId": "res_type",
-                            //                             "name": "refResourceType",
-                            //                             "CascadeObjects": [
-                            //                                 {
-                            //                                     "controlId": "res_ref_id",
-                            //                                     "cascadeName": "refResourceId",
-                            //                                     "cascadeItems": [
-                            //                                         {
-                            //                                             "type": "default",
-                            //                                             "caseValue": {
-                            //                                                 "type": "selectObjectValue",
-                            //                                                 "valueName": "value",
-                            //                                                 "regular": "^0$"
-                            //                                             },
-                            //                                             "content": {
-                            //                                                 "type": "ajax",
-                            //                                                 "data": {
-                            //                                                     "option": [
-                            //                                                         {
-                            //                                                             "name": "_TYPE",
-                            //                                                             "type": "selectObjectValue",
-                            //                                                             "valueName": "value"
-                            //                                                         }
-                            //                                                     ]
-                            //                                                 }
-                            //                                             }
-                            //                                         }
-
-                            //                                     ]
-                            //                                 }
-                            //                             ]
-                            //                         },
-                            //                         {
-                            //                             "type": "",
-                            //                             "controlId": "res_ref_id",
-                            //                             "name": "refResourceId",
-                            //                             "CascadeObjects": [
-                            //                                 {
-                            //                                     "controlId": "res_refField",
-                            //                                     "cascadeName": "refParentResourcePropId",
-                            //                                     "cascadeItems": [
-                            //                                         {
-                            //                                             "type": "default",
-                            //                                             "content": {
-                            //                                                 "type": "ajax",
-                            //                                                 "data": {
-                            //                                                     "option": [
-                            //                                                         {
-                            //                                                             "name": "_TABLE_ID",
-                            //                                                             "type": "selectValue",
-                            //                                                             "valueName": "id"
-                            //                                                         }
-                            //                                                     ]
-                            //                                                 }
-                            //                                             }
-                            //                                         }
-
-                            //                                     ]
-                            //                                 }
-                            //                             ],
-                            //                         },
-                            //                         // {
-                            //                         //     "type": "",
-                            //                         //     "controlId": "res_refSQL",
-                            //                         //     "name": "sqlList",
-                            //                         //     "CascadeObjects": [
-                            //                         //         {
-                            //                         //             "controlId": "res_refSQL",
-                            //                         //             "cascadeName": "sqlList",
-                            //                         //             "cascadeItems": [
-                            //                         //                 {
-                            //                         //                     "type": "default",
-                            //                         //                     "content": {
-                            //                         //                         "type": "setValue",
-                            //                         //                         "data": {
-                            //                         //                             "option": [
-                            //                         //                                 {
-                            //                         //                                     // "name": "_TYPE",
-                            //                         //                                     "type": "dataList",
-                            //                         //                                     // "valueName": "refResourceType"
-                            //                         //                                 }
-                            //                         //                             ]
-                            //                         //                         }
-                            //                         //                     }
-                            //                         //                 }
-
-                            //                         //             ]
-                            //                         //         }
-                            //                         //     ]
-                            //                         // }
-                            //                     ],
-                            //                     "cascadeLayout": [
-                            //                         {
-                            //                             "field": "refResourceType",
-                            //                             "mapping": [
-                            //                                 {
-                            //                                     "value": 0,
-                            //                                     "layout": [
-                            //                                         "col_1",
-                            //                                         "col_2",
-                            //                                         "col_3",
-                            //                                         "col_4",
-                            //                                         "col_5",
-                            //                                     ]
-                            //                                 },
-                            //                                 {
-                            //                                     "value": 1,
-                            //                                     "layout": [
-                            //                                         "col_2",
-                            //                                         "col_3",
-                            //                                         "col_4",
-                            //                                         "col_6",
-                            //                                         "col_7"
-                            //                                     ]
-                            //                                 }
-                            //                             ]
-                            //                         }
-                            //                     ],
-                            //                     "formLayout": {
-                            //                         "id": "b86s2i",
-                            //                         "type": "layout",
-                            //                         "title": "表单布局b86s2i",
-                            //                         "rows": [
-                            //                             {
-                            //                                 "id": "MefhXa",
-                            //                                 "type": "row",
-                            //                                 "cols": [
-                            //                                     {
-                            //                                         "id": "col_4",
-                            //                                         "col": "cc",
-                            //                                         "type": "col",
-                            //                                         "title": "列iHspYn",
-                            //                                         "span": 24,
-                            //                                         "layoutContain": "select",
-                            //                                         "size": {
-                            //                                             "nzXs": 24,
-                            //                                             "nzSm": 24,
-                            //                                             "nzMd": 24,
-                            //                                             "nzLg": 24,
-                            //                                             "ngXl": 24,
-                            //                                             "nzXXl": 24
-                            //                                         },
-                            //                                         "control": {
-                            //                                             "id": "res_type"
-                            //                                         }
-                            //                                     },
-                            //                                     {
-                            //                                         "id": "col_7",
-                            //                                         "col": "cc",
-                            //                                         "type": "col",
-                            //                                         "title": "列iHspYn",
-                            //                                         "span": 24,
-                            //                                         "layoutContain": "select",
-                            //                                         "size": {
-                            //                                             "nzXs": 24,
-                            //                                             "nzSm": 24,
-                            //                                             "nzMd": 24,
-                            //                                             "nzLg": 24,
-                            //                                             "ngXl": 24,
-                            //                                             "nzXXl": 24
-                            //                                         },
-                            //                                         "control": {
-                            //                                             "id": "res_refResourceName"
-                            //                                         }
-                            //                                     },
-                            //                                     {
-                            //                                         "id": "col_2",
-                            //                                         "col": "cc",
-                            //                                         "type": "col",
-                            //                                         "title": "列ioj0mV",
-                            //                                         "span": 12,
-                            //                                         "layoutContain": "select",
-                            //                                         "size": {
-                            //                                             "nzXs": 24,
-                            //                                             "nzSm": 24,
-                            //                                             "nzMd": 12,
-                            //                                             "nzLg": 12,
-                            //                                             "ngXl": 12,
-                            //                                             "nzXXl": 12
-                            //                                         },
-                            //                                         "control": {
-                            //                                             "id": "res_refProperty"
-                            //                                         }
-                            //                                     },
-                            //                                     {
-                            //                                         "id": "col_3",
-                            //                                         "col": "cc",
-                            //                                         "type": "col",
-                            //                                         "title": "列ioj0mV",
-                            //                                         "span": 12,
-                            //                                         "layoutContain": "select",
-                            //                                         "size": {
-                            //                                             "nzXs": 24,
-                            //                                             "nzSm": 24,
-                            //                                             "nzMd": 12,
-                            //                                             "nzLg": 12,
-                            //                                             "ngXl": 12,
-                            //                                             "nzXXl": 12
-                            //                                         },
-                            //                                         "control": {
-                            //                                             "id": "res_cascade_del"
-                            //                                         }
-                            //                                     },
-                            //                                     {
-                            //                                         "id": "col_5",
-                            //                                         "col": "cc",
-                            //                                         "type": "col",
-                            //                                         "title": "列ioj0mV",
-                            //                                         "span": 24,
-                            //                                         "layoutContain": "select",
-                            //                                         "size": {
-                            //                                             "nzXs": 24,
-                            //                                             "nzSm": 24,
-                            //                                             "nzMd": 24,
-                            //                                             "nzLg": 24,
-                            //                                             "ngXl": 24,
-                            //                                             "nzXXl": 24
-                            //                                         },
-                            //                                         "control": {
-                            //                                             "id": "res_ref_id"
-                            //                                         }
-                            //                                     },
-                            //                                     {
-                            //                                         "id": "col_6",
-                            //                                         "col": "cc",
-                            //                                         "type": "col",
-                            //                                         "title": "列ioj0mV",
-                            //                                         "span": 24,
-                            //                                         "layoutContain": "select",
-                            //                                         "size": {
-                            //                                             "nzXs": 24,
-                            //                                             "nzSm": 24,
-                            //                                             "nzMd": 24,
-                            //                                             "nzLg": 24,
-                            //                                             "ngXl": 24,
-                            //                                             "nzXXl": 24
-                            //                                         },
-                            //                                         "control": {
-                            //                                             "id": "res_refSQL"
-                            //                                         }
-                            //                                     },
-                            //                                     {
-                            //                                         "id": "col_1",
-                            //                                         "col": "cc",
-                            //                                         "type": "col",
-                            //                                         "title": "列ioj0mV",
-                            //                                         "span": 12,
-                            //                                         "layoutContain": "select",
-                            //                                         "size": {
-                            //                                             "nzXs": 24,
-                            //                                             "nzSm": 24,
-                            //                                             "nzMd": 12,
-                            //                                             "nzLg": 12,
-                            //                                             "ngXl": 12,
-                            //                                             "nzXXl": 12
-                            //                                         },
-                            //                                         "control": {
-                            //                                             "id": "res_refField"
-                            //                                         }
-                            //                                     },
-                            //                                 ]
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     "formControls": [
-                            //                         {
-                            //                             "id": "res_refProperty",
-                            //                             "hidden": false,
-                            //                             "title": "关联属性",
-                            //                             "titleConfig": {
-                            //                                 "required": true
-                            //                             },
-                            //                             "field": "refResourceKeyName",
-                            //                             "labelSize": {
-                            //                                 "span": 6,
-                            //                                 "nzXs": 6,
-                            //                                 "nzSm": 6,
-                            //                                 "nzMd": 6,
-                            //                                 "nzLg": 6,
-                            //                                 "ngXl": 6,
-                            //                                 "nzXXl": 6
-                            //                             },
-                            //                             "controlSize": {
-                            //                                 "span": 18,
-                            //                                 "nzXs": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzSm": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzMd": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzLg": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "ngXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzXXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 }
-                            //                             },
-                            //                             "state": "edit",
-                            //                             "text": {
-                            //                                 "type": "label",
-                            //                                 "field": "refResourceKeyName"
-                            //                             },
-                            //                             "editor": {
-                            //                                 "type": "input",
-                            //                                 "field": "refResourceKeyName",
-                            //                                 "placeholder": "请输入..."
-                            //                             }
-                            //                         },
-                            //                         {
-                            //                             "id": "res_refResourceName",
-                            //                             "hidden": false,
-                            //                             "title": "SQL描述",
-                            //                             "titleConfig": {
-                            //                                 "required": true
-                            //                             },
-                            //                             "field": "refDescName",
-                            //                             "labelSize": {
-                            //                                 "span": 3,
-                            //                                 "nzXs": 3,
-                            //                                 "nzSm": 3,
-                            //                                 "nzMd": 3,
-                            //                                 "nzLg": 3,
-                            //                                 "ngXl": 3,
-                            //                                 "nzXXl": 3
-                            //                             },
-                            //                             "controlSize": {
-                            //                                 "span": 18,
-                            //                                 "nzXs": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzSm": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzMd": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzLg": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "ngXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzXXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 }
-                            //                             },
-                            //                             "state": "edit",
-                            //                             "text": {
-                            //                                 "type": "label",
-                            //                                 "field": "refDescName"
-                            //                             },
-                            //                             "editor": {
-                            //                                 "type": "input",
-                            //                                 "field": "refDescName",
-                            //                                 "placeholder": "请输入资源..."
-                            //                             }
-                            //                         },
-                            //                         {
-                            //                             "id": "res_refField",
-                            //                             "hidden": false,
-                            //                             "title": "关联列名",
-                            //                             "titleConfig": {
-                            //                                 "required": true
-                            //                             },
-                            //                             "field": "refParentResourcePropId",
-                            //                             "labelSize": {
-                            //                                 "span": 6,
-                            //                                 "nzXs": 6,
-                            //                                 "nzSm": 6,
-                            //                                 "nzMd": 6,
-                            //                                 "nzLg": 6,
-                            //                                 "ngXl": 6,
-                            //                                 "nzXXl": 6
-                            //                             },
-                            //                             "controlSize": {
-                            //                                 "span": 18,
-                            //                                 "nzXs": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzSm": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzMd": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzLg": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "ngXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzXXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 }
-                            //                             },
-                            //                             "state": "edit",
-                            //                             "text": {
-                            //                                 "type": "label",
-                            //                                 "field": "refParentResourcePropId"
-                            //                             },
-                            //                             "editor": {
-                            //                                 "type": "gridSelect",
-                            //                                 "field": "refParentResourcePropId",
-                            //                                 "layoutName": "tableColumnsList",
-                            //                                 "placeholder": "请选择",
-                            //                                 "loadingItemConfig": {
-                            //                                     "id": "loadTableColumnValue"
-                            //                                 },
-                            //                                 "labelName": "descName",
-                            //                                 "valueName": "cname"
-                            //                             }
-                            //                         },
-                            //                         {
-                            //                             "id": "res_cascade_del",
-                            //                             "hidden": false,
-                            //                             "title": "及联删除",
-                            //                             "titleConfig": {
-                            //                                 "required": false
-                            //                             },
-                            //                             "field": "isCascadeDelete",
-                            //                             "labelSize": {
-                            //                                 "span": 6,
-                            //                                 "nzXs": 6,
-                            //                                 "nzSm": 6,
-                            //                                 "nzMd": 6,
-                            //                                 "nzLg": 6,
-                            //                                 "ngXl": 6,
-                            //                                 "nzXXl": 6
-                            //                             },
-                            //                             "controlSize": {
-                            //                                 "span": 18,
-                            //                                 "nzXs": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzSm": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzMd": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzLg": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "ngXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzXXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 }
-                            //                             },
-                            //                             "state": "edit",
-                            //                             "text": {
-                            //                                 "type": "label",
-                            //                                 "field": "isCascadeDelete"
-                            //                             },
-                            //                             "editor": {
-                            //                                 "type": "select",
-                            //                                 "field": "isCascadeDelete",
-                            //                                 "placeholder": "请输入",
-                            //                                 "options": [
-                            //                                     {
-                            //                                         "label": "是",
-                            //                                         "value": 1
-                            //                                     },
-                            //                                     {
-                            //                                         "label": "否",
-                            //                                         "value": 0
-                            //                                     }
-                            //                                 ],
-                            //                                 "defaultValue": 0,
-                            //                                 "labelName": "label"
-                            //                             }
-                            //                         },
-                            //                         {
-                            //                             "id": "res_type",
-                            //                             "hidden": false,
-                            //                             "title": "资源类型",
-                            //                             "titleConfig": {
-                            //                                 "required": false
-                            //                             },
-                            //                             "field": "refResourceType",
-                            //                             "labelSize": {
-                            //                                 "span": 3,
-                            //                                 "nzXs": {
-                            //                                     "span": 3
-                            //                                 },
-                            //                                 "nzSm": {
-                            //                                     "span": 3
-                            //                                 },
-                            //                                 "nzMd": {
-                            //                                     "span": 3
-                            //                                 },
-                            //                                 "nzLg": {
-                            //                                     "span": 3
-                            //                                 },
-                            //                                 "ngXl": {
-                            //                                     "span": 3
-                            //                                 },
-                            //                                 "nzXXl": {
-                            //                                     "span": 3
-                            //                                 }
-                            //                             },
-                            //                             "controlSize": {
-                            //                                 "span": 18,
-                            //                                 "nzXs": 18,
-                            //                                 "nzSm": 18,
-                            //                                 "nzMd": 18,
-                            //                                 "nzLg": 18,
-                            //                                 "ngXl": 18,
-                            //                                 "nzXXl": 18
-                            //                             },
-                            //                             "state": "edit",
-                            //                             "text": {
-                            //                                 "type": "label",
-                            //                                 "field": "refResourceType"
-                            //                             },
-                            //                             "editor": {
-                            //                                 "type": "select",
-                            //                                 "field": "refResourceType",
-                            //                                 "placeholder": "请选择",
-                            //                                 "options": [
-                            //                                     {
-                            //                                         "label": "表资源",
-                            //                                         "value": 0
-                            //                                     },
-                            //                                     {
-                            //                                         "label": "SQL 资源",
-                            //                                         "value": 1
-                            //                                     }
-                            //                                 ],
-                            //                                 "defaultValue": 0,
-                            //                                 "labelName": "label",
-                            //                                 "valueName": "value"
-                            //                             }
-                            //                         },
-                            //                         {
-                            //                             "id": "res_ref_id",
-                            //                             "hidden": false,
-                            //                             "title": "关联表资源",
-                            //                             "titleConfig": {
-                            //                                 "required": true
-                            //                             },
-                            //                             "field": "refResourceId",
-                            //                             "labelSize": {
-                            //                                 "span": 3,
-                            //                                 "nzXs": 3,
-                            //                                 "nzSm": 3,
-                            //                                 "nzMd": 3,
-                            //                                 "nzLg": 3,
-                            //                                 "ngXl": 3,
-                            //                                 "nzXXl": 3
-                            //                             },
-                            //                             "controlSize": {
-                            //                                 "span": 18,
-                            //                                 "nzXs": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzSm": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzMd": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzLg": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "ngXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzXXl": {
-                            //                                     "span": 18,
-                            //                                     "offset": 0
-                            //                                 }
-                            //                             },
-                            //                             "state": "edit",
-                            //                             "text": {
-                            //                                 "type": "label",
-                            //                                 "field": "refResourceId"
-                            //                             },
-                            //                             "editor": {
-                            //                                 "type": "gridSelect",
-                            //                                 "field": "refResourceId",
-                            //                                 "layoutName": "apiResourceList",
-                            //                                 "placeholder": "请选择",
-                            //                                 "loadingItemConfig": {
-                            //                                     "id": "loadResourceValue"
-                            //                                 },
-                            //                                 "labelName": "descName",
-                            //                                 "valueName": "id"
-                            //                             }
-                            //                         },
-                            //                         {
-                            //                             "id": "res_refSQL",
-                            //                             "hidden": false,
-                            //                             "title": "关联SQL资源",
-                            //                             "titleConfig": {
-                            //                                 "required": true
-                            //                             },
-                            //                             "field": "sqlList",
-                            //                             "labelSize": {
-                            //                                 "span": 3,
-                            //                                 "nzXs": 3,
-                            //                                 "nzSm": 3,
-                            //                                 "nzMd": 3,
-                            //                                 "nzLg": 3,
-                            //                                 "ngXl": 3,
-                            //                                 "nzXXl": 3
-                            //                             },
-                            //                             "controlSize": {
-                            //                                 "span": 21,
-                            //                                 "nzXs": {
-                            //                                     "span": 12,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzSm": {
-                            //                                     "span": 21,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzMd": {
-                            //                                     "span": 21,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzLg": {
-                            //                                     "span": 21,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "ngXl": {
-                            //                                     "span": 21,
-                            //                                     "offset": 0
-                            //                                 },
-                            //                                 "nzXXl": {
-                            //                                     "span": 21,
-                            //                                     "offset": 0
-                            //                                 }
-                            //                             },
-                            //                             "state": "edit",
-                            //                             "text": {
-                            //                                 "type": "label",
-                            //                                 "field": "sqlList"
-                            //                             },
-                            //                             "editor": {
-                            //                                 "type": "staticGrid",
-                            //                                 "field": "sqlList",
-                            //                                 "placeholder": "",
-                            //                                 "layoutName": "sqlResourceList",
-                            //                                 "validations": []
-                            //                             }
-                            //                         }
-                            //                     ],
-                            //                     "formControlsPermissions": [
-                            //                         {
-                            //                             "formState": "new",
-                            //                             "formStateContent": {
-                            //                                 "isLoad": false,
-                            //                                 "loadAjax": {},
-                            //                                 "isDefault": true
-                            //                             },
-                            //                             "Controls": [
-                            //                                 {
-                            //                                     "id": "res_refResourceName",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_type",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_refField",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_refProperty",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_cascade_del",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_ref_id",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 }
-
-                            //                             ]
-                            //                         },
-                            //                         {
-                            //                             "formState": "edit",
-                            //                             "Controls": [
-                            //                                 {
-                            //                                     "id": "res_refResourceName",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_type",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_refField",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_refProperty",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_cascade_del",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_ref_id",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 }
-                            //                             ]
-                            //                         },
-                            //                         {
-                            //                             "formState": "text",
-                            //                             "Controls": [
-                            //                                 {
-                            //                                     "id": "res_refResourceName",
-                            //                                     "state": "edit",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_type",
-                            //                                     "state": "text",
-                            //                                     "hidden": false,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_refField",
-                            //                                     "state": "text",
-                            //                                     "hidden": true,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_refProperty",
-                            //                                     "state": "text",
-                            //                                     "hidden": true,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_cascade_del",
-                            //                                     "state": "text",
-                            //                                     "hidden": true,
-                            //                                     "readOnly": false
-                            //                                 },
-                            //                                 {
-                            //                                     "id": "res_ref_id",
-                            //                                     "state": "edit",
-                            //                                     "hidden": true,
-                            //                                     "readOnly": false
-                            //                                 }
-                            //                             ]
-                            //                         }
-                            //                     ],
-                            //                     "ajaxConfig": [
-                            //                         {
-                            //                             "id": "loadBusinessObject",
-                            //                             // "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
-                            //                             "url": "cfgBusiModelResRelations/query",
-                            //                             "urlType": "inner",
-                            //                             "ajaxType": "get",
-                            //                             "params": [
-                            //                                 {
-                            //                                     "name": "id",
-                            //                                     "type": "tempValue",
-                            //                                     "valueName": "_BUS_OBJ_ID",
-                            //                                 },
-                            //                                 // {
-                            //                                 //     "name": "_mapToObject",
-                            //                                 //     "type": "value",
-                            //                                 //     "value": true
-                            //                                 // }
-                            //                             ],
-                            //                             "outputParameters": [],
-                            //                             "result": []
-
-                            //                         },
-                            //                         {
-                            //                             "id": "loadResourceValue",
-                            //                             "url": "td/DM_TABLE/query",
-                            //                             "urlType": "inner",
-                            //                             "ajaxType": "get",
-                            //                             "params": [
-                            //                                 {
-                            //                                     "name": "id",
-                            //                                     "type": "componentValue",
-                            //                                     "valueName": "value",
-                            //                                     "value": "-999"
-                            //                                 },
-                            //                                 {
-                            //                                     "name": "_mapToObject",
-                            //                                     "type": "value",
-                            //                                     "value": true
-                            //                                 }
-                            //                             ],
-                            //                             "outputParameters": [],
-                            //                             "result": []
-                            //                         },
-                            //                         {
-                            //                             "id": "loadTableColumnValue",
-                            //                             "url": "td/DM_COLUMN/query",
-                            //                             "urlType": "inner",
-                            //                             "ajaxType": "get",
-                            //                             "params": [
-                            //                                 {
-                            //                                     "name": "cname",
-                            //                                     "type": "componentValue",
-                            //                                     "valueName": "value",
-                            //                                     "value": "-999"
-                            //                                 },
-                            //                                 {
-                            //                                     "name": "_mapToObject",
-                            //                                     "type": "value",
-                            //                                     "value": true
-                            //                                 }
-                            //                             ],
-                            //                             "outputParameters": [],
-                            //                             "result": []
-                            //                         }
-                            //                     ]
-                            //                 }
-                            //             }
-                            //         ],
-                            //         "condition": [
-                            //             {
-                            //                 "id": "add_cities_state",
-                            //                 "state": [
-                            //                     {
-                            //                         "type": "component",
-                            //                         "valueName": "ROWS_CHECKED",
-                            //                         "expression": [
-                            //                             {
-                            //                                 "type": "property",
-                            //                                 "name": "length",
-                            //                                 "matchValue": 0,
-                            //                                 "match": "gt"
-                            //                             },
-                            //                             {
-                            //                                 "type": "element",
-                            //                                 "name": "name",
-                            //                                 "matchValue": "1",
-                            //                                 "match": "eq",
-                            //                             }
-                            //                         ]
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "edit_business_main_state",
-                            //                 "state": [
-                            //                     {
-                            //                         "type": "component",
-                            //                         "valueName": "ROWS_CHECKED",
-                            //                         "expression": [
-                            //                             {
-                            //                                 "type": "property",
-                            //                                 "name": "length",
-                            //                                 "matchValue": 0,
-                            //                                 "match": "gt"
-                            //                             }
-                            //                         ]
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "add_business_main_condition",
-                            //                 "state": [
-                            //                     {
-                            //                         "type": "component",
-                            //                         "valueName": "ROWS_CHECKED",
-                            //                         "expression": [
-                            //                             {
-                            //                                 "type": "property",
-                            //                                 "name": "length",
-                            //                                 "matchValue": 0,
-                            //                                 "match": "gt"
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     {
-                            //                         "type": "component",
-                            //                         "valueName": "ROWS_ADDED",
-                            //                         "expression": [
-                            //                             {
-                            //                                 "type": "property",
-                            //                                 "name": "length",
-                            //                                 "matchValue": 0,
-                            //                                 "match": "gt"
-                            //                             }
-                            //                         ]
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "edit_business_main",
-                            //                 "state": [
-                            //                     {
-                            //                         "type": "component",
-                            //                         "valueName": "ROWS_EDITED",
-                            //                         "expression": [
-                            //                             {
-                            //                                 "type": "property",
-                            //                                 "name": "length",
-                            //                                 "matchValue": 0,
-                            //                                 "match": "gt"
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     {
-                            //                         "type": "component",
-                            //                         "valueName": "ROWS_CHECKED",
-                            //                         "expression": [
-                            //                             {
-                            //                                 "type": "property",
-                            //                                 "name": "length",
-                            //                                 "matchValue": 0,
-                            //                                 "match": "gt"
-                            //                             }
-                            //                         ]
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "toolbar_business_main_cancel_edit",
-                            //                 "state": [
-                            //                     {
-                            //                         "type": "component",
-                            //                         "valueName": "ROWS_EDITED",
-                            //                         "expression": [
-                            //                             {
-                            //                                 "type": "property",
-                            //                                 "name": "length",
-                            //                                 "matchValue": 0,
-                            //                                 "match": "gt"
-                            //                             }
-                            //                         ]
-                            //                     }
-                            //                 ]
-                            //             }
-                            //         ],
-                            //         "ajaxConfig": [
-                            //             {
-                            //                 "id": "add_business_sub_object",
-                            //                 "url": "cfgBusiModelResRelations/insert",
-                            //                 "urlType": "inner",
-                            //                 "ajaxType": "post",
-                            //                 "params": [
-                            //                     {
-                            //                         "name": "id",
-                            //                         "type": "GUID"
-                            //                     },
-                            //                     {
-                            //                         "name": "refBusiModelId",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_BUSI_ID"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceId",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceId"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceType",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceType"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceName",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceName"
-                            //                     },
-                            //                     // {
-                            //                     //     "name": "parentId",
-                            //                     //     "type": "tempValue",
-                            //                     //     "valueName": "_parentId"
-                            //                     // },
-                            //                     {
-                            //                         "name": "refResourceKeyName",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceKeyName"
-                            //                     },
-                            //                     // {
-                            //                     //     "name": "refDescName",
-                            //                     //     "type": "componentValue",
-                            //                     //     "valueName": "refDescName"
-                            //                     // },
-                            //                     {
-                            //                         "name": "refParentResourcePropId",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refParentResourcePropId"
-                            //                     },
-                            //                     {
-                            //                         "name": "isCascadeDelete",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "isCascadeDelete"
-
-                            //                     },
-                            //                     {
-                            //                         "name": "sqlList",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "sqlList"
-                            //                     }
-                            //                 ],
-                            //                 "outputParameters": [
-
-                            //                 ],
-                            //                 "result": [
-                            //                     {
-                            //                         "name": "data",
-                            //                         "showMessageWithNext": 0,
-                            //                         "message": "message.ajax.state.success",
-                            //                         "senderId": "afterAddBusinessSubObjectSuccess"
-                            //                     },
-                            //                     {
-                            //                         "name": "validation",
-                            //                         "message": "message.ajax.state.success",
-                            //                         "senderId": "afterAddBusinessSubObjectValidation"
-                            //                     },
-                            //                     {
-                            //                         "name": "error",
-                            //                         "senderId": "toolbar_02"
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "add_sub_business_sub_object",
-                            //                 "url": "cfgBusiModelResRelations/insert",
-                            //                 "urlType": "inner",
-                            //                 "ajaxType": "post",
-                            //                 "params": [
-                            //                     {
-                            //                         "name": "id",
-                            //                         "type": "GUID"
-                            //                     },
-                            //                     {
-                            //                         "name": "refBusiModelId",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_BUSI_ID"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceId",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceId"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceType",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceType"
-                            //                     },
-                            //                     {
-                            //                         "name": "parentId",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_PARENT_ID"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceName",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceName"
-                            //                     },
-                            //                     {
-                            //                         "name": "refDescName",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refDescName"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceKeyName",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceKeyName"
-                            //                     },
-                            //                     {
-                            //                         "name": "refParentResourcePropId",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refParentResourcePropId"
-                            //                     },
-                            //                     {
-                            //                         "name": "isCascadeDelete",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "isCascadeDelete"
-
-                            //                     },
-                            //                     {
-                            //                         "name": "sqlList",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "sqlList"
-                            //                     },
-                            //                     // {
-                            //                     //     "name": "$state$",
-                            //                     //     "type": "value",
-                            //                     //     "value": "insert"
-                            //                     // }
-                            //                 ],
-                            //                 "outputParameters": [
-
-                            //                 ],
-                            //                 "result": [
-                            //                     {
-                            //                         "name": "data",
-                            //                         "showMessageWithNext": 0,
-                            //                         "message": "message.ajax.state.success",
-                            //                         "senderId": "afterAddSubBusinessSubObjectSuccess"
-                            //                     },
-                            //                     {
-                            //                         "name": "validation",
-                            //                         "message": "message.ajax.state.success",
-                            //                         "senderId": "afterAddSubBusinessSubObjectValidation"
-                            //                     },
-                            //                     {
-                            //                         "name": "error",
-                            //                         "senderId": "toolbar_02"
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "edit_business_sub_object",
-                            //                 "url": "cfgBusiModelResRelations/update",
-                            //                 "urlType": "inner",
-                            //                 "ajaxType": "put",
-                            //                 "params": [
-                            //                     {
-                            //                         "name": "id",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_BUS_OBJ_ID"
-                            //                     },
-                            //                     {
-                            //                         "name": "refBusiModelId",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_BUSI_ID"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceId",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceId"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceType",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceType"
-                            //                     },
-                            //                     {
-                            //                         "name": "parentId",
-                            //                         "type": "tempValue",
-                            //                         "valueName": "_PARENT_ID"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceKeyName",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceKeyName",
-                            //                         "value": "",
-                            //                     },
-                            //                     {
-                            //                         "name": "refDescName",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refDescName"
-                            //                     },
-                            //                     {
-                            //                         "name": "refResourceName",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refResourceName",
-                            //                         "value": ""
-                            //                     },
-                            //                     {
-                            //                         "name": "refParentResourcePropId",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "refParentResourcePropId"
-                            //                     },
-                            //                     {
-                            //                         "name": "isCascadeDelete",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "isCascadeDelete"
-
-                            //                     },
-                            //                     {
-                            //                         "name": "sqlList",
-                            //                         "type": "componentValue",
-                            //                         "valueName": "sqlList"
-                            //                     },
-                            //                     // {
-                            //                     //     "name": "$state$",
-                            //                     //     "type": "value",
-                            //                     //     "value": "update"
-                            //                     // }
-                            //                 ],
-                            //                 "outputParameters": [
-
-                            //                 ],
-                            //                 "result": [
-                            //                     {
-                            //                         "name": "data",
-                            //                         "showMessageWithNext": 0,
-                            //                         "message": "message.ajax.state.success",
-                            //                         "senderId": "afterEditBusinessSubObjectSuccess"
-                            //                     },
-                            //                     {
-                            //                         "name": "validation",
-                            //                         "message": "message.ajax.state.success",
-                            //                         "senderId": "afterEditBusinessSubObjectValidation"
-                            //                     },
-                            //                     {
-                            //                         "name": "error",
-                            //                         "senderId": "toolbar_02"
-                            //                     }
-                            //                 ]
-                            //             },
-                            //             {
-                            //                 "id": "delete_business_sub_object",
-                            //                 "url": "/cfgBusiModelResRelations/delete",
-                            //                 "urlType": "inner",
-                            //                 "ajaxType": "delete",
-                            //                 "params": [
-                            //                     {
-                            //                         "name": "id",
-                            //                         "type": "item",
-                            //                         "valueName": "id"
-                            //                     }
-                            //                 ],
-                            //                 "outputParameters": [
-
-                            //                 ],
-                            //                 "result": [
-                            //                     {
-                            //                         "name": "data",
-                            //                         "showMessageWithNext": 0,
-                            //                         "message": "message.ajax.state.success",
-                            //                         "senderId": "afterBusinessDeleteSuccess"
-                            //                     },
-                            //                     // {
-                            //                     //     "name": "validation",
-                            //                     //     "message": "message.ajax.state.success",
-                            //                     //     "senderId": "aftetOfficeUpdateValidation"
-                            //                     // },
-                            //                     // {
-                            //                     //     "name": "error",
-                            //                     //     "senderId": "toolbar_02"
-                            //                     // }
-                            //                 ]
-                            //             }
-                            //         ],
-                            //         "beforeTrigger": [
-
-                            //         ],
-                            //         "afterTrigger": [
-                            //             {
-                            //                 "id": "",
-                            //                 "senderId": "view_business_object",
-                            //                 "sendData": [
-                            //                     {
-                            //                         "beforeSend": [],
-                            //                         "reveicerId": "",
-                            //                         "receiverTriggerType": "BEHAVIOR",
-                            //                         "receiverTrigger": "REFRESH_AS_CHILD",
-                            //                         "params": [
-                            //                             {
-                            //                                 "name": "parent_id",
-                            //                                 "type": "item",
-                            //                                 "valueName": "id"
-                            //                             },
-                            //                             {
-                            //                                 "name": "parent_name",
-                            //                                 "type": "item",
-                            //                                 "valueName": "name"
-                            //                             }
-                            //                         ]
-                            //                     }
-                            //                 ]
-                            //             }
-                            //         ],
-                            //         "toolbar": [
-                            //             {
-                            //                 "targetViewId": "view_business_object",
-                            //                 "group": [
-                            //                     {
-                            //                         "id": "M_refresh",
-                            //                         "text": "刷新",
-                            //                         "icon": "reload",
-                            //                         "color": "text-primary",
-                            //                         "hidden": false,
-                            //                         "disabled": false,
-                            //                         "execute": [
-                            //                             {
-                            //                                 "triggerType": "BEHAVIOR",
-                            //                                 "trigger": "REFRESH"
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     {
-                            //                         "id": "M_addParentNode",
-                            //                         "text": "添加主资源",
-                            //                         "state": "new",
-                            //                         "icon": "plus",
-                            //                         "color": "text-primary",
-                            //                         "hidden": false,
-                            //                         "disabled": false,
-                            //                         "execute": [
-                            //                             {
-                            //                                 "triggerType": "ACTION",
-                            //                                 // "trigger": "LAYOUT_DIALOG",
-                            //                                 "trigger": "DIALOG",
-                            //                                 "changeValueId": "add_business_object_changeValue",
-                            //                                 "builtinId": "add_state",
-                            //                                 // "conditionId": "add_state_1"
-                            //                                 "dialogId": "business_object_layout",
-                            //                                 "ajaxId": "add_business_sub_object",
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     {
-                            //                         "id": "M_addChildNode",
-                            //                         "text": "添加子资源",
-                            //                         "state": "new",
-                            //                         "icon": "plus",
-                            //                         "color": "text-primary",
-                            //                         "hidden": false,
-                            //                         "disabled": false,
-                            //                         "execute": [
-                            //                             {
-                            //                                 "triggerType": "ACTION",
-                            //                                 "trigger": "DIALOG",
-                            //                                 // "conditionId": "add_state_1"
-                            //                                 "changeValueId": "add_sub_business_object_changeValue",
-                            //                                 "dialogId": "business_object_layout",
-                            //                                 "ajaxId": "add_sub_business_sub_object",
-                            //                                 "builtinId": "add_state",
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     {
-                            //                         "id": "M_updateRow",
-                            //                         "text": "修改资源",
-                            //                         "icon": "edit",
-                            //                         "color": "text-success",
-                            //                         "hidden": false,
-                            //                         "disabled": false,
-                            //                         "state": "edit",
-                            //                         "execute": [
-                            //                             {
-                            //                                 "triggerType": "ACTION",
-                            //                                 "trigger": "DIALOG",
-                            //                                 // "conditionId": "edit_business_object_changeValue",
-                            //                                 "changeValueId": "edit_business_object_changeValue",
-                            //                                 "dialogId": "business_object_layout",
-                            //                                 "ajaxId": "edit_business_sub_object",
-                            //                                 "builtinId": "edit_state",
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     {
-                            //                         "id": "M_deleteRow",
-                            //                         "text": "删除",
-                            //                         "icon": "delete",
-                            //                         "color": "text-red-light",
-                            //                         "hidden": false,
-                            //                         "disabled": false,
-                            //                         "execute": [
-                            //                             {
-                            //                                 "triggerType": "OPERATION",
-                            //                                 "trigger": "EXECUTE_CHECKED_ROWS_IDS",
-                            //                                 // "conditionId": "delete_business_main_condition",
-                            //                                 "ajaxId": "delete_business_sub_object"
-                            //                             }
-                            //                         ]
-                            //                     },
-                            //                     {
-                            //                         "id": "M_saveRow",
-                            //                         "text": "保存",
-                            //                         "icon": "save",
-                            //                         "color": "text-primary",
-                            //                         "hidden": true,
-                            //                         "disabled": false,
-                            //                         "execute": [
-                            //                             {
-                            //                                 "triggerType": "OPERATION",
-                            //                                 "trigger": "SAVE_ROWS",
-                            //                                 "ajaxId": "add_offices_1",
-                            //                                 // "stateId": "add_save_1",
-                            //                                 // "conditionId": "add_offices"
-                            //                             },
-                            //                             {
-                            //                                 "triggerType": "OPERATION",
-                            //                                 "trigger": "SAVE_ROWS",
-                            //                                 "ajaxId": "edit_offices_1",
-                            //                                 // "stateId": "edit_save_1",
-                            //                                 // "conditionId": "edit_offices"
-                            //                             }
-                            //                         ],
-                            //                         "toggle": {
-                            //                             "type": "state",
-                            //                             "toggleProperty": "hidden",
-                            //                             "values": [
-                            //                                 {
-                            //                                     "name": "edit",
-                            //                                     "value": false
-                            //                                 },
-                            //                                 {
-                            //                                     "name": "text",
-                            //                                     "value": true
-                            //                                 },
-                            //                                 {
-                            //                                     "name": "new",
-                            //                                     "value": false
-                            //                                 }
-                            //                             ]
-                            //                         }
-                            //                     },
-                            //                     {
-                            //                         "id": "M_cancelrow",
-                            //                         "text": "取消1",
-                            //                         "state": "edit",
-                            //                         "icon": "rollback",
-                            //                         "color": "text-grey-darker",
-                            //                         "hidden": true,
-                            //                         "disabled": null,
-                            //                         "execute": [
-                            //                             {
-                            //                                 "triggerType": "STATE",
-                            //                                 "trigger": "CANCEL_EDIT_ROWS",
-                            //                                 "conditionId": "toolbar_business_main_cancel_edit"
-                            //                             },
-                            //                             {
-                            //                                 "triggerType": "STATE",
-                            //                                 "trigger": "CANCEL_NEW_ROWS"
-                            //                             }
-                            //                         ],
-                            //                         "toggle": {
-                            //                             "type": "state",
-                            //                             "toggleProperty": "hidden",
-                            //                             "values": [
-                            //                                 {
-                            //                                     "name": "edit",
-                            //                                     "value": false
-                            //                                 },
-                            //                                 {
-                            //                                     "name": "text",
-                            //                                     "value": true
-                            //                                 },
-                            //                                 {
-                            //                                     "name": "new",
-                            //                                     "value": false
-                            //                                 }
-                            //                             ]
-                            //                         }
-                            //                     },
-                            //                     // {
-                            //                     //     "id": "M_cancelrowc",
-                            //                     //     "text": "批量处理",
-                            //                     //     "icon": "rollback",
-                            //                     //     "color": "text-grey-darker",
-                            //                     //     "hidden": false,
-                            //                     //     "disabled": null,
-                            //                     //     "execute": [
-                            //                     //         {
-                            //                     //             "triggerType": "OPERATION",
-                            //                     //             "trigger": "EXECUTE_CHECKED_ROWS",
-                            //                     //             // "conditionId": "toolbar_business_main_cancel_edit"
-                            //                     //             "ajaxId": "execute_checked_offices_1"
-                            //                     //         }
-                            //                     //     ]
-                            //                     // }
-                            //                 ]
-                            //             }
-                            //         ]
-                            //     }
-                            // },
                             {
                                 "id": "r5zDHB",
                                 "col": "cc",
@@ -3995,7 +2230,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                 "title": "",
                                 "span": 16,
                                 "container": "component",
-                                "noBorder": true,
+                                "noBorder": false,
                                 "header": {
                                     "title": "业务对象列表",
                                     "icon": "right-circle",
@@ -4223,40 +2458,40 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         ]
                                                     },
                                                     "cascadeValue": [
-                                                        // {
-                                                        //     "type": "",
-                                                        //     "controlId": "res_type",
-                                                        //     "name": "refResourceType",
-                                                        //     "CascadeObjects": [
-                                                        //         {
-                                                        //             "controlId": "res_ref_id",
-                                                        //             "cascadeName": "refResourceId",
-                                                        //             "cascadeItems": [
-                                                        //                 {
-                                                        //                     "type": "default",
-                                                        //                     "caseValue": {
-                                                        //                         "type": "selectObjectValue",
-                                                        //                         "valueName": "value",
-                                                        //                         "regular": "^0$"
-                                                        //                     },
-                                                        //                     "content": {
-                                                        //                         "type": "ajax",
-                                                        //                         "data": {
-                                                        //                             "option": [
-                                                        //                                 {
-                                                        //                                     "name": "_TYPE",
-                                                        //                                     "type": "selectObjectValue",
-                                                        //                                     "valueName": "value"
-                                                        //                                 }
-                                                        //                             ]
-                                                        //                         }
-                                                        //                     }
-                                                        //                 }
+                                                        {
+                                                            "type": "",
+                                                            "controlId": "res_type",
+                                                            "name": "refResourceType",
+                                                            "CascadeObjects": [
+                                                                {
+                                                                    "controlId": "res_ref_id",
+                                                                    "cascadeName": "refResourceId",
+                                                                    "cascadeItems": [
+                                                                        {
+                                                                            "type": "default",
+                                                                            "caseValue": {
+                                                                                "type": "selectObjectValue",
+                                                                                "valueName": "value",
+                                                                                "regular": "^0$"
+                                                                            },
+                                                                            "content": {
+                                                                                "type": "ajax",
+                                                                                "data": {
+                                                                                    "option": [
+                                                                                        {
+                                                                                            "name": "_TYPE",
+                                                                                            "type": "selectObjectValue",
+                                                                                            "valueName": "value"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        }
 
-                                                        //             ]
-                                                        //         }
-                                                        //     ]
-                                                        // },
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        },
                                                         {
                                                             "type": "",
                                                             "controlId": "res_ref_id",
@@ -4286,35 +2521,35 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                 }
                                                             ],
                                                         },
-                                                        // {
-                                                        //     "type": "",
-                                                        //     "controlId": "res_refSQL",
-                                                        //     "name": "sqlList",
-                                                        //     "CascadeObjects": [
-                                                        //         {
-                                                        //             "controlId": "res_refSQL",
-                                                        //             "cascadeName": "sqlList",
-                                                        //             "cascadeItems": [
-                                                        //                 {
-                                                        //                     "type": "default",
-                                                        //                     "content": {
-                                                        //                         "type": "setValue",
-                                                        //                         "data": {
-                                                        //                             "option": [
-                                                        //                                 {
-                                                        //                                     // "name": "_TYPE",
-                                                        //                                     "type": "dataList",
-                                                        //                                     // "valueName": "refResourceType"
-                                                        //                                 }
-                                                        //                             ]
-                                                        //                         }
-                                                        //                     }
-                                                        //                 }
+                                                        {
+                                                            "type": "",
+                                                            "controlId": "res_refSQL",
+                                                            "name": "sqlList",
+                                                            "CascadeObjects": [
+                                                                {
+                                                                    "controlId": "res_refSQL",
+                                                                    "cascadeName": "sqlList",
+                                                                    "cascadeItems": [
+                                                                        {
+                                                                            "type": "default",
+                                                                            "content": {
+                                                                                "type": "setValue",
+                                                                                "data": {
+                                                                                    "option": [
+                                                                                        {
+                                                                                            "name": "_TYPE",
+                                                                                            "type": "dataList",
+                                                                                            "valueName": "refResourceType"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        }
 
-                                                        //             ]
-                                                        //         }
-                                                        //     ]
-                                                        // }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
                                                     ],
                                                     "cascadeLayout": [
                                                         {
@@ -4658,7 +2893,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     "id": "loadTableColumnValue"
                                                                 },
                                                                 "labelName": "descName",
-                                                                "valueName": "cname"
+                                                                "valueName": "paramName"
                                                             }
                                                         },
                                                         {
@@ -5065,7 +3300,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         },
                                                         {
                                                             "id": "loadResourceValue",
-                                                            "url": "td/DM_TABLE/query",
+                                                            "url": "resource/DM_RESOURCE/query",
                                                             "urlType": "inner",
                                                             "ajaxType": "get",
                                                             "params": [
@@ -5086,12 +3321,12 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                         },
                                                         {
                                                             "id": "loadTableColumnValue",
-                                                            "url": "td/DM_COLUMN/query",
+                                                            "url": "resource/DM_RESOURCE_PARAMS/query",
                                                             "urlType": "inner",
                                                             "ajaxType": "get",
                                                             "params": [
                                                                 {
-                                                                    "name": "cname",
+                                                                    "name": "paramName",
                                                                     "type": "componentValue",
                                                                     "valueName": "value",
                                                                     "value": "-999"
@@ -5774,7 +4009,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "pageSizeOptions": [10, 20, 50, 100],
                                     "loadingOnInit": false,
                                     "loadingConfig": {
-                                        "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                                        "url": "resource/GET_BUSINESS_OBJECT_LIST/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -5822,7 +4057,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                         ]
                                     },
                                     "expandConfig": {
-                                        "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                                        "url": "resource/GET_BUSINESS_OBJECT_LIST/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -6829,7 +5064,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                     "pageSizeOptions": [10, 20, 50, 100],
                                     "loadingOnInit": false,
                                     "loadingConfig": {
-                                        "url": "sd/GET_SQL_LIST_BY_RELATION/query",
+                                        "url": "resource/GET_SQL_LIST_BY_RELATION/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -7837,7 +6072,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "ajaxConfig": [
                                                     {
                                                         "id": "loadform",
-                                                        "url": "td/SMT_BASE_COMPONENT/query",
+                                                        "url": "resource/SMT_BASE_COMPONENT/query",
                                                         "urlType": "inner",
                                                         "ajaxType": "get",
                                                         "params": [
@@ -7852,7 +6087,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     },
                                                     {
                                                         "id": "loadformgrid",
-                                                        "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                                                        "url": "resource/GET_BUSINESS_OBJECT_LIST/query",
                                                         "urlType": "inner",
                                                         "ajaxType": "get",
                                                         "params": [
@@ -7923,7 +6158,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     "200px"
                 ],
                 "loadingConfig": {
-                    "url": "sd/GET_ALL_RESOURCE_LIST/query",
+                    "url": "resource/GET_ALL_RESOURCE_LIST/query",
                     "method": "get",
                     "params": [
                         {
@@ -8045,11 +6280,11 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     "200px"
                 ],
                 "loadingConfig": {
-                    "url": "td/DM_COLUMN/query",
+                    "url": "resource/DM_RESOURCE_PARAMS/query",
                     "method": "get",
                     "params": [
                         {
-                            "name": "tableId",
+                            "name": "resourceId",
                             "type": "initValue",
                             "valueName": "_TABLE_ID"
                         },
@@ -8065,7 +6300,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                     {
                         "title": "列名称",
                         "type": "field",
-                        "field": "cname",
+                        "field": "paramName",
                         "hidden": false,
                         "showFilter": false,
                         "showSort": false,
@@ -8135,7 +6370,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
             //     '50px', '100px', '100px', '100px', '100px'
             // ],
             "loadingConfig": {
-                "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                "url": "resource/GET_BUSINESS_OBJECT_LIST/query",
                 "method": "get",
                 "params": [
                     {
@@ -8917,7 +7152,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
             "ajaxConfig": [
                 {
                     "id": "loadResourceValue",
-                    "url": "sd/GET_DM_SQL_DROPDOWN_LIST/query",
+                    "url": "resource/GET_DM_SQL_DROPDOWN_LIST/query",
                     "ajaxType": "get",
                     "params": [
                         {
