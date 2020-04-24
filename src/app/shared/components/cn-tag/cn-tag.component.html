@@ -1,15 +1,8 @@
 
-<!-- <nz-tag *ngFor="let tag of tags; let i = index" [nzMode]="i === 0 ? 'default' : 'closeable'" (nzAfterClose)="handleClose(tag)">
-    {{ sliceTagName(tag) }}
-</nz-tag>
-<nz-tag *ngIf="!inputVisible" class="editable-tag" nzNoAnimation (click)="showInput()">
-    <i nz-icon nzType="plus"></i> New Tag
-</nz-tag>
-<input #inputElement nz-input nzSize="small" *ngIf="inputVisible" type="text" [(ngModel)]="inputValue" style="width: 78px;"
-    (blur)="handleInputConfirm()" (keydown.enter)="handleInputConfirm()" /> -->
-    <button (click)="addNodeTest()">添加多选节点</button>
+
+    <!-- <button (click)="addNodeTest()">添加多选节点</button>
     <button (click)="addSingleNodeTest()">添加单选节点</button>
-    <hr>
+    <hr> -->
 
     <nz-tag *ngFor="let tag of nodeList; let i = index" [nzMode]="'closeable'"  [nzColor]="'cyan'" (nzAfterClose)="handleClose1(tag)" style="margin-bottom: 3px">
         {{ tag['label'] }}

@@ -9,38 +9,41 @@
     [nzErrorTip]="" nzHasFeedback nzValidatingTip="Validating...">
     <input nz-input [formControlName]="config.field" hidden="hidden" [(ngModel)]="value"
       (ngModelChange)="valueChange($event)" />
-    <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 100%">
+<!--     <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton" style="width: 100%">
       <input type="text" nz-input [placeholder]="config.placeholder?config.placeholder:''" [(ngModel)]="_value"
-        [ngModelOptions]="{standalone: true}" /><!--  [ngModelOptions]="{standalone: true}" -->
+        [ngModelOptions]="{standalone: true}" />
     </nz-input-group>
     <ng-template #suffixIconButton>
       <button nz-button nzType="primary" nzSearch (click)="createModal()"><i nz-icon nzType="small-dash"></i></button>
-    </ng-template>
+    </ng-template> -->
 
-    编辑状态：
-    <hr>
-    <nz-input-group   [nzAddOnAfter]="suffixButton" style="width: 100%">
-      <input type="hidden" nz-input placeholder="input search text" />
-      <div   style="border:1px solid #d9d9d9; background-color: #fff; min-height: 35px; padding:3px">
-          <nz-tag *ngFor="let tag of tags; let i = index;"  style="margin-bottom: 3px"   (nzAfterClose)="handleClose1(tag)" [nzMode]="'closeable'"  [nzColor]="'cyan'" >
+    <!-- 编辑状态：
+    <hr> -->
+    <ng-container  *ngIf="!config.readonly">
+      <nz-input-group   [nzAddOnAfter]="suffixButton" style="width: 100%">
+        <input type="hidden" nz-input placeholder="input search text" />
+        <div   class="custom-select">
+            <nz-tag *ngFor="let tag of tags; let i = index;"  style="margin-bottom: 3px"   (nzAfterClose)="handleClose1(tag)" [nzMode]="'closeable'"  [nzColor]="'cyan'" >
+                    {{ tag['label']}}
+                </nz-tag>
+        </div>
+      </nz-input-group>
+      <ng-template #suffixButton>
+        <button nz-button nzType="primary"  (click)="createCustomModal()"><i nz-icon nzType="small-dash"></i></button>
+      </ng-template>
+    </ng-container>
+    <ng-container  *ngIf="config.readonly">
+      <nz-input-group   style="width: 100%">
+        <input type="hidden" nz-input placeholder="input search text" />
+        <div   style="border:1px solid #d9d9d9; background-color: #fff; min-height: 35px;  padding:3px">
+          <nz-tag *ngFor="let tag of tags; let i = index;"  style="margin-bottom: 3px"     [nzColor]="'cyan'" >
                   {{ tag['label']}}
               </nz-tag>
       </div>
-    </nz-input-group>
-    <ng-template #suffixButton>
-      <button nz-button nzType="primary"  (click)="createCustomModal()"><i nz-icon nzType="small-dash"></i></button>
-    </ng-template>
+      </nz-input-group>
+    </ng-container>
 
-    text 展示状态：
-    <hr>
-    <nz-input-group   style="width: 100%">
-      <input type="hidden" nz-input placeholder="input search text" />
-      <div   style="border:1px solid #d9d9d9; background-color: #fff; min-height: 35px;  padding:3px">
-        <nz-tag *ngFor="let tag of tags; let i = index;"  style="margin-bottom: 3px"     [nzColor]="'cyan'" >
-                {{ tag['label']}}
-            </nz-tag>
-    </div>
-    </nz-input-group>
+
  
 
   </nz-form-control>

@@ -61,7 +61,7 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
                 } else {
                   // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
                   this.componentService.cacheService.set(key, pageJson[key]);
-                  const componentJson = pageJson[params.name]['componentsJson']
+                  const componentJson = pageJson[key]['componentsJson']
                   if (Array.isArray(componentJson) && componentJson.length > 0) {
                     componentJson.forEach(json => {
                       this.componentService.cacheService.set(json['id'], json);

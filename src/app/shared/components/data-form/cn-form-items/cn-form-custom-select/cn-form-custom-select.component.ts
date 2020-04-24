@@ -33,10 +33,21 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
 
   ngOnInit() {
 
-    if(!this.config.layoutName){
-      this.config.layoutName ="xjdKJcJoSqXHOnuIbWziw4yD1NQVAGWs";
-    }
+    // if(!this.config.layoutName){
+    //   this.config.layoutName ="xjdKJcJoSqXHOnuIbWziw4yD1NQVAGWs";
+    //   this.config.targetValue="tag_BAxdPtAm5Gbzipe3DFRjhbtRcysySoIrlG5C";
+    //   this.config.model ="multiple";
+    //   this.config.valueName="value";
+    // }
+    if(this.config.layoutName)
     this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+   
+    
+    if(this.config.model ==='multiple') {
+      this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE,93F1C6C9-140D-42A5-9379-FE47EDA2DEEB";
+    } else {
+      this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE";
+    }
   }
 
 
@@ -45,7 +56,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     return ParameterResolver.resolve({
       params: paramsCfg,
       tempValue: this.tempValue,
-      componentValue: { value: this._value }, //  组件值？返回值？级联值，需要三值参数
+      componentValue: { value: this.value }, //  组件值？返回值？级联值，需要三值参数
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
@@ -72,17 +83,34 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     if (isArray(response.data)) {
       if (response.data && response.data.length > 0) {
         const data_form = response.data;
-        this.selectedRowItem = data_form[0];
+        // this.selectedRowItem = data_form[0];
+        data_form.forEach(element => {
+          element['label'] = element[this.config.labelName];
+          element['value'] = element[this.config.valueName];
+        });
+        this.tags =  data_form;
       }
       else {
         this.selectedRowItem = null;
       }
     } else {
       if (response.data) {
-        this.selectedRowItem = response.data;
+
+        const _data =response.data;
+        _data['label'] = _data[this.config.labelName];
+        _data['value'] = _data[this.config.valueName];
+        this.tags = [];
+        this.tags.push(_data);
+       //  this.selectedRowItem = response.data;
       } else {
         this.selectedRowItem = null;
       }
+    }
+
+    if(this.config.model ==='multiple') {
+      this.selectedRowItem =this.valueMultipleFormat();
+    } else {
+      this.selectedRowItem = this.valueSingleFormat();
     }
 
 
@@ -91,7 +119,14 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
   handleClose1(removedTag: {}): void {
     this.tags = this.tags.filter(tag => tag !== removedTag);
     // this.valueChange(this.tags);
-    console.log('删除节点nodeList===>>>', this.tags);
+    if(this.config.model ==='multiple') {
+      this.selectedRowItem =this.valueMultipleFormat();
+    } else {
+      this.selectedRowItem = this.valueSingleFormat();
+    }
+    console.log("=================>>>>",this.selectedRowItem);
+     this.value =  this.selectedRowItem['value'];
+    console.log('删除节点nodeList===>>>', this.tags,this.selectedRowItem);
   }
 
   createModal(): void {
@@ -120,7 +155,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
 
   createCustomModal(){
     console.log('createModal');
-    this.initData['tags'] = this.tags; 
+    this.initData[ this.config.targetValue? this.config.targetValue:'tags'] = this.tags; 
     this.componentService.modalService.create({
       nzWidth: '85%',
       nzBodyStyle: { overflow: 'auto' },
@@ -137,16 +172,24 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
         console.log('OK', componentInstance.SELECTED_VALUE);
         if (componentInstance.SELECTED_VALUE) {
         this.tags = componentInstance.SELECTED_VALUE;
-        this.initData['tags'] = this.tags; 
+        this.initData[this.config.targetValue? this.config.targetValue:'tags'] = this.tags; 
         }
 
+        if(this.config.model ==='multiple') {
+          this.selectedRowItem =this.valueMultipleFormat();
+        } else {
+          this.selectedRowItem = this.valueSingleFormat();
+        }
+        console.log("=================>>>>",this.selectedRowItem);
+      //  this.valueChange( this.selectedRowItem['value']);
+         this.value =  this.selectedRowItem['value'];
       }
     });
   }
 
 
   public async valueChange(v?) {
-    //  console.log('input 值变化', v,this.formGroup);
+      console.log('自定义页面-》 值变化', v);
    // v="6IkDKuH1iXCnC5xiszniEVbbUWnOLRKm";
     if (!v) {
       this.selectedRowItem = null;
@@ -155,12 +198,12 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
       if (!this.selectedRowItem) {
         await this.load();
       }
-      if(this.selectedRowItem && !this.selectedRowItem.hasOwnProperty(this.config.valueName)){
+      if(this.selectedRowItem && !this.selectedRowItem.hasOwnProperty('value') && v!= this.selectedRowItem['value'] ){
         await this.load();
       }
     }
     if (this.selectedRowItem) {
-      const labelName = this.selectedRowItem[this.config.labelName];
+      const labelName = this.selectedRowItem['label'];
       if (labelName) {
         this._value = labelName;
       } else {
@@ -194,7 +237,8 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
         }
   }
 
-  tags=[
+  tags=[];
+  tags22=[
     {"label":'一个是阆苑仙葩',value:'01'},
     {"label":'一个是美玉无瑕',value:'02'},
     {"label":'若说没奇缘',value:'03'},
@@ -238,5 +282,44 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
       ]
     }
   };
+
+
+  /**
+   * 将值转化 多选，转化成对象，多选将数组存储在originData MULTIPLE
+   */
+  valueMultipleFormat(){
+    let label_value="";
+    let value_value="";
+    this.tags.forEach(item=>{
+      label_value+= item['label']+',';
+      value_value+= item['value']+',';
+    });
+
+    if (this.tags.length>0){
+      if(label_value.length>0){
+        label_value = label_value.substr(0,label_value.length-1);
+      }
+      if(value_value.length>0){
+        value_value = value_value.substr(0,value_value.length-1);
+      }
+    }
+    const format_v={label: label_value,value:value_value, originData:this.tags};
+    return format_v;
+  }
+
+  /**
+   * 将值转化 单选
+   */
+  valueSingleFormat(){
+
+
+    let format_v={};  // ={label: null,value:null, originData:null};
+    if (this.tags.length>0){
+      format_v = this.tags[0];
+    } else {
+      format_v = {label: null,value:null};
+    }
+    return format_v;
+  }
 
 }

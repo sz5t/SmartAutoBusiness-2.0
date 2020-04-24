@@ -48,21 +48,31 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
   ngOnInit() {
 
    // this.config = this.json;
+   if( this.config.ajaxConfig){
     this.config.ajaxConfig.forEach(ajax => {
       this.ajaxConfigObj[ajax.id] = ajax;
     });
+   }
+
 
 
     // 将异步请求结果拼接组装到 load ，方便后面程序解析。
     if (this.config.loadingConfig) { // 构建load异步请求
       this.config.loadingConfig['ajaxConfig'] = this.ajaxConfigObj[this.config.loadingConfig.id];
     }
-    this.load();
-    if(this.initData && this.initData.hasOwnProperty('tags')){
-      if(this.initData['tags']){
-        this.nodeList =  this.initData['tags']; 
+    
+    // 是否需要进行初始化数据加载，或者从静态数据读取
+    if (this.config.loadingOnInit) {
+          this.load();
+    } else {
+      if(this.initData &&this.config.targetValue &&  this.initData.hasOwnProperty(this.config.targetValue? this.config.targetValue:'tags')){
+        if(this.initData[this.config.targetValue? this.config.targetValue:'tags']){
+          this.nodeList =  this.initData[this.config.targetValue? this.config.targetValue:'tags']; 
+        }
       }
     }
+
+
 
     this.resolveRelations();
     this.valueChange( this.nodeList );
@@ -77,11 +87,7 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
     // {label:'',value:'',origin:{}}  // label 文本展示  value 隐藏值，origin 是原始数据
   ];
 
-  handleClose(removedTag: {}): void {
-    this.tags = this.tags.filter(tag => tag !== removedTag);
 
-    console.log('删除后剩余的tag', this.tags);
-  }
   handleClose1(removedTag: {}): void {
     this.nodeList = this.nodeList.filter(tag => tag !== removedTag);
     this.valueChange(this.nodeList);
@@ -414,8 +420,7 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
     // 添加单选，需要先将当前tag数组清空
     this.nodeList =[];
     const fieldIdentity = CommonUtils.uuID(36);
-    const d ={label:v['label'],value:v['value']};
-    this.addNode(d,"last");
+    this.addNode(v,"last");
     this.nodeList = this.nodeList.filter(item =>item.value !=='key');
     console.log('nodeList单选结果===>>>', this.nodeList);
     this.valueChange(this.nodeList);
@@ -428,14 +433,12 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
     if(!v['value']){
       return false;
     }
-
     const test = this.nodeList.filter(item =>item.value ===v['value']);
     if(test.length>0){
       return false;
     }
-
     const fieldIdentity = CommonUtils.uuID(36);
-    const d ={label:v['label'],value:v['value']};
+    const d =v;
     this.addNode(d,"last");
 
     this.nodeList = this.nodeList.filter(item =>item.value !=='key');

@@ -55,10 +55,10 @@ export class CnFormSwitchComponent implements OnInit {
     console.log('switch_value', v);
     const backValue = { name: this.config.field, value: v, id: this.config.config.id };
     if (v ===  this.off) {
-      this.switchvalue = true;
+      this.switchvalue = false;
     }
     else {
-      this.switchvalue = false;
+      this.switchvalue = true;
     }
     this.updateValue.emit(backValue);
   
@@ -67,9 +67,9 @@ export class CnFormSwitchComponent implements OnInit {
   public switchvalueChange(v?) {
     console.log('switch', v);
     if (v) {
-      this.value =  this.off;
+      this.value =  this.on;
     } else {
-      this.value = this.on;
+      this.value = this.off;
     }
     
   }
