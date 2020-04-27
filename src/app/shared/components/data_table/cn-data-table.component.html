@@ -10,7 +10,7 @@
     <ng-template ngFor let-spans let-i="index" [ngForOf]="config.spanHeader"
       *ngIf="config.spanHeader; else normalHeader">
       <tr>
-        <th *ngIf="i === 0" attr.rowspan="{{ config.spanHeader.length }}" [nzWidth]="'50px'" [nzShowCheckbox]="true"
+        <th *ngIf="i === 0  && config.showCheckBox"  attr.rowspan="{{ config.spanHeader.length }}" [nzWidth]="'50px'" [nzShowCheckbox]="config.showCheckBox" 
           [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-span [ngForOf]="spans">
           <ng-container [ngSwitch]="span.spanType">
@@ -26,7 +26,7 @@
     <!-- 常规表头 -->
     <ng-template #normalHeader>
       <tr>
-        <th nzWidth="50px" nzShowCheckbox="config.showCheckBox" [(nzChecked)]="isAllChecked"
+        <th nzWidth="50px" *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox" [(nzChecked)]="isAllChecked"
           [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-header [ngForOf]="tableColumns">
           <th [nzWidth]="header.width" *ngIf="!header.hidden" [nzShowSort]="header.showSort" [nzSortKey]="header.field">
@@ -40,10 +40,15 @@
   <tbody>
     <tr *ngFor="let rowData of dataTable.data" (click)="setSelectRow(rowData, $event)"
       [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['selected'] : false, validationError: !mapOfDataState[rowData[KEY_ID]]['validation']}">
-      <td nzShowCheckbox="true" [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']"
+      <td *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox" [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']"
         (nzCheckedChange)="dataCheckedStatusChange()"></td>
       <ng-template ngFor let-col [ngForOf]="tableColumns">
         <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
+            <ng-container *ngSwitchCase="'index'">
+                <td nzAlign="center">
+                  {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                </td>
+              </ng-container>
           <ng-container *ngSwitchCase="'field'">
             <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
               <ng-container *ngIf="col.editor">

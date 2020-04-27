@@ -3902,7 +3902,39 @@ export class DataModelingComponent extends CnComponentBase implements OnInit {
                                         }
 
                                     ],
-                                    "ajaxConfig": []
+                                    "ajaxConfig": [],
+                                    cascadeValue1: [ // 值级联配置
+                                        {
+                                          "type": '值变化',
+                                          "controlId": '002', //  大的control标识，级联内部
+                                          "name": 'isNullable',
+                                          "CascadeObjects": [
+                                            {
+                                              "controlId": '003',
+                                              "cascadeName": 'isUnique',
+                                              "cascadeItems": [  // 根据值执行
+                                                {
+                                                  "type": 'default',  // conditions   default  满足条件执行或者默认都执行
+                                                  "caseValue": {    // 条件描述 （触发级联的前置条件，如果不设置，则是满足）
+                                                    "type": 'selectObjectValue',
+                                                    "valueName": 'num',
+                                                    "regular": '^0$'
+                                                  },
+                                                  "content": {  // 应答体描述
+                                                    "type": 'setValue', // 应答类型（异步、消息、赋值、隐藏、显示...）
+                                                    "data": {
+                                                      "option": [
+                                                        { "name": 'value', "type": 'selectValue', "value": '1', "valueName": 'value' }
+                                                      ]
+                                                    }
+                                                  }
+                                                }
+                        
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
                                 }
                             }],
                         id: "3vlDRq",

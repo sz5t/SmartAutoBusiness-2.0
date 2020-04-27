@@ -13,6 +13,7 @@ export class CnGridTextareaComponent implements OnInit {
   @Input() public state;
   value;
   count = 0;
+  cascadeValue: any;
   constructor() { }
 
   ngOnInit() {
@@ -40,5 +41,19 @@ export class CnGridTextareaComponent implements OnInit {
     this.count +=1;
   }
 
-  public cascadeAnalysis(c?) {}
+  public cascadeAnalysis(c?) {
+
+    if (c && c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+    
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setValue') {
+          this.value= c[this.config.field]['setValue']['value'];
+       }
+      }
+
+    }
+  }
 }

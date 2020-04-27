@@ -14,6 +14,7 @@ export class CnGridDatePickerComponent implements OnInit {
   @Input() public state;
   date = null; // new Date();
   value=null;
+  cascadeValue: any;
   constructor() { }
 
   ngOnInit() {
@@ -108,6 +109,17 @@ parserDate(date) {
   }
   
   public cascadeAnalysis(c?) {
+    if (c && c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setValue') {
+           this.value= c[this.config.field]['setValue']['value'];
+        }
+      }
+
+    }
   }
 
 }

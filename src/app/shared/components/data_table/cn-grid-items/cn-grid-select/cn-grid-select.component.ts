@@ -171,6 +171,10 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
             this.selectOptions = newOptions;
           });
         }
+        if (c[this.config.field].exec === 'setValue') {
+          this.selectedValue= c[this.config.field]['setValue']['value'];
+          console.log('执行级联赋值',  this.selectedValue);
+       }
       }
 
     }

@@ -4,9 +4,12 @@
     <button (click)="addSingleNodeTest()">添加单选节点</button>
     <hr> -->
 
-    <nz-tag *ngFor="let tag of nodeList; let i = index" [nzMode]="'closeable'"  [nzColor]="'cyan'" (nzAfterClose)="handleClose1(tag)" style="margin-bottom: 3px">
-        {{ tag['label'] }}
-    </nz-tag>
+    <div style="min-height: 35px; ">
+            <nz-tag *ngFor="let tag of nodeList; let i = index" [nzMode]="'closeable'"  [nzColor]="'cyan'" (nzAfterClose)="handleClose1(tag)" style="margin-bottom: 3px">
+                    {{ tag['label'] }}
+                </nz-tag>
+    </div>
+
 
 
 

@@ -203,9 +203,9 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
     console.log('createModal');
     this.initData[this.config.targetValue ? this.config.targetValue : 'tags'] = this.tags;
     this.componentService.modalService.create({
-      nzWidth: '85%',
-      nzBodyStyle: { overflow: 'auto' },
-      nzTitle: '自定义组件',
+      nzWidth: this.config.customWidth? this.config.customWidth: '85%',
+      nzBodyStyle: this.config.customBodyStyle?this.config.customBodyStyle:{ overflow: 'auto' },
+      nzTitle:this.config.customTitle?this.config.customTitle:'',// '自定义组件',
       //  nzContent: '可实现树+表等多种组件组合',
       nzContent: CnPageComponent,
       nzComponentParams: {
@@ -227,7 +227,7 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
           this.selectedRowItem = this.valueSingleFormat();
         }
         console.log("=================>>>>", this.selectedRowItem);
-        //  this.valueChange( this.selectedRowItem['value']);
+        this.valueChange( this.selectedRowItem['value']);
         this.value = this.selectedRowItem['value'];
       }
     });
@@ -270,7 +270,23 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
   }
 
   public cascadeAnalysis(c?) {
+    if (c && c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
 
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'ajax') {
+          this.load();
+        }
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setValue') {
+           this.value= c[this.config.field]['setValue']['value'];
+        }
+      }
+
+    }
   }
 
 

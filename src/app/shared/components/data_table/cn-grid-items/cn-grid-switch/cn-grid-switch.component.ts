@@ -16,6 +16,7 @@ export class CnGridSwitchComponent implements OnInit {
     check:{},
     close:{}
   };
+  cascadeValue: any;
   constructor() { }
 // "options":[{"type":"check","lable":"是","value":"是"},{"type":"close","lable":"否","value":"否"}]
   ngOnInit() {
@@ -77,7 +78,21 @@ export class CnGridSwitchComponent implements OnInit {
     this.count +=1;
     
   }
-  public cascadeAnalysis(c?) {}
+  public cascadeAnalysis(c?) {
+    if (c && c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+    
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setValue') {
+          this.value= c[this.config.field]['setValue']['value'];
+       }
+      }
+
+    }
+
+  }
 
   // 远程操作
 public remoteOperation(){

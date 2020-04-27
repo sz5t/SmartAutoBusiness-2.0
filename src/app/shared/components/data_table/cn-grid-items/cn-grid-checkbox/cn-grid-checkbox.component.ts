@@ -109,10 +109,15 @@ export class CnGridCheckboxComponent  extends CnComponentBase implements OnInit 
         if (c[this.config.field].exec === 'ajax') {
           this.load();
         }
+        if (c[this.config.field].exec === 'setValue') {
+          this.value= c[this.config.field]['setValue']['value'];
+       }
       }
     }
 
   }
+
+
   
   // 构建参数-》下拉选择自加载数据
   public buildParameters(paramsCfg) {

@@ -157,9 +157,9 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     console.log('createModal');
     this.initData[ this.config.targetValue? this.config.targetValue:'tags'] = this.tags; 
     this.componentService.modalService.create({
-      nzWidth: '85%',
-      nzBodyStyle: { overflow: 'auto' },
-      nzTitle: '自定义组件',
+      nzWidth: this.config.customWidth? this.config.customWidth: '85%',
+      nzBodyStyle: this.config.customBodyStyle?this.config.customBodyStyle:{ overflow: 'auto' },
+      nzTitle:this.config.customTitle?this.config.customTitle:'',
       //  nzContent: '可实现树+表等多种组件组合',
       nzContent: CnPageComponent,
       nzComponentParams: {

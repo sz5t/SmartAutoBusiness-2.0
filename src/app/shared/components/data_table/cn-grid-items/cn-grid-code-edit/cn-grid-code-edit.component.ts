@@ -19,6 +19,7 @@ export class CnGridCodeEditComponent implements OnInit,AfterViewInit {
   isSpinning = true;
   editor;
   divstyle={width:'100%','min-height':(window.document.body.clientHeight-260).toString()+'px'};
+  cascadeValue: any;
   constructor(
     private http: _HttpClient
   ) { }
@@ -129,6 +130,17 @@ export class CnGridCodeEditComponent implements OnInit,AfterViewInit {
   }
 
   public cascadeAnalysis(c?) {
+
+    if (c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setValue') {
+          this.value= c[this.config.field]['setValue']['value'];
+       }
+      }
+    }
   }
   public onblur(e?, type?) {
     this.assemblyValue();
@@ -147,5 +159,9 @@ export class CnGridCodeEditComponent implements OnInit,AfterViewInit {
     this.value = this._value;
     //  this.valueChange( this._value );
   }
+
+
+
+  
 
 }

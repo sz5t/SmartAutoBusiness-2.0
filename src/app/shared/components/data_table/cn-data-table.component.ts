@@ -257,6 +257,7 @@ export class CnDataTableComponent extends CnComponentBase
      */
     private _buildColumns(columns) {
         if (Array.isArray(columns) && columns.length > 0) {
+            const colIndex = columns.filter(item => item.type === 'index');
             const colObjs = columns.filter(item => item.type === 'field');
             const actionCfgs = columns.filter(item => item.type === 'action');
             if (actionCfgs && actionCfgs.length > 0) {
@@ -274,7 +275,9 @@ export class CnDataTableComponent extends CnComponentBase
 
                 })
             }
-
+            if (colIndex && colIndex.length > 0) {
+                this.tableColumns.push(...colIndex);
+            }
             if (colObjs && colObjs.length > 0) {
                 this.tableColumns.push(...colObjs);
             }
@@ -312,7 +315,15 @@ export class CnDataTableComponent extends CnComponentBase
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
             if (response && response.data && response.data.resultDatas) {
                 this._initComponentData();
+                let _index =0;
+                if (this.pageIndex === 1) {
+                    _index = _index;
+                } else {
+                    _index =(this.pageIndex - 1) * this.pageSize ;
+                }
                 response.data.resultDatas.map((d, index) => {
+                    _index = _index+1;
+                    d['_index'] = _index;
                     this.mapOfDataState[d[this.KEY_ID]] = {
                         disabled: false,
                         checked: false, // index === 0 ? true : false,
@@ -368,7 +379,16 @@ export class CnDataTableComponent extends CnComponentBase
         this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
             if (response && response.data && response.data.resultDatas) {
                 this._initComponentData();
+                let _index =0;
+                if (this.pageIndex === 1) {
+                    _index = _index;
+                } else {
+                    _index =(this.pageIndex - 1) * this.pageSize ;
+                }
                 response.data.resultDatas.map((d, index) => {
+
+                    _index = _index+1;
+                    d['_index'] = _index;
                     this.mapOfDataState[d[this.KEY_ID]] = {
                         disabled: false,
                         checked: false, // index === 0 ? true : false,
@@ -1516,11 +1536,18 @@ export class CnDataTableComponent extends CnComponentBase
         }
 
         const triggerKey = v.name;
-        if (this.config.cascadeValue)
-            this.config.cascadeValue.forEach(cascade => {
-                if (cascade.name !== triggerKey) {
-                    return true;
-                }
+
+        if (this.config.cascadeValue){
+
+            const  cascade_arry  =    this.config.cascadeValue.filter(item=> item.name === triggerKey);
+            let cascade;
+            if(cascade_arry.length>0){
+                cascade = cascade_arry[0];
+        
+            // this.config.cascadeValue.forEach(cascade => {
+            //     if (cascade.name !== triggerKey) {
+            //       //  return false;
+            //     }
                 // console.log('==****开始应答解析*****==', cascade);
                 cascade.CascadeObjects.forEach(cascadeObj => {
                     if (!this.formCascade[v['id']][cascadeObj.cascadeName]) {
@@ -1588,6 +1615,9 @@ export class CnDataTableComponent extends CnComponentBase
                                 }
                                 // 其他取值【日后扩展部分】
                             });
+
+                            cascadeResult[cascadeObj.cascadeName]['setValue'] = {value: __setValue };
+                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
                             // 赋值
                             // this.setValue(cascadeObj.cascadeName, __setValue);
 
@@ -1641,7 +1671,9 @@ export class CnDataTableComponent extends CnComponentBase
                     this.formCascade[v['id']][cascadeObj.cascadeName] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.cascadeName]));
                     // console.log('==树表内值变化反馈==', this.formCascade);
                 });
-            });
+           // });
+            }
+        }
     }
 
 

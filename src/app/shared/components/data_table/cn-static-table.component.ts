@@ -1512,11 +1512,17 @@ export class CnStaticTableComponent extends CnComponentBase
         }
 
         const triggerKey = v.name;
-        if (this.config['cascadeValue'])
-            this.config['cascadeValue'].forEach(cascade => {
-                if (cascade.name !== triggerKey) {
-                    return true;
-                }
+        if (this.config.cascadeValue){
+
+            const  cascade_arry  =    this.config.cascadeValue.filter(item=> item.name === triggerKey);
+            let cascade;
+            if(cascade_arry.length>0){
+                cascade = cascade_arry[0];
+           
+            // this.config.cascadeValue.forEach(cascade => {
+            //     if (cascade.name !== triggerKey) {
+            //       //  return false;
+            //     }
                 // console.log('==****开始应答解析*****==', cascade);
                 cascade.CascadeObjects.forEach(cascadeObj => {
                     if (!this.formCascade[v['id']][cascadeObj.cascadeName]) {
@@ -1584,6 +1590,9 @@ export class CnStaticTableComponent extends CnComponentBase
                                 }
                                 // 其他取值【日后扩展部分】
                             });
+
+                            cascadeResult[cascadeObj.cascadeName]['setValue'] = {value: __setValue };
+                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
                             // 赋值
                             // this.setValue(cascadeObj.cascadeName, __setValue);
 
@@ -1599,8 +1608,35 @@ export class CnStaticTableComponent extends CnComponentBase
                         if (item.content.type === 'relation') {
                             // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构
                             // 提供 消息配置名称，发送参数组合
-
-                        }
+                            const _cascadeValue = {};
+                            item.content.data['option'].forEach(ajaxItem => {
+                              if (ajaxItem['type'] === 'value') {
+                                _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                              }
+                              if (ajaxItem['type'] === 'selectValue') {
+                                // 选中行数据[这个是单值]
+                                _cascadeValue[ajaxItem['name']] = v['value'];
+                              }
+                              if (ajaxItem['type'] === 'selectObjectValue') {
+                                // 选中行对象数据
+                                if (v.dataItem) {
+                                  _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                                }
+                              }
+                              // 其他取值【日后扩展部分】
+                            });
+              
+                            if (item.content.sender) {
+                              new RelationResolver(this)
+                                .resolveInnerSender(
+                                  item.content.sender, // 消息泪痣
+                                  _cascadeValue, // 消息数据
+                                  Array.isArray(_cascadeValue) // 是否数组
+                                );
+                            }
+              
+              
+                          }
                         if (item.content.type === 'preventCascade') {
 
                             // 【大招】 某条件下，将级联阻止
@@ -1610,11 +1646,10 @@ export class CnStaticTableComponent extends CnComponentBase
                     this.formCascade[v['id']][cascadeObj.cascadeName] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.cascadeName]));
                     // console.log('==树表内值变化反馈==', this.formCascade);
                 });
-            });
-
+           // });
+            }
+        }
         this.columnSummary(v);
-
-
         this.updateValue.emit(this.dataList);
 
     }

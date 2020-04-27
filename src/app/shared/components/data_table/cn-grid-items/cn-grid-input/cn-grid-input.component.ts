@@ -10,6 +10,7 @@ export class CnGridInputComponent implements OnInit {
   @Input() public valueConfig;
   @Output() public updateValue = new EventEmitter();
   @Input() public state;
+  cascadeValue: any;
   constructor() { }
   value = null;
   count = 0;
@@ -44,6 +45,18 @@ export class CnGridInputComponent implements OnInit {
     this.count +=1;
   }
   public cascadeAnalysis(c?) {
+    if (c && c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setValue') {
+           this.value= c[this.config.field]['setValue']['value'];
+           this.assemblyValue();
+        }
+      }
+
+    }
   }
 
   public onblur(e?, type?) {
