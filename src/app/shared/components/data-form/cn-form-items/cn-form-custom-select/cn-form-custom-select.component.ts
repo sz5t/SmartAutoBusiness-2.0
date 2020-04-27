@@ -43,11 +43,11 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
    
     
-    if(this.config.model ==='multiple') {
-      this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE,93F1C6C9-140D-42A5-9379-FE47EDA2DEEB";
-    } else {
-      this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE";
-    }
+    // if(this.config.model ==='multiple') {
+    //   this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE,93F1C6C9-140D-42A5-9379-FE47EDA2DEEB";
+    // } else {
+    //   this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE";
+    // }
   }
 
 

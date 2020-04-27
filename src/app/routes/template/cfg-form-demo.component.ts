@@ -3262,6 +3262,13 @@ export class CfgFormDemoComponent implements OnInit {
                         "control": { "id": "007" }
                       },
                       {
+                        "id": "ioj0mV1", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
+                        },
+                        "control": { "id": "0071" }
+                      },
+                      {
                         "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 12, "layoutContain": "select",
                         "size": {
                           "nzXs": 12, "nzSm": 12, "nzMd": 12, "nzLg": 12, "ngXl": 12, "nzXXl": 12
@@ -3717,7 +3724,7 @@ export class CfgFormDemoComponent implements OnInit {
                 {
                   id: '007',
                   "hidden": true, // 字段是否隐藏
-                  "title": '创建时间',  // lable 信息
+                  "title": '创建日期',  // lable 信息
                   "titleConfig": {
                     required: false
                   },
@@ -3745,6 +3752,43 @@ export class CfgFormDemoComponent implements OnInit {
                     "field": "createDate",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
 
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '0071',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '创建时间',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "createDateTime",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 8,
+                    "nzXs": 8, "nzSm": 8, "nzMd": 8, "nzLg": 8, "ngXl": 8, "nzXXl": 8
+                  },  // 
+                  "controlSize": {
+                    "span": 16,
+                    "nzXs": { span: 16, offset: 0 },
+                    "nzSm": { span: 16, offset: 0 },
+                    "nzMd": { span: 16, offset: 0 },
+                    "nzLg": { span: 16, offset: 0 },
+                    "ngXl": { span: 16, offset: 0 },
+                    "nzXXl": { span: 16, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'createDateTime',   // 字段
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "datePicker",
+                    "field": "createDateTime",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+                    "showTime":true,  // 是否显示时间 （日期 + 时间） 默认 false
+                    "showFormat":"yyyy-MM-dd HH:mm:ss", // 日期 yyyy-MM-dd 
                     "validations": [  // 校验
                       { validator: "required" }
                     ]
@@ -4635,6 +4679,69 @@ export class CfgFormDemoComponent implements OnInit {
         type: "row"
       }
     ]
+  };
+
+
+  public gridcustom={
+    "id":'001',
+    "type": "customSelect",
+    "field": "remark151",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+    "placeholder": "请输入",
+    readonly:false,
+    labelName: 'UNITNAME',
+    valueName: 'ID',
+    layoutName:"xjdKJcJoSqXHOnuIbWziw4yD1NQVAGWs", // 自定义页面标识（子页面id）
+    targetValue:"tag_BAxdPtAm5Gbzipe3DFRjhbtRcysySoIrlG5C",      // 自定义页面里的承载tag标识
+    model:"multiple",  //  multiple 多选，single  默认单选
+    loadingItemConfig: {
+     // id: "loadformcustom1" // 将加载配置引用
+     ajaxConfig:{
+      "id": "loadformcustom1",
+      "url": "resource/GET_UNIT_LIST/query",
+      "urlType": "inner",
+      "ajaxType": "get",
+      "params": [
+        {
+          "name": "ID",
+          "conditionType":"in",
+          "type": "componentValue",
+          "valueName": "value"
+        }
+      ],
+    }
+  }
+  
+  };
+
+  public gridcustom1={
+    "id":'002',
+    "type": "customSelect",
+    "field": "remark151",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+    "placeholder": "请输入",
+    readonly:true,
+    labelName: 'UNITNAME',
+    valueName: 'ID',
+    layoutName:"xjdKJcJoSqXHOnuIbWziw4yD1NQVAGWs", // 自定义页面标识（子页面id）
+    targetValue:"tag_BAxdPtAm5Gbzipe3DFRjhbtRcysySoIrlG5C",      // 自定义页面里的承载tag标识
+    model:"multiple",  //  multiple 多选，single  默认单选
+    loadingItemConfig: {
+     // id: "loadformcustom1" // 将加载配置引用
+     ajaxConfig:{
+      "id": "loadformcustom1",
+      "url": "resource/GET_UNIT_LIST/query",
+      "urlType": "inner",
+      "ajaxType": "get",
+      "params": [
+        {
+          "name": "ID",
+          "conditionType":"in",
+          "type": "componentValue",
+          "valueName": "value"
+        }
+      ],
+    }
+  }
+  
   };
 
 }
