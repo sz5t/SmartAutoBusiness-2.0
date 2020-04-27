@@ -281,7 +281,6 @@ export class CnStaticTableComponent extends CnComponentBase
                     }
                 }
             });
-
             if (actionCfgs && actionCfgs.length > 0) {
                 actionCfgs.map(cfg => {
                     const colActions = [];
@@ -338,19 +337,32 @@ export class CnStaticTableComponent extends CnComponentBase
     public loadStaticData(data) {
         this._initComponentData();
         if (data && Array.isArray(data) && data.length > 0) {
-
             data.map((d, index) => {
-                d['$state$'] = "update";
-                this.mapOfDataState[d[this.KEY_ID]] = {
-                    disabled: false,
-                    checked: false, // index === 0 ? true : false,
-                    selected: false, // index === 0 ? true : false,
-                    state: 'edit',
-                    data: d,
-                    originData: { ...d },
-                    validation: true,
-                    actions: this.getRowActions('edit')
-                };
+                if (d['$state$'] === 'insert') {
+                    this.mapOfDataState[d[this.KEY_ID]] = {
+                        disabled: false,
+                        checked: false, // index === 0 ? true : false,
+                        selected: false, // index === 0 ? true : false,
+                        state: 'new',
+                        data: d,
+                        originData: { ...d },
+                        validation: true,
+                        actions: this.getRowActions('new')
+                    };
+                } else {
+                    d['$state$'] = "update";
+                    this.mapOfDataState[d[this.KEY_ID]] = {
+                        disabled: false,
+                        checked: false, // index === 0 ? true : false,
+                        selected: false, // index === 0 ? true : false,
+                        state: 'edit',
+                        data: d,
+                        originData: { ...d },
+                        validation: true,
+                        actions: this.getRowActions('edit')
+                    };
+                }
+
                 if (!this.config.isSelected) {
                     index === 0 && (this.ROW_SELECTED = d);
                 } else {

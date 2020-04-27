@@ -49,6 +49,13 @@
       <td nzShowCheckbox *ngIf="config.showCheckBox" [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']"
         (nzCheckedChange)="dataCheckedStatusChange()">
       </td>
+      <!--<td>
+         <span>
+          <nz-tag nzColor="#87d068" (click)="addBtnClick()"><i nz-icon nzType="plus"></i></nz-tag>
+          <nz-tag nzColor="#f50"><i nz-icon nzType="minus"></i></nz-tag>
+        </span>
+
+      </td> -->
       <ng-template ngFor let-col [ngForOf]="tableColumns">
         <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden && (rowData['$state$'] !== 'delete')">
           <ng-container *ngSwitchCase="'index'">
@@ -132,7 +139,7 @@
       </ng-template>
     </tr>
 
-    <tr>
+    <tr *ngIf="config.enableColSummary">
       <td></td>
       <ng-template ngFor let-col [ngForOf]="tableColumns">
         <td *ngIf="col.type === 'field' && !col.hidden" nzAlign="right">

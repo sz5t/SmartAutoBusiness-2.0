@@ -26,7 +26,7 @@ export class RelationResolver {
      */
     public resolveInnerSender(resultCfg: any, successData, isArrayResult = false) {
         // 查找消息配置
-       // debugger;
+        // debugger;
         if (resultCfg['senderId']) {
             const senderCfg = this._componentInstance
                 .config
@@ -34,7 +34,7 @@ export class RelationResolver {
                 .messageSender
                 .find(sender => sender.id === resultCfg['senderId']);
             // tslint:disable-next-line: no-use-before-declare
-            console.log('===>>37===senderCfg',senderCfg);
+            console.log('===>>37===senderCfg', senderCfg);
             senderCfg && new ComponentSenderResolver(this._componentInstance)
                 .sendMessage(senderCfg, isArrayResult, successData);
         }
@@ -132,7 +132,6 @@ export class TriggerReceiverResolver {
         const currentId = this._componentInstance.getCurrentComponentId();
         const trigger_subscribe$ = this._componentInstance.componentService.commonRelationTrigger.subscribe(
             data => {
-                debugger;
                 if (data.viewId === currentId) {
                     new TriggerResolver(
                         data,

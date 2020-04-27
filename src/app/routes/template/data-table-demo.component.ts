@@ -1419,19 +1419,20 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                             "showCheckBox": false,
                             "pageSizeOptions": [10, 20, 50, 100],
                             "loadingOnInit": false,
+                            "enableColSummary": true,
                             "loadingConfig": {
-                                "url": "td/SMT_BASE_INNER_PROPERTY/query",
-                                "method": "get",
-                                "params": [
-                                    {
-                                        "name": "CMPT_ID",
-                                        "type": "tempValue",
-                                        "valueName": "_PID"
-                                    }
-                                ],
-                                "filter": [
+                                // "url": "td/SMT_BASE_INNER_PROPERTY/query",
+                                // "method": "get",
+                                // "params": [
+                                //     {
+                                //         "name": "CMPT_ID",
+                                //         "type": "tempValue",
+                                //         "valueName": "_PID"
+                                //     }
+                                // ],
+                                // "filter": [
 
-                                ]
+                                // ]
                             },
                             "columns": [
                                 {
@@ -1947,7 +1948,7 @@ export class DataTableDemoComponent extends CnComponentBase implements OnInit {
                                     "state": "new",
                                     "text": "取消",
                                     "icon": "close",
-                                    "color": "text-primary",
+                                    "color": "error",
                                     "type": "link",
                                     "size": "small",
                                     "hidden": false,
