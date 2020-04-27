@@ -188,7 +188,8 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     // this.value = v;
   }
   public valueChangeTable(v?) {
-    console.log('valueChangeTable', v);
+    console.log('valueChangeTable', v,this.table.staticTableSummary);
+    this.selectedRowItem = this.table.staticTableSummary;
     //  labelName: 'provinceName',
     // valueName: 'id',
     // ,dataItem: item

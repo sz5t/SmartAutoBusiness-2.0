@@ -148,6 +148,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
     // 前置条件集合
     public beforeOperation;
+    public staticTableSummary={};
 
     private _ajaxConfigObj: any = {};
     constructor(
@@ -1661,15 +1662,19 @@ export class CnStaticTableComponent extends CnComponentBase
                 switch (col.summary.type) {
                     case 'sum':
                         this.tempValue[col.summary.name] = this.colSum(value.name);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
                         break;
                     case 'avg':
                         this.tempValue[col.summary.name] = this.colAvg(value.name).toFixed(col.summary.fixed ? col.summary.fixed : 2);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
                         break;
                     case 'max':
                         this.tempValue[col.summary.name] = this.colMax(value.name);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
                         break;
                     case 'min':
                         this.tempValue[col.summary.name] = this.colMin(value.name);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
                         break;
                 }
             }
