@@ -12,7 +12,7 @@ export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
     EXECUTE_MODAL: 'executeModal',
     VALUE_CHANGE: 'valueChange',
     MESSAGE: 'showMessage',
-
+    WINDOW: 'showWindow',
     // link
     LINK: 'link',
     LINK_TO: 'linkTo'

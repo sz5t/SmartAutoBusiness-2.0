@@ -69,6 +69,14 @@ export class ButtonOperationResolver {
         this._dialogCfg = value;
     }
 
+    private _windowCfg;
+    public get windowCfg() {
+        return this._windowCfg;
+    }
+    public set windowCfg(value) {
+        this._windowCfg = value;
+    }
+
     private _changeValueCfg;
     public get changeValueCfg() {
         return this._changeValueCfg;
@@ -94,6 +102,7 @@ export class ButtonOperationResolver {
         data && (this.currentData = data);
         config.builtinConfig && (this.builtinCfg = config.builtinConfig);
         config.dialog && (this.dialogCfg = config.dialog);
+        config.window && (this.windowCfg = config.window);
         config.changeValue && (this.changeValueCfg = config.changeValue);
         config.linkConfig && (this.linkConfig = config.linkConfig);
     }
@@ -160,6 +169,7 @@ export class ButtonOperationResolver {
             case BSN_TRIGGER_TYPE.ACTION:
                 const action_options = {};
                 action_options['dialog'] = this.findConfirmConfig(cfg.dialogId);
+                action_options['window'] = this.findwindowConfig(cfg.windowId);
                 action_options['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
                 action_options['conditionId'] = this.findConditionConfig(cfg.conditionId);
                 action_options['data'] = this.currentData;
@@ -366,6 +376,17 @@ export class ButtonOperationResolver {
             }
         }
         return confirmConfig;
+    }
+
+    private findwindowConfig(windowId) {
+        let windowConfig;
+        if (this.windowCfg && Array.isArray(this.windowCfg) && this.windowCfg.length > 0) {
+            const c = this.windowCfg.find(cfg => cfg.id === windowId);
+            if (c) {
+                windowConfig = c;
+            }
+        }
+        return windowConfig;
     }
 
     private findChangeValueConfig(changeValueId) {

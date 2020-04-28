@@ -10,7 +10,8 @@ export interface IDataFormTrigger {
     VALUE_CHANGE: string,
     LINK: string,
     LINK_TO: string,
-    MESSAGE: string
+    MESSAGE: string,
+    WINDOW: string,
 }
 
 /**
@@ -28,5 +29,6 @@ export const BSN_DATAFORM_TRIGGER: IDataFormTrigger = {
     VALUE_CHANGE: 'VALUE_CHANGE',
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',
-    MESSAGE:'MESSAGE'
+    MESSAGE:'MESSAGE',
+    WINDOW: 'WINDOW',
 }

@@ -52,7 +52,7 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
   dd_liu={};
   ngOnInit() {
 
-
+    this.setChangeValue(this.changeValue);
      this.dd_liu = this.componentService.cacheService.getNone(this.customPageId);
      console.log('222222', this.dd_liu,this.initData);
     // 解析及联配置
@@ -79,6 +79,28 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
     }
 
     this._trigger_source$ = new RelationResolver(this).resolve();
+  }
+
+  public setChangeValue(ChangeValues?) {
+    console.log('changeValue', ChangeValues);
+    // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+    if (ChangeValues && ChangeValues.length > 0) {
+      ChangeValues.forEach(p => {
+        switch (p.valueTo) {
+          case 'tempValue':
+            this.tempValue[p.name] = p.value;
+            break;
+          case 'initValue':
+            this.initValue[p.name] = p.value;
+            break;
+          case 'staticComponentValue':
+            this.staticComponentValue[p.name] = p.value;
+            break;
+
+        }
+      });
+    }
+
   }
 
   public getCurrentComponentId() {

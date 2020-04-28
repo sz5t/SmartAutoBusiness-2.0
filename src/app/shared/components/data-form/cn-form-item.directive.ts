@@ -107,7 +107,7 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    console.log('创建表单内部组件。。。-----------------------------', this.tempData,);
+    console.log('创建表单内部组件。。。-----------------------------', this.tempData,_config,this.formGroup.controls);
   }
 
   // 组件将值写回、级联数据-》回写 

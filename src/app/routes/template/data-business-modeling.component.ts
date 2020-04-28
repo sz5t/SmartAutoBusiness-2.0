@@ -2521,7 +2521,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                 }
                                                             ],
                                                         },
-                                                        {
+                                              /*           {
                                                             "type": "",
                                                             "controlId": "res_refSQL",
                                                             "name": "sqlList",
@@ -2549,7 +2549,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                     ]
                                                                 }
                                                             ]
-                                                        }
+                                                        } */
                                                     ],
                                                     "cascadeLayout": [
                                                         {
@@ -3344,6 +3344,18 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 }
                                             }
                                         ],
+                                        "window":[
+                                            {
+                                                "id": "business_object_page_1",
+                                                "layoutName": "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+                                                "type": "confirm",
+                                                "width": "100%",
+                                                "title": "业务对象页面",
+                                                "cancelText": "取消",
+                                                "okText": "提交",
+                                      
+                                            }
+                                        ],
                                         "condition": [
                                             {
                                                 "id": "add_cities_state",
@@ -3822,6 +3834,27 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                 "builtinId": "add_state",
                                                                 // "conditionId": "add_state_1"
                                                                 "dialogId": "business_object_layout",
+                                                                "ajaxId": "add_business_sub_object",
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "M_addParentNode1",
+                                                        "text": "添加主资源页面",
+                                                        "state": "new",
+                                                        "icon": "plus",
+                                                        "color": "text-primary",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "ACTION",
+                                                                // "trigger": "LAYOUT_DIALOG",
+                                                                "trigger":"WINDOW", // "WINDOW",
+                                                                "changeValueId": "add_business_object_changeValue",
+                                                                "builtinId": "add_state",
+                                                                // "conditionId": "add_state_1"
+                                                                "windowId": "business_object_page_1",
                                                                 "ajaxId": "add_business_sub_object",
                                                             }
                                                         ]

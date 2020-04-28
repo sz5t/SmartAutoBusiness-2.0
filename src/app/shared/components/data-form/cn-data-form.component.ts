@@ -11,6 +11,7 @@ import { Subject, Subscription, Observable, Observer } from 'rxjs';
 import { CN_DATA_FORM_METHOD } from '@core/relations/bsn-methods/bsn-form-methods';
 import { CustomValidator } from '@shared/components/data-form/form-validator/CustomValidator';
 import { isArray } from 'util';
+import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
 
 @Component({
   selector: 'cn-data-form',
@@ -180,13 +181,28 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       }
       else {
         if (Control.text) {
-          f.addControl(`${Control.text.field}`, new FormControl());
-          this.formValue[Control.text.field] = null;
+          if(Control.text.field === Control.field){
+            f.addControl(`${Control.text.field}`, new FormControl());
+            this.formValue[Control.text.field] = null;
+          }else {
+            f.addControl(`${Control.text.field}`, new FormControl());
+            this.formValue[Control.text.field] = null;
+            f.addControl(`${Control.field}`, new FormControl());
+            this.formValue[Control.field] = null;
+          }
+
         }
         if (Control.editor) {
           // f.addControl(`${Control.editor.field}`, new FormControl());
-          f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
-          this.formValue[Control.editor.field] = null;
+          if(Control.editor.field === Control.field){
+             f.addControl(`${Control.editor.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
+             this.formValue[Control.editor.field] = null;
+          } else{
+            f.addControl(`${Control.field}`, new FormControl());
+            this.formValue[Control.field] = null;
+            f.addControl(`${Control.editor.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
+            this.formValue[Control.editor.field] = null;
+          }
         }
       }
       this.formCascade[Control.id] = {};
@@ -922,6 +938,76 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       }
       option && this.componentService.msgService.create(msgObj.type, `${msgObj.message}`);
   }
+
+  public showWindow(option: any) {
+    let dialog;
+    // 根据按钮类型初始化表单状态
+    const dialogCfg = option.window;
+   // dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
+
+    // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
+    // if(isEditForm) {
+
+    // }
+    if (option.changeValue) {
+        const d = ParameterResolver.resolve({
+            params: option.changeValue.params,
+            tempValue: this.tempValue,
+            componentValue: this.validateForm.value,
+            item: this.FORM_VALUE,
+            initValue: this.initValue,
+            cacheValue: this.cacheValue,
+            router: this.routerValue
+        });
+        option.changeValue.params.map(param => {
+            if (param.type === 'value') {
+                // 类型为value是不需要进行任何值的解析和变化
+            } else {
+                if (d[param.name]) {
+                    param['value'] = d[param.name];
+                }
+            }
+        });
+    }
+
+    const dialogOptional = {
+        nzTitle: dialogCfg.title ? dialogCfg.title : '',
+        nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+        nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+        nzContent: CnPageComponent,
+        nzComponentParams: {
+            config:{},
+           customPageId:dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+          // initData:this.initData
+           changeValue: option.changeValue ? option.changeValue.params : []
+        },
+        nzFooter: [
+            {
+                label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
+                onClick: componentInstance => {
+                    dialog.close();
+                }
+            },
+            {
+                label: dialogCfg.okText ? dialogCfg.okText : 'OK',
+                onClick: componentInstance => {
+                    (async () => {
+                        const response = await componentInstance.executeModal(option);
+                        this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+                        // 处理validation结果
+                        this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                            &&
+                            this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                            && dialog.close();
+                    })();
+                }
+            }
+        ]
+    }
+    dialog = this.componentService.modalService.create(dialogOptional);
+
+}
 
   public buildMessageContent(msgObj) {
       const message: any = {};

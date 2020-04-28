@@ -162,7 +162,7 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     public ngOnInit() {
-        console.log('-----------------------');
+        console.log('-----------stattic_table------------',this.config);
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
 
@@ -337,8 +337,16 @@ export class CnStaticTableComponent extends CnComponentBase
 
     public loadStaticData(data) {
         this._initComponentData();
+        let _index =0;
+        if (this.pageIndex === 1) {
+            _index = _index;
+        } else {
+            _index =(this.pageIndex - 1) * this.pageSize ;
+        }
         if (data && Array.isArray(data) && data.length > 0) {
             data.map((d, index) => {
+                _index = _index+1;
+                d['_index'] = _index;
                 if (d['$state$'] === 'insert') {
                     this.mapOfDataState[d[this.KEY_ID]] = {
                         disabled: false,
@@ -350,6 +358,18 @@ export class CnStaticTableComponent extends CnComponentBase
                         validation: true,
                         actions: this.getRowActions('new')
                     };
+                }  else if (d['$state$'] === 'text') {
+                    this.mapOfDataState[d[this.KEY_ID]] = {
+                        disabled: false,
+                        checked: false, // index === 0 ? true : false,
+                        selected: false, // index === 0 ? true : false,
+                        state: 'text',
+                        data: d,
+                        originData: { ...d },
+                        validation: true,
+                        actions: this.getRowActions('text')
+                    };
+
                 } else {
                     d['$state$'] = "update";
                     this.mapOfDataState[d[this.KEY_ID]] = {
@@ -399,6 +419,9 @@ export class CnStaticTableComponent extends CnComponentBase
             this.setSelectRow(this.ROW_SELECTED);
             this.isLoading = false;
         }
+        this.dataList = data;
+        this.L_columnSummary();
+       // console.log('计算统计值',this.tempValue,this.dataList);
 
     }
 
@@ -1653,6 +1676,32 @@ export class CnStaticTableComponent extends CnComponentBase
         this.columnSummary(v);
         this.updateValue.emit(this.dataList);
 
+    }
+
+
+    public  L_columnSummary() {
+        this.tableColumns.forEach(col => {
+            if (col.field && col.summary) {
+                switch (col.summary.type) {
+                    case 'sum':
+                        this.tempValue[col.summary.name] = this.colSum(col.field);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        break;
+                    case 'avg':
+                        this.tempValue[col.summary.name] = this.colAvg(col.field).toFixed(col.summary.fixed ? col.summary.fixed : 2);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        break;
+                    case 'max':
+                        this.tempValue[col.summary.name] = this.colMax(col.field);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        break;
+                    case 'min':
+                        this.tempValue[col.summary.name] = this.colMin(col.field);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        break;
+                }
+            }
+        });
     }
 
 
