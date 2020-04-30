@@ -22,7 +22,7 @@
     <ng-container  *ngIf="!config.readonly">
       <nz-input-group   [nzAddOnAfter]="suffixButton" style="width: 100%">
         <input type="hidden" nz-input placeholder="input search text" />
-        <div   class="custom-select">
+        <div   class="custom-select" data-text="请选择">
             <nz-tag *ngFor="let tag of tags; let i = index;"  style="margin-bottom: 3px"   (nzAfterClose)="handleClose1(tag)" [nzMode]="'closeable'"  [nzColor]="'cyan'" >
                     {{ tag['label']}}
                 </nz-tag>

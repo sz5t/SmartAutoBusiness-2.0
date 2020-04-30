@@ -66,6 +66,7 @@ export class CnStaticTableComponent extends CnComponentBase
     public config: any;
     @Input() initData;
     @Input() tempData;
+    @Input() changeValue: any;
     @Input()
     public permissions = [];
     @Input()
@@ -95,6 +96,9 @@ export class CnStaticTableComponent extends CnComponentBase
     public pageSize = 10;
     public total = 0;
     public focusIds;
+
+
+    public readonly = false;
 
     public isAllChecked = false;
     public indeterminate = false;
@@ -148,7 +152,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
     // 前置条件集合
     public beforeOperation;
-    public staticTableSummary={};
+    public staticTableSummary = {};
 
     private _ajaxConfigObj: any = {};
     constructor(
@@ -162,7 +166,8 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     public ngOnInit() {
-        console.log('-----------stattic_table------------',this.config);
+        console.log('-----------stattic_table------------', this.config);
+        this.setChangeValue(this.changeValue);
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
 
@@ -337,15 +342,15 @@ export class CnStaticTableComponent extends CnComponentBase
 
     public loadStaticData(data) {
         this._initComponentData();
-        let _index =0;
+        let _index = 0;
         if (this.pageIndex === 1) {
             _index = _index;
         } else {
-            _index =(this.pageIndex - 1) * this.pageSize ;
+            _index = (this.pageIndex - 1) * this.pageSize;
         }
         if (data && Array.isArray(data) && data.length > 0) {
             data.map((d, index) => {
-                _index = _index+1;
+                _index = _index + 1;
                 d['_index'] = _index;
                 if (d['$state$'] === 'insert') {
                     this.mapOfDataState[d[this.KEY_ID]] = {
@@ -358,7 +363,7 @@ export class CnStaticTableComponent extends CnComponentBase
                         validation: true,
                         actions: this.getRowActions('new')
                     };
-                }  else if (d['$state$'] === 'text') {
+                } else if (d['$state$'] === 'text') {
                     this.mapOfDataState[d[this.KEY_ID]] = {
                         disabled: false,
                         checked: false, // index === 0 ? true : false,
@@ -421,7 +426,7 @@ export class CnStaticTableComponent extends CnComponentBase
         }
         this.dataList = data;
         this.L_columnSummary();
-       // console.log('计算统计值',this.tempValue,this.dataList);
+        // console.log('计算统计值',this.tempValue,this.dataList);
 
     }
 
@@ -1536,17 +1541,17 @@ export class CnStaticTableComponent extends CnComponentBase
         }
 
         const triggerKey = v.name;
-        if (this.config.cascadeValue){
+        if (this.config.cascadeValue) {
 
-            const  cascade_arry  =    this.config.cascadeValue.filter(item=> item.name === triggerKey);
+            const cascade_arry = this.config.cascadeValue.filter(item => item.name === triggerKey);
             let cascade;
-            if(cascade_arry.length>0){
+            if (cascade_arry.length > 0) {
                 cascade = cascade_arry[0];
-           
-            // this.config.cascadeValue.forEach(cascade => {
-            //     if (cascade.name !== triggerKey) {
-            //       //  return false;
-            //     }
+
+                // this.config.cascadeValue.forEach(cascade => {
+                //     if (cascade.name !== triggerKey) {
+                //       //  return false;
+                //     }
                 // console.log('==****开始应答解析*****==', cascade);
                 cascade.CascadeObjects.forEach(cascadeObj => {
                     if (!this.formCascade[v['id']][cascadeObj.cascadeName]) {
@@ -1615,8 +1620,54 @@ export class CnStaticTableComponent extends CnComponentBase
                                 // 其他取值【日后扩展部分】
                             });
 
-                            cascadeResult[cascadeObj.cascadeName]['setValue'] = {value: __setValue };
+                            cascadeResult[cascadeObj.cascadeName]['setValue'] = { value: __setValue };
                             cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
+                            this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = __setValue;
+                            // 赋值
+                            // this.setValue(cascadeObj.cascadeName, __setValue);
+
+                        }
+                        if (item.content.type === 'compute') {
+                            let __setValue;
+                            const computeObj = {};
+
+                            item.content.data['option'].forEach(ajaxItem => {
+
+                            
+                                if (ajaxItem['type'] === 'value') {
+                                    __setValue = ajaxItem['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectValue') {
+                                    // 选中行数据[这个是单值]
+                                    __setValue = v['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectObjectValue') {
+                                    // 选中行对象数据
+                                    if (v.dataItem) {
+                                        __setValue = v.dataItem[ajaxItem['valueName']];
+                                    }
+                                }
+                                if (ajaxItem['type'] === 'rowValue') {
+                                    // 选中行对象数据
+                                    if (this.mapOfDataState[v.id]['data']) {
+                                        __setValue = this.mapOfDataState[v.id]['data'][ajaxItem['valueName']];
+                                    }
+                                }
+
+                                computeObj[ ajaxItem['name']] =Number( __setValue) ? Number( __setValue) : 0;
+                                // 其他取值【日后扩展部分】
+                            });
+
+                            
+                          const  _computeValue = this. L__getComputeSymbol(item.content.compute.expression[0],computeObj);
+
+
+                          cascadeResult[cascadeObj.cascadeName]['setValue'] = { value: _computeValue };
+                          cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
+                          this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
+                            // cascadeResult[cascadeObj.cascadeName]['computeSetValue'] = { value: _computeValue };
+                            // cascadeResult[cascadeObj.cascadeName]['exec'] = 'computeSetValue';
+                            // this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
                             // 赋值
                             // this.setValue(cascadeObj.cascadeName, __setValue);
 
@@ -1634,33 +1685,33 @@ export class CnStaticTableComponent extends CnComponentBase
                             // 提供 消息配置名称，发送参数组合
                             const _cascadeValue = {};
                             item.content.data['option'].forEach(ajaxItem => {
-                              if (ajaxItem['type'] === 'value') {
-                                _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
-                              }
-                              if (ajaxItem['type'] === 'selectValue') {
-                                // 选中行数据[这个是单值]
-                                _cascadeValue[ajaxItem['name']] = v['value'];
-                              }
-                              if (ajaxItem['type'] === 'selectObjectValue') {
-                                // 选中行对象数据
-                                if (v.dataItem) {
-                                  _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                                if (ajaxItem['type'] === 'value') {
+                                    _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
                                 }
-                              }
-                              // 其他取值【日后扩展部分】
+                                if (ajaxItem['type'] === 'selectValue') {
+                                    // 选中行数据[这个是单值]
+                                    _cascadeValue[ajaxItem['name']] = v['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectObjectValue') {
+                                    // 选中行对象数据
+                                    if (v.dataItem) {
+                                        _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                                    }
+                                }
+                                // 其他取值【日后扩展部分】
                             });
-              
+
                             if (item.content.sender) {
-                              new RelationResolver(this)
-                                .resolveInnerSender(
-                                  item.content.sender, // 消息泪痣
-                                  _cascadeValue, // 消息数据
-                                  Array.isArray(_cascadeValue) // 是否数组
-                                );
+                                new RelationResolver(this)
+                                    .resolveInnerSender(
+                                        item.content.sender, // 消息泪痣
+                                        _cascadeValue, // 消息数据
+                                        Array.isArray(_cascadeValue) // 是否数组
+                                    );
                             }
-              
-              
-                          }
+
+
+                        }
                         if (item.content.type === 'preventCascade') {
 
                             // 【大招】 某条件下，将级联阻止
@@ -1670,7 +1721,7 @@ export class CnStaticTableComponent extends CnComponentBase
                     this.formCascade[v['id']][cascadeObj.cascadeName] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.cascadeName]));
                     // console.log('==树表内值变化反馈==', this.formCascade);
                 });
-           // });
+                // });
             }
         }
         this.columnSummary(v);
@@ -1679,25 +1730,95 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
 
-    public  L_columnSummary() {
+
+
+    public L__getComputeSymbol(symbolObj?, computeObj?) {
+
+        let r = 0;
+        if (symbolObj.valueName === 'result') {
+
+        }
+        if (symbolObj.valueName === '*') {
+            r = 1;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    r = r * this.L_getComputeValue(_item, computeObj);
+                });
+                return r;
+            }
+            return 0;
+        }
+        if (symbolObj.valueName === '+') {
+            r = 0;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    r = r + this.L_getComputeValue(_item, computeObj);
+                });
+
+            }
+            return r;
+        }
+        if (symbolObj.valueName === '-') {
+            r = 0;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    r = r - this.L_getComputeValue(_item, computeObj);
+                });
+                r = r+ this.L_getComputeValue(symbolObj.children[0], computeObj);
+
+            }
+            return r;
+        }
+        if (symbolObj.valueName === '/') {
+            // 
+            r = 0;
+            if (symbolObj.children) {
+                r = r+ this.L_getComputeValue(symbolObj.children[0], computeObj);
+                for(let i=1;i<symbolObj.children.length;i++ ){
+                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                    if(comput_value ===0){
+                        return 0;
+                    }
+                    r = r/comput_value;
+                }
+            }
+            return r;
+        }
+
+        return r;
+
+    }
+
+    public L_getComputeValue(item?, computeObj?) {
+
+        if (item.type === 'symbol') {
+            return   this.L__getComputeSymbol(item, computeObj);
+        }
+        if (item.type === 'value') {
+            return computeObj[item.valueName] ? computeObj[item.valueName] : 0;
+        }
+    }
+
+
+    public L_columnSummary() {
         this.tableColumns.forEach(col => {
             if (col.field && col.summary) {
                 switch (col.summary.type) {
                     case 'sum':
                         this.tempValue[col.summary.name] = this.colSum(col.field);
-                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
                     case 'avg':
                         this.tempValue[col.summary.name] = this.colAvg(col.field).toFixed(col.summary.fixed ? col.summary.fixed : 2);
-                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
                     case 'max':
                         this.tempValue[col.summary.name] = this.colMax(col.field);
-                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
                     case 'min':
                         this.tempValue[col.summary.name] = this.colMin(col.field);
-                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
                 }
             }
@@ -1711,19 +1832,19 @@ export class CnStaticTableComponent extends CnComponentBase
                 switch (col.summary.type) {
                     case 'sum':
                         this.tempValue[col.summary.name] = this.colSum(value.name);
-                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
                     case 'avg':
                         this.tempValue[col.summary.name] = this.colAvg(value.name).toFixed(col.summary.fixed ? col.summary.fixed : 2);
-                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
                     case 'max':
                         this.tempValue[col.summary.name] = this.colMax(value.name);
-                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
                     case 'min':
                         this.tempValue[col.summary.name] = this.colMin(value.name);
-                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name]; 
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
                 }
             }
@@ -1764,6 +1885,32 @@ export class CnStaticTableComponent extends CnComponentBase
     private colMin(colName) {
 
     }
+
+    /**
+     * setChangeValue 接受 初始变量值
+     */
+    public setChangeValue(ChangeValues?) {
+        console.log('statictable____changeValue', ChangeValues);
+        // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+        if (ChangeValues && ChangeValues.length > 0) {
+            ChangeValues.forEach(p => {
+                switch (p.valueTo) {
+                    case 'tempValue':
+                        this.tempValue[p.name] = p.value;
+                        break;
+                    case 'initValue':
+                        this.initValue[p.name] = p.value;
+                        break;
+                    case 'staticComponentValue':
+                        this.staticComponentValue[p.name] = p.value;
+                        break;
+
+                }
+            });
+        }
+
+    }
+
 
 
 

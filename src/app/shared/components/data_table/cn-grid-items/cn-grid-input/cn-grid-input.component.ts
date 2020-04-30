@@ -54,6 +54,10 @@ export class CnGridInputComponent implements OnInit {
            this.value= c[this.config.field]['setValue']['value'];
            this.assemblyValue();
         }
+        if (c[this.config.field].exec === 'computeSetValue') {
+          this.value= c[this.config.field]['computeSetValue']['value'];
+          this.assemblyValue();
+       }
       }
 
     }

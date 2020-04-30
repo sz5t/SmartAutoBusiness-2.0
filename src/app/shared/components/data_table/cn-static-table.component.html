@@ -1,4 +1,4 @@
-<button nz-button nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;" (click)="addBtnClick()"><i
+<button nz-button *ngIf="!readonly" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;" (click)="addBtnClick()"><i
     nz-icon nzType="plus"></i>
   添加</button>
 <nz-table #dataTable [nzShowSizeChanger]="config.isShowSizeChanger" [nzLoadingDelay]="300" [nzFrontPagination]="true"
@@ -32,7 +32,7 @@
         <th *ngIf="config.showCheckBox" nzWidth="50px" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
           (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-header [ngForOf]="tableColumns">
-          <th [nzWidth]="header.width" *ngIf="!header.hidden" nzShowSort [nzSortKey]="header.field">
+          <th [nzAlign]="header.titleAlign?header.titleAlign:'left'" [nzWidth]="header.width" *ngIf="!header.hidden" [nzShowSort]="header.showSort?header.showSort:false" [nzSortKey]="header.field">
             {{ header.title }}
           </th>
         </ng-template>
@@ -59,7 +59,7 @@
       <ng-template ngFor let-col [ngForOf]="tableColumns">
         <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden && (rowData['$state$'] !== 'delete')">
           <ng-container *ngSwitchCase="'index'">
-            <td nzAlign="center">
+            <td [nzAlign]="col.align?col.align:'left'">
               {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
             </td>
           </ng-container>
@@ -68,6 +68,9 @@
               <ng-container *ngIf="col.editor">
                 <td *ngSwitchCase="'new'">
                   <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else text" [config]="col.editor"
+                  [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                  [initData]="initValue"
+                  [tempData]="tempData"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
                     (updateValue)="valueChange($event)"
                     [formCascade]="formCascade[rowData[KEY_ID]]?(formCascade[rowData[KEY_ID]][col.editor.field]?formCascade[rowData[KEY_ID]][col.editor.field]:{}):{}">
@@ -79,6 +82,9 @@
 
                   <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else text"
                     [config]="col.editor"
+                    [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                    [initData]="initValue"
+                    [tempData]="tempData"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
                     (updateValue)="valueChange($event)"
                     [formCascade]="formCascade[rowData[KEY_ID]]?(formCascade[rowData[KEY_ID]][col.editor.field]?formCascade[rowData[KEY_ID]][col.editor.field]:{}):{}">
@@ -87,8 +93,11 @@
                 <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
               </ng-container>
               <ng-container *ngIf="!col.editor">
-                <td>
+                <td [nzAlign]="col.align?col.align:'left'">
                   <ng-container *ngIf="col.custom; else text" CnGridItemDirective [state]="'edit'" [config]="col.custom"
+                  [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
+                  [initData]="initValue"
+                  [tempData]="tempData"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
                     (updateValue)="valueChange($event)"
                     [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
@@ -102,22 +111,34 @@
           </ng-container>
           <ng-container *ngSwitchCase="'action'">
             <td>
-              <nz-button-group>
-                <!-- <button nz-button>操作</button> -->
-                <button nz-button nz-dropdown [nzDropdownMenu]="menu" nzPlacement="bottomRight">
-                  <i nz-icon nzType="ellipsis"></i>
-                </button>
-              </nz-button-group>
-
-              <nz-dropdown-menu #menu="nzDropdownMenu">
-                <ul nz-menu nzSelectable>
-                  <li nz-menu-item (click)="rowAction(act, rowData, $event)"
-                    *ngFor="let act of mapOfDataState[rowData[KEY_ID]]['actions']">
-                    <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
-                  </li>
-                </ul>
-              </nz-dropdown-menu>
-
+                <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length>1">
+                    <nz-button-group>
+                        <button nzSize="default" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu"
+                          nzPlacement="bottomLeft">
+                          <i nz-icon nzType="ellipsis" class="text-lg green"></i>
+                        </button>
+                      </nz-button-group>
+                      <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                          <li (click)="rowAction(act, rowData, $event)" nz-menu-item
+                            *ngFor="let act of mapOfDataState[rowData[KEY_ID]]['actions']">
+                            <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                            <!-- <button (click)="rowAction(act, rowData, $event)" nz-button [nzSize]="act.size"
+                              [nzType]="act.color ? act.color : 'default'">
+        
+                            </button> -->
+                          </li>
+                        </ul>
+                      </nz-dropdown-menu>
+                  </ng-container>
+                  <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length===1">
+                      <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
+                              <button (click)="rowAction(act, rowData, $event)" nz-button nzSize="act.size"
+                                [nzType]="act.color ? act.color : 'default'">
+                                <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                              </button>
+                        </ng-template>
+                    </ng-container>
               <!-- <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
                 <ng-container [ngSwitch]="act.type">
                   <ng-container *ngSwitchCase="'link'">

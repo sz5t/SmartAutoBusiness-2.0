@@ -22,6 +22,7 @@ import { CnFormCodeEditComponent } from '@shared/components/data-form/cn-form-it
 import { CnFormStaticGridComponent } from './cn-form-items/cn-form-static-grid/cn-form-static-grid.component';
 import { CnFormButtonComponent } from './cn-form-items/cn-form-button/cn-form-button.component';
 import { CnFormGroupComponent } from './cn-form-items/cn-form-group/cn-form-group.component';
+import { CnFormTagComponent } from '@shared/components/data-form/cn-form-items/cn-form-tag/cn-form-tag.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnFormInputComponent,
@@ -45,7 +46,8 @@ const components: { [type: string]: Type<any> } = {
   staticGrid: CnFormStaticGridComponent,
   button: CnFormButtonComponent,
   searchSelect: CnFormSearchSelectComponent,
-  group: CnFormGroupComponent
+  group: CnFormGroupComponent,
+  tag: CnFormTagComponent
 };
 @Directive({
   selector: '[CnFormItemDirective]'

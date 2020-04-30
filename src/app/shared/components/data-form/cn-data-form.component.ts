@@ -116,6 +116,25 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
           Control.editor['expandConfig']['ajaxConfig'] = this.ajaxConfigObj[Control.editor.expandConfig.id];
         }
 
+        if (Control.editor.hasOwnProperty('changeValueId')) {
+          Control.editor['changeValue'] = this.findChangeValueConfig(Control.editor.changeValueId);
+        }
+
+      }
+      if (Control.text) {
+        if (Control.text.loadingConfig) {
+          Control.text['loadingConfig']['ajaxConfig'] = this.ajaxConfigObj[Control.text.loadingConfig.id];
+        }
+        if (Control.text.loadingItemConfig) {
+          Control.text['loadingItemConfig']['ajaxConfig'] = this.ajaxConfigObj[Control.text.loadingItemConfig.id];
+        }
+        if (Control.text.expandConfig) {
+          Control.text['expandConfig']['ajaxConfig'] = this.ajaxConfigObj[Control.text.expandConfig.id];
+        }
+        if (Control.text.hasOwnProperty('changeValueId')) {
+          Control.text['changeValue'] = this.findChangeValueConfig(Control.text.changeValueId);
+        }
+
       }
       this.formControlObj[Control.id] = Control;
     });
@@ -295,6 +314,17 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     }
 
   }
+
+  private findChangeValueConfig(changeValueId) {
+    let changeValueConfig;
+    if (this.config.changeValue && Array.isArray(this.config.changeValue) && this.config.changeValue.length > 0) {
+        const c =this.config.changeValue.find(cfg => cfg.id === changeValueId);
+        if (c) {
+            changeValueConfig = c;
+        }
+    }
+    return changeValueConfig;
+}
   /**
    * 表单设计理念=》 1.0中编辑字段不能灵活切换
    * 2.0设计=》字段展示编辑可自由切换不同字段
@@ -509,6 +539,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                   // 选中行数据[这个是单值]
                   _cascadeValue[ajaxItem['name']] = v['value'];
                 }
+                
                 if (ajaxItem['type'] === 'selectObjectValue') {
                   // 选中行对象数据
                   if (v.dataItem) {
@@ -558,6 +589,52 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               // 表单赋值
               this.setValue(cascadeObj.cascadeName, __setValue);
 
+            }
+            if (item.content.type === 'compute') {
+              let __setValue;
+              const computeObj = {};
+
+              item.content.data['option'].forEach(ajaxItem => {
+
+              
+                  if (ajaxItem['type'] === 'value') {
+                      __setValue = ajaxItem['value'];
+                  }
+                  if (ajaxItem['type'] === 'selectValue') {
+                      // 选中行数据[这个是单值]
+                      __setValue = v['value'];
+                  }
+                  if (ajaxItem['type'] === 'selectObjectValue') {
+                      // 选中行对象数据
+                      if (v.dataItem) {
+                          __setValue = v.dataItem[ajaxItem['valueName']];
+                      }
+                  }
+                  if (ajaxItem['type'] === 'rowValue') {
+                      // 选中行对象数据
+                      if (this.validateForm.value) {
+                          __setValue = this.validateForm.value[ajaxItem['valueName']];
+                      }
+                  }
+
+                  computeObj[ ajaxItem['name']] =Number( __setValue) ? Number( __setValue) : 0;
+                  // 其他取值【日后扩展部分】
+              });
+
+              
+            const  _computeValue = this. L__getComputeSymbol(item.content.compute.expression[0],computeObj);
+            cascadeResult[cascadeObj.cascadeName]['setValue'] = { value: _computeValue };
+            cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
+            this.setValue(cascadeObj.cascadeName, _computeValue);
+              // cascadeResult[cascadeObj.cascadeName]['computeSetValue'] = { value: _computeValue };
+              // cascadeResult[cascadeObj.cascadeName]['exec'] = 'computeSetValue';
+              // this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
+              // 赋值
+              // this.setValue(cascadeObj.cascadeName, __setValue);
+
+          }
+            if (item.content.type === 'changeValue') {
+              cascadeResult[cascadeObj.cascadeName]['exec'] = 'changeValue';
             }
             if (item.content.type === 'display') {
               // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
@@ -635,6 +712,72 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
 
+  public L__getComputeSymbol(symbolObj?, computeObj?) {
+
+    let r = 0;
+    if (symbolObj.valueName === 'result') {
+
+    }
+    if (symbolObj.valueName === '*') {
+        r = 1;
+        if (symbolObj.children) {
+            symbolObj.children.forEach(_item => {
+                r = r * this.L_getComputeValue(_item, computeObj);
+            });
+            return r;
+        }
+        return 0;
+    }
+    if (symbolObj.valueName === '+') {
+        r = 0;
+        if (symbolObj.children) {
+            symbolObj.children.forEach(_item => {
+                r = r + this.L_getComputeValue(_item, computeObj);
+            });
+
+        }
+        return r;
+    }
+    if (symbolObj.valueName === '-') {
+        r = 0;
+        if (symbolObj.children) {
+            symbolObj.children.forEach(_item => {
+                r = r - this.L_getComputeValue(_item, computeObj);
+            });
+            r = r+ this.L_getComputeValue(symbolObj.children[0], computeObj);
+
+        }
+        return r;
+    }
+    if (symbolObj.valueName === '/') {
+        // 
+        r = 0;
+        if (symbolObj.children) {
+            r = r+ this.L_getComputeValue(symbolObj.children[0], computeObj);
+            for(let i=1;i<symbolObj.children.length;i++ ){
+                const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                if(comput_value ===0){
+                    return 0;
+                }
+                r = r/comput_value;
+            }
+        }
+        return r;
+    }
+
+    return r;
+
+}
+
+public L_getComputeValue(item?, computeObj?) {
+
+    if (item.type === 'symbol') {
+        return   this.L__getComputeSymbol(item, computeObj);
+    }
+    if (item.type === 'value') {
+        return computeObj[item.valueName] ? computeObj[item.valueName] : 0;
+    }
+}
   /**
    * 表单内置 赋值操作
    * @param name 

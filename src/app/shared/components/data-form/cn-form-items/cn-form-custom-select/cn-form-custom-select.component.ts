@@ -25,6 +25,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
   selectedRowItem;
   tableConfig;
   public cascadeOptions: any;
+  _changeValue:any;
 
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
@@ -32,7 +33,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
   }
 
   ngOnInit() {
-
+    this.buildChangeValue(this.config);
     // if(!this.config.layoutName){
     //   this.config.layoutName ="xjdKJcJoSqXHOnuIbWziw4yD1NQVAGWs";
     //   this.config.targetValue="tag_BAxdPtAm5Gbzipe3DFRjhbtRcysySoIrlG5C";
@@ -48,6 +49,8 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     // } else {
     //   this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE";
     // }
+
+
   }
 
 
@@ -165,7 +168,8 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
       nzComponentParams: {
         config:this. tableConfig,
         customPageId:this.config.layoutName,
-        initData:this.initData
+        initData:this.initData,
+        changeValue:this._changeValue 
       },
       nzClosable: false,
       nzOnOk: componentInstance => {
@@ -189,6 +193,11 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
 
 
   public async valueChange(v?) {
+
+    this.buildChangeValue(this.config);
+    console.log('==================================');
+    console.log(this.config.changeValue,this.formGroup.value);
+    console.log('==================================');
       console.log('自定义页面-》 值变化', v);
    // v="6IkDKuH1iXCnC5xiszniEVbbUWnOLRKm";
     if (!v) {
@@ -321,5 +330,36 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     }
     return format_v;
   }
+
+
+/** 
+ * 构造changeValue
+ * @param option 
+ */
+public buildChangeValue(option:any){
+  if (option.changeValue) {
+    const d = ParameterResolver.resolve({
+        params: option.changeValue.params,
+        tempValue: this.tempValue,
+        componentValue: this.formGroup.value,
+        item:  this.selectedRowItem,
+        initValue: this.initValue,
+        cacheValue: this.cacheValue,
+        router: this.routerValue
+    });
+    option.changeValue.params.map(param => {
+        if (param.type === 'value') {
+            // 类型为value是不需要进行任何值的解析和变化
+        } else {
+            if (d[param.name]) {
+                param['value'] = d[param.name];
+            }
+        }
+    });
+}
+
+this._changeValue =  option.changeValue ? option.changeValue.params : []
+console.log('===*****************===',option);
+}
 
 }

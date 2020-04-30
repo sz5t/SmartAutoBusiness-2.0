@@ -8,3 +8,10 @@
     border-color: #23c4af;
     border-right-width: 1px !important;
 }
+.custom-select{
+	&:empty:before{
+		content:attr(data-text);
+        color:#cccaca;
+        padding-left: 10px;
+	}
+}

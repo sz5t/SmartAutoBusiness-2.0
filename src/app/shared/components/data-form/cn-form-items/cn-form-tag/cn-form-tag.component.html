@@ -1,0 +1,19 @@
+<nz-form-item>
+        <nz-form-label [nzFor]="config.field" [nzSpan]="config.config.labelSize.span" [nzSm]="config.config.labelSize.nzSm"
+          [nzXs]="config.config.labelSize.nzXs" [nzMd]="config.config.labelSize.nzMd" [nzLg]="config.config.labelSize.nzLg"
+          [nzXl]="config.config.labelSize.nzXl" [nzRequired]="config.config.titleConfig.required">
+          {{config.config.title}}</nz-form-label>
+        <nz-form-control [nzSpan]="config.config.controlSize.span" [nzSm]="config.config.controlSize.nzSm"
+          [nzXs]="config.config.controlSize.nzXs" [nzMd]="config.config.controlSize.nzMd"
+          [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl" [formGroup]="formGroup"
+          [nzErrorTip]="" nzHasFeedback nzValidatingTip="Validating...">
+          <input nz-input [formControlName]="config.field" hidden="hidden" [(ngModel)]="value"
+            (ngModelChange)="valueChange($event)" />
+
+         
+            <div   style=" min-height: 30px;  padding:3px">
+                    <nz-tag [nzColor]="color">{{text}}</nz-tag>
+                </div>
+        </nz-form-control>
+      </nz-form-item>
+      

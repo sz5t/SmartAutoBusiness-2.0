@@ -18,12 +18,15 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
   @Output() public updateValue = new EventEmitter();
   @Input() public state;
   @Input() public initData;
+  @Input() public rowData;
+  @Input() public tempData;
 
   selectedRowItem;
   value = null;
   _value = null;
   tableConfig;
   count = 0;
+  _changeValue:any;
 
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
@@ -58,6 +61,10 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
 
     if(!this.initData){
       this.initData ={};
+    }
+
+    if(this.tempData){
+      this.tempValue ={...this.tempData};
     }
 
     // 静态数据，动态数据
@@ -200,7 +207,7 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
    * 弹出自定义选择
    */
   createCustomModal() {
-    console.log('createModal');
+    console.log('createModal', this.initData,this.rowData);
     this.initData[this.config.targetValue ? this.config.targetValue : 'tags'] = this.tags;
     this.componentService.modalService.create({
       nzWidth: this.config.customWidth? this.config.customWidth: '85%',
@@ -287,6 +294,33 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
       }
 
     }
+  }
+
+
+  public buildChangeValue(option:any){
+    if (option.changeValue) {
+      const d = ParameterResolver.resolve({
+          params: option.changeValue.params,
+          tempValue: this.tempValue,
+          componentValue: this.rowData, // 当前行
+          item:  this.selectedRowItem,
+          initValue: this.initValue,
+          cacheValue: this.cacheValue,
+          router: this.routerValue
+      });
+      option.changeValue.params.map(param => {
+          if (param.type === 'value') {
+              // 类型为value是不需要进行任何值的解析和变化
+          } else {
+              if (d[param.name]) {
+                  param['value'] = d[param.name];
+              }
+          }
+      });
+  }
+  
+  this._changeValue =  option.changeValue ? option.changeValue.params : []
+  console.log('===*****************===',option);
   }
 
 

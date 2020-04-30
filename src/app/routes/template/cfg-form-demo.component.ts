@@ -4214,7 +4214,7 @@ export class CfgFormDemoComponent implements OnInit {
                     "field": "remark15",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                     "placeholder": "请输入",
 
-                    
+                    changeValueId:"add_changeValue_liu_01",
                     labelName: 'UNITNAME',
                     valueName: 'ID',
                     layoutName:"YeWuNswtNoIUFej5TzpLyWEckmnYHMA1", // 自定义页面标识（子页面id）
@@ -4335,18 +4335,33 @@ export class CfgFormDemoComponent implements OnInit {
                   },
                   "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
                   "text": { // 文本展示字段
-                    "type": "codeEdit",
-                    "field": "remark17",  // 编辑字段于定义字段一致 （此处定义于表格相反）
-                    "mode": "text/x-sql",
-                    "autofocus": false,
-                    "readOnly": true,
-                    "placeholder": "请输入",
-                    "autosize": {
-                      minRows: 2, maxRows: 6
-                    },
-                    "validations": [  // 校验
-                      { validator: "required" }
-                    ]
+                    // "type": "codeEdit",
+                    // "field": "remark17",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    // "mode": "text/x-sql",
+                    // "autofocus": false,
+                    // "readOnly": true,
+                    // "placeholder": "请输入",
+                    // "autosize": {
+                    //   minRows: 2, maxRows: 6
+                    // },
+                    // "validations": [  // 校验
+                    //   { validator: "required" }
+                   // ]
+                      "type": "tag",
+                      "field": "remark17",
+                      "dataMapping": [
+                          {
+                              "color": "#87d068",
+                              "field": "remark17",
+                              "value": "已建模"
+                          },
+                          {
+                              "color": "#2db7f5",
+                              "field": "remark17",
+                              "value": "无"
+                          }
+                      ]
+                  
                   },
                   "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                     "type": "codeEdit",
@@ -4641,6 +4656,19 @@ export class CfgFormDemoComponent implements OnInit {
                   }
                 ]
               },
+              "changeValue": [
+                {
+                    "id": "add_changeValue_liu_01",
+                    "params": [
+                        {
+                            "name": "remark11",
+                            "type": "componentValue",
+                            "valueName": "remark11",
+                            "valueTo": "initValue"
+                        }
+                    ]
+                }
+              ],
               cascadeValue: [ // 值级联配置
                 {
                   "type": '值变化',

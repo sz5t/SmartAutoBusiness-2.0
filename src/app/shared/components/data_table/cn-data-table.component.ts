@@ -67,6 +67,7 @@ export class CnDataTableComponent extends CnComponentBase
     public config; // dataTables 的配置参数
     @Input() initData;
     @Input() tempData;
+    @Input() changeValue: any;
     @Input()
     public permissions = [];
     @Input()
@@ -160,6 +161,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public ngOnInit() {
+        this.setChangeValue(this.changeValue);
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
 
@@ -1690,6 +1692,51 @@ export class CnDataTableComponent extends CnComponentBase
                             // this.setValue(cascadeObj.cascadeName, __setValue);
 
                         }
+                        if (item.content.type === 'compute') {
+                            let __setValue;
+                            const computeObj = {};
+
+                            item.content.data['option'].forEach(ajaxItem => {
+
+                            
+                                if (ajaxItem['type'] === 'value') {
+                                    __setValue = ajaxItem['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectValue') {
+                                    // 选中行数据[这个是单值]
+                                    __setValue = v['value'];
+                                }
+                                if (ajaxItem['type'] === 'selectObjectValue') {
+                                    // 选中行对象数据
+                                    if (v.dataItem) {
+                                        __setValue = v.dataItem[ajaxItem['valueName']];
+                                    }
+                                }
+                                if (ajaxItem['type'] === 'rowValue') {
+                                    // 选中行对象数据
+                                    if (this.mapOfDataState[v.id]['data']) {
+                                        __setValue = this.mapOfDataState[v.id]['data'][ajaxItem['valueName']];
+                                    }
+                                }
+
+                                computeObj[ ajaxItem['name']] =Number( __setValue) ? Number( __setValue) : 0;
+                                // 其他取值【日后扩展部分】
+                            });
+
+                            
+                          const  _computeValue = this. L__getComputeSymbol(item.content.compute.expression[0],computeObj);
+
+
+                          cascadeResult[cascadeObj.cascadeName]['setValue'] = { value: _computeValue };
+                          cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
+                          this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
+                            // cascadeResult[cascadeObj.cascadeName]['computeSetValue'] = { value: _computeValue };
+                            // cascadeResult[cascadeObj.cascadeName]['exec'] = 'computeSetValue';
+                            // this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
+                            // 赋值
+                            // this.setValue(cascadeObj.cascadeName, __setValue);
+
+                        }
                         if (item.content.type === 'display') {
                             // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
 
@@ -1744,6 +1791,96 @@ export class CnDataTableComponent extends CnComponentBase
         }
     }
 
+    public L__getComputeSymbol(symbolObj?, computeObj?) {
+
+        let r = 0;
+        if (symbolObj.valueName === 'result') {
+
+        }
+        if (symbolObj.valueName === '*') {
+            r = 1;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    r = r * this.L_getComputeValue(_item, computeObj);
+                });
+                return r;
+            }
+            return 0;
+        }
+        if (symbolObj.valueName === '+') {
+            r = 0;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    r = r + this.L_getComputeValue(_item, computeObj);
+                });
+
+            }
+            return r;
+        }
+        if (symbolObj.valueName === '-') {
+            r = 0;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    r = r - this.L_getComputeValue(_item, computeObj);
+                });
+                r = r+ this.L_getComputeValue(symbolObj.children[0], computeObj);
+
+            }
+            return r;
+        }
+        if (symbolObj.valueName === '/') {
+            // 
+            r = 0;
+            if (symbolObj.children) {
+                r = r+ this.L_getComputeValue(symbolObj.children[0], computeObj);
+                for(let i=1;i<symbolObj.children.length;i++ ){
+                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                    if(comput_value ===0){
+                        return 0;
+                    }
+                    r = r/comput_value;
+                }
+            }
+            return r;
+        }
+
+        return r;
+
+    }
+
+    public L_getComputeValue(item?, computeObj?) {
+
+        if (item.type === 'symbol') {
+            return   this.L__getComputeSymbol(item, computeObj);
+        }
+        if (item.type === 'value') {
+            return computeObj[item.valueName] ? computeObj[item.valueName] : 0;
+        }
+    }
+  /**
+   * setChangeValue 接受 初始变量值
+   */
+  public setChangeValue(ChangeValues?) {
+    console.log('changeValue', ChangeValues);
+    // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+    if (ChangeValues && ChangeValues.length > 0) {
+      ChangeValues.forEach(p => {
+        switch (p.valueTo) {
+          case 'tempValue':
+            this.tempValue[p.name] = p.value;
+            break;
+          case 'initValue':
+            this.initValue[p.name] = p.value;
+            break;
+          case 'staticComponentValue':
+            this.staticComponentValue[p.name] = p.value;
+            break;
+
+        }
+      });
+    }
+
+  }
 
 
 }

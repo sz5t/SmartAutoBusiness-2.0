@@ -8,6 +8,6 @@
     [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl" [formGroup]="formGroup">
     <input nz-input [formControlName]="config.field" hidden="hidden" [(ngModel)]="value"
       (ngModelChange)="valueChange($event)" />
-    <cn-static-table #table [config]="tableConfig" (updateValue)="valueChangeTable($event)"></cn-static-table>
+    <cn-static-table #table [config]="tableConfig"   [changeValue]= "_changeValue"  (updateValue)="valueChangeTable($event)"></cn-static-table>
   </nz-form-control>
 </nz-form-item>
