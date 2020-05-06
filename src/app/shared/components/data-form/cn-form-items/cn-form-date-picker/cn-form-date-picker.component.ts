@@ -46,6 +46,9 @@ export class CnFormDatePickerComponent implements OnInit {
         this.value = bc;
       }
     }
+    else{
+      this.value =null;
+    }
 
   }
 

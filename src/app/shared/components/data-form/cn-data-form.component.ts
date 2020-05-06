@@ -656,6 +656,12 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                   // 选中行数据[这个是单值]
                   _cascadeValue[ajaxItem['name']] = v['value'];
                 }
+                if (ajaxItem['type'] === 'rowValue') {
+                  // 选中行对象数据
+                  if (this.validateForm.value) {
+                    _cascadeValue[ajaxItem['name']]  = this.validateForm.value[ajaxItem['valueName']];
+                  }
+               }
                 if (ajaxItem['type'] === 'selectObjectValue') {
                   // 选中行对象数据
                   if (v.dataItem) {
