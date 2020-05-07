@@ -1,0 +1,66 @@
+<p>cn-upload works!</p>
+<nz-card nzTitle="附件">
+    <nz-upload [(nzFileList)]="fileList" nzType="drag" [nzMultiple]="true" [nzBeforeUpload]="beforeUpload">
+        <p class="ant-upload-drag-icon">
+            <i nz-icon nzType="inbox"></i>
+        </p>
+        <p class="ant-upload-text">请将文件【拖拽】至此或【单击】此区域添加文件</p>
+        <p class="ant-upload-hint">
+            支持单次或批量上传
+        </p>
+    </nz-upload>
+    <nz-card nzTitle="附件描述">
+        <form nz-form>
+            <div nz-row [nzGutter]="12" >
+                <div nz-col [nzSpan]="12">
+                        <nz-form-item >
+                                <nz-form-label [nzSpan]="6" nzFor="email">密级</nz-form-label>
+                                <nz-form-control [nzSpan]="12">
+                                    <input nz-input name="email" type="email" id="email">
+                                </nz-form-control>
+                            </nz-form-item>
+                          
+                </div>
+                <div nz-col [nzSpan]="12">
+                        <nz-form-item>
+                                <nz-form-label [nzSpan]="6" nzFor="email">编码</nz-form-label>
+                                <nz-form-control [nzSpan]="12">
+                                    <input nz-input name="email" type="email" id="email">
+                                </nz-form-control>
+                            </nz-form-item>
+                </div>
+            </div>
+    
+        </form>
+    </nz-card>
+
+    <button nz-button [nzType]="'primary'" [nzLoading]="uploading" (click)="handleUpload()" [disabled]="fileList.length == 0"
+        style="margin-top: 16px">
+        {{ uploading ? 'Uploading' : '上传' }}
+    </button>
+
+
+
+    <nz-table #basicTable [nzData]="listOfData">
+        <thead>
+            <tr>
+                <th>附件名称</th>
+                <th>密级</th>
+                <th>备注</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{ data.name }}</td>
+                <td>{{ data.age }}</td>
+                <td>{{ data.address }}</td>
+                <td>
+                    <a>查看</a>
+                    <nz-divider nzType="vertical"></nz-divider>
+                    <a>删除</a>
+                </td>
+            </tr>
+        </tbody>
+    </nz-table>
+</nz-card>

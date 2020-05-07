@@ -282,9 +282,12 @@ export class CnTreeComponent extends CnComponentBase
     }
 
     private _setTreeNode(node) {
+        this.config.columns.map(column => {
+            node[column['type']] = node[column['field']];
+        });
         this.mapOfDataState[node[this.KEY_ID]] = {
             disabled: false,
-            checked: false, // index === 0 ? true : false,
+            checked: node['checked']? node['checked']:false, // index === 0 ? true : false,
             selected: false, // index === 0 ? true : false,
             state: 'text',
             data: node,
@@ -292,9 +295,7 @@ export class CnTreeComponent extends CnComponentBase
             // validation: true,
             // actions: this.getRowActions('text')
         };
-        this.config.columns.map(column => {
-            node[column['type']] = node[column['field']];
-        });
+ 
 
 
         if (node.children && node.children.length > 0) {

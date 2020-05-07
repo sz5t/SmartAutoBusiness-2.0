@@ -123,6 +123,7 @@ import { CnDynamicPageHeaderComponent } from './components/layout/cn-dynamic-pag
 import { CnFormGroupComponent } from './components/data-form/cn-form-items/cn-form-group/cn-form-group.component';
 import { CnTagComponent } from './components/cn-tag/cn-tag.component';
 import { CnFormTagComponent } from './components/data-form/cn-form-items/cn-form-tag/cn-form-tag.component';
+import { CnUploadComponent } from './components/cn-upload/cn-upload.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -242,6 +243,7 @@ const COMPONENTS = [
   CnFormGroupComponent,
   CnTagComponent,
   CnFormTagComponent,
+  CnUploadComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -276,6 +278,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
+
 
 
   ],
