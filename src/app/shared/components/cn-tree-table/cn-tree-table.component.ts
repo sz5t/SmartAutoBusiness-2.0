@@ -1666,7 +1666,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 {
                     label: dialogCfg.okText ? dialogCfg.okText : 'OK',
                     onClick: componentInstance => {
-                        (async () => {
+                        dialog.close();
+                       /*  (async () => {
                             const response = await componentInstance.executeModal(option);
                             this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1675,7 +1676,7 @@ export class CnTreeTableComponent extends CnComponentBase
                                 &&
                                 this._sendDataErrorMessage(response, option.ajaxConfig.result)
                                 && dialog.close();
-                        })();
+                        })(); */
                     }
                 }
             ]
