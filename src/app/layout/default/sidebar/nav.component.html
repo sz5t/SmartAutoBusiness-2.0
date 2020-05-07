@@ -115,9 +115,12 @@
   <ng-template #menuTemplate let-menus>
     <ng-container *ngFor="let menu of menus">
       <li nz-submenu nz-popover *ngIf="menu.status === 2" [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="right" [nzTitle]="titleTemplate" [nzPopoverTitle]="false" [nzIcon]="menu.icon.value">
+        nzPopoverPlacement="right" [nzTitle]="titleTemplate" [nzPopoverTitle]="titleTemplate2" [nzIcon]="menu.icon.value">
         <ng-template #titleTemplate>
           <span style="font-size:14px;">{{menu.text}}</span>
+        </ng-template>
+        <ng-template #titleTemplate2>
+          <span style="font-size:14px;"></span>
         </ng-template>
         <ng-template #contentTemplate>
           <div nz-row [nzGutter]="16">

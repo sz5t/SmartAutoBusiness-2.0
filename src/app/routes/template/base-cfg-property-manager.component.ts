@@ -120,7 +120,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                         },
                                         {
                                             "prefix": "code",
-                                            "field": "P_COUNT",
+                                            "field": "TITLE",
                                             "fieldValue": "属性总数"
                                         }
                                     ],
