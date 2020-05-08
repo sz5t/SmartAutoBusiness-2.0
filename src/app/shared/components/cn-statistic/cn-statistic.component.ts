@@ -171,14 +171,17 @@ export class CnStatisticComponent extends CnComponentBase implements OnInit, OnD
     private _stepsDataMappingResolve(data) {
         this.itemData = [];
         data.forEach(res => {
-            const dataItem = {};
+            let dataItem;
             if (this.config.dataMapping && this.config.dataMapping.length > 0) {
+                dataItem = res;
                 this.config.dataMapping.forEach((d, index) => {
                     if (res[d['field']]) {
                         this._itemPerfixResolve(res, dataItem);
                         this._itemSuffixResolve(res, dataItem);
-                        dataItem[d['name']] = res[d['field']];
-
+                        this._itemStyleResolve(res, dataItem);
+                        this._itemTypeResolve(res, dataItem);
+                        this._itemTitleResolve(res, dataItem);
+                        this._itemValueResolve(res, dataItem);
                     }
                 })
             }
@@ -186,8 +189,32 @@ export class CnStatisticComponent extends CnComponentBase implements OnInit, OnD
         });
     }
 
-    private _itemStyleResolve() {
+    private _itemValueResolve(data, dataItem) {
+        const mappingObj = this.config.dataMapping.filter(d => d.name === 'title');
+        if(mappingObj && mappingObj.length > 0) {
+            dataItem['title'] = data[mappingObj[0]['field']];
+        }
+    }
 
+    private _itemTitleResolve(data, dataItem) {
+        const mappingObj = this.config.dataMapping.filter(d => d.name === 'value');
+        if(mappingObj && mappingObj.length > 0) {
+            dataItem['value'] = data[mappingObj[0]['field']];
+        }
+    }
+
+    private _itemStyleResolve(data, dataItem) {
+        const mappingObj = this.config.dataMapping.filter(d => d.name === 'style');
+        if(mappingObj && mappingObj.length > 0) {
+            dataItem['style'] = {color: data[mappingObj[0]['field']]};
+        }
+    }
+
+    private _itemTypeResolve(data, dataItem) {
+        const mappingObj = this.config.dataMapping.filter(d => d.name === 'type');
+        if(mappingObj && mappingObj.length > 0) {
+            dataItem['type'] = data[mappingObj[0]['field']];
+        }
     }
 
     private _itemSuffixResolve(data, dataItem) {

@@ -6,12 +6,12 @@ import { Component, Input, OnInit, Output, EventEmitter, Inject, TemplateRef, Vi
     templateUrl: './cn-layout.component.html',
     styles: [
         `
-        .ant-card {
-            margin-bottom: 2px;
-        }
-        .ant-card-body {
-            padding: 6px;
-        }
+        // .ant-card {
+        //     margin-bottom: 2px;
+        // }
+        // .ant-card-body {
+        //     padding: 6px;
+        // }
         [nz-col] {
             padding-right: 0px;
         }

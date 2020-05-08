@@ -1,17 +1,20 @@
 <!-- <div style="background: #e1e1e1; padding: 15px;"></div> -->
-<nz-row [nzGutter]="config.gutter ? config.gutter : 16">
+<nz-row [nzGutter]="config.gutter ? config.gutter : 8">
   <nz-col *ngFor="let item of itemData" [nzSpan]="config.span ? config.span : 24">
-    <nz-alert nzType="info" [nzDescription]="descTmpl">
+    <nz-alert [nzType]="item.type ? item.type : 'info'" [nzDescription]="descTmpl">
 
     </nz-alert>
     <ng-template #descTmpl>
-      <nz-statistic [nzValue]="item.value" [nzTitle]="item.title" [nzPrefix]="perfixTmpl" [nzSuffix]="suffixTmpl"
-        [nzValueStyle]="item.style"></nz-statistic>
+      <nz-statistic [nzValue]="item.value ? item.value : 0" [nzTitle]="title" [nzPrefix]="perfixTmpl" [nzSuffix]="suffixTmpl"
+        [nzValueStyle]="item.style ? item.style : {}"></nz-statistic>
       <ng-template #perfixTmpl>
         <i style="font-size: 24px" nz-icon [nzType]="item.prefix? item.prefix : ''"></i>
       </ng-template>
       <ng-template #suffixTmpl>
         {{item.suffix ? item.suffix : ''}}
+      </ng-template>
+      <ng-template #title>
+        <nz-badge [nzStatus]="item.type ? item.type : 'processing'"></nz-badge><span style="font-size:16px">{{item.title}}</span> 
       </ng-template>
     </ng-template>
   </nz-col>
