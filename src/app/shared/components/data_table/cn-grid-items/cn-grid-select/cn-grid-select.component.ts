@@ -15,6 +15,9 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
   @Input() public valueConfig;
   @Output() public updateValue = new EventEmitter();
   @Input() public state;
+  @Input() public initData;
+  @Input() public rowData;
+  @Input() public tempData;
   public selectedValue;
   public selectOptions = [];
   public selectItems = [];
@@ -24,13 +27,24 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
+    this.initValue ={};
+    this.tempValue ={};
   }
 
   ngOnInit() {
     // console.log('select 初始化ngOnInit=>当前表单的值',this.formGroup.value , this.config);
     // console.log('select required',this.myControl);
 
-
+    if (this.initData) {
+      this.initValue =this.tempData;
+    } else {
+      this.initValue = {};
+    }
+    if (this.tempData) {
+      this.tempValue = this.tempData;
+    } else {
+      this.tempValue = {};
+    }
 
   }
 

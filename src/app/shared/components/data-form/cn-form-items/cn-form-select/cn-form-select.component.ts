@@ -16,6 +16,8 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit, Af
 
   @Input() public config;
   @Input() formGroup: FormGroup;
+  @Input() tempData;
+  @Input() initData;
   @Output() public updateValue = new EventEmitter();
   public selectedValue;
   public selectOptions = [];
@@ -27,9 +29,21 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit, Af
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
+    this.initValue = {};
+    this.tempValue = {};
   }
 
   ngOnInit() {
+    if (this.initData) {
+      this.initValue = this.initData;
+    } else {
+      this.initValue = {};
+    }
+    if (this.tempData) {
+      this.tempValue = this.tempData;
+    } else {
+      this.tempValue = {};
+    }
     // console.log('select 初始化ngOnInit=>当前表单的值',this.formGroup.value , this.config);
     this.myControl = this.formGroup.get(this.config.field);
     // console.log('select required',this.myControl);

@@ -133,6 +133,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
     // 作为子组件时变量
     public selectedRowValue;
+    public _dataList = [];
 
     private _selectedRow;
     private _rowsData;
@@ -410,7 +411,8 @@ export class CnStaticTableComponent extends CnComponentBase
 
             });
             setTimeout(() => {
-                this.dataList = data;
+                this._dataList = data;
+                this.dataList = this._dataList.filter(item => item['state'] !== 'delete');
             })
             this.ROWS_EDITED = [...data];
             this.total = data.length;
@@ -429,6 +431,84 @@ export class CnStaticTableComponent extends CnComponentBase
         // console.log('计算统计值',this.tempValue,this.dataList);
 
     }
+
+
+
+
+    // #region state Liu 扫码的后续响应
+    //  liu 判断数据存在不
+    //  数据列值计算
+    //  选中数据（注意页的切换） locateRow
+    //  静态数据的添加 构成（当前只以传入为主，位置自定义，前后）定位到数据所在的页
+    // liu 扫码加载
+    public scanCodeLoad() {
+        // const index = this.dataList.findIndex(item => item[code] === codeValue);
+        const index = this.dataList.length - 1;
+        if (index !== -1) {
+            // const rowValue = this.loadData.rows[index]['key'];
+            this.pageIndex = Math.ceil((index + 1) / this.pageSize);
+            //  this.load();
+            //  this.scanCodeSetSelectRow(rowValue);
+            // 如果有操作，再选中行后执行
+        } else {
+            console.log('当前扫码未能匹配到数据！');
+        }
+
+    }
+
+    // 是否存在当前行数据
+    public custom_exist(){
+
+    }
+
+    // 前置条件成组出现，当满足某条件后有响应
+
+    /**
+     * 行定位 , 定位只当前页面，当前数据选中状态，后续操作，执行事件，或者运算
+     */
+    public scanCode_locateRow() {
+        // 定义映射字段，哪些字段相等则条件满足
+        // 条件定义  A > B  结构如下 取名：  regular  rule
+        const rule =
+        {
+            condition: [
+                {
+                    type: "symbol",  
+                    valueName: ">",  // 目前支持  && 、||、  >、 <、 >=、 <=、  ===、  !==、  isnull    /
+                    children: [
+                        {
+                            type: "value",
+                            valueName: "A"
+                        },
+                        {
+                            type: "value",
+                            valueName: "B"
+                        }
+                    ]
+                }
+            ],
+            data: {                                    // 设置级联参数
+                option: [
+                    {
+                        "name": "A",
+                        "type": "rowValue",  // 表格行内 多一个类型 rowValue 当前行数据，表单内是当前表单数据
+                        "valueName": "name"
+                    },
+                    {
+                        "name": "B",
+                        "type": "rowValue",  // 表格行内 多一个类型 rowValue
+                        "valueName": "name"
+                    }
+                ]
+            }
+        };
+
+
+
+
+    }
+
+    // #endregion
 
     public load() {
         this.isLoading = true;
@@ -485,20 +565,20 @@ export class CnStaticTableComponent extends CnComponentBase
         });
     }
 
-    public loadRefreshData(option) {
+    public loadRefreshData(Option) {
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
         // 返回结果解析id参数,构建ids
         const param1: any = {};
-        if (option && Array.isArray(option)) {
+        if (Option && Array.isArray(Option)) {
             const rids = [];
-            option.map(opt => {
+            Option.map(opt => {
                 rids.push(opt[this.KEY_ID]);
             })
             param1['id'] = `in(${rids.join(',')})`;
-        } else if (option) {
-            param1['id'] = `in(${option[this.KEY_ID]})`
+        } else if (Option) {
+            param1['id'] = `in(${Option[this.KEY_ID]})`
         }
 
         // 页面其他参数
@@ -639,6 +719,8 @@ export class CnStaticTableComponent extends CnComponentBase
     }
     // #endregion
 
+
+
     // #region state 状态切换
     private createNewRowData() {
         // 创建数据原型,并且初始化对象状态为 new;
@@ -685,6 +767,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
+        this.scanCodeLoad();
 
         console.log('+++++++++++新增行后的数据+++++++++++', this.dataList, this.mapOfDataState);
         // 更新状态
@@ -758,9 +841,15 @@ export class CnStaticTableComponent extends CnComponentBase
 
         }
 
-        // 重新计算数据总数
-        this.total = this.dataList.length;
+        // 200512 重新计算数据总数
+        // 
+        if (this.mapOfDataState.hasOwnProperty(item[this.KEY_ID])) {
+            delete this.mapOfDataState[item[this.KEY_ID]];
+        }
 
+        this.total = this.dataList.length;
+        this.L_columnSummary();
+        this.updateValue_dataList();
     }
 
     public cancelEditRows(option) {
@@ -793,9 +882,15 @@ export class CnStaticTableComponent extends CnComponentBase
                     rItem['$state$'] = "delete";
                     // rItem['state'] = "delete";
                 }
+
+                // liu 200512 删除数据
+                this.dataList = this.dataList.filter(r => r[this.KEY_ID] !== itemId);
+                this.total = this.dataList.length;
             }
         }
 
+        this.L_columnSummary();
+        this.updateValue_dataList();
         console.log('-------------', this.ROWS_ADDED, this.ROWS_EDITED)
         // 调用方法之前,判断传递的验证配置,解析后是否能够继续进行后续操作
         // return true 表示通过验证, return false 表示未通过,无法继续后续操作
@@ -1518,10 +1613,32 @@ export class CnStaticTableComponent extends CnComponentBase
         const orginAction = this.tableColumns.find(c => c.type === 'action');
         const copyAction = [];
         if (orginAction) {
-            const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => c.state === state)));
+            const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => {
+
+                const isHideen = this.Actions_toggle(c, state);
+                return isHideen;
+            })));
             copyAction.push(...actions);
         }
         return copyAction;
+    }
+
+    Actions_toggle(btn?, state?) {
+        if (btn.toggle && btn.toggle.type) {
+            switch (btn.toggle.type) {
+                case 'state':
+                    if (btn.toggle.values) {
+                        const valueObj = btn.toggle.values.find(val => val.name === state);
+                        if (valueObj)
+                            return !valueObj.value
+                    }
+
+                    break;
+                case '...':
+                    break;
+            }
+        }
+        return false;
     }
 
 
@@ -1531,7 +1648,7 @@ export class CnStaticTableComponent extends CnComponentBase
      * @param v {id, name, value, count}
      */
     public valueChange(v?) {
-        console.log('行返回', v);
+        console.log('行返回', v, this._dataList, this.mapOfDataState);
         this.mapOfDataState[v.id]['data'][v.name] = v.value;
         if (v['id']) {
             if (!this.formCascade[v['id']]) {
@@ -1560,162 +1677,195 @@ export class CnStaticTableComponent extends CnComponentBase
                     const cascadeResult = this.formCascade[v['id']][cascadeObj.cascadeName];  // 单个应答对象
                     cascadeResult[cascadeObj.cascadeName] = {};
                     cascadeObj.cascadeItems.forEach(item => {
-
-                        // 满足前置条件、或者 类型是default
-                        if (item.content.type === 'ajax') {
-
-                            const _cascadeValue = {};
-                            item.content.data['option'].forEach(ajaxItem => {
-                                if (ajaxItem['type'] === 'value') {
-                                    _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                        let regularflag = true;
+                        if (item.caseValue && item.type === "condition") {
+                            const reg1 = new RegExp(item.caseValue.regular);
+                            let regularData;
+                            if (item.caseValue.type) {
+                                if (item.caseValue.type === 'value') {
+                                    regularData = item.caseValue['value'];
                                 }
-                                if (ajaxItem['type'] === 'selectValue') {
+                                if (item.caseValue.type === 'selectValue') {
                                     // 选中行数据[这个是单值]
-                                    _cascadeValue[ajaxItem['name']] = v['value'];
+                                    regularData = v['value'];
                                 }
-                                if (ajaxItem['type'] === 'selectObjectValue') {
+                                if (item.caseValue.type === 'selectObjectValue') {
                                     // 选中行对象数据
                                     if (v.dataItem) {
-                                        _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                                        regularData = v.dataItem[item.caseValue['valueName']];
                                     }
                                 }
-                                // 其他取值【日后扩展部分】
-                            });
-                            if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeValue')) {
-                                cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ...cascadeResult[cascadeObj.cascadeName]['cascadeValue'], ..._cascadeValue };
-                            } else {
-                                cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ..._cascadeValue };
-                            }
-                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'ajax';
-                            // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
-                        }
-                        if (item.content.type === 'setOptions') {
-                            // 小组件静态数据集 , 目前静态数据，支持 多字段
-                            const _cascadeOptions = item.content.data['option'];
-
-                            if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeOptions')) {
-                                cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
-                            } else {
-                                cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
-                            }
-                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'setOptions';
-                            // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
-                        }
-                        if (item.content.type === 'setValue') {
-                            let __setValue;
-                            item.content.data['option'].forEach(ajaxItem => {
-                                if (ajaxItem['type'] === 'value') {
-                                    __setValue = ajaxItem['value'];
-                                }
-                                if (ajaxItem['type'] === 'selectValue') {
-                                    // 选中行数据[这个是单值]
-                                    __setValue = v['value'];
-                                }
-                                if (ajaxItem['type'] === 'selectObjectValue') {
-                                    // 选中行对象数据
-                                    if (v.dataItem) {
-                                        __setValue = v.dataItem[ajaxItem['valueName']];
-                                    }
-                                }
-                                // 其他取值【日后扩展部分】
-                            });
-
-                            cascadeResult[cascadeObj.cascadeName]['setValue'] = { value: __setValue };
-                            cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
-                            this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = __setValue;
-                            // 赋值
-                            // this.setValue(cascadeObj.cascadeName, __setValue);
-
-                        }
-                        if (item.content.type === 'compute') {
-                            let __setValue;
-                            const computeObj = {};
-
-                            item.content.data['option'].forEach(ajaxItem => {
-
-                            
-                                if (ajaxItem['type'] === 'value') {
-                                    __setValue = ajaxItem['value'];
-                                }
-                                if (ajaxItem['type'] === 'selectValue') {
-                                    // 选中行数据[这个是单值]
-                                    __setValue = v['value'];
-                                }
-                                if (ajaxItem['type'] === 'selectObjectValue') {
-                                    // 选中行对象数据
-                                    if (v.dataItem) {
-                                        __setValue = v.dataItem[ajaxItem['valueName']];
-                                    }
-                                }
-                                if (ajaxItem['type'] === 'rowValue') {
+                                if (item.caseValue['type'] === 'rowValue') {
                                     // 选中行对象数据
                                     if (this.mapOfDataState[v.id]['data']) {
-                                        __setValue = this.mapOfDataState[v.id]['data'][ajaxItem['valueName']];
+                                        regularData = this.mapOfDataState[v.id]['data'][item.caseValue['valueName']];
                                     }
                                 }
 
-                                computeObj[ ajaxItem['name']] =Number( __setValue) ? Number( __setValue) : 0;
-                                // 其他取值【日后扩展部分】
-                            });
-
-                            
-                          const  _computeValue = this. L__getComputeSymbol(item.content.compute.expression[0],computeObj);
-
-
-                          cascadeResult[cascadeObj.cascadeName]['setValue'] = { value: _computeValue };
-                          cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
-                          this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
-                            // cascadeResult[cascadeObj.cascadeName]['computeSetValue'] = { value: _computeValue };
-                            // cascadeResult[cascadeObj.cascadeName]['exec'] = 'computeSetValue';
-                            // this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
-                            // 赋值
-                            // this.setValue(cascadeObj.cascadeName, __setValue);
-
-                        }
-                        if (item.content.type === 'display') {
-                            // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
-
-                        }
-                        if (item.content.type === 'message') {
-                            // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
-
-                        }
-                        if (item.content.type === 'relation') {
-                            // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构
-                            // 提供 消息配置名称，发送参数组合
-                            const _cascadeValue = {};
-                            item.content.data['option'].forEach(ajaxItem => {
-                                if (ajaxItem['type'] === 'value') {
-                                    _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
-                                }
-                                if (ajaxItem['type'] === 'selectValue') {
-                                    // 选中行数据[这个是单值]
-                                    _cascadeValue[ajaxItem['name']] = v['value'];
-                                }
-                                if (ajaxItem['type'] === 'selectObjectValue') {
-                                    // 选中行对象数据
-                                    if (v.dataItem) {
-                                        _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
-                                    }
-                                }
-                                // 其他取值【日后扩展部分】
-                            });
-
-                            if (item.content.sender) {
-                                new RelationResolver(this)
-                                    .resolveInnerSender(
-                                        item.content.sender, // 消息泪痣
-                                        _cascadeValue, // 消息数据
-                                        Array.isArray(_cascadeValue) // 是否数组
-                                    );
+                            } else {
+                                regularData = v['value'];
                             }
-
-
+                            regularflag = reg1.test(regularData);
                         }
-                        if (item.content.type === 'preventCascade') {
+                        if (regularflag) {
 
-                            // 【大招】 某条件下，将级联阻止
 
+                            // 满足前置条件、或者 类型是default
+                            if (item.content.type === 'ajax') {
+
+                                const _cascadeValue = {};
+                                item.content.data['option'].forEach(ajaxItem => {
+                                    if (ajaxItem['type'] === 'value') {
+                                        _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                                    }
+                                    if (ajaxItem['type'] === 'selectValue') {
+                                        // 选中行数据[这个是单值]
+                                        _cascadeValue[ajaxItem['name']] = v['value'];
+                                    }
+                                    if (ajaxItem['type'] === 'selectObjectValue') {
+                                        // 选中行对象数据
+                                        if (v.dataItem) {
+                                            _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                                        }
+                                    }
+                                    // 其他取值【日后扩展部分】
+                                });
+                                if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeValue')) {
+                                    cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ...cascadeResult[cascadeObj.cascadeName]['cascadeValue'], ..._cascadeValue };
+                                } else {
+                                    cascadeResult[cascadeObj.cascadeName]['cascadeValue'] = { ..._cascadeValue };
+                                }
+                                cascadeResult[cascadeObj.cascadeName]['exec'] = 'ajax';
+                                // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+                            }
+                            if (item.content.type === 'setOptions') {
+                                // 小组件静态数据集 , 目前静态数据，支持 多字段
+                                const _cascadeOptions = item.content.data['option'];
+
+                                if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeOptions')) {
+                                    cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
+                                } else {
+                                    cascadeResult[cascadeObj.cascadeName]['cascadeOptions'] = _cascadeOptions;
+                                }
+                                cascadeResult[cascadeObj.cascadeName]['exec'] = 'setOptions';
+                                // this.setValue(cascadeObj.cascadeName, null); // 异步执行前，将组件值置空
+                            }
+                            if (item.content.type === 'setValue') {
+                                let __setValue;
+                                item.content.data['option'].forEach(ajaxItem => {
+                                    if (ajaxItem['type'] === 'value') {
+                                        __setValue = ajaxItem['value'];
+                                    }
+                                    if (ajaxItem['type'] === 'selectValue') {
+                                        // 选中行数据[这个是单值]
+                                        __setValue = v['value'];
+                                    }
+                                    if (ajaxItem['type'] === 'selectObjectValue') {
+                                        // 选中行对象数据
+                                        if (v.dataItem) {
+                                            __setValue = v.dataItem[ajaxItem['valueName']];
+                                        }
+                                    }
+                                    // 其他取值【日后扩展部分】
+                                });
+
+                                cascadeResult[cascadeObj.cascadeName]['setValue'] = { value: __setValue };
+                                cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
+                                this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = __setValue;
+                                // 赋值
+                                // this.setValue(cascadeObj.cascadeName, __setValue);
+
+                            }
+                            if (item.content.type === 'compute') {
+                                let __setValue;
+                                const computeObj = {};
+
+                                item.content.data['option'].forEach(ajaxItem => {
+
+
+                                    if (ajaxItem['type'] === 'value') {
+                                        __setValue = ajaxItem['value'];
+                                    }
+                                    if (ajaxItem['type'] === 'selectValue') {
+                                        // 选中行数据[这个是单值]
+                                        __setValue = v['value'];
+                                    }
+                                    if (ajaxItem['type'] === 'selectObjectValue') {
+                                        // 选中行对象数据
+                                        if (v.dataItem) {
+                                            __setValue = v.dataItem[ajaxItem['valueName']];
+                                        }
+                                    }
+                                    if (ajaxItem['type'] === 'rowValue') {
+                                        // 选中行对象数据
+                                        if (this.mapOfDataState[v.id]['data']) {
+                                            __setValue = this.mapOfDataState[v.id]['data'][ajaxItem['valueName']];
+                                        }
+                                    }
+
+                                    computeObj[ajaxItem['name']] = Number(__setValue) ? Number(__setValue) : 0;
+                                    // 其他取值【日后扩展部分】
+                                });
+
+
+                                const _computeValue = this.L__getComputeSymbol(item.content.compute.expression[0], computeObj);
+
+
+                                cascadeResult[cascadeObj.cascadeName]['setValue'] = { value: _computeValue };
+                                cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
+                                this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
+                                // cascadeResult[cascadeObj.cascadeName]['computeSetValue'] = { value: _computeValue };
+                                // cascadeResult[cascadeObj.cascadeName]['exec'] = 'computeSetValue';
+                                // this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = _computeValue;
+                                // 赋值
+                                // this.setValue(cascadeObj.cascadeName, __setValue);
+
+                            }
+                            if (item.content.type === 'display') {
+                                // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
+
+                            }
+                            if (item.content.type === 'message') {
+                                // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
+
+                            }
+                            if (item.content.type === 'relation') {
+                                // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构
+                                // 提供 消息配置名称，发送参数组合
+                                const _cascadeValue = {};
+                                item.content.data['option'].forEach(ajaxItem => {
+                                    if (ajaxItem['type'] === 'value') {
+                                        _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                                    }
+                                    if (ajaxItem['type'] === 'selectValue') {
+                                        // 选中行数据[这个是单值]
+                                        _cascadeValue[ajaxItem['name']] = v['value'];
+                                    }
+                                    if (ajaxItem['type'] === 'selectObjectValue') {
+                                        // 选中行对象数据
+                                        if (v.dataItem) {
+                                            _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                                        }
+                                    }
+                                    // 其他取值【日后扩展部分】
+                                });
+
+                                if (item.content.sender) {
+                                    new RelationResolver(this)
+                                        .resolveInnerSender(
+                                            item.content.sender, // 消息泪痣
+                                            _cascadeValue, // 消息数据
+                                            Array.isArray(_cascadeValue) // 是否数组
+                                        );
+                                }
+
+
+                            }
+                            if (item.content.type === 'preventCascade') {
+
+                                // 【大招】 某条件下，将级联阻止
+
+                            }
                         }
                     });
                     this.formCascade[v['id']][cascadeObj.cascadeName] = JSON.parse(JSON.stringify(this.formCascade[v['id']][cascadeObj.cascadeName]));
@@ -1725,8 +1875,28 @@ export class CnStaticTableComponent extends CnComponentBase
             }
         }
         this.columnSummary(v);
-        this.updateValue.emit(this.dataList);
 
+        this.updateValue_dataList('feild');
+    }
+
+    // liu 200512 计算出反馈数据（以及序号变化后更改序号）
+    public updateValue_dataList(type?) {
+        if (type !== 'feild') {
+            this.dataList.forEach((item, index) => {
+                // item['_index'] = index+1;
+                this.mapOfDataState[item[this.KEY_ID]]['data']['_index'] = index + 1;
+                this.mapOfDataState[item[this.KEY_ID]]['originData']['_index'] = index + 1;
+            });
+            this.dataList = this.dataList.filter(item => item['state'] !== 'delete');
+        }
+        const list = [];
+        // tslint:disable-next-line:forin
+        for (const mv in this.mapOfDataState) {
+            list.push(this.mapOfDataState[mv]['data']);
+        }
+        this._dataList = list;
+        console.log('序号变化', this.dataList, this.mapOfDataState);
+        this.updateValue.emit(list);
     }
 
 
@@ -1736,63 +1906,78 @@ export class CnStaticTableComponent extends CnComponentBase
 
         let r = 0;
         if (symbolObj.valueName === 'result') {
-
+    
         }
         if (symbolObj.valueName === '*') {
-            r = 1;
-            if (symbolObj.children) {
-                symbolObj.children.forEach(_item => {
-                    r = r * this.L_getComputeValue(_item, computeObj);
-                });
-                return r;
-            }
-            return 0;
+          r = 1;
+          if (symbolObj.children) {
+            symbolObj.children.forEach(_item => {
+              // r = r * this.L_getComputeValue(_item, computeObj);
+              r =  parseFloat(( r * this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
+            });
+            return r;
+          }
+          return 0;
         }
         if (symbolObj.valueName === '+') {
-            r = 0;
-            if (symbolObj.children) {
-                symbolObj.children.forEach(_item => {
-                    r = r + this.L_getComputeValue(_item, computeObj);
-                });
-
-            }
-            return r;
+          r = 0;
+          if (symbolObj.children) {
+            symbolObj.children.forEach(_item => {
+             // r = r + this.L_getComputeValue(_item, computeObj);
+              r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
+            });
+    
+          }
+          return r;
         }
         if (symbolObj.valueName === '-') {
-            r = 0;
-            if (symbolObj.children) {
-                symbolObj.children.forEach(_item => {
-                    r = r - this.L_getComputeValue(_item, computeObj);
-                });
-                r = r+ this.L_getComputeValue(symbolObj.children[0], computeObj);
-
+          // r = 0;
+          // if (symbolObj.children) {
+          //     symbolObj.children.forEach(_item => {
+          //         r = r - this.L_getComputeValue(_item, computeObj);
+          //     });
+          //     r = r+ 2* this.L_getComputeValue(symbolObj.children[0], computeObj);
+    
+          // }
+          // return r;
+          r = 0;
+          if (symbolObj.children) {
+            r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
+            for (let i = 1; i < symbolObj.children.length; i++) {
+              const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+            //  r = r - comput_value;
+              r =  parseFloat((r - comput_value).toFixed(10)); 
             }
-            return r;
+          }
+          return r;
         }
         if (symbolObj.valueName === '/') {
-            // 
-            r = 0;
-            if (symbolObj.children) {
-                r = r+ this.L_getComputeValue(symbolObj.children[0], computeObj);
-                for(let i=1;i<symbolObj.children.length;i++ ){
-                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
-                    if(comput_value ===0){
-                        return 0;
-                    }
-                    r = r/comput_value;
-                }
+          // 
+          r = 0.0;
+          if (symbolObj.children) {
+            r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
+            for (let i = 1; i < symbolObj.children.length; i++) {
+              const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+              if (comput_value === 0) {
+                return 0;
+              }
+            //  r = r / comput_value;
+              r =  parseFloat((r / comput_value).toFixed(10)); 
             }
-            return r;
+          }
+         // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
+    
+          return r;
         }
-
+    
         return r;
-
-    }
+    
+      }
 
     public L_getComputeValue(item?, computeObj?) {
 
         if (item.type === 'symbol') {
-            return   this.L__getComputeSymbol(item, computeObj);
+            return this.L__getComputeSymbol(item, computeObj);
         }
         if (item.type === 'value') {
             return computeObj[item.valueName] ? computeObj[item.valueName] : 0;
@@ -1854,10 +2039,12 @@ export class CnStaticTableComponent extends CnComponentBase
     private colSum(colName) {
         let sum = 0;
         this.dataList.forEach(d => {
-            if (d[colName]) {
-                const val = d[colName];
-                sum = sum + Number(val);
-            }
+            if (d['$state$'] !== "delete")
+                if (d[colName]) {
+                    const val = d[colName];
+                  //  sum = sum + Number(val);
+                    sum =  parseFloat(( sum + Number(val)).toFixed(10)); 
+                }
         })
         return sum;
     }
@@ -1868,10 +2055,11 @@ export class CnStaticTableComponent extends CnComponentBase
             this.dataList.forEach(d => {
                 if (d[colName]) {
                     const val = d[colName];
-                    sum = sum + Number(val);
+                    // sum = sum + Number(val);
+                    sum =  parseFloat(( sum + Number(val)).toFixed(10)); 
                 }
             });
-            return Number(sum / this.dataList.length);
+            return Number(  parseFloat((  sum / this.dataList.length).toFixed(10)));
         } else {
             sum = 0;
             return sum;

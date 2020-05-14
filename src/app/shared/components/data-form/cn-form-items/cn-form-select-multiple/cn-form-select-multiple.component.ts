@@ -13,6 +13,8 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
 export class CnFormSelectMultipleComponent extends CnComponentBase implements OnInit, AfterViewInit {
   @Input() public config;
   @Input() formGroup: FormGroup;
+  @Input() tempData;
+  @Input() initData;
   @Output() public updateValue = new EventEmitter();
   public selectedValue;
   public selectOptions = [];
@@ -31,6 +33,16 @@ export class CnFormSelectMultipleComponent extends CnComponentBase implements On
   listOfSelectedValue = [];
 
   ngOnInit(): void {
+    if (this.initData) {
+      this.initValue = this.initData;
+    } else {
+      this.initValue = {};
+    }
+    if (this.tempData) {
+      this.tempValue = this.tempData;
+    } else {
+      this.tempValue = {};
+    }
 
   }
 

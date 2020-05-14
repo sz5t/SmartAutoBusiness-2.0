@@ -17,6 +17,9 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
   @Input() public valueConfig;
   @Output() public updateValue = new EventEmitter();
   @Input() public state;
+  @Input() public initData;
+  @Input() public rowData;
+  @Input() public tempData;
   tableConfig: any;
   value = null;
   visible = false;

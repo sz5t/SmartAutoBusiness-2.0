@@ -44,7 +44,8 @@
     <tr *ngFor="let rowData of dataTable.data" (click)="setSelectRow(rowData, $event)" [ngClass]="{ 
         newRow: mapOfDataState[rowData[KEY_ID]]['state'] === 'new' ? true : false, 
         validationError:  !mapOfDataState[rowData[KEY_ID]]['validation'],
-        editRow: mapOfDataState[rowData[KEY_ID]]['state'] === 'edit' ? true : false
+        editRow: mapOfDataState[rowData[KEY_ID]]['state'] === 'edit' ? true : false,
+        selectedRow: mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['selected'] : false
       }">
       <td nzShowCheckbox *ngIf="config.showCheckBox" [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']"
         (nzCheckedChange)="dataCheckedStatusChange()">

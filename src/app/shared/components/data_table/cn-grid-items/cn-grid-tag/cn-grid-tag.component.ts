@@ -7,6 +7,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class CnGridTagComponent implements OnInit {
   @Input() public config;
   @Input() public valueConfig;
+  @Input() public initData;
+  @Input() public rowData;
+  @Input() public tempData;
   public text: string;
   public color: string;
   constructor() { }

@@ -19,6 +19,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
   @Input() public initData; 
+  @Input() tempData;
   value = null;
   _value = null;
   selectedRowValue;
@@ -33,6 +34,16 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
   }
 
   ngOnInit() {
+    if (this.initData) {
+      this.initValue = this.initData;
+    } else {
+      this.initValue = {};
+    }
+    if (this.tempData) {
+      this.tempValue = this.tempData;
+    } else {
+      this.tempValue = {};
+    }
     this.buildChangeValue(this.config);
     // if(!this.config.layoutName){
     //   this.config.layoutName ="xjdKJcJoSqXHOnuIbWziw4yD1NQVAGWs";

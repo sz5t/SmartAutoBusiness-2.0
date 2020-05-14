@@ -614,8 +614,8 @@ class SelectedRowParameter extends BaseParameter implements IParameter {
     super();
   }
   public buildParameter() {
-    if (this._model.item) {
-      this._result = this._model.item[this._param.valueName];
+    if (this._model.selectedRow) {
+      this._result = this._model.selectedRow[this._param.valueName];
     }
     return this._result;
   }

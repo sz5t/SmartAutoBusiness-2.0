@@ -62,6 +62,12 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
     if(!this.initData){
       this.initData ={};
     }
+    
+    if (this.initData) {
+      this.initValue = this.initData;
+    } else {
+      this.initValue = {};
+    }
 
     if(this.tempData){
       this.tempValue ={...this.tempData};
