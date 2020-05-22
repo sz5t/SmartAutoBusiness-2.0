@@ -111,7 +111,8 @@ export class CnTreeTableComponent extends CnComponentBase
     public ROW_SELECTED: any;
     public ROWS_CHECKED: any[] = [];
     public COMPONENT_VALUE: any[] = [];
-
+    public ROW_CURRENT: any;
+    
     public operationRow: any;
 
     private _selectedRow;
@@ -145,6 +146,7 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public ngOnInit() {
+
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
         this.PARENT_ID = this.config.parentKey ? this.config.parentKey : 'parentId';
@@ -197,7 +199,7 @@ export class CnTreeTableComponent extends CnComponentBase
     /**
      * 解析级联消息
      */
-    private resolveRelations() {
+    private resolveRelations1() {
         if (this.config.cascade && this.config.cascade.messageSender) {
             if (!this._sender_source$) {
                 // 解析组件发送消息配置,并注册消息发送对象
@@ -216,6 +218,25 @@ export class CnTreeTableComponent extends CnComponentBase
         this._trigger_source$ = new RelationResolver(this).resolve();
 
     }
+
+    private resolveRelations() {
+        if (this.config.cascade && this.config.cascade.messageSender) {
+          if (!this._sender_source$) {
+            // 解析组件发送消息配置,并注册消息发送对象
+            this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
+            this._sender_subscription$ = this._sender_source$.subscribe();
+          }
+    
+        }
+        if (this.config.cascade && this.config.cascade.messageReceiver) {
+          // 解析消息接受配置,并注册消息接收对象
+          // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+          // this._receiver_subscription$ = this._receiver_source$.subscribe();
+          new RelationResolver(this).resolveReceiver(this.config);
+        }
+    
+        this._trigger_source$ = new RelationResolver(this).resolve();
+      }
 
     /**
      * 构建表格列集合
@@ -267,7 +288,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 originData: { ..._root },
                 validation: true,
                 actions: this.getRowActions('text'),
-                children: [],
+                children: _root['children'] ? []: null,
                 isNewRow: false
             });
 
@@ -421,6 +442,8 @@ export class CnTreeTableComponent extends CnComponentBase
         } else {
             this.isLoading = false;
         }
+
+        console.log('xxxxxliuxxxxxx', this.dataList);
     }
 
     private _buildReloadAjax(option, callback) {
@@ -995,7 +1018,7 @@ export class CnTreeTableComponent extends CnComponentBase
         if (option.data) {
             paramData = ParameterResolver.resolve({
                 params: ajaxParams,
-                item: option.data.data,
+                item: option.data.data?option.data.data:option.data,
                 tempValue: this.tempValue,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue
@@ -1561,10 +1584,13 @@ export class CnTreeTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: this.ROW_SELECTED,
+                item:  option.data.data?option.data.data:option.data,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                selectedRow: this.ROW_SELECTED,
+                addedRows: this.ROWS_ADDED,
+                editedRows: this.ROWS_EDITED
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1628,10 +1654,13 @@ export class CnTreeTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: this.ROW_SELECTED,
+                item: option.data.data?option.data.data:option.data,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                selectedRow: this.ROW_SELECTED,
+                addedRows: this.ROWS_ADDED,
+                editedRows: this.ROWS_EDITED
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1787,7 +1816,9 @@ export class CnTreeTableComponent extends CnComponentBase
      * @param $event 
      */
     rowAction(actionCfg, dataOfState, $event?) {
+    
         $event && $event.stopPropagation();
+        this.ROW_CURRENT = dataOfState.data;
         const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
         trigger.toolbarAction(actionCfg, this.config.id);
         $event && $event.preventDefault();

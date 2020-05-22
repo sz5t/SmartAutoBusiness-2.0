@@ -1262,7 +1262,10 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                                     "name": "new",
                                                                     "value": true
                                                                 },
-
+                                                                {
+                                                                    "name": "save",
+                                                                    "value": false
+                                                                }
                                                             ]
                                                         }
                                                     },
@@ -1300,6 +1303,10 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                                 {
                                                                     "name": "cancel",
                                                                     "value": false
+                                                                },
+                                                                {
+                                                                    "name": "save",
+                                                                    "value": false
                                                                 }
                                                             ]
                                                         }
@@ -1311,6 +1318,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                         "color": "text-primary",
                                                         "hidden": true,
                                                         "disabled": false,
+                                                        "state": "save",
                                                         "execute": [
                                                             {
                                                                 "triggerType": "OPERATION",
@@ -1325,6 +1333,7 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                                 // "stateId": "edit_save_1",
                                                                 "ajaxId": "edit_save_1",
                                                                 "conditionId": "edit_save_1",
+                                                                "builtinId": "cancel_state_1"
                                                                 // "afterId": "edit_save_1"
                                                             }
                                                         ],
@@ -1346,6 +1355,10 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                                 },
                                                                 {
                                                                     "name": "cancel",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "save",
                                                                     "value": true
                                                                 }
                                                             ]
@@ -1386,6 +1399,10 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                                 },
                                                                 {
                                                                     "name": "cancel",
+                                                                    "value": true
+                                                                },
+                                                                {
+                                                                    "name": "save",
                                                                     "value": true
                                                                 }
                                                             ]

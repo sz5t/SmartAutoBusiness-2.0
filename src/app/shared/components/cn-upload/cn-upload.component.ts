@@ -45,7 +45,7 @@ export class CnUploadComponent extends CnComponentBase implements OnInit {
   execConfig={
     "ajaxConfig":{
       "urlType": "inner", // 是否内置地址
-      url:"",
+      url:"file/upload",
       ajaxType:"post",
       params:[]
     }
@@ -53,22 +53,31 @@ export class CnUploadComponent extends CnComponentBase implements OnInit {
 
   Percent=90;
   myVar;
-  handleUpload(): void {
+  async handleUpload(): Promise<void> {
 debugger;
     const formData = new FormData();
     // tslint:disable-next-line:no-any
     this.fileList.forEach((file: any, index) => {
-      formData.append('files[]', file);
-      formData.append(`secretLevel_${index}`, '密级');
-      formData.append(`remark_${index}`, '备注');
+      formData.append(`files.${index}`, file);
+      formData.append(`TYPE.${index}`, index.toString());
+      formData.append(`ORDER_CODE.${index}`,  index.toString());
+      formData.append(`SAVE_TYPE.${index}`, 'service');
+      formData.append(`SECRET_LEVEL.${index}`, 'public');
+      formData.append(`REMARK.${index}`, '备注');
+      formData.append(`REF_DATA_ID.${index}`, 'LIUTEXT00001');
     });
-    formData.append('refDataId', '引用id');
+
     this.uploading = true;
 
     // You can use any AJAX library you like
     const url = this.execConfig.ajaxConfig.url;
     const params = this.buildParameters( this.execConfig.ajaxConfig.params);
     this.fileList=[];
+
+    const response = await this.componentService.apiService[this.execConfig.ajaxConfig.ajaxType](url, formData).toPromise();
+
+    console.log('附件提交返回',response);
+
 
     setTimeout(()=>{
       this.uploading = false;
@@ -410,12 +419,65 @@ debugger;
             }
           ],
           cascade: {
+            // action
+            "messageSender": [
+              {
+                  "id": "afterscanCode",
+                  "senderId": "form_01",
+                  "sendData": [
+                      {
+                          "beforeSend": {},
+                          "reveicerId": "",
+                          "receiverTriggerType": "ACTION",
+                          "receiverTrigger": "ADD_ROW",
+                          "params": [
+                              {
+                                  "name": "provinceName",
+                                  "type": "returnValue",
+                                  "valueName": "ID",
+                                  "valueTo": "tempValue"
+                              }
+                          ]
+                      }
+                  ]
+              }
+           ],
             "messageReceiver": [
             ]
           },
-          "changeValue": [
-          ],
           cascadeValue: [ // 值级联配置
+            {
+              "type": "",
+              "controlId": "003",
+              "name": "remarkscancode",
+              "CascadeObjects": [
+                  {
+                      "controlId": "003",
+                      "cascadeName": "remarkscancode",
+                      "cascadeItems": [
+                          {
+                              "type": "default",
+                              "content": {
+                                  "type": "relation",
+                                  "sender": {
+                                      "name": "scanCode",
+                                      "senderId": "afterscanCode"
+                                  },
+                                  "data": {
+                                      "option": [
+                                          {
+                                              "name": "ID",
+                                              "type": "selectObjectValue",
+                                              "valueName": "ID"
+                                          }
+                                      ]
+                                  }
+                              }
+                          }
+                      ]
+                  }
+              ]
+          }
           ]
         }
 
@@ -536,93 +598,6 @@ debugger;
               ],
               "cascade": {
                 "messageSender": [
-                  {
-                    "id": "form_01",
-                    "senderId": "view_01",
-                    "triggerType": "BEHAVIOR",
-                    "trigger": "SET_SELECT_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                      {
-                        "beforeSend": {},
-                        "reveicerId": "",
-                        "receiverTriggerType": "BEHAVIOR",
-                        "receiverTrigger": "REFRESH_AS_CHILD",
-                        "params": [
-                          {
-                            "name": "_PID",
-                            "type": "item",
-                            "valueName": "id"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "id": "grid_sender_03",
-                    "senderId": "view_01",
-                    "triggerType": "STATE",
-                    "trigger": "CANCEL_EDIT_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                      {
-                        "reveicerId": "",
-                        "receiverTriggerType": "STATE",
-                        "receiverTrigger": "STATE_TO_TEXT",
-                        "conditionId": "cancel_edit_1",
-                        "params": [
-                          {
-                            "name": "targetViewId",
-                            "value": "view_01",
-                            "type": "value"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "id": "grid_sender_04",
-                    "senderId": "view_01",
-                    "triggerType": "STATE",
-                    "trigger": "CANCEL_NEW_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                      {
-                        "reveicerId": "",
-                        "receiverTriggerType": "STATE",
-                        "receiverTrigger": "STATE_TO_TEXT",
-                        "conditionId": "cancel_edit_2",
-                        "params": [
-                          {
-                            "name": "targetViewId",
-                            "value": "view_01",
-                            "type": "value"
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "id": "grid_sender_05",
-                    "senderId": "view_01",
-                    "triggerType": "STATE",
-                    "trigger": "EDIT_ROW",
-                    "triggerMoment": "after",
-                    "sendData": [
-                      {
-                        "reveicerId": "",
-                        "receiverTriggerType": "STATE",
-                        "receiverTrigger": "STATE_TO_EDIT",
-                        "params": [
-                          {
-                            "name": "targetViewId",
-                            "value": "view_01",
-                            "type": "value"
-                          }
-                        ]
-                      }
-                    ]
-                  }
                 ],
                 "messageReceiver": [
                   {
@@ -631,8 +606,8 @@ debugger;
                     "receiveData": [
                       {
                         "beforeReceive": [],
-                        "triggerType": "BEHAVIOR",
-                        "trigger": "REFRESH_AS_CHILD",
+                        "triggerType": "ACTION",
+                        "trigger": "ADD_ROW",
                         "params": [
                         ]
                       }

@@ -2559,7 +2559,7 @@ export class PageDesignComponent implements OnInit {
                                                                     "params": [
                                                                         {
                                                                             "name": "ID",
-                                                                            "type": "item",
+                                                                            "type": "selectedRow",
                                                                             "valueName": "ID",
                                                                             "valueTo": "tempValue"
                                                                         }

@@ -33,8 +33,14 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
   }
 
   ngOnInit() {
-    this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+   // debugger;
+     const _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
     // 静态数据，动态数据
+    if(Object.prototype.toString.call(this.tableConfig.component) === '[object Object]') {
+      this.tableConfig =_tableConfig;
+    }else{
+      this.tableConfig['component'] = _tableConfig;
+    }
   }
 
 
@@ -222,7 +228,7 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'ajax') {
           this.load();
-
+// debugger;
           this.table.setInitValue(this.cascadeValue);
           this.table.load();
         }

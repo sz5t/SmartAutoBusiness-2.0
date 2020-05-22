@@ -1,6 +1,5 @@
 import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
 import { BSN_TOOLBAR_TRIGGER } from '../../../core/relations/bsn-trigger/toolbar.trigger.interface';
-import { BSN_DATAGRID_TRIGGER } from '../../../core/relations/bsn-trigger/data-grid.trigger.interface';
 import { ButtonOperationResolver } from '../../resolver/buttonOperation/buttonOperation.resolver';
 import { CN_DATA_GRID_PROPERTY } from '../../../core/relations/bsn-property/data-grid.property.interface';
 import { CN_DATA_GRID_METHOD } from '@core/relations/bsn-methods';
@@ -26,7 +25,7 @@ import { filter, concatMap, mergeMap } from 'rxjs/operators';
 import { Subscription, Subject, BehaviorSubject, merge, Observable } from 'rxjs';
 import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
-import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
+import { BSN_TRIGGER_TYPE, BSN_TREE_TRIGGER } from '@core/relations/bsn-status';
 import { arraysEqual, NzFormatEmitEvent, NzTreeNode, NzTreeComponent } from 'ng-zorro-antd';
 import { ITreeProperty, CN_TREE_PROPERTY } from '@core/relations/bsn-property/tree.property.interface';
 import { CN_TREE_METHOD } from '@core/relations/bsn-methods/bsn-tree-methods';
@@ -74,7 +73,7 @@ export class CnTreeComponent extends CnComponentBase
     public tableColumns = [];
 
     public spanCount = 0;
-
+    
 
     public isLoading = false;
     public loading = false;
@@ -560,13 +559,13 @@ export class CnTreeComponent extends CnComponentBase
     }
 
     public editRows(option) {
-        this.NODES_CHECKED.map(
-            item => {
-                this.addEditRows(item);
-                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
-                trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.EDIT_ROW }, this.config.id);
-            }
-        )
+        // this.NODES_CHECKED.map(
+        //     item => {
+        //         this.addEditRows(item);
+        //         const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+        //         trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_TREE_TRIGGER.EDIT_ROW }, this.config.id);
+        //     }
+        // )
     }
 
     public editRow(option) {
@@ -584,14 +583,14 @@ export class CnTreeComponent extends CnComponentBase
     }
 
     public cancelNewRows(option) {
-        this.NODES_ADDED.map(
-            item => {
-                this.removeNewRow(item);
-                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
-                trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+        // this.NODES_ADDED.map(
+        //     item => {
+        //         this.removeNewRow(item);
+        //         const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+        //         trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_TREE_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
 
-            }
-        )
+        //     }
+        // )
         return true;
     }
 
@@ -602,14 +601,14 @@ export class CnTreeComponent extends CnComponentBase
     }
 
     public cancelEditRows(option) {
-        this.NODES_CHECKED.map(
-            item => {
-                this.removeEditRow(item);
-                const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
-                trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+        // this.NODES_CHECKED.map(
+        //     item => {
+        //         this.removeEditRow(item);
+        //         const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[item[this.KEY_ID]]);
+        //         trigger.sendBtnMessage(option.btnCfg, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_TREE_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
 
-            }
-        )
+        //     }
+        // )
         return true;
     }
 
@@ -629,25 +628,25 @@ export class CnTreeComponent extends CnComponentBase
 
     public changeAddedRowsToText(option) {
         // 通过服务器端的临时ID与执行数据的ID匹配取得数据
-        if (option && Array.isArray(option)) {
-            option.map(opt => {
-                if (this.mapOfDataState[opt[this.KEY_ID]]) {
+        // if (option && Array.isArray(option)) {
+        //     option.map(opt => {
+        //         if (this.mapOfDataState[opt[this.KEY_ID]]) {
 
-                    this.NODES_ADDED = this.NODES_ADDED.filter(r => r[this.KEY_ID] !== opt[this.KEY_ID]);
-                    this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
-                    this.mapOfDataState[opt[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
-                    const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
-                    trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
-                }
-            })
-        } else if (option) {
-            // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
-            this.NODES_ADDED = this.NODES_ADDED.filter(r => r[this.KEY_ID] !== option[this.KEY_ID]);
-            this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
-            this.mapOfDataState[option[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
-            const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
-            trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
-        }
+        //             this.NODES_ADDED = this.NODES_ADDED.filter(r => r[this.KEY_ID] !== opt[this.KEY_ID]);
+        //             this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
+        //             this.mapOfDataState[opt[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
+        //             const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
+        //             trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_TREE_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+        //         }
+        //     })
+        // } else if (option) {
+        //     // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
+        //     this.NODES_ADDED = this.NODES_ADDED.filter(r => r[this.KEY_ID] !== option[this.KEY_ID]);
+        //     this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
+        //     this.mapOfDataState[option[this.KEY_ID]]['actions'] = [...this.config.rowActions.filter(action => action.state === 'text')];
+        //     const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
+        //     trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_TREE_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+        // }
 
 
     }
@@ -655,20 +654,20 @@ export class CnTreeComponent extends CnComponentBase
     public changeEditedRowsToText(option) {
         console.log('changeEditedRowsToText', option);
         // 通过服务器端的临时ID与执行数据的ID匹配取得数据
-        if (option && Array.isArray(option)) {
-            option.map(opt => {
-                if (this.mapOfDataState[opt[this.KEY_ID]]) {
-                    this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
-                    const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
-                    trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
-                }
-            })
-        } else if (option) {
-            // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
-            this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
-            const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
-            trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_DATAGRID_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
-        }
+        // if (option && Array.isArray(option)) {
+        //     option.map(opt => {
+        //         if (this.mapOfDataState[opt[this.KEY_ID]]) {
+        //             this.mapOfDataState[opt[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[opt[this.KEY_ID]]['data'] };
+        //             const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[opt[this.KEY_ID]]);
+        //             trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_TREE_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+        //         }
+        //     })
+        // } else if (option) {
+        //     // this.mapOfDataState[option[this.KEY_ID]].state = 'text';
+        //     this.mapOfDataState[option[this.KEY_ID]]['originData'] = { ...this.mapOfDataState[option[this.KEY_ID]]['data'] };
+        //     const trigger = new ButtonOperationResolver(this.componentService, this.config, this.mapOfDataState[option[this.KEY_ID]]);
+        //     trigger.sendBtnMessage({}, { triggerType: BSN_TRIGGER_TYPE.STATE, trigger: BSN_TREE_TRIGGER.CANCEL_EDIT_ROW }, this.config.id);
+        // }
 
     }
 
@@ -725,6 +724,7 @@ export class CnTreeComponent extends CnComponentBase
     }
 
     public deleteSelectedNode(option) {
+
         if (option[this.KEY_ID]) {
             const deletedNode = this.treeObj.getTreeNodeByKey(option[this.KEY_ID]);
             if (deletedNode) {
@@ -1074,7 +1074,7 @@ export class CnTreeComponent extends CnComponentBase
         this.config.columns.map(col => {
             appendNodeData[col['type']] = option[col['field']];
         });
-
+      
         const addRootNode = new NzTreeNode({
             key: appendNodeData['key'],
             title: appendNodeData['title'],
@@ -1083,6 +1083,7 @@ export class CnTreeComponent extends CnComponentBase
             origin: appendNodeData,
             ...option
         });
+        addRootNode['isLeaf'] = true;
         this.nodes = this.treeObj.getTreeNodes();
         const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
         /// const nNode = { ...option, addRootNode };
@@ -1098,7 +1099,7 @@ export class CnTreeComponent extends CnComponentBase
         this.config.columns.map(col => {
             appendNodeData[col['type']] = option[col['field']];
         });
-
+        appendNodeData['isLeaf'] = true;
         // const addChildNode = new NzTreeNode({
         //     key: appendNodeData['key'],
         //     title: appendNodeData['title'],
@@ -1108,6 +1109,9 @@ export class CnTreeComponent extends CnComponentBase
         // });
 
         const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
+        if(currentSelectedNode['isLeaf']){
+            currentSelectedNode['isLeaf'] = false;
+        }
         if (!currentSelectedNode.isExpanded) {
             currentSelectedNode.isExpanded = true;
             this.expandNode(currentSelectedNode);
@@ -1214,6 +1218,10 @@ export class CnTreeComponent extends CnComponentBase
 
             });
         } else if (!isArray && data) {
+// liu 2020 0521 存储过程返回
+            if(data['_procedure_resultset_1']){
+                data =data['_procedure_resultset_1'][0];
+            }
             parameterResult = ParameterResolver.resolve({
                 params: paramsCfg,
                 tempValue: this.tempValue,

@@ -167,11 +167,12 @@ export class ButtonOperationResolver {
                 break;
             // 动作触发
             case BSN_TRIGGER_TYPE.ACTION:
+            console.log('liu___action');
                 const action_options = {};
                 action_options['dialog'] = this.findConfirmConfig(cfg.dialogId);
                 action_options['window'] = this.findwindowConfig(cfg.windowId);
                 action_options['ajaxConfig'] = this.findAjaxConfig(cfg.ajaxId);
-                action_options['conditionId'] = this.findConditionConfig(cfg.conditionId);
+                action_options['condition'] = this.findConditionConfig(cfg.conditionId);
                 action_options['data'] = this.currentData;
                 action_options['btnCfg'] = btn;
                 action_options['changeValue'] = this.findChangeValueConfig(cfg.changeValueId);

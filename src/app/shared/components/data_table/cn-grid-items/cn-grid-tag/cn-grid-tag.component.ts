@@ -26,6 +26,9 @@ export class CnGridTagComponent implements OnInit {
         const val = this.valueConfig.value[d['field']];
         if (val && (d.value === val)) {
           this.color = d.color;
+          if(d.valueText){
+            this.text = d.valueText;
+          }
           return false;
         }
       })

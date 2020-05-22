@@ -128,7 +128,7 @@ export class CnStaticTableComponent extends CnComponentBase
     public ROW_SELECTED: any;
     public ROWS_CHECKED: any[] = [];
     public COMPONENT_VALUE: any[] = [];
-
+    public ROW_CURRENT: any;
     public operationRow: any;
 
     // 作为子组件时变量
@@ -457,7 +457,33 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     // 是否存在当前行数据
-    public custom_exist(){
+    public custom_exist() {
+
+        const newconfig = {
+            custom: [   // 组件自定义行为，只进一组参数【】，然后根据参数做业务处理，参数里需要【响应方法名称】
+                {
+                    "id": "001",
+                    "name": "addRow",
+                    "content": [  // 内容，来决定执行步骤顺序
+                        {
+                            type: "条件、执行",
+                            children: [
+                                {
+                                    type: 'exec',
+                                    content: [
+
+                                    ]
+                                }
+
+                            ]
+                        }
+                    ],
+                    "addRow": {  // 行为内容
+
+                    }
+                }
+            ]
+        };
 
     }
 
@@ -473,7 +499,7 @@ export class CnStaticTableComponent extends CnComponentBase
         {
             condition: [
                 {
-                    type: "symbol",  
+                    type: "symbol",
                     valueName: ">",  // 目前支持  && 、||、  >、 <、 >=、 <=、  ===、  !==、  isnull    /
                     children: [
                         {
@@ -1603,6 +1629,7 @@ export class CnStaticTableComponent extends CnComponentBase
      */
     rowAction(actionCfg, rowData, $event?) {
         const dataOfState = this.mapOfDataState[rowData[this.KEY_ID]];
+        this.ROW_CURRENT = dataOfState;
         $event && $event.stopPropagation();
         const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
         trigger.toolbarAction(actionCfg, this.config.id);
@@ -1906,73 +1933,73 @@ export class CnStaticTableComponent extends CnComponentBase
 
         let r = 0;
         if (symbolObj.valueName === 'result') {
-    
+
         }
         if (symbolObj.valueName === '*') {
-          r = 1;
-          if (symbolObj.children) {
-            symbolObj.children.forEach(_item => {
-              // r = r * this.L_getComputeValue(_item, computeObj);
-              r =  parseFloat(( r * this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
-            });
-            return r;
-          }
-          return 0;
+            r = 1;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    // r = r * this.L_getComputeValue(_item, computeObj);
+                    r = parseFloat((r * this.L_getComputeValue(_item, computeObj)).toFixed(10));
+                });
+                return r;
+            }
+            return 0;
         }
         if (symbolObj.valueName === '+') {
-          r = 0;
-          if (symbolObj.children) {
-            symbolObj.children.forEach(_item => {
-             // r = r + this.L_getComputeValue(_item, computeObj);
-              r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
-            });
-    
-          }
-          return r;
+            r = 0;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    // r = r + this.L_getComputeValue(_item, computeObj);
+                    r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10));
+                });
+
+            }
+            return r;
         }
         if (symbolObj.valueName === '-') {
-          // r = 0;
-          // if (symbolObj.children) {
-          //     symbolObj.children.forEach(_item => {
-          //         r = r - this.L_getComputeValue(_item, computeObj);
-          //     });
-          //     r = r+ 2* this.L_getComputeValue(symbolObj.children[0], computeObj);
-    
-          // }
-          // return r;
-          r = 0;
-          if (symbolObj.children) {
-            r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
-            for (let i = 1; i < symbolObj.children.length; i++) {
-              const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
-            //  r = r - comput_value;
-              r =  parseFloat((r - comput_value).toFixed(10)); 
+            // r = 0;
+            // if (symbolObj.children) {
+            //     symbolObj.children.forEach(_item => {
+            //         r = r - this.L_getComputeValue(_item, computeObj);
+            //     });
+            //     r = r+ 2* this.L_getComputeValue(symbolObj.children[0], computeObj);
+
+            // }
+            // return r;
+            r = 0;
+            if (symbolObj.children) {
+                r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
+                for (let i = 1; i < symbolObj.children.length; i++) {
+                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                    //  r = r - comput_value;
+                    r = parseFloat((r - comput_value).toFixed(10));
+                }
             }
-          }
-          return r;
+            return r;
         }
         if (symbolObj.valueName === '/') {
-          // 
-          r = 0.0;
-          if (symbolObj.children) {
-            r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
-            for (let i = 1; i < symbolObj.children.length; i++) {
-              const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
-              if (comput_value === 0) {
-                return 0;
-              }
-            //  r = r / comput_value;
-              r =  parseFloat((r / comput_value).toFixed(10)); 
+            // 
+            r = 0.0;
+            if (symbolObj.children) {
+                r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
+                for (let i = 1; i < symbolObj.children.length; i++) {
+                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                    if (comput_value === 0) {
+                        return 0;
+                    }
+                    //  r = r / comput_value;
+                    r = parseFloat((r / comput_value).toFixed(10));
+                }
             }
-          }
-         // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
-    
-          return r;
+            // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
+
+            return r;
         }
-    
+
         return r;
-    
-      }
+
+    }
 
     public L_getComputeValue(item?, computeObj?) {
 
@@ -2019,6 +2046,10 @@ export class CnStaticTableComponent extends CnComponentBase
                         this.tempValue[col.summary.name] = this.colSum(value.name);
                         this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
                         break;
+                    case 'join':
+                        this.tempValue[col.summary.name] = this.colJoin(value.name);
+                        this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
+                        break;
                     case 'avg':
                         this.tempValue[col.summary.name] = this.colAvg(value.name).toFixed(col.summary.fixed ? col.summary.fixed : 2);
                         this.staticTableSummary[col.summary.name] = this.tempValue[col.summary.name];
@@ -2042,10 +2073,38 @@ export class CnStaticTableComponent extends CnComponentBase
             if (d['$state$'] !== "delete")
                 if (d[colName]) {
                     const val = d[colName];
-                  //  sum = sum + Number(val);
-                    sum =  parseFloat(( sum + Number(val)).toFixed(10)); 
+                    //  sum = sum + Number(val);
+                    sum = parseFloat((sum + Number(val)).toFixed(10));
                 }
         })
+        return sum;
+    }
+
+    private colJoin(colName) {
+        let sum = "";
+        // this.dataList.forEach(d => {
+        //     if (d['$state$'] !== "delete")
+        //         if (d[colName]) {
+        //             const val = d[colName];
+        //             //  sum = sum + Number(val);
+        //             sum = sum + val + ',';
+        //         }
+        // })
+        let n = 0;
+         // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.dataList.length; i++) {
+            if ( this.dataList[i]['$state$'] !== "delete")
+            if (this.dataList[i][colName]) {
+                const val = this.dataList[i][colName];
+                //  sum = sum + Number(val);
+                sum = sum + val + ',';
+                n++;
+            }
+        }
+        if(n>0 && sum.length>0){
+            sum = sum.substring(0, sum.length - 1); 
+        }
+
         return sum;
     }
 
@@ -2056,10 +2115,10 @@ export class CnStaticTableComponent extends CnComponentBase
                 if (d[colName]) {
                     const val = d[colName];
                     // sum = sum + Number(val);
-                    sum =  parseFloat(( sum + Number(val)).toFixed(10)); 
+                    sum = parseFloat((sum + Number(val)).toFixed(10));
                 }
             });
-            return Number(  parseFloat((  sum / this.dataList.length).toFixed(10)));
+            return Number(parseFloat((sum / this.dataList.length).toFixed(10)));
         } else {
             sum = 0;
             return sum;

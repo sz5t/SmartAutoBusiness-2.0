@@ -409,6 +409,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         }
       }
       this.validateForm.setValue(this.formValue);
+      this.FORM_VALID = this.formValue;
       console.log('------------------formValue', this.validateForm.value)
     }, error => {
       console.log(error);
@@ -671,7 +672,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               }
               if (item.content.type === 'display') {
                 // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
-
+                const _dd={name:cascadeObj.cascadeName,value: this.FORM_VALUE[cascadeObj.cascadeName]?1:0,value1: this.validateForm.value[cascadeObj.cascadeName]?1:0}
+               this. L_getComputeDisplay(_dd);
               }
               if (item.content.type === 'message') {
                 // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
@@ -755,11 +757,54 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
 
-    /*
-  * 核心方法，实现加减乘除运算，确保不丢失精度
-  * 思路：把小数放大为整数（乘），进行算术运算，再缩小为小数（除）
-  *
-  */
+  public L_getComputeDisplay(v) {
+    if (this.config.cascadeLayout && this.config.cascadeLayout.length > 0) {
+      this.config.cascadeLayout.forEach(cascade => {
+        if (cascade.field === v.name) {
+          // debugger;
+          cascade.mapping.forEach(m => {
+            if(m.type === 'default') {
+              this.config.formLayout.rows.forEach(r => {
+                r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) > -1)
+                  .forEach(_c => _c['display'] = false);
+                r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) < 0)
+                  .forEach(_c => _c['display'] = 'none');
+              })
+            }else{
+              if (m.value === v.value) {
+                // const oldRows = this.config.formLayout.rows;
+                // const newRows = [];
+                // const newCols = [];
+                // oldRows.forEach(r => {
+                //   const newCols = r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) > -1);
+                //   newRows.push({
+                //     "id": r.id,
+                //     "type": "row",
+                //     "cols": newCols
+                //   });
+                // })
+                // this.layoutRowsCfg = newRows;
+                this.config.formLayout.rows.forEach(r => {
+                  r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) > -1)
+                    .forEach(_c => _c['display'] = false);
+                  r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) < 0)
+                    .forEach(_c => _c['display'] = 'none');
+                })
+              }
+            }
+     
+          });
+        }
+      });
+    }
+  }
+
+
+  /*
+* 核心方法，实现加减乘除运算，确保不丢失精度
+* 思路：把小数放大为整数（乘），进行算术运算，再缩小为小数（除）
+*
+*/
   public L__getComputeSymbol(symbolObj?, computeObj?) {
 
     let r = 0;
@@ -771,7 +816,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       if (symbolObj.children) {
         symbolObj.children.forEach(_item => {
           // r = r * this.L_getComputeValue(_item, computeObj);
-          r =  parseFloat(( r * this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
+          r = parseFloat((r * this.L_getComputeValue(_item, computeObj)).toFixed(10));
         });
         return r;
       }
@@ -781,8 +826,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       r = 0;
       if (symbolObj.children) {
         symbolObj.children.forEach(_item => {
-         // r = r + this.L_getComputeValue(_item, computeObj);
-          r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
+          // r = r + this.L_getComputeValue(_item, computeObj);
+          r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10));
         });
 
       }
@@ -803,8 +848,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
         for (let i = 1; i < symbolObj.children.length; i++) {
           const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
-        //  r = r - comput_value;
-          r =  parseFloat((r - comput_value).toFixed(10)); 
+          //  r = r - comput_value;
+          r = parseFloat((r - comput_value).toFixed(10));
         }
       }
       return r;
@@ -819,11 +864,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
           if (comput_value === 0) {
             return 0;
           }
-        //  r = r / comput_value;
-          r =  parseFloat((r / comput_value).toFixed(10)); 
+          //  r = r / comput_value;
+          r = parseFloat((r / comput_value).toFixed(10));
         }
       }
-     // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
+      // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
 
       return r;
     }
@@ -834,26 +879,27 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
 
 
-public L_getComputeValue(item ?, computeObj ?) {
 
-  if (item.type === 'symbol') {
-    return this.L__getComputeSymbol(item, computeObj);
+  public L_getComputeValue(item?, computeObj?) {
+
+    if (item.type === 'symbol') {
+      return this.L__getComputeSymbol(item, computeObj);
+    }
+    if (item.type === 'value') {
+      return computeObj[item.valueName] ? computeObj[item.valueName] : 0;
+    }
   }
-  if (item.type === 'value') {
-    return computeObj[item.valueName] ? computeObj[item.valueName] : 0;
-  }
-}
   /**
    * 表单内置 赋值操作
    * @param name 
    * @param value 
    */
   public setValue(name: string, value: any) {
-  const control = this.validateForm.controls[name];
-  if (control) {
-    control.setValue(value, { emitEvent: true });
+    const control = this.validateForm.controls[name];
+    if (control) {
+      control.setValue(value, { emitEvent: true });
+    }
   }
-}
 
   /**
    * 【表单内置操作】
@@ -864,236 +910,237 @@ public L_getComputeValue(item ?, computeObj ?) {
 
 
   public getCurrentComponentId() {
-  return this.config.id;
-}
-
-  public addForm(v ?) {
-  this.validateForm = this.fb.group({});
-  this.createControls(this.validateForm);
-  this.value = this.formValue;
-  if (v.hasOwnProperty('builtinConfig')) {
-    if (v['builtinConfig'].event === 'formStateChange') {
-      this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'insert');
-    }
+    return this.config.id;
   }
 
-  console.log(this.config.id + '-------------addForm', v);
-}
-  public editForm(v ?) {
-  const ss = JSON.parse(JSON.stringify(this.validateForm.value));
-  // this.validateForm = this.fb.group({});
-  // this.createControls( this.validateForm);
-  this.value = ss;
-  if (v.hasOwnProperty('builtinConfig')) {
-    if (v['builtinConfig'].event === 'formStateChange') {
-      this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'update');
+  public addForm(v?) {
+    this.validateForm = this.fb.group({});
+    this.createControls(this.validateForm);
+    this.value = this.formValue;
+    if (v.hasOwnProperty('builtinConfig')) {
+      if (v['builtinConfig'].event === 'formStateChange') {
+        this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'insert');
+      }
     }
-  }
-  this.load();
-  //  this.validateForm.setValue( this.validateForm.value);
-  console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
-}
-  public cancel(v ?) {
-  const ss = JSON.parse(JSON.stringify(this.validateForm.value));
-  console.log(this.config.id + '-------------cancel【开始】------------');
 
-  // this.validateForm = this.fb.group({});
-  // this.createControls(this.validateForm);
-  // this.validateForm.setValue(ss,{onlySelf:false,emitEvent:true});
-  this.value = ss;
-  if (v.hasOwnProperty('builtinConfig')) {
-    if (v['builtinConfig'].event === 'formStateChange') {
-      this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'text');
-    }
-  } else {
-    this.formStateChange('text');
+    console.log(this.config.id + '-------------addForm', v);
   }
-  // this.validateForm.setValue(this.validateForm.value);
-  this.load();
-  console.log(this.config.id + '-------------cancel【结束】', v, this.validateForm.value);
-  // setTimeout(() => this.setValue('code','liu'), 1000);
-  // setTimeout(() => this.validateForm.setValue(ss), 1000);
-  // this.setValue('code','liu');
-}
+  public editForm(v?) {
+    const ss = JSON.parse(JSON.stringify(this.validateForm.value));
+    // this.validateForm = this.fb.group({});
+    // this.createControls( this.validateForm);
+    this.value = ss;
+    if (v.hasOwnProperty('builtinConfig')) {
+      if (v['builtinConfig'].event === 'formStateChange') {
+        this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'update');
+      }
+    }
+    this.load();
+    //  this.validateForm.setValue( this.validateForm.value);
+    console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
+  }
+  public cancel(v?) {
+    const ss = JSON.parse(JSON.stringify(this.validateForm.value));
+    console.log(this.config.id + '-------------cancel【开始】------------');
+
+    // this.validateForm = this.fb.group({});
+    // this.createControls(this.validateForm);
+    // this.validateForm.setValue(ss,{onlySelf:false,emitEvent:true});
+    this.value = ss;
+    if (v.hasOwnProperty('builtinConfig')) {
+      if (v['builtinConfig'].event === 'formStateChange') {
+        this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'text');
+      }
+    } else {
+      this.formStateChange('text');
+    }
+    // this.validateForm.setValue(this.validateForm.value);
+    this.load();
+    console.log(this.config.id + '-------------cancel【结束】', v, this.validateForm.value);
+    // setTimeout(() => this.setValue('code','liu'), 1000);
+    // setTimeout(() => this.validateForm.setValue(ss), 1000);
+    // this.setValue('code','liu');
+  }
 
   /**
    * 执行sql
    * @param Config 
    */
   public async execute(execConfig) {
-  const valid = this.validate(); // 这个方法通过配置来调用
-  console.log('  this.FORM_VALID', this.FORM_VALID);
-  console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
-  // 构建业务对象
-  // 执行异步操作
-  // this.componentService.apiService.doPost();
-  if (valid) {
-    const url = execConfig.ajaxConfig.url;
-    const params = this.buildParameters(execConfig.ajaxConfig.params);
-    console.log(this.config.id + '-------------执行sql params:', params);
-    const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
+    debugger;
+    const valid = this.validate(); // 这个方法通过配置来调用
+    console.log('  this.FORM_VALID', this.FORM_VALID);
+    console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
+    // 构建业务对象
+    // 执行异步操作
+    // this.componentService.apiService.doPost();
+    if (valid) {
+      const url = execConfig.ajaxConfig.url;
+      const params = this.buildParameters(execConfig.ajaxConfig.params);
+      console.log(this.config.id + '-------------执行sql params:', params);
+      const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
 
 
-    // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
-    this._sendDataSuccessMessage(response, execConfig.ajaxConfig.result);
+      // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+      this._sendDataSuccessMessage(response, execConfig.ajaxConfig.result);
 
-    // 处理validation结果
-    const validationResult = this._sendDataValidationMessage(response, execConfig.ajaxConfig.result);
+      // 处理validation结果
+      const validationResult = this._sendDataValidationMessage(response, execConfig.ajaxConfig.result);
 
-    // 处理error结果
-    const errorResult = this._sendDataErrorMessage(response, execConfig.ajaxConfig.result);
+      // 处理error结果
+      const errorResult = this._sendDataErrorMessage(response, execConfig.ajaxConfig.result);
 
-    return validationResult && errorResult;
+      return validationResult && errorResult;
+    }
+
+
   }
-
-
-}
 
 
 
   public async executeModal(execConfig) {
-  const valid = this.validate(); // 这个方法通过配置来调用
-  console.log('  this.FORM_VALID', this.FORM_VALID);
-  console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
-  if (valid) {
-    // 构建业务对象
-    // 执行异步操作
-    // this.componentService.apiService.doPost();
+    const valid = this.validate(); // 这个方法通过配置来调用
+    console.log('  this.FORM_VALID', this.FORM_VALID);
+    console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
+    if (valid) {
+      // 构建业务对象
+      // 执行异步操作
+      // this.componentService.apiService.doPost();
 
-    const url = execConfig.ajaxConfig.url;
-    const params = this.buildParameters(execConfig.ajaxConfig.params);
-    console.log(this.config.id + '-------------执行sql params:', params);
-    const back = false;
-    const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
-    return response;
+      const url = execConfig.ajaxConfig.url;
+      const params = this.buildParameters(execConfig.ajaxConfig.params);
+      console.log(this.config.id + '-------------执行sql params:', params);
+      const back = false;
+      const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
+      return response;
+    }
+
   }
-
-}
 
   private _sendDataSuccessMessage(response, resultCfg): boolean {
 
-  let result = false;
-  if (Array.isArray(response.data) && response.data.length <= 0) {
+    let result = false;
+    if (Array.isArray(response.data) && response.data.length <= 0) {
+      return result;
+    }
+    if (response && response.data) {
+      const successCfg = resultCfg.find(res => res.name === 'data');
+      // 弹出提示框
+      if (successCfg) {
+        new RelationResolver(this)
+          .resolveInnerSender(
+            successCfg,
+            response.data,
+            Array.isArray(response.data)
+          );
+      }
+      result = true;
+    }
+
     return result;
   }
-  if (response && response.data) {
-    const successCfg = resultCfg.find(res => res.name === 'data');
-    // 弹出提示框
-    if (successCfg) {
-      new RelationResolver(this)
-        .resolveInnerSender(
-          successCfg,
-          response.data,
-          Array.isArray(response.data)
-        );
-    }
-    result = true;
-  }
-
-  return result;
-}
 
   private _sendDataValidationMessage(response, resultCfg) {
-  let result = true;
-  if (response && Array.isArray(response.validation) && response.validation.length <= 0) {
+    let result = true;
+    if (response && Array.isArray(response.validation) && response.validation.length <= 0) {
+      return result;
+    }
+    if (response && response.validation) {
+      const validationCfg = resultCfg.find(res => res.name === 'validation');
+      if (validationCfg) {
+        new RelationResolver(this)
+          .resolverDataValidationSender(
+            validationCfg,
+            response.validation);
+      }
+      result = false;
+    }
     return result;
   }
-  if (response && response.validation) {
-    const validationCfg = resultCfg.find(res => res.name === 'validation');
-    if (validationCfg) {
-      new RelationResolver(this)
-        .resolverDataValidationSender(
-          validationCfg,
-          response.validation);
-    }
-    result = false;
-  }
-  return result;
-}
 
   private _sendDataErrorMessage(response, resultCfg) {
-  let result = true;
-  if (response && Array.isArray(response.error) && response.error.length <= 0) {
+    let result = true;
+    if (response && Array.isArray(response.error) && response.error.length <= 0) {
+      return result;
+    }
+    if (response && response.error) {
+      const errorCfg = resultCfg.find(res => res.name === 'error');
+      if (errorCfg) {
+        new RelationResolver(this)
+          .resolverDataErrorSender(
+            errorCfg,
+            response.error);
+      }
+      result = false;
+    }
     return result;
   }
-  if (response && response.error) {
-    const errorCfg = resultCfg.find(res => res.name === 'error');
-    if (errorCfg) {
-      new RelationResolver(this)
-        .resolverDataErrorSender(
-          errorCfg,
-          response.error);
+
+  //       return new SenderResolver(this._componentInstance).resolve(config.cascade.messageSender);
+
+  /**
+   * 状态更改-》直接修改配置
+   *  消息过来时，判断当前组件相应的内置操作，
+   * 例如当接受主子刷新时，子组件状态保存当前，还是恢复到某个状态
+   * 可控=》子组件可连续操作不间断。
+   * 消息的前置条件可控
+   */
+
+
+  repeat = (control: FormControl): { [s: string]: boolean } => {
+    // console.log('repeat==>', control);
+    if (!control.value) {
+      return { error: true, required: true };
+    } else if (control.value === '中国香港') {
+      return { repeat: true };
     }
-    result = false;
-  }
-  return result;
-}
+    return {};
+  };
 
-//       return new SenderResolver(this._componentInstance).resolve(config.cascade.messageSender);
+  repeat1 = (control: FormControl): { [s: string]: boolean } => {
+    // console.log('repeat2==>', control);
+    let dd = {};
 
-/**
- * 状态更改-》直接修改配置
- *  消息过来时，判断当前组件相应的内置操作，
- * 例如当接受主子刷新时，子组件状态保存当前，还是恢复到某个状态
- * 可控=》子组件可连续操作不间断。
- * 消息的前置条件可控
- */
+    if (!control.value) {
+      dd = { error: true, required: true };
+    } else if (control.value === '中国香港2') {
+      dd = { repeat1: true };
+    }
 
 
-repeat = (control: FormControl): { [s: string]: boolean } => {
-  // console.log('repeat==>', control);
-  if (!control.value) {
-    return { error: true, required: true };
-  } else if (control.value === '中国香港') {
-    return { repeat: true };
-  }
-  return {};
-};
-
-repeat1 = (control: FormControl): { [s: string]: boolean } => {
-  // console.log('repeat2==>', control);
-  let dd = {};
-
-  if (!control.value) {
-    dd = { error: true, required: true };
-  } else if (control.value === '中国香港2') {
-    dd = { repeat1: true };
-  }
+    return dd;
+  };
 
 
-  return dd;
-};
+  validating1 = (control: FormControl) =>
+    new Observable((observer: Observer<ValidationErrors | null>) => {
+      setTimeout(() => {
+        console.log('validating>>>>>>>>>>测试远程校验');
 
+        if (control.value === '中国香港1') {
+          // you have to return `{error: true}` to mark it as an error event
+          observer.next({ validating: true, repeat: true });
+          console.log('validating>>>>>>>>>>');
+        } else {
+          observer.next(null);
+        }
+        observer.complete();
+      }, 200);
+    });
 
-validating1 = (control: FormControl) =>
-  new Observable((observer: Observer<ValidationErrors | null>) => {
-    setTimeout(() => {
-      console.log('validating>>>>>>>>>>测试远程校验');
-
+  userNameAsyncValidator = (control: FormControl) =>
+    new Observable((observer: Observer<ValidationErrors | null>) => {
+      //  setTimeout(() => {
       if (control.value === '中国香港1') {
         // you have to return `{error: true}` to mark it as an error event
-        observer.next({ validating: true, repeat: true });
         console.log('validating>>>>>>>>>>');
+        observer.next({ error: true, userNameAsyncValidator: true });
       } else {
         observer.next(null);
       }
       observer.complete();
-    }, 200);
-  });
-
-userNameAsyncValidator = (control: FormControl) =>
-  new Observable((observer: Observer<ValidationErrors | null>) => {
-    //  setTimeout(() => {
-    if (control.value === '中国香港1') {
-      // you have to return `{error: true}` to mark it as an error event
-      console.log('validating>>>>>>>>>>');
-      observer.next({ error: true, userNameAsyncValidator: true });
-    } else {
-      observer.next(null);
-    }
-    observer.complete();
-    //  }, 1000);
-  });
+      //  }, 1000);
+    });
 
 
   /**
@@ -1101,147 +1148,147 @@ userNameAsyncValidator = (control: FormControl) =>
    * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
    */
   public link(option) {
-  let url;
-  let params;
-  if (option && option.linkConfig) {
-    if (option.linkConfig.link) {
-      url = option.linkConfig.link;
-    }
+    let url;
+    let params;
+    if (option && option.linkConfig) {
+      if (option.linkConfig.link) {
+        url = option.linkConfig.link;
+      }
 
-    if (option.linkConfig.params && Array.isArray(option.linkConfig.params)) {
-      params = this.buildParameters(option.linkConfig.params, option.data.originData);
-      url = `${url}/${params['ID']}`;
-    }
+      if (option.linkConfig.params && Array.isArray(option.linkConfig.params)) {
+        params = this.buildParameters(option.linkConfig.params, option.data.originData);
+        url = `${url}/${params['ID']}`;
+      }
 
-    if (url && params) {
-      this.componentService.router.navigate([url], { queryParams: { ...params } });
+      if (url && params) {
+        this.componentService.router.navigate([url], { queryParams: { ...params } });
+      }
+      else if (url) {
+        this.componentService.router.navigate([url]);
+      }
+    } else {
+      console.log('error');
     }
-    else if (url) {
-      this.componentService.router.navigate([url]);
-    }
-  } else {
-    console.log('error');
+    // this.componentService.router.navigate([option.link], { queryParams: { ...option.data.originData } });
+    // this.componentService.activeRoute
+    // this.router.navigate(['../home'],{relativeTo:this.route});
   }
-  // this.componentService.router.navigate([option.link], { queryParams: { ...option.data.originData } });
-  // this.componentService.activeRoute
-  // this.router.navigate(['../home'],{relativeTo:this.route});
-}
 
   public linkTo(option) {
 
-}
-
-
-/**
- * 显示消息框
- * @param option 
- */
-    public showMessage(option) {
-  let msgObj;
-  if (option && Array.isArray(option)) {
-    // 后续需要根据具体情况解析批量处理结果
-    msgObj = this.buildMessageContent(option[0]);
-  } else if (option) {
-    msgObj = this.buildMessageContent(option);
   }
-  option && this.componentService.msgService.create(msgObj.type, `${msgObj.message}`);
-}
+
+
+  /**
+   * 显示消息框
+   * @param option 
+   */
+  public showMessage(option) {
+    let msgObj;
+    if (option && Array.isArray(option)) {
+      // 后续需要根据具体情况解析批量处理结果
+      msgObj = this.buildMessageContent(option[0]);
+    } else if (option) {
+      msgObj = this.buildMessageContent(option);
+    }
+    option && this.componentService.msgService.create(msgObj.type, `${msgObj.message}`);
+  }
 
   public showWindow(option: any) {
-  let dialog;
-  // 根据按钮类型初始化表单状态
-  const dialogCfg = option.window;
-  // dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
+    let dialog;
+    // 根据按钮类型初始化表单状态
+    const dialogCfg = option.window;
+    // dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
 
-  // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
-  // if(isEditForm) {
+    // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
+    // if(isEditForm) {
 
-  // }
-  if (option.changeValue) {
-    const d = ParameterResolver.resolve({
-      params: option.changeValue.params,
-      tempValue: this.tempValue,
-      componentValue: this.validateForm.value,
-      item: this.FORM_VALUE,
-      initValue: this.initValue,
-      cacheValue: this.cacheValue,
-      router: this.routerValue
-    });
-    option.changeValue.params.map(param => {
-      if (param.type === 'value') {
-        // 类型为value是不需要进行任何值的解析和变化
-      } else {
-        if (d[param.name]) {
-          param['value'] = d[param.name];
+    // }
+    if (option.changeValue) {
+      const d = ParameterResolver.resolve({
+        params: option.changeValue.params,
+        tempValue: this.tempValue,
+        componentValue: this.validateForm.value,
+        item: this.FORM_VALUE,
+        initValue: this.initValue,
+        cacheValue: this.cacheValue,
+        router: this.routerValue
+      });
+      option.changeValue.params.map(param => {
+        if (param.type === 'value') {
+          // 类型为value是不需要进行任何值的解析和变化
+        } else {
+          if (d[param.name]) {
+            param['value'] = d[param.name];
+          }
         }
-      }
-    });
-  }
+      });
+    }
 
-  const dialogOptional = {
-    nzTitle: dialogCfg.title ? dialogCfg.title : '',
-    nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
-    nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
-    nzContent: CnPageComponent,
-    nzComponentParams: {
-      config: {},
-      customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
-      // initData:this.initData
-      changeValue: option.changeValue ? option.changeValue.params : []
-    },
-    nzFooter: [
-      {
-        label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
-        onClick: componentInstance => {
-          dialog.close();
-        }
+    const dialogOptional = {
+      nzTitle: dialogCfg.title ? dialogCfg.title : '',
+      nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+      nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+      nzContent: CnPageComponent,
+      nzComponentParams: {
+        config: {},
+        customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+        // initData:this.initData
+        changeValue: option.changeValue ? option.changeValue.params : []
       },
-      {
-        label: dialogCfg.okText ? dialogCfg.okText : 'OK',
-        onClick: componentInstance => {
-          dialog.close();
-          /*    (async () => {
-                 const response = await componentInstance.executeModal(option);
-                 this._sendDataSuccessMessage(response, option.ajaxConfig.result);
-
-                 // 处理validation结果
-                 this._sendDataValidationMessage(response, option.ajaxConfig.result)
-                     &&
-                     this._sendDataErrorMessage(response, option.ajaxConfig.result)
-                     && dialog.close();
-             })(); */
+      nzFooter: [
+        {
+          label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
+          onClick: componentInstance => {
+            dialog.close();
+          }
+        },
+        {
+          label: dialogCfg.okText ? dialogCfg.okText : 'OK',
+          onClick: componentInstance => {
+            dialog.close();
+            /*    (async () => {
+                   const response = await componentInstance.executeModal(option);
+                   this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+  
+                   // 处理validation结果
+                   this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                       &&
+                       this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                       && dialog.close();
+               })(); */
+          }
         }
-      }
-    ]
-  }
-  dialog = this.componentService.modalService.create(dialogOptional);
+      ]
+    }
+    dialog = this.componentService.modalService.create(dialogOptional);
 
-}
+  }
 
   public buildMessageContent(msgObj) {
-  const message: any = {};
-  let array: any[];
-  if (msgObj.type) {
+    const message: any = {};
+    let array: any[];
+    if (msgObj.type) {
 
-  } else {
-    array = msgObj.message.split(':');
-  }
-
-  if (!array) {
-    if (msgObj.code) {
-      message.message = msgObj.code;
-    } else if (msgObj.message) {
-      message.message = msgObj.message;
+    } else {
+      array = msgObj.message.split(':');
     }
-    // message.message = option.code ? option.code : '';
-    msgObj.field && (message.field = msgObj.field ? msgObj.field : '');
-    message.type = msgObj.type;
-  } else {
-    message.type = array[0];
-    message.message = array[1];
+
+    if (!array) {
+      if (msgObj.code) {
+        message.message = msgObj.code;
+      } else if (msgObj.message) {
+        message.message = msgObj.message;
+      }
+      // message.message = option.code ? option.code : '';
+      msgObj.field && (message.field = msgObj.field ? msgObj.field : '');
+      message.type = msgObj.type;
+    } else {
+      message.type = array[0];
+      message.message = array[1];
+    }
+    return message
   }
-  return message
-}
 
   // 分组属性表单=》动态读取属性，分布提交
   // 根据属性生成-》折叠+表格+扩展页面=>组合属性

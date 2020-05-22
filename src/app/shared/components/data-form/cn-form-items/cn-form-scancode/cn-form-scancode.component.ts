@@ -41,6 +41,8 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
         this.formGroup.controls[key].updateValueAndValidity();
       }
     }
+    const backValue = { name: this.config.field, value: v, id: this.config.config.id,dataItem: this.selectedRowItem };
+    this.updateValue.emit(backValue);
   }
   public cascadeAnalysis(c?) {
   }

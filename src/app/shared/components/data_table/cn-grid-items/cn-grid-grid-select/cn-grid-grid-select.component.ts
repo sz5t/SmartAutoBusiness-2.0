@@ -37,7 +37,13 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
   }
 
   ngOnInit() {
-    this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+    const _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+    // 静态数据，动态数据
+    if (Object.prototype.toString.call(this.tableConfig.component) === '[object Object]') {
+      this.tableConfig = _tableConfig;
+    } else {
+      this.tableConfig['component'] = _tableConfig;
+    }
     if (this.config.loadingOnInit) {
       this.tableConfig.component['loadingOnInit'] = this.config.loadingOnInit;
     }

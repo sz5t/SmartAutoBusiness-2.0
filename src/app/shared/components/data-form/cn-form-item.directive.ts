@@ -24,6 +24,8 @@ import { CnFormButtonComponent } from './cn-form-items/cn-form-button/cn-form-bu
 import { CnFormGroupComponent } from './cn-form-items/cn-form-group/cn-form-group.component';
 import { CnFormTagComponent } from '@shared/components/data-form/cn-form-items/cn-form-tag/cn-form-tag.component';
 import { CnFormScancodeComponent } from '@shared/components/data-form/cn-form-items/cn-form-scancode/cn-form-scancode.component';
+import { CnFormCustomInputComponent } from '@shared/components/data-form/cn-form-items/cn-form-custom-input/cn-form-custom-input.component';
+import { CnFormCascaderComponent } from '@shared/components/data-form/cn-form-items/cn-form-cascader/cn-form-cascader.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnFormInputComponent,
@@ -50,6 +52,8 @@ const components: { [type: string]: Type<any> } = {
   group: CnFormGroupComponent,
   tag: CnFormTagComponent,
   scancode:CnFormScancodeComponent,
+  customInput:CnFormCustomInputComponent,
+  cascader:CnFormCascaderComponent
 };
 @Directive({
   selector: '[CnFormItemDirective]'
@@ -111,7 +115,7 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
     }
 
 
-    console.log('创建表单内部组件。。。-----------------------------', this.tempData,_config,this.formGroup.controls);
+ //   console.log('创建表单内部组件。。。-----------------------------', this.tempData,_config,this.formGroup.controls);
   }
 
   // 组件将值写回、级联数据-》回写 

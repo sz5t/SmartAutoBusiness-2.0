@@ -191,7 +191,6 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         setTimeout(_ => {
             this.toolbarsIsLoading[btn.id] = false;
         }, 150);
-
         if (Array.isArray(btn.beforeExecute) && btn.beforeExecute.length > 0) {
             const res = this.checkComponentProperty(btn);
             if (!res) {
@@ -231,6 +230,14 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                         if (btn.toggle.values) {
                             const valueObj = btn.toggle.values.find(val => val.name === stateValue);
                             valueObj && (btn[btn.toggle.toggleProperty] = valueObj.value);
+                        }
+                        if(actions){
+                            actions.group.forEach(element => {
+                                if(element.toggle && element.toggle.values){
+                                    const _valueObj = element.toggle.values.find(val => val.name === stateValue);
+                                    _valueObj && (element[element.toggle.toggleProperty] = _valueObj.value);
+                                }
+                            });
                         }
 
                         break;

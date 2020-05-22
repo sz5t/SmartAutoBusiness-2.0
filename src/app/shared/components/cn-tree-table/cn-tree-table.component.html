@@ -119,7 +119,7 @@
               </ng-template>
               <ng-container *ngSwitchCase="'action'">
                 <td>
-                  <ng-template ngFor let-act [ngForOf]="item['actions']">
+                  <!-- <ng-template ngFor let-act [ngForOf]="item['actions']">
                     <ng-container [ngSwitch]="act.type">
                       <ng-container *ngSwitchCase="'link'">
                         <a *ngIf="!act.hidden" (click)="rowAction(act, item, $event)"><i nz-icon [nzType]="act.icon"
@@ -133,7 +133,37 @@
                         </button>
                       </ng-container>
                     </ng-container>
-                  </ng-template>
+                  </ng-template> -->
+ 
+                  <ng-container *ngIf="item['actions'].length>1">
+                    <nz-button-group>
+                        <button nzSize="default" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu"
+                          nzPlacement="bottomLeft">
+                          <i nz-icon nzType="ellipsis" class="text-lg green"></i>
+                        </button>
+                      </nz-button-group>
+                      <nz-dropdown-menu #menu="nzDropdownMenu">
+                        <ul nz-menu nzSelectable>
+                          <li (click)="rowAction(act, item, $event)" nz-menu-item
+                            *ngFor="let act of item['actions']">
+                            <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                            <!-- <button (click)="rowAction(act, rowData, $event)" nz-button [nzSize]="act.size"
+                              [nzType]="act.color ? act.color : 'default'">
+        
+                            </button> -->
+                          </li>
+                        </ul>
+                      </nz-dropdown-menu>
+                  </ng-container>
+                  <ng-container *ngIf="item['actions'].length===1">
+                      <ng-template ngFor let-act [ngForOf]="item['actions']">
+                              <button (click)="rowAction(act, item, $event)" nz-button nzSize="act.size"
+                                [nzType]="act.color ? act.color : 'default'">
+                                <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                              </button>
+                        </ng-template>
+                    </ng-container>
+
                 </td>
               </ng-container>
             </ng-container>

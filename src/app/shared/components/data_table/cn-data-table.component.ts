@@ -126,7 +126,7 @@ export class CnDataTableComponent extends CnComponentBase
     public ROW_SELECTED: any;
     public ROWS_CHECKED: any[] = [];
     public COMPONENT_VALUE: any[] = [];
-
+    public ROW_CURRENT: any;
     public operationRow: any;
 
     // 作为子组件时变量
@@ -366,6 +366,9 @@ export class CnDataTableComponent extends CnComponentBase
 
     public load() {
         this.isLoading = true;
+        if (!this.config.loadingConfig) {
+            return;
+          }
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
 
@@ -433,6 +436,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public loadRefreshData(option) {
+        debugger;
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
@@ -595,11 +599,15 @@ export class CnDataTableComponent extends CnComponentBase
         return newData;
     }
 
-    public addRow() {
+    public addRow(r?) {
+       // debugger;
         // 创建空数据对象
         const newId = CommonUtils.uuID(32);
-        const newData = this.createNewRowData();
+        let newData = this.createNewRowData();
         newData[this.KEY_ID] = newId;
+        if(r){
+            newData = {...newData,...r};
+        }
 
         // 新增数据加入原始列表,才能够动态新增一行编辑数据
         this.dataList = [newData, ...this.dataList];
@@ -798,7 +806,7 @@ export class CnDataTableComponent extends CnComponentBase
         // if (option.data) {
         //     paramData = ParameterResolver.resolve({
         //         params: ajaxParams,
-        //         item: option.data.data,
+        //         item: option.data.data?option.data.data:option.data,
         //         tempValue: this.tempValue,
         //         initValue: this.initValue,
         //         cacheValue: this.cacheValue
@@ -818,7 +826,7 @@ export class CnDataTableComponent extends CnComponentBase
         if (option.data) {
             paramData = ParameterResolver.resolve({
                 params: ajaxParams,
-                item: option.data.data,
+                item: option.data.data?option.data.data:option.data,
 
                 selectedRow: this.ROW_SELECTED,
                 router: this.routerValue,
@@ -903,7 +911,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     public async saveRow(option) {
         const ajaxConfig = option.ajaxConfig;
-        const rowData = option.data.data;
+        const rowData = option.data.data?option.data.data:option.data;
         const url = ajaxConfig.url;
         const paramData = ParameterResolver.resolve({
             params: ajaxConfig.params,
@@ -1109,7 +1117,9 @@ export class CnDataTableComponent extends CnComponentBase
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
                 checkedRow: this.ROWS_CHECKED,
-                outputValue: data
+                outputValue: data,
+                returnValue: data,
+                selectedRow:this.ROW_SELECTED
 
             });
         } else if (!isArray && data) {
@@ -1117,7 +1127,7 @@ export class CnDataTableComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.ROW_SELECTED,
+                item: data,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -1126,7 +1136,8 @@ export class CnDataTableComponent extends CnComponentBase
                 validation: data,
                 returnValue: data,
                 checkedRow: this.ROWS_CHECKED,
-                outputValue: data
+                outputValue: data,
+                selectedRow:this.ROW_SELECTED
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1135,7 +1146,7 @@ export class CnDataTableComponent extends CnComponentBase
                     params: paramsCfg,
                     tempValue: this.tempValue,
                     componentValue: d,
-                    item: this.ROW_SELECTED,
+                    item:  d,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
                     router: this.routerValue,
@@ -1187,7 +1198,8 @@ export class CnDataTableComponent extends CnComponentBase
             item: this.ROW_SELECTED,
             tempValue: this.tempValue,
             initValue: this.initValue,
-            cacheValue: this.cacheValue
+            cacheValue: this.cacheValue,
+            selectedRow: this.ROW_SELECTED
         });
     }
 
@@ -1269,6 +1281,7 @@ export class CnDataTableComponent extends CnComponentBase
      * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
      */
     public link(option) {
+       // debugger;
         let url;
         let params;
         if (option && option.linkConfig) {
@@ -1277,7 +1290,7 @@ export class CnDataTableComponent extends CnComponentBase
             }
 
             if (option.linkConfig.params && Array.isArray(option.linkConfig.params)) {
-                params = this.buildParameters(option.linkConfig.params, option.data.originData);
+                params = this.buildParameters(option.linkConfig.params, option.data.originData?option.data.originData:option.data);
                 url = `${url}/${params['ID']}`;
             }
             if (url && params) {
@@ -1346,7 +1359,11 @@ export class CnDataTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: this.ROW_SELECTED,
+                item: option.data.data?option.data.data:option.data,
+                selectedRow: this.ROW_SELECTED,
+                addedRows: this.ROWS_ADDED,
+                editedRows: this.ROWS_EDITED,
+                checkedRow: this.ROWS_CHECKED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue
@@ -1413,7 +1430,11 @@ export class CnDataTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: this.ROW_SELECTED,
+                item: option.data,
+                selectedRow: this.ROW_SELECTED,
+                addedRows: this.ROWS_ADDED,
+                editedRows: this.ROWS_EDITED,
+                checkedRow: this.ROWS_CHECKED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue
@@ -1591,6 +1612,7 @@ export class CnDataTableComponent extends CnComponentBase
      */
     rowAction(actionCfg, rowData, $event?) {
         const dataOfState = this.mapOfDataState[rowData[this.KEY_ID]];
+        this.ROW_CURRENT = dataOfState.originData;
         $event && $event.stopPropagation();
         const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
         trigger.toolbarAction(actionCfg, this.config.id);

@@ -52,7 +52,7 @@ export class GridTrigger {
 
     handleActionType() {
         // 前置条件判断
-
+        
         // 该功能不由组件实现
         this._componentInstance[CN_DATA_GRID_METHOD[this._triggerMsg.trigger.trigger]]();
     }
@@ -168,6 +168,9 @@ export class TriggerResolver {
     }
 
     handleActionType() {
+        if (!this.conditionValidator(this._triggerMsg.options.condition)) {
+            return false;
+        }
         const method = this._componentInstance.COMPONENT_METHODS[this._triggerMsg.trigger.trigger];
         if (method) {
             this._componentInstance[method](this._triggerMsg.options);
@@ -195,6 +198,7 @@ export class TriggerResolver {
     }
 
     private conditionValidator(condCfg): boolean {
+       // debugger;
         if (!condCfg) {
             return true;
         }

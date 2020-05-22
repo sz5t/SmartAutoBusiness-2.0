@@ -30,6 +30,9 @@ export class CnFormTagComponent implements OnInit {
         const val = this.value;
         if (val && (d.value === val)) {
           this.color = d.color;
+          if(d.valueText){
+            this.text = d.valueText;
+          }
           return false;
         }
       })

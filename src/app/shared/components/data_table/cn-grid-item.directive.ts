@@ -108,7 +108,7 @@ export class CnGridItemDirective implements OnInit, OnChanges, OnDestroy {
         this.setValue(event);
       });
     }
-     console.log('创建表格内部组件。。。',  this.config);
+   //  console.log('创建表格内部组件。。。',  this.config);
   }
 
   // 组件将值写回、级联数据-》回写 

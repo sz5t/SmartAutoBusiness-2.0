@@ -1,24 +1,23 @@
-import { Component, OnInit, Input, Inject, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, Inject } from '@angular/core';
 import { CnComponentBase } from '@shared/components/cn-component.base';
+import { FormGroup } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
-import { NzFormatEmitEvent, NzTreeNode } from 'ng-zorro-antd';
-import { FormGroup } from '@angular/forms';
 import { isArray } from 'util';
 
 @Component({
-  selector: 'app-cn-form-tree-select',
-  templateUrl: './cn-form-tree-select.component.html',
-  styleUrls: ['./cn-form-tree-select.component.less']
+  selector: 'app-cn-form-cascader',
+  templateUrl: './cn-form-cascader.component.html',
+  styleUrls: ['./cn-form-cascader.component.less']
 })
-export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit {
+export class CnFormCascaderComponent extends CnComponentBase implements OnInit {
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Input() tempData;
   @Input() initData;
   @Output() public updateValue = new EventEmitter();
-  @ViewChild('tree', { static: true }) tree: ElementRef;
+
   isLoading;
   public mapOfDataState: {
     [key: string]: {
@@ -45,6 +44,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
   }
   expandKeys = null; // ['100', '1001'];
   value: string;
+  _value;
   nodes = [];
   nodes1 = [
     {
@@ -82,7 +82,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
     let item = null;
     if (v) {
       item = this.getChidlren(v);
-      if (!item) {
+/*       if (!item) {
         // 异步执行 loaditem
         item = await this.loadItem();
 
@@ -110,7 +110,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
         // this.tree['selectedNodes'][0]['_title'] =  _itemData['title'];
 
        // console.log('zxzxzxzxzx', this.nodes);
-      }
+      } */
     }
 
     const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: item };
@@ -119,6 +119,21 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
 
 
     console.log('下拉树返回', backValue);
+  }
+
+
+  valueChange_ByCascader(v?){
+     if(v){
+         this.value =v[v.length-1];
+     } else {
+       v=null;
+     }
+
+  }
+
+  validate(option?, _index ?: number): boolean {
+    const value = option.value as string;
+    return true;
   }
 
   clicktree() {
@@ -137,7 +152,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
     // this.tree['selectedNodes'].push(new NzTreeNode(d));
     // this.tree['value'].push( item['key'] );
     // this.tree['selectedNodes'][0]['_title'] =  item['NAME'];
-    console.log('下拉树返回___CLICK', this.tree);
+    // console.log('下拉树返回___CLICK', this.tree);
   }
 
   ngOnInit(): void {
@@ -271,36 +286,54 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
     }
   }
 
-  public async expandNode($event: NzFormatEmitEvent | NzTreeNode) {
-    let node;
-    if ($event instanceof NzTreeNode) {
-      node = $event;
-    } else {
-      node = $event['node'];
-    }
 
-    if (!this.config.asyncData) {
-      return true;
-    }
+  // 展开加载
+  loadData(node?): PromiseLike<void> {
 
-    if (node && node.isExpanded) {
-      const response = await this._getAsyncTreeData(this.config.expandConfig.ajaxConfig, node);
-      if (response && response.data && response.data.length > 0) {
-        node.clearChildren();
-        response.data.map(d => {
-          this._setTreeNode(d);
-          // d['isLeaf'] = false;
-         //  d['children'] = [];
-        });
-        node.addChildren(response.data);
-      } else {
-        node.addChildren([]);
-        node.isExpanded = false;
-      }
-    } else if (node.isExpanded === false) {
-      node.clearChildren();
-    }
+    return new Promise(resolve => {
+      setTimeout(() => {
+        // if (index < 0) {
+        //   // if index less than 0 it is root node
+        //   node.children = provinces;
+        // } else if (index === 0) {
+        //   node.children = cities[node.value];
+        // } else {
+        //   node.children = scenicspots[node.value];
+        // }
+        resolve();
+      }, 1000);
+    });
   }
+  // public async expandNode($event: NzFormatEmitEvent | NzTreeNode) {
+  //   let node;
+  //   if ($event instanceof NzTreeNode) {
+  //     node = $event;
+  //   } else {
+  //     node = $event['node'];
+  //   }
+
+  //   if (!this.config.asyncData) {
+  //     return true;
+  //   }
+
+  //   if (node && node.isExpanded) {
+  //     const response = await this._getAsyncTreeData(this.config.expandConfig.ajaxConfig, node);
+  //     if (response && response.data && response.data.length > 0) {
+  //       node.clearChildren();
+  //       response.data.map(d => {
+  //         this._setTreeNode(d);
+  //         // d['isLeaf'] = false;
+  //        //  d['children'] = [];
+  //       });
+  //       node.addChildren(response.data);
+  //     } else {
+  //       node.addChildren([]);
+  //       node.isExpanded = false;
+  //     }
+  //   } else if (node.isExpanded === false) {
+  //     node.clearChildren();
+  //   }
+  // }
 
   // onExpandChange(e: Required<NzFormatEmitEvent>): void {
   //   const node = e.node;
@@ -330,8 +363,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
     return result;
   }
 
-  public cascadeAnalysis(c?) { 
-
+  public cascadeAnalysis(c?) {
     if (c.hasOwnProperty(this.config.field)) {
       if (c[this.config.field].hasOwnProperty('cascadeValue')) {
         this.cascadeValue = c[this.config.field].cascadeValue;
@@ -346,14 +378,10 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
       }
 
     }
-  }
+
+   }
 
 
-  // 树加载
-  // 定义树结构
-  // id  name parentid  =》 指定字段
-  // 树类型（异步树、静态树）
-  // 异步树-》Expand 节点展开-》数据加载，可扩充条件，加载不同数据，异构树
-  // 下拉树，值展示 根据component 取出对象值
+
 
 }

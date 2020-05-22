@@ -274,6 +274,10 @@ export class ComponentSenderResolver {
         // 前置条件判断
         // 该功能不由组件实现
         // this.sendMessage(cfg);
+       // debugger;
+        if (!this.conditionValidator(cfg.condition)) {
+            return false;
+        }
         this._componentInstance[cfg.triggerMoment](
             this._componentInstance,
             this._componentInstance.COMPONENT_METHODS[cfg.trigger],
@@ -400,6 +404,7 @@ export class ComponentSenderResolver {
      * @param condCfg 条件配置
      */
     private conditionValidator(condCfg): boolean {
+       // debugger;
         if (!condCfg) {
             return true;
         }
@@ -442,11 +447,13 @@ export class ComponentSenderResolver {
                         case 'element':
                             const elementResult = [];
                             for (const element of componentValue) {
+                               // console.log('liu______',element);
                                 const elementCompareObj = this.buildMatchObject(element, exp);
                                 elementResult.push(this.matchResolve(elementCompareObj, exp.match));
                             }
                             const elementMatchResult = elementResult.findIndex(res => !res) < 0;
                             allCheckResult.push(elementMatchResult);
+                            break;
                     }
                 }
                 break;
@@ -461,7 +468,13 @@ export class ComponentSenderResolver {
      */
     private buildMatchObject(componentValue, expCfg) {
         // 
-        const value = componentValue[expCfg.name];
+        let value;
+        if (expCfg.name) {
+            value = componentValue[expCfg.name];
+        } else {  // 读取自身数据
+            value = componentValue;
+        }
+        // const value = componentValue[expCfg.name];
         const matchValue = expCfg.matchValue;
         const matchValueFrom = expCfg.matchValueFrom;
         const matchValueTo = expCfg.matchValueTo;

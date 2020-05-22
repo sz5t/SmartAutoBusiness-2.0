@@ -3357,6 +3357,13 @@ export class CfgFormDemoComponent implements OnInit {
                         "control": { "id": "0151" }
                       },
                       {
+                        "id": "ioj0mV1", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
+                        "size": {
+                          "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
+                        },
+                        "control": { "id": "0153" }
+                      },
+                      {
                         "id": "ioj0mV", "col": "cc", "type": "col", "title": "列ioj0mV", "span": 24, "layoutContain": "select",
                         "size": {
                           "nzXs": 24, "nzSm": 24, "nzMd": 24, "nzLg": 24, "ngXl": 24, "nzXXl": 24
@@ -4271,6 +4278,67 @@ export class CfgFormDemoComponent implements OnInit {
                     },
                     "validations": [  // 校验
                       { validator: "required" }
+                    ]
+                  }
+                },
+                {
+                  id: '0153',
+                  "hidden": true, // 字段是否隐藏
+                  "title": '自定义文本单选',  // lable 信息
+                  "titleConfig": {
+                    required: false
+                  },
+                  "field": "remark153",  // fromcontrol name  默认的字段
+                  "labelSize": {
+                    "span": 4,
+                    "nzXs": 4, "nzSm": 4, "nzMd": 4, "nzLg": 4, "ngXl": 4, "nzXXl": 4
+                  },  // 
+                  "controlSize": {
+                    "span": 20,
+                    "nzXs": { span: 20, offset: 0 },
+                    "nzSm": { span: 20, offset: 0 },
+                    "nzMd": { span: 20, offset: 0 },
+                    "nzLg": { span: 20, offset: 0 },
+                    "ngXl": { span: 20, offset: 0 },
+                    "nzXXl": { span: 20, offset: 0 }
+                  },
+                  "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
+                  "text": { // 文本展示字段
+                    "type": 'label', // 什么组件展示文本 
+                    "field": 'remark153',   // 字段
+                  },
+                  "editor1": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "customSelect",
+                    "field": "remark15",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    labelName: 'OFFICENAME',
+                    valueName: 'ID',
+                    loadingItemConfig: {
+                      id: "loadformcustom" // 将加载配置引用
+                    },
+                    "validations": [  // 校验
+                      { validator: "required" }
+                    ]
+                  },
+                  "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
+                    "type": "customInput",
+                    "field": "remark153",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                    "placeholder": "请输入",
+
+                    changeValueId:"add_changeValue_liu_01",
+                    labelName: 'UNITNAME',
+                    valueName: 'ID',
+                    layoutName:"YeWuNswtNoIUFej5TzpLyWEckmnYHMA1", // 自定义页面标识（子页面id）
+                    targetValue:"tag_SBAxdPtAm5Gbzipe3DFRjhbtRcysySoIrlG5C",      // 自定义页面里的承载tag标识
+                    model:"single",  //  multiple 多选，single  默认单选
+                    loadingItemConfig: {
+                      id: "loadformcustom1" // 将加载配置引用
+                    },
+
+       
+                    "validations1": [  // 校验
+                    //  { validator: "required" }
                     ]
                   }
                 },

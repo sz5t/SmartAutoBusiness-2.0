@@ -15,22 +15,38 @@ export class CnGridInputComponent implements OnInit {
   value = null;
   count = 0;
   ngOnInit() {
+    // debugger;
     // console.log('input=>:', this.config,this.formGroup);
     let v_value;
     if (this.valueConfig) {
       v_value = this.valueConfig.value;
     }
-    if(this.state ==='new'){
-      if (this.config.defaultValue) {
-        if (!this.value) {
-          v_value = this.config.defaultValue;
-        }
+
+
+if (typeof(v_value) === "undefined"){ 
+  if (this.state === 'new') {
+    if (this.config.defaultValue) {
+      if (!this.value) {
+        v_value = this.config.defaultValue;
       }
     }
+  }
+}else if (!v_value && typeof(v_value)!=="undefined" && v_value!==0){ 
+  if (this.state === 'new') {
+    if (this.config.defaultValue) {
+      if (!this.value) {
+        v_value = this.config.defaultValue;
+      }
+    }
+  } 
+}
+
+
+    
 
     setTimeout(() => {
-      this.value =v_value;
-      this.valueChange( this.value);
+      this.value = v_value;
+      this.valueChange(this.value);
     });
 
   }
@@ -40,9 +56,9 @@ export class CnGridInputComponent implements OnInit {
    * valueChange
    */
   public valueChange(v?) {
-    const backValue ={id:this.valueConfig.id,name:this.config.field,value:v,count:this.count};
+    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v, count: this.count };
     this.updateValue.emit(backValue);
-    this.count +=1;
+    this.count += 1;
   }
   public cascadeAnalysis(c?) {
     if (c && c.hasOwnProperty(this.config.field)) {
@@ -51,13 +67,13 @@ export class CnGridInputComponent implements OnInit {
       }
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'setValue') {
-           this.value= c[this.config.field]['setValue']['value'];
-           this.assemblyValue();
+          this.value = c[this.config.field]['setValue']['value'];
+          this.assemblyValue();
         }
         if (c[this.config.field].exec === 'computeSetValue') {
-          this.value= c[this.config.field]['computeSetValue']['value'];
+          this.value = c[this.config.field]['computeSetValue']['value'];
           this.assemblyValue();
-       }
+        }
       }
 
     }
@@ -66,36 +82,36 @@ export class CnGridInputComponent implements OnInit {
   public onblur(e?, type?) {
     this.assemblyValue();
 
-}
-public onKeyPress(e?, type?) {
-    if (e.code === 'Enter') {
-        this.assemblyValue();
-    }
-}
-
-// 组装值
-public assemblyValue() {
-   console.log('组装值',this.value)
-    this.valueChange(this.value);
-}
-// 远程操作
-public remoteOperation(){
-  this.count =0;
-  let v_value;
-  if (this.valueConfig) {
-    v_value = this.valueConfig.value;
   }
-  if(this.state ==='new'){
-    if (this.config.defaultValue) {
-      if (!this.value) {
-        v_value = this.config.defaultValue;
+  public onKeyPress(e?, type?) {
+    if (e.code === 'Enter') {
+      this.assemblyValue();
+    }
+  }
+
+  // 组装值
+  public assemblyValue() {
+    console.log('组装值', this.value)
+    this.valueChange(this.value);
+  }
+  // 远程操作
+  public remoteOperation() {
+    this.count = 0;
+    let v_value;
+    if (this.valueConfig) {
+      v_value = this.valueConfig.value;
+    }
+    if (this.state === 'new') {
+      if (this.config.defaultValue) {
+        if (!this.value) {
+          v_value = this.config.defaultValue;
+        }
       }
     }
+    setTimeout(() => {
+      this.value = v_value;
+      this.valueChange(this.value);
+    });
   }
-  setTimeout(() => {
-    this.value =v_value;
-    this.valueChange( this.value);
-  });
-}
 
 }
