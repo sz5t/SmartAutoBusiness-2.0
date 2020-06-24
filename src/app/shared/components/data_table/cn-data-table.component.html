@@ -16,9 +16,9 @@
           [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-span [ngForOf]="spans">
           <ng-container [ngSwitch]="span.spanType">
-            <th *ngSwitchCase="'row'" attr.rowspan="{{ span.span }}">{{ span.title }}</th>
-            <th *ngSwitchCase="'col'" attr.colspan="{{ span.span }}">{{ span.title }}</th>
-            <th *ngSwitchDefault>{{ span.title }}</th>
+            <th *ngSwitchCase="'row'"  [nzAlign]="span.titleAlign?span.titleAlign:'left'"  attr.rowspan="{{ span.span }}">{{ span.title }}</th>
+            <th *ngSwitchCase="'col'"  [nzAlign]="span.titleAlign?span.titleAlign:'left'"  attr.colspan="{{ span.span }}">{{ span.title }}</th>
+            <th *ngSwitchDefault  [nzAlign]="span.titleAlign?span.titleAlign:'left'" >{{ span.title }}</th>
           </ng-container>
         </ng-template>
       </tr>
@@ -54,7 +54,7 @@
           <ng-container *ngSwitchCase="'field'">
             <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
               <ng-container *ngIf="col.editor">
-                <td *ngSwitchCase="'new'">
+                <td *ngSwitchCase="'new'"  [nzAlign]="col.align?col.align:'left'">
 
                   <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else text" [config]="col.editor"
                    [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
@@ -65,7 +65,7 @@
                     [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
                   </ng-container>
                 </td>
-                <td *ngSwitchCase="'edit'">
+                <td *ngSwitchCase="'edit'"  [nzAlign]="col.align?col.align:'left'">
                   <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else text"
                     [config]="col.editor"
                     [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
@@ -76,7 +76,7 @@
                     [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
                   </ng-container>
                 </td>
-                <td *ngSwitchDefault>
+                <td *ngSwitchDefault  [nzAlign]="col.align?col.align:'left'">
                   <ng-container CnGridItemDirective *ngIf="col.custom; else innerText" [state]="'edit'"
                     [config]="col.custom"
                     [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"

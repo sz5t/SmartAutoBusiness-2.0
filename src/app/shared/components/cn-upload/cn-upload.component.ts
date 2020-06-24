@@ -1,41 +1,119 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, ViewChild, OnDestroy } from '@angular/core';
 import { UploadFile } from 'ng-zorro-antd';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
+import { CnDataFormComponent } from '@shared/components/data-form/cn-data-form.component';
+import { environment } from '@env/environment';
+import { CnDataTableComponent } from '@shared/components/data_table/cn-data-table.component';
+import { CN_UPLOAD_PROPERTY } from '@core/relations/bsn-property/upload.property.interface.1';
+import { CN_UPLOAD_METHOD } from '@core/relations/bsn-methods/upload-methods';
+import { Subject, Subscription } from 'rxjs';
+import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
 
 @Component({
   selector: 'cn-upload,[cn-upload]',
   templateUrl: './cn-upload.component.html',
   styleUrls: ['./cn-upload.component.less']
 })
-export class CnUploadComponent extends CnComponentBase implements OnInit {
+export class CnUploadComponent extends CnComponentBase implements OnInit,OnDestroy {
   @Input()  public config; // dataTables 的配置参数
   @Input() initData;
   @Input() tempData;
   @Input() changeValue: any;
-  constructor(
-    @Inject(BSN_COMPONENT_SERVICES)
-    public componentService: ComponentServiceProvider
-) {
+  @Input() dataServe;
+
+  @ViewChild('fileform', { static: true }) public fileform: CnDataFormComponent;
+  @ViewChild('filetable', { static: true }) public filetable: CnDataTableComponent;
+  
+  public url = environment.SERVER_URL;
+
+
+  public COMPONENT_NAME = "CnUpload";
+  /**
+   * 组件操作对外名称
+   * 所有组件实现此属性
+   */
+  public COMPONENT_METHODS = CN_UPLOAD_METHOD;
+  public COMPONENT_PROPERTY = CN_UPLOAD_PROPERTY;
+
+  private _sender_source$: Subject<any>;
+  private _receiver_source$: Subject<any>;
+  private _trigger_source$: Subject<any>;
+
+  private _receiver_subscription$: Subscription;
+  private _sender_subscription$: Subscription;
+  private _trigger_receiver_subscription$: Subscription;
+  constructor(@Inject(BSN_COMPONENT_SERVICES)
+  public componentService: ComponentServiceProvider) {
     super(componentService);
     this.cacheValue = this.componentService.cacheService;
     this.tempValue = {};
     this.initValue = {};
-    // init cacheValue
-}
-  ngOnInit() {
+  }
 
+
+  ngOnInit() {
+console.log("xxxxxxxxxxxxxxxxxxxxxx=======");
     // 将准备参数解析后导入当前组件内部变量
     this.setChangeValue(this.changeValue);
 
   }
 
+  private resolveRelations() {
+    if (this.config.cascade && this.config.cascade.messageSender) {
+      if (!this._sender_source$) {
+        // 解析组件发送消息配置,并注册消息发送对象
+        this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
+        this._sender_subscription$ = this._sender_source$.subscribe();
+      }
+
+    }
+    if (this.config.cascade && this.config.cascade.messageReceiver) {
+      // 解析消息接受配置,并注册消息接收对象
+      // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+      // this._receiver_subscription$ = this._receiver_source$.subscribe();
+      new RelationResolver(this).resolveReceiver(this.config);
+    }
+
+    this._trigger_source$ = new RelationResolver(this).resolve();
+  }
+
+
+  public ngOnDestroy() {
+    // 释放级联对象
+    this.unsubscribeRelation();
+    // 释放及联接受对象
+    if (this._receiver_subscription$) {
+      this._receiver_subscription$.unsubscribe();
+    }
+
+    if (this._sender_subscription$) {
+      this._sender_subscription$.unsubscribe();
+    }
+
+    // 释放触发器对象
+    if (this._trigger_receiver_subscription$) {
+      this._trigger_receiver_subscription$.unsubscribe();
+    }
+
+    if (this._trigger_source$) {
+      this._trigger_source$.unsubscribe();
+    }
+
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
+  }
+
   uploading = false;
   fileList: UploadFile[] = [];
 
- 
+  // 下载
+  downClick(){
+    window.location.href=`${this.url}file/download?ids=59f7a501-d7f6-4b20-bcd5-73dfc9a30fcd,79bc1433-3c5a-4ef1-99e7-9bfff380bd1f`;
+  }
 
   beforeUpload = (file: UploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
@@ -54,6 +132,10 @@ export class CnUploadComponent extends CnComponentBase implements OnInit {
   Percent=90;
   myVar;
   async handleUpload(): Promise<void> {
+
+    console.log('.>>>>>>>>>',this.initData,this.initValue);
+    const fileform_value=this.fileform.validateForm.value;
+
 debugger;
     const formData = new FormData();
     // tslint:disable-next-line:no-any
@@ -72,18 +154,25 @@ debugger;
     // You can use any AJAX library you like
     const url = this.execConfig.ajaxConfig.url;
     const params = this.buildParameters( this.execConfig.ajaxConfig.params);
-    this.fileList=[];
+    // this.fileList=[]; // 上传成功清空，上传失败，则不清除，方便第二次提交数据
 
-    const response = await this.componentService.apiService[this.execConfig.ajaxConfig.ajaxType](url, formData).toPromise();
+   const response = await this.componentService.apiService[this.execConfig.ajaxConfig.ajaxType](url, formData).toPromise();
 
-    console.log('附件提交返回',response);
-
-
+  if (response && response.data) {
     setTimeout(()=>{
       this.uploading = false;
-    },2000);
+    },1000);
+    this.fileList=[]; 
+  }else{
+    this.uploading = false;
+  }
+//    console.log('附件提交返回',response);
+
+
+   
  
 
+    // 上传成功，刷新一下表格
 
     // const response = await this.componentService.apiService[ this.execConfig.ajaxConfig.ajaxType](url, params).toPromise();
 
@@ -235,7 +324,7 @@ debugger;
               "titleConfig": {
                 required: false
               },
-              "field": "inputname4",  // fromcontrol name  默认的字段
+              "field": "SECRET_LEVEL",  // fromcontrol name  默认的字段
               "labelSize": {
                 "span": 6,
                 "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
@@ -252,11 +341,11 @@ debugger;
               "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
               "text": { // 文本展示字段
                 "type": 'label', // 什么组件展示文本 
-                "field": 'inputname4',   // 字段
+                "field": 'SECRET_LEVEL',   // 字段
               },
               "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                 "type": "select",
-                "field": "inputname4",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                "field": "SECRET_LEVEL",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                 "placeholder": "请输入",
                 options: [
                   { label: '公开', value: '1' },
@@ -277,7 +366,7 @@ debugger;
               "titleConfig": {
                 required: false
               },
-              "field": "remark",  // fromcontrol name  默认的字段
+              "field": "REMARK",  // fromcontrol name  默认的字段
               "labelSize": {
                 "span": 6,
                 "nzXs": 6, "nzSm": 6, "nzMd": 6, "nzLg": 6, "ngXl": 6, "nzXXl": 6
@@ -294,11 +383,11 @@ debugger;
               "state": "edit", // 当前组件默认状态 文本，编辑，或者由表单状态控制 text、edit、form
               "text": { // 文本展示字段
                 "type": 'label', // 什么组件展示文本 
-                "field": 'remark',   // 字段
+                "field": 'REMARK',   // 字段
               },
               "editor": {            // 编辑状态字段  日后扩充可为数组，满足条件下的组件变化
                 "type": "textarea",
-                "field": "remark",  // 编辑字段于定义字段一致 （此处定义于表格相反）
+                "field": "REMARK",  // 编辑字段于定义字段一致 （此处定义于表格相反）
                 "placeholder": "请输入",
                 "autosize": {
                   minRows: 2, maxRows: 6
@@ -500,7 +589,7 @@ debugger;
               "pageSize": 5,
               "showCheckBox": true,
               "pageSizeOptions": [10, 20, 50, 100],
-              "loadingOnInit": false,
+              "loadingOnInit": true,
               // "scroll": {
               //     "y": "300px"
               // },
@@ -508,7 +597,7 @@ debugger;
                 '50px', '100px', '200px', '200px', '200px'
               ],
               "loadingConfig": {
-                "url": "",
+                "url": "resource/SYS_FILE/query",
                 "method": "get",
                 "params": [
 
@@ -532,7 +621,7 @@ debugger;
                 {
                   "title": "文件名称",
                   "type": "field",
-                  "field": "provinceName",
+                  "field": "ACT_NAME",
                   "hidden": false,
                   "showFilter": false,
                   "showSort": false,
@@ -540,7 +629,7 @@ debugger;
                   "style": {},
                   editor: {
                     "type": "input",
-                    "field": "provinceName",
+                    "field": "ACT_NAME",
                     "defaultValue": '默认值'
                   }
                 },
@@ -1129,7 +1218,60 @@ debugger;
 
             }
       }
-    }
+    },
+    "fileContentParams":[ // 上传附件表单映射列
+      {
+        "name": "REF_DATA_ID",
+        "type": "initValue",
+        "value": "PID",
+        "valueName":""
+      },
+      {
+        "name": "SAVE_TYPE",
+        "type": "value",
+        "value": "service",
+        "valueName":""
+      },
+      {
+        "name": "SECRET_LEVEL",
+        "type": "formValue",
+        "value": "public",
+        "valueName":"SECRET_LEVEL"
+      },
+      {
+        "name": "REMARK",
+        "type": "formValue",
+        "value": "isnull",
+        "valueName":"REMARK"
+      },
+      {
+        "name": "TYPE",     // 外部传入，当前附件上传属于哪类附件，一般此处配置是表名称，或者功能名称，方便后期附件管理
+        "type": "initValue",
+        "value": "isnull",
+        "valueName":"TYPE"
+      },
+      {
+        "name": "files",  
+        "type": "initValue",
+        "value": "isnull",
+        "valueName":"files"
+      },
+      {
+        "name": "ORDER_CODE",    // 排序字段，默认是当前排序
+        "type": "initValue",
+        "value": "isnull",
+        "valueName":"ORDER_CODE"
+      },
+
+
+      // formData.append(`files.${index}`, file);
+      // formData.append(`TYPE.${index}`, index.toString());
+      // formData.append(`ORDER_CODE.${index}`,  index.toString());
+      // formData.append(`SAVE_TYPE.${index}`, 'service');
+      // formData.append(`SECRET_LEVEL.${index}`, 'public');
+      // formData.append(`REMARK.${index}`, '备注');
+      // formData.append(`REF_DATA_ID.${index}`, 'LIUTEXT00001');
+    ]
 
 
     

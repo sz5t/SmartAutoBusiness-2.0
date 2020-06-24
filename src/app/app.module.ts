@@ -134,7 +134,7 @@ import { AppComponent } from './app.component';
 import { RoutesModule } from './routes/routes.module';
 import { LayoutModule } from './layout/layout.module';
 import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
-import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { ComponentServiceProvider, DataServerService } from '@core/services/component/component-service.provider';
 import { environment } from '@env/environment';
 import { DelonMockModule } from '@delon/mock';
 import { ConfigureModule } from './configure/configure.module';

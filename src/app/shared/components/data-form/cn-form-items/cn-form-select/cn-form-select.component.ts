@@ -33,7 +33,7 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit, Af
     this.tempValue = {};
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.initData) {
       this.initValue = this.initData;
     } else {
@@ -47,12 +47,8 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit, Af
     // console.log('select 初始化ngOnInit=>当前表单的值',this.formGroup.value , this.config);
     this.myControl = this.formGroup.get(this.config.field);
     // console.log('select required',this.myControl);
-  }
-
-  ngAfterViewInit() {
-    // console.log('ngAfterViewInit ==>' , this.config.field);
     if (this.config.loadingConfig) {
-      this.load();
+     await this.load();
     } else {
       if (this.config.options) {
         setTimeout(() => {
@@ -61,6 +57,11 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit, Af
         this.selectItems = this.config.options;
       }
     }
+  }
+
+  ngAfterViewInit() {
+    // console.log('ngAfterViewInit ==>' , this.config.field);
+
   }
 
   /**
@@ -135,9 +136,10 @@ export class CnFormSelectComponent extends CnComponentBase implements OnInit, Af
       data_form.forEach(element => {
         newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
       });
-      setTimeout(() => {
+    //  setTimeout(() => {
         this.selectOptions = newOptions;
-      });
+        this.selectOptions =this.selectOptions.filter(d=>d.lable!==null);
+    //  });
 
       //   console.log('下拉选择的最终数据集===》', this.selectOptions);
       // for (const item in this.formValue) {

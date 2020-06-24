@@ -125,9 +125,14 @@ export class CnFormCascaderComponent extends CnComponentBase implements OnInit {
   valueChange_ByCascader(v?){
      if(v){
          this.value =v[v.length-1];
+         if(! this.value){
+          this.value =null;
+         }
      } else {
        v=null;
+       this.value = null;
      }
+
 
   }
 

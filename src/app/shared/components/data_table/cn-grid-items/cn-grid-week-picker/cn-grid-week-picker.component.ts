@@ -14,6 +14,7 @@ export class CnGridWeekPickerComponent implements OnInit {
   @Input() public state;
   date = null; // new Date();
   value =null;
+  cascadeValue: any;
   constructor() { }
 
   ngOnInit() {
@@ -43,7 +44,7 @@ export class CnGridWeekPickerComponent implements OnInit {
       this.value = yw
     }
     console.log('周变化week: ',yw);
-
+    this.valueChange( this.value);
   }
   public valueChange(v?) {
     if (v) {
@@ -87,5 +88,18 @@ export class CnGridWeekPickerComponent implements OnInit {
     return d;
   }
 
-  public cascadeAnalysis(c?) {}
+  public cascadeAnalysis(c?) {
+    if (c && c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setValue') {
+           this.value= c[this.config.field]['setValue']['value'];
+           this.valueChange( c[this.config.field]['setValue']['value']);
+        }
+      }
+
+    }
+  }
 }

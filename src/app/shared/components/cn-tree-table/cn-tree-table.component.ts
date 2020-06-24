@@ -44,14 +44,15 @@ import { CN_TREE_GRID_METHOD } from '@core/relations/bsn-methods/bsn-tree-grid-m
     styleUrls: [`cn-tree-table.component.less`]
 })
 export class CnTreeTableComponent extends CnComponentBase
-    implements OnInit, AfterViewInit, OnDestroy, ITreeGridProperty {
-
+    implements OnInit, AfterViewInit, OnDestroy {
+    // ITreeGridProperty
     @Input()
     public config; // dataTables 的配置参数
     @Input()
     public permissions = [];
     @Input()
     public dataList = [];
+    @Input() dataServe;
     @Output() public updateValue = new EventEmitter();
     /**
      * 组件名称
@@ -112,7 +113,7 @@ export class CnTreeTableComponent extends CnComponentBase
     public ROWS_CHECKED: any[] = [];
     public COMPONENT_VALUE: any[] = [];
     public ROW_CURRENT: any;
-    
+
     public operationRow: any;
 
     private _selectedRow;
@@ -221,22 +222,22 @@ export class CnTreeTableComponent extends CnComponentBase
 
     private resolveRelations() {
         if (this.config.cascade && this.config.cascade.messageSender) {
-          if (!this._sender_source$) {
-            // 解析组件发送消息配置,并注册消息发送对象
-            this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
-            this._sender_subscription$ = this._sender_source$.subscribe();
-          }
-    
+            if (!this._sender_source$) {
+                // 解析组件发送消息配置,并注册消息发送对象
+                this._sender_source$ = new RelationResolver(this).resolveSender(this.config);
+                this._sender_subscription$ = this._sender_source$.subscribe();
+            }
+
         }
         if (this.config.cascade && this.config.cascade.messageReceiver) {
-          // 解析消息接受配置,并注册消息接收对象
-          // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
-          // this._receiver_subscription$ = this._receiver_source$.subscribe();
-          new RelationResolver(this).resolveReceiver(this.config);
+            // 解析消息接受配置,并注册消息接收对象
+            // this._receiver_source$ = new RelationResolver(this).resolveReceiver(this.config);
+            // this._receiver_subscription$ = this._receiver_source$.subscribe();
+            new RelationResolver(this).resolveReceiver(this.config);
         }
-    
+
         this._trigger_source$ = new RelationResolver(this).resolve();
-      }
+    }
 
     /**
      * 构建表格列集合
@@ -288,7 +289,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 originData: { ..._root },
                 validation: true,
                 actions: this.getRowActions('text'),
-                children: _root['children'] ? []: null,
+                children: _root['children'] ? [] : null,
                 isNewRow: false
             });
 
@@ -488,6 +489,7 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public loadRefreshData(option) {
+        debugger;
         this._buildReloadAjax(option, (data) => {
             this.refreshData(data);
         })
@@ -1018,7 +1020,7 @@ export class CnTreeTableComponent extends CnComponentBase
         if (option.data) {
             paramData = ParameterResolver.resolve({
                 params: ajaxParams,
-                item: option.data.data?option.data.data:option.data,
+                item: option.data.data ? option.data.data : option.data,
                 tempValue: this.tempValue,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue
@@ -1332,6 +1334,9 @@ export class CnTreeTableComponent extends CnComponentBase
 
             });
         } else if (!isArray && data) {
+            if (data['_procedure_resultset_1']) {
+                data = data['_procedure_resultset_1'][0];
+            }
             parameterResult = ParameterResolver.resolve({
                 params: paramsCfg,
                 tempValue: this.tempValue,
@@ -1584,7 +1589,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item:  option.data.data?option.data.data:option.data,
+                item: option.data.data ? option.data.data : option.data,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -1640,11 +1645,11 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public showWindow(option: any) {
-       // debugger;
+        debugger;
         let dialog;
         // 根据按钮类型初始化表单状态
         const dialogCfg = option.window;
-     
+
         // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
         // if(isEditForm) {
 
@@ -1654,7 +1659,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: option.data.data?option.data.data:option.data,
+                item: option.data.data ? option.data.data : option.data,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -1679,11 +1684,11 @@ export class CnTreeTableComponent extends CnComponentBase
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
             nzContent: CnPageComponent,
             nzComponentParams: {
-              // config:this. tableConfig,
-              config:{},
-              customPageId:dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
-             // initData:this.initData
-              changeValue: option.changeValue ? option.changeValue.params : []
+                // config:this. tableConfig,
+                config: {},
+                customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+                // initData:this.initData
+                changeValue: option.changeValue ? option.changeValue.params : []
             },
             nzFooter: [
                 {
@@ -1696,24 +1701,187 @@ export class CnTreeTableComponent extends CnComponentBase
                     label: dialogCfg.okText ? dialogCfg.okText : 'OK',
                     onClick: componentInstance => {
                         dialog.close();
-                       /*  (async () => {
-                            const response = await componentInstance.executeModal(option);
-                            this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+                        /*  (async () => {
+                             const response = await componentInstance.executeModal(option);
+                             this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+ 
+                             // 处理validation结果
+                             this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                                 &&
+                                 this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                                 && dialog.close();
+                         })(); */
+                    }
+                }
+            ]
+        }
 
-                            // 处理validation结果
-                            this._sendDataValidationMessage(response, option.ajaxConfig.result)
-                                &&
-                                this._sendDataErrorMessage(response, option.ajaxConfig.result)
-                                && dialog.close();
-                        })(); */
+        // 自定义 操作按钮
+        if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
+            dialogOptional.nzFooter = [];
+
+            dialogCfg.footerButton.forEach(_button => {
+                dialogOptional.nzFooter.push(
+                    {
+                        label: _button.text,
+                        onClick: componentInstance => {
+                            // dialog.close();
+                            this.execCustomAction(_button.customActionId, dialog, componentInstance);
+                        }
+                    }
+                );
+            });
+
+        }
+
+        dialog = this.componentService.modalService.create(dialogOptional);
+    }
+
+    // 执行弹出页的按钮事件
+    public execCustomAction(_id?, dialog?, componentInstance?) {
+
+        debugger;
+        _id ="001";
+        if (!_id) {
+            dialog.close();
+            return true;
+        }
+
+        const customAction = [
+            {
+                id: "001",
+                "declareParams": [
+                    {
+                        "name": "A",
+                        "componentId":"",
+                        "type": "",  // 取值，当前组件、弹出页面组件值，分两部分取值
+                        "datatype": "string",
+                        "value": "name"
+                    },
+                ],
+                exectu: [
+                    // {  // 执行内容 ， 可执行子组件隐藏操作
+                    //     trigger: '',
+                    //     triggerType: '',  // 组件内的方法名称
+                    //     sendId: "", // 发出组件 默认当前组件
+                    //     receiverId: "" // 接受组件 默认当前组件
+                    // },
+                {  
+                    exectuType:"Relation",
+                    senderId: "afterAddBusinessSubObjectSuccess",  // 指定发送哪个消息
+                },
+                {  
+                    exectuType:"builtIn",   // 内置操作
+                    centend:{
+                        actionName:"close"  // 关闭
+                    }
+                }
+                
+                ],
+                result: [  // 结果内容  方法执行完成返回，得返回json结构，不能是单独的true，这样可以将结构传递
+                    {
+
+                    }
+                ]
+            }
+        ];
+
+        const _customActionCfg = customAction.find(res => res.id === _id);
+        
+        _customActionCfg.exectu.forEach(item=>{
+            new RelationResolver(this)
+            .resolveInnerSender(
+                item,
+                {id:'1'},
+                Array.isArray({id:'1'})
+            );
+        });
+
+        // new RelationResolver(this). resolveSender();
+
+        
+        dialog.close();
+        return true;
+    }
+
+
+
+    public showUpload(option: any) {
+
+        // CnUploadComponent
+        console.log('上传', option);
+        let dialog;
+        // 根据按钮类型初始化表单状态
+        const dialogCfg = option.window;
+        // dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
+
+        // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
+        // if(isEditForm) {
+
+        // }
+        if (option.changeValue) {
+            const d = ParameterResolver.resolve({
+                params: option.changeValue.params,
+                tempValue: this.tempValue,
+                // componentValue: cmptValue,
+                item: option.data,
+                selectedRow: this.ROW_SELECTED,
+                addedRows: this.ROWS_ADDED,
+                editedRows: this.ROWS_EDITED,
+                checkedRow: this.ROWS_CHECKED,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue
+            });
+            option.changeValue.params.map(param => {
+                if (param.type === 'value') {
+                    // 类型为value是不需要进行任何值的解析和变化
+                } else {
+                    if (d[param.name]) {
+                        param['value'] = d[param.name];
+                    }
+                }
+            });
+        }
+
+        const dialogOptional = {
+            nzTitle: dialogCfg.title ? dialogCfg.title : '',
+            nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+            nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzContent: CnPageComponent,
+            nzComponentParams: {
+                config: {},
+                customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+                // initData:this.initData
+                changeValue: option.changeValue ? option.changeValue.params : []
+            },
+            nzFooter: [
+                {
+                    label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
+                    onClick: componentInstance => {
+                        dialog.close();
+                    }
+                },
+                {
+                    label: dialogCfg.okText ? dialogCfg.okText : 'OK',
+                    onClick: componentInstance => {
+                        dialog.close();
+                        /*   (async () => {
+                              const response = await componentInstance.executeModal(option);
+                              this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+  
+                              // 处理validation结果
+                              this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                                  &&
+                                  this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                                  && dialog.close();
+                          })(); */
                     }
                 }
             ]
         }
         dialog = this.componentService.modalService.create(dialogOptional);
-    }
 
-    public showUpload() {
 
     }
 
@@ -1816,7 +1984,7 @@ export class CnTreeTableComponent extends CnComponentBase
      * @param $event 
      */
     rowAction(actionCfg, dataOfState, $event?) {
-    
+
         $event && $event.stopPropagation();
         this.ROW_CURRENT = dataOfState.data;
         const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);

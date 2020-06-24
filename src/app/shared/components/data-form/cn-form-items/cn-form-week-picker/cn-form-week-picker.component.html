@@ -7,7 +7,7 @@
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
         [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
         <input nz-input  [formControlName]="config.field"  hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
-        <nz-week-picker [(ngModel)]="date"  [ngModelOptions]="{standalone: true}" (ngModelChange)="getWeek($event)" nzPlaceHolder="Select week"></nz-week-picker>
+        <nz-week-picker style="width: 100%;"  [nzStyle]="_style"  [(ngModel)]="date"  [ngModelOptions]="{standalone: true}" (ngModelChange)="getWeek($event)"   [nzPlaceHolder] = "config.placeholder"></nz-week-picker>
         <ng-template #combineTpl let-control>
                 <ng-container nz-col *ngFor="let c of config.validations" > 
                         <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>

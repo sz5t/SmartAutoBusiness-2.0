@@ -60,7 +60,7 @@ const components: { [type: string]: Type<any> } = {
     styleUrls: [`cn-static-table.component.less`]
 })
 export class CnStaticTableComponent extends CnComponentBase
-    implements OnInit, AfterViewInit, OnDestroy, IDataGridProperty {
+    implements OnInit, AfterViewInit, OnDestroy {
 
     @Input()
     public config: any;
@@ -1801,7 +1801,7 @@ export class CnStaticTableComponent extends CnComponentBase
                                 this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = __setValue;
                                 // 赋值
                                 // this.setValue(cascadeObj.cascadeName, __setValue);
-
+                                this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = __setValue;
                             }
                             if (item.content.type === 'compute') {
                                 let __setValue;

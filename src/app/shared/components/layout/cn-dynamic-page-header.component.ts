@@ -63,7 +63,7 @@ export class CnDynamicPageHeaderComponent extends CnComponentBase implements OnI
     @Input() public headerConfig;
     @Input() initData;
     @Input() tempData;
-
+    @Input() public dataServe;
     public title;
     public subTitle;
     public tagText;
@@ -106,6 +106,8 @@ export class CnDynamicPageHeaderComponent extends CnComponentBase implements OnI
         if (this.headerConfig.initLoading) {
             this._load();
         }
+
+        console.log('+++++++pagehead++++++++',this.dataServe);
     }
 
     private _findAjaxById(ajaxId) {

@@ -353,6 +353,8 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                 return compareValue.value <= compareValue.matchValue;
             case 'lt': // <
                 return compareValue.value < compareValue.matchValue;
+            case 'notNull': // 是否为null
+                return   !! compareValue.value ;
             default:
             case 'regexp': // 正在表达式匹配
                 const regexp = new RegExp(compareValue.matchValue);

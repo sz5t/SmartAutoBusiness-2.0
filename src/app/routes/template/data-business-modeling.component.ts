@@ -2310,6 +2310,19 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                             }
                                         ],
                                         "changeValue": [
+
+                                            
+                                            {
+                                                "id": "add_business_object_upload_changeValue",
+                                                "params": [
+                                                    {
+                                                        "name": "_BUSI_ID",
+                                                        "type": "tempValue",
+                                                        "valueName": "_BUSI_ID",
+                                                        "valueTo": "initValue"
+                                                    }
+                                                ]
+                                            },
                                             {
                                                 "id": "add_business_object_changeValue",
                                                 "params": [
@@ -3353,8 +3366,59 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 "title": "业务对象页面",
                                                 "cancelText": "取消",
                                                 "okText": "提交",
+                                                "footerButton":[
+                                                    {
+                                                        "name":'ok',  // 确定按钮
+                                                        "text": "【确定】",
+                                                        "customActionId":'001'
+                                                    },
+                                                    {
+                                                        "name":'cancel', // 取消按钮
+                                                        "text": "【取消】",
+                                                        "customActionId":'002'
+                                                    },    
+                                                    {
+                                                        "name":'cancel', // 取消按钮
+                                                        "text": "【自定义】",
+                                                        "customActionId":'002'
+                                                    },
+                                                    {
+                                                        "name":'cancel', // 取消按钮
+                                                        "text": "【按钮大全】",
+                                                        "customActionId":'002'
+                                                    }
+                                                ] ,
+                                                "customAction":[
+                                                    {
+                                                        id:"001",
+
+                                                        exectu:{  // 执行内容
+                                                           trigger:'',
+                                                           triggerType:'',  // 组件内的方法名称
+                                                        },
+                                                        result:[  // 结果内容  方法执行完成返回，得返回json结构，不能是单独的true，这样可以将结构传递
+                                                            {
+
+                                                            }
+
+                                                        ]
+                                                    }
+
+                                                ]
                                       
-                                            }
+                                            },
+                                            {
+                                                "id": "business_object_upload_1",
+                                                "layoutName": "lGMSLqUMpzb50TSlW3EmDpMSywhgfEWV",
+                                                "type": "confirm",
+                                                "width": "100%",
+                                                "title": "上传页面",
+                                                "cancelText": "取消",
+                                                "okText": "提交",
+                                      
+                                            },
+
+                                            
                                         ],
                                         "condition": [
                                             {
@@ -3856,6 +3920,27 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                                 // "conditionId": "add_state_1"
                                                                 "windowId": "business_object_page_1",
                                                                 "ajaxId": "add_business_sub_object",
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "id": "M_addParentNode1",
+                                                        "text": "添加主资源上传",
+                                                        "state": "new",
+                                                        "icon": "plus",
+                                                        "color": "text-primary",
+                                                        "hidden": false,
+                                                        "disabled": false,
+                                                        "execute": [
+                                                            {
+                                                                "triggerType": "ACTION",
+                                                                // "trigger": "LAYOUT_DIALOG",
+                                                                "trigger":"UPLOAD", // "WINDOW",
+                                                                "changeValueId": "add_business_object_upload_changeValue",
+                                                                "builtinId": "add_state",
+                                                                // "conditionId": "add_state_1"
+                                                                "windowId": "business_object_upload_1",
+                                                                // "ajaxId": "add_business_sub_object",
                                                             }
                                                         ]
                                                     },

@@ -1,2 +1,2 @@
 <input nz-input    hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
-<nz-date-picker [(ngModel)]="date"    (ngModelChange)="onChange($event)"  [ngModelOptions]="{standalone: true}"></nz-date-picker>
+<nz-date-picker [(ngModel)]="date"    (ngModelChange)="onChange($event)"   [nzPlaceHolder]="config.placeholder" ></nz-date-picker>

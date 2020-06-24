@@ -5,7 +5,7 @@
     (nzSelect)="tabActive(tab)">
 
     <ng-container *ngIf="tab.active" cnLayoutResolverDirective [config]="tab.layout" [initData]="initData"
-      [tempData]="tempData">
+      [tempData]="tempData" [dataServe]="dataServe" >
     </ng-container>
     <ng-template #header>
       <span><i nz-icon spin type="tag" theme="outline"></i> {{ tab.title }}</span>

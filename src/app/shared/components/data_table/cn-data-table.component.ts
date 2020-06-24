@@ -61,7 +61,7 @@ const components: { [type: string]: Type<any> } = {
     styleUrls: [`cn-data-table.component.less`]
 })
 export class CnDataTableComponent extends CnComponentBase
-    implements OnInit, AfterViewInit, OnDestroy, IDataGridProperty {
+    implements OnInit, AfterViewInit, OnDestroy {
 
     @Input()
     public config; // dataTables 的配置参数
@@ -72,6 +72,7 @@ export class CnDataTableComponent extends CnComponentBase
     public permissions = [];
     @Input()
     public dataList = [];
+    @Input() dataServe;
     @Output() public updateValue = new EventEmitter();
     /**
      * 组件名称
@@ -150,6 +151,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     // 前置条件集合
     public beforeOperation;
+    private _ajaxConfigObj: any = {};
     constructor(
         @Inject(BSN_COMPONENT_SERVICES)
         public componentService: ComponentServiceProvider
@@ -167,7 +169,9 @@ export class CnDataTableComponent extends CnComponentBase
 
         // 初始化默认分页大小
         this.config.pageSize && (this.pageSize = this.config.pageSize);
-
+        this.config.ajaxConfig.forEach(ajax => {
+            this._ajaxConfigObj[ajax.id] = ajax;
+        });
         // 构建表格列及列标题
         this._buildColumns(this.config.columns);
 
@@ -263,6 +267,19 @@ export class CnDataTableComponent extends CnComponentBase
             const colIndex = columns.filter(item => item.type === 'index');
             const colObjs = columns.filter(item => item.type === 'field');
             const actionCfgs = columns.filter(item => item.type === 'action');
+            colObjs.forEach(col => {
+                if (col.editor) {
+                    if (col.editor.loadingConfig) {
+                        col.editor['loadingConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.loadingConfig.id];
+                    }
+                    if (col.editor.loadingItemConfig) {
+                        col.editor['loadingItemConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.loadingItemConfig.id];
+                    }
+                    if (col.editor.expandConfig) {
+                        col.editor['expandConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.expandConfig.id];
+                    }
+                }
+            });
             if (actionCfgs && actionCfgs.length > 0) {
                 actionCfgs.map(cfg => {
                     const colActions = [];
@@ -302,13 +319,16 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public loadByFilter() {
+        if (!this.config.loadingConfig) {
+            return;
+        }
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
-        const method = this.config.loadingConfig.method;
+        const method = this.config.loadingConfig.method ? this.config.loadingConfig.method : this.config.loadingConfig.ajaxType;
         const params = {
-            ...this.buildParameters(this.config.loadingConfig.filter),
+            ...this.buildParameters(this.config.loadingConfig.params),
             ...this._buildPaging(),
-            // ...this._buildFilter(this.config.ajaxConfig.filter),
+            ...this._buildFilter(this.config.loadingConfig.filter),   // 查询是在当前基础上进行查询的
             ...this._buildSort(),
             // ...this._buildColumnFilter(),
             // ...this._buildFocusId(),
@@ -368,14 +388,14 @@ export class CnDataTableComponent extends CnComponentBase
         this.isLoading = true;
         if (!this.config.loadingConfig) {
             return;
-          }
+        }
         const url = this.config.loadingConfig.url;
-        const method = this.config.loadingConfig.method;
+        const method = this.config.loadingConfig.method ? this.config.loadingConfig.method : this.config.loadingConfig.ajaxType;
 
         const params = {
             ...this.buildParameters(this.config.loadingConfig.params),
             ...this._buildPaging(),
-            // ...this._buildFilter(this.config.ajaxConfig.filter),
+            ...this._buildFilter(this.config.loadingConfig.filter),
             ...this._buildSort(),
             // ...this._buildColumnFilter(),
             // ...this._buildFocusId(),
@@ -427,16 +447,18 @@ export class CnDataTableComponent extends CnComponentBase
             } else {
                 this.isLoading = false;
                 this._initComponentData();
-                this.dataList =[];
+                this.dataList = [];
                 this.total = 0;
             }
+
+            this.dataServe && this.dataServe.setComponentValue(this.config.id, this.dataList);
         }, error => {
             console.log(error);
         });
     }
 
     public loadRefreshData(option) {
-        debugger;
+        // debugger;
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
@@ -484,7 +506,8 @@ export class CnDataTableComponent extends CnComponentBase
             filter = ParameterResolver.resolve({
                 params: filterConfig,
                 tempValue: this.tempValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                initValue: this.initValue
             });
         }
         return filter;
@@ -600,13 +623,13 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public addRow(r?) {
-       // debugger;
+        // debugger;
         // 创建空数据对象
         const newId = CommonUtils.uuID(32);
         let newData = this.createNewRowData();
         newData[this.KEY_ID] = newId;
-        if(r){
-            newData = {...newData,...r};
+        if (r) {
+            newData = { ...newData, ...r };
         }
 
         // 新增数据加入原始列表,才能够动态新增一行编辑数据
@@ -798,7 +821,14 @@ export class CnDataTableComponent extends CnComponentBase
 
     public async deleteCurrentRow(option) {
         console.log(this.config.id + '-------------executeSelectRow', option);
+        if (option && option[this.KEY_ID]) {
+            this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== option[this.KEY_ID]);
+        }
+        if (this.dataList.length > 0) {
+            this.setSelectRow(this.dataList[0]);
+        }
 
+        this.total = this.dataList.length;
         // const url = option.ajaxConfig.url;
         // const method = option.ajaxConfig.ajaxType ? option.ajaxConfig.ajaxType : 'delete';
         // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
@@ -826,7 +856,7 @@ export class CnDataTableComponent extends CnComponentBase
         if (option.data) {
             paramData = ParameterResolver.resolve({
                 params: ajaxParams,
-                item: option.data.data?option.data.data:option.data,
+                item: option.data.data ? option.data.data : option.data,
 
                 selectedRow: this.ROW_SELECTED,
                 router: this.routerValue,
@@ -911,7 +941,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     public async saveRow(option) {
         const ajaxConfig = option.ajaxConfig;
-        const rowData = option.data.data?option.data.data:option.data;
+        const rowData = option.data.data ? option.data.data : option.data;
         const url = ajaxConfig.url;
         const paramData = ParameterResolver.resolve({
             params: ajaxConfig.params,
@@ -967,7 +997,7 @@ export class CnDataTableComponent extends CnComponentBase
         return validationResult && errorResult;
     }
 
-    public setSelectRow(rowData?, $event?) {
+    public setSelectRow1(rowData?, $event?) {
         if (!rowData) {
             return false;
         }
@@ -999,6 +1029,59 @@ export class CnDataTableComponent extends CnComponentBase
 
             this.dataCheckedStatusChange();
         }
+
+        return true;
+    }
+
+    public setSelectRow(rowData?, $event?) {
+
+        if ($event) {
+            const src = $event.srcElement || $event.target;
+            if (src.type !== undefined) {
+                return false;
+            }
+            $event.stopPropagation();
+            $event.preventDefault();
+        }
+        if (!rowData.hasOwnProperty(this.KEY_ID)) {
+            if (this.dataList.length > 0) {
+
+                this.dataList.map(row => {
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                });
+
+                const key = this.dataList[0][this.KEY_ID];
+                this.mapOfDataState[key]['selected'] = true;
+                this.mapOfDataState[key]['checked'] = true;
+                // 勾选/取消当前行勾选状态            
+
+                this.dataCheckedStatusChange();
+            }
+            // return false;
+        }
+        else {
+            this.ROW_SELECTED = rowData;
+
+            // 选中当前行
+            if (this.dataList.length > 0) {
+                this.dataList.map(row => {
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                });
+
+                if (rowData[this.KEY_ID] && rowData[this.KEY_ID].length > 0) {
+                    this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
+                    this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = true; // !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
+                }
+
+
+                // 勾选/取消当前行勾选状态            
+
+                this.dataCheckedStatusChange();
+            }
+        }
+
 
         return true;
     }
@@ -1046,6 +1129,9 @@ export class CnDataTableComponent extends CnComponentBase
                 } else {
                     this.dataList = [loadNewData[ind], ...this.dataList];
                 }
+                // liu 20200525
+
+
                 const mapData = this.mapOfDataState[newData[this.KEY_ID]];
                 if (mapData) {
                     mapData.state = "text";
@@ -1069,6 +1155,13 @@ export class CnDataTableComponent extends CnComponentBase
         }
         // 刷新dataList
         // 刷新mapOfDataState
+
+        this.dataList.forEach((item, idx) => {
+            this.mapOfDataState[item[this.KEY_ID]]['originData']['_index'] = idx + 1;
+            // item[this.KEY_ID]
+            item['_index'] = idx + 1;
+
+        })
     }
 
     public showInvalidateAddedRows(option) {
@@ -1119,10 +1212,13 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
                 returnValue: data,
-                selectedRow:this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED
 
             });
         } else if (!isArray && data) {
+            if (data['_procedure_resultset_1']) {
+                data = data['_procedure_resultset_1'][0];
+            }
             parameterResult = ParameterResolver.resolve({
                 params: paramsCfg,
                 tempValue: this.tempValue,
@@ -1137,7 +1233,7 @@ export class CnDataTableComponent extends CnComponentBase
                 returnValue: data,
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
-                selectedRow:this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1146,7 +1242,7 @@ export class CnDataTableComponent extends CnComponentBase
                     params: paramsCfg,
                     tempValue: this.tempValue,
                     componentValue: d,
-                    item:  d,
+                    item: d,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
                     router: this.routerValue,
@@ -1281,7 +1377,7 @@ export class CnDataTableComponent extends CnComponentBase
      * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
      */
     public link(option) {
-       // debugger;
+        // debugger;
         let url;
         let params;
         if (option && option.linkConfig) {
@@ -1290,7 +1386,7 @@ export class CnDataTableComponent extends CnComponentBase
             }
 
             if (option.linkConfig.params && Array.isArray(option.linkConfig.params)) {
-                params = this.buildParameters(option.linkConfig.params, option.data.originData?option.data.originData:option.data);
+                params = this.buildParameters(option.linkConfig.params, option.data.originData ? option.data.originData : option.data);
                 url = `${url}/${params['ID']}`;
             }
             if (url && params) {
@@ -1359,7 +1455,7 @@ export class CnDataTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: option.data.data?option.data.data:option.data,
+                item: option.data.data ? option.data.data : option.data,
                 selectedRow: this.ROW_SELECTED,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
@@ -1491,7 +1587,82 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
 
-    public showUpload() {
+    public showUpload(option: any) {
+
+        // CnUploadComponent
+        console.log('上传', option);
+        let dialog;
+        // 根据按钮类型初始化表单状态
+        const dialogCfg = option.window;
+        // dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
+
+        // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
+        // if(isEditForm) {
+
+        // }
+        if (option.changeValue) {
+            const d = ParameterResolver.resolve({
+                params: option.changeValue.params,
+                tempValue: this.tempValue,
+                // componentValue: cmptValue,
+                item: option.data,
+                selectedRow: this.ROW_SELECTED,
+                addedRows: this.ROWS_ADDED,
+                editedRows: this.ROWS_EDITED,
+                checkedRow: this.ROWS_CHECKED,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue
+            });
+            option.changeValue.params.map(param => {
+                if (param.type === 'value') {
+                    // 类型为value是不需要进行任何值的解析和变化
+                } else {
+                    if (d[param.name]) {
+                        param['value'] = d[param.name];
+                    }
+                }
+            });
+        }
+
+        const dialogOptional = {
+            nzTitle: dialogCfg.title ? dialogCfg.title : '',
+            nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+            nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzContent: CnPageComponent,
+            nzComponentParams: {
+                config: {},
+                customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+                // initData:this.initData
+                changeValue: option.changeValue ? option.changeValue.params : []
+            },
+            nzFooter: [
+                {
+                    label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
+                    onClick: componentInstance => {
+                        dialog.close();
+                    }
+                },
+                {
+                    label: dialogCfg.okText ? dialogCfg.okText : 'OK',
+                    onClick: componentInstance => {
+                        dialog.close();
+                        /*   (async () => {
+                              const response = await componentInstance.executeModal(option);
+                              this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+  
+                              // 处理validation结果
+                              this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                                  &&
+                                  this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                                  && dialog.close();
+                          })(); */
+                    }
+                }
+            ]
+        }
+        dialog = this.componentService.modalService.create(dialogOptional);
+
 
     }
 
@@ -1663,7 +1834,7 @@ export class CnDataTableComponent extends CnComponentBase
                     cascadeResult[cascadeObj.cascadeName] = {};
                     cascadeObj.cascadeItems.forEach(item => {
                         let regularflag = true;
-                        if (item.caseValue && item.type==="condition") {
+                        if (item.caseValue && item.type === "condition") {
                             const reg1 = new RegExp(item.caseValue.regular);
                             let regularData;
                             if (item.caseValue.type) {
@@ -1760,7 +1931,7 @@ export class CnDataTableComponent extends CnComponentBase
                                 cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
                                 // 赋值
                                 // this.setValue(cascadeObj.cascadeName, __setValue);
-
+                                this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = __setValue;
                             }
                             if (item.content.type === 'compute') {
                                 let __setValue;
@@ -1866,73 +2037,73 @@ export class CnDataTableComponent extends CnComponentBase
 
         let r = 0;
         if (symbolObj.valueName === 'result') {
-    
+
         }
         if (symbolObj.valueName === '*') {
-          r = 1;
-          if (symbolObj.children) {
-            symbolObj.children.forEach(_item => {
-              // r = r * this.L_getComputeValue(_item, computeObj);
-              r =  parseFloat(( r * this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
-            });
-            return r;
-          }
-          return 0;
+            r = 1;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    // r = r * this.L_getComputeValue(_item, computeObj);
+                    r = parseFloat((r * this.L_getComputeValue(_item, computeObj)).toFixed(10));
+                });
+                return r;
+            }
+            return 0;
         }
         if (symbolObj.valueName === '+') {
-          r = 0;
-          if (symbolObj.children) {
-            symbolObj.children.forEach(_item => {
-             // r = r + this.L_getComputeValue(_item, computeObj);
-              r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
-            });
-    
-          }
-          return r;
+            r = 0;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    // r = r + this.L_getComputeValue(_item, computeObj);
+                    r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10));
+                });
+
+            }
+            return r;
         }
         if (symbolObj.valueName === '-') {
-          // r = 0;
-          // if (symbolObj.children) {
-          //     symbolObj.children.forEach(_item => {
-          //         r = r - this.L_getComputeValue(_item, computeObj);
-          //     });
-          //     r = r+ 2* this.L_getComputeValue(symbolObj.children[0], computeObj);
-    
-          // }
-          // return r;
-          r = 0;
-          if (symbolObj.children) {
-            r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
-            for (let i = 1; i < symbolObj.children.length; i++) {
-              const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
-            //  r = r - comput_value;
-              r =  parseFloat((r - comput_value).toFixed(10)); 
+            // r = 0;
+            // if (symbolObj.children) {
+            //     symbolObj.children.forEach(_item => {
+            //         r = r - this.L_getComputeValue(_item, computeObj);
+            //     });
+            //     r = r+ 2* this.L_getComputeValue(symbolObj.children[0], computeObj);
+
+            // }
+            // return r;
+            r = 0;
+            if (symbolObj.children) {
+                r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
+                for (let i = 1; i < symbolObj.children.length; i++) {
+                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                    //  r = r - comput_value;
+                    r = parseFloat((r - comput_value).toFixed(10));
+                }
             }
-          }
-          return r;
+            return r;
         }
         if (symbolObj.valueName === '/') {
-          // 
-          r = 0.0;
-          if (symbolObj.children) {
-            r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
-            for (let i = 1; i < symbolObj.children.length; i++) {
-              const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
-              if (comput_value === 0) {
-                return 0;
-              }
-            //  r = r / comput_value;
-              r =  parseFloat((r / comput_value).toFixed(10)); 
+            // 
+            r = 0.0;
+            if (symbolObj.children) {
+                r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
+                for (let i = 1; i < symbolObj.children.length; i++) {
+                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                    if (comput_value === 0) {
+                        return 0;
+                    }
+                    //  r = r / comput_value;
+                    r = parseFloat((r / comput_value).toFixed(10));
+                }
             }
-          }
-         // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
-    
-          return r;
+            // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
+
+            return r;
         }
-    
+
         return r;
-    
-      }
+
+    }
 
     public L_getComputeValue(item?, computeObj?) {
 

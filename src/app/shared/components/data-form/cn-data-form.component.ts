@@ -19,14 +19,15 @@ import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
   styleUrls: ['./cn-data-form.component.less'],
   // changeDetection: ChangeDetectionStrategy.Default
 })
-export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDestroy, OnChanges, IDataFormProperty, AfterViewInit {
+export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDestroy, OnChanges, AfterViewInit {
 
-
+  // IDataFormProperty
 
   @Input() public config;
   @Input() public changeValue;
   @Input() public tempData;
   @Input() public initData;
+  @Input() dataServe;
   layoutRowsCfg: any[];
   validateForm: FormGroup;
   controlArray: any[] = [];
@@ -505,6 +506,10 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       });
     }
 
+
+    if (v.value === undefined) {
+      return true;
+    }
     // 1. 循环发出对象
 
     // 2. 解析应答对象（应答策略） 本次优化，将1.0里的data value 变化合并为一种策略，
@@ -571,14 +576,41 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                   }
                   if (ajaxItem['type'] === 'selectValue') {
                     // 选中行数据[这个是单值]
-                    _cascadeValue[ajaxItem['name']] = v['value'];
+                    if (ajaxItem['isDefault']) {
+                      // tslint:disable-next-line:prefer-conditional-expression
+                      if (!v['value']) {
+                        _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                      }
+                      else {
+                        _cascadeValue[ajaxItem['name']] = v['value'];
+                      }
+                    } else {
+                      _cascadeValue[ajaxItem['name']] = v['value'];
+                    }
+
                   }
 
                   if (ajaxItem['type'] === 'selectObjectValue') {
                     // 选中行对象数据
                     if (v.dataItem) {
-                      _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                     //  _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                      if (ajaxItem['isDefault']) {
+                        // tslint:disable-next-line:prefer-conditional-expression
+                        if (!v.dataItem[ajaxItem['valueName']]) {
+                          _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                        }
+                        else {
+                          _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                        }
+                      } else {
+                        _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                      }
+                    } else {
+                      if (ajaxItem['isDefault']) {
+                          _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                      }
                     }
+
                   }
                   // 其他取值【日后扩展部分】
                 });
@@ -672,8 +704,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               }
               if (item.content.type === 'display') {
                 // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
-                const _dd={name:cascadeObj.cascadeName,value: this.FORM_VALUE[cascadeObj.cascadeName]?1:0,value1: this.validateForm.value[cascadeObj.cascadeName]?1:0}
-               this. L_getComputeDisplay(_dd);
+                const _dd = { name: cascadeObj.cascadeName, value: this.FORM_VALUE[cascadeObj.cascadeName] ? 1 : 0, value1: this.validateForm.value[cascadeObj.cascadeName] ? 1 : 0 }
+                this.L_getComputeDisplay(_dd);
               }
               if (item.content.type === 'message') {
                 // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
@@ -763,14 +795,14 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         if (cascade.field === v.name) {
           // debugger;
           cascade.mapping.forEach(m => {
-            if(m.type === 'default') {
+            if (m.type === 'default') {
               this.config.formLayout.rows.forEach(r => {
                 r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) > -1)
                   .forEach(_c => _c['display'] = false);
                 r.cols.filter(c => m.layout.findIndex(_m => c.id === _m) < 0)
                   .forEach(_c => _c['display'] = 'none');
               })
-            }else{
+            } else {
               if (m.value === v.value) {
                 // const oldRows = this.config.formLayout.rows;
                 // const newRows = [];
@@ -792,7 +824,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                 })
               }
             }
-     
+
           });
         }
       });
@@ -1288,6 +1320,11 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       message.message = array[1];
     }
     return message
+  }
+
+
+  public transferValue(option?) {
+    console.log('将接受传递的值');
   }
 
   // 分组属性表单=》动态读取属性，分布提交

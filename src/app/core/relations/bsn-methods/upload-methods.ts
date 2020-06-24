@@ -1,7 +1,7 @@
 
-import { IDataFormTrigger } from '@core/relations/bsn-trigger/data-form.trigger.interface';
+import { IUploadTrigger } from '@core/relations/bsn-trigger/upload.trigger.interface';
 
-export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
+export const CN_UPLOAD_METHOD: IUploadTrigger = {
     // state
     ADD_FORM: 'addForm',
     EDIT_FORM: 'editForm',
@@ -11,10 +11,11 @@ export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
     VALIDATE: 'validate',
     EXECUTE_MODAL: 'executeModal',
     VALUE_CHANGE: 'valueChange',
-    MESSAGE: 'showMessage',
-    WINDOW: 'showWindow',
-    TRANSFER_VALUE:'transferValue',
+
     // link
     LINK: 'link',
-    LINK_TO: 'linkTo'
+    LINK_TO: 'linkTo',
+
+   ADD_MULTIPLE_NODE: 'addMultipleNode',
+   ADD_SINGLE_NODE:'addSingleNode'
 }

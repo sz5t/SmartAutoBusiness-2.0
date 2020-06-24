@@ -4,7 +4,7 @@ import { ButtonOperationResolver } from '../../resolver/buttonOperation/buttonOp
 import { CN_DATA_GRID_PROPERTY } from '../../../core/relations/bsn-property/data-grid.property.interface';
 import { CN_DATA_GRID_METHOD } from '@core/relations/bsn-methods';
 import { BSN_COMPONENT_SERVICES, BsnRelativesMessageModel, BSN_RELATION_SUBJECT } from '../../../core/relations/bsn-relatives';
-import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { ComponentServiceProvider, DataServerService } from '@core/services/component/component-service.provider';
 import {
     Component,
     OnInit,
@@ -45,14 +45,15 @@ import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
     styleUrls: [`cn-tree.component.less`]
 })
 export class CnTreeComponent extends CnComponentBase
-    implements OnInit, AfterViewInit, OnDestroy, ITreeProperty {
-
+    implements OnInit, AfterViewInit, OnDestroy {
+// ITreeProperty
     @Input()
     public config; // dataTables 的配置参数
     @Input()
     public permissions = [];
     @Input()
     public nodes = [];
+    @Input() dataServe:DataServerService;
     @Output() public updateValue = new EventEmitter();
 
     @ViewChild('treeObj', { static: true })
@@ -260,6 +261,9 @@ export class CnTreeComponent extends CnComponentBase
         } else {
             this.isLoading = false;
         }
+
+        console.log('+++++树++++++++++',this.dataServe)
+        this.dataServe && this.dataServe.setComponentValue(this.config.id,this.nodes);
 
     }
 

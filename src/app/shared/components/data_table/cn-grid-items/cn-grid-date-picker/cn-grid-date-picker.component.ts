@@ -51,6 +51,10 @@ export class CnGridDatePickerComponent implements OnInit {
         this.value = bc;
       }
     }
+    else{
+      this.value =null;
+    }
+    this.valueChange( this.value);
 
   }
 
@@ -116,6 +120,7 @@ parserDate(date) {
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'setValue') {
            this.value= c[this.config.field]['setValue']['value'];
+           this.valueChange( c[this.config.field]['setValue']['value']);
         }
       }
 

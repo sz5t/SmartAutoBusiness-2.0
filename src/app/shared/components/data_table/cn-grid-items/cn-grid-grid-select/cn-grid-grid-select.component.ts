@@ -20,7 +20,7 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
   @Input() public initData;
   @Input() public rowData;
   @Input() public tempData;
-  tableConfig: any;
+  tableConfig: any={};
   value = null;
   visible = false;
   _value = null;
@@ -36,10 +36,19 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
     super(componentService);
   }
 
-  ngOnInit() {
-    const _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+  async ngOnInit() {
+    // const _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+    let _tableConfig;
+
+    if(this.config.layoutName){
+     _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+   }
+   if( !_tableConfig){
+     await  this.getCustomConfig(this.config.layoutName);
+     _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+    }
     // 静态数据，动态数据
-    if (Object.prototype.toString.call(this.tableConfig.component) === '[object Object]') {
+    if (Object.prototype.toString.call(_tableConfig['component']) === '[object Object]') {
       this.tableConfig = _tableConfig;
     } else {
       this.tableConfig['component'] = _tableConfig;
@@ -76,6 +85,8 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
 
     });
   }
+
+
 
 
 

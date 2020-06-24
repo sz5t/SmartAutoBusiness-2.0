@@ -11,16 +11,16 @@
 
 
           <ng-container *ngSwitchCase="'pageHeader'" CnDynamicLayoutResolverDirective [config]="c.pageHeader"
-            [tempData]="tempData" [initData]="initData"></ng-container>
+            [tempData]="tempData" [initData]="initData" [dataServe]="dataServe"></ng-container>
 
           <nz-card *ngSwitchCase="'tabs'">
-            <ng-container CnDynamicLayoutResolverDirective [config]="c.tabs" [tempData]="tempData"
+            <ng-container CnDynamicLayoutResolverDirective [config]="c.tabs" [tempData]="tempData" [dataServe]="dataServe"
               [initData]="initData">
             </ng-container>
           </nz-card>
 
 
-          <ng-container *ngSwitchCase="'layout'" CnDynamicLayoutResolverDirective [config]="c.layout"
+          <ng-container *ngSwitchCase="'layout'" CnDynamicLayoutResolverDirective [config]="c.layout" [dataServe]="dataServe"
             [tempData]="tempData" [initData]="initData">
           </ng-container>
 
@@ -45,20 +45,20 @@
 
             <ng-template #extraTemplate>
               <ng-container cnComponentResolverDirective *ngIf="c.header.toolbar" [config]="c.header.toolbar"
-               [tempData]="tempData" [initData]="initData">
+               [tempData]="tempData" [initData]="initData" [dataServe]="dataServe">
               </ng-container>
             </ng-template>
 
               
                
           
-            <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData"
+            <ng-container cnComponentResolverDirective [config]="c.component" [tempData]="tempData" [dataServe]="dataServe"
               [initData]="initData">
             </ng-container>
           </nz-card>
 
           <ng-container *ngSwitchCase="'rows'" CnDynamicLayoutResolverDirective [config]="c" [tempData]="tempData"
-            [initData]="initData">
+            [initData]="initData" [dataServe]="dataServe"> 
           </ng-container>
 
           <!-- <nz-card [ngSwitch]="c.container" >
@@ -69,7 +69,7 @@
     </ng-container>
 
     <ng-container *ngIf="layoutObj.pageHeader" CnDynamicLayoutResolverDirective [config]="layoutObj"
-      [initData]="initData" [tempData]="tempData">
+      [initData]="initData" [tempData]="tempData" [dataServe]="dataServe">
 
     </ng-container>
   </nz-content>

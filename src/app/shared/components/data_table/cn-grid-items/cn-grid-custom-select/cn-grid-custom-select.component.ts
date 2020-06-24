@@ -45,12 +45,17 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
     { "label": '驾驶的那次即可拿数控机床', value: '08' },
     { "label": '爱神的箭奶茶色', value: '09' }
   ];
-  ngOnInit() {
+  async ngOnInit() {
 
     // 加载页面配置
-    if (this.config.layoutName) {
-      this.tableConfig = this.componentService.cacheService.getNone("PAGE_" + this.config.layoutName);
+
+    if(this.config.layoutName){
+      this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
     }
+    if( !this.tableConfig){
+      await  this.getCustomConfig(this.config.layoutName);
+      this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+     }
 
     // if(!this.valueConfig){
     //   this.valueConfig ={
@@ -89,6 +94,8 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
     this.value = v_value;
     this.valueChange(this.value);
   }
+
+
 
   handleClose(removedTag: {}): void {
     this.tags = this.tags.filter(tag => tag !== removedTag);

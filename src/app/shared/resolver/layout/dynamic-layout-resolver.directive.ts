@@ -31,7 +31,8 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     @Input() config: any;
     @Input() public tempData;
     @Input() public initData;
-
+    @Input() public dataServe;
+  
 
     private _layoutObj: ComponentRef<any>;
     private _rowsObj: ComponentRef<any>;
@@ -183,6 +184,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
         if (this.initValue) {
             this._pageHeaderObj.instance['initData'] = this.initData;
         }
+        this._pageHeaderObj.instance['dataServe'] = this.dataServe;
     }
 
     private buildLayout(layoutObj: any) {
@@ -199,6 +201,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
         if (this.initValue) {
             this._layoutObj.instance['initData'] = this.initData;
         }
+        this._layoutObj.instance.dataServe = this.dataServe;
     }
 
     private buildLayoutRows(layoutObj: any) {
@@ -215,6 +218,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
         if (this.initValue) {
             this._rowsObj.instance['initData'] = this.initData;
         }
+        this._rowsObj.instance.dataServe = this.dataServe;
     }
 
     private buildTabsLayout(tabsObj: any) {
@@ -231,6 +235,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
         if (this.initValue) {
             this._tabObj.instance['initData'] = this.initData;
         }
+        this._tabObj.instance.dataServe = this.dataServe;
     }
 
     private buildCustomerLayout(customLayoutObj: any) {
@@ -247,6 +252,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
         if (this.initValue) {
             this._customObj.instance['initData'] = this.initData;
         }
+        this._customObj.instance.dataServe = this.dataServe;
     }
 
     public resolver(cfg) {

@@ -36,9 +36,16 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     super(componentService);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.buildChangeValue(this.config);
-    this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+   // this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+    if(this.config.layoutName){
+      this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+    }
+    if( !this.tableConfig){
+      await  this.getCustomConfig(this.config.layoutName);
+      this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+     }
     // 静态数据，动态数据
 
     this.table.readonly = this.config.readonly?this.config.readonly:false;

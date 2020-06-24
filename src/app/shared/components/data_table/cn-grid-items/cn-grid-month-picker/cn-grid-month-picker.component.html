@@ -1,2 +1,2 @@
 <input nz-input   hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
-<nz-month-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" [ngModelOptions]="{standalone: true}" nzPlaceHolder="Select month"></nz-month-picker>
+<nz-month-picker [(ngModel)]="date" (ngModelChange)="onChange($event)" [ngModelOptions]="{standalone: true}"  [nzPlaceHolder]="config.placeholder"></nz-month-picker>

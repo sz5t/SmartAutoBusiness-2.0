@@ -289,7 +289,9 @@ export class ComponentSenderResolver {
 
     handleLinkType(cfg) {
         // 前置条件判断
-
+        if (!this.conditionValidator(cfg.condition)) {
+            return false;
+        }
         // 执行跳转功能, 该功能不由组件实现
         // this.sendMessage(cfg);
         this._componentInstance[cfg.triggerMoment](
@@ -420,6 +422,23 @@ export class ComponentSenderResolver {
             }
         }
         // 根据数组中所有的返回结果,判断最终是否能够继续执行操作
+        const  _r = result.findIndex(res => !res) < 0;
+        if(condCfg.result){
+            condCfg.result.forEach(element => {
+
+                if(_r){
+                    if(element.name==='yes'){
+                        this._componentInstance[this._componentInstance.COMPONENT_METHODS[element.trigger]](element);
+                    }
+                }else{
+                    if(element.name==='no'){
+                        this._componentInstance[this._componentInstance.COMPONENT_METHODS[element.trigger]](element);
+                    }
+                }
+            });
+
+        }
+
         return result.findIndex(res => !res) < 0;
     }
 
@@ -527,6 +546,8 @@ export class ComponentSenderResolver {
                 return compareValue.value <= compareValue.matchValue;
             case 'lt': // <
                 return compareValue.value < compareValue.matchValue;
+            case 'notNull': // 是否为null
+                return   !! compareValue.value ;
             default:
             case 'regexp': // 正在表达式匹配
                 const regexp = new RegExp(compareValue.matchValue);

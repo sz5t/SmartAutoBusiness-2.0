@@ -13,9 +13,12 @@ export class CnFormMonthPickerComponent implements OnInit {
   @Output() public updateValue = new EventEmitter();
   date=null;
   value=null;
+  _style={"width": "100%"};
   constructor() { }
 
   ngOnInit() {
+    this._style= this.config.style? this.config.style:{"width": "100%"};
+
   }
 
   onChange(result: Date): void {

@@ -2,6 +2,7 @@ import { Component, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
+import { CacheService } from '@delon/cache';
 
 @Component({
   selector: 'header-user',
@@ -44,10 +45,19 @@ export class HeaderUserComponent {
     public settings: SettingsService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
+    private _cacheService: CacheService,
   ) { }
 
   logout() {
+ 
+    const pageList = this._cacheService.getMeta();
+    pageList.forEach(item=>{
+      this._cacheService.remove(item);
+    });
+    this._cacheService.clear(); // liu 200601 退出登录清楚缓存
     this.tokenService.clear();
     this.router.navigateByUrl(this.tokenService.login_url!);
+
+
   }
 }

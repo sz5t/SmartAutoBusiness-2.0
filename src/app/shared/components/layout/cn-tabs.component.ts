@@ -22,6 +22,7 @@ export class CnTabsComponent extends CnComponentBase implements OnInit {
     public _currentIndex = 0;
     @Input() initData;
     @Input() tempData;
+    @Input() public dataServe;
     public selectedIndex = 0;
     public tabsConfig: any[] = [];
     constructor(

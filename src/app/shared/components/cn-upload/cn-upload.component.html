@@ -1,4 +1,3 @@
-<p>cn-upload works!</p>
 <nz-card nzTitle="附件">
         <nz-spin  [nzSpinning]="uploading"  nzTip="上传中......">
     <nz-upload [(nzFileList)]="fileList" nzType="drag" [nzMultiple]="true" [nzBeforeUpload]="beforeUpload">
@@ -12,7 +11,7 @@
     </nz-upload>
 </nz-spin>
     <nz-card nzTitle="附件描述">
-        <cn-data-form [config]="_config.customStructure.fileContent.component"></cn-data-form>
+        <cn-data-form #fileform [config]="_config.customStructure.fileContent.component"></cn-data-form>
     </nz-card>
 
     <!-- <nz-progress
@@ -28,33 +27,11 @@
         {{ uploading ? '上传中...' : '上传' }}
     </button>
 
-<p>
-    7mrGRS9OT23ixYiMBeH2EX7Ck4zbSifh  
-    BAkU2on7UEJWvyZXLImEXdopHCtli9Jv
-</p>
-<a target="_blank" href="http://192.168.1.19:8880/file/download?ids=59f7a501-d7f6-4b20-bcd5-73dfc9a30fcd,79bc1433-3c5a-4ef1-99e7-9bfff380bd1f">下载</a>
- <cn-data-table [config]="_config.customStructure.fileList.component"></cn-data-table>
 
-    <nz-table #basicTable [nzData]="listOfData">
-        <thead>
-            <tr>
-                <th>附件名称</th>
-                <th>密级</th>
-                <th>备注</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of basicTable.data">
-                <td>{{ data.name }}</td>
-                <td>{{ data.age }}</td>
-                <td>{{ data.address }}</td>
-                <td>
-                    <a>查看</a>
-                    <nz-divider nzType="vertical"></nz-divider>
-                    <a>删除</a>
-                </td>
-            </tr>
-        </tbody>
-    </nz-table>
+  <a target="_blank" href="{{url}}file/download?ids=59f7a501-d7f6-4b20-bcd5-73dfc9a30fcd,79bc1433-3c5a-4ef1-99e7-9bfff380bd1f">测试下载</a>
+  <button nz-button [nzType]="'primary'" (click)="downClick()" style="margin-top: 16px">
+    downClick
+</button>
+  
+ <cn-data-table #filetable [config]="_config.customStructure.fileList.component"></cn-data-table>
 </nz-card>

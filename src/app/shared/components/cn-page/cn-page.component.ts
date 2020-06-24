@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, Input, OnDestroy } from '@angular/core';
 import { CnComponentBase } from '@shared/components/cn-component.base';
 import { Subject, Subscription, config } from 'rxjs';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
-import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { ComponentServiceProvider, DataServerService } from '@core/services/component/component-service.provider';
 import { CN_PAGE_METHOD } from '@core/relations/bsn-methods/bsn-page-methods';
 import { CN_PAGE_PROPERTY } from '@core/relations/bsn-property/page.property.interface';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
@@ -11,7 +11,10 @@ import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver
 @Component({
   selector: 'app-cn-page',
   templateUrl: './cn-page.component.html',
-  styleUrls: ['./cn-page.component.less']
+  styleUrls: ['./cn-page.component.less'],
+  providers: [
+    DataServerService
+    ]
 })
 export class CnPageComponent extends CnComponentBase implements OnInit, OnDestroy {
 
@@ -43,18 +46,33 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
   private _trigger_receiver_subscription$: Subscription;
 
   constructor(@Inject(BSN_COMPONENT_SERVICES)
-  public componentService: ComponentServiceProvider) {
+  public componentService: ComponentServiceProvider,
+  public componentDataService: DataServerService
+) {
     super(componentService);
     this.tempValue = {};
     this.initValue = {};
   }
 
-  dd_liu={};
-  ngOnInit() {
+  page_config;
+  async ngOnInit() {
 
+    this.componentDataService.data.push({id:1});
+    const n =this.componentDataService.getInstanceAll();
+    console.log('cccccccccccccccccccc',n);
     this.setChangeValue(this.changeValue);
-     this.dd_liu = this.componentService.cacheService.getNone(this.customPageId);
-     console.log('222222', this.dd_liu,this.initData);
+    this.initValue = {...this.initValue,...this.initData};
+   
+    let _page_config=null;
+     if(this.customPageId){
+      _page_config = this.componentService.cacheService.getNone(this.customPageId);
+    }
+    if( !_page_config){
+      await  this.getCustomConfig(this.customPageId);
+      _page_config = this.componentService.cacheService.getNone(this.customPageId);
+     }
+     this.page_config =_page_config;
+     console.log('222222', this.page_config,this.initData);
     // 解析及联配置
     this.resolveRelations();
   }
