@@ -34,7 +34,10 @@ export class CnFormMonthPickerComponent implements OnInit {
       if (this.value !== ym) {
         this.value = ym
       }
+    }   else{
+      this.value =null;
     }
+
 
     console.log('年月 onChange: ', result,this.date,  this.value);
   }

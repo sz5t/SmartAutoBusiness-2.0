@@ -464,6 +464,12 @@ class ComponentValueParameter extends BaseParameter implements IParameter {
   }
   public buildParameter() {
     const cmpVal = this._model['componentValue'];
+    if(this._param.valueName==='componentValue'){
+      this._result = JSON.stringify(cmpVal);
+    }
+    else if (!this._param.valueName) {
+      this._result =cmpVal;  // 不配valueName，则将当前属性给他 object
+    }
     // 判断组件取值是否为null
     if (
       cmpVal[this._param.valueName] === null ||

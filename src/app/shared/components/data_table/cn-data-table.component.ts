@@ -162,7 +162,7 @@ export class CnDataTableComponent extends CnComponentBase
         // init cacheValue
     }
 
-    public ngOnInit() {
+    public async ngOnInit() {
         this.setChangeValue(this.changeValue);
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
@@ -173,12 +173,18 @@ export class CnDataTableComponent extends CnComponentBase
             this._ajaxConfigObj[ajax.id] = ajax;
         });
         // 构建表格列及列标题
+        
+        if (this.config.columnsAjax) {
+          await    this.loadDynamicColumns();
+          console.log('动态++++》',this.config.columns);
+        }
         this._buildColumns(this.config.columns);
 
         this._initInnerValue();
 
         // 解析及联配置
         this.resolveRelations();
+
 
 
 
@@ -491,6 +497,132 @@ export class CnDataTableComponent extends CnComponentBase
         }, error => {
             console.log(error);
         });
+
+    }
+
+    public ajaxColumns; // 动态列
+    public async loadDynamicColumns() {
+        debugger;
+        const url = this.config.columnsAjax.url;
+        const method = this.config.columnsAjax.method ? this.config.columnsAjax.method : this.config.columnsAjax.ajaxType;
+
+        const params = {
+            ...this.buildParameters(this.config.columnsAjax.params),
+        };
+        const loadColumns = [];
+        const loadData = await   this.componentService.apiService.getRequest(url, method, { params }).toPromise();
+        if (loadData && loadData.data && loadData.success) {
+            if (loadData.data) {
+                // console.log('异步请求列信息', loadData.data);
+                if (loadData.data.length > 0) {
+                    if (loadData.data.length < 50) { // 异常处理，超过50个
+                        this.ajaxColumns = loadData.data;
+                        loadData.data.forEach(element => {
+                            const column = {};
+                            column['type']= "field";
+                            this.config.columnsConfig.forEach(cc => {
+                                if (cc.feild) {
+                                    column[cc.name] = element[cc.feild];
+                                } else {
+                                    column[cc.name] = cc['value'];
+                                }
+                            });
+                            loadColumns.push(column);
+                        });
+                    }
+                }
+            }
+        }
+        const Columns = this.mergedColumns(loadColumns);
+        this.config.columns = Columns;
+    }
+
+    public mergedColumns(fieldConfig?) {
+        const dynamicColumns = this.setFieldByColumns(fieldConfig);
+        const dynamicdefaultcolumns = [];
+        this.config.defaultcolumns.forEach(c => {
+            if(c['type'] !=='action'){
+                const index = dynamicColumns.findIndex(item => item.feild === c.field);
+                if (index > -1) {
+                    // 动态列重复，覆盖默认列
+                } else {
+                    dynamicdefaultcolumns.push(c);
+                }
+            }else {
+                dynamicdefaultcolumns.push(c);
+            }
+         
+        });
+
+        const columns = [...dynamicdefaultcolumns, ...dynamicColumns];
+        // console.log('最终生成列', columns);
+        return columns;
+    }
+
+    public setFieldByColumns(fieldConfig?) {
+        const cf_config = [];
+        fieldConfig.forEach(f => {
+            const cf = {};
+            cf['title'] = f.title;
+            cf['type'] = f.type;
+            cf['subtitle'] = f.subtitle ? f.subtitle : null;
+            cf['subtitletext'] = f.subtitletext ? f.subtitletext : null;
+            cf['text'] = f.text ? f.text : null;
+            cf['field'] = f.field;
+            cf['width'] = f.width;
+            cf['hidden'] = f.hidden;
+            cf['titleField'] = f.titleField;
+            cf['fieldAlign'] = f.fieldAlign ? f.field.Align : 'text-center'
+            if (f.isEdit) {
+                cf['editor'] = this.setEditConfig(f);
+            }
+            cf_config.push(cf);
+        });
+        return cf_config;
+    }
+
+    public setEditConfig(d?) {
+        let c;
+        if (d.editType === 'input') {
+            c = {
+                'type': 'input',
+                'field': d.field,
+                'options': {
+                    'type': 'input',
+                    'width': d.width,
+                    'inputType': 'text'
+                }
+            }
+        } else if (d.editType === 'select') {
+            // 无法实现动态数据源，这部分信息只能由视图补充
+            c = {
+                'type': 'select',
+                'field': d.field,
+                'options': {
+                    'type': 'select',
+                    'labelSize': '6',
+                    'controlSize': '18',
+                    'inputType': 'submit',
+                    'disabled': false,
+                    'size': 'default',
+                    'width': d.width,
+                    'defaultValue': '1',
+                    'options': [
+                        {
+                            'label': '合格',
+                            'value': '1',
+                            'disabled': false
+                        },
+                        {
+                            'label': '不合格',
+                            'value': '2',
+                            'disabled': false
+                        }
+                    ]
+                }
+            }
+        }
+        return c;
 
     }
 
