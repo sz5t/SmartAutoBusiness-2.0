@@ -288,6 +288,7 @@ export class ComponentSenderResolver {
     }
 
     handleLinkType(cfg) {
+       
         // 前置条件判断
         if (!this.conditionValidator(cfg.condition)) {
             return false;

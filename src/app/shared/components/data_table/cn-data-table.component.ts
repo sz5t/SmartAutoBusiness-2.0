@@ -502,7 +502,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     public ajaxColumns; // 动态列
     public async loadDynamicColumns() {
-        debugger;
+       // debugger;
         const url = this.config.columnsAjax.url;
         const method = this.config.columnsAjax.method ? this.config.columnsAjax.method : this.config.columnsAjax.ajaxType;
 

@@ -17,9 +17,9 @@
           (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-span [ngForOf]="spans">
           <ng-container [ngSwitch]="span.spanType">
-            <th *ngSwitchCase="'row'" attr.rowspan="{{ span.span }}">{{ span.title }}</th>
-            <th *ngSwitchCase="'col'" attr.colspan="{{ span.span }}">{{ span.title }}</th>
-            <th *ngSwitchDefault>{{ span.title }}</th>
+            <th *ngSwitchCase="'row'"  [nzAlign]="span.titleAlign?span.titleAlign:'left'"  attr.rowspan="{{ span.span }}">{{ span.title }}</th>
+            <th *ngSwitchCase="'col'"  [nzAlign]="span.titleAlign?span.titleAlign:'left'"  attr.colspan="{{ span.span }}">{{ span.title }}</th>
+            <th *ngSwitchDefault  [nzAlign]="span.titleAlign?span.titleAlign:'left'" >{{ span.title }}</th>
           </ng-container>
         </ng-template>
       </tr>

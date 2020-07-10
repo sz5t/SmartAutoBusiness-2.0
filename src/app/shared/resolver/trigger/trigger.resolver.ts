@@ -59,7 +59,7 @@ export class GridTrigger {
 
     handleLinkType() {
         // 前置条件判断
-
+ 
         // 执行跳转功能, 该功能不由组件实现
         this._componentInstance[CN_DATA_GRID_METHOD[this._triggerMsg.trigger.trigger]](this._triggerMsg.options);
     }
@@ -180,6 +180,7 @@ export class TriggerResolver {
     }
 
     handleLinkType() {
+  
         // 前置条件判断
         if (!this.conditionValidator(this._triggerMsg.options.condition)) {
             return false;
