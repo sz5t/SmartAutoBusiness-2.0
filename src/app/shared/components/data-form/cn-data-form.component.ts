@@ -268,9 +268,9 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   private ControlsPermissions(state?) {
     // const ob = JSON.parse(JSON.stringify( this.formControlObj));
     this.config.formControlsPermissions.forEach(items => {
-      if (items.formState === state) {
+      if (state && items.formState === state) {
         items.Controls.forEach(Control => {
-          this.formControlObj[Control.id].state = Control.state;
+          this.formControlObj[Control.id] && (this.formControlObj[Control.id]['state'] = Control['state']);
           // 读写等操作 未处理
           // 将 Control 的其他行为也写入
         });

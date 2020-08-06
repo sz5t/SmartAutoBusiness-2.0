@@ -33,8 +33,8 @@ export class CnDynamicLayoutComponent implements OnInit {
     public ngOnInit() {
         console.log('layout init---', this.initData, this.tempData);
         if(  this.dataServe)
-        this.dataServe.data.push({id:2});
-        this.dataServe.setComponentValue('002',{name:333});
+        this.dataServe && this.dataServe.data.push({id:2});
+        this.dataServe && this.dataServe.setComponentValue('002',{name:333});
         console.log('******', this.layoutObj,this.dataServe);
     }
 }

@@ -112,7 +112,8 @@ export class CnDataTableComponent extends CnComponentBase
             data: any,
             originData: any,
             actions?: any[],
-            validation?: boolean
+            validation?: boolean,
+            mergeData?:any
         }
     } = {};
     public checkedNumber = 0;
@@ -361,7 +362,8 @@ export class CnDataTableComponent extends CnComponentBase
                         data: d,
                         originData: { ...d },
                         validation: true,
-                        actions: this.getRowActions('text')
+                        actions: this.getRowActions('text'),
+                        mergeData:{}
                     };
                     if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
@@ -429,7 +431,8 @@ export class CnDataTableComponent extends CnComponentBase
                         data: d,
                         originData: { ...d },
                         validation: true,
-                        actions: this.getRowActions('text')
+                        actions: this.getRowActions('text'),
+                        mergeData:{}
                     };
                     if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
@@ -450,6 +453,9 @@ export class CnDataTableComponent extends CnComponentBase
 
                 this.setSelectRow(this.ROW_SELECTED);
                 this.isLoading = false;
+                // 2020.7.27 计算合并列
+                if(this.config.mergeconfig)
+                this._createMapd_new(this.config.mergeconfig, this.dataList);
             } else {
                 this.isLoading = false;
                 this._initComponentData();
@@ -464,7 +470,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public loadRefreshData(option) {
-        // debugger;
+         debugger;
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
@@ -776,7 +782,8 @@ export class CnDataTableComponent extends CnComponentBase
             checked: true, // index === 0 ? true : false,
             selected: false, // index === 0 ? true : false,
             state: 'new',
-            actions: this.getRowActions('new')
+            actions: this.getRowActions('new'),
+            mergeData:{}
         }
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
@@ -810,8 +817,12 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public editRow(option) {
+        console.log('edit====',option)
         if (option.data) {
             this.addEditRows(option.data.data);
+              // 2020.7.27 计算合并列
+              if(this.config.mergeconfig)
+              this._createMapd_new(this.config.mergeconfig, this.dataList);
         }
         return true;
     }
@@ -844,6 +855,9 @@ export class CnDataTableComponent extends CnComponentBase
         if (this.total > 0) {
             this.total = this.total - 1;
         }
+            // 2020.7.27 计算合并列
+            if(this.config.mergeconfig)
+            this._createMapd_new(this.config.mergeconfig, this.dataList);
 
     }
 
@@ -865,6 +879,9 @@ export class CnDataTableComponent extends CnComponentBase
             if (itemId) {
                 this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== itemId);
             }
+                // 2020.7.27 计算合并列
+                if(this.config.mergeconfig)
+                this._createMapd_new(this.config.mergeconfig, this.dataList);
         }
 
         console.log('-------------', this.ROWS_ADDED, this.ROWS_EDITED)
@@ -1280,7 +1297,8 @@ export class CnDataTableComponent extends CnComponentBase
                         selected: false, // index === 0 ? true : false,
                         state: 'text',
                         validation: true,
-                        actions: this.getRowActions('text')
+                        actions: this.getRowActions('text'),
+                        mergeData:{}
                     }
                 }
             })
@@ -2268,6 +2286,346 @@ export class CnDataTableComponent extends CnComponentBase
                 }
             });
         }
+
+    }
+
+
+
+
+    public _createMapd_new_old(mergeconfig?,listOfData?) {
+
+        // 生成group字段
+
+        const mergeData={};
+  
+
+        listOfData.forEach(
+            row => {
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'] = {}; // 初始化
+            }
+        );
+
+
+        // 按照 group 分组顺序进行  merge
+
+
+        mergeconfig.rowConfig && mergeconfig.rowConfig.forEach(r_c => {
+
+
+            listOfData.forEach(row => {
+
+                if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]) {
+                    this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName] = {};
+                }
+                let new_data=[...listOfData];
+                r_c.groupCols.forEach(group_col=>{
+
+                    new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
+                });
+
+                new_data = new_data.filter(d => d[r_c.groupName] === row[r_c.groupName]);
+                let group_num = new_data.length;
+                let group_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupNum'] = group_num;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupIndex'] = group_index + 1;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupIndex'] = 1;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupNum'] = 1;
+
+
+            });
+
+        }
+        );
+
+
+
+        mergeconfig.colConfig && mergeconfig.colConfig.length>0 && listOfData.forEach(
+            row => {
+                // this.mapd[row.id]={}; // 初始化
+
+                mergeconfig.colConfig.forEach(col_c => {
+
+                    col_c.mergeItems.forEach(item => {
+                        
+
+                        let regularflag = true;
+                        if (item.caseValue && item.type === "condition") {
+                            const reg1 = new RegExp(item.caseValue.regular);
+                            let regularData;
+                            if (item.caseValue.type) {
+                                if (item.caseValue.type === 'value') {
+                                    regularData = item.caseValue['value'];
+                                }
+                                if (item.caseValue['type'] === 'rowValue') {
+                                    // 选中行对象数据
+                                    if (row) {
+                                        regularData = row[item.caseValue['valueName']];
+                                    }
+                                }
+        
+                            } else {
+                                regularData = null;
+                            }
+                            regularflag = reg1.test(regularData);
+                        }
+                        if (regularflag) {
+
+                            let group_num = item.mergeCols.length;
+                            item.mergeCols.forEach(merge_col=>{
+                                if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]) {
+                                    this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']] = {};
+                                }
+                                let group_index = item.mergeCols.findIndex(d => d['mergeColName'] === merge_col['mergeColName']);
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupIndex'] = group_index+1;
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupNum'] = group_num;
+                            });
+
+                           
+                            
+                            
+
+                        }
+
+
+                    });
+
+
+                });
+
+       
+
+            }
+        );
+
+
+        console.log('new生成分组信息', this.mapOfDataState);
+
+    }
+
+
+    public _createMapd_new(mergeconfig?,listOfData?) {
+
+        // 生成group字段
+
+        const mergeData={};
+  
+
+        listOfData.forEach(
+            row => {
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'] = {}; // 初始化
+            }
+        );
+
+
+        // 按照 group 分组顺序进行  merge
+
+
+        mergeconfig.rowConfig && mergeconfig.rowConfig.forEach(r_c => {
+
+
+            listOfData.forEach(row => {
+
+                if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]) {
+                    this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName] = {};
+                }
+                let new_data=[...listOfData];
+                r_c.groupCols.forEach(group_col=>{
+
+                   // new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
+
+                    new_data =[...this._createMapd_array(new_data,group_col.groupColName,row,true)];
+               //     console.log('jisuan:',group_col.groupColName,new_data);
+                });
+
+
+
+               // console.log('统计:',new_data , row[r_c.groupName]); 
+                // new_data = new_data.filter(d => d[r_c.groupName] === row[r_c.groupName]);
+                let group_num = new_data.length;
+                let group_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
+                // if(group_index<0){
+                //     console.log('错误统计',new_data,row[this.KEY_ID])
+                // } 
+               
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupNum'] = group_num;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupIndex'] = group_index + 1;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupIndex'] = 1;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupNum'] = 1;
+
+
+            });
+
+        }
+        );
+
+
+
+        mergeconfig.colConfig && mergeconfig.colConfig.length>0 && listOfData.forEach(
+            row => {
+                // this.mapd[row.id]={}; // 初始化
+
+                mergeconfig.colConfig.forEach(col_c => {
+
+                    col_c.mergeItems.forEach(item => {
+                        
+
+                        let regularflag = true;
+                        if (item.caseValue && item.type === "condition") {
+                            const reg1 = new RegExp(item.caseValue.regular);
+                            let regularData;
+                            if (item.caseValue.type) {
+                                if (item.caseValue.type === 'value') {
+                                    regularData = item.caseValue['value'];
+                                }
+                                if (item.caseValue['type'] === 'rowValue') {
+                                    // 选中行对象数据
+                                    if (row) {
+                                        regularData = row[item.caseValue['valueName']];
+                                    }
+                                }
+        
+                            } else {
+                                regularData = null;
+                            }
+                            regularflag = reg1.test(regularData);
+                        }
+                        if (regularflag) {
+
+                            let group_num = item.mergeCols.length;
+                            item.mergeCols.forEach(merge_col=>{
+                                if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]) {
+                                    this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']] = {};
+                                }
+                                let group_index = item.mergeCols.findIndex(d => d['mergeColName'] === merge_col['mergeColName']);
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupIndex'] = group_index+1;
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupNum'] = group_num;
+                            });
+
+                           
+                            
+                            
+
+                        }
+
+
+                    });
+
+
+                });
+
+       
+
+            }
+        );
+
+
+        console.log('new生成分组信息', this.mapOfDataState);
+
+    }
+
+
+
+
+
+ /**
+  * 
+  * @param new_data  范围数组
+  * @param feildName 分组字段
+  * @param row       当前行
+  * @param isSingleEdit 分组字段是否启用单独编辑
+  */
+    public _createMapd_array(new_data?,feildName?,row?,isSingleEdit?){
+
+        // 总方法，将数据集合 拷贝 可补充解析字段在当前结构下是否计算
+       // 数组构建 
+       // 将原数据对比编辑状态数据，计算出当前数据的状态
+       // 1.判断是否启用独立编辑
+       // 1.1 启用独立编辑 计算出当前行所在位置
+          // 按当前行开始，向下找，满足分组标识一致，并且行不能是edit 若有一个不满足循环结束
+          // 当前行向上找, 满足分组条件，并且不能是edit（逆序查找，查找结束后，反转）
+          // 将上下两部分数据加上本身行合并，生成满足条件的新数据 
+          // 返回当前数组
+       // 2.当前列未启用编辑，则按照原始处理
+
+       //1 将当前数组集合的edit状态写入
+       // state: 'new' 'edit',
+       console.log('xxxxxxxxx====>',feildName,new_data);
+       new_data.forEach(row => {
+         row['__state__'] =  this.mapOfDataState[row[this.KEY_ID]]['state'];
+       });
+
+       //2 数组分割
+       //2.1 计算出当前行所在
+       let row_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
+       //2.2 计算出前数组
+       let BeforeArr = new_data.slice(0,row_index).reverse();
+       let OwnArr= new_data.slice(row_index,row_index+1);
+       let AftertArr = new_data.slice(row_index+1);
+
+       console.log('xxxxxxxxx分割====>',row_index,BeforeArr,OwnArr,AftertArr);
+       //2.2 计算出后数组
+         // reverse() 反转
+
+         let new_BeforeArr=[];
+         let Before_index=0;
+         for(let i=0;i<BeforeArr.length;i++){
+           // 序号不能断，状态不能断 
+           if(Before_index===i && BeforeArr[i][feildName] ===row[feildName] ){
+               if(isSingleEdit){
+                if(BeforeArr[i]['__state__']==='new' || BeforeArr[i]['__state__']==='edit' ) {
+                    Before_index=-1;
+                }else{
+                    new_BeforeArr.push(BeforeArr[i]);
+                    Before_index++;
+                }
+
+               } else{
+                new_BeforeArr.push(BeforeArr[i]);
+                Before_index++;
+               }
+           } else{
+               break;
+           }
+
+         }
+
+         let new_AftertArr=[];
+         let Aftert_index=0;
+         for(let i=0;i<AftertArr.length;i++){
+           // 序号不能断，状态不能断 
+           if(Aftert_index===i && AftertArr[i][feildName] ===row[feildName]){
+               if(isSingleEdit){
+                if(AftertArr[i]['__state__']==='new'|| AftertArr[i]['__state__']==='edit' ) {
+                    Aftert_index=-1;
+                }else{
+                    new_AftertArr.push(AftertArr[i]);
+                    Aftert_index++;
+                }
+
+               } else{
+                new_AftertArr.push(AftertArr[i]);
+                Aftert_index++;
+               }
+           }else{
+               break;
+           }
+
+         }
+
+         if(isSingleEdit){
+            if(OwnArr[0]['__state__']==='new'|| OwnArr[0]['__state__']==='edit' ) {
+                new_BeforeArr=[];
+                new_AftertArr=[];
+            }
+
+         }
+
+       //3 合并数组，返回
+
+       let back_data=[];
+       back_data=[...new_BeforeArr.reverse(),...OwnArr,...new_AftertArr];
+
+       return back_data;
 
     }
 

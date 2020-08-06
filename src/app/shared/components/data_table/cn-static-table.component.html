@@ -1,5 +1,5 @@
-<button nz-button *ngIf="!readonly" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;" (click)="addBtnClick()"><i
-    nz-icon nzType="plus"></i>
+<button nz-button *ngIf="!readonly" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
+  (click)="addBtnClick()"><i nz-icon nzType="plus"></i>
   添加</button>
 <nz-table #dataTable [nzShowSizeChanger]="config.isShowSizeChanger" [nzLoadingDelay]="300" [nzFrontPagination]="true"
   [nzShowPagination]="config.isPagination" [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"
@@ -17,9 +17,11 @@
           (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-span [ngForOf]="spans">
           <ng-container [ngSwitch]="span.spanType">
-            <th *ngSwitchCase="'row'"  [nzAlign]="span.titleAlign?span.titleAlign:'left'"  attr.rowspan="{{ span.span }}">{{ span.title }}</th>
-            <th *ngSwitchCase="'col'"  [nzAlign]="span.titleAlign?span.titleAlign:'left'"  attr.colspan="{{ span.span }}">{{ span.title }}</th>
-            <th *ngSwitchDefault  [nzAlign]="span.titleAlign?span.titleAlign:'left'" >{{ span.title }}</th>
+            <th *ngSwitchCase="'row'" [nzAlign]="span.titleAlign?span.titleAlign:'left'" attr.rowspan="{{ span.span }}">
+              {{ span.title }}</th>
+            <th *ngSwitchCase="'col'" [nzAlign]="span.titleAlign?span.titleAlign:'left'" attr.colspan="{{ span.span }}">
+              {{ span.title }}</th>
+            <th *ngSwitchDefault [nzAlign]="span.titleAlign?span.titleAlign:'left'">{{ span.title }}</th>
           </ng-container>
         </ng-template>
       </tr>
@@ -32,7 +34,8 @@
         <th *ngIf="config.showCheckBox" nzWidth="50px" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
           (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-header [ngForOf]="tableColumns">
-          <th [nzAlign]="header.titleAlign?header.titleAlign:'left'" [nzWidth]="header.width" *ngIf="!header.hidden" [nzShowSort]="header.showSort?header.showSort:false" [nzSortKey]="header.field">
+          <th [nzAlign]="header.titleAlign?header.titleAlign:'left'" [nzWidth]="header.width" *ngIf="!header.hidden"
+            [nzShowSort]="header.showSort?header.showSort:false" [nzSortKey]="header.field">
             {{ header.title }}
           </th>
         </ng-template>
@@ -60,45 +63,66 @@
       <ng-template ngFor let-col [ngForOf]="tableColumns">
         <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden && (rowData['$state$'] !== 'delete')">
           <ng-container *ngSwitchCase="'index'">
-            <td [nzAlign]="col.align?col.align:'left'">
+            <td [nzAlign]="col.align?col.align:'left'"
+              [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+              [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+              *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
               {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
             </td>
           </ng-container>
           <ng-container *ngSwitchCase="'field'">
             <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
               <ng-container *ngIf="col.editor">
-                <td *ngSwitchCase="'new'">
-                  <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else text" [config]="col.editor"
-                  [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
-                  [initData]="initValue"
-                  [tempData]="tempData"
-                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
-                    (updateValue)="valueChange($event)"
-                    [formCascade]="formCascade[rowData[KEY_ID]]?(formCascade[rowData[KEY_ID]][col.editor.field]?formCascade[rowData[KEY_ID]][col.editor.field]:{}):{}">
 
-                  </ng-container>
+                <ng-container *ngSwitchCase="'new'">
+                  <td
+                    [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                    [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                    *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+                    <ng-container CnGridItemDirective [state]="'new'" *ngIf="col.editor ; else text"
+                      [config]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initValue"
+                      [tempData]="tempData"
+                      [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                      (updateValue)="valueChange($event)"
+                      [formCascade]="formCascade[rowData[KEY_ID]]?(formCascade[rowData[KEY_ID]][col.editor.field]?formCascade[rowData[KEY_ID]][col.editor.field]:{}):{}">
 
-                </td>
-                <td *ngSwitchCase="'edit'">
+                    </ng-container>
 
-                  <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else text"
-                    [config]="col.editor"
-                    [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
-                    [initData]="initValue"
-                    [tempData]="tempData"
-                    [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
-                    (updateValue)="valueChange($event)"
-                    [formCascade]="formCascade[rowData[KEY_ID]]?(formCascade[rowData[KEY_ID]][col.editor.field]?formCascade[rowData[KEY_ID]][col.editor.field]:{}):{}">
-                  </ng-container>
-                </td>
-                <td *ngSwitchDefault>{{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
+                  </td>
+                </ng-container>
+                <ng-container *ngSwitchCase="'edit'">
+                  <td
+                    [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                    [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                    *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+
+                    <ng-container CnGridItemDirective [state]="'edit'" *ngIf="col.editor ; else text"
+                      [config]="col.editor" [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initValue"
+                      [tempData]="tempData"
+                      [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                      (updateValue)="valueChange($event)"
+                      [formCascade]="formCascade[rowData[KEY_ID]]?(formCascade[rowData[KEY_ID]][col.editor.field]?formCascade[rowData[KEY_ID]][col.editor.field]:{}):{}">
+                    </ng-container>
+                  </td>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  <td
+                    [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                    [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                    *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
+                    {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}</td>
+                </ng-container>
+
+
+
               </ng-container>
               <ng-container *ngIf="!col.editor">
-                <td [nzAlign]="col.align?col.align:'left'">
+                <td [nzAlign]="col.align?col.align:'left'"
+                  [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
+                  [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
+                  *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
                   <ng-container *ngIf="col.custom; else text" CnGridItemDirective [state]="'edit'" [config]="col.custom"
-                  [rowData]="mapOfDataState[rowData[KEY_ID]]['data']"
-                  [initData]="initValue"
-                  [tempData]="tempData"
+                    [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initValue" [tempData]="tempData"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
                     (updateValue)="valueChange($event)"
                     [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
@@ -112,34 +136,34 @@
           </ng-container>
           <ng-container *ngSwitchCase="'action'">
             <td>
-                <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length>1">
-                    <nz-button-group>
-                        <button nzSize="default" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu"
-                          nzPlacement="bottomLeft">
-                          <i nz-icon nzType="ellipsis" class="text-lg green"></i>
-                        </button>
-                      </nz-button-group>
-                      <nz-dropdown-menu #menu="nzDropdownMenu">
-                        <ul nz-menu nzSelectable>
-                          <li (click)="rowAction(act, rowData, $event)" nz-menu-item
-                            *ngFor="let act of mapOfDataState[rowData[KEY_ID]]['actions']">
-                            <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
-                            <!-- <button (click)="rowAction(act, rowData, $event)" nz-button [nzSize]="act.size"
+              <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length>1">
+                <nz-button-group>
+                  <button nzSize="default" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu"
+                    nzPlacement="bottomLeft">
+                    <i nz-icon nzType="ellipsis" class="text-lg green"></i>
+                  </button>
+                </nz-button-group>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                  <ul nz-menu nzSelectable>
+                    <li (click)="rowAction(act, rowData, $event)" nz-menu-item
+                      *ngFor="let act of mapOfDataState[rowData[KEY_ID]]['actions']">
+                      <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                      <!-- <button (click)="rowAction(act, rowData, $event)" nz-button [nzSize]="act.size"
                               [nzType]="act.color ? act.color : 'default'">
         
                             </button> -->
-                          </li>
-                        </ul>
-                      </nz-dropdown-menu>
-                  </ng-container>
-                  <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length===1">
-                      <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
-                              <button (click)="rowAction(act, rowData, $event)" nz-button nzSize="act.size"
-                                [nzType]="act.color ? act.color : 'default'">
-                                <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
-                              </button>
-                        </ng-template>
-                    </ng-container>
+                    </li>
+                  </ul>
+                </nz-dropdown-menu>
+              </ng-container>
+              <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length===1">
+                <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
+                  <button (click)="rowAction(act, rowData, $event)" nz-button nzSize="act.size"
+                    [nzType]="act.color ? act.color : 'default'">
+                    <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                  </button>
+                </ng-template>
+              </ng-container>
               <!-- <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
                 <ng-container [ngSwitch]="act.type">
                   <ng-container *ngSwitchCase="'link'">
@@ -192,3 +216,65 @@
   条记录
 </ng-template>
 <ng-template #title> <i nz-icon [nzType]="config.titleIcon" nzTheme="outline"></i> {{ config.title }}</ng-template>
+
+<!-- colspan="2" -->
+
+
+<!-- <nz-table #colSpanTable1 [nzData]="listOfData" nzBordered>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th colspan="2">配方量</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of colSpanTable1.data; index as i">
+
+      <td>{{ data.name }}</td>
+      <td>{{ data.age }}</td>
+      <td [nzAlign]="'center'"
+        [attr.rowspan]="mapd[data['id']]['tel']?(mapd[data['id']]['tel'].groupIndex===1 ? mapd[data['id']]['tel'].groupNum : 1):1"
+        [attr.colspan]="mapd[data['id']]['tel']?(mapd[data['id']]['tel']['colgroupIndex']===1 ? mapd[data['id']]['tel'].colgroupNum : 1):1"
+        *ngIf=" !mapd[data['id']]['tel'] || ( mapd[data['id']]['tel']['groupIndex'] === 1 && mapd[data['id']]['tel']['colgroupIndex'] === 1 )">
+        {{ data.tel }}</td>
+      <td [nzAlign]="'center'"
+        [attr.rowspan]="mapd[data['id']]['phone']?(mapd[data['id']]['phone'].groupIndex===1 ? mapd[data['id']]['phone'].groupNum : 1):1"
+        [attr.colspan]="mapd[data['id']]['phone']?(mapd[data['id']]['phone']['colgroupIndex']===1 ? mapd[data['id']]['phone'].colgroupNum : 1):1"
+        *ngIf="!mapd[data['id']]['phone'] || ( mapd[data['id']]['phone']['groupIndex'] === 1 && mapd[data['id']]['phone']['colgroupIndex'] === 1 )">
+        {{ data.phone }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<button (click)="createMapd()">合并</button><button (click)="createMapd1()">恢复</button>
+
+
+<nz-table #colSpanTable2 [nzData]="listOfData2" nzBordered>
+  <thead>
+    <tr>
+      <th *ngFor="let col of mergetableColumns">{{ col.title }}</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of colSpanTable2.data; index as i">
+      <ng-template ngFor let-col [ngForOf]="mergetableColumns">
+
+        <ng-container *ngIf="!mergeData[data['id']]">
+          <td [nzAlign]="'center'"> {{ data[col.field] }}</td>
+        </ng-container>
+        <ng-container *ngIf="mergeData[data['id']]">
+          <td [nzAlign]="'center'"
+            [attr.rowspan]="mergeData[data['id']][col.field]?(mergeData[data['id']][col.field].groupIndex===1 ? mergeData[data['id']][col.field].groupNum : 1):1"
+            [attr.colspan]="mergeData[data['id']][col.field]?(mergeData[data['id']][col.field]['colgroupIndex']===1 ? mergeData[data['id']][col.field].colgroupNum : 1):1"
+            *ngIf="!mergeData[data['id']][col.field] || ( mergeData[data['id']][col.field]['groupIndex'] === 1 && mergeData[data['id']][col.field]['colgroupIndex'] === 1 )">
+            {{ data[col.field] }}
+          </td>
+        </ng-container>
+
+      </ng-template>
+    </tr>
+  </tbody>
+</nz-table>
+
+<button (click)="createMapd_new()">合并</button><button (click)="createMapd1_new()">恢复</button> -->

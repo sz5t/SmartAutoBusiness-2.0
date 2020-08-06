@@ -283,6 +283,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
                         newCol.size = new LayoutSize(c.size);
                         newCol.container = c.container;
                         newCol.header = c.header;
+                        c.header && (newCol.header = this.setHeader(c.header));
                         this.setContainer(newCol, c);
                         newRow.add(newCol);
                     }
@@ -292,7 +293,14 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
         }
         return newLayout;
     }
+    private setHeader(headerCfg) {
+        const header: any = headerCfg;
+        if (headerCfg.id) {
+            header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
+        }
 
+        return header;
+    }
     private setContainer(containerObj, containerCfg) {
         switch (containerObj.container) {
             case 'layout':

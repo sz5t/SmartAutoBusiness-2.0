@@ -854,7 +854,7 @@ export class CnTreeComponent extends CnComponentBase
         }
     }
 
-    public async excecuteCheckedNodesByID(option) {
+    public async executeCheckedNodesByID(option) {
         console.log('execute checked nodes', option);
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
@@ -863,7 +863,7 @@ export class CnTreeComponent extends CnComponentBase
         const parameterResult = [];
         data.map(d => {
             const param = ParameterResolver.resolve({
-                params: ajaxParams,
+                params: [{name:this.KEY_ID,type:"item",valueName:this.KEY_ID}],
                 tempValue: this.tempValue,
                 item: d.origin,
                 initValue: this.initValue,
@@ -877,7 +877,16 @@ export class CnTreeComponent extends CnComponentBase
                 const pData = p[this.KEY_ID]
                 pData && ids.push(pData);
             })
-            const response = await this.executeHttpRequest(url, method, { ids: ids.join(',') });
+            let paramData;
+            paramData = ParameterResolver.resolve({
+                params: ajaxParams,
+                item: { ids: ids.join(',') },
+                checkedItem: { ids: ids.join(',') },
+                tempValue: this.tempValue,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue
+            });
+            const response = await this.executeHttpRequest(url, method, paramData);
             // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
             this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
