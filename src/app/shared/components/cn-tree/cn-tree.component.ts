@@ -53,6 +53,8 @@ export class CnTreeComponent extends CnComponentBase
     public permissions = [];
     @Input()
     public nodes = [];
+    @Input() initData;
+    @Input() tempData;
     @Input() dataServe:DataServerService;
     @Output() public updateValue = new EventEmitter();
 
@@ -136,7 +138,21 @@ export class CnTreeComponent extends CnComponentBase
         // init cacheValue
     }
 
+    private _initInnerValue() {
+        if (this.tempData) {
+            this.tempValue = this.tempData;
+        } else {
+            this.tempValue = {};
+        }
+        if (this.initData) {
+            this.initValue = this.initData;
+        } else {
+            this.initValue = {};
+        }
+    }
+
     public ngOnInit() {
+        this._initInnerValue();
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
 
