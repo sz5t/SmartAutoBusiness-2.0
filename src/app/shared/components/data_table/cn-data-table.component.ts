@@ -968,9 +968,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public setSelectRow(rowData?, $event?) {
-        if (!rowData) {
-            return false;
-        }
+        debugger;
         if ($event) {
             const src = $event.srcElement || $event.target;
             if (src.type !== undefined) {
@@ -979,26 +977,45 @@ export class CnDataTableComponent extends CnComponentBase
             $event.stopPropagation();
             $event.preventDefault();
         }
+        if (!rowData) {
+            if (this.dataList.length > 0) {
 
-        this.ROW_SELECTED = rowData;
+                this.dataList.map(row => {
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                });
 
-        // 选中当前行
-        if (this.dataList.length > 0) {
-            this.dataList.map(row => {
-                this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
-                this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
-            });
-
-            if (rowData[this.KEY_ID] && rowData[this.KEY_ID].length > 0) {
-                this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
-                this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = true; // !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
+                const key = this.dataList[0][this.KEY_ID];
+                this.mapOfDataState[key]['selected'] = true;
+                this.mapOfDataState[key]['checked'] = true;
+                // 勾选/取消当前行勾选状态            
+    
+                this.dataCheckedStatusChange();
             }
-
-
-            // 勾选/取消当前行勾选状态            
-
-            this.dataCheckedStatusChange();
+            // return false;
         }
+        else {
+            this.ROW_SELECTED = rowData;
+
+            // 选中当前行
+            if (this.dataList.length > 0) {
+                this.dataList.map(row => {
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                });
+    
+                if (rowData[this.KEY_ID] && rowData[this.KEY_ID].length > 0) {
+                    this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
+                    this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = true; // !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
+                }
+    
+    
+                // 勾选/取消当前行勾选状态            
+    
+                this.dataCheckedStatusChange();
+            }
+        }
+        
 
         return true;
     }
