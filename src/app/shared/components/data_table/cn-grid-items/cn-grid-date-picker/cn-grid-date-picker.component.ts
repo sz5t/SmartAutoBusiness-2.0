@@ -18,6 +18,14 @@ export class CnGridDatePickerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    if( !this.config.showFormat){
+      if(!this.config.showTime){
+           this.config.showFormat ='yyyy-MM-dd';
+      }else {
+       this.config.showFormat ='yyyy-MM-dd HH:mm:ss';
+      }
+ 
+    }
     let v_value;
    if (this.valueConfig) {
      v_value = this.valueConfig.value;
@@ -46,11 +54,15 @@ export class CnGridDatePickerComponent implements OnInit {
         sj   = this.parserDate(result);
        }
 
-      const bc= this.getDateFormat(sj,"yyyy-MM-dd");
+      const bc= this.getDateFormat(sj, this.config.showFormat);
       if (this.value !== bc) {
         this.value = bc;
       }
     }
+    else{
+      this.value =null;
+    }
+    this.valueChange( this.value);
 
   }
 
@@ -95,7 +107,7 @@ parserDate(date) {
       const o = {
           "M+": getMonth(strDate) + 1, // 月份
           "d+": getDate(strDate), // 日
-          "h+": getHours(strDate), // 小时
+          "H+": getHours(strDate), // 小时
           "m+": getMinutes(strDate), // 分
           "s+":  getSeconds(strDate), // 秒
           "q+": Math.floor((getMonth(strDate) + 3) / 3), // 季度
@@ -116,6 +128,7 @@ parserDate(date) {
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'setValue') {
            this.value= c[this.config.field]['setValue']['value'];
+           this.valueChange( c[this.config.field]['setValue']['value']);
         }
       }
 

@@ -40,7 +40,7 @@ export class CommonUtils {
           return null;
       }
     } else {
-      return value;
+        return value;
     }
 
   }

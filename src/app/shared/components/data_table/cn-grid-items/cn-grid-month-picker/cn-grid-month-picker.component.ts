@@ -14,6 +14,7 @@ export class CnGridMonthPickerComponent implements OnInit {
   @Input() public state;
   date=null;
   value=null;
+  cascadeValue: any;
   constructor() { }
 
   ngOnInit() {
@@ -48,8 +49,10 @@ export class CnGridMonthPickerComponent implements OnInit {
       if (this.value !== ym) {
         this.value = ym
       }
+    }else{
+      this.value =null;
     }
-
+    this.valueChange( this.value);
     console.log('年月 onChange: ', result,this.date,  this.value);
   }
 
@@ -92,6 +95,18 @@ export class CnGridMonthPickerComponent implements OnInit {
     return d;
 }
 public cascadeAnalysis(c?) {
+  if (c && c.hasOwnProperty(this.config.field)) {
+    if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+      this.cascadeValue = c[this.config.field].cascadeValue;
+    }
+    if (c[this.config.field].hasOwnProperty('exec')) {
+      if (c[this.config.field].exec === 'setValue') {
+         this.value= c[this.config.field]['setValue']['value'];
+         this.valueChange( c[this.config.field]['setValue']['value']);
+      }
+    }
+
+  }
 }
 
 }

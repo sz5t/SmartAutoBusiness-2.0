@@ -1,2 +1,2 @@
 <input nz-input   hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
-<nz-week-picker [(ngModel)]="date"  [ngModelOptions]="{standalone: true}" (ngModelChange)="getWeek($event)" nzPlaceHolder="Select week"></nz-week-picker>
+<nz-week-picker [(ngModel)]="date"  [ngModelOptions]="{standalone: true}" (ngModelChange)="getWeek($event)"  [nzPlaceHolder]="config.placeholder"></nz-week-picker>

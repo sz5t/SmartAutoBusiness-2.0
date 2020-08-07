@@ -33,7 +33,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     super(componentService);
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     if (this.initData) {
       this.initValue = this.initData;
     } else {
@@ -51,9 +51,15 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     //   this.config.model ="multiple";
     //   this.config.valueName="value";
     // }
-    if(this.config.layoutName)
-    this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
-   
+    // debugger;
+    if(this.config.layoutName){
+      this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+    }
+    if( !this.tableConfig){
+        await this.getCustomConfig(this.config.layoutName);
+        this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+     }
+
     
     // if(this.config.model ==='multiple') {
     //   this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE,93F1C6C9-140D-42A5-9379-FE47EDA2DEEB";
@@ -63,6 +69,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
 
 
   }
+
 
 
   // 构建参数-》下拉选择自加载数据
@@ -94,9 +101,9 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
    
     const response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
     console.log('--da---' + this.config.field, response);
-    if (isArray(response.data)) {
-      if (response.data && response.data.length > 0) {
-        const data_form = response.data;
+    if (isArray(response['data'])) {
+      if (response['data'] && response['data'].length > 0) {
+        const data_form = response['data'];
         // this.selectedRowItem = data_form[0];
         data_form.forEach(element => {
           element['label'] = element[this.config.labelName];
@@ -108,14 +115,14 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
         this.selectedRowItem = null;
       }
     } else {
-      if (response.data) {
+      if (response['data']) {
 
-        const _data =response.data;
+        const _data =response['data'];
         _data['label'] = _data[this.config.labelName];
         _data['value'] = _data[this.config.valueName];
         this.tags = [];
         this.tags.push(_data);
-       //  this.selectedRowItem = response.data;
+       //  this.selectedRowItem = response['data'];
       } else {
         this.selectedRowItem = null;
       }
@@ -168,6 +175,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
   }
 
   createCustomModal(){
+    this.buildChangeValue(this.config);
     console.log('createModal');
     this.initData[ this.config.targetValue? this.config.targetValue:'tags'] = this.tags; 
     this.componentService.modalService.create({
@@ -251,6 +259,9 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
           if (c[this.config.field].hasOwnProperty('exec')) {
             if (c[this.config.field].exec === 'ajax') {
               this.load();
+            }
+            if (c[this.config.field].exec === 'changeValue') {
+              this.buildChangeValue(this.config);
             }
           }
     

@@ -20,7 +20,7 @@ export class CnFormDatePickerComponent implements OnInit {
     this._style= this.config.style? this.config.style:{"width": "100%"};
 
    if( !this.config.showFormat){
-     if(!this.config.nzShowTime){
+     if(!this.config.showTime){
           this.config.showFormat ='yyyy-MM-dd';
      }else {
       this.config.showFormat ='yyyy-MM-dd HH:mm:ss';

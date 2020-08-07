@@ -1,5 +1,12 @@
  <ng-container *ngIf="config.isAllJson"  cnLayoutResolverDirective [config]="configdemo"></ng-container> 
 
-<cn-dynamic-layout-resolver  *ngIf="!config.isAllJson"   [layoutObj]="dd_liu['layoutJson']"    [initData]="initData"></cn-dynamic-layout-resolver> 
+<cn-dynamic-layout-resolver  *ngIf="!config.isAllJson && page_config"   [layoutObj]="page_config['layoutJson']" [dataServe]="componentDataService"     [initData]="initValue"></cn-dynamic-layout-resolver> 
 
 
+<!-- [dataServe]="componentDataService" -->
+
+<!-- <iframe src="../#/template/businessmodeling" height="400" width="700" name="demo" frameborder="0" scrolling="auto" sandbox="allow-same-origin allow-top-navigation allow-forms allow-scripts"  ></iframe>
+ -->
+<!-- 
+<iframe src="https://www.baidu.com" height="200" width="200" name="demo1" frameborder="0" scrolling="auto" sandbox="allow-same-origin allow-forms allow-scripts"  ></iframe>
+ -->

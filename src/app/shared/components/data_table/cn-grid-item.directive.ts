@@ -19,6 +19,7 @@ import { CnGridCustomSelectComponent } from '@shared/components/data_table/cn-gr
 import { CnGridRangePickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-range-picker/cn-grid-range-picker.component';
 import { CnGridYearPickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-year-picker/cn-grid-year-picker.component';
 import { CnGridMonthPickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-month-picker/cn-grid-month-picker.component';
+import { CnGridTreeSelectComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-tree-select/cn-grid-tree-select.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnGridInputComponent,
@@ -41,6 +42,7 @@ const components: { [type: string]: Type<any> } = {
   customSelect:  CnGridCustomSelectComponent,
   codeEdit:  CnGridCodeEditComponent,
   textarea:  CnGridTextareaComponent,
+  treeSelect: CnGridTreeSelectComponent,
   // label: ,
   // selectMultiple:,
   // datePicker:,

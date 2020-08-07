@@ -1,5 +1,5 @@
 
-export interface IDataFormTrigger {
+export interface IUploadTrigger {
     ADD_FORM: string,
     EDIT_FORM: string,
     CANCEL: string,
@@ -10,15 +10,14 @@ export interface IDataFormTrigger {
     VALUE_CHANGE: string,
     LINK: string,
     LINK_TO: string,
-    MESSAGE: string,
-    WINDOW: string,
-    TRANSFER_VALUE:string
+    ADD_MULTIPLE_NODE: string,
+   ADD_SINGLE_NODE:string  
 }
 
 /**
  * 表单功能触发器
  */
-export const BSN_DATAFORM_TRIGGER: IDataFormTrigger = {
+export const BSN_DATATAG_TRIGGER: IUploadTrigger = {
     // state
     ADD_FORM: 'ADD_FORM',
     EDIT_FORM: 'EDIT_FORM',
@@ -30,7 +29,6 @@ export const BSN_DATAFORM_TRIGGER: IDataFormTrigger = {
     VALUE_CHANGE: 'VALUE_CHANGE',
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',
-    MESSAGE:'MESSAGE',
-    WINDOW: 'WINDOW',
-    TRANSFER_VALUE:'TRANSFER_VALUE' 
+    ADD_MULTIPLE_NODE: 'ADD_MULTIPLE_NODE',
+    ADD_SINGLE_NODE:'ADD_SINGLE_NODE'
 }

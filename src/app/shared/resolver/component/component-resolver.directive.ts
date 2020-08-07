@@ -15,6 +15,7 @@ import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { CnStaticTableComponent } from '@shared/components/data_table/cn-static-table.component';
 import { CnTagComponent } from '@shared/components/cn-tag/cn-tag.component';
+import { CnUploadComponent } from '@shared/components/cn-upload/cn-upload.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -30,7 +31,8 @@ const components: { [type: string]: Type<any> } = {
     cfgLayoutPage: CfgLayoutPageComponent,
     cnCardList: CnCardListComponent,
     cnStaticTable: CnStaticTableComponent,
-    cnTag:CnTagComponent
+    cnTag:CnTagComponent,
+    cnUpload:CnUploadComponent
 };
 
 @Directive({
@@ -41,6 +43,8 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
     @Input() config;
     @Input() initData;
     @Input() tempData;
+    @Input() dataServe;
+
     private _componentRef: ComponentRef<any>;
     constructor(
         private _resolver: ComponentFactoryResolver,
@@ -117,6 +121,8 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
         this._componentRef.instance.config = componentObj;
         this._componentRef.instance.initData = this.initData;
         this._componentRef.instance.tempData = this.tempData;
+        this._componentRef.instance.dataServe = this.dataServe;
+        this.dataServe && (this.dataServe.setComponentInstace(componentObj.id,this._componentRef));
     }
 
     private _getComponentObjectById(id) {

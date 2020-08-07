@@ -61,7 +61,7 @@ const components: { [type: string]: Type<any> } = {
     styleUrls: [`cn-data-table.component.less`]
 })
 export class CnDataTableComponent extends CnComponentBase
-    implements OnInit, AfterViewInit, OnDestroy, IDataGridProperty {
+    implements OnInit, AfterViewInit, OnDestroy {
 
     @Input()
     public config; // dataTables 的配置参数
@@ -72,6 +72,7 @@ export class CnDataTableComponent extends CnComponentBase
     public permissions = [];
     @Input()
     public dataList = [];
+    @Input() dataServe;
     @Output() public updateValue = new EventEmitter();
     /**
      * 组件名称
@@ -111,7 +112,8 @@ export class CnDataTableComponent extends CnComponentBase
             data: any,
             originData: any,
             actions?: any[],
-            validation?: boolean
+            validation?: boolean,
+            mergeData?:any
         }
     } = {};
     public checkedNumber = 0;
@@ -150,6 +152,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     // 前置条件集合
     public beforeOperation;
+    private _ajaxConfigObj: any = {};
     constructor(
         @Inject(BSN_COMPONENT_SERVICES)
         public componentService: ComponentServiceProvider
@@ -160,21 +163,29 @@ export class CnDataTableComponent extends CnComponentBase
         // init cacheValue
     }
 
-    public ngOnInit() {
+    public async ngOnInit() {
         this.setChangeValue(this.changeValue);
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
 
         // 初始化默认分页大小
         this.config.pageSize && (this.pageSize = this.config.pageSize);
-
+        this.config.ajaxConfig.forEach(ajax => {
+            this._ajaxConfigObj[ajax.id] = ajax;
+        });
         // 构建表格列及列标题
+        
+        if (this.config.columnsAjax) {
+          await    this.loadDynamicColumns();
+          console.log('动态++++》',this.config.columns);
+        }
         this._buildColumns(this.config.columns);
 
         this._initInnerValue();
 
         // 解析及联配置
         this.resolveRelations();
+
 
 
 
@@ -263,6 +274,19 @@ export class CnDataTableComponent extends CnComponentBase
             const colIndex = columns.filter(item => item.type === 'index');
             const colObjs = columns.filter(item => item.type === 'field');
             const actionCfgs = columns.filter(item => item.type === 'action');
+            colObjs.forEach(col => {
+                if (col.editor) {
+                    if (col.editor.loadingConfig) {
+                        col.editor['loadingConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.loadingConfig.id];
+                    }
+                    if (col.editor.loadingItemConfig) {
+                        col.editor['loadingItemConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.loadingItemConfig.id];
+                    }
+                    if (col.editor.expandConfig) {
+                        col.editor['expandConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.expandConfig.id];
+                    }
+                }
+            });
             if (actionCfgs && actionCfgs.length > 0) {
                 actionCfgs.map(cfg => {
                     const colActions = [];
@@ -302,13 +326,16 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public loadByFilter() {
+        if (!this.config.loadingConfig) {
+            return;
+        }
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
-        const method = this.config.loadingConfig.method;
+        const method = this.config.loadingConfig.method ? this.config.loadingConfig.method : this.config.loadingConfig.ajaxType;
         const params = {
-            ...this.buildParameters(this.config.loadingConfig.filter),
+            ...this.buildParameters(this.config.loadingConfig.params),
             ...this._buildPaging(),
-            // ...this._buildFilter(this.config.ajaxConfig.filter),
+            ...this._buildFilter(this.config.loadingConfig.filter),   // 查询是在当前基础上进行查询的
             ...this._buildSort(),
             // ...this._buildColumnFilter(),
             // ...this._buildFocusId(),
@@ -335,7 +362,8 @@ export class CnDataTableComponent extends CnComponentBase
                         data: d,
                         originData: { ...d },
                         validation: true,
-                        actions: this.getRowActions('text')
+                        actions: this.getRowActions('text'),
+                        mergeData:{}
                     };
                     if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
@@ -368,14 +396,14 @@ export class CnDataTableComponent extends CnComponentBase
         this.isLoading = true;
         if (!this.config.loadingConfig) {
             return;
-          }
+        }
         const url = this.config.loadingConfig.url;
-        const method = this.config.loadingConfig.method;
+        const method = this.config.loadingConfig.method ? this.config.loadingConfig.method : this.config.loadingConfig.ajaxType;
 
         const params = {
             ...this.buildParameters(this.config.loadingConfig.params),
             ...this._buildPaging(),
-            // ...this._buildFilter(this.config.ajaxConfig.filter),
+            ...this._buildFilter(this.config.loadingConfig.filter),
             ...this._buildSort(),
             // ...this._buildColumnFilter(),
             // ...this._buildFocusId(),
@@ -403,7 +431,8 @@ export class CnDataTableComponent extends CnComponentBase
                         data: d,
                         originData: { ...d },
                         validation: true,
-                        actions: this.getRowActions('text')
+                        actions: this.getRowActions('text'),
+                        mergeData:{}
                     };
                     if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
@@ -424,19 +453,24 @@ export class CnDataTableComponent extends CnComponentBase
 
                 this.setSelectRow(this.ROW_SELECTED);
                 this.isLoading = false;
+                // 2020.7.27 计算合并列
+                if(this.config.mergeconfig)
+                this._createMapd_new(this.config.mergeconfig, this.dataList);
             } else {
                 this.isLoading = false;
                 this._initComponentData();
-                this.dataList =[];
+                this.dataList = [];
                 this.total = 0;
             }
+
+            this.dataServe && this.dataServe.setComponentValue(this.config.id, this.dataList);
         }, error => {
             console.log(error);
         });
     }
 
     public loadRefreshData(option) {
-        debugger;
+         debugger;
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
@@ -472,6 +506,132 @@ export class CnDataTableComponent extends CnComponentBase
 
     }
 
+    public ajaxColumns; // 动态列
+    public async loadDynamicColumns() {
+       // debugger;
+        const url = this.config.columnsAjax.url;
+        const method = this.config.columnsAjax.method ? this.config.columnsAjax.method : this.config.columnsAjax.ajaxType;
+
+        const params = {
+            ...this.buildParameters(this.config.columnsAjax.params),
+        };
+        const loadColumns = [];
+        const loadData = await   this.componentService.apiService.getRequest(url, method, { params }).toPromise();
+        if (loadData && loadData.data && loadData.success) {
+            if (loadData.data) {
+                // console.log('异步请求列信息', loadData.data);
+                if (loadData.data.length > 0) {
+                    if (loadData.data.length < 50) { // 异常处理，超过50个
+                        this.ajaxColumns = loadData.data;
+                        loadData.data.forEach(element => {
+                            const column = {};
+                            column['type']= "field";
+                            this.config.columnsConfig.forEach(cc => {
+                                if (cc.feild) {
+                                    column[cc.name] = element[cc.feild];
+                                } else {
+                                    column[cc.name] = cc['value'];
+                                }
+                            });
+                            loadColumns.push(column);
+                        });
+                    }
+                }
+            }
+        }
+        const Columns = this.mergedColumns(loadColumns);
+        this.config.columns = Columns;
+    }
+
+    public mergedColumns(fieldConfig?) {
+        const dynamicColumns = this.setFieldByColumns(fieldConfig);
+        const dynamicdefaultcolumns = [];
+        this.config.defaultcolumns.forEach(c => {
+            if(c['type'] !=='action'){
+                const index = dynamicColumns.findIndex(item => item.feild === c.field);
+                if (index > -1) {
+                    // 动态列重复，覆盖默认列
+                } else {
+                    dynamicdefaultcolumns.push(c);
+                }
+            }else {
+                dynamicdefaultcolumns.push(c);
+            }
+         
+        });
+
+        const columns = [...dynamicdefaultcolumns, ...dynamicColumns];
+        // console.log('最终生成列', columns);
+        return columns;
+    }
+
+    public setFieldByColumns(fieldConfig?) {
+        const cf_config = [];
+        fieldConfig.forEach(f => {
+            const cf = {};
+            cf['title'] = f.title;
+            cf['type'] = f.type;
+            cf['subtitle'] = f.subtitle ? f.subtitle : null;
+            cf['subtitletext'] = f.subtitletext ? f.subtitletext : null;
+            cf['text'] = f.text ? f.text : null;
+            cf['field'] = f.field;
+            cf['width'] = f.width;
+            cf['hidden'] = f.hidden;
+            cf['titleField'] = f.titleField;
+            cf['fieldAlign'] = f.fieldAlign ? f.field.Align : 'text-center'
+            if (f.isEdit) {
+                cf['editor'] = this.setEditConfig(f);
+            }
+            cf_config.push(cf);
+        });
+        return cf_config;
+    }
+
+    public setEditConfig(d?) {
+        let c;
+        if (d.editType === 'input') {
+            c = {
+                'type': 'input',
+                'field': d.field,
+                'options': {
+                    'type': 'input',
+                    'width': d.width,
+                    'inputType': 'text'
+                }
+            }
+        } else if (d.editType === 'select') {
+            // 无法实现动态数据源，这部分信息只能由视图补充
+            c = {
+                'type': 'select',
+                'field': d.field,
+                'options': {
+                    'type': 'select',
+                    'labelSize': '6',
+                    'controlSize': '18',
+                    'inputType': 'submit',
+                    'disabled': false,
+                    'size': 'default',
+                    'width': d.width,
+                    'defaultValue': '1',
+                    'options': [
+                        {
+                            'label': '合格',
+                            'value': '1',
+                            'disabled': false
+                        },
+                        {
+                            'label': '不合格',
+                            'value': '2',
+                            'disabled': false
+                        }
+                    ]
+                }
+            }
+        }
+        return c;
+
+    }
+
     /**
      * 构建查询过滤参数
      * @param filterConfig
@@ -484,7 +644,8 @@ export class CnDataTableComponent extends CnComponentBase
             filter = ParameterResolver.resolve({
                 params: filterConfig,
                 tempValue: this.tempValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                initValue: this.initValue
             });
         }
         return filter;
@@ -600,13 +761,13 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public addRow(r?) {
-       // debugger;
+        // debugger;
         // 创建空数据对象
         const newId = CommonUtils.uuID(32);
         let newData = this.createNewRowData();
         newData[this.KEY_ID] = newId;
-        if(r){
-            newData = {...newData,...r};
+        if (r) {
+            newData = { ...newData, ...r };
         }
 
         // 新增数据加入原始列表,才能够动态新增一行编辑数据
@@ -621,7 +782,8 @@ export class CnDataTableComponent extends CnComponentBase
             checked: true, // index === 0 ? true : false,
             selected: false, // index === 0 ? true : false,
             state: 'new',
-            actions: this.getRowActions('new')
+            actions: this.getRowActions('new'),
+            mergeData:{}
         }
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
@@ -655,8 +817,12 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public editRow(option) {
+        console.log('edit====',option)
         if (option.data) {
             this.addEditRows(option.data.data);
+              // 2020.7.27 计算合并列
+              if(this.config.mergeconfig)
+              this._createMapd_new(this.config.mergeconfig, this.dataList);
         }
         return true;
     }
@@ -689,6 +855,9 @@ export class CnDataTableComponent extends CnComponentBase
         if (this.total > 0) {
             this.total = this.total - 1;
         }
+            // 2020.7.27 计算合并列
+            if(this.config.mergeconfig)
+            this._createMapd_new(this.config.mergeconfig, this.dataList);
 
     }
 
@@ -710,6 +879,9 @@ export class CnDataTableComponent extends CnComponentBase
             if (itemId) {
                 this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== itemId);
             }
+                // 2020.7.27 计算合并列
+                if(this.config.mergeconfig)
+                this._createMapd_new(this.config.mergeconfig, this.dataList);
         }
 
         console.log('-------------', this.ROWS_ADDED, this.ROWS_EDITED)
@@ -798,7 +970,14 @@ export class CnDataTableComponent extends CnComponentBase
 
     public async deleteCurrentRow(option) {
         console.log(this.config.id + '-------------executeSelectRow', option);
+        if (option && option[this.KEY_ID]) {
+            this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== option[this.KEY_ID]);
+        }
+        if (this.dataList.length > 0) {
+            this.setSelectRow(this.dataList[0]);
+        }
 
+        this.total = this.dataList.length;
         // const url = option.ajaxConfig.url;
         // const method = option.ajaxConfig.ajaxType ? option.ajaxConfig.ajaxType : 'delete';
         // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
@@ -826,7 +1005,7 @@ export class CnDataTableComponent extends CnComponentBase
         if (option.data) {
             paramData = ParameterResolver.resolve({
                 params: ajaxParams,
-                item: option.data.data?option.data.data:option.data,
+                item: option.data.data ? option.data.data : option.data,
 
                 selectedRow: this.ROW_SELECTED,
                 router: this.routerValue,
@@ -911,7 +1090,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     public async saveRow(option) {
         const ajaxConfig = option.ajaxConfig;
-        const rowData = option.data.data?option.data.data:option.data;
+        const rowData = option.data.data ? option.data.data : option.data;
         const url = ajaxConfig.url;
         const paramData = ParameterResolver.resolve({
             params: ajaxConfig.params,
@@ -967,8 +1146,10 @@ export class CnDataTableComponent extends CnComponentBase
         return validationResult && errorResult;
     }
 
-    public setSelectRow(rowData?, $event?) {
-        debugger;
+    public setSelectRow1(rowData?, $event?) {
+        if (!rowData) {
+            return false;
+        }
         if ($event) {
             const src = $event.srcElement || $event.target;
             if (src.type !== undefined) {
@@ -1020,6 +1201,59 @@ export class CnDataTableComponent extends CnComponentBase
         return true;
     }
 
+    public setSelectRow(rowData?, $event?) {
+
+        if ($event) {
+            const src = $event.srcElement || $event.target;
+            if (src.type !== undefined) {
+                return false;
+            }
+            $event.stopPropagation();
+            $event.preventDefault();
+        }
+        if (!rowData.hasOwnProperty(this.KEY_ID)) {
+            if (this.dataList.length > 0) {
+
+                this.dataList.map(row => {
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                });
+
+                const key = this.dataList[0][this.KEY_ID];
+                this.mapOfDataState[key]['selected'] = true;
+                this.mapOfDataState[key]['checked'] = true;
+                // 勾选/取消当前行勾选状态            
+
+                this.dataCheckedStatusChange();
+            }
+            // return false;
+        }
+        else {
+            this.ROW_SELECTED = rowData;
+
+            // 选中当前行
+            if (this.dataList.length > 0) {
+                this.dataList.map(row => {
+                    this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
+                    this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
+                });
+
+                if (rowData[this.KEY_ID] && rowData[this.KEY_ID].length > 0) {
+                    this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
+                    this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = true; // !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
+                }
+
+
+                // 勾选/取消当前行勾选状态            
+
+                this.dataCheckedStatusChange();
+            }
+        }
+
+
+        return true;
+    }
+
     public clearSelectRow(type?) {
         this.dataList.map(row => {
             switch (type) {
@@ -1063,6 +1297,9 @@ export class CnDataTableComponent extends CnComponentBase
                 } else {
                     this.dataList = [loadNewData[ind], ...this.dataList];
                 }
+                // liu 20200525
+
+
                 const mapData = this.mapOfDataState[newData[this.KEY_ID]];
                 if (mapData) {
                     mapData.state = "text";
@@ -1079,13 +1316,21 @@ export class CnDataTableComponent extends CnComponentBase
                         selected: false, // index === 0 ? true : false,
                         state: 'text',
                         validation: true,
-                        actions: this.getRowActions('text')
+                        actions: this.getRowActions('text'),
+                        mergeData:{}
                     }
                 }
             })
         }
         // 刷新dataList
         // 刷新mapOfDataState
+
+        this.dataList.forEach((item, idx) => {
+            this.mapOfDataState[item[this.KEY_ID]]['originData']['_index'] = idx + 1;
+            // item[this.KEY_ID]
+            item['_index'] = idx + 1;
+
+        })
     }
 
     public showInvalidateAddedRows(option) {
@@ -1136,10 +1381,13 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
                 returnValue: data,
-                selectedRow:this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED
 
             });
         } else if (!isArray && data) {
+            if (data['_procedure_resultset_1']) {
+                data = data['_procedure_resultset_1'][0];
+            }
             parameterResult = ParameterResolver.resolve({
                 params: paramsCfg,
                 tempValue: this.tempValue,
@@ -1154,7 +1402,7 @@ export class CnDataTableComponent extends CnComponentBase
                 returnValue: data,
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
-                selectedRow:this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1163,7 +1411,7 @@ export class CnDataTableComponent extends CnComponentBase
                     params: paramsCfg,
                     tempValue: this.tempValue,
                     componentValue: d,
-                    item:  d,
+                    item: d,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
                     router: this.routerValue,
@@ -1298,7 +1546,7 @@ export class CnDataTableComponent extends CnComponentBase
      * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
      */
     public link(option) {
-       // debugger;
+        // debugger;
         let url;
         let params;
         if (option && option.linkConfig) {
@@ -1307,7 +1555,7 @@ export class CnDataTableComponent extends CnComponentBase
             }
 
             if (option.linkConfig.params && Array.isArray(option.linkConfig.params)) {
-                params = this.buildParameters(option.linkConfig.params, option.data.originData?option.data.originData:option.data);
+                params = this.buildParameters(option.linkConfig.params, option.data.originData ? option.data.originData : option.data);
                 url = `${url}/${params['ID']}`;
             }
             if (url && params) {
@@ -1376,7 +1624,7 @@ export class CnDataTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: option.data.data?option.data.data:option.data,
+                item: option.data.data ? option.data.data : option.data,
                 selectedRow: this.ROW_SELECTED,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
@@ -1508,7 +1756,82 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
 
-    public showUpload() {
+    public showUpload(option: any) {
+
+        // CnUploadComponent
+        console.log('上传', option);
+        let dialog;
+        // 根据按钮类型初始化表单状态
+        const dialogCfg = option.window;
+        // dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
+
+        // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
+        // if(isEditForm) {
+
+        // }
+        if (option.changeValue) {
+            const d = ParameterResolver.resolve({
+                params: option.changeValue.params,
+                tempValue: this.tempValue,
+                // componentValue: cmptValue,
+                item: option.data,
+                selectedRow: this.ROW_SELECTED,
+                addedRows: this.ROWS_ADDED,
+                editedRows: this.ROWS_EDITED,
+                checkedRow: this.ROWS_CHECKED,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue
+            });
+            option.changeValue.params.map(param => {
+                if (param.type === 'value') {
+                    // 类型为value是不需要进行任何值的解析和变化
+                } else {
+                    if (d[param.name]) {
+                        param['value'] = d[param.name];
+                    }
+                }
+            });
+        }
+
+        const dialogOptional = {
+            nzTitle: dialogCfg.title ? dialogCfg.title : '',
+            nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+            nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzContent: CnPageComponent,
+            nzComponentParams: {
+                config: {},
+                customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+                // initData:this.initData
+                changeValue: option.changeValue ? option.changeValue.params : []
+            },
+            nzFooter: [
+                {
+                    label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
+                    onClick: componentInstance => {
+                        dialog.close();
+                    }
+                },
+                {
+                    label: dialogCfg.okText ? dialogCfg.okText : 'OK',
+                    onClick: componentInstance => {
+                        dialog.close();
+                        /*   (async () => {
+                              const response = await componentInstance.executeModal(option);
+                              this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+  
+                              // 处理validation结果
+                              this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                                  &&
+                                  this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                                  && dialog.close();
+                          })(); */
+                    }
+                }
+            ]
+        }
+        dialog = this.componentService.modalService.create(dialogOptional);
+
 
     }
 
@@ -1680,7 +2003,7 @@ export class CnDataTableComponent extends CnComponentBase
                     cascadeResult[cascadeObj.cascadeName] = {};
                     cascadeObj.cascadeItems.forEach(item => {
                         let regularflag = true;
-                        if (item.caseValue && item.type==="condition") {
+                        if (item.caseValue && item.type === "condition") {
                             const reg1 = new RegExp(item.caseValue.regular);
                             let regularData;
                             if (item.caseValue.type) {
@@ -1777,7 +2100,7 @@ export class CnDataTableComponent extends CnComponentBase
                                 cascadeResult[cascadeObj.cascadeName]['exec'] = 'setValue';
                                 // 赋值
                                 // this.setValue(cascadeObj.cascadeName, __setValue);
-
+                                this.mapOfDataState[v.id]['data'][cascadeObj.cascadeName] = __setValue;
                             }
                             if (item.content.type === 'compute') {
                                 let __setValue;
@@ -1883,73 +2206,73 @@ export class CnDataTableComponent extends CnComponentBase
 
         let r = 0;
         if (symbolObj.valueName === 'result') {
-    
+
         }
         if (symbolObj.valueName === '*') {
-          r = 1;
-          if (symbolObj.children) {
-            symbolObj.children.forEach(_item => {
-              // r = r * this.L_getComputeValue(_item, computeObj);
-              r =  parseFloat(( r * this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
-            });
-            return r;
-          }
-          return 0;
+            r = 1;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    // r = r * this.L_getComputeValue(_item, computeObj);
+                    r = parseFloat((r * this.L_getComputeValue(_item, computeObj)).toFixed(10));
+                });
+                return r;
+            }
+            return 0;
         }
         if (symbolObj.valueName === '+') {
-          r = 0;
-          if (symbolObj.children) {
-            symbolObj.children.forEach(_item => {
-             // r = r + this.L_getComputeValue(_item, computeObj);
-              r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10)); 
-            });
-    
-          }
-          return r;
+            r = 0;
+            if (symbolObj.children) {
+                symbolObj.children.forEach(_item => {
+                    // r = r + this.L_getComputeValue(_item, computeObj);
+                    r = parseFloat((r + this.L_getComputeValue(_item, computeObj)).toFixed(10));
+                });
+
+            }
+            return r;
         }
         if (symbolObj.valueName === '-') {
-          // r = 0;
-          // if (symbolObj.children) {
-          //     symbolObj.children.forEach(_item => {
-          //         r = r - this.L_getComputeValue(_item, computeObj);
-          //     });
-          //     r = r+ 2* this.L_getComputeValue(symbolObj.children[0], computeObj);
-    
-          // }
-          // return r;
-          r = 0;
-          if (symbolObj.children) {
-            r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
-            for (let i = 1; i < symbolObj.children.length; i++) {
-              const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
-            //  r = r - comput_value;
-              r =  parseFloat((r - comput_value).toFixed(10)); 
+            // r = 0;
+            // if (symbolObj.children) {
+            //     symbolObj.children.forEach(_item => {
+            //         r = r - this.L_getComputeValue(_item, computeObj);
+            //     });
+            //     r = r+ 2* this.L_getComputeValue(symbolObj.children[0], computeObj);
+
+            // }
+            // return r;
+            r = 0;
+            if (symbolObj.children) {
+                r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
+                for (let i = 1; i < symbolObj.children.length; i++) {
+                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                    //  r = r - comput_value;
+                    r = parseFloat((r - comput_value).toFixed(10));
+                }
             }
-          }
-          return r;
+            return r;
         }
         if (symbolObj.valueName === '/') {
-          // 
-          r = 0.0;
-          if (symbolObj.children) {
-            r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
-            for (let i = 1; i < symbolObj.children.length; i++) {
-              const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
-              if (comput_value === 0) {
-                return 0;
-              }
-            //  r = r / comput_value;
-              r =  parseFloat((r / comput_value).toFixed(10)); 
+            // 
+            r = 0.0;
+            if (symbolObj.children) {
+                r = r + this.L_getComputeValue(symbolObj.children[0], computeObj);
+                for (let i = 1; i < symbolObj.children.length; i++) {
+                    const comput_value = this.L_getComputeValue(symbolObj.children[i], computeObj);
+                    if (comput_value === 0) {
+                        return 0;
+                    }
+                    //  r = r / comput_value;
+                    r = parseFloat((r / comput_value).toFixed(10));
+                }
             }
-          }
-         // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
-    
-          return r;
+            // const dd =  parseFloat((110.0 / 1.1).toFixed(10)) ; 
+
+            return r;
         }
-    
+
         return r;
-    
-      }
+
+    }
 
     public L_getComputeValue(item?, computeObj?) {
 
@@ -1982,6 +2305,349 @@ export class CnDataTableComponent extends CnComponentBase
                 }
             });
         }
+
+    }
+
+
+
+
+    public _createMapd_new_old(mergeconfig?,listOfData?) {
+
+        // 生成group字段
+
+        const mergeData={};
+  
+
+        listOfData.forEach(
+            row => {
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'] = {}; // 初始化
+            }
+        );
+
+
+        // 按照 group 分组顺序进行  merge
+
+
+        mergeconfig.rowConfig && mergeconfig.rowConfig.forEach(r_c => {
+
+
+            listOfData.forEach(row => {
+
+                if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]) {
+                    this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName] = {};
+                }
+                let new_data=[...listOfData];
+                r_c.groupCols.forEach(group_col=>{
+
+                    new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
+                });
+
+                new_data = new_data.filter(d => d[r_c.groupName] === row[r_c.groupName]);
+                let group_num = new_data.length;
+                let group_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupNum'] = group_num;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupIndex'] = group_index + 1;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupIndex'] = 1;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupNum'] = 1;
+
+
+            });
+
+        }
+        );
+
+
+
+        mergeconfig.colConfig && mergeconfig.colConfig.length>0 && listOfData.forEach(
+            row => {
+                // this.mapd[row.id]={}; // 初始化
+
+                mergeconfig.colConfig.forEach(col_c => {
+
+                    col_c.mergeItems.forEach(item => {
+                        
+
+                        let regularflag = true;
+                        if (item.caseValue && item.type === "condition") {
+                            const reg1 = new RegExp(item.caseValue.regular);
+                            let regularData;
+                            if (item.caseValue.type) {
+                                if (item.caseValue.type === 'value') {
+                                    regularData = item.caseValue['value'];
+                                }
+                                if (item.caseValue['type'] === 'rowValue') {
+                                    // 选中行对象数据
+                                    if (row) {
+                                        regularData = row[item.caseValue['valueName']];
+                                    }
+                                }
+        
+                            } else {
+                                regularData = null;
+                            }
+                            regularflag = reg1.test(regularData);
+                        }
+                        if (regularflag) {
+
+                            let group_num = item.mergeCols.length;
+                            item.mergeCols.forEach(merge_col=>{
+                                if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]) {
+                                    this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']] = {};
+                                }
+                                let group_index = item.mergeCols.findIndex(d => d['mergeColName'] === merge_col['mergeColName']);
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupIndex'] = group_index+1;
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupNum'] = group_num;
+                            });
+
+                           
+                            
+                            
+
+                        }
+
+
+                    });
+
+
+                });
+
+       
+
+            }
+        );
+
+
+        console.log('new生成分组信息', this.mapOfDataState);
+
+    }
+
+
+    public _createMapd_new(mergeconfig?,listOfData?) {
+
+        // 生成group字段
+
+        const mergeData={};
+  
+
+        listOfData.forEach(
+            row => {
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'] = {}; // 初始化
+            }
+        );
+
+
+        // 按照 group 分组顺序进行  merge
+
+
+        mergeconfig.rowConfig && mergeconfig.rowConfig.forEach(r_c => {
+
+
+            listOfData.forEach(row => {
+
+                if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]) {
+                    this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName] = {};
+                }
+                let new_data=[...listOfData];
+                r_c.groupCols.forEach(group_col=>{
+
+                   // new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
+                   let _SingleEdit =true;
+                   if(group_col.hasOwnProperty('singleEdit')) {
+                       _SingleEdit=group_col['singleEdit'];
+                   }  
+                    new_data =[...this._createMapd_array(new_data,group_col.groupColName,row,_SingleEdit)];
+               //     console.log('jisuan:',group_col.groupColName,new_data);
+                });
+
+
+
+               // console.log('统计:',new_data , row[r_c.groupName]); 
+                // new_data = new_data.filter(d => d[r_c.groupName] === row[r_c.groupName]);
+                let group_num = new_data.length;
+                let group_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
+                // if(group_index<0){
+                //     console.log('错误统计',new_data,row[this.KEY_ID])
+                // } 
+               
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupNum'] = group_num;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupIndex'] = group_index + 1;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupIndex'] = 1;
+                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupNum'] = 1;
+
+
+            });
+
+        }
+        );
+
+
+
+        mergeconfig.colConfig && mergeconfig.colConfig.length>0 && listOfData.forEach(
+            row => {
+                // this.mapd[row.id]={}; // 初始化
+
+                mergeconfig.colConfig.forEach(col_c => {
+
+                    col_c.mergeItems.forEach(item => {
+                        
+
+                        let regularflag = true;
+                        if (item.caseValue && item.type === "condition") {
+                            const reg1 = new RegExp(item.caseValue.regular);
+                            let regularData;
+                            if (item.caseValue.type) {
+                                if (item.caseValue.type === 'value') {
+                                    regularData = item.caseValue['value'];
+                                }
+                                if (item.caseValue['type'] === 'rowValue') {
+                                    // 选中行对象数据
+                                    if (row) {
+                                        regularData = row[item.caseValue['valueName']];
+                                    }
+                                }
+        
+                            } else {
+                                regularData = null;
+                            }
+                            regularflag = reg1.test(regularData);
+                        }
+                        if (regularflag) {
+
+                            let group_num = item.mergeCols.length;
+                            item.mergeCols.forEach(merge_col=>{
+                                if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]) {
+                                    this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']] = {};
+                                }
+                                let group_index = item.mergeCols.findIndex(d => d['mergeColName'] === merge_col['mergeColName']);
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupIndex'] = group_index+1;
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupNum'] = group_num;
+                            });
+
+                           
+                            
+                            
+
+                        }
+
+
+                    });
+
+
+                });
+
+       
+
+            }
+        );
+
+
+        console.log('new生成分组信息', this.mapOfDataState);
+
+    }
+
+
+
+
+
+ /**
+  * 
+  * @param new_data  范围数组
+  * @param feildName 分组字段
+  * @param row       当前行
+  * @param isSingleEdit 分组字段是否启用单独编辑
+  */
+    public _createMapd_array(new_data?,feildName?,row?,isSingleEdit?){
+
+        // 总方法，将数据集合 拷贝 可补充解析字段在当前结构下是否计算
+       // 数组构建 
+       // 将原数据对比编辑状态数据，计算出当前数据的状态
+       // 1.判断是否启用独立编辑
+       // 1.1 启用独立编辑 计算出当前行所在位置
+          // 按当前行开始，向下找，满足分组标识一致，并且行不能是edit 若有一个不满足循环结束
+          // 当前行向上找, 满足分组条件，并且不能是edit（逆序查找，查找结束后，反转）
+          // 将上下两部分数据加上本身行合并，生成满足条件的新数据 
+          // 返回当前数组
+       // 2.当前列未启用编辑，则按照原始处理
+
+       //1 将当前数组集合的edit状态写入
+       // state: 'new' 'edit',
+       console.log('xxxxxxxxx====>',feildName,new_data);
+       new_data.forEach(row => {
+         row['__state__'] =  this.mapOfDataState[row[this.KEY_ID]]['state'];
+       });
+
+       //2 数组分割
+       //2.1 计算出当前行所在
+       let row_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
+       //2.2 计算出前数组
+       let BeforeArr = new_data.slice(0,row_index).reverse();
+       let OwnArr= new_data.slice(row_index,row_index+1);
+       let AftertArr = new_data.slice(row_index+1);
+
+       console.log('xxxxxxxxx分割====>',row_index,BeforeArr,OwnArr,AftertArr);
+       //2.2 计算出后数组
+         // reverse() 反转
+
+         let new_BeforeArr=[];
+         let Before_index=0;
+         for(let i=0;i<BeforeArr.length;i++){
+           // 序号不能断，状态不能断 
+           if(Before_index===i && BeforeArr[i][feildName] ===row[feildName] ){
+               if(isSingleEdit){
+                if(BeforeArr[i]['__state__']==='new' || BeforeArr[i]['__state__']==='edit' ) {
+                    Before_index=-1;
+                }else{
+                    new_BeforeArr.push(BeforeArr[i]);
+                    Before_index++;
+                }
+
+               } else{
+                new_BeforeArr.push(BeforeArr[i]);
+                Before_index++;
+               }
+           } else{
+               break;
+           }
+
+         }
+
+         let new_AftertArr=[];
+         let Aftert_index=0;
+         for(let i=0;i<AftertArr.length;i++){
+           // 序号不能断，状态不能断 
+           if(Aftert_index===i && AftertArr[i][feildName] ===row[feildName]){
+               if(isSingleEdit){
+                if(AftertArr[i]['__state__']==='new'|| AftertArr[i]['__state__']==='edit' ) {
+                    Aftert_index=-1;
+                }else{
+                    new_AftertArr.push(AftertArr[i]);
+                    Aftert_index++;
+                }
+
+               } else{
+                new_AftertArr.push(AftertArr[i]);
+                Aftert_index++;
+               }
+           }else{
+               break;
+           }
+
+         }
+
+         if(isSingleEdit){
+            if(OwnArr[0]['__state__']==='new'|| OwnArr[0]['__state__']==='edit' ) {
+                new_BeforeArr=[];
+                new_AftertArr=[];
+            }
+
+         }
+
+       //3 合并数组，返回
+
+       let back_data=[];
+       back_data=[...new_BeforeArr.reverse(),...OwnArr,...new_AftertArr];
+
+       return back_data;
 
     }
 

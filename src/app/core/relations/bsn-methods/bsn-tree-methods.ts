@@ -58,6 +58,6 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds',
     EXECUTE_SELECTED_NODE: 'executeSelectedNode',
     EXECUTE_CHECKED_NODES: 'executeCheckedNodes',
-    EXECUTE_CHECKED_NODES_BY_ID: 'executeCheckedNodesByID',
+    EXECUTE_CHECKED_NODES_BY_ID: 'executeCheckedNodesByID',       
     EXECUTE_DELETE_CHECKED_NODES_BY_ID: 'executeDeleteCheckedNodesByID'
 }

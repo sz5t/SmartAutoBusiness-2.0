@@ -14,6 +14,7 @@ export class CnGridYearPickerComponent implements OnInit {
   @Input() public state;
   date = null; // new Date();
   value;
+  cascadeValue: any;
   constructor() { }
 
   ngOnInit() {
@@ -68,9 +69,9 @@ export class CnGridYearPickerComponent implements OnInit {
     }else {
       this.value = null;
     }
-
+    this.valueChange( this.value);
   }
-  public cascadeAnalysis(c?) {}
+
 
   parserDate(date) {
     const t = Date.parse(date)
@@ -98,6 +99,21 @@ export class CnGridYearPickerComponent implements OnInit {
       if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 
+  }
+
+  public cascadeAnalysis(c?) {
+    if (c && c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setValue') {
+           this.value= c[this.config.field]['setValue']['value'];
+           this.valueChange( c[this.config.field]['setValue']['value']);
+        }
+      }
+
+    }
   }
 
 }

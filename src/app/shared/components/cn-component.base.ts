@@ -219,4 +219,46 @@ export class CnComponentBase {
     }
 
 
+    public  async getCustomConfig(customConfigId?){
+        const response = await  this._componentService.apiService.post('sd/B_P_C_CONFIG_PAGE_ALL/procedure', { "PageId": customConfigId }).toPromise();
+      
+        if(response['data']){
+         if (response['data']._procedure_resultset_1[0]['W'] === "") {
+          // this.config = null;
+         }
+         else {
+           const pageJson = JSON.parse(response['data']._procedure_resultset_1[0]['W']);
+           for (const key in pageJson) {
+             if (pageJson.hasOwnProperty(key)) {
+               // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
+               if (key === customConfigId) {
+               //  this.config = pageJson[customConfigId]['layoutJson'];
+                 const componentJson = pageJson[customConfigId]['componentsJson']
+                 if (Array.isArray(componentJson) && componentJson.length > 0) {
+                   componentJson.forEach(json => {
+                     this._componentService.cacheService.set(json['id'], json);
+                   });
+                 }
+   
+                 this._componentService.cacheService.set(key, pageJson[customConfigId]);
+                 
+               } else {
+                 // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
+                 this._componentService.cacheService.set(key, pageJson[key]);
+                 const componentJson = pageJson[key]['componentsJson']
+                 if (Array.isArray(componentJson) && componentJson.length > 0) {
+                   componentJson.forEach(json => {
+                     this._componentService.cacheService.set(json['id'], json);
+                   });
+                 }
+   
+               }
+             }
+           }
+         }
+       
+        }
+     }
+
+
 }

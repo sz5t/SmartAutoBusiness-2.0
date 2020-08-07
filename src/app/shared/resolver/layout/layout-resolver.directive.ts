@@ -24,7 +24,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
     @Input() config: any;
     @Input() public tempData;
     @Input() public initData;
-
+    @Input() public dataServe;
 
     private _layoutObj: ComponentRef<any>;
     private _rowsObj: ComponentRef<any>;
@@ -176,6 +176,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
         if (this.initValue) {
             this._pageHeaderObj.instance['initData'] = this.initData;
         }
+        this._pageHeaderObj.instance['dataServe']  = this.dataServe;
     }
 
     private buildLayout(layoutObj: any) {
@@ -192,6 +193,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
         if (this.initValue) {
             this._layoutObj.instance['initData'] = this.initData;
         }
+        this._layoutObj.instance['dataServe']  = this.dataServe;
     }
 
     private buildLayoutRows(layoutObj: any) {
@@ -208,6 +210,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
         if (this.initValue) {
             this._rowsObj.instance['initData'] = this.initData;
         }
+        this._rowsObj.instance['dataServe']  = this.dataServe;
     }
 
     private buildTabsLayout(tabsObj: any) {
@@ -224,6 +227,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
         if (this.initValue) {
             this._tabObj.instance['initData'] = this.initData;
         }
+        this._tabObj.instance['dataServe']  = this.dataServe;
     }
 
     private buildCustomerLayout(customLayoutObj: any) {
@@ -240,6 +244,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
         if (this.initValue) {
             this._customObj.instance['initData'] = this.initData;
         }
+
     }
 
     public resolver(cfg) {
@@ -278,6 +283,7 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
                         newCol.size = new LayoutSize(c.size);
                         newCol.container = c.container;
                         newCol.header = c.header;
+                        c.header && (newCol.header = this.setHeader(c.header));
                         this.setContainer(newCol, c);
                         newRow.add(newCol);
                     }
@@ -287,7 +293,14 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
         }
         return newLayout;
     }
+    private setHeader(headerCfg) {
+        const header: any = headerCfg;
+        if (headerCfg.id) {
+            header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
+        }
 
+        return header;
+    }
     private setContainer(containerObj, containerCfg) {
         switch (containerObj.container) {
             case 'layout':

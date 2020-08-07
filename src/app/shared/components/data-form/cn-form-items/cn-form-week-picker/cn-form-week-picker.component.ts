@@ -12,40 +12,47 @@ export class CnFormWeekPickerComponent implements OnInit {
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
   date = null; // new Date();
-  value =null;
+  value = null;
+  _style = { "width": "100%" };
   constructor() { }
 
   ngOnInit() {
+    this._style = this.config.style ? this.config.style : { "width": "100%" };
+
   }
   getWeek(result: Date): void {
-
-    const year = getISOYear(result);
-    const week = this.getNewWeek(getISOWeek(result));
-    const yw= `${year}-${week}`;
-    if (this.value !== yw) {
-      this.value = yw
+    if (result) {
+      const year = getISOYear(result);
+      const week = this.getNewWeek(getISOWeek(result));
+      const yw = `${year}-${week}`;
+      if (this.value !== yw) {
+        this.value = yw
+      }
+      console.log('周变化week: ', yw);
+    } else {
+      this.value = null;
     }
-    console.log('周变化week: ',yw);
+
+
 
   }
   public valueChange(v?) {
     if (v) {
       const YearAndWeek = v.split('-');
-      if(YearAndWeek.length>1)
-      {
-        const    _year =YearAndWeek[0];
-        const    _week =YearAndWeek[1];
-        const datenew =  addWeeks(_year,_week);
+      if (YearAndWeek.length > 1) {
+        const _year = YearAndWeek[0];
+        const _week = YearAndWeek[1];
+        const datenew = addWeeks(_year, _week);
         const yearold = getISOYear(this.date);
         const weekold = this.getNewWeek(getISOWeek(this.date));
-        const ywold= `${yearold}-${weekold}`;
+        const ywold = `${yearold}-${weekold}`;
         const yearnew = getISOYear(datenew);
         const weeknew = this.getNewWeek(getISOWeek(datenew));
-        const ywnew= `${yearnew}-${weeknew}`;
-        if(ywold!==ywnew ){
+        const ywnew = `${yearnew}-${weeknew}`;
+        if (ywold !== ywnew) {
           this.date = datenew;
         }
-        console.log('==年周计算出时间==',datenew);
+        console.log('==年周计算出时间==', datenew);
       }
       const year = getISOYear(this.date);
       const week = this.getNewWeek(getISOWeek(this.date));
@@ -70,5 +77,5 @@ export class CnFormWeekPickerComponent implements OnInit {
     return d;
   }
 
-  public cascadeAnalysis(c?) {}
+  public cascadeAnalysis(c?) { }
 }

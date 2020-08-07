@@ -25,12 +25,16 @@ export class CnDynamicLayoutComponent implements OnInit {
     @Input() public layoutObj;
     @Input() public initData;
     @Input() public tempData;
+    @Input() public dataServe;
     constructor() {
 
     }
 
     public ngOnInit() {
         console.log('layout init---', this.initData, this.tempData);
-        console.log('******', this.layoutObj);
+        if(  this.dataServe)
+        this.dataServe && this.dataServe.data.push({id:2});
+        this.dataServe && this.dataServe.setComponentValue('002',{name:333});
+        console.log('******', this.layoutObj,this.dataServe);
     }
 }

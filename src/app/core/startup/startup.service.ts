@@ -38,6 +38,7 @@ export class StartupService {
       zip(
 
         this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
+        this.httpClient.get(`resource/GET_SYS_I18N_LIST/query?_mapToObject=true&ddicCode=${this.i18n.defaultLang}`),
         this.httpClient.get(`assets/tmp/app-data.json`),
         this.httpClient.get(`resource/GET_MODULE_LIST/query?_mapToObject=true`)
 
@@ -46,23 +47,26 @@ export class StartupService {
           // 接收其他拦截器后产生的异常消息
           catchError(([
             langData,
+            serverlangData,
             appData,
             serverData
           ]) => {
             resolve(null);
             return [
               langData,
+              serverlangData,
               appData,
               serverData
             ];
           }),
         )
         .subscribe(
-          ([langData, appData,
+          ([langData, serverlangData, appData,
             serverData
           ]) => {
             // setting language data
-            this.translate.setTranslation(this.i18n.defaultLang, langData);
+           const lang_data=  this.buildI18NServerRes(langData, serverlangData);
+            this.translate.setTranslation(this.i18n.defaultLang, lang_data);
             this.translate.setDefaultLang(this.i18n.defaultLang);
 
             // application data
@@ -90,6 +94,19 @@ export class StartupService {
 
   private buildLocalRes(data) {
     return data;
+  }
+
+  private buildI18NServerRes(data, serverData) {
+    if (serverData.data) {
+      const s ={};
+      serverData.data.forEach(element => {
+        s[element['i18n']] = element['name'];
+      });
+      data = {...data, ...s}
+      return data;
+    } else {
+      return data;
+    }
   }
 
   private buildServerRes(data, serverData) {

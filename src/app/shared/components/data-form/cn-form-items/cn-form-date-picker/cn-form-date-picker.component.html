@@ -6,7 +6,7 @@
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
         [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
         <input nz-input  [formControlName]="config.field"  hidden="hidden" [(ngModel)]="value" (ngModelChange)="valueChange($event)" />
-        <nz-date-picker style="width: 100%;" [nzShowTime]="config.showTime" [nzFormat]="config.showFormat" [nzStyle]="_style"  [(ngModel)]="date"    (ngModelChange)="onChange($event)"  [ngModelOptions]="{standalone: true}"></nz-date-picker>
+        <nz-date-picker style="width: 100%;" [nzShowTime]="config.showTime" [nzFormat]="config.showFormat" [nzStyle]="_style"  [(ngModel)]="date"    (ngModelChange)="onChange($event)"  [ngModelOptions]="{standalone: true}" [nzPlaceHolder]="config.placeholder" ></nz-date-picker>
      
         <ng-template #combineTpl let-control>
                 <ng-container nz-col *ngFor="let c of config.validations" > 

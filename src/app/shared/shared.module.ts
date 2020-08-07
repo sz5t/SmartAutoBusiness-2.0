@@ -127,6 +127,8 @@ import { CnUploadComponent } from './components/cn-upload/cn-upload.component';
 import { CnFormScancodeComponent } from './components/data-form/cn-form-items/cn-form-scancode/cn-form-scancode.component';
 import { CnFormCustomInputComponent } from './components/data-form/cn-form-items/cn-form-custom-input/cn-form-custom-input.component';
 import { CnFormCascaderComponent } from './components/data-form/cn-form-items/cn-form-cascader/cn-form-cascader.component';
+import { CnCarouseComponent } from './components/cn-carouse/cn-carouse.component';
+import { CnGridTreeSelectComponent } from './components/data_table/cn-grid-items/cn-grid-tree-select/cn-grid-tree-select.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -250,6 +252,8 @@ const COMPONENTS = [
   CnFormScancodeComponent,
   CnFormCustomInputComponent,
   CnFormCascaderComponent,
+  CnCarouseComponent,
+  CnGridTreeSelectComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [

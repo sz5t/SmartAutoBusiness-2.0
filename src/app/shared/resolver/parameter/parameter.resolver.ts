@@ -34,7 +34,7 @@ export class ParameterResolver {
         if (paramType) {
           console.log(paramType);
           const val = this[paramType](param, model);
-          if (param.dataType && (val || val === 0)) {
+          if (param.dataType && (val || val === 0 || val === "")) {
             result[param.name] = CommonUtils.getResultByDataType(val, param.dataType);
           } else if (param.dataType === 'nullable') {
             result[param.name] = CommonUtils.getResultByDataType(val, param.dataType);
@@ -464,10 +464,17 @@ class ComponentValueParameter extends BaseParameter implements IParameter {
   }
   public buildParameter() {
     const cmpVal = this._model['componentValue'];
+    if(this._param.valueName==='componentValue'){
+      this._result = JSON.stringify(cmpVal);
+    }
+    else if (!this._param.valueName) {
+      this._result =cmpVal;  // 不配valueName，则将当前属性给他 object
+    }
     // 判断组件取值是否为null
     if (
       cmpVal[this._param.valueName] === null ||
-      cmpVal[this._param.valueName] === undefined
+      cmpVal[this._param.valueName] === undefined ||
+      cmpVal[this._param.valueName] === ""
     ) {
       if (this._param.value !== undefined) {
         if (this._param.conditionType) {
