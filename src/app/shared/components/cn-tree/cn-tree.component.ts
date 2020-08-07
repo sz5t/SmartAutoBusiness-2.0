@@ -299,9 +299,19 @@ export class CnTreeComponent extends CnComponentBase
             // actions: this.getRowActions('text')
         };
  
-
-
         if (node.children && node.children.length > 0) {
+            if (!this.config.asyncData) {
+              // 静态
+              node.children.map(n => {
+                this._setTreeNode(n);
+              })
+            }
+            node['isLeaf'] = false;
+          }else{
+              node['isLeaf'] = true;
+          }
+
+ /*        if (node.children && node.children.length > 0) {
             node['isLeaf'] = false;
             node['children'] = [];
             // node.children.map(n => {
@@ -309,7 +319,7 @@ export class CnTreeComponent extends CnComponentBase
             // })
         } else {
             node['isLeaf'] = true;
-        }
+        } */
     }
 
     public async expandNode($event: NzFormatEmitEvent | NzTreeNode) {
@@ -319,6 +329,9 @@ export class CnTreeComponent extends CnComponentBase
         } else {
             node = $event['node'];
         }
+        if (!this.config.asyncData) {
+            return true;
+          }
         if (node && node.isExpanded) {
             const response = await this._getAsyncTreeData(this.config.expandConfig, node);
             if (response && response.data && response.data.length > 0) {
@@ -858,7 +871,9 @@ export class CnTreeComponent extends CnComponentBase
         console.log('execute checked nodes', option);
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
-        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
+       
+       // const data =this.treeObj.getTreeNodes().filter(r=>{if(r.isChecked) return r});
         const data = [...this.treeObj.getCheckedNodeList(), ...this.treeObj.getHalfCheckedNodeList()];
         const parameterResult = [];
         data.map(d => {
@@ -1222,7 +1237,7 @@ export class CnTreeComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.ACTIVED_NODE['origin'],
+                item: this.ACTIVED_NODE?(this.ACTIVED_NODE['origin']?this.ACTIVED_NODE['origin']:null):null,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -1239,7 +1254,7 @@ export class CnTreeComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.ACTIVED_NODE['origin'],
+                item: this.ACTIVED_NODE?(this.ACTIVED_NODE['origin']?this.ACTIVED_NODE['origin']:null):null,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -1256,7 +1271,7 @@ export class CnTreeComponent extends CnComponentBase
                     params: paramsCfg,
                     tempValue: this.tempValue,
                     componentValue: d,
-                    item: this.ACTIVED_NODE['origin'],
+                    item: this.ACTIVED_NODE?(this.ACTIVED_NODE['origin']?this.ACTIVED_NODE['origin']:null):null,
                     checkedItem: d,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
@@ -1338,7 +1353,7 @@ export class CnTreeComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: this.ACTIVED_NODE.origin,
+                item: this.ACTIVED_NODE?(this.ACTIVED_NODE['origin']?this.ACTIVED_NODE['origin']:null):null,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue

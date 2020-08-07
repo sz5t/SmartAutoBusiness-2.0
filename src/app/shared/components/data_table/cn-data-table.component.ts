@@ -2432,8 +2432,11 @@ export class CnDataTableComponent extends CnComponentBase
                 r_c.groupCols.forEach(group_col=>{
 
                    // new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
-
-                    new_data =[...this._createMapd_array(new_data,group_col.groupColName,row,true)];
+                   let _SingleEdit =true;
+                   if(group_col.hasOwnProperty('singleEdit')) {
+                       _SingleEdit=group_col['singleEdit'];
+                   }  
+                    new_data =[...this._createMapd_array(new_data,group_col.groupColName,row,_SingleEdit)];
                //     console.log('jisuan:',group_col.groupColName,new_data);
                 });
 
