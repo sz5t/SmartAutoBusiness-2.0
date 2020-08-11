@@ -316,7 +316,7 @@ export class CnTreeComponent extends CnComponentBase
         };
  
         if (node.children && node.children.length > 0) {
-            if (!this.config.asyncData) {
+            if (!this.config.async) {
               // 静态
               node.children.map(n => {
                 this._setTreeNode(n);
@@ -339,22 +339,25 @@ export class CnTreeComponent extends CnComponentBase
     }
 
     public async expandNode($event: NzFormatEmitEvent | NzTreeNode) {
+        console.log('ex');
         let node;
         if ($event instanceof NzTreeNode) {
             node = $event;
         } else {
             node = $event['node'];
         }
-        if (!this.config.asyncData) {
+        if (!this.config.async) {
             return true;
-          }
+        }
+     
         if (node && node.isExpanded) {
             const response = await this._getAsyncTreeData(this.config.expandConfig, node);
             if (response && response.data && response.data.length > 0) {
+                node.clearChildren();
                 response.data.map(d => {
                     this._setTreeNode(d);
                     if (d.children && d.children.length > 0) {
-                        d['isLeaf'] = true;
+                        // d['isLeaf'] = true;
                         // d['children'] = [];
                     }
                 });
