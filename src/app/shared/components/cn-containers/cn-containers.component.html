@@ -1,0 +1,17 @@
+
+
+<div CnDynamicLayoutResolverDirective  *ngIf="showLayout"  [config]="view"   [dataServe]="componentDataService"  [tempData]="_tempValue_new"   [initData]="_initValue_new"></div> 
+
+
+<ng-container *ngFor="let _view of _linkViews" >
+
+    
+    <ng-container *ngIf="_view['viewConfig'] && _view['showLayout']">
+        <div [ngStyle]="_view['hidden']? {'display': 'none','width':'100%','height':'100%'} : {}">
+            <div CnDynamicLayoutResolverDirective  [hidden]="_view['hidden']"    [config]="_view['viewConfig']"   [dataServe]="componentDataService"  [tempData]="_tempValue_new"   [initData]="_initValue_new"></div> 
+        </div> 
+    </ng-container>
+  
+</ng-container>
+ 
+

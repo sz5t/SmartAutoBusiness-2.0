@@ -3291,7 +3291,7 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                     "ajaxConfig": [
                                                         {
                                                             "id": "loadBusinessObject",
-                                                            // "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                                                            // "url": "resource/GET_BUSINESS_OBJECT_LIST/query",
                                                             "url": "cfgBusiModelResRelations/query",
                                                             "urlType": "inner",
                                                             "ajaxType": "get",
@@ -3390,17 +3390,14 @@ export class DataBusinessModelingComponent extends CnComponentBase implements On
                                                 ] ,
                                                 "customAction":[
                                                     {
-                                                        id:"001",
-
-                                                        exectu:{  // 执行内容
-                                                           trigger:'',
-                                                           triggerType:'',  // 组件内的方法名称
-                                                        },
-                                                        result:[  // 结果内容  方法执行完成返回，得返回json结构，不能是单独的true，这样可以将结构传递
+                                                        "id":"001",
+                                                        "execute": [
                                                             {
-
+                                                                "type": "relation",
+                                                                "sender": {                                  // -- 设置消息发送内容, 当切仅当type为relation时该配置才生效
+                                                                    "senderId": "afterSelectValueChange"
+                                                                 }
                                                             }
-
                                                         ]
                                                     }
 

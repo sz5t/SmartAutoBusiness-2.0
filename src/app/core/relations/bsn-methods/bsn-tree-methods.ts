@@ -42,7 +42,7 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     CHECK_ROW: 'checkRow',
     REFRESH_AS_CHILD: 'load',
     CLICK_NODE: 'clickNode',
-
+    TRANSFER_VALUE:'transferValue',
 
     // link
     LINK: 'link',
@@ -59,5 +59,6 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     EXECUTE_SELECTED_NODE: 'executeSelectedNode',
     EXECUTE_CHECKED_NODES: 'executeCheckedNodes',
     EXECUTE_CHECKED_NODES_BY_ID: 'executeCheckedNodesByID',       
-    EXECUTE_DELETE_CHECKED_NODES_BY_ID: 'executeDeleteCheckedNodesByID'
+    EXECUTE_DELETE_CHECKED_NODES_BY_ID: 'executeDeleteCheckedNodesByID',
+    EXECUTE_POPUP_CLOSE: 'executePopupClose'
 }

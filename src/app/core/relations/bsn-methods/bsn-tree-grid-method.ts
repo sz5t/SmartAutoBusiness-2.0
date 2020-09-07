@@ -42,7 +42,7 @@ export const CN_TREE_GRID_METHOD: ITreeGridTrigger = {
     CHECK_ROW: 'checkRow',
     REFRESH_AS_CHILD: 'load',
     REPLACE_ROW_DATA: 'replaceRowData',
-
+    TRANSFER_VALUE:'transferValue',
     // link
     LINK: 'link',
     LINK_TO: 'linkTo',
@@ -55,5 +55,6 @@ export const CN_TREE_GRID_METHOD: ITreeGridTrigger = {
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
     EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds',
-    DELETE_CHECKED_ROWS: 'deleteCheckedRows'
+    DELETE_CHECKED_ROWS: 'deleteCheckedRows',
+    EXECUTE_POPUP_CLOSE: 'executePopupClose'
 }

@@ -1,0 +1,11 @@
+
+<!-- <nz-select  [ngModel]="selectedValue" (ngModelChange)="valueChange($event)" nzAllowClear [nzPlaceHolder]="config.placeholder" style="width:100%">
+    <nz-option *ngFor="let option of selectOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+</nz-select> -->
+
+<input nz-input hidden="hidden"   [(ngModel)]="selectedValue" (ngModelChange)="valueChange($event)" />
+<nz-select [nzMaxTagCount]="" [nzMaxTagPlaceholder]="tagPlaceHolder" style="width: 100%" nzMode="multiple"   [nzPlaceHolder] = "config.placeholder"
+    [(ngModel)]="listOfSelectedValue" [ngModelOptions]="{standalone: true}"  (ngModelChange)="valueChangeSelect($event)">
+    <nz-option *ngFor="let option of selectOptions" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+</nz-select>
+<ng-template #tagPlaceHolder let-selectedList> 还有 {{ selectedList.length }} 个被选中 </ng-template>

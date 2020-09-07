@@ -1,5 +1,5 @@
 <button nz-button *ngIf="!readonly" nzType="dashed" nzBlock="true" nzSize="default" style="margin-bottom: 3px;"
-  (click)="addBtnClick()"><i nz-icon nzType="plus"></i>
+  (click)="addBtnClick($event)"><i nz-icon nzType="plus"></i>
   添加</button>
 <nz-table #dataTable [nzShowSizeChanger]="config.isShowSizeChanger" [nzLoadingDelay]="300" [nzFrontPagination]="true"
   [nzShowPagination]="config.isPagination" [nzTotal]="total" [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize"

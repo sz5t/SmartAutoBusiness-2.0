@@ -120,8 +120,10 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
 
     public receiveMessage(data) {
         if (this._tabObj) {
-            this._tabObj.instance['initData'] = this.initValue;
-            this._tabObj.instance['tempData'] = this.tempValue;
+            let _initValue_new = {...this.initValue};
+            let _tempValue_new = {...this.tempValue};
+            this._tabObj.instance['initData'] = _initValue_new;
+            this._tabObj.instance['tempData'] = _tempValue_new;
             this._tabObj.instance.reloadTabContent();
             // this._tabObj.instance.tabsObj = CommonUtils.deepCopy(this._tabObj.instance.tabsObj);
         }
@@ -129,8 +131,10 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
 
     public tabActiveChangeByMapping(data) {
         if (this._tabObj) {
-            this._tabObj.instance['initData'] = this.initValue;
-            this._tabObj.instance['tempData'] = this.tempValue;
+            let _initValue_new = {...this.initValue};
+            let _tempValue_new = {...this.tempValue};
+            this._tabObj.instance['initData'] = _initValue_new;
+            this._tabObj.instance['tempData'] = _tempValue_new;
             this._tabObj.instance.setActiveByMapping(data);
             // this._tabObj.instance.tabsObj = CommonUtils.deepCopy(this._tabObj.instance.tabsObj);
         }

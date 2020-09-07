@@ -15,6 +15,7 @@ export class CnFormRadioComponent extends CnComponentBase  implements OnInit {
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
+  public cascadeOptions: any;
   selectOptions = [];
   selectItems = [];
   radioValue = 'A';
@@ -31,7 +32,7 @@ export class CnFormRadioComponent extends CnComponentBase  implements OnInit {
 
   ngOnInit() {
     if (this.config.loadingConfig) {
-      // this.load();
+        this.load();
     } else {
       if (this.config.options) {
         setTimeout(() => {
@@ -118,7 +119,7 @@ export class CnFormRadioComponent extends CnComponentBase  implements OnInit {
     });
   }
   public async load() {
-    if( !this.config.loadingItemConfig){
+    if( !this.config.loadingConfig){
       return null;
     }
     let selectedRowItem = null;
@@ -157,5 +158,33 @@ export class CnFormRadioComponent extends CnComponentBase  implements OnInit {
     });
   }
 
-  public cascadeAnalysis(c?) {}
+  public cascadeAnalysis(c?) {
+    if (c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('cascadeOptions')) {
+        this.cascadeOptions = c[this.config.field].cascadeOptions;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'ajax') {
+          this.load();
+        }
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setOptions') {
+          this.selectItems = this.cascadeOptions;
+          const newOptions = [];
+          // 下拉选项赋值
+          this.cascadeOptions.forEach(element => {
+            newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
+          });
+          setTimeout(() => {
+            this.selectOptions = newOptions;
+          });
+        }
+      }
+
+    }
+  }
 }

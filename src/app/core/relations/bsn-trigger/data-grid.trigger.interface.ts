@@ -24,6 +24,8 @@ export interface IDataGridTrigger {
     MESSAGE: string,
     LOAD_REFRESH_DATA: string,
     DATA_CHECKED_STATUS_CHANGE: string,
+    TRANSFER_VALUE:string,
+    CUSTOM_ACTION:string,
 
     REFRESH: string,
     HIDDEN: string,
@@ -36,6 +38,7 @@ export interface IDataGridTrigger {
     REFRESH_AS_CHILD: string,
     LOAD_BY_FILTER: string,
     SET_SELECT_ROW: string,
+    EXECUTE_POPUP_CLOSE:string,
 
     LINK: string,
     LINK_TO: string,
@@ -69,7 +72,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     CHANGE_EDITED_ROWS_TO_TEXT: 'CHANGE_EDITED_ROWS_TO_TEXT',
     SHOW_INVALIDATE_ADDED_ROWS: 'SHOW_INVALIDATE_ADDED_ROWS',
     SHOW_INVALIDATE_EDITED_ROWS: 'SHOW_INVALIDATE_EDITED_ROWS',
-
+    TRANSFER_VALUE:'TRANSFER_VALUE',
     // action
     DIALOG: 'DIALOG',
     WINDOW: 'WINDOW',
@@ -80,7 +83,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     MESSAGE: 'MESSAGE',
     LOAD_REFRESH_DATA: 'LOAD_REFRESH_DATA',
     DATA_CHECKED_STATUS_CHANGE: 'DATA_CHECKED_STATUS_CHANGE',
-
+    CUSTOM_ACTION:'CUSTOM_ACTION',
 
     // behavior
     REFRESH: 'REFRESH',
@@ -94,6 +97,7 @@ export const BSN_DATAGRID_TRIGGER: IDataGridTrigger = {
     SELECT_ROW: 'SELECT_ROW',
     SET_SELECT_ROW: 'SET_SELECT_ROW',
     CHECK_ROW: 'CHECK_ROW',
+    EXECUTE_POPUP_CLOSE: 'EXECUTE_POPUP_CLOSE',
 
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',

@@ -1629,7 +1629,7 @@ export class BaseInnerMethodManagerComponent implements OnInit {
                                     "rootTitle": '根节点',
                                     "desc": "NAME",
                                     "loadingConfig": {
-                                        "url": "sd/COMPONENT_TREE_BASE_METHOD/query",
+                                        "url": "resource/COMPONENT_TREE_BASE_METHOD/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -1653,7 +1653,7 @@ export class BaseInnerMethodManagerComponent implements OnInit {
                                         ]
                                     },
                                     "expandConfig": {
-                                        "url": "sd/COMPONENT_TREE_BASE_METHOD/query",
+                                        "url": "resource/COMPONENT_TREE_BASE_METHOD/query",
                                         "method": "get",
                                         "params": [
                                             {

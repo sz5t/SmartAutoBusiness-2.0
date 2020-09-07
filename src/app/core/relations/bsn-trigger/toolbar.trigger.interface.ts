@@ -5,7 +5,8 @@ export interface IToolbarTrigger {
     EXECUTE_NONE: string,
     EXECUTE_NONE_EDIT: string,
     SET_OPERATION_DATA: string,
-    EXECUTE: string
+    EXECUTE: string,
+    EXECUTE_ACTION:string
 }
 
 /**
@@ -18,5 +19,6 @@ export const BSN_TOOLBAR_TRIGGER: IToolbarTrigger = {
     EXECUTE_NONE: 'EXECUTE_NONE',
     EXECUTE_NONE_EDIT: 'EXECUTE_NONE_EDIT',
     SET_OPERATION_DATA: 'SET_OPERATION_DATA',
-    EXECUTE: 'EXECUTE'
+    EXECUTE: 'EXECUTE',
+    EXECUTE_ACTION:'EXECUTE_ACTION'
 }

@@ -3428,7 +3428,7 @@ export class CnAttributeComponent extends CnComponentBase implements OnInit, OnD
   }
 
   loadingConfig = {
-    "url": "sd/B_P_EDIT_ATTRIBUTE_TYPE/procedure",  // operation 操作 query
+    "url": "resource/B_P_EDIT_ATTRIBUTE_TYPE/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {

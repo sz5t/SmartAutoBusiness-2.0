@@ -1719,14 +1719,23 @@ export class CnTreeTableComponent extends CnComponentBase
         // 自定义 操作按钮
         if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
             dialogOptional.nzFooter = [];
-
+        
             dialogCfg.footerButton.forEach(_button => {
                 dialogOptional.nzFooter.push(
                     {
                         label: _button.text,
                         onClick: componentInstance => {
                             // dialog.close();
-                            this.execCustomAction(_button.customActionId, dialog, componentInstance);
+                            // customAction
+                            let customAction;
+                            if(dialogCfg.customAction && dialogCfg.customAction.length>0 ){
+                              let  customActionList = dialogCfg.customAction.filter(item=>item.id===_button.customActionId);
+                              if(customActionList && customActionList.length>0){
+                                customAction =customActionList[0];
+                              } 
+                            }
+                          
+                            this.execCustomAction(customAction, dialog, componentInstance);
                         }
                     }
                 );
@@ -1735,72 +1744,87 @@ export class CnTreeTableComponent extends CnComponentBase
         }
 
         dialog = this.componentService.modalService.create(dialogOptional);
+        this.windowDialog = dialog;
     }
 
     // 执行弹出页的按钮事件
-    public execCustomAction(_id?, dialog?, componentInstance?) {
+    public execCustomAction(customAction?, dialog?, componentInstance?) {
 
         debugger;
-        _id ="001";
-        if (!_id) {
-            dialog.close();
-            return true;
-        }
 
-        const customAction = [
+        const customAction1 = [
             {
                 id: "001",
                 "declareParams": [
                     {
                         "name": "A",
-                        "componentId":"",
+                        "componentId": "",
                         "type": "",  // 取值，当前组件、弹出页面组件值，分两部分取值
                         "datatype": "string",
                         "value": "name"
                     },
                 ],
-                exectu: [
-                    // {  // 执行内容 ， 可执行子组件隐藏操作
-                    //     trigger: '',
-                    //     triggerType: '',  // 组件内的方法名称
-                    //     sendId: "", // 发出组件 默认当前组件
-                    //     receiverId: "" // 接受组件 默认当前组件
-                    // },
-                {  
-                    exectuType:"Relation",
-                    senderId: "afterAddBusinessSubObjectSuccess",  // 指定发送哪个消息
-                },
-                {  
-                    exectuType:"builtIn",   // 内置操作
-                    centend:{
-                        actionName:"close"  // 关闭
-                    }
-                }
-                
-                ],
-                result: [  // 结果内容  方法执行完成返回，得返回json结构，不能是单独的true，这样可以将结构传递
+                execute: [
                     {
-
+                        "type": "relation",
+                        "sender": {                                  // -- 设置消息发送内容, 当切仅当type为relation时该配置才生效
+                            "senderId": "afterSelectValueChange"
+                        },
+                    },
+                    {
+                        "type": "relation",
+                        "sender": {                                  // -- 设置消息发送内容, 当切仅当type为relation时该配置才生效
+                            "senderId": "afterSelectValueChange"
+                        },
+                    },
+                    {
+                        "type": "relation",
+                        "sender": {                                  // -- 设置消息发送内容, 当切仅当type为relation时该配置才生效
+                            "senderId": "afterSelectValueChange"
+                        },
                     }
                 ]
             }
         ];
 
-        const _customActionCfg = customAction.find(res => res.id === _id);
-        
-        _customActionCfg.exectu.forEach(item=>{
-            new RelationResolver(this)
-            .resolveInnerSender(
-                item,
-                {id:'1'},
-                Array.isArray({id:'1'})
-            );
+        customAction.execute.forEach(item => {
+            if(item.type ==='relation'){
+                new RelationResolver(this)
+                .resolveInnerSender(
+                    item.sender,
+                    {},
+                    Array.isArray({})
+                );
+            } else if(item.type ==='action'){
+                this.windowDialog.close(); 
+            }
+       
         });
 
         // new RelationResolver(this). resolveSender();
 
-        
-        dialog.close();
+
+       
+        return true;
+    }
+
+
+    windowDialog;
+
+    /**
+     * 执行关闭，通过消息等将当前弹出关闭
+     * @param option 
+     */
+    executePopupClose(option?) {
+
+        console.log('关闭弹出executeShowClose', option)
+        // 参数传递 更加传递类型关闭，若传递类型不配置，则将当前存在的示例关闭 popup
+
+        if (this.windowDialog) {
+            this.windowDialog.close(); // 关闭弹出
+            this.windowDialog = null;
+        }
+
         return true;
     }
 
@@ -1869,7 +1893,7 @@ export class CnTreeTableComponent extends CnComponentBase
                         /*   (async () => {
                               const response = await componentInstance.executeModal(option);
                               this._sendDataSuccessMessage(response, option.ajaxConfig.result);
-  
+     
                               // 处理validation结果
                               this._sendDataValidationMessage(response, option.ajaxConfig.result)
                                   &&
@@ -2115,6 +2139,10 @@ export class CnTreeTableComponent extends CnComponentBase
                 });
             });
     }
+
+    public transferValue(option?) {
+        console.log('将接受传递的值');
+      }
 
 
 

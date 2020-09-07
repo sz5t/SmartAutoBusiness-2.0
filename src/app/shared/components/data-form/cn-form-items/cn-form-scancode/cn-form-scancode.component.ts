@@ -45,6 +45,16 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
     this.updateValue.emit(backValue);
   }
   public cascadeAnalysis(c?) {
+    if (c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'ajax') {
+          this.load();
+        }
+      }
+    }
   }
 
 
@@ -72,6 +82,7 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
       //  扫码后 触发返回
       //  this.valueChange(this.value, result.data);
       this.valueChange(this.value);
+      e.stopPropagation(); 
     } else {
       if (e.code === 'ArrowDown') {
 
@@ -106,22 +117,33 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
 
     const response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
     console.log('--da---' + this.config.field, response);
+    let _selectedRowItem;
     if (isArray(response.data)) {
       if (response.data && response.data.length > 0) {
         const data_form = response.data;
-         this.selectedRowItem = data_form[0];
+        _selectedRowItem = data_form[0];
       }
       else {
-        this.selectedRowItem = null;
+        _selectedRowItem = null;
       }
     } else {
       if (response.data) {
 
         const _data = response.data;
-          this.selectedRowItem =_data;
+        _selectedRowItem =_data;
       } else {
-        this.selectedRowItem = null;
+        _selectedRowItem = null;
       }
+    }
+
+    if(this.config['columns']){
+      let _new_selectedRowItem={};
+      this.config.columns.map(column => {
+        _new_selectedRowItem[column['type']] = _selectedRowItem[column['field']];
+      });
+      this.selectedRowItem = _new_selectedRowItem;
+    }else {
+     this.selectedRowItem = _selectedRowItem;
     }
 
 

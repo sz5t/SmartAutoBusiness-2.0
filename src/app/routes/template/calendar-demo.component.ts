@@ -1645,7 +1645,7 @@ export class CalendarDemoComponent implements OnInit {
                                     "ajaxConfig": [
                                         {
                                             "id": "loading",
-                                            "url": "sd/CALENDAR_DEMO/query",
+                                            "url": "resource/CALENDAR_DEMO/query",
                                             "urlType": "inner",
                                             "method": "get",
                                             "params": [

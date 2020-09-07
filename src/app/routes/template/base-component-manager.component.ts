@@ -469,7 +469,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                     "ajaxConfig": [
                                         {
                                             "id": "loadBusinessNameValue",
-                                            "url": "sd/GET_COMPONENT_LIST/query",
+                                            "url": "resource/GET_COMPONENT_LIST/query",
                                             "urlType": "inner",
                                             "ajaxType": "get",
                                             "params": [
@@ -1301,7 +1301,7 @@ export class BaseComponentMannagerComponent extends CnComponentBase implements O
                                     "ajaxConfig": [
                                         {
                                             "id": "loadingComponentList",
-                                            "url": "sd/GET_COMPONENT_LIST/query",
+                                            "url": "resource/GET_COMPONENT_LIST/query",
                                             "method": "get",
                                             "params": [
                                                 // {

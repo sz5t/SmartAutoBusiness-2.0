@@ -8,6 +8,7 @@ export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
     CANCEL: 'cancel',
     EXECUTE: 'execute',
     REFRESH_AS_CHILD: 'load',
+    LOAD_REFRESH_DATA:'load',
     VALIDATE: 'validate',
     EXECUTE_MODAL: 'executeModal',
     VALUE_CHANGE: 'valueChange',
@@ -16,5 +17,6 @@ export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
     TRANSFER_VALUE:'transferValue',
     // link
     LINK: 'link',
-    LINK_TO: 'linkTo'
+    LINK_TO: 'linkTo',
+    EXECUTE_POPUP_CLOSE:'executePopupClose'
 }

@@ -113,7 +113,7 @@ export class CnDataTableComponent extends CnComponentBase
             originData: any,
             actions?: any[],
             validation?: boolean,
-            mergeData?:any
+            mergeData?: any
         }
     } = {};
     public checkedNumber = 0;
@@ -174,10 +174,10 @@ export class CnDataTableComponent extends CnComponentBase
             this._ajaxConfigObj[ajax.id] = ajax;
         });
         // 构建表格列及列标题
-        
+
         if (this.config.columnsAjax) {
-          await    this.loadDynamicColumns();
-          console.log('动态++++》',this.config.columns);
+            await this.loadDynamicColumns();
+            console.log('动态++++》', this.config.columns);
         }
         this._buildColumns(this.config.columns);
 
@@ -363,7 +363,7 @@ export class CnDataTableComponent extends CnComponentBase
                         originData: { ...d },
                         validation: true,
                         actions: this.getRowActions('text'),
-                        mergeData:{}
+                        mergeData: {}
                     };
                     if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
@@ -432,7 +432,7 @@ export class CnDataTableComponent extends CnComponentBase
                         originData: { ...d },
                         validation: true,
                         actions: this.getRowActions('text'),
-                        mergeData:{}
+                        mergeData: {}
                     };
                     if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
@@ -454,8 +454,8 @@ export class CnDataTableComponent extends CnComponentBase
                 this.setSelectRow(this.ROW_SELECTED);
                 this.isLoading = false;
                 // 2020.7.27 计算合并列
-                if(this.config.mergeconfig)
-                this._createMapd_new(this.config.mergeconfig, this.dataList);
+                if (this.config.mergeconfig)
+                    this._createMapd_new(this.config.mergeconfig, this.dataList);
             } else {
                 this.isLoading = false;
                 this._initComponentData();
@@ -470,7 +470,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public loadRefreshData(option) {
-         debugger;
+        debugger;
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
@@ -508,7 +508,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     public ajaxColumns; // 动态列
     public async loadDynamicColumns() {
-       // debugger;
+        // debugger;
         const url = this.config.columnsAjax.url;
         const method = this.config.columnsAjax.method ? this.config.columnsAjax.method : this.config.columnsAjax.ajaxType;
 
@@ -516,7 +516,7 @@ export class CnDataTableComponent extends CnComponentBase
             ...this.buildParameters(this.config.columnsAjax.params),
         };
         const loadColumns = [];
-        const loadData = await   this.componentService.apiService.getRequest(url, method, { params }).toPromise();
+        const loadData = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
         if (loadData && loadData.data && loadData.success) {
             if (loadData.data) {
                 // console.log('异步请求列信息', loadData.data);
@@ -525,7 +525,7 @@ export class CnDataTableComponent extends CnComponentBase
                         this.ajaxColumns = loadData.data;
                         loadData.data.forEach(element => {
                             const column = {};
-                            column['type']= "field";
+                            column['type'] = "field";
                             this.config.columnsConfig.forEach(cc => {
                                 if (cc.feild) {
                                     column[cc.name] = element[cc.feild];
@@ -547,17 +547,17 @@ export class CnDataTableComponent extends CnComponentBase
         const dynamicColumns = this.setFieldByColumns(fieldConfig);
         const dynamicdefaultcolumns = [];
         this.config.defaultcolumns.forEach(c => {
-            if(c['type'] !=='action'){
+            if (c['type'] !== 'action') {
                 const index = dynamicColumns.findIndex(item => item.feild === c.field);
                 if (index > -1) {
                     // 动态列重复，覆盖默认列
                 } else {
                     dynamicdefaultcolumns.push(c);
                 }
-            }else {
+            } else {
                 dynamicdefaultcolumns.push(c);
             }
-         
+
         });
 
         const columns = [...dynamicdefaultcolumns, ...dynamicColumns];
@@ -783,7 +783,7 @@ export class CnDataTableComponent extends CnComponentBase
             selected: false, // index === 0 ? true : false,
             state: 'new',
             actions: this.getRowActions('new'),
-            mergeData:{}
+            mergeData: {}
         }
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
@@ -817,12 +817,12 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public editRow(option) {
-        console.log('edit====',option)
+        console.log('edit====', option)
         if (option.data) {
             this.addEditRows(option.data.data);
-              // 2020.7.27 计算合并列
-              if(this.config.mergeconfig)
-              this._createMapd_new(this.config.mergeconfig, this.dataList);
+            // 2020.7.27 计算合并列
+            if (this.config.mergeconfig)
+                this._createMapd_new(this.config.mergeconfig, this.dataList);
         }
         return true;
     }
@@ -855,8 +855,8 @@ export class CnDataTableComponent extends CnComponentBase
         if (this.total > 0) {
             this.total = this.total - 1;
         }
-            // 2020.7.27 计算合并列
-            if(this.config.mergeconfig)
+        // 2020.7.27 计算合并列
+        if (this.config.mergeconfig)
             this._createMapd_new(this.config.mergeconfig, this.dataList);
 
     }
@@ -879,8 +879,8 @@ export class CnDataTableComponent extends CnComponentBase
             if (itemId) {
                 this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== itemId);
             }
-                // 2020.7.27 计算合并列
-                if(this.config.mergeconfig)
+            // 2020.7.27 计算合并列
+            if (this.config.mergeconfig)
                 this._createMapd_new(this.config.mergeconfig, this.dataList);
         }
 
@@ -998,6 +998,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public async executeCurrentRow(option) {
+        console.log('executeCurrentRow');
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
         const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
@@ -1170,7 +1171,7 @@ export class CnDataTableComponent extends CnComponentBase
                 this.mapOfDataState[key]['selected'] = true;
                 this.mapOfDataState[key]['checked'] = true;
                 // 勾选/取消当前行勾选状态            
-    
+
                 this.dataCheckedStatusChange();
             }
             // return false;
@@ -1184,19 +1185,19 @@ export class CnDataTableComponent extends CnComponentBase
                     this.mapOfDataState[row[this.KEY_ID]]['selected'] = false;
                     this.mapOfDataState[row[this.KEY_ID]]['checked'] = false;
                 });
-    
+
                 if (rowData[this.KEY_ID] && rowData[this.KEY_ID].length > 0) {
                     this.mapOfDataState[rowData[this.KEY_ID]]['selected'] = true;
                     this.mapOfDataState[rowData[this.KEY_ID]]['checked'] = true; // !this.mapOfDataState[rowData[this.KEY_ID]]['checked'];
                 }
-    
-    
+
+
                 // 勾选/取消当前行勾选状态            
-    
+
                 this.dataCheckedStatusChange();
             }
         }
-        
+
 
         return true;
     }
@@ -1249,8 +1250,6 @@ export class CnDataTableComponent extends CnComponentBase
                 this.dataCheckedStatusChange();
             }
         }
-
-
         return true;
     }
 
@@ -1297,9 +1296,10 @@ export class CnDataTableComponent extends CnComponentBase
                 } else {
                     this.dataList = [loadNewData[ind], ...this.dataList];
                 }
+
+                // liu 20200818 处理编辑一次后不可编辑，刷新将状态恢复
+
                 // liu 20200525
-
-
                 const mapData = this.mapOfDataState[newData[this.KEY_ID]];
                 if (mapData) {
                     mapData.state = "text";
@@ -1317,9 +1317,11 @@ export class CnDataTableComponent extends CnComponentBase
                         state: 'text',
                         validation: true,
                         actions: this.getRowActions('text'),
-                        mergeData:{}
+                        mergeData: {}
                     }
                 }
+
+                this.rows_Add_Edit(newData);
             })
         }
         // 刷新dataList
@@ -1331,7 +1333,17 @@ export class CnDataTableComponent extends CnComponentBase
             item['_index'] = idx + 1;
 
         })
+        //liu 20200818
+        this.dataCheckedStatusChange();
     }
+
+    // liu 20200818 去除保存后的新增，编辑状态
+    public rows_Add_Edit(item?) {
+        this.ROWS_ADDED = this.ROWS_ADDED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
+        this.ROWS_EDITED = this.ROWS_EDITED.filter(r => r[this.KEY_ID] !== item[this.KEY_ID]);
+        // this.dataCheckedStatusChange();
+    }
+
 
     public showInvalidateAddedRows(option) {
         if (option && Array.isArray(option)) {
@@ -1473,6 +1485,7 @@ export class CnDataTableComponent extends CnComponentBase
     public async executeCheckedRows(option) {
         console.log(this.config.id + '-------------executeCheckedRows', option);
         const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+
         const paramData = this._createCheckedRowsParameter(ajaxParams);
         console.log('executeCheckedRows params', paramData);
         const result = await this._executeAjax(option, paramData);
@@ -1499,7 +1512,17 @@ export class CnDataTableComponent extends CnComponentBase
     public async executeCheckedRowsIds(option) {
         console.log(this.config.id + '-------------executeCheckedRowsIds', option);
         const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
-        const paramData = this._createCheckedRowsIdParameter(ajaxParams);
+        const ajaxParams_1 = [{ name: this.KEY_ID, type: "item", valueName: this.KEY_ID }];
+        const paramDataids = this._createCheckedRowsIdParameter(ajaxParams_1);
+        let paramData;
+        paramData = ParameterResolver.resolve({
+            params: ajaxParams,
+            item: paramDataids,
+            checkedItem: paramDataids,
+            tempValue: this.tempValue,
+            initValue: this.initValue,
+            cacheValue: this.cacheValue
+        });
         const result = await this._executeAjax(option, paramData);
         return result;
     }
@@ -1511,6 +1534,7 @@ export class CnDataTableComponent extends CnComponentBase
                 const p = ParameterResolver.resolve({
                     params: ajaxParams,
                     checkedItem: cr,
+                    item: cr,
                     tempValue: this.tempValue,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue
@@ -1695,7 +1719,7 @@ export class CnDataTableComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: option.data,
+                item: option.data.data ? option.data.data : option.data,
                 selectedRow: this.ROW_SELECTED,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
@@ -1751,9 +1775,81 @@ export class CnDataTableComponent extends CnComponentBase
                 }
             ]
         }
+        // 自定义 操作按钮
+        if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
+            dialogOptional.nzFooter = [];
+
+            dialogCfg.footerButton.forEach(_button => {
+                dialogOptional.nzFooter.push(
+                    {
+                        label: _button.text,
+                        onClick: componentInstance => {
+                            // dialog.close();
+                            // customAction
+                            let customAction;
+                            if (dialogCfg.customAction && dialogCfg.customAction.length > 0) {
+                                let customActionList = dialogCfg.customAction.filter(item => item.id === _button.customActionId);
+                                if (customActionList && customActionList.length > 0) {
+                                    customAction = customActionList[0];
+                                }
+                            }
+
+                            this.execCustomAction(customAction, dialog, componentInstance);
+                        }
+                    }
+                );
+            });
+
+        }
+
         dialog = this.componentService.modalService.create(dialogOptional);
+        this.windowDialog = dialog;
 
     }
+        // 执行弹出页的按钮事件
+        public execCustomAction(customAction?, dialog?, componentInstance?) {
+            console.log('execCustomAction');
+    
+            customAction.execute.forEach(item => {
+                if (item.type === 'relation') {
+                    new RelationResolver(this)
+                        .resolveInnerSender(
+                            item.sender,
+                            {},
+                            Array.isArray({})
+                        );
+                } else if (item.type === 'action') {
+                    this.windowDialog.close();
+                }
+    
+            });
+    
+            // new RelationResolver(this). resolveSender();
+    
+    
+    
+            return true;
+        }
+    
+    
+        windowDialog;
+    
+        /**
+         * 执行关闭，通过消息等将当前弹出关闭
+         * @param option 
+         */
+        executePopupClose(option?) {
+    
+            console.log('关闭弹出executeShowClose', option)
+            // 参数传递 更加传递类型关闭，若传递类型不配置，则将当前存在的示例关闭 popup
+    
+            if (this.windowDialog) {
+                this.windowDialog.close(); // 关闭弹出
+                this.windowDialog = null;
+            }
+    
+            return true;
+        }
 
 
     public showUpload(option: any) {
@@ -2311,12 +2407,12 @@ export class CnDataTableComponent extends CnComponentBase
 
 
 
-    public _createMapd_new_old(mergeconfig?,listOfData?) {
+    public _createMapd_new_old(mergeconfig?, listOfData?) {
 
         // 生成group字段
 
-        const mergeData={};
-  
+        const mergeData = {};
+
 
         listOfData.forEach(
             row => {
@@ -2336,8 +2432,8 @@ export class CnDataTableComponent extends CnComponentBase
                 if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]) {
                     this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName] = {};
                 }
-                let new_data=[...listOfData];
-                r_c.groupCols.forEach(group_col=>{
+                let new_data = [...listOfData];
+                r_c.groupCols.forEach(group_col => {
 
                     new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
                 });
@@ -2358,14 +2454,14 @@ export class CnDataTableComponent extends CnComponentBase
 
 
 
-        mergeconfig.colConfig && mergeconfig.colConfig.length>0 && listOfData.forEach(
+        mergeconfig.colConfig && mergeconfig.colConfig.length > 0 && listOfData.forEach(
             row => {
                 // this.mapd[row.id]={}; // 初始化
 
                 mergeconfig.colConfig.forEach(col_c => {
 
                     col_c.mergeItems.forEach(item => {
-                        
+
 
                         let regularflag = true;
                         if (item.caseValue && item.type === "condition") {
@@ -2381,7 +2477,7 @@ export class CnDataTableComponent extends CnComponentBase
                                         regularData = row[item.caseValue['valueName']];
                                     }
                                 }
-        
+
                             } else {
                                 regularData = null;
                             }
@@ -2390,18 +2486,18 @@ export class CnDataTableComponent extends CnComponentBase
                         if (regularflag) {
 
                             let group_num = item.mergeCols.length;
-                            item.mergeCols.forEach(merge_col=>{
+                            item.mergeCols.forEach(merge_col => {
                                 if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]) {
                                     this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']] = {};
                                 }
                                 let group_index = item.mergeCols.findIndex(d => d['mergeColName'] === merge_col['mergeColName']);
-                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupIndex'] = group_index+1;
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupIndex'] = group_index + 1;
                                 this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupNum'] = group_num;
                             });
 
-                           
-                            
-                            
+
+
+
 
                         }
 
@@ -2411,7 +2507,7 @@ export class CnDataTableComponent extends CnComponentBase
 
                 });
 
-       
+
 
             }
         );
@@ -2422,12 +2518,12 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
 
-    public _createMapd_new(mergeconfig?,listOfData?) {
+    public _createMapd_new(mergeconfig?, listOfData?) {
 
         // 生成group字段
 
-        const mergeData={};
-  
+        const mergeData = {};
+
 
         listOfData.forEach(
             row => {
@@ -2447,28 +2543,28 @@ export class CnDataTableComponent extends CnComponentBase
                 if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]) {
                     this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName] = {};
                 }
-                let new_data=[...listOfData];
-                r_c.groupCols.forEach(group_col=>{
+                let new_data = [...listOfData];
+                r_c.groupCols.forEach(group_col => {
 
-                   // new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
-                   let _SingleEdit =true;
-                   if(group_col.hasOwnProperty('singleEdit')) {
-                       _SingleEdit=group_col['singleEdit'];
-                   }  
-                    new_data =[...this._createMapd_array(new_data,group_col.groupColName,row,_SingleEdit)];
-               //     console.log('jisuan:',group_col.groupColName,new_data);
+                    // new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
+                    let _SingleEdit = true;
+                    if (group_col.hasOwnProperty('singleEdit')) {
+                        _SingleEdit = group_col['singleEdit'];
+                    }
+                    new_data = [...this._createMapd_array(new_data, group_col.groupColName, row, _SingleEdit)];
+                    //     console.log('jisuan:',group_col.groupColName,new_data);
                 });
 
 
 
-               // console.log('统计:',new_data , row[r_c.groupName]); 
+                // console.log('统计:',new_data , row[r_c.groupName]); 
                 // new_data = new_data.filter(d => d[r_c.groupName] === row[r_c.groupName]);
                 let group_num = new_data.length;
                 let group_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
                 // if(group_index<0){
                 //     console.log('错误统计',new_data,row[this.KEY_ID])
                 // } 
-               
+
                 this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupNum'] = group_num;
                 this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['groupIndex'] = group_index + 1;
                 this.mapOfDataState[row[this.KEY_ID]]['mergeData'][r_c.colName]['colgroupIndex'] = 1;
@@ -2482,14 +2578,14 @@ export class CnDataTableComponent extends CnComponentBase
 
 
 
-        mergeconfig.colConfig && mergeconfig.colConfig.length>0 && listOfData.forEach(
+        mergeconfig.colConfig && mergeconfig.colConfig.length > 0 && listOfData.forEach(
             row => {
                 // this.mapd[row.id]={}; // 初始化
 
                 mergeconfig.colConfig.forEach(col_c => {
 
                     col_c.mergeItems.forEach(item => {
-                        
+
 
                         let regularflag = true;
                         if (item.caseValue && item.type === "condition") {
@@ -2505,7 +2601,7 @@ export class CnDataTableComponent extends CnComponentBase
                                         regularData = row[item.caseValue['valueName']];
                                     }
                                 }
-        
+
                             } else {
                                 regularData = null;
                             }
@@ -2514,18 +2610,18 @@ export class CnDataTableComponent extends CnComponentBase
                         if (regularflag) {
 
                             let group_num = item.mergeCols.length;
-                            item.mergeCols.forEach(merge_col=>{
+                            item.mergeCols.forEach(merge_col => {
                                 if (!this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]) {
                                     this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']] = {};
                                 }
                                 let group_index = item.mergeCols.findIndex(d => d['mergeColName'] === merge_col['mergeColName']);
-                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupIndex'] = group_index+1;
+                                this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupIndex'] = group_index + 1;
                                 this.mapOfDataState[row[this.KEY_ID]]['mergeData'][merge_col['mergeColName']]['colgroupNum'] = group_num;
                             });
 
-                           
-                            
-                            
+
+
+
 
                         }
 
@@ -2535,7 +2631,7 @@ export class CnDataTableComponent extends CnComponentBase
 
                 });
 
-       
+
 
             }
         );
@@ -2549,107 +2645,117 @@ export class CnDataTableComponent extends CnComponentBase
 
 
 
- /**
-  * 
-  * @param new_data  范围数组
-  * @param feildName 分组字段
-  * @param row       当前行
-  * @param isSingleEdit 分组字段是否启用单独编辑
-  */
-    public _createMapd_array(new_data?,feildName?,row?,isSingleEdit?){
+    /**
+     * 
+     * @param new_data  范围数组
+     * @param feildName 分组字段
+     * @param row       当前行
+     * @param isSingleEdit 分组字段是否启用单独编辑
+     */
+    public _createMapd_array(new_data?, feildName?, row?, isSingleEdit?) {
 
         // 总方法，将数据集合 拷贝 可补充解析字段在当前结构下是否计算
-       // 数组构建 
-       // 将原数据对比编辑状态数据，计算出当前数据的状态
-       // 1.判断是否启用独立编辑
-       // 1.1 启用独立编辑 计算出当前行所在位置
-          // 按当前行开始，向下找，满足分组标识一致，并且行不能是edit 若有一个不满足循环结束
-          // 当前行向上找, 满足分组条件，并且不能是edit（逆序查找，查找结束后，反转）
-          // 将上下两部分数据加上本身行合并，生成满足条件的新数据 
-          // 返回当前数组
-       // 2.当前列未启用编辑，则按照原始处理
+        // 数组构建 
+        // 将原数据对比编辑状态数据，计算出当前数据的状态
+        // 1.判断是否启用独立编辑
+        // 1.1 启用独立编辑 计算出当前行所在位置
+        // 按当前行开始，向下找，满足分组标识一致，并且行不能是edit 若有一个不满足循环结束
+        // 当前行向上找, 满足分组条件，并且不能是edit（逆序查找，查找结束后，反转）
+        // 将上下两部分数据加上本身行合并，生成满足条件的新数据 
+        // 返回当前数组
+        // 2.当前列未启用编辑，则按照原始处理
 
-       //1 将当前数组集合的edit状态写入
-       // state: 'new' 'edit',
-       console.log('xxxxxxxxx====>',feildName,new_data);
-       new_data.forEach(row => {
-         row['__state__'] =  this.mapOfDataState[row[this.KEY_ID]]['state'];
-       });
+        //1 将当前数组集合的edit状态写入
+        // state: 'new' 'edit',
+        console.log('xxxxxxxxx====>', feildName, new_data);
+        new_data.forEach(row => {
+            row['__state__'] = this.mapOfDataState[row[this.KEY_ID]]['state'];
+        });
 
-       //2 数组分割
-       //2.1 计算出当前行所在
-       let row_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
-       //2.2 计算出前数组
-       let BeforeArr = new_data.slice(0,row_index).reverse();
-       let OwnArr= new_data.slice(row_index,row_index+1);
-       let AftertArr = new_data.slice(row_index+1);
+        //2 数组分割
+        //2.1 计算出当前行所在
+        let row_index = new_data.findIndex(d => d[this.KEY_ID] === row[this.KEY_ID]);
+        //2.2 计算出前数组
+        let BeforeArr = new_data.slice(0, row_index).reverse();
+        let OwnArr = new_data.slice(row_index, row_index + 1);
+        let AftertArr = new_data.slice(row_index + 1);
 
-       console.log('xxxxxxxxx分割====>',row_index,BeforeArr,OwnArr,AftertArr);
-       //2.2 计算出后数组
-         // reverse() 反转
+        console.log('xxxxxxxxx分割====>', row_index, BeforeArr, OwnArr, AftertArr);
+        //2.2 计算出后数组
+        // reverse() 反转
 
-         let new_BeforeArr=[];
-         let Before_index=0;
-         for(let i=0;i<BeforeArr.length;i++){
-           // 序号不能断，状态不能断 
-           if(Before_index===i && BeforeArr[i][feildName] ===row[feildName] ){
-               if(isSingleEdit){
-                if(BeforeArr[i]['__state__']==='new' || BeforeArr[i]['__state__']==='edit' ) {
-                    Before_index=-1;
-                }else{
+        let new_BeforeArr = [];
+        let Before_index = 0;
+        for (let i = 0; i < BeforeArr.length; i++) {
+            // 序号不能断，状态不能断 
+            if (Before_index === i && BeforeArr[i][feildName] === row[feildName]) {
+                if (isSingleEdit) {
+                    if (BeforeArr[i]['__state__'] === 'new' || BeforeArr[i]['__state__'] === 'edit') {
+                        Before_index = -1;
+                    } else {
+                        new_BeforeArr.push(BeforeArr[i]);
+                        Before_index++;
+                    }
+
+                } else {
                     new_BeforeArr.push(BeforeArr[i]);
                     Before_index++;
                 }
+            } else {
+                break;
+            }
 
-               } else{
-                new_BeforeArr.push(BeforeArr[i]);
-                Before_index++;
-               }
-           } else{
-               break;
-           }
+        }
 
-         }
+        let new_AftertArr = [];
+        let Aftert_index = 0;
+        for (let i = 0; i < AftertArr.length; i++) {
+            // 序号不能断，状态不能断 
+            if (Aftert_index === i && AftertArr[i][feildName] === row[feildName]) {
+                if (isSingleEdit) {
+                    if (AftertArr[i]['__state__'] === 'new' || AftertArr[i]['__state__'] === 'edit') {
+                        Aftert_index = -1;
+                    } else {
+                        new_AftertArr.push(AftertArr[i]);
+                        Aftert_index++;
+                    }
 
-         let new_AftertArr=[];
-         let Aftert_index=0;
-         for(let i=0;i<AftertArr.length;i++){
-           // 序号不能断，状态不能断 
-           if(Aftert_index===i && AftertArr[i][feildName] ===row[feildName]){
-               if(isSingleEdit){
-                if(AftertArr[i]['__state__']==='new'|| AftertArr[i]['__state__']==='edit' ) {
-                    Aftert_index=-1;
-                }else{
+                } else {
                     new_AftertArr.push(AftertArr[i]);
                     Aftert_index++;
                 }
-
-               } else{
-                new_AftertArr.push(AftertArr[i]);
-                Aftert_index++;
-               }
-           }else{
-               break;
-           }
-
-         }
-
-         if(isSingleEdit){
-            if(OwnArr[0]['__state__']==='new'|| OwnArr[0]['__state__']==='edit' ) {
-                new_BeforeArr=[];
-                new_AftertArr=[];
+            } else {
+                break;
             }
 
-         }
+        }
 
-       //3 合并数组，返回
+        if (isSingleEdit) {
+            if (OwnArr[0]['__state__'] === 'new' || OwnArr[0]['__state__'] === 'edit') {
+                new_BeforeArr = [];
+                new_AftertArr = [];
+            }
 
-       let back_data=[];
-       back_data=[...new_BeforeArr.reverse(),...OwnArr,...new_AftertArr];
+        }
 
-       return back_data;
+        //3 合并数组，返回
+
+        let back_data = [];
+        back_data = [...new_BeforeArr.reverse(), ...OwnArr, ...new_AftertArr];
+
+        return back_data;
 
     }
 
+
+    public transferValue(option?) {
+        console.log('将接受传递的值', this.tempValue);
+    }
+
+
+    is_hidden=false;
+    hiddentrue(){
+        this.is_hidden =!this.is_hidden;
+    }
 
 }

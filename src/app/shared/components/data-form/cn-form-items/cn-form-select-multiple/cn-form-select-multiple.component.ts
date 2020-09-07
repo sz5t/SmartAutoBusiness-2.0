@@ -109,7 +109,33 @@ export class CnFormSelectMultipleComponent extends CnComponentBase implements On
 
     // 分类完善信息，此处完善的信息为 异步参数处理
     // cascadeValue
+    if (c.hasOwnProperty(this.config.field)) {
+      if (c[this.config.field].hasOwnProperty('cascadeValue')) {
+        this.cascadeValue = c[this.config.field].cascadeValue;
+      }
+      if (c[this.config.field].hasOwnProperty('cascadeOptions')) {
+        this.cascadeOptions = c[this.config.field].cascadeOptions;
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'ajax') {
+          this.load();
+        }
+      }
+      if (c[this.config.field].hasOwnProperty('exec')) {
+        if (c[this.config.field].exec === 'setOptions') {
+          this.selectItems = this.cascadeOptions;
+          const newOptions = [];
+          // 下拉选项赋值
+          this.cascadeOptions.forEach(element => {
+            newOptions.push({ label: element[this.config.labelName], value: element[this.config.valueName] });
+          });
+          setTimeout(() => {
+            this.selectOptions = newOptions;
+          });
+        }
+      }
 
+    }
     console.log('级联具体小组件接受=》', c);
   }
 

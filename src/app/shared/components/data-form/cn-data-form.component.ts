@@ -68,7 +68,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
   ngOnInit() {
-    this.layoutRowsCfg = this.config.formLayout.rows.filter(r => r.id);
+    this.layoutRowsCfg = (this.config.formLayout && this.config.formLayout.rows)? this.config.formLayout.rows.filter(r => r.id):[];
     if (this.initData) {
       this.initValue = this.initData;
     } else {
@@ -1180,6 +1180,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
    */
   public link(option) {
+    console.log('link',option);
     let url;
     let params;
     if (option && option.linkConfig) {
@@ -1207,7 +1208,37 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
   public linkTo(option) {
+    console.log('linkTo',option);
+    let link_config = this.config.linkConfig.filter(item=>item.id ===option['LINKID']);
+    if(link_config &&link_config.length>0 ){
+      let url = link_config[0]['link'];
+      this.componentService.router.navigate([url]);
+    }
 
+  }
+
+  // liu 20200821  未完成 需要状态和参数一致 和跳转差不多
+  public changeState(v?) {
+    const ss = JSON.parse(JSON.stringify(this.validateForm.value));
+    console.log(this.config.id + '-------------cancel【开始】------------');
+
+    // this.validateForm = this.fb.group({});
+    // this.createControls(this.validateForm);
+    // this.validateForm.setValue(ss,{onlySelf:false,emitEvent:true});
+    this.value = ss;
+    if (v.hasOwnProperty('builtinConfig')) {
+      if (v['builtinConfig'].event === 'formStateChange') {
+        this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'text');
+      }
+    } else {
+      this.formStateChange('text');
+    }
+    // this.validateForm.setValue(this.validateForm.value);
+    this.load();
+    console.log(this.config.id + '-------------cancel【结束】', v, this.validateForm.value);
+    // setTimeout(() => this.setValue('code','liu'), 1000);
+    // setTimeout(() => this.validateForm.setValue(ss), 1000);
+    // this.setValue('code','liu');
   }
 
 

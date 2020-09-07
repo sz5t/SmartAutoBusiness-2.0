@@ -200,7 +200,7 @@ console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
   }
 
   loadingConfig = {
-    "url": "sd/B_P_D_CONFIG_JSON_P/procedure",  // operation 操作 query
+    "url": "resource/B_P_D_CONFIG_JSON_P/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {
@@ -278,7 +278,7 @@ console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
 	// @CURRENTCOMID  nvarchar(50),--生成组件标识
 	// @LAYOUTCOMPONENTID nvarchar(50) -- 引用标识
   addObjectConfig = {
-    "url": "sd/B_P_DOWN_NODE/procedure",  // operation 操作 query
+    "url": "resource/B_P_DOWN_NODE/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {
@@ -307,7 +307,7 @@ console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
   }
 
   deleteObjectConfig = {
-    "url": "sd/B_P_DELETE_NODE/procedure",  // operation 操作 query
+    "url": "resource/B_P_DELETE_NODE/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {

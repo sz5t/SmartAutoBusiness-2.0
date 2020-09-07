@@ -678,6 +678,30 @@ debugger;
                   }
                 },
                 {
+                  "title": "备注1",
+                  "type": "field",
+                  "field": "areaCode1",
+                  "hidden": false,
+                  "showFilter": false,
+                  "showSort": false,
+                  "width": "200px",
+                  "style": {},
+                  editor: {
+                    "type": "selectMultiple",
+                    "field": "areaCode1",
+                    "placeholder": "请输入",
+                    options: [
+                      { label: '东方不败', value: '0' },
+                      { label: '独孤求败', value: '1' },
+                      { label: '西门吹雪', value: '2' },
+                      { label: '陆小凤', value: '3' },
+                    ],
+                    "defaultValue": '1,3',
+                    labelName: 'label',
+                    valueName: 'value',
+                  }
+                },
+                {
                   "title": "操作",
                   "type": "action",
                   "actionIds": [

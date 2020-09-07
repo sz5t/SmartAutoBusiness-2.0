@@ -1,15 +1,15 @@
-import { Component, OnInit, AfterViewInit, Input, EventEmitter, Output, Inject } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, Inject, AfterViewInit } from '@angular/core';
 import { CnComponentBase } from '@shared/components/cn-component.base';
-import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 
 @Component({
-  selector: 'app-cn-grid-select',
-  templateUrl: './cn-grid-select.component.html',
-  styleUrls: ['./cn-grid-select.component.less']
+  selector: 'app-cn-grid-select-multiple',
+  templateUrl: './cn-grid-select-multiple.component.html',
+  styleUrls: ['./cn-grid-select-multiple.component.less']
 })
-export class CnGridSelectComponent extends CnComponentBase implements OnInit, AfterViewInit {
+export class CnGridSelectMultipleComponent extends CnComponentBase implements OnInit, AfterViewInit {
 
   @Input() public config;
   @Input() public valueConfig;
@@ -23,7 +23,9 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
   public selectItems = [];
   public cascadeOptions: any;
   public myControl;
+  value;
   count = 0;
+  listOfSelectedValue =[];
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
     super(componentService);
@@ -77,30 +79,11 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
 
     setTimeout(() => {
       this.selectedValue = s_value;
+      this.listOfSelectedValue = this.selectedValue.split(',');
+     // this.listOfSelectedValue = this.listOfSelectedValue.filter(item=>{return true;});
       this.valueChange(this.selectedValue);
     });
 
-  }
-
-  /**
-   * valueChange
-   */
-  public async valueChange(v?) {
-    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v, count: this.count };
-    if (this.selectItems.length < 1) {
-      await this.load();
-    }
-    const index = this.selectItems.findIndex(item => item[this.config['valueName']] === v);
-    if (index > -1) {
-      backValue['dataItem'] = this.selectItems[index];
-    } else {
-      //  if(v)
-      // myControl.setValue(null, { emitEvent: true });
-    }
-    console.log('select 值变化', v, this.config.field, this.selectItems);
-
-    this.updateValue.emit(backValue);
-    this.count += 1;
   }
 
   // 构建参数-》下拉选择自加载数据
@@ -108,7 +91,7 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
     return ParameterResolver.resolve({
       params: paramsCfg,
       tempValue: this.tempValue,
-      componentValue: {value:this.selectedValue}, //  组件值？返回值？级联值，需要三值参数
+      componentValue:{ value: this.selectedValue }, //  组件值？返回值？级联值，需要三值参数
       selectedRow:this.rowData,
       item:this.rowData,
       initValue: this.initValue,
@@ -198,4 +181,42 @@ export class CnGridSelectComponent extends CnComponentBase implements OnInit, Af
     // console.log('级联具体小组件接受=》',c );
   }
 
+
+  /**
+   * 值变化
+   * @param v 
+   */
+  public async valueChange(v?) {
+    console.log('多选值变化model', v);
+    const backValue = { id: this.valueConfig.id, name: this.config.field, value: v, count: this.count };
+    if (this.selectItems.length < 1) {
+     if(this.config.loadingConfig) 
+      await this.load();
+    }
+    // if (v) {
+    //   this.listOfSelectedValue = v.split(',');
+    // } else {
+    //   this.listOfSelectedValue = [];
+    // }
+
+    console.log('selectMuilt 值变化', v, this.config.field, this.selectItems);
+    this.count += 1;
+    this.updateValue.emit(backValue);
+  }
+
+  /**
+   * 多选值变化
+   * @param v 
+   */
+  public valueChangeSelect(v?) {
+    console.log('多选值变化select', v);
+    const newValue = v.join(',');
+    if (this.selectedValue !== newValue) {
+      this.selectedValue = newValue;
+      this.valueChange(this.selectedValue);
+    }
+
+  }
+
 }
+

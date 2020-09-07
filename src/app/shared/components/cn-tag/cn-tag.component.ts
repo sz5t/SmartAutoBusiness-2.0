@@ -87,6 +87,9 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
     // {label:'',value:'',origin:{}}  // label 文本展示  value 隐藏值，origin 是原始数据
   ];
 
+  tagValues=null;
+  tagLabels=null;
+
 
   handleClose1(removedTag: {}): void {
     this.nodeList = this.nodeList.filter(tag => tag !== removedTag);
@@ -123,7 +126,7 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
 
        // 当值变化的时候，需要将变化值通知外部组件，由外部容器组件接受存储当前值
        // 隐藏input 存储值，值变化可以通过ngmodelchange 来触发当前
-
+       this.nodeListToData();
        console.log('tags值变化',v);
        return true;
   }
@@ -282,6 +285,7 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
       }
 
       this.dataToNodeList(data_form);
+      this.nodeListToData();
       console.log('tag加载数据',data_form);
 
       // data_form = { ...data_form, ...this.staticComponentValue };
@@ -309,6 +313,27 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
     });
  
     this.nodeList = data;
+    this.valueChange(this.nodeList);
+  }
+
+  public nodeListToData(){
+   
+  
+    let values="";
+    let labels="";
+    this.nodeList.forEach( item=>{
+          values = values+item['value']+',';
+          labels=labels+item['label']+',';
+    });
+    if(labels.length>0){
+      labels = labels.substr(0,labels.length-1);
+    }
+    if(values.length>0){
+      values = values.substr(0,values.length-1);
+    }
+
+    this.tagValues = values;
+    this.tagLabels =labels;
   
   }
 
@@ -453,7 +478,7 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
     return ParameterResolver.resolve({
       params: paramsCfg,
       tempValue: this.tempValue,
-      componentValue: {value:this.nodeList},
+      componentValue: {value:this.nodeList,tagValues:this.tagValues,tagLabels:this.tagLabels},
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,

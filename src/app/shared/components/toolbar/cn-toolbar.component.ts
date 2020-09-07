@@ -91,6 +91,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             // this._receiver_source$.subscribe();
             new RelationResolver(this).resolveReceiver(this.config);
         }
+        this.getBttonList();
 
     }
 
@@ -231,9 +232,9 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                             const valueObj = btn.toggle.values.find(val => val.name === stateValue);
                             valueObj && (btn[btn.toggle.toggleProperty] = valueObj.value);
                         }
-                        if(actions){
+                        if (actions) {
                             actions.group.forEach(element => {
-                                if(element.toggle && element.toggle.values){
+                                if (element.toggle && element.toggle.values) {
                                     const _valueObj = element.toggle.values.find(val => val.name === stateValue);
                                     _valueObj && (element[element.toggle.toggleProperty] = _valueObj.value);
                                 }
@@ -354,7 +355,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             case 'lt': // <
                 return compareValue.value < compareValue.matchValue;
             case 'notNull': // 是否为null
-                return   !! compareValue.value ;
+                return !!compareValue.value;
             default:
             case 'regexp': // 正在表达式匹配
                 const regexp = new RegExp(compareValue.matchValue);
@@ -362,4 +363,72 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
 
         }
     }
+
+
+    /**
+     * 模拟执行按钮操作 EXECUTE_ACTION
+     * 从操作配置中读取 当前btn 相应的tagViewId
+     * @param option 
+     */
+    private executeAction(option?) {
+
+        let id = option['toolbarId'];
+        console.log('executeAction', option);
+        let btn =  this.getBtn(id);
+        if(btn){
+            this.action(btn, btn['targetViewId']);
+            return true;
+        } else{
+            return false;
+        }
+        
+        // 消息操作id ，获取btn配置 执行
+
+    }
+
+    public getBtn(id?) {
+
+       let _button = this.button_list.filter(item=>item['id']===id);
+       if(_button && _button.length>0){
+           return _button[0];
+       }else{
+           return null;
+       }
+
+    }
+
+    button_list = [];
+    public getBttonList() {
+
+        // "targetViewId": "tree_page",
+        let _button_list = [];
+        if (this.toolbarConfig && Array.isArray(this.toolbarConfig)) {
+            this.toolbarConfig.forEach(item => {
+                if (item.group) {
+                   
+                    let targetViewId = item['targetViewId']; 
+                    item.group.forEach(g => {
+                        if (g.dropdown) {
+                            g.dropdown.forEach(b => {
+                                b['targetViewId'] = targetViewId;
+                                _button_list.push(b);
+                            });
+                        } else{
+                            g['targetViewId'] = targetViewId;
+                            _button_list.push(g);
+                        }
+                    });
+                } else if (item.dropdown) {
+                    let targetViewId = item['targetViewId']; 
+                    item.dropdown.forEach(b => {
+                        b['targetViewId'] = targetViewId;
+                        _button_list.push(b);
+                    });
+                }
+            });
+        }
+        this.button_list = _button_list;
+        console.log('按钮统计', _button_list);
+    }
+
 }

@@ -35,7 +35,7 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
   ngOnInit() {
     this._route.params.subscribe((params: any) => {
       if (params.name) {
-        this.componentService.apiService.post('sd/B_P_C_CONFIG_PAGE_ALL/procedure', { "PageId": params.name }).subscribe(response => {
+        this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { "PageId": params.name }).subscribe(response => {
           if (response.data._procedure_resultset_1[0]['W'] === "") {
             this.config = null;
           }
@@ -84,7 +84,7 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
         //   if (localJson) {
         //     this.config = localJson;
         //   } else {
-        //     this.componentService.apiService.post('sd/PROCEDURE B_P_C_CONFIG_PAGE_ALL/procedure', { "PageId": params.name }).subscribe(response => {
+        //     this.componentService.apiService.post('resource/PROCEDURE B_P_C_CONFIG_PAGE_ALL/procedure', { "PageId": params.name }).subscribe(response => {
         //       if (response.data._procedure_resultset_1[0]['W'] === "") {
         //         this.config = null;
         //       }

@@ -26,8 +26,8 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     CHECKED_ITEMS_IDS_CONFIRM: "showCheckedItemsIdsConfirm",
     MESSAGE: 'showMessage',
     DATA_CHECKED_STATUS_CHANGE: 'dataCheckedStatusChange',
-
-
+    TRANSFER_VALUE: 'transferValue',
+    CUSTOM_ACTION: 'component_customAction',
 
     // behavior
     REFRESH: 'load',
@@ -42,6 +42,7 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     REFRESH_AS_CHILD: 'load',
     LOAD_BY_FILTER: 'loadByFilter',
     LOAD_REFRESH_DATA: 'loadRefreshData',
+  
 
 
     // link
@@ -56,7 +57,8 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     EXECUTE_CURRENT_ROW: 'executeCurrentRow',
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
-    EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds'
+    EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds',
+    EXECUTE_POPUP_CLOSE:'executePopupClose'
 }
 
 export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
@@ -65,5 +67,6 @@ export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
     EXECUTE_NONE: 'executeNone',
     EXECUTE_NONE_EDIT: 'executeNoneEdit',
     SET_OPERATION_DATA: 'setOperationData',
-    EXECUTE: 'execute'
+    EXECUTE: 'execute',
+    EXECUTE_ACTION :'executeAction'
 }

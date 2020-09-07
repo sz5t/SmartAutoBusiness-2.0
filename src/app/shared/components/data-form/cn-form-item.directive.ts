@@ -77,7 +77,10 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
 
   }
   public ngOnInit() {
-    // console.log('**********', this.config, this.formCascade)
+     // console.log('**********', this.config, this.formCascade)
+     if(!this.config){
+       return true;
+     }
     let _config: any = {};
     if (this.config.state === 'text' && this.config.text) {
       _config = JSON.parse(JSON.stringify(this.config.text));

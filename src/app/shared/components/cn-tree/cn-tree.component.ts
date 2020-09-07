@@ -31,6 +31,7 @@ import { ITreeProperty, CN_TREE_PROPERTY } from '@core/relations/bsn-property/tr
 import { CN_TREE_METHOD } from '@core/relations/bsn-methods/bsn-tree-methods';
 import { ChildrenOutletContexts } from '@angular/router';
 import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
+import { isArray } from 'util';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -46,7 +47,7 @@ import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
 })
 export class CnTreeComponent extends CnComponentBase
     implements OnInit, AfterViewInit, OnDestroy {
-// ITreeProperty
+    // ITreeProperty
     @Input()
     public config; // dataTables 的配置参数
     @Input()
@@ -55,7 +56,7 @@ export class CnTreeComponent extends CnComponentBase
     public nodes = [];
     @Input() initData;
     @Input() tempData;
-    @Input() dataServe:DataServerService;
+    @Input() dataServe: DataServerService;
     @Output() public updateValue = new EventEmitter();
 
     @ViewChild('treeObj', { static: true })
@@ -76,7 +77,7 @@ export class CnTreeComponent extends CnComponentBase
     public tableColumns = [];
 
     public spanCount = 0;
-    
+
 
     public isLoading = false;
     public loading = false;
@@ -127,6 +128,8 @@ export class CnTreeComponent extends CnComponentBase
 
     // 前置条件集合
     public beforeOperation;
+    searchValue = '';
+    defaultSelectedKeys = [];
     constructor(
         @Inject(BSN_COMPONENT_SERVICES)
         public componentService: ComponentServiceProvider
@@ -151,7 +154,7 @@ export class CnTreeComponent extends CnComponentBase
         }
     }
 
-    public ngOnInit() {
+    public async ngOnInit() {
         this._initInnerValue();
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
@@ -166,8 +169,85 @@ export class CnTreeComponent extends CnComponentBase
 
         // 是否需要进行初始化数据加载
         if (this.config.loadingOnInit) {
-            this.load();
+            await this.load();
         }
+        if (!this.config.isSelected && this.config.defaultSelectedKeys) {
+            this.defaultSelectedKeys = [];
+            this.defaultSelectedKeys.push(this.config.defaultSelectedKeys);
+            this.defaultSelectedKeys = this.defaultSelectedKeys.filter(r => r !== '');
+        }
+        if (!this.config.isSelected && this.config.defaultSelectedConfig) {
+            /*     let dd = {  // 指定层级定位
+                    location: {
+                        locationContent: {
+                            hierarchy: 0, // 层索引
+                            index: 0,  // 位置索引
+                            isLeaf: false,
+                            locationContent: {
+                                hierarchy: 1, // 层索引
+                                index: 0,  // 位置索引
+                                isLeaf: true
+                            }
+                        }
+                    },
+                    default: {
+                        locationContent: {
+                            hierarchy: 0, // 层索引
+                            index: 0,  // 位置索引
+                            isLeaf: true
+                        }
+                    }
+                } */
+
+            let location_id;
+            if (this.config.defaultSelectedConfig.location) {
+                location_id = this.getSeletedkeys(this.config.defaultSelectedConfig.location.locationContent, this.nodes);
+            }
+            if (!location_id) {
+                if (this.config.defaultSelectedConfig.default) {
+                    location_id = this.getSeletedkeys(this.config.defaultSelectedConfig.default.locationContent, this.nodes);
+                }
+            }
+            if (location_id) {
+                this.defaultSelectedKeys = [];
+                this.defaultSelectedKeys.push(location_id);
+                this.defaultSelectedKeys = this.defaultSelectedKeys.filter(r => r !== '');
+            }
+        }
+
+        setTimeout(() => {
+            if (this.defaultSelectedKeys.length > 0) {
+                let select_node = this.treeObj.getTreeNodeByKey(this.defaultSelectedKeys[0]);
+                // console.log('树节点选中', this.defaultSelectedKeys, select_node)
+                if (select_node) {
+                    let clickNode = {
+                        eventName: "click",
+                        node: select_node
+                    }
+                    this.clickNode(clickNode);
+                }
+            }
+        });
+
+    }
+
+    public getSeletedkeys(_con?, _nodelist?, _hierarchy?) {
+        console.log('计算选中节点', _con, _nodelist);
+        let back_key;
+        if (!_con) {
+            return back_key;
+        }
+
+        if (_nodelist.length >= _con['index']) {
+            let new__nodelist = _nodelist[_con['index']];
+            if (_con['isLeaf']) {
+                back_key = new__nodelist['key'];
+            } else {
+                back_key = this.getSeletedkeys(_con['locationContent'], new__nodelist['children']);
+            }
+        }
+        return back_key;
+
     }
 
     public ngAfterViewInit() {
@@ -278,8 +358,8 @@ export class CnTreeComponent extends CnComponentBase
             this.isLoading = false;
         }
 
-        console.log('+++++树++++++++++',this.dataServe)
-        this.dataServe && this.dataServe.setComponentValue(this.config.id,this.nodes);
+        console.log('+++++树++++++++++', this.dataServe)
+        this.dataServe && this.dataServe.setComponentValue(this.config.id, this.nodes);
 
     }
 
@@ -306,7 +386,7 @@ export class CnTreeComponent extends CnComponentBase
         });
         this.mapOfDataState[node[this.KEY_ID]] = {
             disabled: false,
-            checked: node['checked']? node['checked']:false, // index === 0 ? true : false,
+            checked: node['checked'] ? node['checked'] : false, // index === 0 ? true : false,
             selected: false, // index === 0 ? true : false,
             state: 'text',
             data: node,
@@ -314,28 +394,28 @@ export class CnTreeComponent extends CnComponentBase
             // validation: true,
             // actions: this.getRowActions('text')
         };
- 
+
         if (node.children && node.children.length > 0) {
             if (!this.config.async) {
-              // 静态
-              node.children.map(n => {
-                this._setTreeNode(n);
-              })
+                // 静态
+                node.children.map(n => {
+                    this._setTreeNode(n);
+                })
             }
             node['isLeaf'] = false;
-          }else{
-              node['isLeaf'] = true;
-          }
-
- /*        if (node.children && node.children.length > 0) {
-            node['isLeaf'] = false;
-            node['children'] = [];
-            // node.children.map(n => {
-            //     // this._setTreeNode(n);
-            // })
         } else {
             node['isLeaf'] = true;
-        } */
+        }
+
+        /*        if (node.children && node.children.length > 0) {
+                   node['isLeaf'] = false;
+                   node['children'] = [];
+                   // node.children.map(n => {
+                   //     // this._setTreeNode(n);
+                   // })
+               } else {
+                   node['isLeaf'] = true;
+               } */
     }
 
     public async expandNode($event: NzFormatEmitEvent | NzTreeNode) {
@@ -349,7 +429,7 @@ export class CnTreeComponent extends CnComponentBase
         if (!this.config.async) {
             return true;
         }
-     
+
         if (node && node.isExpanded) {
             const response = await this._getAsyncTreeData(this.config.expandConfig, node);
             if (response && response.data && response.data.length > 0) {
@@ -380,7 +460,8 @@ export class CnTreeComponent extends CnComponentBase
         }
     }
 
-    public clickNode($event: NzFormatEmitEvent) {
+    public clickNode($event?: NzFormatEmitEvent) {
+        console.log('选节点', $event);
         if (this.ACTIVED_NODE) {
             this.ACTIVED_NODE['isSelected'] = false;
             this.ACTIVED_NODE['selected'] && (this.ACTIVED_NODE['selected'] = false);
@@ -392,6 +473,8 @@ export class CnTreeComponent extends CnComponentBase
         this.tempValue['selectedNode'] = {
             ...$event.node.origin
         };
+        let ss1 = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE['key']);
+        console.log('clickNode', this.defaultSelectedKeys, ss1, this.treeObj.getTreeNodes());
 
         return true;
     }
@@ -891,13 +974,13 @@ export class CnTreeComponent extends CnComponentBase
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
         const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
-       
-       // const data =this.treeObj.getTreeNodes().filter(r=>{if(r.isChecked) return r});
+
+        // const data =this.treeObj.getTreeNodes().filter(r=>{if(r.isChecked) return r});
         const data = [...this.treeObj.getCheckedNodeList(), ...this.treeObj.getHalfCheckedNodeList()];
         const parameterResult = [];
         data.map(d => {
             const param = ParameterResolver.resolve({
-                params: [{name:this.KEY_ID,type:"item",valueName:this.KEY_ID}],
+                params: [{ name: this.KEY_ID, type: "item", valueName: this.KEY_ID }],
                 tempValue: this.tempValue,
                 item: d.origin,
                 initValue: this.initValue,
@@ -1116,12 +1199,15 @@ export class CnTreeComponent extends CnComponentBase
         // this.ACTIVED_NODE = sNode[0];
     }
 
-    public appendChildToRootNode(option) {
+    public async appendChildToRootNode(option) {
+        if (this.config.loadingItemConfig) {
+            option = await this.loadItem(option);
+        }
         const appendNodeData = {}
         this.config.columns.map(col => {
             appendNodeData[col['type']] = option[col['field']];
         });
-      
+
         const addRootNode = new NzTreeNode({
             key: appendNodeData['key'],
             title: appendNodeData['title'],
@@ -1140,8 +1226,11 @@ export class CnTreeComponent extends CnComponentBase
 
     }
 
-    public appendChildToSelectedNode(option) {
+    public async appendChildToSelectedNode(option) {
         // let appendNode: NzTreeNode;
+        if (this.config.loadingItemConfig) {
+            option = await this.loadItem(option);
+        }
         const appendNodeData = {}
         this.config.columns.map(col => {
             appendNodeData[col['type']] = option[col['field']];
@@ -1156,7 +1245,7 @@ export class CnTreeComponent extends CnComponentBase
         // });
 
         const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
-        if(currentSelectedNode['isLeaf']){
+        if (currentSelectedNode['isLeaf']) {
             currentSelectedNode['isLeaf'] = false;
         }
         if (!currentSelectedNode.isExpanded) {
@@ -1171,6 +1260,49 @@ export class CnTreeComponent extends CnComponentBase
 
 
 
+    }
+
+    public async loadItem(data?) {
+        // 【参数不全是否阻止加载！】
+        // 对后续业务判断有影响
+        //  console.log('===select 自加载====>load');
+        const url = this.config.loadingItemConfig.url;
+        const method = this.config.loadingItemConfig.ajaxType ? this.config.loadingItemConfig.ajaxType : this.config.loadingItemConfig.method;
+        const params = {
+            ...this.Item_buildParameters(this.config.loadingItemConfig.params, data)
+        };
+        // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+
+        const response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
+        // console.log('--da---' + this.config.field, response);
+        let data_form;
+        if (isArray(response.data)) {
+            if (response.data && response.data.length > 0) {
+                data_form = response.data[0];
+            }
+        } else {
+            if (response.data) {
+                data_form = response.data;
+            }
+        }
+
+        if (!data_form) {
+            data_form = data;
+        }
+        return data_form;
+    }
+
+    public Item_buildParameters(paramsCfg, data?) {
+        return ParameterResolver.resolve({
+            params: paramsCfg,
+            tempValue: this.tempValue,
+            item: data,
+            componentValue: data, //  组件值？返回值？级联值，需要三值参数
+            initValue: this.initValue,
+            cacheValue: this.cacheValue,
+            router: this.routerValue,
+            cascadeValue: this.cascadeValue
+        });
     }
 
     public updateSelectedNode(option) {
@@ -1256,7 +1388,7 @@ export class CnTreeComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.ACTIVED_NODE?(this.ACTIVED_NODE['origin']?this.ACTIVED_NODE['origin']:null):null,
+                item: this.ACTIVED_NODE ? (this.ACTIVED_NODE['origin'] ? this.ACTIVED_NODE['origin'] : null) : null,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -1265,15 +1397,15 @@ export class CnTreeComponent extends CnComponentBase
 
             });
         } else if (!isArray && data) {
-// liu 2020 0521 存储过程返回
-            if(data['_procedure_resultset_1']){
-                data =data['_procedure_resultset_1'][0];
+            // liu 2020 0521 存储过程返回
+            if (data['_procedure_resultset_1']) {
+                data = data['_procedure_resultset_1'][0];
             }
             parameterResult = ParameterResolver.resolve({
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.ACTIVED_NODE?(this.ACTIVED_NODE['origin']?this.ACTIVED_NODE['origin']:null):null,
+                item: this.ACTIVED_NODE ? (this.ACTIVED_NODE['origin'] ? this.ACTIVED_NODE['origin'] : null) : null,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -1290,7 +1422,7 @@ export class CnTreeComponent extends CnComponentBase
                     params: paramsCfg,
                     tempValue: this.tempValue,
                     componentValue: d,
-                    item: this.ACTIVED_NODE?(this.ACTIVED_NODE['origin']?this.ACTIVED_NODE['origin']:null):null,
+                    item: this.ACTIVED_NODE ? (this.ACTIVED_NODE['origin'] ? this.ACTIVED_NODE['origin'] : null) : null,
                     checkedItem: d,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
@@ -1372,7 +1504,7 @@ export class CnTreeComponent extends CnComponentBase
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
-                item: this.ACTIVED_NODE?(this.ACTIVED_NODE['origin']?this.ACTIVED_NODE['origin']:null):null,
+                item: this.ACTIVED_NODE ? (this.ACTIVED_NODE['origin'] ? this.ACTIVED_NODE['origin'] : null) : null,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue
@@ -1427,11 +1559,11 @@ export class CnTreeComponent extends CnComponentBase
         let dialog;
         // 根据按钮类型初始化表单状态
         const dialogCfg = option.window;
-       // dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
-    
+        // dialogCfg.form.state = option.btnCfg.state ? option.btnCfg.state : 'text';
+
         // const isEditForm = dialogCfg.form.state === 'edit' ? true : false;
         // if(isEditForm) {
-    
+
         // }
         if (option.changeValue) {
             const d = ParameterResolver.resolve({
@@ -1453,17 +1585,17 @@ export class CnTreeComponent extends CnComponentBase
                 }
             });
         }
-    
+
         const dialogOptional = {
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
             nzContent: CnPageComponent,
             nzComponentParams: {
-                config:{},
-               customPageId:dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
-              // initData:this.initData
-               changeValue: option.changeValue ? option.changeValue.params : []
+                config: {},
+                customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+                // initData:this.initData
+                changeValue: option.changeValue ? option.changeValue.params : []
             },
             nzFooter: [
                 {
@@ -1475,22 +1607,94 @@ export class CnTreeComponent extends CnComponentBase
                 {
                     label: dialogCfg.okText ? dialogCfg.okText : 'OK',
                     onClick: componentInstance => {
-                        (async () => {
-                            const response = await componentInstance.executeModal(option);
-                            this._sendDataSuccessMessage(response, option.ajaxConfig.result);
-    
-                            // 处理validation结果
-                            this._sendDataValidationMessage(response, option.ajaxConfig.result)
-                                &&
-                                this._sendDataErrorMessage(response, option.ajaxConfig.result)
-                                && dialog.close();
-                        })();
+                        // (async () => {
+                        //     const response = await componentInstance.executeModal(option);
+                        //     this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+                        //     // 处理validation结果
+                        //     this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                        //         &&
+                        //         this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                        //         && dialog.close();
+                        // })();
                     }
                 }
             ]
         }
+        // 自定义 操作按钮
+        if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
+            dialogOptional.nzFooter = [];
+
+            dialogCfg.footerButton.forEach(_button => {
+                dialogOptional.nzFooter.push(
+                    {
+                        label: _button.text,
+                        onClick: componentInstance => {
+                            // dialog.close();
+                            // customAction
+                            let customAction;
+                            if (dialogCfg.customAction && dialogCfg.customAction.length > 0) {
+                                let customActionList = dialogCfg.customAction.filter(item => item.id === _button.customActionId);
+                                if (customActionList && customActionList.length > 0) {
+                                    customAction = customActionList[0];
+                                }
+                            }
+
+                            this.execCustomAction(customAction, dialog, componentInstance);
+                        }
+                    }
+                );
+            });
+
+        }
+
         dialog = this.componentService.modalService.create(dialogOptional);
-    
+        this.windowDialog = dialog;
+    }
+
+    // 执行弹出页的按钮事件
+    public execCustomAction(customAction?, dialog?, componentInstance?) {
+        console.log('execCustomAction');
+
+        customAction.execute.forEach(item => {
+            if (item.type === 'relation') {
+                new RelationResolver(this)
+                    .resolveInnerSender(
+                        item.sender,
+                        {},
+                        Array.isArray({})
+                    );
+            } else if (item.type === 'action') {
+                this.windowDialog.close();
+            }
+
+        });
+
+        // new RelationResolver(this). resolveSender();
+
+
+
+        return true;
+    }
+
+
+    windowDialog;
+
+    /**
+     * 执行关闭，通过消息等将当前弹出关闭
+     * @param option 
+     */
+    executePopupClose(option?) {
+
+        console.log('关闭弹出executeShowClose', option)
+        // 参数传递 更加传递类型关闭，若传递类型不配置，则将当前存在的示例关闭 popup
+
+        if (this.windowDialog) {
+            this.windowDialog.close(); // 关闭弹出
+            this.windowDialog = null;
+        }
+
+        return true;
     }
 
     public showUpload() {
@@ -1599,5 +1803,30 @@ export class CnTreeComponent extends CnComponentBase
         }
         return copyAction;
     }
+
+    nzEvent(event: NzFormatEmitEvent): void {
+        console.log(event);
+    }
+    public searchTargetString(objtext) { // 查找处理
+        const searchtext = this.searchValue;
+        const reg = new RegExp(searchtext, 'g');
+        const back = ['', '', ''];
+        if (!reg.test(objtext)) {// 没找到
+            return back;
+        } else {// 找到
+            const index = objtext.indexOf(searchtext);
+            if (index > 0) {
+                back[0] = objtext.substring(0, index);
+            }
+            back[1] = searchtext;
+            const indexEnd = index + searchtext.length;
+            back[2] = objtext.substring(indexEnd);
+            return back;
+        }
+
+    }
+    public transferValue(option?) {
+        console.log('将接受传递的值');
+      }
 
 }

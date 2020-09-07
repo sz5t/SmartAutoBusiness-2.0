@@ -89,7 +89,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                     "ajaxConfig": [
                                         {
                                             "id": "loading",
-                                            "url": "sd/P_COUNT/query",
+                                            "url": "resource/P_COUNT/query",
                                             "method": "get",
                                             "params": []
                                         }
@@ -179,7 +179,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                     "ajaxConfig": [
                                         {
                                             "id": "loading",
-                                            "url": "sd/SQL_PERCENT/query",
+                                            "url": "resource/SQL_PERCENT/query",
                                             "method": "get",
                                             "params": []
                                         }
@@ -826,7 +826,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                     "ajaxConfig": [
                                         {
                                             "id": "tree_add_property_category",
-                                            "url": "sd/ADD_PROPERTY_CATEGORY/operate",
+                                            "url": "resource/ADD_PROPERTY_CATEGORY/operate",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
@@ -978,7 +978,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                         },
                                         {
                                             "id": "tree_delete_property",
-                                            "url": "sd/DELETE_PROPERTY/operate",
+                                            "url": "resource/DELETE_PROPERTY/operate",
                                             "urlType": "inner",
                                             "ajaxType": "post",
                                             "params": [
@@ -1172,7 +1172,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                     "rootTitle": '根节点',
                                     "desc": "NAME",
                                     "loadingConfig": {
-                                        "url": "sd/COMPONENT_TREE_BASE_PROPERTIES_DATA/query",
+                                        "url": "resource/COMPONENT_TREE_BASE_PROPERTIES_DATA/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -1196,7 +1196,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                         ]
                                     },
                                     "expandConfig": {
-                                        "url": "sd/COMPONENT_TREE_BASE_PROPERTIES_DATA/query",
+                                        "url": "resource/COMPONENT_TREE_BASE_PROPERTIES_DATA/query",
                                         "method": "get",
                                         "params": [
                                             {
@@ -2493,7 +2493,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                     "ajaxConfig": [
                                                                                         {
                                                                                             "id": "add_properties_data",
-                                                                                            "url": "sd/ADD_PROPERTY_DETAIL/batchOperate",
+                                                                                            "url": "resource/ADD_PROPERTY_DETAIL/batchOperate",
                                                                                             "urlType": "inner",
                                                                                             "ajaxType": "post",
                                                                                             "params": [
@@ -2600,7 +2600,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                         },
                                                                                         {
                                                                                             "id": "edit_properties_data",
-                                                                                            "url": "sd/EDIT_PROPERTY_DETAIL/batchOperate",
+                                                                                            "url": "resource/EDIT_PROPERTY_DETAIL/batchOperate",
                                                                                             "urlType": "inner",
                                                                                             "ajaxType": "put",
                                                                                             "params": [
@@ -2930,7 +2930,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                     "pageSizeOptions": [10, 20, 50, 100],
                                                                                     "loadingOnInit": true,
                                                                                     "loadingConfig": {
-                                                                                        "url": "sd/GET_PROPERTY_DETAILS/query",
+                                                                                        "url": "resource/GET_PROPERTY_DETAILS/query",
                                                                                         "method": "get",
                                                                                         "params": [
                                                                                             {
@@ -3669,7 +3669,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                     "ajaxConfig": [
                                                                                         {
                                                                                             "id": "add_properties_data",
-                                                                                            "url": "sd/ADD_PROPERTY_DETAIL/operate",
+                                                                                            "url": "resource/ADD_PROPERTY_DETAIL/operate",
                                                                                             "urlType": "inner",
                                                                                             "ajaxType": "post",
                                                                                             "params": [
@@ -3928,7 +3928,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                     "ajaxConfig": [
                                                                                         {
                                                                                             "id": "toolbar_form_component_base_edit",
-                                                                                            "url": "sd/UPDATE_COMPONENT_EDITOR_DATA/operate",
+                                                                                            "url": "resource/UPDATE_COMPONENT_EDITOR_DATA/operate",
                                                                                             "urlType": "inner",
                                                                                             "ajaxType": "put",
                                                                                             "params": [
@@ -4467,7 +4467,7 @@ export class BaseCfgPropertyManagerComponent implements OnInit {
                                                                                     "ajaxConfig": [
                                                                                         {
                                                                                             "id": "loadform",
-                                                                                            "url": "sd/COMPONENT_PROPERTY_EDITOR_DATA/query",
+                                                                                            "url": "resource/COMPONENT_PROPERTY_EDITOR_DATA/query",
                                                                                             "urlType": "inner",
                                                                                             "ajaxType": "get",
                                                                                             "params": [

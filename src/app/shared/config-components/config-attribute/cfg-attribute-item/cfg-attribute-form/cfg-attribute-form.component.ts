@@ -83,7 +83,7 @@ export class CfgAttributeFormComponent  extends CnComponentBase implements OnIni
     }
   
     loadingConfig = {
-      "url": "sd/B_P_D_CONFIG_JSON_P/procedure",  // operation 操作 query
+      "url": "resource/B_P_D_CONFIG_JSON_P/operate",  // operation 操作 query
       "ajaxType": "post",
       "params": [
         {
@@ -182,7 +182,7 @@ export class CfgAttributeFormComponent  extends CnComponentBase implements OnIni
    }
 
    saveConfig = {
-    "url": "sd/B_P_SAVE_JSON/procedure",  // operation 操作 query
+    "url": "resource/B_P_SAVE_JSON/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {

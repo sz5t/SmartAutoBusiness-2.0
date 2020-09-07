@@ -88,7 +88,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
 
   // B_P_EDIT_ATTRIBUTE_SELECT  @CODE nvarchar(50),	@ACODE nvarchar(50) ajaxConfig
   loadEditJsonConfig = {
-    "url": "sd/B_P_EDIT_ATTRIBUTE_SELECT/procedure",  // operation 操作 query
+    "url": "resource/B_P_EDIT_ATTRIBUTE_SELECT/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {
@@ -111,7 +111,7 @@ export class CfgAttributeGridSelectComponent extends CnComponentBase implements 
   }
 
   loadDataJsonConfig = {
-    "url": "sd/B_P_D_CONFIG_PROPERTY_SELECT_JSON/procedure",  // operation 操作 query
+    "url": "resource/B_P_D_CONFIG_PROPERTY_SELECT_JSON/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {

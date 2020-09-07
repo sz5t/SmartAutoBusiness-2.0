@@ -918,7 +918,7 @@
                       },
                       {
                         "id": "loadformgrid",
-                        "url": "sd/GET_BUSINESS_OBJECT_LIST/query",
+                        "url": "resource/GET_BUSINESS_OBJECT_LIST/query",
                         "urlType": "inner",
                         "ajaxType": "get",
                         "params": [

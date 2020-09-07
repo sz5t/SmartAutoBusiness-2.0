@@ -11,6 +11,7 @@ export const CN_DATA_TAG_METHOD: IDataTagTrigger = {
     VALIDATE: 'validate',
     EXECUTE_MODAL: 'executeModal',
     VALUE_CHANGE: 'valueChange',
+    LOAD_REFRESH_DATA:'load',
 
     // link
     LINK: 'link',

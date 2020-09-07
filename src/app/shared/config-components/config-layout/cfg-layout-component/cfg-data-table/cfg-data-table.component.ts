@@ -51,7 +51,7 @@ export class CfgDataTableComponent  extends CnComponentBase   implements OnInit,
 
   
   loadingDataConfig = {
-    "url": "sd/B_P_C_CONFIG_ATTRIBUTE_TYPE/procedure",  // operation 操作 query
+    "url": "resource/B_P_C_CONFIG_ATTRIBUTE_TYPE/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {

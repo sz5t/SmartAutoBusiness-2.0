@@ -16,6 +16,7 @@ import { ComponentServiceProvider } from '@core/services/component/component-ser
 import { CnStaticTableComponent } from '@shared/components/data_table/cn-static-table.component';
 import { CnTagComponent } from '@shared/components/cn-tag/cn-tag.component';
 import { CnUploadComponent } from '@shared/components/cn-upload/cn-upload.component';
+import { CnContainersComponent } from '@shared/components/cn-containers/cn-containers.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -32,7 +33,8 @@ const components: { [type: string]: Type<any> } = {
     cnCardList: CnCardListComponent,
     cnStaticTable: CnStaticTableComponent,
     cnTag:CnTagComponent,
-    cnUpload:CnUploadComponent
+    cnUpload:CnUploadComponent,
+    cnContainers:CnContainersComponent,
 };
 
 @Directive({

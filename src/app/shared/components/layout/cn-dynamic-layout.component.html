@@ -36,7 +36,7 @@
             </ng-template>
           </nz-card> -->
 
-          <nz-card [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
+          <nz-card *ngIf="c.container!=='rows' && c.container!=='tabs' " [nzBodyStyle]="c.bodyStyle" [nzBordered]="c.noBorder ? false : true"
             [nzTitle]="c.header ? titleTmpl : false" [nzExtra]="c.header ? extraTemplate : false">
             <ng-template #titleTmpl>
                 <i nz-icon spin style="font-size:14px" [nzType]="c.header.icon" *ngIf="c.header.icon"></i>

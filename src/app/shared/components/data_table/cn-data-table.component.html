@@ -29,10 +29,11 @@
     <!-- 常规表头 -->
     <ng-template #normalHeader>
       <tr>
-        <th nzWidth="50px" *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox"
+        <th  [nzWidth]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('width'))?config.showCheckBoxConfig['width']:'50px'" [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?config.showCheckBoxConfig.offsetLeft:null"
+         *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox"
           [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-header [ngForOf]="tableColumns">
-          <th [nzAlign]="header.titleAlign?header.titleAlign:'left'" [nzWidth]="header.width" *ngIf="header.hasOwnProperty('titleHidden')? !header.titleHidden :!header.hidden"
+          <th [nzAlign]="header.titleAlign?header.titleAlign:'left'" [nzLeft]="header.hasOwnProperty('offsetLeft')?header.offsetLeft:null" [nzRight]="header.hasOwnProperty('offsetRight')?header.offsetRight:null" [nzWidth]="header.width" *ngIf="header.hasOwnProperty('titleHidden')? !header.titleHidden :!header.hidden"
             [nzShowSort]="header.showSort" [nzSortKey]="header.field" attr.rowspan="{{ header.rowspan?header.rowspan:1 }}" attr.colspan="{{ header.colspan?header.colspan:1 }}">
           <!--   [attr.rowspan]="header.rowspan?:header.rowspan:1"
             [attr.colspan]="header.colspan?header.colspan:1"
@@ -47,12 +48,12 @@
   <tbody>
     <tr *ngFor="let rowData of dataTable.data" (click)="setSelectRow(rowData, $event)"
       [ngClass]="{ selectedRow: mapOfDataState[rowData[KEY_ID]] ? mapOfDataState[rowData[KEY_ID]]['selected'] : false, validationError: !mapOfDataState[rowData[KEY_ID]]['validation']}">
-      <td *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox"
+      <td *ngIf="config.showCheckBox" [nzShowCheckbox]="config.showCheckBox" [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?config.showCheckBoxConfig.offsetLeft:null"
         [(nzChecked)]="mapOfDataState[rowData[KEY_ID]]['checked']" (nzCheckedChange)="dataCheckedStatusChange()"></td>
       <ng-template ngFor let-col [ngForOf]="tableColumns">
         <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
           <ng-container *ngSwitchCase="'index'">
-            <td [nzAlign]="col.align?col.align:'left'">
+            <td [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
               {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
             </td>
           </ng-container>
@@ -60,7 +61,7 @@
             <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
               <ng-container *ngIf="col.editor">
                 <ng-container *ngSwitchCase="'new'">
-                  <td  [nzAlign]="col.align?col.align:'left'"
+                  <td nzBreakWord [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null"
                   [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
                   [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                   *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
@@ -76,7 +77,7 @@
                 </ng-container>
           
                 <ng-container *ngSwitchCase="'edit'">
-                  <td  [nzAlign]="col.align?col.align:'left'"
+                  <td nzBreakWord [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null"
                   [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
                   [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                   *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
@@ -92,7 +93,8 @@
                 </ng-container>
        
                 <ng-container *ngSwitchDefault>
-                  <td [nzAlign]="col.align?col.align:'left'" 
+                  <td [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null"
+                     nzBreakWord 
                     [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
                     [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                     *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
@@ -110,13 +112,14 @@
 
               </ng-container>
               <ng-container *ngIf="!col.editor">
-                <td [nzAlign]="col.align?col.align:'left'">
+                <td nzBreakWord [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
                   <ng-container CnGridItemDirective *ngIf="col.custom; else text" [state]="'edit'" [config]="col.custom"
                     [rowData]="mapOfDataState[rowData[KEY_ID]]['data']" [initData]="initData" [tempData]="tempData"
                     [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data']}"
                     (updateValue)="valueChange($event)"
                     [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.custom.field]:null">
                   </ng-container>
+                  
                 </td>
                 <ng-template #text>
                   {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
@@ -131,8 +134,9 @@
               <td>{{ rowData[col.field] }}</td>
             </ng-template> -->
           </ng-container>
+          
           <ng-container *ngSwitchCase="'action'">
-            <td>
+            <td [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
 
               <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length>1">
                 <nz-button-group>
@@ -211,3 +215,7 @@
   <div class="clearfix"></div>
 
 </ng-template>
+
+<!-- <button  (click)="hiddentrue()">隐藏</button>
+
+<input [hidden]="is_hidden" nz-input placeholder="Basic usage" /> -->

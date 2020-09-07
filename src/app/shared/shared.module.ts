@@ -129,6 +129,8 @@ import { CnFormCustomInputComponent } from './components/data-form/cn-form-items
 import { CnFormCascaderComponent } from './components/data-form/cn-form-items/cn-form-cascader/cn-form-cascader.component';
 import { CnCarouseComponent } from './components/cn-carouse/cn-carouse.component';
 import { CnGridTreeSelectComponent } from './components/data_table/cn-grid-items/cn-grid-tree-select/cn-grid-tree-select.component';
+import { CnContainersComponent } from './components/cn-containers/cn-containers.component';
+import { CnGridSelectMultipleComponent } from './components/data_table/cn-grid-items/cn-grid-select-multiple/cn-grid-select-multiple.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -254,6 +256,8 @@ const COMPONENTS = [
   CnFormCascaderComponent,
   CnCarouseComponent,
   CnGridTreeSelectComponent,
+  CnContainersComponent,
+  CnGridSelectMultipleComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -288,6 +292,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
+
 
 
 

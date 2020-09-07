@@ -42,7 +42,7 @@
       "200px"
     ],
     "loadingConfig": {
-      "url": "sd/GET_ALL_RESOURCE_LIST/query",
+      "url": "resource/GET_ALL_RESOURCE_LIST/query",
       "method": "get",
       "params": [],
       "filter": []

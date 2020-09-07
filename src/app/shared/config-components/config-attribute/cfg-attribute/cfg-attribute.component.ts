@@ -119,7 +119,7 @@ export class CfgAttributeComponent extends CnComponentBase implements OnInit, On
   }
 
   loadingConfig = {
-    "url": "resource/B_P_EDIT_ATTRIBUTE_TYPE/procedure",  // operation 操作 query
+    "url": "resource/B_P_EDIT_ATTRIBUTE_TYPE/operate",  // operation 操作 query
     "ajaxType": "post",
     "params": [
       {

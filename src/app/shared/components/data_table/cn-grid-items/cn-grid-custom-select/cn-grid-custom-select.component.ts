@@ -155,6 +155,8 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
       params: paramsCfg,
       tempValue: this.tempValue,
       componentValue: { value: this.value }, //  组件值？返回值？级联值，需要三值参数
+      selectedRow:this.rowData,
+      item:this.rowData,
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,

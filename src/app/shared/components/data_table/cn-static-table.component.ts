@@ -115,7 +115,7 @@ export class CnStaticTableComponent extends CnComponentBase
             originData: any,
             actions?: any[],
             validation?: boolean,
-            mergeData?:any
+            mergeData?: any
         }
     } = {};
     public checkedNumber = 0;
@@ -332,7 +332,13 @@ export class CnStaticTableComponent extends CnComponentBase
 
 
 
-    public addBtnClick() {
+    public addBtnClick(event?) {
+        console.log('addBtnClick',event);
+        if(event){
+            if (event.code === 'Enter') {
+               return false;
+              }
+        }
         this.addRow();
         this.updateValue.emit(this.getAddedNewRowsData());
     }
@@ -365,7 +371,7 @@ export class CnStaticTableComponent extends CnComponentBase
                         originData: { ...d },
                         validation: true,
                         actions: this.getRowActions('new'),
-                        mergeData:{}
+                        mergeData: {}
                     };
                 } else if (d['$state$'] === 'text') {
                     this.mapOfDataState[d[this.KEY_ID]] = {
@@ -377,7 +383,7 @@ export class CnStaticTableComponent extends CnComponentBase
                         originData: { ...d },
                         validation: true,
                         actions: this.getRowActions('text'),
-                        mergeData:{}
+                        mergeData: {}
                     };
 
                 } else {
@@ -391,7 +397,7 @@ export class CnStaticTableComponent extends CnComponentBase
                         originData: { ...d },
                         validation: true,
                         actions: this.getRowActions('edit'),
-                        mergeData:{}
+                        mergeData: {}
                     };
                 }
 
@@ -462,7 +468,7 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     // 是否存在当前行数据
-    public custom_exist() {
+    public custom_exist(option?,structureConfig?) {
 
         const newconfig = {
             custom: [   // 组件自定义行为，只进一组参数【】，然后根据参数做业务处理，参数里需要【响应方法名称】
@@ -490,6 +496,50 @@ export class CnStaticTableComponent extends CnComponentBase
             ]
         };
 
+        let addRowMapping;
+
+        let row_data = {};
+        if(structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']){
+            addRowMapping =  structureConfig['structure'];
+        }
+     
+       if(addRowMapping){
+        addRowMapping.forEach(add_row => {
+
+            let value;
+            if (add_row['type'] === 'tempValue') {
+                value = this.tempValue[add_row['valueName']];
+            } else if (add_row['type'] === 'tempValue') {
+                value = this.initValue[add_row['valueName']];
+            } else if (add_row['type'] === 'value') {
+                value = add_row['value'];
+            } else if (add_row['type'] === 'item') {
+                value = option[add_row['valueName']];
+            }
+            row_data[add_row['name']] = value;
+        })
+       } else{
+         row_data ={};
+       }
+
+       let back_dataList = this.dataList.filter(item=>{
+          let back =true;
+          for(let key  in row_data){
+            // console.log(key + '---' + row_data[key]);
+            if(row_data[key]!==item[key]){
+                back =false;
+            }
+          }
+          return back;
+       });
+
+       if(back_dataList && back_dataList.length>0){
+        // return true;
+        return { result:true,  data: back_dataList[0]};
+       }else {
+        //return false;
+        return { result:false,  data: null};
+       }
     }
 
     // 前置条件成组出现，当满足某条件后有响应
@@ -535,9 +585,265 @@ export class CnStaticTableComponent extends CnComponentBase
         };
 
 
+        // 根据条件计算出是否有记录满足
+
+        // 根据记录定位到当前行
+        this.setSelectRow(this.ROW_SELECTED);
+
+    }
+
+
+    public custom_add(option?,structureConfig?) {
+
+        let addRowMapping;
+
+        let row_data = {};
+        if(structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']){
+            addRowMapping =  structureConfig['structure'];
+        }
+     
+       if(addRowMapping){
+        addRowMapping.forEach(add_row => {
+
+            let value;
+            if (add_row['type'] === 'tempValue') {
+                value = this.tempValue[add_row['valueName']];
+            } else if (add_row['type'] === 'tempValue') {
+                value = this.initValue[add_row['valueName']];
+            } else if (add_row['type'] === 'value') {
+                value = add_row['value'];
+            } else if (add_row['type'] === 'item') {
+                value = option[add_row['valueName']];
+            }
+            row_data[add_row['name']] = value;
+        })
+       } else{
+         row_data =option;
+       }
+
+
+        // 将数据处理合并为当前新增行数据,并选中当前数据
+
+        // 创建空数据对象
+        let newId = CommonUtils.uuID(32);
+
+        // 存在主键，则
+        if (row_data[this.KEY_ID]) {
+            newId = row_data[this.KEY_ID];
+        }
+        let newData = this.createNewRowData();
+        newData[this.KEY_ID] = newId;
+        // 数据合并
+        newData = { ...newData, ...row_data };
+
+        // 新增数据加入原始列表,才能够动态新增一行编辑数据
+        this.dataList = [...this.dataList, newData];
+        this.total = this.dataList.length;
+
+        // 组装状态数据
+        this.mapOfDataState[newId] = {
+            data: newData,
+            originData: { ...newData },
+            disabled: false,
+            checked: true, // index === 0 ? true : false,
+            selected: false, // index === 0 ? true : false,
+            state: 'new',
+            actions: this.getRowActions('new'),
+            validation: true,
+            mergeData: {}
+        }
+
+
+        // formCascade
+        setTimeout(() => {
+            this.formCascade[newId] = {};
+        });
+
+
+
+        this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
+        this.scanCodeLoad();
+        this.updateValue_dataList(); // 将数据回写
+        // return true;
+
+        return { result:true,  data: newData};
+
+        console.log('+++++++++++新增行后的数据+++++++++++', this.dataList, this.mapOfDataState);
+        // 更新状态
+    }
+    public custom_update(option?,structureConfig?,backData?) {
+
+        let addRowMapping;
+
+        let row_data = {};
+        if(structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']){
+            addRowMapping =  structureConfig['structure'];
+        }
+     
+       if(addRowMapping){
+        addRowMapping.forEach(add_row => {
+
+            let value;
+            if (add_row['type'] === 'tempValue') {
+                value = this.tempValue[add_row['valueName']];
+            } else if (add_row['type'] === 'tempValue') {
+                value = this.initValue[add_row['valueName']];
+            } else if (add_row['type'] === 'value') {
+                value = add_row['value'];
+            } else if (add_row['type'] === 'item') {
+                value = option[add_row['valueName']];
+            }
+            row_data[add_row['name']] = value;
+        })
+       } else{
+         row_data =option;
+       }
+
+
+        // 将数据处理合并为当前新增行数据,并选中当前数据
+
+        // 创建空数据对象
+        let newId = CommonUtils.uuID(32);
+        let newData = {};
+
+        if(backData && addRowMapping){
+
+            newId=  backData[this.KEY_ID];
+
+            addRowMapping.forEach(add_row => {
+
+                let value;
+                if (add_row['type'] === 'tempValue') {
+                    value = this.tempValue[add_row['valueName']];
+                } else if (add_row['type'] === 'tempValue') {
+                    value = this.initValue[add_row['valueName']];
+                } else if (add_row['type'] === 'value') {
+                    value = add_row['value'];
+                } else if (add_row['type'] === 'item') {
+                    value = option[add_row['valueName']];
+                }
+
+                // "symbol":"plus", // plus\reduce\ride\except\cover 计算类型
+                if(add_row['symbol']==='plus'){
+                    this.mapOfDataState[newId]['data'][add_row['name']] = this.mapOfDataState[newId]['data'][add_row['name']] + value;
+                }
+                if(add_row['symbol']==='reduce'){
+                    this.mapOfDataState[newId]['data'][add_row['name']] = this.mapOfDataState[newId]['data'][add_row['name']] - value;
+                }
+                if(add_row['symbol']==='cover'){
+                    this.mapOfDataState[newId]['data'][add_row['name']] =  value;
+                }
+               
+            })
+
+            if (newId) {
+                if (!this.formCascade[newId]) {
+                    this.formCascade[newId] = {};
+                }
+            }
+            newData = this.mapOfDataState[newId]['data'];
+            return { result:true,  data: newData};
+        } else {
+            return { result:false,  data: newData};
+        }
+       
+        // return true;
+
+        console.log('+++++++++++修改行后的数据+++++++++++', this.dataList, this.mapOfDataState);
+        // 更新状态
+    }
+
+    // 组件内自定义操作
+    public component_customAction(option?) {
+
+        let customAction_Id = option['customActionId'];
+        let customAction_data = option;
+
+        let _customAction_list;
+        _customAction_list = this.config['customAction'].filter(item => item['id'] === customAction_Id);
+        if (_customAction_list && _customAction_list.length > 0) {
+            let _customAction = _customAction_list[0];
+            this.execute_component_customAction(_customAction, _customAction['defineStructure'], customAction_data);
+        }
+
+        return true;
+
+    }
+
+    public execute_component_customAction(customAction?, defineStructure?, data?,backData?) {
+
+        console.log('execute_component_customAction', customAction, data);
+        customAction.execute.forEach(item => {
+            if (item.type === 'relation') {
+                new RelationResolver(this)
+                    .resolveInnerSender(
+                        item.sender,
+                        {},
+                        Array.isArray({})
+                    );
+            } else if (item.type === 'action') {
+                let result = false;
+                let resultObj;
+                let resultData;
+                let actionType = item['content']['actionType'];
+                let structureId = item['content']['structureId'];
+                let structure;
+                if(structureId && defineStructure && defineStructure.length>0) {
+                    let  structureList =  defineStructure.filter(structureItem=> structureItem['id'] === structureId);
+                    if(structureList && structureList.length>0){
+                        structure = structureList[0];
+                    }
+                } 
+                switch (actionType) {
+                    case 'custom_exist':
+                        resultObj = this.custom_exist(data,structure);
+                        break;
+                    case 'custom_add':
+                        resultObj = this.custom_add(data,structure);
+                        break;
+                    case 'custom_locate':
+                        break;
+                    case 'custom_update':
+                        resultObj = this.custom_update(data,structure,backData);
+                        break;
+
+                }
+
+                if(resultObj){
+                    result = resultObj['result'];
+                    resultData = resultObj['data'];
+                }
+
+
+                if (item['result']) {
+                    let resultAction;
+                    let resultActionList;
+
+                    if (result) {
+                        resultActionList = item['result'].filter(resultItem => resultItem['resultName'] === 'success');
+                    } else {
+                        resultActionList = item['result'].filter(resultItem => resultItem['resultName'] === 'failed');
+                    }
+                    if (resultActionList && resultActionList.length > 0) {
+                        resultAction = resultActionList[0];
+                        this.execute_component_customAction(resultAction, defineStructure, data,resultData);
+                    }
+                }
+
+
+            }
+
+        });
+
+        return true;
 
 
     }
+
+
+
+
+
 
     // #endregion
 
@@ -568,7 +874,7 @@ export class CnStaticTableComponent extends CnComponentBase
                         originData: { ...d },
                         validation: true,
                         actions: this.getRowActions('text'),
-                        mergeData:{}
+                        mergeData: {}
                     };
                     if (!this.config.isSelected) {
                         index === 0 && (this.ROW_SELECTED = d);
@@ -788,7 +1094,7 @@ export class CnStaticTableComponent extends CnComponentBase
             state: 'new',
             actions: this.getRowActions('new'),
             validation: true,
-            mergeData:{}
+            mergeData: {}
         }
 
 
@@ -2455,8 +2761,8 @@ export class CnStaticTableComponent extends CnComponentBase
                 if (!this.mapd[row.id][r_c.colName]) {
                     this.mapd[row.id][r_c.colName] = {};
                 }
-                let new_data=[...this.listOfData];
-                r_c.groupCols.forEach(group_col=>{
+                let new_data = [...this.listOfData];
+                r_c.groupCols.forEach(group_col => {
 
                     new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
                 });
@@ -2484,7 +2790,7 @@ export class CnStaticTableComponent extends CnComponentBase
                 this.colConfig.forEach(col_c => {
 
                     col_c.mergeItems.forEach(item => {
-                        
+
 
                         let regularflag = true;
                         if (item.caseValue && item.type === "condition") {
@@ -2500,7 +2806,7 @@ export class CnStaticTableComponent extends CnComponentBase
                                         regularData = row[item.caseValue['valueName']];
                                     }
                                 }
-        
+
                             } else {
                                 regularData = null;
                             }
@@ -2509,18 +2815,18 @@ export class CnStaticTableComponent extends CnComponentBase
                         if (regularflag) {
 
                             let group_num = item.mergeCols.length;
-                            item.mergeCols.forEach(merge_col=>{
+                            item.mergeCols.forEach(merge_col => {
                                 if (!this.mapd[row.id][merge_col['mergeColName']]) {
                                     this.mapd[row.id][merge_col['mergeColName']] = {};
                                 }
                                 let group_index = item.mergeCols.findIndex(d => d['mergeColName'] === merge_col['mergeColName']);
-                                this.mapd[row.id][merge_col['mergeColName']]['colgroupIndex'] = group_index+1;
+                                this.mapd[row.id][merge_col['mergeColName']]['colgroupIndex'] = group_index + 1;
                                 this.mapd[row.id][merge_col['mergeColName']]['colgroupNum'] = group_num;
                             });
 
-                           
-                            
-                            
+
+
+
 
                         }
 
@@ -2530,7 +2836,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
                 });
 
-       
+
 
             }
         );
@@ -2547,73 +2853,73 @@ export class CnStaticTableComponent extends CnComponentBase
 
 
 
-    listOfData2=[
+    listOfData2 = [
         {
-            id:'001',
-            companyname:'博道1',
-            type:'a',
-            shopname:'mes',
-            price:'12'
+            id: '001',
+            companyname: '博道1',
+            type: 'a',
+            shopname: 'mes',
+            price: '12'
         },
         {
-            id:'002',
-            companyname:'博道',
-            type:'a',
-            shopname:'Imes',
-            price:'13'
+            id: '002',
+            companyname: '博道',
+            type: 'a',
+            shopname: 'Imes',
+            price: '13'
         },
         {
-            id:'003',
-            companyname:'博道',
-            type:'b',
-            shopname:'mes',
-            price:'22'
+            id: '003',
+            companyname: '博道',
+            type: 'b',
+            shopname: 'mes',
+            price: '22'
         },
         {
-            id:'004',
-            companyname:'博道',
-            type:'b',
-            shopname:'Imes',
-            price:'42'
+            id: '004',
+            companyname: '博道',
+            type: 'b',
+            shopname: 'Imes',
+            price: '42'
         },
         {
-            id:'005',
-            companyname:'文博',
-            type:'a',
-            shopname:'mes',
-            price:'17'
+            id: '005',
+            companyname: '文博',
+            type: 'a',
+            shopname: 'mes',
+            price: '17'
         },
         {
-            id:'006',
-            companyname:'文博',
-            type:'a',
-            shopname:'Imes',
-            price:'18'
+            id: '006',
+            companyname: '文博',
+            type: 'a',
+            shopname: 'Imes',
+            price: '18'
         },
         {
-            id:'007',
-            companyname:'文博',
-            type:'b',
-            shopname:'mes',
-            price:'19'
+            id: '007',
+            companyname: '文博',
+            type: 'b',
+            shopname: 'mes',
+            price: '19'
         },
         {
-            id:'008',
-            companyname:'文博',
-            type:'b',
-            shopname:'Imes',
-            price:'21'
+            id: '008',
+            companyname: '文博',
+            type: 'b',
+            shopname: 'Imes',
+            price: '21'
         },
     ];
 
 
 
 
-    mergeconfig={
-        rowConfig:[
+    mergeconfig = {
+        rowConfig: [
             {
                 colName: 'companyname',
-                isEdit:'', // 是否编辑启用（编辑启用则不计算当前条件下的分组信息）   数据集合需要标识
+                isEdit: '', // 是否编辑启用（编辑启用则不计算当前条件下的分组信息）   数据集合需要标识
                 groupName: 'companyname',  // 分组标识
                 groupOrder: 1, //  按照数据计算出的当前分组信息 ？
                 showValue: '', // 固定字段值，其他  暂时先不处理 默认按照第一列处理
@@ -2622,7 +2928,7 @@ export class CnStaticTableComponent extends CnComponentBase
                         groupColName: 'companyname',  // 被合并列
                     }
                 ]
-    
+
             },
             {
                 colName: 'type',
@@ -2637,7 +2943,7 @@ export class CnStaticTableComponent extends CnComponentBase
                         groupColName: 'type',  // 被合并列
                     }
                 ]
-    
+
             }
         ]
     };
@@ -2648,55 +2954,55 @@ export class CnStaticTableComponent extends CnComponentBase
     // 当当前状态变为编辑状态时，计算行列合并等信息均从当前跨过（涉及列不启用编辑除外）
 
 
-    mergetableEditor={
-      id:{   // 描述当前列的状态  ，要不要区分新增、编辑 状态下的区别
+    mergetableEditor = {
+        id: {   // 描述当前列的状态  ，要不要区分新增、编辑 状态下的区别
 
-      }
+        }
 
     }
-    
 
-    mergetableColumns=[
-       {
-        field:'id',
-        title:'主键'
-       },
-       {
-        field:'companyname',
-        title:'公司名称'
-       },
-       {
-        field:'type',
-        title:'分类'
-       },
-       {
-        field:'shopname',
-        title:'名称'
-       },
-       {
-        field:'price',
-        title:'价格'
-       }
+
+    mergetableColumns = [
+        {
+            field: 'id',
+            title: '主键'
+        },
+        {
+            field: 'companyname',
+            title: '公司名称'
+        },
+        {
+            field: 'type',
+            title: '分类'
+        },
+        {
+            field: 'shopname',
+            title: '名称'
+        },
+        {
+            field: 'price',
+            title: '价格'
+        }
 
     ];
 
-    mergeData={};
-    mergeData1={
-        '001':{},
-        '002':{},
-        '003':{},
-        '004':{},
-        '005':{},
-        '006':{},
-        '007':{},
-        '008':{}
+    mergeData = {};
+    mergeData1 = {
+        '001': {},
+        '002': {},
+        '003': {},
+        '004': {},
+        '005': {},
+        '006': {},
+        '007': {},
+        '008': {}
     };
 
-    public _createMapd_new(mergeconfig?,listOfData?) {
+    public _createMapd_new(mergeconfig?, listOfData?) {
 
         // 生成group字段
 
-        const mergeData={};
+        const mergeData = {};
 
         listOfData.forEach(
             row => {
@@ -2716,8 +3022,8 @@ export class CnStaticTableComponent extends CnComponentBase
                 if (!mergeData[row.id][r_c.colName]) {
                     mergeData[row.id][r_c.colName] = {};
                 }
-                let new_data=[...listOfData];
-                r_c.groupCols.forEach(group_col=>{
+                let new_data = [...listOfData];
+                r_c.groupCols.forEach(group_col => {
 
                     new_data = new_data.filter(d => d[group_col.groupColName] === row[group_col.groupColName]);
                 });
@@ -2745,7 +3051,7 @@ export class CnStaticTableComponent extends CnComponentBase
                 mergeconfig.colConfig.forEach(col_c => {
 
                     col_c.mergeItems.forEach(item => {
-                        
+
 
                         let regularflag = true;
                         if (item.caseValue && item.type === "condition") {
@@ -2761,7 +3067,7 @@ export class CnStaticTableComponent extends CnComponentBase
                                         regularData = row[item.caseValue['valueName']];
                                     }
                                 }
-        
+
                             } else {
                                 regularData = null;
                             }
@@ -2770,18 +3076,18 @@ export class CnStaticTableComponent extends CnComponentBase
                         if (regularflag) {
 
                             let group_num = item.mergeCols.length;
-                            item.mergeCols.forEach(merge_col=>{
+                            item.mergeCols.forEach(merge_col => {
                                 if (!mergeData[row.id][merge_col['mergeColName']]) {
                                     mergeData[row.id][merge_col['mergeColName']] = {};
                                 }
                                 let group_index = item.mergeCols.findIndex(d => d['mergeColName'] === merge_col['mergeColName']);
-                                mergeData[row.id][merge_col['mergeColName']]['colgroupIndex'] = group_index+1;
+                                mergeData[row.id][merge_col['mergeColName']]['colgroupIndex'] = group_index + 1;
                                 mergeData[row.id][merge_col['mergeColName']]['colgroupNum'] = group_num;
                             });
 
-                           
-                            
-                            
+
+
+
 
                         }
 
@@ -2791,7 +3097,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
                 });
 
-       
+
 
             }
         );
@@ -2803,13 +3109,16 @@ export class CnStaticTableComponent extends CnComponentBase
 
     }
 
-    createMapd_new(){
-        this.mergeData =null;
-        let new_data =  this._createMapd_new(this.mergeconfig,this.listOfData2);
-        this.mergeData =new_data;
+    createMapd_new() {
+        this.mergeData = null;
+        let new_data = this._createMapd_new(this.mergeconfig, this.listOfData2);
+        this.mergeData = new_data;
     }
-    createMapd1_new(){
-        this.mergeData ={...this.mergeData1};
+    createMapd1_new() {
+        this.mergeData = { ...this.mergeData1 };
+    }
+    public transferValue(option?) {
+        console.log('将接受传递的值');
     }
 
 
