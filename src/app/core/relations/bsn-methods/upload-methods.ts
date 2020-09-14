@@ -11,7 +11,7 @@ export const CN_UPLOAD_METHOD: IUploadTrigger = {
     VALIDATE: 'validate',
     EXECUTE_MODAL: 'executeModal',
     VALUE_CHANGE: 'valueChange',
-
+    MESSAGE: 'showMessage',
     // link
     LINK: 'link',
     LINK_TO: 'linkTo',

@@ -34,7 +34,7 @@ const components: { [type: string]: Type<any> } = {
   selectMultiple: CnFormSelectMultipleComponent,
   datePicker: CnFormDatePickerComponent,
   yearPicker: CnFormYearPickerComponent,
-  weekPicke: CnFormWeekPickerComponent,
+  weekPicker: CnFormWeekPickerComponent,
   rangePicker: CnFormRangePickerComponent,
   monthPicker: CnFormMonthPickerComponent,
   switch: CnFormSwitchComponent,

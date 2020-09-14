@@ -1,6 +1,19 @@
 <p>cn-carouse works!</p>
 <nz-carousel [nzEffect]="effect">
     <div nz-carousel-content *ngFor="let index of array">
+      <img src="http://39.101.168.200:8304/file/download?ids=37cd3384-13aa-45f7-ba49-dd896e48ca6b" alt="Smiley face" style=" width: 100%; height: auto;max-width: 100%; display: block;">
+     
       <h3>{{ index }}</h3>
+     
     </div>
   </nz-carousel>
+
+  <!-- <img src="http://39.101.168.200:8304/file/download?ids=37cd3384-13aa-45f7-ba49-dd896e48ca6b" alt="Smiley face" width="100%" height="100%">
+ -->
+
+ <!-- <iframe src="http://39.101.168.200:8304/file/download?ids=80a9da13-4020-4af4-90be-f2d18ac8c799" scrolling="no" frameborder="0" width="800" height="600"></iframe> -->
+ <!-- <iframe src="http://39.101.168.200:8304/file/download?id=80a9da13-4020-4af4-90be-f2d18ac8c799" scrolling="no" frameborder="0" width="800" height="600"></iframe>
+ -->
+ <button nz-button [nzType]="'primary'" (click)="testClick()" style="margin-top: 16px">
+  测试返回
+</button>

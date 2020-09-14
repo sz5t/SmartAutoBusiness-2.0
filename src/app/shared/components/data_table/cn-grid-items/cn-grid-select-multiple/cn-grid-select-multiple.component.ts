@@ -79,6 +79,7 @@ export class CnGridSelectMultipleComponent extends CnComponentBase implements On
 
     setTimeout(() => {
       this.selectedValue = s_value;
+      if(this.selectedValue)
       this.listOfSelectedValue = this.selectedValue.split(',');
      // this.listOfSelectedValue = this.listOfSelectedValue.filter(item=>{return true;});
       this.valueChange(this.selectedValue);

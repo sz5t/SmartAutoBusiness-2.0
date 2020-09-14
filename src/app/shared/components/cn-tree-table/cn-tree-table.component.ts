@@ -58,7 +58,7 @@ export class CnTreeTableComponent extends CnComponentBase
      * 组件名称
      * 所有组件实现此属性 
      */
-    public COMPONENT_NAME = "CnDataTable";
+    public COMPONENT_NAME = "cnTreeTable";
     /**
      * 组件操作对外名称
      * 所有组件实现此属性
@@ -330,11 +330,21 @@ export class CnTreeTableComponent extends CnComponentBase
                 if (response.data && response.data) {
                     const appendedChildrenData: any[] = [];
                     response.data.map(data => {
+                        if(data['children'] && data['children'].length>0){
+
+                        }else{
+                            data['children']=null;
+                        }
                         this.mapOfDataExpanded[data[this.KEY_ID]] = this._convertTreeToList(data, item.level + 1);
                         appendedChildrenData.push(data);
                         this.total = this.total + 1;
                     })
                     item['children'] = appendedChildrenData;
+                     if(appendedChildrenData.length>0){
+                        item['children'] = appendedChildrenData;
+                     }else{
+                        item['children'] =null;
+                     }
                     this._appendChildrenToList(item.data, appendedChildrenData);
                 }
             })();
@@ -370,11 +380,14 @@ export class CnTreeTableComponent extends CnComponentBase
         const index = this.dataList.findIndex(d => d[this.KEY_ID] === parent[this.KEY_ID]);
         for (let i = 0, len = this.dataList.length; i < len; i++) {
             childrenList.forEach(child => {
-                if (this.dataList[i][this.KEY_ID] === child[this.KEY_ID]) {
-                    this.dataList.splice(i, 1);
-                    i--;
-                    len--;
+                if(i>-1){
+                    if (this.dataList[i][this.KEY_ID] === child[this.KEY_ID]) {
+                        this.dataList.splice(i, 1);
+                        i--;
+                        len--;
+                    }
                 }
+
             });
         }
         this.dataList.splice(index + 1, 0, ...childrenList);
@@ -2143,6 +2156,8 @@ export class CnTreeTableComponent extends CnComponentBase
     public transferValue(option?) {
         console.log('将接受传递的值');
       }
+
+
 
 
 

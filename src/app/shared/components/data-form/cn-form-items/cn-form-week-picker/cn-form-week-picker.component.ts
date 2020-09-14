@@ -41,7 +41,7 @@ export class CnFormWeekPickerComponent implements OnInit {
       const YearAndWeek = v.split('-');
       if (YearAndWeek.length > 1) {
         const _year = YearAndWeek[0];
-        const _week = YearAndWeek[1];
+        const _week = YearAndWeek[1]-1;
         const datenew = addWeeks(_year, _week);
         const yearold = getISOYear(this.date);
         const weekold = this.getNewWeek(getISOWeek(this.date));
@@ -71,6 +71,7 @@ export class CnFormWeekPickerComponent implements OnInit {
 
 
   public getNewWeek(d: any) {
+   // d=d+1;
     if (d <= 9) {
       d = '0' + d;
     }

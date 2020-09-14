@@ -28,11 +28,68 @@ export class RelationResolver {
         // 查找消息配置
         // debugger;
         if (resultCfg['senderId']) {
-            const senderCfg = this._componentInstance
+            // const senderCfg = this._componentInstance
+            //     .config
+            //     .cascade
+            //     .messageSender
+            //     .find(sender => sender.id === resultCfg['senderId']);
+
+                const senderCfg = this._componentInstance
                 .config
                 .cascade
                 .messageSender
-                .find(sender => sender.id === resultCfg['senderId']);
+                .find(sender =>{
+
+                    if(sender.id === resultCfg['senderId']){
+                      
+                        if(sender.hasOwnProperty('preCondition')){
+                            if(sender['preCondition'].hasOwnProperty('caseValue')){
+
+                                let item = sender['preCondition'];
+                                let regularflag = true;
+                                if (item.caseValue) {
+                                  const reg1 = new RegExp(item.caseValue.regular);
+                                  let regularData;
+                                  if (item.caseValue.type) {
+                                    if (item.caseValue.regularType === 'value') {
+                                      regularData = item.caseValue['value'];
+                                    }
+                                    if (item.caseValue.type === 'successData') {
+                                      // 选中行数据[这个是单值]
+                                      regularData = successData[item.caseValue['valueName']];
+                                    }
+                                    if (item.caseValue['type'] === 'temValue') {
+                                        regularData = this._componentInstance.tempValue[item.caseValue['valueName']];
+                                    }
+                                    if (item.caseValue['type'] === 'initValue') {
+                                        regularData = this._componentInstance.initValue[item.caseValue['valueName']];
+                                    }
+                    
+                                  } 
+                                  regularflag = reg1.test(regularData);
+                                }
+                    
+                                // 正则校验
+                                if (regularflag) {
+                                    return true; 
+                                }else{
+                                    return false;
+                                }
+
+                            }else{
+                                return true; 
+                            }
+
+                        }else{
+                            return true;
+                        }
+                    }else {
+                        return false;
+                    }
+
+
+                } );
+
             // tslint:disable-next-line: no-use-before-declare
             console.log('===>>37===senderCfg', senderCfg);
             senderCfg && new ComponentSenderResolver(this._componentInstance)

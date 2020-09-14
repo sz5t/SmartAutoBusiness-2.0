@@ -17,6 +17,7 @@ import { CnStaticTableComponent } from '@shared/components/data_table/cn-static-
 import { CnTagComponent } from '@shared/components/cn-tag/cn-tag.component';
 import { CnUploadComponent } from '@shared/components/cn-upload/cn-upload.component';
 import { CnContainersComponent } from '@shared/components/cn-containers/cn-containers.component';
+import { CnCarouseComponent } from '@shared/components/cn-carouse/cn-carouse.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -35,6 +36,7 @@ const components: { [type: string]: Type<any> } = {
     cnTag:CnTagComponent,
     cnUpload:CnUploadComponent,
     cnContainers:CnContainersComponent,
+    CnCarouse:CnCarouseComponent
 };
 
 @Directive({

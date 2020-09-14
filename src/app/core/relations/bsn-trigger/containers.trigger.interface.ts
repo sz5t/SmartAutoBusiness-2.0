@@ -8,7 +8,8 @@ export interface IContainersTrigger {
     LINK_TO: string,
     MESSAGE: string,
     WINDOW: string,
-    TRANSFER_VALUE:string
+    TRANSFER_VALUE:string,
+    REFRESH_CONTAINE:string
 }
 
 /**
@@ -24,5 +25,6 @@ export const BSN_CONTAINERS_TRIGGER: IContainersTrigger = {
     LINK_TO: 'LINK_TO',
     MESSAGE:'MESSAGE',
     WINDOW: 'WINDOW',
-    TRANSFER_VALUE:'TRANSFER_VALUE' 
+    TRANSFER_VALUE:'TRANSFER_VALUE' ,
+    REFRESH_CONTAINE:'REFRESH_CONTAINE'
 }

@@ -1601,6 +1601,22 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     /**
+     * 内部子页面跳转【问题，参数传递、覆盖 changValue 和 普通参数传递】
+     * @param option 
+     */
+    public linkToSub(option?){
+
+        // let params = this.buildParameters(option.linkConfig.params, option.data.originData ? option.data.originData : option.data);
+        // let item;
+        // new RelationResolver(this)
+        // .resolveInnerSender(
+        //     item.sender,
+        //     params,
+        //     Array.isArray(params)
+        // );
+    }
+
+    /**
      * ACTION
      * 显示确认对话框
      * @param option 确认参数 

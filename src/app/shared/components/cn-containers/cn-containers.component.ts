@@ -70,8 +70,6 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
   }
 
   load() {
-
-
     let v = this.viewChange();
     this.switchContaine(v);
     console.log('容器组件load==>', this.tempValue, v);
@@ -130,11 +128,26 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
     console.log('=========================',this._linkViews);
   }
 
-  async switchContaine_cache(c_viewId?) {
+
+
+  switchContaineload(option?) {
+
+    // 静态切换，需要告知 当前消息是是否重新加载
+    let isLoad= true;
+    if(option.hasOwnProperty('isLoad')){
+      isLoad = option['isLoad'];
+    }
+    let v = this.viewChange();
+    this.switchContaine_cache(v,isLoad);
+    console.log('容器组件load==>', this.tempValue, v);
+
+  }
+  //  容器数组内存在的子页面，则自由切换，不存在的子页面，加载出数据切换
+  async switchContaine_cache(c_viewId?,isLoad?) {
 
     this._linkViews.forEach(element => {
       if(element.id ===c_viewId){
-        if(element.id==='lbj_002'){
+        if(isLoad){
          element['showLayout'] = false;
         }     
       }
@@ -171,7 +184,7 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
       this.view = currentView['layoutJson'];
       this._linkViews.forEach(element => {
          if(element.id ===c_viewId){
-          if(element.id==='lbj_002'){
+          if(isLoad){
             element['showLayout'] = true;
           }   
           element['viewConfig'] = currentView['layoutJson'];

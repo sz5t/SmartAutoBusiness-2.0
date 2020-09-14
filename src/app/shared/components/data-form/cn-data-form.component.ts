@@ -68,7 +68,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
   ngOnInit() {
-    this.layoutRowsCfg = (this.config.formLayout && this.config.formLayout.rows)? this.config.formLayout.rows.filter(r => r.id):[];
+    this.layoutRowsCfg = (this.config.formLayout && this.config.formLayout.rows) ? this.config.formLayout.rows.filter(r => r.id) : [];
     if (this.initData) {
       this.initValue = this.initData;
     } else {
@@ -157,16 +157,16 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // this.load();
   }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit(): Promise<void> {
 
     const permission = this.config.formControlsPermissions.find(p => p.formState === this.config.state);
     if (permission && permission.formStateContent) {
       const isload = permission.formStateContent.isLoad;
       if (isload) {
-        this.load();
+        await this.load();
       }
     } else {
-      this.load();
+      await this.load();
     }
 
 
@@ -381,7 +381,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   /**
    * load 自加载
    */
-  public load() {
+  public async load() {
     if (!this.config.loadingConfig.ajaxConfig) {
       return;
     }
@@ -392,7 +392,9 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     };
     // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
     let data_form;
-    this.componentService.apiService[method](url, params).subscribe(response => {
+
+    const response = await this.componentService.apiService[method](url, params).toPromise();
+    if (response) {
       if (isArray(response.data)) {
         if (response.data && response.data.length > 0) {
           data_form = response.data[0];
@@ -409,12 +411,15 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
           this.formValue[item] = data_form[item];
         }
       }
+      
+      this.FORM_VALUE = this.formValue;
       this.validateForm.setValue(this.formValue);
-      this.FORM_VALID = this.formValue;
-      console.log('------------------formValue', this.validateForm.value)
-    }, error => {
-      console.log(error);
-    });
+     
+      console.log('------------------formValue', this.formValue,this.validateForm.value)
+    }
+
+    return true;
+
   }
 
   /**
@@ -472,6 +477,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    */
   public valueChange(v?) {
     console.log('===valueChange==', v, this.validateForm.value);
+    this.FORM_VALUE[v.name] = v['value'];
     if (!this.formCascade) {
       this.formCascade = {};
     }
@@ -593,7 +599,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                   if (ajaxItem['type'] === 'selectObjectValue') {
                     // 选中行对象数据
                     if (v.dataItem) {
-                     //  _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
+                      //  _cascadeValue[ajaxItem['name']] = v.dataItem[ajaxItem['valueName']];
                       if (ajaxItem['isDefault']) {
                         // tslint:disable-next-line:prefer-conditional-expression
                         if (!v.dataItem[ajaxItem['valueName']]) {
@@ -607,11 +613,25 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                       }
                     } else {
                       if (ajaxItem['isDefault']) {
-                          _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
+                        _cascadeValue[ajaxItem['name']] = ajaxItem['value'];
                       }
                     }
 
                   }
+
+                  if (ajaxItem['type'] === 'rowValue') {
+                    // 选中行对象数据
+                    if (this.validateForm.value) {
+                      _cascadeValue[ajaxItem['name']] = this.validateForm.value[ajaxItem['valueName']];
+                    }
+                  }
+                  if (ajaxItem['type'] === 'formValue') {
+                    // 选中行对象数据
+                    if (this.FORM_VALUE) {
+                      _cascadeValue[ajaxItem['name']] = this.FORM_VALUE[ajaxItem['valueName']];
+                    }
+                  }
+
                   // 其他取值【日后扩展部分】
                 });
                 if (cascadeResult[cascadeObj.cascadeName].hasOwnProperty('cascadeValue')) {
@@ -650,6 +670,25 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                       __setValue = v.dataItem[ajaxItem['valueName']];
                     }
                   }
+                  if (ajaxItem['type'] === 'selectObjectValue') {
+                    // 选中行对象数据
+                    if (v.dataItem) {
+                      __setValue = v.dataItem[ajaxItem['valueName']];
+                    }
+                  }
+                  if (ajaxItem['type'] === 'rowValue') {
+                    // 选中行对象数据
+                    if (this.validateForm.value) {
+                      __setValue = this.validateForm.value[ajaxItem['valueName']];
+                    }
+                  }
+                  if (ajaxItem['type'] === 'formValue') {
+                    // 选中行对象数据
+                    if (this.FORM_VALUE) {
+                      __setValue = this.FORM_VALUE[ajaxItem['valueName']];
+                    }
+                  }
+                  
                   // 其他取值【日后扩展部分】
                 });
                 // 表单赋值
@@ -682,6 +721,14 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                       __setValue = this.validateForm.value[ajaxItem['valueName']];
                     }
                   }
+                  if (ajaxItem['type'] === 'formValue') {
+                    // 选中行对象数据
+                    if (this.FORM_VALUE) {
+                      __setValue = this.FORM_VALUE[ajaxItem['valueName']];
+                    }
+                  }
+
+                  
 
                   computeObj[ajaxItem['name']] = Number(__setValue) ? Number(__setValue) : 0;
                   // 其他取值【日后扩展部分】
@@ -726,7 +773,13 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                   if (ajaxItem['type'] === 'rowValue') {
                     // 选中行对象数据
                     if (this.validateForm.value) {
-                      _cascadeValue[ajaxItem['name']] = this.validateForm.value[ajaxItem['valueName']];
+                        _cascadeValue[ajaxItem['name']] = this.validateForm.value[ajaxItem['valueName']];
+                    }
+                  }
+                  if (ajaxItem['type'] === 'formValue') {
+                    // 选中行对象数据
+                    if (this.FORM_VALUE) {
+                        _cascadeValue[ajaxItem['name']] = this.FORM_VALUE[ajaxItem['valueName']];
                     }
                   }
                   if (ajaxItem['type'] === 'selectObjectValue') {
@@ -738,6 +791,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                   // 其他取值【日后扩展部分】
                 });
 
+               // console.log('********', _cascadeValue);
                 if (item.content.sender) {
                   new RelationResolver(this)
                     .resolveInnerSender(
@@ -1180,7 +1234,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
    */
   public link(option) {
-    console.log('link',option);
+    console.log('link', option);
     let url;
     let params;
     if (option && option.linkConfig) {
@@ -1208,9 +1262,9 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
   public linkTo(option) {
-    console.log('linkTo',option);
-    let link_config = this.config.linkConfig.filter(item=>item.id ===option['LINKID']);
-    if(link_config &&link_config.length>0 ){
+    console.log('linkTo', option);
+    let link_config = this.config.linkConfig.filter(item => item.id === option['LINKID']);
+    if (link_config && link_config.length > 0) {
       let url = link_config[0]['link'];
       this.componentService.router.navigate([url]);
     }
