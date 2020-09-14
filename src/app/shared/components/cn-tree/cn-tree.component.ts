@@ -469,6 +469,7 @@ export class CnTreeComponent extends CnComponentBase
         }
         $event.node.isSelected = true;
         this.ACTIVED_NODE = $event.node;
+        this.NODE_SELECTED =this.ACTIVED_NODE['origin']; 
 
         this.tempValue['selectedNode'] = {
             ...$event.node.origin
@@ -1715,7 +1716,7 @@ export class CnTreeComponent extends CnComponentBase
             message.type = option[0].type;
             message.field = option[0].field;
         } else if (option) {
-            message.message = option.code ? option.code : '';
+            message.message = option.code ? option.code : (option.message?option.message:'');
             message.type = option.type;
             message.field = option.field ? option.field : '';
         }

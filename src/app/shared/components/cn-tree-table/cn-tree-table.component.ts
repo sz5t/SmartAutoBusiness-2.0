@@ -1435,29 +1435,42 @@ export class CnTreeTableComponent extends CnComponentBase
         console.log(this.config.id + '-------------executeCheckedRowsIds', option);
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
-        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
+       // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
         const data = this.ROWS_CHECKED;
-        const parameterResult = [];
+        const parameterResult = true;
+
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        const ajaxParams_1 = [{ name: this.KEY_ID, type: "item", valueName: this.KEY_ID }];
+        const paramDataids = this._createCheckedRowsIdParameter(ajaxParams_1);
         let paramData;
-        if (data && data.length > 0) {
-            data.map(d => {
-                const p = paramData = ParameterResolver.resolve({
-                    params: ajaxParams,
-                    item: d.data,
-                    tempValue: this.tempValue,
-                    initValue: this.initValue,
-                    cacheValue: this.cacheValue
-                });
-                parameterResult.push(p);
-            });
-        }
+        paramData = ParameterResolver.resolve({
+            params: ajaxParams,
+            item: paramDataids,
+            checkedItem: paramDataids,
+            tempValue: this.tempValue,
+            initValue: this.initValue,
+            cacheValue: this.cacheValue
+        });
+      
+        // if (data && data.length > 0) {
+        //     data.map(d => {
+        //         const p = paramData = ParameterResolver.resolve({
+        //             params: ajaxParams,
+        //             item: d.data,
+        //             tempValue: this.tempValue,
+        //             initValue: this.initValue,
+        //             cacheValue: this.cacheValue
+        //         });
+        //         parameterResult.push(p);
+        //     });
+        // }
         if (parameterResult) {
-            const ids = [];
-            parameterResult.map(p => {
-                const pData = p[this.KEY_ID]
-                pData && ids.push(pData);
-            });
-            const response = await this.executeHttpRequest(url, method, { ids: ids.join(',') });
+            // const ids = [];
+            // parameterResult.map(p => {
+            //     const pData = p[this.KEY_ID]
+            //     pData && ids.push(pData);
+            // });
+            const response = await this.executeHttpRequest(url, method,paramData);
             // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
             this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1473,6 +1486,24 @@ export class CnTreeTableComponent extends CnComponentBase
         }
 
 
+    }
+
+    private _createCheckedRowsIdParameter(ajaxParams) {
+        const params = [];
+        if (this.ROWS_CHECKED.length > 0) {
+            this.ROWS_CHECKED.map(cr => {
+                const p = ParameterResolver.resolve({
+                    params: ajaxParams,
+                    checkedItem: cr['originData']?cr['originData']:cr,
+                    item: cr['originData']?cr['originData']:cr,
+                    tempValue: this.tempValue,
+                    initValue: this.initValue,
+                    cacheValue: this.cacheValue
+                });
+                params.push(p[this.KEY_ID]);
+            });
+        }
+        return { ids: params.join(',') };
     }
 
     public searchRow() {
@@ -1936,7 +1967,7 @@ export class CnTreeTableComponent extends CnComponentBase
             message.type = option[0].type;
             message.field = option[0].field;
         } else if (option) {
-            message.message = option.code ? option.code : '';
+            message.message = option.code ? option.code : (option.message?option.message:'');
             message.type = option.type;
             message.field = option.field ? option.field : '';
         }

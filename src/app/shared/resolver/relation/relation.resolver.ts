@@ -525,7 +525,14 @@ export class ComponentSenderResolver {
                             const elementResult = [];
                             for (const element of componentValue) {
                                // console.log('liu______',element);
-                                const elementCompareObj = this.buildMatchObject(element, exp);
+                               let new_element = element;
+                               if(exp.hasOwnProperty('dataFrom')){
+                                   if(exp['dataFrom']==='own'){}
+                                   else {
+                                       new_element = element[exp['dataFrom']];  
+                                   }
+                               }
+                                const elementCompareObj = this.buildMatchObject(new_element, exp);
                                 elementResult.push(this.matchResolve(elementCompareObj, exp.match));
                             }
                             const elementMatchResult = elementResult.findIndex(res => !res) < 0;
@@ -606,6 +613,8 @@ export class ComponentSenderResolver {
                 return compareValue.value < compareValue.matchValue;
             case 'notNull': // 是否为null
                 return   !! compareValue.value ;
+            case 'isNull': // 是否为null
+                return   ! compareValue.value ;
             default:
             case 'regexp': // 正在表达式匹配
                 const regexp = new RegExp(compareValue.matchValue);
