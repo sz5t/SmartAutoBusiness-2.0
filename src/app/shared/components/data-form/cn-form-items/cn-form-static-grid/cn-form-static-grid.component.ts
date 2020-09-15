@@ -29,7 +29,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   selectedRowItem;
   public addedRowsData: [];
   public cascadeOptions: any;
-  _changeValue:any;
+  _changeValue: any;
   @ViewChild('table', { static: true }) public table: CnStaticTableComponent;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {
@@ -38,17 +38,31 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
 
   async ngOnInit() {
     this.buildChangeValue(this.config);
-   // this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
-    if(this.config.layoutName){
-      this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
-    }
-    if( !this.tableConfig){
-      await  this.getCustomConfig(this.config.layoutName);
-      this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
-     }
+    // this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+    await this.getJson();
     // 静态数据，动态数据
+    setTimeout(() => {
+      this.table.readonly = this.config.readonly ? this.config.readonly : false;
+    });
 
-    this.table.readonly = this.config.readonly?this.config.readonly:false;
+  }
+
+
+  async getJson() {
+    if (!this.tableConfig) {
+
+      if (this.config.layoutName) {
+        this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+      }
+      if (!this.tableConfig) {
+        await this.getCustomConfig(this.config.layoutName);
+
+        this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+
+
+      }
+    }
+
   }
 
 
@@ -184,6 +198,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   private count = 0;
   public async valueChange(v?) {
     console.log('表单静态表格数据：', v);
+    await this.getJson();
     this.buildChangeValue(this.config);
     if (v) {
       this.count++;
@@ -200,7 +215,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     // this.value = v;
   }
   public valueChangeTable(v?) {
-    console.log('valueChangeTable', v,this.table.staticTableSummary);
+    console.log('valueChangeTable', v, this.table.staticTableSummary);
     this.selectedRowItem = this.table.staticTableSummary;
     //  labelName: 'provinceName',
     // valueName: 'id',
@@ -284,34 +299,39 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
 
 
 
-/**
- * 构造changeValue
- * @param option 
- */
-  public buildChangeValue(option:any){
+  /**
+   * 构造changeValue
+   * @param option 
+   */
+  public buildChangeValue(option: any) {
     if (option.changeValue) {
       const d = ParameterResolver.resolve({
-          params: option.changeValue.params,
-          tempValue: this.tempValue,
-          componentValue: this.formGroup.value,
-          item:  this.selectedRowItem,
-          initValue: this.initValue,
-          cacheValue: this.cacheValue,
-          router: this.routerValue
+        params: option.changeValue.params,
+        tempValue: this.tempValue,
+        componentValue: this.formGroup.value,
+        item: this.selectedRowItem,
+        initValue: this.initValue,
+        cacheValue: this.cacheValue,
+        router: this.routerValue
       });
       option.changeValue.params.map(param => {
-          if (param.type === 'value') {
-              // 类型为value是不需要进行任何值的解析和变化
-          } else {
-              if (d[param.name]) {
-                  param['value'] = d[param.name];
-              }
+        if (param.type === 'value') {
+          // 类型为value是不需要进行任何值的解析和变化
+        } else {
+          if (d[param.name]) {
+            param['value'] = d[param.name];
           }
+        }
       });
-  }
-  this._changeValue =  option.changeValue ? option.changeValue.params : []
-  this.table.setChangeValue(this._changeValue);
-  console.log(this.table.initData);
+    }
+    this._changeValue = option.changeValue ? option.changeValue.params : []
+    if (!this._changeValue) { this._changeValue = [] };
+    setTimeout(() => {
+      this.table.setChangeValue(this._changeValue);
+      console.log(this.table.initData);
+    });
+
+
   }
 
 
