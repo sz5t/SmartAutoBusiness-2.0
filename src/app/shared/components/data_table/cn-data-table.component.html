@@ -122,7 +122,17 @@
                   
                 </td>
                 <ng-template #text>
-                  {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                  <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                    <ng-container *ngSwitchCase="'new'">
+                      {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'edit'">
+                      {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                      {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                    </ng-container>
+                  </ng-container>
                 </ng-template>
               </ng-container>
 
@@ -219,3 +229,5 @@
 <!-- <button  (click)="hiddentrue()">隐藏</button>
 
 <input [hidden]="is_hidden" nz-input placeholder="Basic usage" /> -->
+
+<!-- <button  (click)="downFile()">下载</button> -->

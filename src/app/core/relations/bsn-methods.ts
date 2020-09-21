@@ -24,6 +24,8 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     DIALOG_BATCH: 'showBatchDialog',
     CONFIRM: 'showConfirm',
     CHECKED_ITEMS_IDS_CONFIRM: "showCheckedItemsIdsConfirm",
+    CHECKED_ITEMS_CONFIRM: 'showCheckedItems',
+    
     MESSAGE: 'showMessage',
     DATA_CHECKED_STATUS_CHANGE: 'dataCheckedStatusChange',
     TRANSFER_VALUE: 'transferValue',
@@ -58,7 +60,8 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
     EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds',
-    EXECUTE_POPUP_CLOSE:'executePopupClose'
+    EXECUTE_POPUP_CLOSE:'executePopupClose',
+    EXECUTE_DOWN_FILE:'downFile'  
 }
 
 export const CN_TOOLBAR_METHOD: IToolbarTrigger = {

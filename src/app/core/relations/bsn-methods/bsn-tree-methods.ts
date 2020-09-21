@@ -25,6 +25,7 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     MESSAGE: 'showMessage',
     LOAD_REFRESH_DATA: 'loadRefreshData',
     APPEND_CHILD_TO_SELECTED_NODE: 'appendChildToSelectedNode',
+    APPEND_CHILDS_TO_SELECTED_NODE:'appendChildsToSelectedNode',
     APPEND_CHILD_TO_ROOT_NODE: 'appendChildToRootNode',
     UPDATE_SELECTED_NODE: 'updateSelectedNode',
     DELETE_SELECTED_NODE: 'deleteSelectedNode',

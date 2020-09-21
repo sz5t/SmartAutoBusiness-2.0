@@ -1214,7 +1214,7 @@ export class CnTreeComponent extends CnComponentBase
             title: appendNodeData['title'],
             selected: true,
             parentId: null,
-            origin: appendNodeData,
+            origin: { ...option, ...appendNodeData },
             ...option
         });
         addRootNode['isLeaf'] = true;
@@ -1237,6 +1237,7 @@ export class CnTreeComponent extends CnComponentBase
             appendNodeData[col['type']] = option[col['field']];
         });
         appendNodeData['isLeaf'] = true;
+        appendNodeData['origin'] = { ...option, ...appendNodeData };
         // const addChildNode = new NzTreeNode({
         //     key: appendNodeData['key'],
         //     title: appendNodeData['title'],
@@ -1244,6 +1245,7 @@ export class CnTreeComponent extends CnComponentBase
         //     parentId: appendNodeData['parentId'],
         //     origin: appendNodeData
         // });
+        //console.log('appendChildToSelectedNode');
 
         const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
         if (currentSelectedNode['isLeaf']) {
@@ -1251,7 +1253,12 @@ export class CnTreeComponent extends CnComponentBase
         }
         if (!currentSelectedNode.isExpanded) {
             currentSelectedNode.isExpanded = true;
-            this.expandNode(currentSelectedNode);
+            if (!this.config.async) {
+                currentSelectedNode.addChildren([{ ...option, ...appendNodeData }]);
+            } else {
+                this.expandNode(currentSelectedNode);
+            }
+
             // this._setChildrenSelectedNode(currentSelectedNode);
         } else { // 节点已经打开,直接在节点下添加子节点
             currentSelectedNode.addChildren([{ ...option, ...appendNodeData }]);
@@ -1261,6 +1268,28 @@ export class CnTreeComponent extends CnComponentBase
 
 
 
+    }
+
+    // 批量添加多个节点
+    public async appendChildsToSelectedNode(option) {
+        // let appendNode: NzTreeNode;
+
+        const currentSelectedNode = this.treeObj.getTreeNodeByKey(this.ACTIVED_NODE.key);
+        if (currentSelectedNode['isLeaf']) {
+            currentSelectedNode['isLeaf'] = false;
+        }
+        if (!currentSelectedNode.isExpanded) {
+            currentSelectedNode.isExpanded = true;
+            if (!this.config.async) {
+              
+            } else {
+                this.expandNode(currentSelectedNode);
+            }
+            // this._setChildrenSelectedNode(currentSelectedNode);
+        } else { // 节点已经打开,直接在节点下添加子节点
+            this.expandNode(currentSelectedNode);
+            // this._setChildrenSelectedNode(currentSelectedNode);
+        }
     }
 
     public async loadItem(data?) {
@@ -1306,8 +1335,11 @@ export class CnTreeComponent extends CnComponentBase
         });
     }
 
-    public updateSelectedNode(option) {
+    public async updateSelectedNode(option) {
         const appendNodeData = {}
+        if (this.config.loadingItemConfig) {
+            option = await this.loadItem(option);
+        }
         this.config.columns.map(col => {
             appendNodeData[col['type']] = option[col['field']];
         });
@@ -1315,6 +1347,9 @@ export class CnTreeComponent extends CnComponentBase
         const node = this.treeObj.getTreeNodeByKey(appendNodeData['key']);
         if (node) {
             node.title = appendNodeData['title'];
+            node.origin= { ...option, ...appendNodeData };
+            this.ACTIVED_NODE = node;
+            this.NODE_SELECTED =this.ACTIVED_NODE['origin']; 
         }
     }
 

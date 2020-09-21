@@ -299,4 +299,9 @@ export class CnCarouseComponent extends CnComponentBase implements OnInit, OnDes
  }
 
 
+ public testDown(){
+  window.open("http://39.101.168.200:8304/file/download?id=80a9da13-4020-4af4-90be-f2d18ac8c799");
+ }
+
+
 }

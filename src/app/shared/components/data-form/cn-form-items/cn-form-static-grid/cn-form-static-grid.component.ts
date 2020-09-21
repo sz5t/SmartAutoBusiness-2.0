@@ -1,6 +1,6 @@
 import { CnStaticTableComponent } from './../../../data_table/cn-static-table.component';
 
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, Inject, ViewContainerRef, ComponentFactoryResolver, Type, ComponentRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CnDataTableComponent } from '@shared/components/data_table/cn-data-table.component';
 import { CnComponentBase } from '@shared/components/cn-component.base';
@@ -8,7 +8,10 @@ import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 import { isArray } from 'util';
-
+const components: { [type: string]: Type<any> } = {
+  cnDataTable: CnDataTableComponent,
+  cnStaticTable: CnStaticTableComponent
+};
 @Component({
   selector: 'app-cn-form-static-grid',
   templateUrl: './cn-form-static-grid.component.html',
@@ -18,6 +21,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
+  loading = true;
   tableConfig: any;
   value = null;
   visible = false;
@@ -30,19 +34,22 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   public addedRowsData: [];
   public cascadeOptions: any;
   _changeValue: any;
-  @ViewChild('table', { static: true }) public table: CnStaticTableComponent;
+  private _componentRef: ComponentRef<any>;
+  // @ViewChild('table', { static: true }) public table: CnStaticTableComponent;
+  table :CnStaticTableComponent;
+  @ViewChild('virtualContainer', {static: true, read: ViewContainerRef }) virtualContainer: ViewContainerRef;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
-  public componentService: ComponentServiceProvider) {
+  public componentService: ComponentServiceProvider,     private _resolver: ComponentFactoryResolver) {
     super(componentService);
   }
 
   async ngOnInit() {
     this.buildChangeValue(this.config);
     // this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
-    await this.getJson();
+    // await this.getJson();
     // 静态数据，动态数据
     setTimeout(() => {
-      this.table.readonly = this.config.readonly ? this.config.readonly : false;
+    
     });
 
   }
@@ -61,9 +68,32 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
 
 
       }
+      this.loading =false;
+      this._buildComponent();
+      
+    } else{
+      this.buildChangeValue(this.config);
     }
 
   }
+
+  private _buildComponent(componentObj?) {
+   // console.log('=+++++=====++++++======+++')
+    const comp = this._resolver.resolveComponentFactory<any>(
+        components['cnStaticTable']
+    );
+    this.virtualContainer.clear();
+    this._componentRef = this.virtualContainer.createComponent(comp);
+    this._componentRef.instance.config = this.tableConfig;
+    this._componentRef.instance.changeValue = this._changeValue;
+    this._componentRef.instance.updateValue.subscribe(event => {
+      this.valueChangeTable(event);
+    });
+    this.table =  this._componentRef.instance;
+    this.table.readonly = this.config.readonly ? this.config.readonly : false;
+    this.buildChangeValue(this.config);
+   
+}
 
 
 
@@ -199,7 +229,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   public async valueChange(v?) {
     console.log('表单静态表格数据：', v);
     await this.getJson();
-    this.buildChangeValue(this.config);
+   
     if (v) {
       this.count++;
     }
@@ -326,10 +356,10 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     }
     this._changeValue = option.changeValue ? option.changeValue.params : []
     if (!this._changeValue) { this._changeValue = [] };
-    setTimeout(() => {
-      this.table.setChangeValue(this._changeValue);
-      console.log(this.table.initData);
-    });
+    //setTimeout(() => {
+      this.table && this.table.setChangeValue(this._changeValue);
+    //  console.log(this.table.initData);
+    //});
 
 
   }

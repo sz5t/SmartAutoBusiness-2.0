@@ -28,6 +28,7 @@ import { CommonUtils } from '@core/utils/common-utils';
 import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.property.interface';
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
+import { environment } from '@env/environment';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -153,6 +154,9 @@ export class CnDataTableComponent extends CnComponentBase
     // 前置条件集合
     public beforeOperation;
     private _ajaxConfigObj: any = {};
+    
+    public _url = environment.SERVER_URL;
+
     constructor(
         @Inject(BSN_COMPONENT_SERVICES)
         public componentService: ComponentServiceProvider
@@ -2772,6 +2776,32 @@ export class CnDataTableComponent extends CnComponentBase
     is_hidden=false;
     hiddentrue(){
         this.is_hidden =!this.is_hidden;
+    }
+
+    public downFile(option?){
+
+        if(!option || !option.ajaxConfig){
+            return true;
+        }
+
+        const url = option.ajaxConfig.url;
+        let params;
+        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
+        params = this.buildParameters(ajaxParams, option.data.originData ? option.data.originData : option.data);
+
+        let url_content ='';
+
+        for(let _params in params){
+            url_content=url_content+  _params+'='+params[_params]+'&&';
+        }
+        if(url_content.length>0){
+            url_content =url_content.substr(0, url_content.length - 2);
+        }
+
+        let downUrl=`${this._url}${url}?${url_content}`
+        window.open(`${downUrl}`);
+       
+
     }
 
 }

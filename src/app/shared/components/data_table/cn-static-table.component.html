@@ -31,10 +31,11 @@
     <!-- 常规表头 -->
     <ng-template #normalHeader>
       <tr>
-        <th *ngIf="config.showCheckBox" nzWidth="50px" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
+        <th [nzWidth]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('width'))?config.showCheckBoxConfig['width']:'50px'" [nzLeft]="(config.showCheckBoxConfig && config.showCheckBoxConfig.hasOwnProperty('offsetLeft'))?config.showCheckBoxConfig.offsetLeft:null"
+         *ngIf="config.showCheckBox" nzWidth="50px" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
           (nzCheckedChange)="checkAll($event)"></th>
         <ng-template ngFor let-header [ngForOf]="tableColumns">
-          <th [nzAlign]="header.titleAlign?header.titleAlign:'left'" [nzWidth]="header.width" *ngIf="!header.hidden"
+          <th [nzAlign]="header.titleAlign?header.titleAlign:'left'" [nzLeft]="header.hasOwnProperty('offsetLeft')?header.offsetLeft:null" [nzRight]="header.hasOwnProperty('offsetRight')?header.offsetRight:null" [nzWidth]="header.width" *ngIf="header.hasOwnProperty('titleHidden')? !header.titleHidden :!header.hidden"
             [nzShowSort]="header.showSort?header.showSort:false" [nzSortKey]="header.field">
             {{ header.title }}
           </th>
@@ -63,7 +64,7 @@
       <ng-template ngFor let-col [ngForOf]="tableColumns">
         <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden && (rowData['$state$'] !== 'delete')">
           <ng-container *ngSwitchCase="'index'">
-            <td [nzAlign]="col.align?col.align:'left'"
+            <td [nzAlign]="col.align?col.align:'left'"   [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null"
               [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
               [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
               *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
@@ -75,7 +76,7 @@
               <ng-container *ngIf="col.editor">
 
                 <ng-container *ngSwitchCase="'new'">
-                  <td
+                  <td [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null"
                     [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
                     [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                     *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
@@ -91,7 +92,7 @@
                   </td>
                 </ng-container>
                 <ng-container *ngSwitchCase="'edit'">
-                  <td
+                  <td [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null"
                     [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
                     [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                     *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
@@ -106,7 +107,7 @@
                   </td>
                 </ng-container>
                 <ng-container *ngSwitchDefault>
-                  <td
+                  <td [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null"
                     [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
                     [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                     *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
@@ -117,7 +118,7 @@
 
               </ng-container>
               <ng-container *ngIf="!col.editor">
-                <td [nzAlign]="col.align?col.align:'left'"
+                <td [nzAlign]="col.align?col.align:'left'" [nzAlign]="col.align?col.align:'left'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null"
                   [attr.rowspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field].groupIndex===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupNum'] : 1):1"
                   [attr.colspan]="mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]?(mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex']===1 ? mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupNum'] : 1):1"
                   *ngIf="!mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field] || ( mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['groupIndex'] === 1 && mapOfDataState[rowData[KEY_ID]]['mergeData'][col.field]['colgroupIndex'] === 1 )">
@@ -129,13 +130,24 @@
                   </ng-container>
                 </td>
                 <ng-template #text>
-                  {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                  <ng-container [ngSwitch]="mapOfDataState[rowData[KEY_ID]]['state']">
+                    <ng-container *ngSwitchCase="'new'">
+                      {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'edit'">
+                      {{ mapOfDataState[rowData[KEY_ID]]['data'][col.field] }}
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                      {{ mapOfDataState[rowData[KEY_ID]]['originData'][col.field] }}
+                    </ng-container>
+                  </ng-container>
+                 
                 </ng-template>
               </ng-container>
             </ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'action'">
-            <td>
+            <td [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
               <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length>1">
                 <nz-button-group>
                   <button nzSize="default" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu"
@@ -188,7 +200,7 @@
     <tr *ngIf="config.enableColSummary">
       <td></td>
       <ng-template ngFor let-col [ngForOf]="tableColumns">
-        <td *ngIf="col.type === 'field' && !col.hidden" nzAlign="right">
+        <td *ngIf="col.type === 'field' && !col.hidden" nzAlign="right" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
           <span *ngIf="col.summary">{{col.summary.label}}
             {{tempValue[col.summary.name] ? tempValue[col.summary.name] : 0}}</span>
         </td>

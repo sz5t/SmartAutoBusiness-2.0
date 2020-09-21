@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, Inject, ViewContainerRef, Type, ComponentFactoryResolver, ComponentRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CnDataTableComponent } from '@shared/components/data_table/cn-data-table.component';
 import { CnComponentBase } from '@shared/components/cn-component.base';
@@ -6,7 +6,9 @@ import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 import { isArray } from 'util';
-
+const components: { [type: string]: Type<any> } = {
+  cnDataTable: CnDataTableComponent
+};
 @Component({
   selector: 'app-cn-form-grid-select',
   templateUrl: './cn-form-grid-select.component.html',
@@ -16,7 +18,7 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
-  tableConfig: any={};
+  tableConfig: any;
   value = null;
   visible = false;
   _value = null;
@@ -26,31 +28,58 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
   selectedRowValue;
   selectedRowItem;
   public cascadeOptions: any;
-  @ViewChild('table', { static: true }) public table: CnDataTableComponent;
+  // @ViewChild('table', { static: true }) public table: CnDataTableComponent;
+  table :CnDataTableComponent;
+  @ViewChild('virtualContainer', {static: true, read: ViewContainerRef }) virtualContainer: ViewContainerRef;
+  private _componentRef: ComponentRef<any>;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
-  public componentService: ComponentServiceProvider) {
+  public componentService: ComponentServiceProvider,   private _resolver: ComponentFactoryResolver) {
     super(componentService);
   }
 
   async ngOnInit() {
-   // debugger;
-     let _tableConfig;
+    // debugger;
 
-     if(this.config.layoutName){
-      _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
-    }
-    if( !_tableConfig){
-      await  this.getCustomConfig(this.config.layoutName);
-      _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
-     }
+  }
 
-    // 静态数据，动态数据
-    if(Object.prototype.toString.call(_tableConfig['component']) === '[object Object]') {
-      this.tableConfig =_tableConfig;
-    }else{
-      this.tableConfig['component'] = _tableConfig;
+  async getJson() {
+
+    if (!this.tableConfig) {
+      let _tableConfig;
+
+      this.tableConfig={};
+      if (this.config.layoutName) {
+        _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+      }
+      if (!_tableConfig) {
+        await this.getCustomConfig(this.config.layoutName);
+        _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+      }
+
+      // 静态数据，动态数据
+      if (Object.prototype.toString.call(_tableConfig['component']) === '[object Object]') {
+        this.tableConfig = _tableConfig;
+      } else {
+        this.tableConfig['component'] = _tableConfig;
+      }
+      this._buildComponent();
+    } else {
+
     }
   }
+
+  private _buildComponent(componentObj?) {
+    // console.log('=+++++=====++++++======+++')
+     const comp = this._resolver.resolveComponentFactory<any>(
+         components['cnDataTable']
+     );
+     this.virtualContainer.clear();
+     this._componentRef = this.virtualContainer.createComponent(comp);
+     this._componentRef.instance.config = this.tableConfig.component;
+     this._componentRef.instance.initData =  this.formGroup.value;
+    // this._componentRef.instance.changeValue = this._changeValue;
+     this.table =  this._componentRef.instance;
+ }
 
 
 
@@ -191,6 +220,7 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
     // valueName: 'id',
     // ,dataItem: item
     // tslint:disable-next-line:forin
+    await this.getJson();
     this.value = v;
     if (!v) {
       this.selectedRowItem = null;
@@ -224,9 +254,10 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
   /**
    * 级联分析
    */
-  public cascadeAnalysis(c?) {
+  public async cascadeAnalysis(c?) {
     // 分类完善信息，此处完善的信息为 异步参数处理
     // cascadeValue
+    await this.getJson();
     if (c.hasOwnProperty(this.config.field)) {
       if (c[this.config.field].hasOwnProperty('cascadeValue')) {
         this.cascadeValue = c[this.config.field].cascadeValue;
@@ -238,9 +269,12 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'ajax') {
           this.load();
-// debugger;
-          this.table.setInitValue(this.cascadeValue);
-          this.table.load();
+          // debugger;
+         
+            this.table.setInitValue(this.cascadeValue);
+            this.table.load();
+          
+        
         }
       }
       if (c[this.config.field].hasOwnProperty('exec')) {
