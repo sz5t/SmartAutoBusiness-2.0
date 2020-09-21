@@ -288,6 +288,9 @@ export class CnStaticTableComponent extends CnComponentBase
                     if (col.editor.expandConfig) {
                         col.editor['expandConfig']['ajaxConfig'] = this._ajaxConfigObj[col.editor.expandConfig.id];
                     }
+                    if (col.editor.hasOwnProperty('changeValueId')) {
+                        col.editor['changeValue'] = this.findChangeValueConfig(col.editor.changeValueId);
+                      }
                 }
             });
             if (actionCfgs && actionCfgs.length > 0) {
@@ -319,6 +322,17 @@ export class CnStaticTableComponent extends CnComponentBase
         }
 
     }
+
+    private findChangeValueConfig(changeValueId) {
+        let changeValueConfig;
+        if (this.config.changeValue && Array.isArray(this.config.changeValue) && this.config.changeValue.length > 0) {
+          const c = this.config.changeValue.find(cfg => cfg.id === changeValueId);
+          if (c) {
+            changeValueConfig = c;
+          }
+        }
+        return changeValueConfig;
+      }
 
     private _initComponentData() {
         this.mapOfDataState = {};
@@ -2168,6 +2182,9 @@ export class CnStaticTableComponent extends CnComponentBase
                             if (item.content.type === 'message') {
                                 // 某种操作后，或者返回后，弹出提示消息，可提示静态消息，可提示动态消息
 
+                            }
+                            if (item.content.type === 'changeValue') {
+                                cascadeResult[cascadeObj.cascadeName]['exec'] = 'changeValue';
                             }
                             if (item.content.type === 'relation') {
                                 // 当满足某种条件下，触发某种消息，消息值的组转，-》调用配置完善的消息结构

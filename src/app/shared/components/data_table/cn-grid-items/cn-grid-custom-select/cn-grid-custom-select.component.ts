@@ -233,7 +233,8 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
       nzComponentParams: {
         config: this.tableConfig,
         customPageId: this.config.layoutName,
-        initData: this.initData
+        initData: this.initData,
+        changeValue:this._changeValue 
       },
       nzClosable: false,
       nzOnOk: componentInstance => {
@@ -305,6 +306,9 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'setValue') {
            this.value= c[this.config.field]['setValue']['value'];
+        }
+        if (c[this.config.field].exec === 'changeValue') {
+          this.buildChangeValue(this.config);
         }
       }
 
