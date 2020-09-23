@@ -222,7 +222,7 @@ export class CnComponentBase {
     public  async getCustomConfig(customConfigId?){
         const response = await  this._componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { "PageId": customConfigId }).toPromise();
       
-        if(response['data']){
+        if(response && response['data']){
          if (response['data']._procedure_resultset_1[0]['W'] === "") {
           // this.config = null;
          }

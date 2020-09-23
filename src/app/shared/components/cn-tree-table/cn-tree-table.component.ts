@@ -30,6 +30,7 @@ import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 import { arraysEqual } from 'ng-zorro-antd';
 import { ITreeGridProperty, CN_TREE_GRID_PROPERTY } from '@core/relations/bsn-property/tree-grid.property.interface';
 import { CN_TREE_GRID_METHOD } from '@core/relations/bsn-methods/bsn-tree-grid-method';
+import { isArray } from 'util';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -495,17 +496,75 @@ export class CnTreeTableComponent extends CnComponentBase
         });
     }
 
+    public async loadItem(data, callback) {
+        // 【参数不全是否阻止加载！】
+        // 对后续业务判断有影响
+        //  console.log('===select 自加载====>load');
+        const url = this.config.loadingItemConfig.url;
+        const method = this.config.loadingItemConfig.ajaxType ? this.config.loadingItemConfig.ajaxType : this.config.loadingItemConfig.method;
+        const params = {
+            ...this.Item_buildParameters(this.config.loadingItemConfig.params, data)
+        };
+        // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+
+        const response = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
+        // console.log('--da---' + this.config.field, response);
+        let data_form;
+        if (isArray(response.data)) {
+            if (response.data && response.data.length > 0) {
+                data_form = response.data;
+            }
+        } else {
+            if (response.data) {
+                data_form = [...response.data];
+            }
+        }
+
+        if (!data_form) {
+            data_form = [...data];
+        }
+        callback(data_form);
+       // return data_form;
+    }
+
+    public Item_buildParameters(paramsCfg, data?) {
+        return ParameterResolver.resolve({
+            params: paramsCfg,
+            tempValue: this.tempValue,
+            item: data,
+            componentValue: data, //  组件值？返回值？级联值，需要三值参数
+            initValue: this.initValue,
+            cacheValue: this.cacheValue,
+            router: this.routerValue,
+            cascadeValue: this.cascadeValue
+        });
+    }
+
     public loadRefreshChildrenData(option) {
-        this._buildReloadAjax(option, (data) => {
-            this.refreshChildrenData(data);
-        })
+        if (this.config.loadingItemConfig) {
+            this.loadItem(option, (data) => {
+                this.refreshChildrenData(data);
+            })
+        }else{
+            this._buildReloadAjax(option, (data) => {
+                this.refreshChildrenData(data);
+            })
+        }
+
     }
 
     public loadRefreshData(option) {
         debugger;
-        this._buildReloadAjax(option, (data) => {
-            this.refreshData(data);
-        })
+        if (this.config.loadingItemConfig) {
+            this.loadItem(option, (data) => {
+                this.refreshData(data);
+            })
+        }else{
+            this._buildReloadAjax(option, (data) => {
+                this.refreshData(data);
+            })
+        }
+
         // this.isLoading = true;
         // const url = this.config.loadingConfig.url;
         // const method = this.config.loadingConfig.method;
