@@ -26,7 +26,7 @@
   <nz-page-header nzBackIcon>
     <nz-page-header-title>{{title}}</nz-page-header-title>
     <nz-page-header-subtitle>{{subTitle}}</nz-page-header-subtitle>
-    <nz-page-header-tags>
+    <nz-page-header-tags *ngIf="tagText">
       <nz-tag [nzColor]="tagColor">{{tagText}}</nz-tag>
     </nz-page-header-tags>
     <nz-page-header-extra>

@@ -4,8 +4,8 @@
 
 export const environment = {
  // SERVER_URL: `http://192.168.1.111:8304/`, // 大产品
- //  SERVER_URL: `http://39.101.168.200:8304/`, // 42
-   SERVER_URL: `http://192.168.1.105:8404/`, // 42
+   SERVER_URL: `http://39.101.168.200:8304/`, // 42
+ //  SERVER_URL: `http://192.168.1.105:8404/`, // 42
  // SERVER_URL: `http://39.101.168.200:8201/`, // 小产品
  // SERVER_URL: `http://192.168.1.111:8201/`,  // 云服务器 小产品
   //SERVER_URL: `http://39.101.168.200:8304/`,  

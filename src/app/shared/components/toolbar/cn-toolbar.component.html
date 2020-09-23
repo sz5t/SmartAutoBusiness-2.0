@@ -19,15 +19,18 @@
         <i nz-icon [nzType]="toolbar.icon ? toolbar.icon :'setting'" theme="outline"></i> {{toolbar.text}}
       </strong>
     </button>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <ng-template ngFor let-btn [ngForOf]="toolbar.dropdown">
-          <li *ngIf="!btn.hidden" nz-menu-item (click)="action(btn, toolbar.targetViewId)">
-            <i nz-icon [nzType]="btn.icon" [theme]="btn.theme ? btn.theme : 'outline'"></i> {{btn.text}}
-          </li>
-        </ng-template>
-      </ul>
-    </nz-dropdown-menu>
+    <div style="display: none;">
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+        <ul nz-menu>
+          <ng-template ngFor let-btn [ngForOf]="toolbar.dropdown">
+            <li *ngIf="!btn.hidden" nz-menu-item (click)="action(btn, toolbar.targetViewId)">
+              <i nz-icon [nzType]="btn.icon" [theme]="btn.theme ? btn.theme : 'outline'"></i> {{btn.text}}
+            </li>
+          </ng-template>
+        </ul>
+      </nz-dropdown-menu>
+    </div>
+
     <!-- <ng-container *ngFor="let btn of toolbar.dropdown">
       
     </ng-container> -->
