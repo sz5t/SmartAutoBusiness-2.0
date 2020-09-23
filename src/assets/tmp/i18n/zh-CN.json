@@ -90,6 +90,7 @@
   "menu.cfg.base.configPropertyManager": "配置管理",
   "menu.cfg.base.innerMethodManager": "功能管理",
   "menu.component.steps": "步骤",
+  "menu.component.datasteps": "步骤圈",
   "menu.component.calendar": "日历",
   "app.analysis.test": "工专路 {{no}} 号店",
   "app.analysis.introduce": "指标说明",

@@ -18,6 +18,7 @@ import { CnTagComponent } from '@shared/components/cn-tag/cn-tag.component';
 import { CnUploadComponent } from '@shared/components/cn-upload/cn-upload.component';
 import { CnContainersComponent } from '@shared/components/cn-containers/cn-containers.component';
 import { CnCarouseComponent } from '@shared/components/cn-carouse/cn-carouse.component';
+import { CnDataStepsComponent } from '@shared/components/cn-data-steps/cn-data-steps.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -36,7 +37,8 @@ const components: { [type: string]: Type<any> } = {
     cnTag:CnTagComponent,
     cnUpload:CnUploadComponent,
     cnContainers:CnContainersComponent,
-    CnCarouse:CnCarouseComponent
+    CnCarouse:CnCarouseComponent,
+    cnDataStep: CnDataStepsComponent
 };
 
 @Directive({

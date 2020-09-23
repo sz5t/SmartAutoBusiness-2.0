@@ -19,6 +19,7 @@ import { DataSqlModelingComponent } from './data-sql-modeling.component';
 import { StepsDemoComponent } from './steps-demo.component';
 import { DataBusinessModelingComponent } from './data-business-modeling.component';
 import { CnDynamicTemplateComponent } from './dynamic-template/dynamic-template.component';
+import { DataStepsDemoComponent } from './data-step-demo.component';
 
 const COMPONENTS = [
   LayoutDemoComponent,
@@ -37,7 +38,8 @@ const COMPONENTS = [
   PageDesignComponent,
   DataBusinessModelingComponent,
   BaseComponentMannagerComponent,
-  CnDynamicTemplateComponent
+  CnDynamicTemplateComponent,
+  DataStepsDemoComponent
 ];
 
 const COMPONENTS_NOROUNT = [];

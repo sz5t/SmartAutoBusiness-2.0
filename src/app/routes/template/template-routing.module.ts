@@ -17,6 +17,7 @@ import { TreeTableDemoComponent } from './tree-table-demo.component';
 import { StepsDemoComponent } from './steps-demo.component';
 import { DataBusinessModelingComponent } from './data-business-modeling.component';
 import { CnDynamicTemplateComponent } from './dynamic-template/dynamic-template.component';
+import { DataStepsDemoComponent } from './data-step-demo.component';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'treeTableDemo', component: TreeTableDemoComponent },
   { path: 'datamodeling', component: DataModelingComponent },
   { path: 'stepsDemo', component: StepsDemoComponent },
+  { path: 'datastepDemo', component: DataStepsDemoComponent },
   { path: 'innerPropertyManager', component: BaseInnerPropertyManagerComponent },
   { path: 'sqlmodeling', component: DataSqlModelingComponent },
   { path: 'configPropertyManager', component: BaseCfgPropertyManagerComponent },

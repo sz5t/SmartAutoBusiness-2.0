@@ -179,6 +179,12 @@ export class NavComponent implements OnInit, OnDestroy {
           "level": 3
         },
         {
+          "text": "步骤圈",
+          "link": "/template/datastepDemo",
+          "i18n": "menu.component.datasteps",
+          "level": 3
+        },
+        {
           "text": "步骤",
           "link": "/template/calendarDemo",
           "i18n": "menu.component.calendar",

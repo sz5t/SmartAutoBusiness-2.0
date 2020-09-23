@@ -166,6 +166,13 @@
               "level": 3
             },
             {
+              "text": "步骤圈",
+              "link": "/template/datastepDemo",
+              "i18n": "menu.component.datasteps",
+              "status": 2,
+              "level": 3
+            },
+            {
               "text": "步骤",
               "link": "/template/calendarDemo",
               "i18n": "menu.component.calendar",
