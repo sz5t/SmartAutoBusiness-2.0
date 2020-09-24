@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+// SERVER_URL: `http://192.168.1.111:8401/`, // 实施平台
  // SERVER_URL: `http://192.168.1.111:8304/`, // 大产品
    SERVER_URL: `http://39.101.168.200:8304/`, // 42
  //  SERVER_URL: `http://192.168.1.105:8404/`, // 42

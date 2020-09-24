@@ -9,7 +9,49 @@
     "email": "cipchk@qq.com"
   },
   "menu": [
-
+    {
+      "text": "建模",
+      "i18n": "menu.data.modeling",
+      "group": true,
+      "hideInBreadcrumb": true,
+      "level": 1,
+      "status": 2,
+      "icon": "book",
+      "children": [{
+        "text": "管理",
+        "i18n": "menu.data.modeling",
+        "group": true,
+        "hideInBreadcrumb": true,
+        "level": 2,
+        "icon": "book",
+        "status": 2,
+        "children": [{
+            "text": "数据建模",
+            "i18n": "menu.data.datamodeling",
+            "icon": "database",
+            "level": 3,
+            "status": 2,
+            "link": "/template/datamodeling"
+          },
+          {
+            "text": "SQL建模",
+            "i18n": "menu.data.sqlmodeling",
+            "icon": "database",
+            "level": 3,
+            "status": 2,
+            "link": "/template/sqlmodeling"
+          },
+          {
+            "text": "业务建模",
+            "i18n": "menu.data.businessmodeling",
+            "icon": "database",
+            "level": 3,
+            "status": 2,
+            "link": "/template/businessmodeling"
+          }
+        ]
+      }]
+    },
     {
       "text": "页面管理",
       "i18n": "menu.page.pagemanage",

@@ -6,11 +6,11 @@ import { NzDropdownContextComponent, NzMenuItemDirective } from 'ng-zorro-antd'
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
 // import G6Editor from '@antv/g6-editor';
-import G6 from '@antv/g6';
+// import G6 from '@antv/g6';
 import { CN_DATA_STEP_METHOD } from '@core/relations/bsn-methods/bsn-data-step-methods';
 import { CN_DATA_STEP_PROPERTY } from './../../../core/relations/bsn-property/data-step.property.interface';
 import { Subject, Subscription } from 'rxjs';
-
+declare let G6: any;
 @Component({
   selector: 'app-cn-data-step',
   templateUrl: './cn-data-steps.component.html',

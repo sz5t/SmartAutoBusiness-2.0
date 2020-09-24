@@ -6,6 +6,7 @@
   <ng-template #suffixIcon>
     <i nz-icon nzType="search"></i>
   </ng-template>
+
   <nz-tree #treeObj [nzData]="nodes" [nzAsyncData]="config.async" [nzExpandAll]="config.expandAll"
     [nzCheckStrictly]="config.checkStrictly" [nzCheckable]="config.showCheckBox" [nzShowLine]="config.showLine"
     (nzClick)="clickNode($event)" (nzExpandChange)="expandNode($event)" [nzTreeTemplate]="nzTreeTemplate"
@@ -45,3 +46,4 @@
     </span>
   </ng-template> 
 </nz-spin>
+

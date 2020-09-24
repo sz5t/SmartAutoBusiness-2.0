@@ -1132,8 +1132,10 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "params": [
                                                     {
                                                         "name": "id",
-                                                        "type": "item",
-                                                        "valueName": "ID"
+                                                        //"type": "item",
+                                                        "type": "value",
+                                                        "valueName": "ID",
+                                                        "value":'0efcb42c-c2b5-4671-a35b-aa13fce5a3f1'
                                                     }
                                                 ],
                                                 "outputParameters": [
@@ -1162,8 +1164,10 @@ export class DataSqlModelingComponent extends CnComponentBase implements OnInit 
                                                 "params": [
                                                     {
                                                         "name": "id",
-                                                        "type": "item",
-                                                        "valueName": "ID"
+                                                       // "type": "item",
+                                                       "type": "value",
+                                                        "valueName": "ID",
+                                                        "value":'0efcb42c-c2b5-4671-a35b-aa13fce5a3f1'
                                                     }
                                                 ],
                                                 "outputParameters": [
