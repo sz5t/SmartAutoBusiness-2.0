@@ -21,6 +21,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
   public config;
   @Input()
   public initData;
+  @Input()
+  public tempData;
+  @Input()
+  public changeValue: any;
   @ViewChild('dataSteps', { static: false }) public dataSteps: ElementRef;
   public isLoading = true;
   public dataList = [];
@@ -98,6 +102,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
      * 属性初始化
      */
   initComponent() {
+    this.setChangeValue(this.changeValue);
 
     this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
     // this.pageSize = this.config.pageSize;
@@ -113,7 +118,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
     this.nodeLabelField = this.config.basiAttribute.nodeLabelField ? this.config.basiAttribute.nodeLabelField : '节点名称';
     this.nodeWidth = this.config.basiAttribute.nodeWidth ? this.config.basiAttribute.nodeWidth : 200;
     this.nodeHeight = this.config.basiAttribute.nodeHeight ? this.config.basiAttribute.nodeHeight : 64;
-    this.nodeParentField = this.config.basiAttribute.nodeParentField ? this.config.basiAttribute.nodeParentField : 'PARENT_ID';
+    this.nodeParentField = this.config.basiAttribute.nodeParentField ? this.config.basiAttribute.nodeParentField : '';
     this.descField = this.config.basiAttribute.descField ? this.config.basiAttribute.descField : '节点描述';
     this.edgeType = this.config.basiAttribute.edgeType ? this.config.basiAttribute.edgeType : 'line';
     this.sNodeStoke = this.config.basiAttribute.sNodeStoke ? this.config.basiAttribute.sNodeStoke : this.sNodeStoke;
@@ -125,12 +130,45 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
     this.maxHeight = this.config.bodyStyle.maxHeight ? this.config.bodyStyle.maxHeight : 500;
   }
 
+  /*
+     * setChangeValue 接受 初始变量值
+     */
+  public setChangeValue(ChangeValues?) {
+    console.log('changeValue', ChangeValues);
+    // const ChangeValues = [{ name: "", value: "", valueTo: "" }];
+    if (ChangeValues && ChangeValues.length > 0) {
+      ChangeValues.forEach(p => {
+        switch (p.valueTo) {
+          case 'tempValue':
+            this.tempValue[p.name] = p.value;
+            break;
+          case 'initValue':
+            this.initValue[p.name] = p.value;
+            break;
+          case 'staticComponentValue':
+            this.staticComponentValue[p.name] = p.value;
+            break;
+
+        }
+      });
+    }
+
+  }
+
   /**
    * 内部变量初始化
    */
   initInnerData() {
-    this.tempValue = {};
-    this.initValue = {};
+    if (this.tempData) {
+      this.tempValue = this.tempData;
+    } else {
+      this.tempValue = {};
+    }
+    if (this.initData) {
+      this.initValue = this.initData;
+    } else {
+      this.initValue = {};
+    }
   }
 
   /**
@@ -160,8 +198,12 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
    */
   public async load() {
     this.dataList = await this.createUrlParams(this.config.loadingConfig);
-    this.pDatalist = this.dataList.filter(e => e[this.nodeParentField] === null);
-    this.cDatalist = this.dataList.filter(e => e[this.nodeParentField] !== null);
+    if (this.nodeParentField === '') {
+      this.pDatalist = this.dataList
+    } else {
+      this.pDatalist = this.dataList.filter(e => e[this.nodeParentField] === null);
+      this.cDatalist = this.dataList.filter(e => e[this.nodeParentField] !== null);
+    }
     if (this.dataList.length > 0) {
       this.setStepParentNode();
       this.setStepParentLine();
@@ -254,8 +296,8 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
   }
 
   public ngAfterViewInit() {
-    this.dataSteps.nativeElement.style['height'] = this.maxHeight.toString() +　'px'
-    this.dataSteps.nativeElement.style['width'] = this.maxWidth.toString() +　'px'
+    this.dataSteps.nativeElement.style['height'] = this.maxHeight.toString() + 'px'
+    this.dataSteps.nativeElement.style['width'] = this.maxWidth.toString() + 'px'
     this.dataSteps.nativeElement.style['overflow'] = 'auto'
     if (this.config.loadingOnInit) {
       this.load();
@@ -301,7 +343,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
   public setStepParentNode() {
     if (this.direction === 'vertical') {
       for (let i = 0; i < this.pDatalist.length; i++) {
-        const hasChildren = this.cDatalist.findIndex(e => e[this.nodeParentField] === this.pDatalist[i][this.KEY_ID]) > -1 ? true : false;
+        const hasChildren = this.nodeParentField === '' ? false : (this.cDatalist.findIndex(e => e[this.nodeParentField] === this.pDatalist[i][this.KEY_ID]) > -1 ? true : false)
         this.pNode.push({
           id: this.pDatalist[i][this.KEY_ID],
           x: 50,
@@ -329,7 +371,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
       }
     } else if (this.direction === 'horizontal') {
       for (let i = 0; i < this.pDatalist.length; i++) {
-        const hasChildren = this.cDatalist.findIndex(e => e[this.nodeParentField] === this.pDatalist[i][this.KEY_ID]) > -1 ? true : false;
+        const hasChildren = this.nodeParentField === '' ? false : (this.cDatalist.findIndex(e => e[this.nodeParentField] === this.pDatalist[i][this.KEY_ID]) > -1 ? true : false)
         this.pNode.push({
           id: this.pDatalist[i][this.KEY_ID],
           x: (this.nodeWidth + 60) * i + 30,
