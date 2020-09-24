@@ -331,21 +331,21 @@ export class CnTreeTableComponent extends CnComponentBase
                 if (response.data && response.data) {
                     const appendedChildrenData: any[] = [];
                     response.data.map(data => {
-                        if(data['children'] && data['children'].length>0){
+                        if (data['children'] && data['children'].length > 0) {
 
-                        }else{
-                            data['children']=null;
+                        } else {
+                            data['children'] = null;
                         }
                         this.mapOfDataExpanded[data[this.KEY_ID]] = this._convertTreeToList(data, item.level + 1);
                         appendedChildrenData.push(data);
                         this.total = this.total + 1;
                     })
                     item['children'] = appendedChildrenData;
-                     if(appendedChildrenData.length>0){
+                    if (appendedChildrenData.length > 0) {
                         item['children'] = appendedChildrenData;
-                     }else{
-                        item['children'] =null;
-                     }
+                    } else {
+                        item['children'] = null;
+                    }
                     this._appendChildrenToList(item.data, appendedChildrenData);
                 }
             })();
@@ -381,7 +381,7 @@ export class CnTreeTableComponent extends CnComponentBase
         const index = this.dataList.findIndex(d => d[this.KEY_ID] === parent[this.KEY_ID]);
         for (let i = 0, len = this.dataList.length; i < len; i++) {
             childrenList.forEach(child => {
-                if(i>-1){
+                if (i > -1) {
                     if (this.dataList[i][this.KEY_ID] === child[this.KEY_ID]) {
                         this.dataList.splice(i, 1);
                         i--;
@@ -524,7 +524,7 @@ export class CnTreeTableComponent extends CnComponentBase
             data_form = [...data];
         }
         callback(data_form);
-       // return data_form;
+        // return data_form;
     }
 
     public Item_buildParameters(paramsCfg, data?) {
@@ -545,7 +545,7 @@ export class CnTreeTableComponent extends CnComponentBase
             this.loadItem(option, (data) => {
                 this.refreshChildrenData(data);
             })
-        }else{
+        } else {
             this._buildReloadAjax(option, (data) => {
                 this.refreshChildrenData(data);
             })
@@ -559,7 +559,7 @@ export class CnTreeTableComponent extends CnComponentBase
             this.loadItem(option, (data) => {
                 this.refreshData(data);
             })
-        }else{
+        } else {
             this._buildReloadAjax(option, (data) => {
                 this.refreshData(data);
             })
@@ -1402,7 +1402,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
                 addedRows: this.ROWS_ADDED,
-                editedRows: this.ROWS_EDITED
+                editedRows: this.ROWS_EDITED,
+                selectedRow: this.ROW_SELECTED
 
             });
         } else if (!isArray && data) {
@@ -1420,7 +1421,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 addedRows: data,
                 editedRows: data,
                 validation: data,
-                returnValue: data
+                returnValue: data,
+                selectedRow: this.ROW_SELECTED
 
             });
         } else if (isArray && data && Array.isArray(data)) {
@@ -1494,7 +1496,7 @@ export class CnTreeTableComponent extends CnComponentBase
         console.log(this.config.id + '-------------executeCheckedRowsIds', option);
         const url = option.ajaxConfig.url;
         const method = option.ajaxConfig.ajaxType;
-       // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
+        // const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
         const data = this.ROWS_CHECKED;
         const parameterResult = true;
 
@@ -1510,7 +1512,7 @@ export class CnTreeTableComponent extends CnComponentBase
             initValue: this.initValue,
             cacheValue: this.cacheValue
         });
-      
+
         // if (data && data.length > 0) {
         //     data.map(d => {
         //         const p = paramData = ParameterResolver.resolve({
@@ -1529,7 +1531,7 @@ export class CnTreeTableComponent extends CnComponentBase
             //     const pData = p[this.KEY_ID]
             //     pData && ids.push(pData);
             // });
-            const response = await this.executeHttpRequest(url, method,paramData);
+            const response = await this.executeHttpRequest(url, method, paramData);
             // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
             this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
@@ -1553,8 +1555,8 @@ export class CnTreeTableComponent extends CnComponentBase
             this.ROWS_CHECKED.map(cr => {
                 const p = ParameterResolver.resolve({
                     params: ajaxParams,
-                    checkedItem: cr['originData']?cr['originData']:cr,
-                    item: cr['originData']?cr['originData']:cr,
+                    checkedItem: cr['originData'] ? cr['originData'] : cr,
+                    item: cr['originData'] ? cr['originData'] : cr,
                     tempValue: this.tempValue,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue
@@ -1822,7 +1824,7 @@ export class CnTreeTableComponent extends CnComponentBase
         // 自定义 操作按钮
         if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
             dialogOptional.nzFooter = [];
-        
+
             dialogCfg.footerButton.forEach(_button => {
                 dialogOptional.nzFooter.push(
                     {
@@ -1831,13 +1833,13 @@ export class CnTreeTableComponent extends CnComponentBase
                             // dialog.close();
                             // customAction
                             let customAction;
-                            if(dialogCfg.customAction && dialogCfg.customAction.length>0 ){
-                              let  customActionList = dialogCfg.customAction.filter(item=>item.id===_button.customActionId);
-                              if(customActionList && customActionList.length>0){
-                                customAction =customActionList[0];
-                              } 
+                            if (dialogCfg.customAction && dialogCfg.customAction.length > 0) {
+                                let customActionList = dialogCfg.customAction.filter(item => item.id === _button.customActionId);
+                                if (customActionList && customActionList.length > 0) {
+                                    customAction = customActionList[0];
+                                }
                             }
-                          
+
                             this.execCustomAction(customAction, dialog, componentInstance);
                         }
                     }
@@ -1891,23 +1893,22 @@ export class CnTreeTableComponent extends CnComponentBase
         ];
 
         customAction.execute.forEach(item => {
-            if(item.type ==='relation'){
+
+
+            if (item.type === 'relation') {
                 new RelationResolver(this)
-                .resolveInnerSender(
-                    item.sender,
-                    {},
-                    Array.isArray({})
-                );
-            } else if(item.type ==='action'){
-                this.windowDialog.close(); 
+                    .resolveInnerSender(
+                        item.sender,
+                        {},
+                        Array.isArray({})
+                    );
+            } else if (item.type === 'action') {
+                this.windowDialog.close();
             }
-       
+
         });
 
         // new RelationResolver(this). resolveSender();
-
-
-       
         return true;
     }
 
@@ -2026,7 +2027,7 @@ export class CnTreeTableComponent extends CnComponentBase
             message.type = option[0].type;
             message.field = option[0].field;
         } else if (option) {
-            message.message = option.code ? option.code : (option.message?option.message:'');
+            message.message = option.code ? option.code : (option.message ? option.message : '');
             message.type = option.type;
             message.field = option.field ? option.field : '';
         }
@@ -2245,7 +2246,7 @@ export class CnTreeTableComponent extends CnComponentBase
 
     public transferValue(option?) {
         console.log('将接受传递的值');
-      }
+    }
 
 
 
