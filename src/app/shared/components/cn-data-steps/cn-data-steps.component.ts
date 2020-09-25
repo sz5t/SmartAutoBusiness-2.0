@@ -82,6 +82,8 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
   public NODE_SELECTED = {};
   public maxWidth;
   public maxHeight;
+  public startX;
+  public startY;
 
   public evt: any = {};
 
@@ -128,6 +130,8 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
     this.direction = this.config.drawDirection ? this.config.drawDirection : 'vertical';
     this.maxWidth = this.config.bodyStyle.maxWidth ? this.config.bodyStyle.maxWidth : 500;
     this.maxHeight = this.config.bodyStyle.maxHeight ? this.config.bodyStyle.maxHeight : 500;
+    this.startX = this.config.basiAttribute.startX ? this.config.basiAttribute.startX : 50;
+    this.startY = this.config.basiAttribute.startY ? this.config.basiAttribute.startY : 50;
   }
 
   /*
@@ -346,10 +350,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
         const hasChildren = this.nodeParentField === '' ? false : (this.cDatalist.findIndex(e => e[this.nodeParentField] === this.pDatalist[i][this.KEY_ID]) > -1 ? true : false)
         this.pNode.push({
           id: this.pDatalist[i][this.KEY_ID],
-          x: 50,
-          y: 50 + 100 * i,
+          x: this.startX,
+          y: this.startY + 100 * i,
           dataType: 'root',
-          keyInfo: this.pDatalist[i][this.descField],
+          keyInfo: this.pDatalist[i][this.descField] ? this.pDatalist[i][this.descField] : '',
           name: this.pDatalist[i][this.nodeLabelField],
           level: 0,
           width: this.nodeWidth,
@@ -374,10 +378,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
         const hasChildren = this.nodeParentField === '' ? false : (this.cDatalist.findIndex(e => e[this.nodeParentField] === this.pDatalist[i][this.KEY_ID]) > -1 ? true : false)
         this.pNode.push({
           id: this.pDatalist[i][this.KEY_ID],
-          x: (this.nodeWidth + 60) * i + 30,
-          y: 50 + this.nodeHeight,
+          x: (this.nodeWidth + 60) * i + this.startX,
+          y: this.startY + this.nodeHeight,
           dataType: 'root',
-          keyInfo: this.pDatalist[i][this.descField],
+          keyInfo: this.pDatalist[i][this.descField] ? this.pDatalist[i][this.descField] : '',
           name: this.pDatalist[i][this.nodeLabelField],
           level: 0,
           width: this.nodeWidth,
@@ -470,10 +474,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
           if (this.direction === 'vertical') {
             this.expandNodeList.push({
               id: dataList[i][this.KEY_ID],
-              x: 50,
-              y: 50 + 100 * i,
+              x: this.startX,
+              y: this.startY + 100 * i,
               dataType: 'root',
-              keyInfo: dataList[i][this.descField],
+              keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
               name: dataList[i][this.nodeLabelField],
               level: 0,
               width: this.nodeWidth,
@@ -484,10 +488,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
           } else if (this.direction === 'horizontal') {
             this.expandNodeList.push({
               id: dataList[i][this.KEY_ID],
-              x: (this.nodeWidth + 60) * i + 30,
-              y: 50 + this.nodeHeight,
+              x: (this.nodeWidth + 60) * i + this.startX,
+              y: this.startY + this.nodeHeight,
               dataType: 'root',
-              keyInfo: dataList[i][this.descField],
+              keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
               name: dataList[i][this.nodeLabelField],
               level: 0,
               width: this.nodeWidth,
@@ -501,10 +505,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
           if (this.direction === 'vertical') {
             this.expandNodeList.push({
               id: dataList[i][this.KEY_ID],
-              x: 50,
-              y: 50 + 100 * i,
+              x: this.startX,
+              y: this.startY + 100 * i,
               dataType: 'child',
-              keyInfo: dataList[i][this.descField],
+              keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
               name: dataList[i][this.nodeLabelField],
               level: 1,
               width: this.nodeWidth,
@@ -515,10 +519,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
           } else if (this.direction === 'horizontal') {
             this.expandNodeList.push({
               id: dataList[i][this.KEY_ID],
-              x: (this.nodeWidth + 60) * i + 30,
-              y: 50 + this.nodeHeight,
+              x: (this.nodeWidth + 60) * i + this.startX,
+              y: this.startY + this.nodeHeight,
               dataType: 'child',
-              keyInfo: dataList[i][this.descField],
+              keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
               name: dataList[i][this.nodeLabelField],
               level: 1,
               width: this.nodeWidth,
@@ -538,10 +542,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             if (this.direction === 'vertical') {
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
-                x: 50,
-                y: 50 + 100 * i,
+                x: this.startX,
+                y: this.startY + 100 * i,
                 dataType: 'root',
-                keyInfo: dataList[i][this.descField],
+                keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 name: dataList[i][this.nodeLabelField],
                 level: 0,
                 width: this.nodeWidth,
@@ -552,10 +556,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             } else if (this.direction === 'horizontal') {
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
-                x: (this.nodeWidth + 60) * i + 30,
-                y: 50 + this.nodeHeight,
+                x: (this.nodeWidth + 60) * i + this.startX,
+                y: this.startY + this.nodeHeight,
                 dataType: 'root',
-                keyInfo: dataList[i][this.descField],
+                keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 name: dataList[i][this.nodeLabelField],
                 level: 0,
                 width: this.nodeWidth,
@@ -569,10 +573,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             if (this.direction === 'vertical') {
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
-                x: 50,
-                y: 50 + 100 * i,
+                x: this.startX,
+                y: this.startY + 100 * i,
                 dataType: 'child',
-                keyInfo: dataList[i][this.descField],
+                keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 name: dataList[i][this.nodeLabelField],
                 level: 1,
                 width: this.nodeWidth,
@@ -583,10 +587,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             } else if (this.direction === 'horizontal') {
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
-                x: (this.nodeWidth + 60) * i + 30,
-                y: 50 + this.nodeHeight,
+                x: (this.nodeWidth + 60) * i + this.startX,
+                y: this.startY + this.nodeHeight,
                 dataType: 'child',
-                keyInfo: dataList[i][this.descField],
+                keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 name: dataList[i][this.nodeLabelField],
                 level: 1,
                 width: this.nodeWidth,
@@ -604,10 +608,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             if (this.direction === 'vertical') {
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
-                x: 50,
-                y: 50 + 100 * i,
+                x: this.startX,
+                y: this.startY + 100 * i,
                 dataType: 'root',
-                keyInfo: dataList[i][this.descField],
+                keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 level: 0,
                 width: this.nodeWidth,
                 height: this.nodeHeight,
@@ -617,10 +621,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             } else if (this.direction === 'horizontal') {
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
-                x: (this.nodeWidth + 60) * i + 30,
-                y: 50 + this.nodeHeight,
+                x: (this.nodeWidth + 60) * i + this.startX,
+                y: this.startY + this.nodeHeight,
                 dataType: 'root',
-                keyInfo: dataList[i][this.descField],
+                keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 level: 0,
                 width: this.nodeWidth,
                 height: this.nodeHeight,
@@ -633,10 +637,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             if (this.direction === 'vertical') {
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
-                x: 50,
-                y: 50 + 100 * i,
+                x: this.startX,
+                y: this.startY + 100 * i,
                 dataType: 'child',
-                keyInfo: dataList[i][this.descField],
+                keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 level: 1,
                 width: this.nodeWidth,
                 height: this.nodeHeight,
@@ -646,10 +650,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             } else if (this.direction === 'horizontal') {
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
-                x: (this.nodeWidth + 60) * i + 30,
-                y: 50 + this.nodeHeight,
+                x: (this.nodeWidth + 60) * i + this.startX,
+                y: this.startY + this.nodeHeight,
                 dataType: 'child',
-                keyInfo: dataList[i][this.descField],
+                keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 level: 1,
                 width: this.nodeWidth,
                 height: this.nodeHeight,
