@@ -61,7 +61,7 @@ export class DataStepsDemoComponent  implements OnInit {
               "titleIcon": "right-circle",
               "component": "cnDataStep",
               "keyId": "ID",
-              "drawDirection":"vertical", // vertical 竖直 horizontal 水平
+              "drawDirection":"horizontal", // vertical 竖直 horizontal 水平
               "loadingOnInit": true,
               "loadingConfig": {
                 "url": "resource/DATA_STEP_TEST_DATA/query",
@@ -69,17 +69,20 @@ export class DataStepsDemoComponent  implements OnInit {
                 "params": [],
                 "filter": []
               },
-              "bodyStyle":{
-                "maxWidth":500,
-                "maxHeight":500
-              },
+              // "bodyStyle":{
+              //   "maxWidth":500,
+              //   "maxHeight":500
+              // },
               "basiAttribute": {
                 // "asyncLoadChild": false,
-                "graphWidth" : 500,
+                "startX":1,
+                "startY":1,
+                "graphWidth" : 1000,
                 "graphHeight" : 800,
                 "nodeLabelField": "NODE_LABLE",
                 "nodeParentField": "PARENT_ID",
-                "descField":"DESC_FIELD",
+                // "descField":"DESC_FIELD",
+                "descField":"AAA",
                 "nodeWidth": 150,
                 "nodeHeight": 50,
                 "edgeType": "line",

@@ -128,8 +128,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
     // this.initNodeColor = this.config.basiAttribute.processNode.initNodeColor ? this.config.basiAttribute.processNode.initNodeColor : null;
     this.colorField = this.config.basiAttribute.colorField ? this.config.basiAttribute.colorField : '';
     this.direction = this.config.drawDirection ? this.config.drawDirection : 'vertical';
-    this.maxWidth = this.config.bodyStyle.maxWidth ? this.config.bodyStyle.maxWidth : 500;
-    this.maxHeight = this.config.bodyStyle.maxHeight ? this.config.bodyStyle.maxHeight : 500;
+    if (this.config.bodyStyle) {
+      this.maxWidth = this.config.bodyStyle.maxWidth ? this.config.bodyStyle.maxWidth : 500;
+      this.maxHeight = this.config.bodyStyle.maxHeight ? this.config.bodyStyle.maxHeight : 500;
+    }
     this.startX = this.config.basiAttribute.startX ? this.config.basiAttribute.startX : 50;
     this.startY = this.config.basiAttribute.startY ? this.config.basiAttribute.startY : 50;
   }
@@ -300,9 +302,11 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
   }
 
   public ngAfterViewInit() {
-    this.dataSteps.nativeElement.style['height'] = this.maxHeight.toString() + 'px'
-    this.dataSteps.nativeElement.style['width'] = this.maxWidth.toString() + 'px'
-    this.dataSteps.nativeElement.style['overflow'] = 'auto'
+    if (this.config.bodyStyle) {
+      this.dataSteps.nativeElement.style['height'] = this.maxHeight.toString() + 'px'
+      this.dataSteps.nativeElement.style['width'] = this.maxWidth.toString() + 'px'
+      this.dataSteps.nativeElement.style['overflow'] = 'auto'
+    }
     if (this.config.loadingOnInit) {
       this.load();
       setTimeout(() => {
@@ -379,7 +383,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
         this.pNode.push({
           id: this.pDatalist[i][this.KEY_ID],
           x: (this.nodeWidth + 60) * i + this.startX,
-          y: this.startY + this.nodeHeight,
+          y: this.startY ,
           dataType: 'root',
           keyInfo: this.pDatalist[i][this.descField] ? this.pDatalist[i][this.descField] : '',
           name: this.pDatalist[i][this.nodeLabelField],
@@ -387,7 +391,11 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
           width: this.nodeWidth,
           height: this.nodeHeight,
           children: hasChildren,
-          collapsed: hasChildren ? 'EXPAND_ICON' : 'COLLAPSE_ICON'
+          collapsed: hasChildren ? 'EXPAND_ICON' : 'COLLAPSE_ICON',
+          anchorPoints: [
+            [0, 0.5], // 左侧中间
+            [1, 0.5], // 右侧中间
+          ]
         });
         this.formatNode.push({
           id: this.pDatalist[i][this.KEY_ID]
@@ -414,7 +422,8 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
         id: 'node' + i + '-' + (i + 1),
         source: this.pDatalist[i][this.KEY_ID],
         target: this.pDatalist[i + 1][this.KEY_ID],
-        weight: this.config.basiAttribute.lineWidth ? this.config.basiAttribute.lineWidth : 2
+        weight: this.config.basiAttribute.lineWidth ? this.config.basiAttribute.lineWidth : 2,
+        color: '#000'
       })
     }
   }
@@ -489,7 +498,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             this.expandNodeList.push({
               id: dataList[i][this.KEY_ID],
               x: (this.nodeWidth + 60) * i + this.startX,
-              y: this.startY + this.nodeHeight,
+              y: this.startY ,
               dataType: 'root',
               keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
               name: dataList[i][this.nodeLabelField],
@@ -497,7 +506,11 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
               width: this.nodeWidth,
               height: this.nodeHeight,
               children: hasChildren,
-              collapsed: hasChildren ? 'COLLAPSE_ICON' : 'EXPAND_ICON'
+              collapsed: hasChildren ? 'COLLAPSE_ICON' : 'EXPAND_ICON',
+              anchorPoints: [
+                [0, 0.5], // 左侧中间
+                [1, 0.5], // 右侧中间
+              ]
             });
           }
 
@@ -520,7 +533,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
             this.expandNodeList.push({
               id: dataList[i][this.KEY_ID],
               x: (this.nodeWidth + 60) * i + this.startX,
-              y: this.startY + this.nodeHeight,
+              y: this.startY ,
               dataType: 'child',
               keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
               name: dataList[i][this.nodeLabelField],
@@ -528,7 +541,11 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
               width: this.nodeWidth,
               height: this.nodeHeight,
               children: hasChildren,
-              collapsed: hasChildren ? 'COLLAPSE_ICON' : 'EXPAND_ICON'
+              collapsed: hasChildren ? 'COLLAPSE_ICON' : 'EXPAND_ICON',
+              anchorPoints: [
+                [0, 0.5], // 左侧中间
+                [1, 0.5], // 右侧中间
+              ]
             });
           }
 
@@ -557,7 +574,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
                 x: (this.nodeWidth + 60) * i + this.startX,
-                y: this.startY + this.nodeHeight,
+                y: this.startY ,
                 dataType: 'root',
                 keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 name: dataList[i][this.nodeLabelField],
@@ -565,7 +582,11 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
                 width: this.nodeWidth,
                 height: this.nodeHeight,
                 children: hasChildren,
-                collapsed: hasChildren ? 'EXPAND_ICON' : 'COLLAPSE_ICON'
+                collapsed: hasChildren ? 'EXPAND_ICON' : 'COLLAPSE_ICON',
+                anchorPoints: [
+                  [0, 0.5], // 左侧中间
+                  [1, 0.5], // 右侧中间
+                ]
               });
             }
 
@@ -588,7 +609,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
                 x: (this.nodeWidth + 60) * i + this.startX,
-                y: this.startY + this.nodeHeight,
+                y: this.startY ,
                 dataType: 'child',
                 keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 name: dataList[i][this.nodeLabelField],
@@ -596,7 +617,11 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
                 width: this.nodeWidth,
                 height: this.nodeHeight,
                 children: hasChildren,
-                collapsed: hasChildren ? 'EXPAND_ICON' : 'COLLAPSE_ICON'
+                collapsed: hasChildren ? 'EXPAND_ICON' : 'COLLAPSE_ICON',
+                anchorPoints: [
+                  [0, 0.5], // 左侧中间
+                  [1, 0.5], // 右侧中间
+                ]
               });
             }
 
@@ -622,14 +647,18 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
                 x: (this.nodeWidth + 60) * i + this.startX,
-                y: this.startY + this.nodeHeight,
+                y: this.startY ,
                 dataType: 'root',
                 keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 level: 0,
                 width: this.nodeWidth,
                 height: this.nodeHeight,
                 name: dataList[i][this.nodeLabelField],
-                children: hasChildren
+                children: hasChildren,
+                anchorPoints: [
+                  [0, 0.5], // 左侧中间
+                  [1, 0.5], // 右侧中间
+                ]
               });
             }
 
@@ -651,14 +680,18 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
               this.expandNodeList.push({
                 id: dataList[i][this.KEY_ID],
                 x: (this.nodeWidth + 60) * i + this.startX,
-                y: this.startY + this.nodeHeight,
+                y: this.startY ,
                 dataType: 'child',
                 keyInfo: dataList[i][this.descField] ? dataList[i][this.descField] : '',
                 level: 1,
                 width: this.nodeWidth,
                 height: this.nodeHeight,
                 name: dataList[i][this.nodeLabelField],
-                children: hasChildren
+                children: hasChildren,
+                anchorPoints: [
+                  [0, 0.5], // 左侧中间
+                  [1, 0.5], // 右侧中间
+                ]
               });
             }
 
@@ -753,12 +786,13 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
     const nodeBasicMethod = {
       createNodeBox: (group, config, level, w, h, isRoot) => {
         /* 最外面的大矩形 */
-        const container = group.addShape('rect', {
+        const container = 
+        group.addShape('rect', {
           attrs: {
             x: 0,
             y: 0,
             width: w,
-            heigh: h,
+            height: h
           },
           name: 'big-rect-shape',
         });

@@ -1099,6 +1099,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       const back = false;
       const response = await this.componentService.apiService[execConfig.ajaxConfig.ajaxType](url, params).toPromise();
       return response;
+    } else {
+      return false;
     }
 
   }
