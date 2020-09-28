@@ -23,12 +23,34 @@ export class CnGridTagComponent implements OnInit {
   private _colorMappingResolve() {
     if (this.config.dataMapping) {
       this.config.dataMapping.forEach(d => {
-        const val = this.valueConfig.value[d['field']];
+        let val = this.valueConfig.value[d['field']];
+        if (d.type === 'tempValue') {
+          val = this.tempData[d['field']];
+        }
+        if (d.type  === 'initValue') {
+          val = this.initData[d['field']];
+        }
+        if (d.type  === 'rowValue') {
+          val = this.rowData[d['field']];
+        }    
+        if (d.type  === 'formValue') {
+          val = this.rowData[d['field']];
+        }
+        if (d.type  === 'currentValue') {
+          val = this.valueConfig.value[d['field']];
+        }
         if (val && (d.value === val)) {
           this.color = d.color;
           if(d.valueText){
             this.text = d.valueText;
           }
+          if(d.valueField){
+            this.text = this.rowData[d['valueField']];
+          }
+          if(!d.valueText && !d.valueField) { 
+            this.text = this.valueConfig.value[this.config.field];
+          }
+
           return false;
         }
       })
@@ -36,9 +58,9 @@ export class CnGridTagComponent implements OnInit {
   }
 
 
-  getColor() {
+ public getColorConfig() {
 
-    let _viewId;
+    let _viewId={};
     // 循环 映射条件
     try {
       this.config.mapping.forEach(item => {
@@ -64,11 +86,11 @@ export class CnGridTagComponent implements OnInit {
           // 满足正则表达 
           if (regularflag) {
             // 返回 满足条件视图
-            _viewId = item.color;
+            _viewId = item;
             throw new Error()
           }
         } else {
-          _viewId = item.color;
+          _viewId = item;
           throw new Error()
           // 无条件，直接返回 视图
         }

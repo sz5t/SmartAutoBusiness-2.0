@@ -1,0 +1,11 @@
+<ng-container *ngIf="isShow">
+    <span> {{showLable}} </span>
+</ng-container>
+<ng-container *ngIf="!isShow">
+  <ng-container *ngIf="!showAll">
+     <span nzTitle="showTitle"> {{showShortLable}}  </span><a title='{{showTitle}}' (click)='openSapn()'>...</a>
+  </ng-container>
+   <ng-container *ngIf="showAll">
+     <span nzTitle="showTitle"> {{showLable}}  </span> <a (click)='closeSapn()'>收起</a>
+  </ng-container>
+</ng-container>

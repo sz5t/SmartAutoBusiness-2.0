@@ -33,7 +33,7 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
    * valueChange
    */
   public valueChange(v?) {
-    console.log('input 值变化', v,   this.selectedRowItem);
+    console.log('input 值变化', v, this.selectedRowItem);
     // tslint:disable-next-line:forin
     for (const key in this.formGroup.controls) {
       if (this.config.field === key) {
@@ -41,7 +41,7 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
         this.formGroup.controls[key].updateValueAndValidity();
       }
     }
-    const backValue = { name: this.config.field, value: v, id: this.config.config.id,dataItem: this.selectedRowItem };
+    const backValue = { name: this.config.field, value: v, id: this.config.config.id, dataItem: this.selectedRowItem };
     this.updateValue.emit(backValue);
   }
   public cascadeAnalysis(c?) {
@@ -75,14 +75,15 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
   isScan = true;
   oldvalue = null;
   public async onKeyPress(e) {
+
     if (e.code === 'Enter') {
       this.isScan = false;
       this.oldvalue = this.value;
-       const result = await this.load();
+      const result = await this.load();
       //  扫码后 触发返回
       //  this.valueChange(this.value, result.data);
       this.valueChange(this.value);
-      e.stopPropagation(); 
+      e.stopPropagation();
     } else {
       if (e.code === 'ArrowDown') {
 
@@ -99,14 +100,32 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
       }
     }
   }
+  groupClick(e) {
+    //  console.log('group_click');
+    e.stopPropagation();
+    // e.preventDefault();
+  }
+  public async scanCodeClick(e?) {
+    console.log('scanCodeClick',e)
+    if (e.code === 'Enter'){}
+    else {
+      console.log(this.value);
+      this.oldvalue = this.value;
+      const result = await this.load();
+      //  扫码后 触发返回
+      //  this.valueChange(this.value, result.data);
+      this.valueChange(this.value);
+    }
+
+  }
 
   // 扫码后数据加载  可配置，当前扫码是否加载数据，后续操作均由返回触发级联执行
   public async load() {
     // 【参数不全是否阻止加载！】
     // 对后续业务判断有影响
     //  console.log('===select 自加载====>load');
-    if(!this.config.loadingItemConfig['ajaxConfig']){
-        return false;
+    if (!this.config.loadingItemConfig['ajaxConfig']) {
+      return false;
     }
     const url = this.config.loadingItemConfig['ajaxConfig'].url;
     const method = this.config.loadingItemConfig['ajaxConfig'].ajaxType;
@@ -130,20 +149,20 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
       if (response.data) {
 
         const _data = response.data;
-        _selectedRowItem =_data;
+        _selectedRowItem = _data;
       } else {
         _selectedRowItem = null;
       }
     }
 
-    if(this.config['columns']){
-      let _new_selectedRowItem={};
+    if (this.config['columns']) {
+      let _new_selectedRowItem = {};
       this.config.columns.map(column => {
         _new_selectedRowItem[column['type']] = _selectedRowItem[column['field']];
       });
       this.selectedRowItem = _new_selectedRowItem;
-    }else {
-     this.selectedRowItem = _selectedRowItem;
+    } else {
+      this.selectedRowItem = _selectedRowItem;
     }
 
 

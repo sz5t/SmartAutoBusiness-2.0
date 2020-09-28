@@ -7,8 +7,19 @@
         [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
         [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
 
+ 
+
+        <nz-input-group    [nzAddOnAfter]="suffixButton" style="width: 100%" (click)="groupClick($event)">
+          
         <input nz-input [placeholder] = "config.placeholder" [type]="config.displayType?config.displayType:'text'" [(ngModel)]="value" [formControlName]="config.field"  (keyup)="onKeyPress($event)"
         />
+        </nz-input-group>
+        <ng-template #suffixButton>
+          <button nz-button nzType="primary"  (click)="scanCodeClick($event)"><i nz-icon nzType="read"></i></button>
+        </ng-template>
+
+  
+
         <ng-template #combineTpl let-control>
                 <ng-container nz-col *ngFor="let c of config.validations" > 
                         <ng-container *ngIf="control.hasError(c['validator'])">{{c.message ? c.message:'校验不通过' }}</ng-container>

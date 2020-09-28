@@ -132,6 +132,7 @@ import { CnGridTreeSelectComponent } from './components/data_table/cn-grid-items
 import { CnContainersComponent } from './components/cn-containers/cn-containers.component';
 import { CnGridSelectMultipleComponent } from './components/data_table/cn-grid-items/cn-grid-select-multiple/cn-grid-select-multiple.component';
 import { CnDataStepsComponent } from './components/cn-data-steps/cn-data-steps.component';
+import { CnGridSpanComponent } from './components/data_table/cn-grid-items/cn-grid-span/cn-grid-span.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -260,6 +261,7 @@ const COMPONENTS = [
   CnContainersComponent,
   CnGridSelectMultipleComponent,
   CnDataStepsComponent,
+  CnGridSpanComponent,
   // ------设计组件-----
 ];
 const DIRECTIVES = [

@@ -1,3 +1,4 @@
-<input nz-input [placeholder] = "config.placeholder?config.placeholder:''"  [(ngModel)]="value" 
+<input nz-input [placeholder] = "config.placeholder?config.placeholder:''"  [type]="config.displayType?config.displayType:'text'"
+  [(ngModel)]="value" 
 (blur)="onblur($event,'end')" (keyup)="onKeyPress($event,'end')"
 />

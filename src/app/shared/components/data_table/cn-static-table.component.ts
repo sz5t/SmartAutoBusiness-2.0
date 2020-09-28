@@ -739,7 +739,17 @@ export class CnStaticTableComponent extends CnComponentBase
 
                 // "symbol":"plus", // plus\reduce\ride\except\cover 计算类型
                 if(add_row['symbol']==='plus'){
-                    this.mapOfDataState[newId]['data'][add_row['name']] = this.mapOfDataState[newId]['data'][add_row['name']] + value;
+        
+                    this.mapOfDataState[newId]['data'][add_row['name']] =parseFloat(( this.mapOfDataState[newId]['data'][add_row['name']] + value).toFixed(10));
+                   // this.mapOfDataState[newId]['originData'][add_row['name']] = parseFloat(( this.mapOfDataState[newId]['data'][add_row['name']] + value).toFixed(10));
+                    // this.mapOfDataState[newId]['data'][add_row['name']] + value;
+                    if( !this.formCascade[newId][add_row['name']]){
+                        this.formCascade[newId][add_row['name']] ={};
+                    }
+                  //  this.formCascade[newId][add_row['name']]['setValue'] = { value:  this.mapOfDataState[newId]['data'][add_row['name']] };
+                  //  this.formCascade[newId][add_row['name']]['exec']= 'setValue';
+                  //  this.formCascade[newId][add_row['name']] = JSON.parse(JSON.stringify(this.formCascade[newId][add_row['name']]));
+                    
                 }
                 if(add_row['symbol']==='reduce'){
                     this.mapOfDataState[newId]['data'][add_row['name']] = this.mapOfDataState[newId]['data'][add_row['name']] - value;
@@ -756,6 +766,16 @@ export class CnStaticTableComponent extends CnComponentBase
                 }
             }
             newData = this.mapOfDataState[newId]['data'];
+            //const dd = JSON.parse(JSON.stringify(this.dataList));
+             this.dataList=JSON.parse(JSON.stringify(this.dataList));
+
+           // this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== '');
+            // setTimeout(() => {
+            //     this.dataList = dd;
+            // });
+            
+            console.log('+++++++++++修改行后的数据+++++++++++', this.dataList, this.mapOfDataState);
+           
             return { result:true,  data: newData};
         } else {
             return { result:false,  data: newData};

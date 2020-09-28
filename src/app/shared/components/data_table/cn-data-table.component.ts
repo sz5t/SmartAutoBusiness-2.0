@@ -1415,7 +1415,7 @@ export class CnDataTableComponent extends CnComponentBase
             });
         } else if (!isArray && data) {
             if (data['_procedure_resultset_1']) {
-                data = data['_procedure_resultset_1'][0];
+                data ={...data['_procedure_resultset_1'][0],...data};
             }
             parameterResult = ParameterResolver.resolve({
                 params: paramsCfg,
@@ -1676,12 +1676,17 @@ export class CnDataTableComponent extends CnComponentBase
         // if(isEditForm) {
 
         // }
+
+        const ajaxParams_1 = [{ name: this.KEY_ID, type: "item", valueName: this.KEY_ID }];
+        const paramDataids = this._createCheckedRowsIdParameter(ajaxParams_1);
+   
         if (option.changeValue) {
             const d = ParameterResolver.resolve({
                 params: option.changeValue.params,
                 tempValue: this.tempValue,
                 // componentValue: cmptValue,
                 item: option.data.data ? option.data.data : option.data,
+                checkedItem: paramDataids,
                 selectedRow: this.ROW_SELECTED,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
@@ -1747,6 +1752,10 @@ export class CnDataTableComponent extends CnComponentBase
         // if(isEditForm) {
 
         // }
+
+        const ajaxParams_1 = [{ name: this.KEY_ID, type: "item", valueName: this.KEY_ID }];
+        const paramDataids = this._createCheckedRowsIdParameter(ajaxParams_1);
+   
         if (option.changeValue) {
             const d = ParameterResolver.resolve({
                 params: option.changeValue.params,
@@ -1754,6 +1763,7 @@ export class CnDataTableComponent extends CnComponentBase
                 // componentValue: cmptValue,
                 item: option.data.data ? option.data.data : option.data,
                 selectedRow: this.ROW_SELECTED,
+                checkedItem: paramDataids,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
                 checkedRow: this.ROWS_CHECKED,

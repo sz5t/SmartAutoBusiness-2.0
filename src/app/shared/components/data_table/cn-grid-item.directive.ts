@@ -21,6 +21,7 @@ import { CnGridYearPickerComponent } from '@shared/components/data_table/cn-grid
 import { CnGridMonthPickerComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-month-picker/cn-grid-month-picker.component';
 import { CnGridTreeSelectComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-tree-select/cn-grid-tree-select.component';
 import { CnGridSelectMultipleComponent } from './cn-grid-items/cn-grid-select-multiple/cn-grid-select-multiple.component';
+import { CnGridSpanComponent } from '@shared/components/data_table/cn-grid-items/cn-grid-span/cn-grid-span.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnGridInputComponent,
@@ -31,20 +32,21 @@ const components: { [type: string]: Type<any> } = {
   AttributePropertyGrid: CnAttributePropertyGridComponent,
   progress: CnProgressComponent,
   tag: CnGridTagComponent,
-  switch:CnGridSwitchComponent,
+  switch: CnGridSwitchComponent,
   radio: CnGridRadioComponent,
-  checkbox:  CnGridCheckboxComponent,
-  gridSelect:  CnGridGridSelectComponent,
-  selectMultiple:CnGridSelectMultipleComponent,
-  datePicker:  CnGridDatePickerComponent,
-  monthPicker:  CnGridMonthPickerComponent,
-  weekPicke:  CnGridWeekPickerComponent,
-  yearPicker:  CnGridYearPickerComponent,
+  checkbox: CnGridCheckboxComponent,
+  gridSelect: CnGridGridSelectComponent,
+  selectMultiple: CnGridSelectMultipleComponent,
+  datePicker: CnGridDatePickerComponent,
+  monthPicker: CnGridMonthPickerComponent,
+  weekPicke: CnGridWeekPickerComponent,
+  yearPicker: CnGridYearPickerComponent,
   rangePicker: CnGridRangePickerComponent,
-  customSelect:  CnGridCustomSelectComponent,
-  codeEdit:  CnGridCodeEditComponent,
-  textarea:  CnGridTextareaComponent,
+  customSelect: CnGridCustomSelectComponent,
+  codeEdit: CnGridCodeEditComponent,
+  textarea: CnGridTextareaComponent,
   treeSelect: CnGridTreeSelectComponent,
+  span: CnGridSpanComponent
   // label: ,
   // selectMultiple:,
   // datePicker:,
@@ -87,8 +89,7 @@ export class CnGridItemDirective implements OnInit, OnChanges, OnDestroy {
     if (!components[this.config.type]) {
       const supportedTypes = Object.keys(components).join(', ');
       throw new Error(
-        `不支持此类型的组件 (${
-        this.config.type
+        `不支持此类型的组件 (${this.config.type
         }).可支持的类型为: ${supportedTypes}`
       );
     }
@@ -112,7 +113,7 @@ export class CnGridItemDirective implements OnInit, OnChanges, OnDestroy {
         this.setValue(event);
       });
     }
-   //  console.log('创建表格内部组件。。。',  this.config);
+    //  console.log('创建表格内部组件。。。',  this.config);
   }
 
   // 组件将值写回、级联数据-》回写 
@@ -146,8 +147,7 @@ export class CnGridItemDirective implements OnInit, OnChanges, OnDestroy {
         if (!components[this.config.type]) {
           const supportedTypes = Object.keys(components).join(', ');
           throw new Error(
-            `不支持此类型的组件 (${
-            this.config.type
+            `不支持此类型的组件 (${this.config.type
             }).可支持的类型为: ${supportedTypes}`
           );
         }

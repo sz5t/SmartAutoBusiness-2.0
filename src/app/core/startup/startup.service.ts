@@ -31,7 +31,21 @@ export class StartupService {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
 
-  load(): Promise<any> {
+  public async getWebConfig(){
+    
+    const data = await this.httpClient.get(`assets/tmp/webConfig.json`).toPromise();
+
+    if(data && data.hasOwnProperty('SERVER_URL')){
+       if(data['SERVER_URL']){
+        environment.SERVER_URL = data['SERVER_URL'];
+       }
+    }
+    console.log('+++++++++加载后台服务访问地址++++++++++++',data);
+  }
+
+  async load(): Promise<any> {
+    //debugger;
+    await this.getWebConfig();
     // only works with promises
     // https://github.com/angular/angular/issues/15088
     return new Promise(resolve => {
