@@ -125,8 +125,10 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
 
         this._componentRef = this._container.createComponent(comp);
         this._componentRef.instance.config = componentObj;
-        this._componentRef.instance.initData = this.initData;
-        this._componentRef.instance.tempData = this.tempData;
+        const _initValue_new = {...this.initData};
+        const _tempValue_new = {...this.tempData};
+        this._componentRef.instance.initData = _initValue_new;
+        this._componentRef.instance.tempData = _tempValue_new;
         this._componentRef.instance.dataServe = this.dataServe;
         this.dataServe && (this.dataServe.setComponentInstace(componentObj.id,this._componentRef));
     }

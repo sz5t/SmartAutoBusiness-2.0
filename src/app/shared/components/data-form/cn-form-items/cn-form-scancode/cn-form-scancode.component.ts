@@ -155,10 +155,12 @@ export class CnFormScancodeComponent extends CnComponentBase implements OnInit {
       }
     }
 
-    if (this.config['columns']) {
+    if (this.config['columns'] && this.config['columns'].length>0) {
       let _new_selectedRowItem = {};
       this.config.columns.map(column => {
-        _new_selectedRowItem[column['type']] = _selectedRowItem[column['field']];
+        if(_selectedRowItem && _selectedRowItem.hasOwnProperty(column['field'])){
+          _new_selectedRowItem[column['type']] = _selectedRowItem[column['field']];
+        }
       });
       this.selectedRowItem = _new_selectedRowItem;
     } else {

@@ -84,3 +84,4 @@ node_modules.zip
 dist/
 src/assets/alain-default.less
 src/environments/environment.ts
+src/assets/tmp/webConfig.json
