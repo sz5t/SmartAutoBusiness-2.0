@@ -26,6 +26,7 @@ import { CnFormTagComponent } from '@shared/components/data-form/cn-form-items/c
 import { CnFormScancodeComponent } from '@shared/components/data-form/cn-form-items/cn-form-scancode/cn-form-scancode.component';
 import { CnFormCustomInputComponent } from '@shared/components/data-form/cn-form-items/cn-form-custom-input/cn-form-custom-input.component';
 import { CnFormCascaderComponent } from '@shared/components/data-form/cn-form-items/cn-form-cascader/cn-form-cascader.component';
+import { CnFormSpanComponent } from './cn-form-items/cn-form-span/cn-form-span.component';
 
 const components: { [type: string]: Type<any> } = {
   input: CnFormInputComponent,
@@ -53,7 +54,8 @@ const components: { [type: string]: Type<any> } = {
   tag: CnFormTagComponent,
   scancode:CnFormScancodeComponent,
   customInput:CnFormCustomInputComponent,
-  cascader:CnFormCascaderComponent
+  cascader:CnFormCascaderComponent,
+  span:CnFormSpanComponent
 };
 @Directive({
   selector: '[CnFormItemDirective]'

@@ -133,6 +133,8 @@ import { CnContainersComponent } from './components/cn-containers/cn-containers.
 import { CnGridSelectMultipleComponent } from './components/data_table/cn-grid-items/cn-grid-select-multiple/cn-grid-select-multiple.component';
 import { CnDataStepsComponent } from './components/cn-data-steps/cn-data-steps.component';
 import { CnGridSpanComponent } from './components/data_table/cn-grid-items/cn-grid-span/cn-grid-span.component';
+import { CnFormCheckboxGroupComponent } from './components/data-form/cn-form-items/cn-form-checkbox-group/cn-form-checkbox-group.component';
+import { CnFormSpanComponent } from './components/data-form/cn-form-items/cn-form-span/cn-form-span.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -262,6 +264,8 @@ const COMPONENTS = [
   CnGridSelectMultipleComponent,
   CnDataStepsComponent,
   CnGridSpanComponent,
+  CnFormSpanComponent,
+  CnFormCheckboxGroupComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [

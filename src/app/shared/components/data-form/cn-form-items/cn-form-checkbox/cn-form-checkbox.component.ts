@@ -14,6 +14,8 @@ import { CnComponentBase } from '@shared/components/cn-component.base';
 export class CnFormCheckboxComponent extends CnComponentBase implements OnInit {
   @Input() public config;
   @Input() formGroup: FormGroup;
+  @Input() public initData; 
+  @Input() tempData;
   @Output() public updateValue = new EventEmitter();
   value = null;
   selectItems;
@@ -29,6 +31,16 @@ export class CnFormCheckboxComponent extends CnComponentBase implements OnInit {
   }
 
   ngOnInit() {
+    if (this.initData) {
+      this.initValue = this.initData;
+    } else {
+      this.initValue = {};
+    }
+    if (this.tempData) {
+      this.tempValue = this.tempData;
+    } else {
+      this.tempValue = {};
+    }
     if (this.config.loadingConfig) {
       // this.load();
     } else {
