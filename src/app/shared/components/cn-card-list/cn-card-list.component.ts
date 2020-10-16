@@ -687,6 +687,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                     onClick: componentInstance => {
                         (async () => {
                             const response = await componentInstance.executeModal(option);
+                            if(response){
                             this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
                             // 处理validation结果
@@ -694,6 +695,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                                 &&
                                 this._sendDataErrorMessage(response, option.ajaxConfig.result)
                                 && dialog.close();
+                            }
                         })();
                     }
                 }
@@ -701,6 +703,146 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
         }
         dialog = this.componentService.modalService.create(dialogOptional);
     }
+
+    public showWindow(option: any) {
+        let dialog;
+        // 根据按钮类型初始化表单状态
+        const dialogCfg = option.window;
+        // const ajaxParams_1 = [{ name: this.KEY_ID, type: "item", valueName: this.KEY_ID }];
+        // const paramDataids = this._createCheckedRowsIdParameter(ajaxParams_1);
+   
+        if (option.changeValue) {
+            const d = ParameterResolver.resolve({
+                params: option.changeValue.params,
+                tempValue: this.tempValue,
+                // componentValue: cmptValue,
+                item: this.ITEM_SELECTED,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue
+            });
+            option.changeValue.params.map(param => {
+                if (param.type === 'value') {
+                    // 类型为value是不需要进行任何值的解析和变化
+                } else {
+                    if (d[param.name]) {
+                        param['value'] = d[param.name];
+                    }
+                }
+            });
+        }
+
+        const dialogOptional = {
+            nzTitle: dialogCfg.title ? dialogCfg.title : '',
+            nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
+            nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzContent: CnPageComponent,
+            nzComponentParams: {
+                config: {},
+                customPageId: dialogCfg.layoutName, // "0MwdEVnpL0PPFnGISDWYdkovXiQ2cIOG",
+                // initData:this.initData
+                changeValue: option.changeValue ? option.changeValue.params : []
+            },
+            nzFooter: [
+                {
+                    label: dialogCfg.cancelText ? dialogCfg.cancelText : 'cancel',
+                    onClick: componentInstance => {
+                        dialog.close();
+                    }
+                },
+                {
+                    label: dialogCfg.okText ? dialogCfg.okText : 'OK',
+                    onClick: componentInstance => {
+                        dialog.close();
+                        /*   (async () => {
+                              const response = await componentInstance.executeModal(option);
+                              this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+  
+                              // 处理validation结果
+                              this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                                  &&
+                                  this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                                  && dialog.close();
+                          })(); */
+                    }
+                }
+            ]
+        }
+        // 自定义 操作按钮
+        if (dialogCfg.footerButton && dialogCfg.footerButton.length > 0) {
+            dialogOptional.nzFooter = [];
+
+            dialogCfg.footerButton.forEach(_button => {
+                dialogOptional.nzFooter.push(
+                    {
+                        label: _button.text,
+                        onClick: componentInstance => {
+                            // dialog.close();
+                            // customAction
+                            let customAction;
+                            if (dialogCfg.customAction && dialogCfg.customAction.length > 0) {
+                                let customActionList = dialogCfg.customAction.filter(item => item.id === _button.customActionId);
+                                if (customActionList && customActionList.length > 0) {
+                                    customAction = customActionList[0];
+                                }
+                            }
+
+                            this.execCustomAction(customAction, dialog, componentInstance);
+                        }
+                    }
+                );
+            });
+
+        }
+
+        dialog = this.componentService.modalService.create(dialogOptional);
+        this.windowDialog = dialog;
+
+    }
+        // 执行弹出页的按钮事件
+        public execCustomAction(customAction?, dialog?, componentInstance?) {
+            console.log('execCustomAction');
+    
+            customAction.execute.forEach(item => {
+                if (item.type === 'relation') {
+                    new RelationResolver(this)
+                        .resolveInnerSender(
+                            item.sender,
+                            {},
+                            Array.isArray({})
+                        );
+                } else if (item.type === 'action') {
+                    this.windowDialog.close();
+                }
+    
+            });
+    
+            // new RelationResolver(this). resolveSender();
+    
+    
+    
+            return true;
+        }
+    
+    
+        windowDialog;
+    
+        /**
+         * 执行关闭，通过消息等将当前弹出关闭
+         * @param option 
+         */
+        executePopupClose(option?) {
+    
+            console.log('关闭弹出executeShowClose', option)
+            // 参数传递 更加传递类型关闭，若传递类型不配置，则将当前存在的示例关闭 popup
+    
+            if (this.windowDialog) {
+                this.windowDialog.close(); // 关闭弹出
+                this.windowDialog = null;
+            }
+    
+            return true;
+        }
 
     /**
      * 显示消息框

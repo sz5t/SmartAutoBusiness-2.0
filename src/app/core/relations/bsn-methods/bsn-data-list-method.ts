@@ -55,5 +55,6 @@ export const CN_DATA_LIST_METHOD: IDataListTrigger = {
     EXECUTE_CURRENT_ROW: 'executeCurrentRow',
     EXECUTE_SELECTED_ROW: 'executeSelectRow',
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
-    EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds'
+    EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds',
+    EXECUTE_POPUP_CLOSE: 'executePopupClose'
 }
