@@ -47,10 +47,10 @@ export class StartupService {
   }
 
   async load(): Promise<any> {
-    //debugger;
+    // debugger;
     await this.getWebConfig();
-    //const data = await this.httpClient.get(`resource/SMT_SETTING_LAYOUT_BASE/query?_mapToObject=true`).toPromise();
-    //console.log('======测试发布地址======',data);
+    // const data = await this.httpClient.get(`resource/SMT_SETTING_LAYOUT_BASE/query?_mapToObject=true`).toPromise();
+    // console.log('======测试发布地址======',data);
     // only works with promises
     // https://github.com/angular/angular/issues/15088
     return new Promise(resolve => {
@@ -98,7 +98,7 @@ export class StartupService {
             // ACL：设置权限为全量
             this.aclService.setFull(true);
             // 初始化菜单
-            this.menuService.add(res.menu);
+            // this.menuService.add(res.menu);
             // 设置页面标题的后缀
             this.titleService.default = '';
             this.titleService.suffix = res.app.name;

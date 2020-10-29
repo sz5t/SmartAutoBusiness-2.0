@@ -1,4 +1,4 @@
-import { SettingsService, _HttpClient } from '@delon/theme';
+import { MenuService, SettingsService, _HttpClient } from '@delon/theme';
 import { Component, OnDestroy, Inject, Optional } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { SocialService, SocialOpenType, ITokenService, DA_SERVICE_TOKEN } from '
 import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
 import { StartupService } from '@core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'passport-login',
@@ -25,6 +26,8 @@ export class UserLoginComponent implements OnDestroy {
     private router: Router,
     private settingsService: SettingsService,
     private socialService: SocialService,
+    private menuService: MenuService,
+    public httpClient: HttpClient,
     @Optional()
     @Inject(ReuseTabService)
     private reuseTabService: ReuseTabService,
@@ -86,7 +89,7 @@ export class UserLoginComponent implements OnDestroy {
 
   // #endregion
 
-  submit() {
+  async submit(): Promise<any> {
     this.error = '';
     if (this.type === 0) {
       this.userName.markAsDirty();
@@ -132,6 +135,21 @@ export class UserLoginComponent implements OnDestroy {
     //       this.router.navigateByUrl(url);
     //     });
     //   });
+    this.tokenService.set({ key: `123`, token: '123' });
+    const result = await this.http.get(`resource/GET_LOGIN_RESULT/query?_mapToObject=true&login_name=` + this.userName.value + `&login_pwd=` + this.password.value).toPromise();
+    let menu: any
+    menu = await this.http.get(`resource/GET_MODULE_LIST/query?_mapToObject=true&_sort=sortcode asc`).toPromise();
+    if (this.userName.value === 'admin') {
+      const currentMenu = this.buildServerRes(menu)
+      this.menuService.add(currentMenu['menu']);
+    } else if (result['data'].length > 0 && this.userName.value !== 'admin') {
+      const permissionMenu:any = await this.http.get(`resource/GET_USER_MODULE/query?_mapToObject=true&login_name=` + this.userName.value).toPromise();
+      if (permissionMenu['data'].length > 0) {
+        menu['data'] = menu.data.filter(e => permissionMenu.data.findIndex(p => p.moduleId === e.id) > -1)
+      }
+      const currentMenu = this.buildServerRes(menu)
+      this.menuService.add(currentMenu['menu']);
+    }
 
     // 清空路由复用信息
     this.reuseTabService.clear();
@@ -146,6 +164,45 @@ export class UserLoginComponent implements OnDestroy {
       this.router.navigateByUrl(url);
     });
     // this.router.navigateByUrl('/');
+  }
+
+  private buildServerRes(serverData) {
+    const data:any = {};
+    if (serverData.data) {
+      const s = this.buildServerMenu(serverData);
+      data['menu'] = [...s]
+      return data;
+    } else {
+      return data;
+    }
+  }
+  private buildServerMenu(serverData) {
+    const menu_level_1 = serverData.data.filter(d => d.nodetype === 1);
+    const menu_level_2 = serverData.data.filter(d => d.nodetype === 2);
+    const menu_level_3 = serverData.data.filter(d => d.nodetype === 3);
+
+    if (menu_level_3) {
+      for (const l2 of menu_level_2) {
+        l2['children'] = [];
+        for (const l3 of menu_level_3) {
+          if (l3.parentId === l2.id) {
+            l2['children'].push(l3);
+          }
+        }
+      }
+    }
+    if (menu_level_2) {
+      menu_level_1.map(l1 => {
+        l1['children'] = [];
+        menu_level_2.map(l2 => {
+          if (l2.parentId === l1.id) {
+            l1['children'].push(l2);
+          }
+        })
+      })
+    }
+
+    return menu_level_1;
   }
 
   // #region social
