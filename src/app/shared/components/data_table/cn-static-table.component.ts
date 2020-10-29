@@ -290,7 +290,7 @@ export class CnStaticTableComponent extends CnComponentBase
                     }
                     if (col.editor.hasOwnProperty('changeValueId')) {
                         col.editor['changeValue'] = this.findChangeValueConfig(col.editor.changeValueId);
-                      }
+                    }
                 }
             });
             if (actionCfgs && actionCfgs.length > 0) {
@@ -326,13 +326,13 @@ export class CnStaticTableComponent extends CnComponentBase
     private findChangeValueConfig(changeValueId) {
         let changeValueConfig;
         if (this.config.changeValue && Array.isArray(this.config.changeValue) && this.config.changeValue.length > 0) {
-          const c = this.config.changeValue.find(cfg => cfg.id === changeValueId);
-          if (c) {
-            changeValueConfig = c;
-          }
+            const c = this.config.changeValue.find(cfg => cfg.id === changeValueId);
+            if (c) {
+                changeValueConfig = c;
+            }
         }
         return changeValueConfig;
-      }
+    }
 
     private _initComponentData() {
         this.mapOfDataState = {};
@@ -347,11 +347,11 @@ export class CnStaticTableComponent extends CnComponentBase
 
 
     public addBtnClick(event?) {
-        console.log('addBtnClick',event);
-        if(event){
+        console.log('addBtnClick', event);
+        if (event) {
             if (event.code === 'Enter') {
-               return false;
-              }
+                return false;
+            }
         }
         this.addRow();
         this.updateValue.emit(this.getAddedNewRowsData());
@@ -482,7 +482,7 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
     // 是否存在当前行数据
-    public custom_exist(option?,structureConfig?) {
+    public custom_exist(option?, structureConfig?) {
 
         const newconfig = {
             custom: [   // 组件自定义行为，只进一组参数【】，然后根据参数做业务处理，参数里需要【响应方法名称】
@@ -513,47 +513,47 @@ export class CnStaticTableComponent extends CnComponentBase
         let addRowMapping;
 
         let row_data = {};
-        if(structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']){
-            addRowMapping =  structureConfig['structure'];
+        if (structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']) {
+            addRowMapping = structureConfig['structure'];
         }
-     
-       if(addRowMapping){
-        addRowMapping.forEach(add_row => {
 
-            let value;
-            if (add_row['type'] === 'tempValue') {
-                value = this.tempValue[add_row['valueName']];
-            } else if (add_row['type'] === 'tempValue') {
-                value = this.initValue[add_row['valueName']];
-            } else if (add_row['type'] === 'value') {
-                value = add_row['value'];
-            } else if (add_row['type'] === 'item') {
-                value = option[add_row['valueName']];
+        if (addRowMapping) {
+            addRowMapping.forEach(add_row => {
+
+                let value;
+                if (add_row['type'] === 'tempValue') {
+                    value = this.tempValue[add_row['valueName']];
+                } else if (add_row['type'] === 'tempValue') {
+                    value = this.initValue[add_row['valueName']];
+                } else if (add_row['type'] === 'value') {
+                    value = add_row['value'];
+                } else if (add_row['type'] === 'item') {
+                    value = option[add_row['valueName']];
+                }
+                row_data[add_row['name']] = value;
+            })
+        } else {
+            row_data = {};
+        }
+
+        let back_dataList = this.dataList.filter(item => {
+            let back = true;
+            for (let key in row_data) {
+                // console.log(key + '---' + row_data[key]);
+                if (row_data[key] !== item[key]) {
+                    back = false;
+                }
             }
-            row_data[add_row['name']] = value;
-        })
-       } else{
-         row_data ={};
-       }
+            return back;
+        });
 
-       let back_dataList = this.dataList.filter(item=>{
-          let back =true;
-          for(let key  in row_data){
-            // console.log(key + '---' + row_data[key]);
-            if(row_data[key]!==item[key]){
-                back =false;
-            }
-          }
-          return back;
-       });
-
-       if(back_dataList && back_dataList.length>0){
-        // return true;
-        return { result:true,  data: back_dataList[0]};
-       }else {
-        //return false;
-        return { result:false,  data: null};
-       }
+        if (back_dataList && back_dataList.length > 0) {
+            // return true;
+            return { result: true, data: back_dataList[0] };
+        } else {
+            //return false;
+            return { result: false, data: null };
+        }
     }
 
     // 前置条件成组出现，当满足某条件后有响应
@@ -607,33 +607,33 @@ export class CnStaticTableComponent extends CnComponentBase
     }
 
 
-    public custom_add(option?,structureConfig?) {
+    public custom_add(option?, structureConfig?) {
 
         let addRowMapping;
 
         let row_data = {};
-        if(structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']){
-            addRowMapping =  structureConfig['structure'];
+        if (structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']) {
+            addRowMapping = structureConfig['structure'];
         }
-     
-       if(addRowMapping){
-        addRowMapping.forEach(add_row => {
 
-            let value;
-            if (add_row['type'] === 'tempValue') {
-                value = this.tempValue[add_row['valueName']];
-            } else if (add_row['type'] === 'tempValue') {
-                value = this.initValue[add_row['valueName']];
-            } else if (add_row['type'] === 'value') {
-                value = add_row['value'];
-            } else if (add_row['type'] === 'item') {
-                value = option[add_row['valueName']];
-            }
-            row_data[add_row['name']] = value;
-        })
-       } else{
-         row_data =option;
-       }
+        if (addRowMapping) {
+            addRowMapping.forEach(add_row => {
+
+                let value;
+                if (add_row['type'] === 'tempValue') {
+                    value = this.tempValue[add_row['valueName']];
+                } else if (add_row['type'] === 'tempValue') {
+                    value = this.initValue[add_row['valueName']];
+                } else if (add_row['type'] === 'value') {
+                    value = add_row['value'];
+                } else if (add_row['type'] === 'item') {
+                    value = option[add_row['valueName']];
+                }
+                row_data[add_row['name']] = value;
+            })
+        } else {
+            row_data = option;
+        }
 
 
         // 将数据处理合并为当前新增行数据,并选中当前数据
@@ -677,41 +677,42 @@ export class CnStaticTableComponent extends CnComponentBase
 
         this.ROWS_ADDED = [newData, ...this.ROWS_ADDED];
         this.scanCodeLoad();
-        this.updateValue_dataList(); // 将数据回写
+        this.L_columnSummary();
+        this.updateValue_dataList('custom_add'); // 将数据回写
         // return true;
 
-        return { result:true,  data: newData};
+        return { result: true, data: newData };
 
         console.log('+++++++++++新增行后的数据+++++++++++', this.dataList, this.mapOfDataState);
         // 更新状态
     }
-    public custom_update(option?,structureConfig?,backData?) {
+    public custom_update(option?, structureConfig?, backData?) {
 
         let addRowMapping;
 
         let row_data = {};
-        if(structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']){
-            addRowMapping =  structureConfig['structure'];
+        if (structureConfig && structureConfig.hasOwnProperty('structure') && structureConfig['structure']) {
+            addRowMapping = structureConfig['structure'];
         }
-     
-       if(addRowMapping){
-        addRowMapping.forEach(add_row => {
 
-            let value;
-            if (add_row['type'] === 'tempValue') {
-                value = this.tempValue[add_row['valueName']];
-            } else if (add_row['type'] === 'tempValue') {
-                value = this.initValue[add_row['valueName']];
-            } else if (add_row['type'] === 'value') {
-                value = add_row['value'];
-            } else if (add_row['type'] === 'item') {
-                value = option[add_row['valueName']];
-            }
-            row_data[add_row['name']] = value;
-        })
-       } else{
-         row_data =option;
-       }
+        if (addRowMapping) {
+            addRowMapping.forEach(add_row => {
+
+                let value;
+                if (add_row['type'] === 'tempValue') {
+                    value = this.tempValue[add_row['valueName']];
+                } else if (add_row['type'] === 'tempValue') {
+                    value = this.initValue[add_row['valueName']];
+                } else if (add_row['type'] === 'value') {
+                    value = add_row['value'];
+                } else if (add_row['type'] === 'item') {
+                    value = option[add_row['valueName']];
+                }
+                row_data[add_row['name']] = value;
+            })
+        } else {
+            row_data = option;
+        }
 
 
         // 将数据处理合并为当前新增行数据,并选中当前数据
@@ -720,9 +721,9 @@ export class CnStaticTableComponent extends CnComponentBase
         let newId = CommonUtils.uuID(32);
         let newData = {};
 
-        if(backData && addRowMapping){
+        if (backData && addRowMapping) {
 
-            newId=  backData[this.KEY_ID];
+            newId = backData[this.KEY_ID];
 
             addRowMapping.forEach(add_row => {
 
@@ -738,26 +739,26 @@ export class CnStaticTableComponent extends CnComponentBase
                 }
 
                 // "symbol":"plus", // plus\reduce\ride\except\cover 计算类型
-                if(add_row['symbol']==='plus'){
-        
-                    this.mapOfDataState[newId]['data'][add_row['name']] =parseFloat(( this.mapOfDataState[newId]['data'][add_row['name']] + value).toFixed(10));
-                   // this.mapOfDataState[newId]['originData'][add_row['name']] = parseFloat(( this.mapOfDataState[newId]['data'][add_row['name']] + value).toFixed(10));
+                if (add_row['symbol'] === 'plus') {
+
+                    this.mapOfDataState[newId]['data'][add_row['name']] = parseFloat((this.mapOfDataState[newId]['data'][add_row['name']] + value).toFixed(10));
+                    // this.mapOfDataState[newId]['originData'][add_row['name']] = parseFloat(( this.mapOfDataState[newId]['data'][add_row['name']] + value).toFixed(10));
                     // this.mapOfDataState[newId]['data'][add_row['name']] + value;
-                    if( !this.formCascade[newId][add_row['name']]){
-                        this.formCascade[newId][add_row['name']] ={};
+                    if (!this.formCascade[newId][add_row['name']]) {
+                        this.formCascade[newId][add_row['name']] = {};
                     }
-                  //  this.formCascade[newId][add_row['name']]['setValue'] = { value:  this.mapOfDataState[newId]['data'][add_row['name']] };
-                  //  this.formCascade[newId][add_row['name']]['exec']= 'setValue';
-                  //  this.formCascade[newId][add_row['name']] = JSON.parse(JSON.stringify(this.formCascade[newId][add_row['name']]));
-                    
+                    //  this.formCascade[newId][add_row['name']]['setValue'] = { value:  this.mapOfDataState[newId]['data'][add_row['name']] };
+                    //  this.formCascade[newId][add_row['name']]['exec']= 'setValue';
+                    //  this.formCascade[newId][add_row['name']] = JSON.parse(JSON.stringify(this.formCascade[newId][add_row['name']]));
+
                 }
-                if(add_row['symbol']==='reduce'){
+                if (add_row['symbol'] === 'reduce') {
                     this.mapOfDataState[newId]['data'][add_row['name']] = this.mapOfDataState[newId]['data'][add_row['name']] - value;
                 }
-                if(add_row['symbol']==='cover'){
-                    this.mapOfDataState[newId]['data'][add_row['name']] =  value;
+                if (add_row['symbol'] === 'cover') {
+                    this.mapOfDataState[newId]['data'][add_row['name']] = value;
                 }
-               
+
             })
 
             if (newId) {
@@ -767,20 +768,25 @@ export class CnStaticTableComponent extends CnComponentBase
             }
             newData = this.mapOfDataState[newId]['data'];
             //const dd = JSON.parse(JSON.stringify(this.dataList));
-             this.dataList=JSON.parse(JSON.stringify(this.dataList));
 
-           // this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== '');
+            let new_index = this.dataList.findIndex(item => item[this.KEY_ID] === newData[this.KEY_ID]);
+            if (new_index > -1) {
+                this.dataList[new_index] = newData;
+            }
+            this.dataList = JSON.parse(JSON.stringify(this.dataList));
+            this.L_columnSummary();
+            // this.dataList = this.dataList.filter(d => d[this.KEY_ID] !== '');
             // setTimeout(() => {
             //     this.dataList = dd;
             // });
-            
+
             console.log('+++++++++++修改行后的数据+++++++++++', this.dataList, this.mapOfDataState);
-           
-            return { result:true,  data: newData};
+
+            return { result: true, data: newData };
         } else {
-            return { result:false,  data: newData};
+            return { result: false, data: newData };
         }
-       
+
         // return true;
 
         console.log('+++++++++++修改行后的数据+++++++++++', this.dataList, this.mapOfDataState);
@@ -804,7 +810,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
     }
 
-    public execute_component_customAction(customAction?, defineStructure?, data?,backData?) {
+    public execute_component_customAction(customAction?, defineStructure?, data?, backData?) {
 
         console.log('execute_component_customAction', customAction, data);
         customAction.execute.forEach(item => {
@@ -822,28 +828,28 @@ export class CnStaticTableComponent extends CnComponentBase
                 let actionType = item['content']['actionType'];
                 let structureId = item['content']['structureId'];
                 let structure;
-                if(structureId && defineStructure && defineStructure.length>0) {
-                    let  structureList =  defineStructure.filter(structureItem=> structureItem['id'] === structureId);
-                    if(structureList && structureList.length>0){
+                if (structureId && defineStructure && defineStructure.length > 0) {
+                    let structureList = defineStructure.filter(structureItem => structureItem['id'] === structureId);
+                    if (structureList && structureList.length > 0) {
                         structure = structureList[0];
                     }
-                } 
+                }
                 switch (actionType) {
                     case 'custom_exist':
-                        resultObj = this.custom_exist(data,structure);
+                        resultObj = this.custom_exist(data, structure);
                         break;
                     case 'custom_add':
-                        resultObj = this.custom_add(data,structure);
+                        resultObj = this.custom_add(data, structure);
                         break;
                     case 'custom_locate':
                         break;
                     case 'custom_update':
-                        resultObj = this.custom_update(data,structure,backData);
+                        resultObj = this.custom_update(data, structure, backData);
                         break;
 
                 }
 
-                if(resultObj){
+                if (resultObj) {
                     result = resultObj['result'];
                     resultData = resultObj['data'];
                 }
@@ -860,7 +866,7 @@ export class CnStaticTableComponent extends CnComponentBase
                     }
                     if (resultActionList && resultActionList.length > 0) {
                         resultAction = resultActionList[0];
-                        this.execute_component_customAction(resultAction, defineStructure, data,resultData);
+                        this.execute_component_customAction(resultAction, defineStructure, data, resultData);
                     }
                 }
 
@@ -1222,7 +1228,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
         this.total = this.dataList.length;
         this.L_columnSummary();
-        this.updateValue_dataList();
+        this.updateValue_dataList('removeNewRow');
     }
 
     public cancelEditRows(option) {
@@ -1263,7 +1269,7 @@ export class CnStaticTableComponent extends CnComponentBase
         }
 
         this.L_columnSummary();
-        this.updateValue_dataList();
+        this.updateValue_dataList('cancelEditRow');
         console.log('-------------', this.ROWS_ADDED, this.ROWS_EDITED)
         // 调用方法之前,判断传递的验证配置,解析后是否能够继续进行后续操作
         // return true 表示通过验证, return false 表示未通过,无法继续后续操作
@@ -1866,6 +1872,7 @@ export class CnStaticTableComponent extends CnComponentBase
                     onClick: componentInstance => {
                         (async () => {
                             const response = await componentInstance.executeModal(option);
+                            if(response){
                             this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
                             // 处理validation结果
@@ -1873,6 +1880,7 @@ export class CnStaticTableComponent extends CnComponentBase
                                 &&
                                 this._sendDataErrorMessage(response, option.ajaxConfig.result)
                                 && dialog.close();
+                            }
                         })();
                     }
                 }

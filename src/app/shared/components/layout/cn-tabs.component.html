@@ -1,4 +1,4 @@
-<nz-tabset [nzType]="tabsObj.tabType ? tabsObj.tabType :'card'" [nzTabPosition]="'top'"
+<nz-tabset [nzType]="tabsObj.tabType ? tabsObj.tabType :'card'" [nzTabPosition]="tabsObj.tabPosition?tabsObj.tabPosition:'top'"
   [nzSize]="tabsObj.size ? tabsObj.size : 'default'" [nzAnimated]="true" (nzSelectChange)="tabChange($event)"
   [(nzSelectedIndex)]="selectedIndex" (nzSelectedIndexChange)="selectedIndexEvent($event)">
   <nz-tab *ngFor="let tab of tabsConfig" [nzTitle]="header" (nzDeselect)="tabDisactive(tab)"

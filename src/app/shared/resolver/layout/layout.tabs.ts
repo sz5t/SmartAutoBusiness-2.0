@@ -10,6 +10,13 @@ export class LayoutTabs extends LayoutBase implements ILayout {
     public set tabType(value: string) {
         this._tabType = value;
     }
+    private _tabPosition: string;
+    public get tabPosition(): string {
+        return this._tabPosition;
+    }
+    public set tabPosition(value: string) {
+        this._tabPosition = value;
+    }
     private _tabContent: LayoutTab[];
     public get tabContent(): LayoutTab[] {
         return this._tabContent;

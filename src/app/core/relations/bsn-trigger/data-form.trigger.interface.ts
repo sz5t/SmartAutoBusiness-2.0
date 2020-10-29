@@ -13,6 +13,7 @@ export interface IDataFormTrigger {
     MESSAGE: string,
     WINDOW: string,
     TRANSFER_VALUE:string,
+    FORM_STATE_SWITCH:string,
     LOAD_REFRESH_DATA:string,
     EXECUTE_POPUP_CLOSE:string
 }
@@ -35,6 +36,7 @@ export const BSN_DATAFORM_TRIGGER: IDataFormTrigger = {
     MESSAGE:'MESSAGE',
     WINDOW: 'WINDOW',
     TRANSFER_VALUE:'TRANSFER_VALUE' ,
+    FORM_STATE_SWITCH:'FORM_STATE_SWITCH',
     LOAD_REFRESH_DATA:'LOAD_REFRESH_DATA',
     EXECUTE_POPUP_CLOSE:'EXECUTE_POPUP_CLOSE'
 }

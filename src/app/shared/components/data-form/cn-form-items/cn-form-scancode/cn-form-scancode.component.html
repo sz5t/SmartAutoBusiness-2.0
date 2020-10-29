@@ -8,15 +8,8 @@
         [formGroup]="formGroup" [nzErrorTip]="combineTpl" nzHasFeedback nzValidatingTip="Validating...">
 
  
-
-        <nz-input-group    [nzAddOnAfter]="suffixButton" style="width: 100%" (click)="groupClick($event)">
-          
-        <input nz-input [placeholder] = "config.placeholder" [type]="config.displayType?config.displayType:'text'" [(ngModel)]="value" [formControlName]="config.field"  (keyup)="onKeyPress($event)"
+        <input nz-input [placeholder] = "config.placeholder" [formControlName]="config.field" [type]="config.displayType?config.displayType:'text'" [(ngModel)]="value"   (keyup)="onKeyPress($event)"
         />
-        </nz-input-group>
-        <ng-template #suffixButton>
-          <button nz-button  type="button" nzType="primary"  (click)="scanCodeClick($event)"><i nz-icon nzType="read"></i></button>
-        </ng-template>
 
   
 

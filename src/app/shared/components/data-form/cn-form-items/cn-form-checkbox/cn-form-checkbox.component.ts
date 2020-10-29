@@ -53,7 +53,7 @@ export class CnFormCheckboxComponent extends CnComponentBase implements OnInit {
     }
 
   }
-  log(value: string[]): void {
+  log(value): void {
     console.log('log', value);
     // 判断
     if (value && value.length > 0) {

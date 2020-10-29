@@ -362,6 +362,7 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     private buildTabsObj(cfg): any {
         const newTabs = new LayoutTabs();
         newTabs.tabType = cfg.tabType;
+        newTabs.tabPosition = cfg.tabPosition;
         newTabs.container = cfg.container;
         newTabs.tabContent = cfg.tabContent;
         newTabs.tabActiveMapping = cfg.tabActiveMapping;

@@ -4,7 +4,7 @@
     <!-- <nz-button-group> -->
     <ng-template ngFor let-btn [ngForOf]="toolbar.group">
       <button *ngIf="!btn.hidden" [nzSize]="btn.size ? btn.size : 'default'"
-        [nzType]="btn.color ? btn.color : 'default'" nz-button type ="text" (click)="action(btn, toolbar.targetViewId)">
+        [nzType]="btn.color ? btn.color : 'default'" nz-button type="button" (click)="action(btn, toolbar.targetViewId)">
         <i nz-icon style="font-weight: 600" *ngIf="btn.icon" [type]="btn.icon"
           [theme]="btn.theme ? btn.theme : 'outline'"></i>
         {{btn.text}}

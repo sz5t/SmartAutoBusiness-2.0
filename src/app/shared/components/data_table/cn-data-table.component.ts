@@ -1727,13 +1727,16 @@ export class CnDataTableComponent extends CnComponentBase
                     onClick: componentInstance => {
                         (async () => {
                             const response = await componentInstance.executeModal(option);
-                            this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+                            if(response){
+                                this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
-                            // 处理validation结果
-                            this._sendDataValidationMessage(response, option.ajaxConfig.result)
-                                &&
-                                this._sendDataErrorMessage(response, option.ajaxConfig.result)
-                                && dialog.close();
+                                // 处理validation结果
+                                this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                                    &&
+                                    this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                                    && dialog.close();
+                            }
+
                         })();
                     }
                 }
@@ -2023,7 +2026,7 @@ export class CnDataTableComponent extends CnComponentBase
     public checkAll($value: boolean): void {
         //
         this.dataList
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['disabled'])
             .map(item =>
                 this.mapOfDataState[item[this.KEY_ID]]['checked'] = $value
             );
@@ -2037,18 +2040,18 @@ export class CnDataTableComponent extends CnComponentBase
     public dataCheckedStatusChange() {
         if (this.dataList.length > 0) {
             this.isAllChecked = this.dataList
-                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['disabled'])
                 .every(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
 
             this.indeterminate = this.dataList
-                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['disabled'])
                 .some(item => this.mapOfDataState[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
 
             this.checkedNumber = this.dataList.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
 
             // 更新当前选中数据集合
             this.ROWS_CHECKED = this.dataList
-                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+                .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['disabled'])
                 .filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
         } else {
             this.isAllChecked = false;

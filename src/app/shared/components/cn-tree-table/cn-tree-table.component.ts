@@ -1734,6 +1734,7 @@ export class CnTreeTableComponent extends CnComponentBase
                     onClick: componentInstance => {
                         (async () => {
                             const response = await componentInstance.executeModal(option);
+                            if(response){
                             this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
                             // 处理validation结果
@@ -1741,6 +1742,7 @@ export class CnTreeTableComponent extends CnComponentBase
                                 &&
                                 this._sendDataErrorMessage(response, option.ajaxConfig.result)
                                 && dialog.close();
+                            }
                         })();
                     }
                 }

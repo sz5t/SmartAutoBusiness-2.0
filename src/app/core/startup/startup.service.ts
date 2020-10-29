@@ -35,11 +35,14 @@ export class StartupService {
     
     const data = await this.httpClient.get(`assets/tmp/webConfig.json`).toPromise();
 
+    
     if(data && data.hasOwnProperty('SERVER_URL')){
        if(data['SERVER_URL']){
         environment.SERVER_URL = data['SERVER_URL'];
        }
     }
+
+   // const data1 = await this.httpClient.get(`http://192.168.1.111:8401/page/struct/parse?pageId=m2lSKOiIgmNR5R3JStQg0CYPNzdSd4Fd`).toPromise();
     console.log('+++++++++加载后台服务访问地址++++++++++++',data);
   }
 
@@ -56,7 +59,7 @@ export class StartupService {
         this.httpClient.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
         this.httpClient.get(`resource/GET_SYS_I18N_LIST/query?_mapToObject=true&ddicCode=${this.i18n.defaultLang}`),
         this.httpClient.get(`assets/tmp/app-data.json`),
-        this.httpClient.get(`resource/GET_MODULE_LIST/query?_mapToObject=true`)
+        this.httpClient.get(`resource/GET_MODULE_LIST/query?_mapToObject=true&_sort=sortcode asc`)
 
       )
         .pipe(

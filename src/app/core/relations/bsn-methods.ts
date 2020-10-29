@@ -71,5 +71,6 @@ export const CN_TOOLBAR_METHOD: IToolbarTrigger = {
     EXECUTE_NONE_EDIT: 'executeNoneEdit',
     SET_OPERATION_DATA: 'setOperationData',
     EXECUTE: 'execute',
-    EXECUTE_ACTION :'executeAction'
+    EXECUTE_ACTION :'executeAction',
+    BUTTON_STATE_SWITCH:'buttonStateSwitch'
 }

@@ -135,6 +135,8 @@ import { CnDataStepsComponent } from './components/cn-data-steps/cn-data-steps.c
 import { CnGridSpanComponent } from './components/data_table/cn-grid-items/cn-grid-span/cn-grid-span.component';
 import { CnFormCheckboxGroupComponent } from './components/data-form/cn-form-items/cn-form-checkbox-group/cn-form-checkbox-group.component';
 import { CnFormSpanComponent } from './components/data-form/cn-form-items/cn-form-span/cn-form-span.component';
+import { CnCustomIconStateComponent } from './components/cn-custom-items/cn-custom-icon-state/cn-custom-icon-state.component';
+import { CnCustomGroupStateComponent } from './components/cn-custom-items/cn-custom-group-state/cn-custom-group-state.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -265,7 +267,9 @@ const COMPONENTS = [
   CnDataStepsComponent,
   CnGridSpanComponent,
   CnFormSpanComponent,
-  CnFormCheckboxGroupComponent
+  CnFormCheckboxGroupComponent,
+  CnCustomIconStateComponent,
+  CnCustomGroupStateComponent
   // ------设计组件-----
 ];
 const DIRECTIVES = [

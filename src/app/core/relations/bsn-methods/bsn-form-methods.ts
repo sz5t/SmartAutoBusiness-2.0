@@ -15,6 +15,7 @@ export const CN_DATA_FORM_METHOD: IDataFormTrigger = {
     MESSAGE: 'showMessage',
     WINDOW: 'showWindow',
     TRANSFER_VALUE:'transferValue',
+    FORM_STATE_SWITCH:'formStateSwitch',
     // link
     LINK: 'link',
     LINK_TO: 'linkTo',

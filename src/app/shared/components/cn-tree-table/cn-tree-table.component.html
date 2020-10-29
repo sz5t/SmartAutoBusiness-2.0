@@ -62,7 +62,7 @@
                   <ng-container *ngIf="col.expand">
                     <td *ngSwitchCase="'new'" [nzIndentSize]="item.level * 20 "
                       [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
-                      (nzExpandChange)="expandRow(item[KEY_ID], item, $event)"
+                      (nzExpandChange)="expandRow(item, $event)"
                       [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
                       [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
                       <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'new'"
@@ -75,7 +75,7 @@
                     </td>
                     <td *ngSwitchCase="'edit'" [nzIndentSize]="item.level * 20 "
                       [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
-                      (nzExpandChange)="expandRow(item[item[KEY_ID]], item, $event)"
+                      (nzExpandChange)="expandRow( item, $event)"
                       [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
                       [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
 

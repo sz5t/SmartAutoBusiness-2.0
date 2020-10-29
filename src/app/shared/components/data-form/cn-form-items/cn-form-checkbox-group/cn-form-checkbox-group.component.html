@@ -6,3 +6,46 @@
 </div>
 <br />
 <nz-checkbox-group [(ngModel)]="checkOptionsOne" (ngModelChange)="updateSingleChecked()"></nz-checkbox-group>
+<br />
+[分组属性]
+<hr>
+<div nz-row *ngFor="let data of new_data">
+
+    <div nz-col [nzSpan]="24">
+
+        内容
+        {{data.pageName}}
+        <ng-container *ngFor="let c of new_config.columns">
+
+            <ng-container *ngIf="c.type==='switch'">
+                <nz-switch [(ngModel)]="switchValue"></nz-switch>
+            </ng-container>
+            <ng-container *ngIf="c.type==='checked'">
+                <label nz-checkbox [(ngModel)]="checked">是否可见</label>
+            </ng-container>
+            <ng-container *ngIf="c.type==='input'">
+                <input nz-input placeholder="Basic usage" [(ngModel)]="value" />
+            </ng-container>
+
+        </ng-container>
+        <hr>
+
+    </div>
+
+</div>
+<ng-container>
+    <button nz-button [nzType]="switchValue?'primary':'default'"  (click)="buttonSwitchClick(switchValue)">
+        <i *ngIf="switchValue" nz-icon nzType="eye" ></i>
+        <i *ngIf="!switchValue" nz-icon nzType="eye-invisible" ></i>
+    </button>
+</ng-container>
+<ng-container>
+    <button nz-button [nzType]="'dashed'"  (click)="buttonCheckClick(checked)">
+        <i *ngIf="checked" nz-icon nzType="lock" ></i>
+        <i *ngIf="!checked" nz-icon nzType="unlock" ></i>
+    </button>
+
+</ng-container>
+
+<i nz-icon nzType="eye-invisible" nzTheme="twotone"></i>
+

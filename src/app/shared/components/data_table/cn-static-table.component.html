@@ -150,7 +150,7 @@
             <td [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null" [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
               <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length>1">
                 <nz-button-group>
-                  <button nzSize="default" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu"
+                  <button nzSize="default" nzType="primary" nz-button type="button" nz-dropdown [nzDropdownMenu]="menu"
                     nzPlacement="bottomLeft">
                     <i nz-icon nzType="ellipsis" class="text-lg green"></i>
                   </button>
@@ -170,7 +170,7 @@
               </ng-container>
               <ng-container *ngIf="mapOfDataState[rowData[KEY_ID]]['actions'].length===1">
                 <ng-template ngFor let-act [ngForOf]="mapOfDataState[rowData[KEY_ID]]['actions']">
-                  <button (click)="rowAction(act, rowData, $event)" nz-button nzSize="act.size"
+                  <button (click)="rowAction(act, rowData, $event)" nz-button type="button" nzSize="act.size"
                     [nzType]="act.color ? act.color : 'default'">
                     <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
                   </button>

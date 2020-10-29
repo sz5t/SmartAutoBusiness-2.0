@@ -32,6 +32,8 @@ export class CommonUtils {
           return Number.parseInt(value, 10);
         case 'float':
           return Number.parseFloat(value);
+        case 'number':
+            return Number.parseFloat(value);
         case 'date':
           return new Date(value).toDateString();
         case 'datetime':

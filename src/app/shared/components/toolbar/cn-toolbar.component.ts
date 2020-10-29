@@ -83,6 +83,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     public ngOnInit() {
 
         this.toolbarConfig = this.config.toolbar;
+        // 权限计算后，将操作按钮组，赋值给this.toolbarConfig 
         this._initInnerValue();
 
         if (this.config.cascade && this.config.cascade.messageReceiver) {
@@ -188,7 +189,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     }
 
     public action(btn, targetViewId) {
-
+        // console.log('点击按钮',btn);
         setTimeout(_ => {
             this.toolbarsIsLoading[btn.id] = false;
         }, 150);
@@ -224,7 +225,13 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             // btn_source$.pipe(map(exeCfg => this.sendBtnMessage(exeCfg, targetViewId))).subscribe().unsubscribe();
             const actions = this.toolbarConfig.find(t => t.targetViewId === targetViewId);
             const dataOfState = { 'state': btn.state, 'actions': actions.group }
-            if (btn.toggle && btn.toggle.type) {
+            let _toggleType = true;
+            if (btn.toggle && btn.toggle.toggleType) {
+                if (btn.toggle.toggleType === 'relation') {
+                    _toggleType = false;
+                }
+            }
+            if (btn.toggle && btn.toggle.type && _toggleType) {
                 switch (btn.toggle.type) {
                     case 'state':
                         const stateValue = dataOfState[btn.toggle.type];
@@ -247,6 +254,9 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                 }
             }
             const state = '';
+            if(!_toggleType){
+                dataOfState['state']="";
+            }
             const btnResolver = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
             btnResolver.toolbarAction(btn, targetViewId);
             this.toolbarsIsLoading[btn.id] = true;
@@ -374,26 +384,26 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
 
         let id = option['toolbarId'];
         console.log('executeAction', option);
-        let btn =  this.getBtn(id);
-        if(btn){
+        let btn = this.getBtn(id);
+        if (btn) {
             this.action(btn, btn['targetViewId']);
             return true;
-        } else{
+        } else {
             return false;
         }
-        
+
         // 消息操作id ，获取btn配置 执行
 
     }
 
     public getBtn(id?) {
 
-       let _button = this.button_list.filter(item=>item['id']===id);
-       if(_button && _button.length>0){
-           return _button[0];
-       }else{
-           return null;
-       }
+        let _button = this.button_list.filter(item => item['id'] === id);
+        if (_button && _button.length > 0) {
+            return _button[0];
+        } else {
+            return null;
+        }
 
     }
 
@@ -405,21 +415,21 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         if (this.toolbarConfig && Array.isArray(this.toolbarConfig)) {
             this.toolbarConfig.forEach(item => {
                 if (item.group) {
-                   
-                    let targetViewId = item['targetViewId']; 
+
+                    let targetViewId = item['targetViewId'];
                     item.group.forEach(g => {
                         if (g.dropdown) {
                             g.dropdown.forEach(b => {
                                 b['targetViewId'] = targetViewId;
                                 _button_list.push(b);
                             });
-                        } else{
+                        } else {
                             g['targetViewId'] = targetViewId;
                             _button_list.push(g);
                         }
                     });
                 } else if (item.dropdown) {
-                    let targetViewId = item['targetViewId']; 
+                    let targetViewId = item['targetViewId'];
                     item.dropdown.forEach(b => {
                         b['targetViewId'] = targetViewId;
                         _button_list.push(b);
@@ -429,6 +439,63 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         }
         this.button_list = _button_list;
         console.log('按钮统计', _button_list);
+    }
+
+
+    // 权限 合并计算
+    public permissionsMerge(SourceData?, Permissions?): any {
+
+        let _toolBar = [];
+
+
+
+
+    }
+
+
+    // 操作按钮状态切换【执行成功后切换，消息通知】
+    public buttonStateSwitch(option?): any {
+        let id = option['toolbarId'];
+        console.log('buttonStateSwitch', option);
+        let btn = this.getBtn(id);
+        if (btn) {
+            // 固定参数【toolbarId,targetViewId】
+            const targetViewId = btn['targetViewId'];
+            const actions = this.toolbarConfig.find(t => t.targetViewId === targetViewId);
+            const dataOfState = { 'state': btn.state, 'actions': actions.group }
+            let _toggleType = false;
+            if (btn.toggle && btn.toggle.toggleType) {
+                if (btn.toggle.toggleType === 'relation') {
+                    _toggleType = true;
+                }
+            }
+            if (btn.toggle && btn.toggle.type && _toggleType) {
+                switch (btn.toggle.type) {
+                    case 'state':
+                        const stateValue = dataOfState[btn.toggle.type];
+                        if (btn.toggle.values) {
+                            const valueObj = btn.toggle.values.find(val => val.name === stateValue);
+                            valueObj && (btn[btn.toggle.toggleProperty] = valueObj.value);
+                        }
+                        if (actions) {
+                            actions.group.forEach(element => {
+                                if (element.toggle && element.toggle.values) {
+                                    const _valueObj = element.toggle.values.find(val => val.name === stateValue);
+                                    _valueObj && (element[element.toggle.toggleProperty] = _valueObj.value);
+                                }
+                            });
+                        }
+
+                        break;
+                    case '...':
+                        break;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 }

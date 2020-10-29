@@ -291,6 +291,21 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     this.ControlsPermissions(this.FORM_STATE);
   }
 
+  public formStateSwitch(option?) {
+    // insert  update   text  新增、修改、查看 3种状态切换
+    console.log('formStateSwitch', option);
+    if (option && option['state']) {
+      const state = option['state'];
+      this.FORM_STATE = state;
+      // 新增状态可填写默认值，其他状态无默认值
+      this.ControlsPermissions(this.FORM_STATE);
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
   /**
    * setChangeValue 接受 初始变量值
    */
@@ -411,11 +426,42 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
           this.formValue[item] = data_form[item];
         }
       }
-      
+
       this.FORM_VALUE = this.formValue;
       this.validateForm.setValue(this.formValue);
-     
-      console.log('------------------formValue', this.formValue,this.validateForm.value)
+      // 需要赋值后触发满足当前展示字段的布局
+      // 根据状态，触发级联 xx状态下 xx字段级联触发
+      /*   "triggerFeilds":[         -- 加载完成后，主动触发级联字段
+          {
+             feildName:'',        -- 需要触发的字段
+             type:'',             -- value、formValue  
+             valueName:'',        -- 取值名称
+             value:''             -- 常量取值   
+          }
+        ] */
+      const permission = this.config.formControlsPermissions.find(p => p.formState === this.FORM_STATE);
+      if (permission && permission.formStateContent) {
+        const triggerFeilds = permission.formStateContent.triggerFeilds;
+        if (triggerFeilds && triggerFeilds.length > 0) {
+          triggerFeilds.forEach(element => {
+            let triggerFeild_value;
+            if (element['type'] === 'value') {
+              // 选中行对象数据
+              triggerFeild_value = element['value'];
+            }
+            if (element['type'] === 'formValue') {
+              // 选中行对象数据
+              if (this.FORM_VALUE) {
+                const _name = element['valueName'];
+                triggerFeild_value = this.FORM_VALUE[_name];
+              }
+            }
+            this.valueChange({ name: element['name'], value: triggerFeild_value });
+          });
+        }
+      }
+      // this.valueChange({name:'CP_USE',value: this.FORM_VALUE['CP_USE']});
+      console.log('------------------formValue', this.FORM_STATE, this.formValue, this.validateForm.value)
     }
 
     return true;
@@ -563,6 +609,12 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                     regularData = this.validateForm.value[item.caseValue['valueName']];
                   }
                 }
+                if (item.caseValue['type'] === 'formValue') {
+                  // 选中行对象数据
+                  if (this.FORM_VALUE) {
+                    regularData = this.FORM_VALUE[item.caseValue['valueName']];
+                  }
+                }
 
               } else {
                 regularData = v['value'];
@@ -688,7 +740,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                       __setValue = this.FORM_VALUE[ajaxItem['valueName']];
                     }
                   }
-                  
+
                   // 其他取值【日后扩展部分】
                 });
                 // 表单赋值
@@ -728,7 +780,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                     }
                   }
 
-                  
+
 
                   computeObj[ajaxItem['name']] = Number(__setValue) ? Number(__setValue) : 0;
                   // 其他取值【日后扩展部分】
@@ -751,7 +803,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               }
               if (item.content.type === 'display') {
                 // 控制 小组件的显示、隐藏，由于组件不可控制，故而控制行列布局的显示隐藏
-                const _dd = { name: cascadeObj.cascadeName, value: this.FORM_VALUE[cascadeObj.cascadeName] ? 1 : 0, value1: this.validateForm.value[cascadeObj.cascadeName] ? 1 : 0 }
+                const _dd = { name: cascadeObj.cascadeName, value: this.FORM_VALUE[cascadeObj.cascadeName] ? 1 : 0, value1: this.FORM_VALUE[cascadeObj.cascadeName] ? 1 : 0 }
                 this.L_getComputeDisplay(_dd);
               }
               if (item.content.type === 'message') {
@@ -773,13 +825,13 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                   if (ajaxItem['type'] === 'rowValue') {
                     // 选中行对象数据
                     if (this.validateForm.value) {
-                        _cascadeValue[ajaxItem['name']] = this.validateForm.value[ajaxItem['valueName']];
+                      _cascadeValue[ajaxItem['name']] = this.validateForm.value[ajaxItem['valueName']];
                     }
                   }
                   if (ajaxItem['type'] === 'formValue') {
                     // 选中行对象数据
                     if (this.FORM_VALUE) {
-                        _cascadeValue[ajaxItem['name']] = this.FORM_VALUE[ajaxItem['valueName']];
+                      _cascadeValue[ajaxItem['name']] = this.FORM_VALUE[ajaxItem['valueName']];
                     }
                   }
                   if (ajaxItem['type'] === 'selectObjectValue') {
@@ -791,7 +843,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                   // 其他取值【日后扩展部分】
                 });
 
-               // console.log('********', _cascadeValue);
+                // console.log('********', _cascadeValue);
                 if (item.content.sender) {
                   new RelationResolver(this)
                     .resolveInnerSender(
@@ -1008,6 +1060,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         this.formStateChange(v['builtinConfig'].state ? v['builtinConfig'].state : 'insert');
       }
     }
+    return true;
 
     console.log(this.config.id + '-------------addForm', v);
   }
@@ -1022,6 +1075,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       }
     }
     this.load();
+    return true;
     //  this.validateForm.setValue( this.validateForm.value);
     console.log(this.config.id + '-------------editForm', v, this.validateForm.value);
   }
@@ -1042,6 +1096,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     }
     // this.validateForm.setValue(this.validateForm.value);
     this.load();
+    return true;
     console.log(this.config.id + '-------------cancel【结束】', v, this.validateForm.value);
     // setTimeout(() => this.setValue('code','liu'), 1000);
     // setTimeout(() => this.validateForm.setValue(ss), 1000);
