@@ -1,5 +1,17 @@
 {
-    "SERVER_URL_1": "http://192.168.1.111:8401/",
-    "SERVER_URL": "http://192.168.1.111:8402/",
-    "SERVER_URL_2": "http://39.101.168.200:8304/"
+    "SERVER_URL": "http://192.168.1.111:8401/",
+    "SERVER_URL_3": "http://192.168.1.103:8401/",
+    "SERVER_URL_1": "http://192.168.1.111:8402/",
+    "SERVER_URL_2": "http://39.101.168.200:8304/",
+    "SYSTEM_CONFIG" :{
+        "login":{
+            "login_enabled": true,
+            "login_url": "GET_LOGIN_RESULT",
+            "login_premission_url":"GET_USER_MODULE"
+        },
+        "module_list":{
+            "module_list_enabled": true,
+            "module_list_url": "GET_MODULE_LIST"
+        }
+    }
 }

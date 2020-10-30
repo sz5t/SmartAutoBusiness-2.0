@@ -42,6 +42,12 @@ export class StartupService {
        }
     }
 
+    if(data && data.hasOwnProperty('SYSTEM_CONFIG')){
+      if(data['SYSTEM_CONFIG']){
+       environment['SYSTEM_CONFIG'] = data['SYSTEM_CONFIG'];
+      }
+   }
+
    // const data1 = await this.httpClient.get(`http://192.168.1.111:8401/page/struct/parse?pageId=m2lSKOiIgmNR5R3JStQg0CYPNzdSd4Fd`).toPromise();
     console.log('+++++++++加载后台服务访问地址++++++++++++',data);
   }

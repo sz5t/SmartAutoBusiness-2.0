@@ -135,15 +135,31 @@ export class UserLoginComponent implements OnDestroy {
     //       this.router.navigateByUrl(url);
     //     });
     //   });
+    let userLogin: any
+    let moduleList: any
+    let userModule: any
     this.tokenService.set({ key: `123`, token: '123' });
-    const result = await this.http.get(`resource/GET_LOGIN_RESULT/query?_mapToObject=true&login_name=` + this.userName.value + `&login_pwd=` + this.password.value).toPromise();
+    if (environment['SYSTEM_CONFIG']) {
+      if (environment['SYSTEM_CONFIG']['login']['login_enabled']) {
+        userLogin = environment['SYSTEM_CONFIG']['login']['login_url']
+        userModule = environment['SYSTEM_CONFIG']['login']['login_premission_url']
+      }
+      if (environment['SYSTEM_CONFIG']['module_list']['module_list_enabled']) {
+        moduleList = environment['SYSTEM_CONFIG']['module_list']['module_list_url']
+      }
+    } else {
+      userLogin = 'GET_LOGIN_RESULT'
+      userModule = 'GET_USER_MODULE'
+      moduleList = 'GET_MODULE_LIST'
+    }
+    const result = await this.http.get(`resource/`+ userLogin + `/query?_mapToObject=true&login_name=` + this.userName.value + `&login_pwd=` + this.password.value).toPromise();
     let menu: any
-    menu = await this.http.get(`resource/GET_MODULE_LIST/query?_mapToObject=true&_sort=sortcode asc`).toPromise();
+    menu = await this.http.get(`resource/`+ moduleList +`/query?_mapToObject=true&_sort=sortcode asc`).toPromise();
     if (this.userName.value === 'admin') {
       const currentMenu = this.buildServerRes(menu)
       this.menuService.add(currentMenu['menu']);
     } else if (result['data'].length > 0 && this.userName.value !== 'admin') {
-      const permissionMenu:any = await this.http.get(`resource/GET_USER_MODULE/query?_mapToObject=true&login_name=` + this.userName.value).toPromise();
+      const permissionMenu:any = await this.http.get(`resource/`+ userModule +`/query?_mapToObject=true&login_name=` + this.userName.value).toPromise();
       if (permissionMenu['data'].length > 0) {
         menu['data'] = menu.data.filter(e => permissionMenu.data.findIndex(p => p.moduleId === e.id) > -1)
       }
