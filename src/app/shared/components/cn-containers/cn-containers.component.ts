@@ -196,7 +196,7 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
       });
       this._initValue_new = {...this.initValue};
       this._tempValue_new = {...this.tempValue};
-      this.showLayout = true;
+      // this.showLayout = true;
     });
 
     console.log('=========================',this._linkViews);
