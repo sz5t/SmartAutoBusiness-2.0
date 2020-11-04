@@ -29,6 +29,7 @@ import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.proper
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
 import { environment } from '@env/environment';
+import { PageStructure } from '@shared/resolver/structure/page_Structure';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -2832,5 +2833,41 @@ export class CnDataTableComponent extends CnComponentBase
        
 
     }
+
+
+    //=========================测试解析页面结构============================
+    nodes=[];
+    public test_layout(){
+
+        let pageJson:any;
+        let page_id:any;
+        // PAGE_JSON
+        if(this.ROW_SELECTED){
+            if(this.ROW_SELECTED['PAGE_JSON']){
+                pageJson=JSON.parse(this.ROW_SELECTED['PAGE_JSON']);
+                page_id = this.ROW_SELECTED['ID']
+            }
+        }
+    
+        console.log('当前选中行',this.ROW_SELECTED);
+        if(pageJson){
+            let f = new PageStructure();
+            f.page_id=page_id;
+            f.page_config = pageJson;
+            f.getPageStructure();
+            this.nodes = f.nodes;
+        } else {
+            this.nodes=[];
+        }
+ 
+      
+      
+    }
+
+
+
+  
+
+
 
 }
