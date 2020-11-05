@@ -541,15 +541,18 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public loadRefreshChildrenData(option) {
-        if (this.config.loadingItemConfig) {
-            this.loadItem(option, (data) => {
-                this.refreshChildrenData(data);
-            })
-        } else {
-            this._buildReloadAjax(option, (data) => {
-                this.refreshChildrenData(data);
-            })
-        }
+
+        // 20201105 修改树表
+        this.expandRow(option,true);
+        // if (this.config.loadingItemConfig) {
+        //     this.loadItem(option, (data) => {
+        //         this.refreshChildrenData(data);
+        //     })
+        // } else {
+        //     this._buildReloadAjax(option, (data) => {
+        //         this.refreshChildrenData(data);
+        //     })
+        // }
 
     }
 
@@ -598,6 +601,8 @@ export class CnTreeTableComponent extends CnComponentBase
         //     console.log(error);
         // });
     }
+
+ 
 
     /**
      * 构建查询过滤参数

@@ -230,18 +230,18 @@
 
 <input [hidden]="is_hidden" nz-input placeholder="Basic usage" /> -->
 
-<button  (click)="test_layout()">分析页面结构</button>
 
-
-
-    <nz-tree [nzData]="nodes" nzShowIcon nzShowLine [nzExpandedIcon]="mutiExpandedIconTpl">
-      <ng-template #mutiExpandedIconTpl let-node>
-        <i
-          *ngIf="!node.origin.isLeaf"
-          nz-icon
-          [nzType]="node.isExpanded ? 'folder-open' : 'folder'"
-          class="ant-tree-switcher-line-icon"
-        ></i>
-        <i *ngIf="node.origin.isLeaf" nz-icon nzType="file" class="ant-tree-switcher-line-icon"></i>
-      </ng-template>
-    </nz-tree>
+<ng-container *ngIf="config.hasOwnProperty('analysisLayout')">
+  <button  (click)="executeAnalysisLayout()">分析页面结构</button>
+  <nz-tree [nzData]="nodes" nzShowIcon nzShowLine [nzExpandedIcon]="mutiExpandedIconTpl">
+    <ng-template #mutiExpandedIconTpl let-node>
+      <i
+        *ngIf="!node.origin.isLeaf"
+        nz-icon
+        [nzType]="node.isExpanded ? 'folder-open' : 'folder'"
+        class="ant-tree-switcher-line-icon"
+      ></i>
+      <i *ngIf="node.origin.isLeaf" nz-icon nzType="file" class="ant-tree-switcher-line-icon"></i>
+    </ng-template>
+  </nz-tree>
+</ng-container>

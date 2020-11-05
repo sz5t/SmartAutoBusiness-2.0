@@ -1033,7 +1033,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 tempValue: this.tempValue,
                 initValue: this.initValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                currentRow:this.ROW_CURRENT
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);
@@ -2840,7 +2841,7 @@ export class CnDataTableComponent extends CnComponentBase
 
     //=========================测试解析页面结构============================
     nodes=[];
-    public test_layout(){
+    public executeAnalysisLayout(option?){
 
         let pageJson:any;
         let page_id:any;
@@ -2859,12 +2860,16 @@ export class CnDataTableComponent extends CnComponentBase
             f.page_config = pageJson;
             f.getPageStructure();
             this.nodes = f.nodes;
+            this.ROW_SELECTED['analysisLayout'] = JSON.stringify (f.ts_new);
         } else {
             this.nodes=[];
         }
- 
-      
-      
+
+        if(option){
+            this.executeCurrentRow(option);
+        }
+        return true;
+
     }
 
 
