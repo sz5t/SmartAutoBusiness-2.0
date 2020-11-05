@@ -19,8 +19,8 @@ export class PageStructure {
         }
         this.ts_new = [];
         this.tsc_new = [];
-        this.jxlayout(this.page_config['layoutJson'], null);
-        this.jxcomponent(this.page_config['componentsJson']);
+        this.analysisLayout(this.page_config['layoutJson'], null);
+        this.analysisComponent(this.page_config['componentsJson']);
 
         this.tsc_new.forEach(n => {
             n.hasOwnProperty('toolbar');
@@ -44,7 +44,8 @@ export class PageStructure {
         console.log('当前页面结构树', this.nodes);
     }
 
-    public jxlayout(layoutconfig?, parentid?) {
+    // 解析布局
+    public analysisLayout(layoutconfig?, parentid?) {
         // console.log('xxx:',layoutconfig);
         // "header": {
         //     "title": "功能分类",
@@ -60,7 +61,7 @@ export class PageStructure {
                         this.ts_new.push({ id: item['header']['id'], type: 'cnToolbar', title: item['header']['title'], parentId: item['id'], container: 'cnToolbar' });
                     }
                     if (item['container'] !== '')
-                        this.jxlayout(item[item['container']], item['id']);
+                        this.analysisLayout(item[item['container']], item['id']);
                 }
             });
         }
@@ -75,7 +76,7 @@ export class PageStructure {
 
                 this.ts_new.push({ id: layoutconfig['id'], type: layoutconfig['type'], title: layoutconfig['title'], parentId: parentid, container: layoutconfig['container'] });
                 if (layoutconfig['container'] !== '' && layoutconfig[layoutconfig['container']])
-                    this.jxlayout(layoutconfig[layoutconfig['container']], layoutconfig['id']);
+                    this.analysisLayout(layoutconfig[layoutconfig['container']], layoutconfig['id']);
             }
         }
 
@@ -86,11 +87,11 @@ export class PageStructure {
 
 
     // 解析组件信息
-    public jxcomponent(componentconfig) {
+    public analysisComponent(componentconfig) {
 
         if (componentconfig instanceof Array) {
             componentconfig.forEach(item => {
-                this.jxcomponent(item);
+                this.analysisComponent(item);
             });
         } else {
 
@@ -103,12 +104,12 @@ export class PageStructure {
                 _base_button['type'] = 'option';
                 _base_button['parentId'] = componentconfig['id'];
 
-                _toolbar = this.jxtoolbar(componentconfig, _base_button['id']);
+                _toolbar = this.analysisToolbar(componentconfig, _base_button['id']);
                 _toolbar = [...[_base_button], ..._toolbar];
             }
             if (componentconfig['component'] === 'cnDataTable') {
 
-                _columns = this.jxtable(componentconfig, componentconfig['id']);
+                _columns = this.analysisTable(componentconfig, componentconfig['id']);
 
             }
             this.tsc_new.push({ id: componentconfig['id'], type: 'component', title: componentconfig['title'], parentId: null, container: componentconfig['component'], toolbar: _toolbar, columns: _columns });
@@ -120,7 +121,7 @@ export class PageStructure {
     }
 
     // 解析操作
-    public jxtoolbar(toolbarconfig, parent_id?) {
+    public analysisToolbar(toolbarconfig, parent_id?) {
 
         let _button_list = [];
         if (toolbarconfig && toolbarconfig['toolbar']) {
@@ -198,7 +199,7 @@ export class PageStructure {
 
 
     // 解析表格类型
-    public jxtable(componentconfig, parent_id) {
+    public analysisTable(componentconfig, parent_id) {
 
         // columns
         // "title": "布局名称",
@@ -217,9 +218,9 @@ export class PageStructure {
             return null;
         }
         let columns = [];
-        const columns_id = CommonUtils.uuID(36);
-        const text_id = CommonUtils.uuID(36);
-        const editor_id = CommonUtils.uuID(36);
+        const columns_id = parent_id+'_columns';
+        const text_id = parent_id+'_columns_text_state';
+        const editor_id = parent_id+'_columns_editor_state';
 
         const columns_state = [
             { id: columns_id, type: 'columns', title: '字段信息', parentId: parent_id, container: 'columns' },
@@ -254,11 +255,33 @@ export class PageStructure {
     }
 
     // 行内操作
-    jxrowActions(config?,actionId?){
-        config.rowActions.find(action => actionId === action.id);
+    analysisRowActions(rowactionconfig?,parent_id?){
+       // rowactionconfig.rowActions.find(action => actionId === action.id)
+        let _row_button_list =[];
+        if(!rowactionconfig['rowActions'] || rowactionconfig['rowActions'].length<0){
+            return _row_button_list;
+        }
+        const _rowActions_button = {};
+        const _actionsId = parent_id+'_rowActions';
+        _rowActions_button['id'] = _actionsId;
+        _rowActions_button['text'] = '行内操作';
+        _rowActions_button['targetViewId'] = parent_id;
+        _rowActions_button['parentId'] = parent_id;
+        _rowActions_button['type'] = 'rowAction';
+        _row_button_list.push(_rowActions_button);
+        rowactionconfig['rowActions'].forEach(element => {
+
+            let _action_button={}
+            _action_button['id'] = _actionsId+'_rowActions';
+            _action_button['text'] = element['text'];
+            _action_button['parentId'] = _actionsId;
+            _action_button['type'] = 'button';
+            _row_button_list.push(_action_button);
+        });
+
     }
 
-
+    // 列表结构转树
     public listToTree(oldArr) {
         oldArr.forEach(element => {
             element['key'] = element['id'];

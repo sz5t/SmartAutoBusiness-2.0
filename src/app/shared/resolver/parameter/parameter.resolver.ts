@@ -18,7 +18,8 @@ export interface ParametersResolverModel {
   checkedItem?: any,
   checkedRow?: any[],
   selectedRow?: any,
-  outputValue?: any
+  outputValue?: any,
+  currentRow?:any
 }
 
 export interface IParameter {
@@ -81,6 +82,13 @@ export class ParameterResolver {
     // tslint:disable-next-line: no-use-before-declare
     return new SelectedRowParameter(param, model).buildParameter();
   }
+
+  private static currentRow(param, model) {
+    // tslint:disable-next-line: no-use-before-declare
+    return new CurrentRowParameter(param, model).buildParameter();
+  }
+
+  
 
   private static checked(param, model) {
     // tslint:disable-next-line: no-use-before-declare
@@ -566,6 +574,7 @@ class SelectedParameter extends BaseParameter implements IParameter {
   }
 }
 
+
 /**
  * 构建勾选ID项
  */
@@ -623,6 +632,19 @@ class SelectedRowParameter extends BaseParameter implements IParameter {
   public buildParameter() {
     if (this._model.selectedRow) {
       this._result = this._model.selectedRow[this._param.valueName];
+    }
+    return this._result;
+  }
+}
+
+class CurrentRowParameter extends BaseParameter implements IParameter {
+  private _result: any;
+  constructor(private _param, private _model) {
+    super();
+  }
+  public buildParameter() {
+    if (this._model.currentRow) {
+      this._result = this._model.currentRow[this._param.valueName];
     }
     return this._result;
   }

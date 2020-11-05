@@ -1411,7 +1411,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
                 returnValue: data,
-                selectedRow: this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED,
+                currentRow:this.ROW_CURRENT
 
             });
         } else if (!isArray && data) {
@@ -1432,7 +1433,8 @@ export class CnDataTableComponent extends CnComponentBase
                 returnValue: data,
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
-                selectedRow: this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED,
+                currentRow:this.ROW_CURRENT
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1450,7 +1452,8 @@ export class CnDataTableComponent extends CnComponentBase
                     validation: d,
                     returnValue: d,
                     checkedRow: this.ROWS_CHECKED,
-                    outputValue: data
+                    outputValue: data,
+                    currentRow:this.ROW_CURRENT
                 });
                 parameterResult.push(param);
             })

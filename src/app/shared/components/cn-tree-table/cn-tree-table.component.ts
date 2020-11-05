@@ -1403,7 +1403,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 router: this.routerValue,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
-                selectedRow: this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED,
+                currentRow:this.ROW_CURRENT
 
             });
         } else if (!isArray && data) {
@@ -1422,7 +1423,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 editedRows: data,
                 validation: data,
                 returnValue: data,
-                selectedRow: this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED,
+                currentRow:this.ROW_CURRENT
 
             });
         } else if (isArray && data && Array.isArray(data)) {
@@ -1439,7 +1441,8 @@ export class CnTreeTableComponent extends CnComponentBase
                     addedRows: d,
                     editedRows: d,
                     validation: d,
-                    returnValue: d
+                    returnValue: d,
+                    currentRow:this.ROW_CURRENT
                 });
                 parameterResult.push(param);
             })
