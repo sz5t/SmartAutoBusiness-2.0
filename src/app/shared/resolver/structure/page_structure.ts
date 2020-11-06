@@ -23,17 +23,28 @@ export class PageStructure {
         this.analysisComponent(this.page_config['componentsJson']);
 
         this.tsc_new.forEach(n => {
-            n.hasOwnProperty('toolbar');
-            n['toolbar'].forEach(element => {
-                element['title'] = element['text'];
-            });
-            n['columns'].forEach(element => {
-                if(element['field']){
-                    element['title'] = element['title'] +'_【'+ element['field']+'】_'+element['container'];;
-                }
-              
-            });
-            this.ts_new = [...this.ts_new, ...n['toolbar'], ...n['columns']];
+            if (n.hasOwnProperty('toolbar')) {
+                n['toolbar'].forEach(element => {
+                    element['title'] = element['text'];
+                });
+            }
+            if (n.hasOwnProperty('columns')) {
+                n['columns'].forEach(element => {
+                    if (element['field']) {
+                        element['title'] = element['title'] + '_【' + element['field'] + '】_' + element['container'];;
+                    }
+
+                });
+            }
+            if (n.hasOwnProperty('rowActions') && n['rowActions'].length > 0) {
+                n['rowActions'].forEach(element => {
+                    element['title'] = element['text'];
+                });
+            }
+
+
+
+            this.ts_new = [...this.ts_new, ...n['toolbar'], ...n['columns'], ...n['rowActions']];
         });
 
 
@@ -45,7 +56,7 @@ export class PageStructure {
     }
 
     // 解析布局
-    public analysisLayout(layoutconfig?, parentid?) {
+    private analysisLayout(layoutconfig?, parentid?) {
         // console.log('xxx:',layoutconfig);
         // "header": {
         //     "title": "功能分类",
@@ -87,7 +98,7 @@ export class PageStructure {
 
 
     // 解析组件信息
-    public analysisComponent(componentconfig) {
+    private analysisComponent(componentconfig) {
 
         if (componentconfig instanceof Array) {
             componentconfig.forEach(item => {
@@ -97,6 +108,7 @@ export class PageStructure {
 
             let _toolbar = [];
             let _columns = [];
+            let _rowActions = [];
             if (componentconfig['component'] === 'cnToolbar') {
                 const _base_button = {};
                 _base_button['id'] = componentconfig['id'] + '_' + 'option';
@@ -107,12 +119,14 @@ export class PageStructure {
                 _toolbar = this.analysisToolbar(componentconfig, _base_button['id']);
                 _toolbar = [...[_base_button], ..._toolbar];
             }
-            if (componentconfig['component'] === 'cnDataTable') {
+            if (componentconfig['component'] === 'cnDataTable' || componentconfig['component'] === 'cnTreeTable' ) {
 
                 _columns = this.analysisTable(componentconfig, componentconfig['id']);
+                _rowActions = this.analysisRowActions(componentconfig, componentconfig['id']);
+                console.log('行内操作', _rowActions);
 
             }
-            this.tsc_new.push({ id: componentconfig['id'], type: 'component', title: componentconfig['title'], parentId: null, container: componentconfig['component'], toolbar: _toolbar, columns: _columns });
+            this.tsc_new.push({ id: componentconfig['id'], type: 'component', title: componentconfig['title'], parentId: null, container: componentconfig['component'], toolbar: _toolbar, columns: _columns, rowActions: _rowActions });
 
 
         }
@@ -121,7 +135,7 @@ export class PageStructure {
     }
 
     // 解析操作
-    public analysisToolbar(toolbarconfig, parent_id?) {
+    private analysisToolbar(toolbarconfig, parent_id?): any {
 
         let _button_list = [];
         if (toolbarconfig && toolbarconfig['toolbar']) {
@@ -150,7 +164,7 @@ export class PageStructure {
                                     b['targetViewId'] = targetViewId;
                                     b['parentId'] = g['id'];
                                     b['type'] = 'button';
-                                    if(b['execute']){
+                                    if (b['execute']) {
                                         delete b['execute'];
                                     }
                                     _button_list.push(b);
@@ -159,7 +173,7 @@ export class PageStructure {
                                 g['targetViewId'] = targetViewId;
                                 g['parentId'] = parent_id;
                                 g['type'] = 'button';
-                                if(g['execute']){
+                                if (g['execute']) {
                                     delete g['execute'];
                                 }
                                 _button_list.push(g);
@@ -181,7 +195,7 @@ export class PageStructure {
                             b['targetViewId'] = targetViewId;
                             b['parentId'] = item['id'];
                             b['type'] = 'button';
-                            if(b['execute']){
+                            if (b['execute']) {
                                 delete b['execute'];
                             }
                             _button_list.push(b);
@@ -199,7 +213,7 @@ export class PageStructure {
 
 
     // 解析表格类型
-    public analysisTable(componentconfig, parent_id) {
+    private analysisTable(componentconfig, parent_id): any {
 
         // columns
         // "title": "布局名称",
@@ -218,9 +232,9 @@ export class PageStructure {
             return null;
         }
         let columns = [];
-        const columns_id = parent_id+'_columns';
-        const text_id = parent_id+'_columns_text_state';
-        const editor_id = parent_id+'_columns_editor_state';
+        const columns_id = parent_id + '_columns';
+        const text_id = parent_id + '_columns_text_state';
+        const editor_id = parent_id + '_columns_editor_state';
 
         const columns_state = [
             { id: columns_id, type: 'columns', title: '字段信息', parentId: parent_id, container: 'columns' },
@@ -234,12 +248,12 @@ export class PageStructure {
         componentconfig['columns'].forEach(element => {
 
             if (element['type'] === 'field') {
-                text_columns.push({ field:element['field'], id: element['field'] + '_' + 'text' + '_' + CommonUtils.uuID(36), type: element['type'], title: element['title'], parentId: text_id, container: 'text' });
+                text_columns.push({ field: element['field'], id: element['field'] + '_' + 'text' + '_' + CommonUtils.uuID(36), type: element['type'], title: element['title'], parentId: text_id, container: 'text' });
                 if (element.hasOwnProperty('editor')) {
-                    edit_columns.push({ field:element['editor']['field'],id: element['editor']['field'] + '_' + 'editor' + '_' + CommonUtils.uuID(36), type: element['type'], title: element['title'], parentId: editor_id, container: 'editor' });
+                    edit_columns.push({ field: element['editor']['field'], id: element['editor']['field'] + '_' + 'editor' + '_' + CommonUtils.uuID(36), type: element['type'], title: element['title'], parentId: editor_id, container: 'editor' });
 
                 } else {
-                    edit_columns.push({field:element['field'], id: element['field'] + '_' + 'editor_text' + '_' + CommonUtils.uuID(36), type: element['type'], title: element['title'], parentId: editor_id, container: 'editor_text' });
+                    edit_columns.push({ field: element['field'], id: element['field'] + '_' + 'editor_text' + '_' + CommonUtils.uuID(36), type: element['type'], title: element['title'], parentId: editor_id, container: 'editor_text' });
                 }
             }
 
@@ -255,14 +269,14 @@ export class PageStructure {
     }
 
     // 行内操作
-    analysisRowActions(rowactionconfig?,parent_id?){
-       // rowactionconfig.rowActions.find(action => actionId === action.id)
-        let _row_button_list =[];
-        if(!rowactionconfig['rowActions'] || rowactionconfig['rowActions'].length<0){
+    private analysisRowActions(rowactionconfig?, parent_id?): any {
+        // rowactionconfig.rowActions.find(action => actionId === action.id)
+        let _row_button_list = [];
+        if (!rowactionconfig['rowActions'] || rowactionconfig['rowActions'].length < 0) {
             return _row_button_list;
         }
         const _rowActions_button = {};
-        const _actionsId = parent_id+'_rowActions';
+        const _actionsId = parent_id + '_rowActions';
         _rowActions_button['id'] = _actionsId;
         _rowActions_button['text'] = '行内操作';
         _rowActions_button['targetViewId'] = parent_id;
@@ -271,18 +285,19 @@ export class PageStructure {
         _row_button_list.push(_rowActions_button);
         rowactionconfig['rowActions'].forEach(element => {
 
-            let _action_button={}
-            _action_button['id'] = _actionsId+'_rowActions';
+            let _action_button = {}
+            _action_button['id'] = _actionsId + '_rowActions';
             _action_button['text'] = element['text'];
             _action_button['parentId'] = _actionsId;
             _action_button['type'] = 'button';
             _row_button_list.push(_action_button);
         });
+        return _row_button_list;
 
     }
 
     // 列表结构转树
-    public listToTree(oldArr) {
+    private listToTree(oldArr): any {
         oldArr.forEach(element => {
             element['key'] = element['id'];
             let structureName = '[组件]';
@@ -319,6 +334,11 @@ export class PageStructure {
                 case "dropdown":
                     structureName = "[下拉按钮]";
                     break;
+                case "rowAction":
+                    structureName = "[行内按钮]";
+                    break;
+
+
 
                 default:
                     break;
