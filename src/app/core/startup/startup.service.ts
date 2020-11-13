@@ -32,8 +32,8 @@ export class StartupService {
   }
 
   public async getWebConfig(){
-    
-    const data = await this.httpClient.get(`assets/tmp/webConfig.json`).toPromise();
+    const timestamp = new Date().getTime();
+    const data = await this.httpClient.get(`assets/tmp/webConfig.json?${timestamp}`).toPromise();
 
     
     if(data && data.hasOwnProperty('SERVER_URL')){

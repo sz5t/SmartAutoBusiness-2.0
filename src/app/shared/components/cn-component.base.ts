@@ -8,6 +8,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Inject, Optional, Type } from '@angular/core';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { pageConfigCache } from '@env/page-config-cache';
+import { CommonUtils } from '@core/utils/common-utils';
 
 export interface InnerValue {
     tempValue: any;
@@ -328,7 +329,7 @@ export class CnComponentBase {
         // 4.从当前menu配置集合中查找相应组件的详细配置信息
         let componentConfig =null;
         if( pageConfigCache[menuId]['pageConfig'][id]) {
-            componentConfig =  pageConfigCache[menuId]['pageConfig'][id];
+            componentConfig = CommonUtils.deepCopy(pageConfigCache[menuId]['pageConfig'][id]);
         }
         return componentConfig;
     }

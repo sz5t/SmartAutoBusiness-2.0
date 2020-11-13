@@ -20,6 +20,7 @@ import { CnContainersComponent } from '@shared/components/cn-containers/cn-conta
 import { CnCarouseComponent } from '@shared/components/cn-carouse/cn-carouse.component';
 import { CnDataStepsComponent } from '@shared/components/cn-data-steps/cn-data-steps.component';
 import { pageConfigCache } from '@env/page-config-cache';
+import { CommonUtils } from '@core/utils/common-utils';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -157,7 +158,7 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
        // let componentConfig = activeConfig['pageConfig'][id];
         let componentConfig =null;
         if( pageConfigCache[menuId]['pageConfig'][id]) {
-            componentConfig =  pageConfigCache[menuId]['pageConfig'][id];
+            componentConfig = CommonUtils.deepCopy(pageConfigCache[menuId]['pageConfig'][id]);
         }
         return componentConfig;
     }
