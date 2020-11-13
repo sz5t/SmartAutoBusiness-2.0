@@ -65,7 +65,7 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
     if (this.config.loadingOnInit) {
       this.load();
     }
-   // console.log('容器组件初始化');
+    // console.log('容器组件初始化');
 
   }
 
@@ -117,15 +117,15 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
       await this.getCustomConfig(c_view['layoutName']);
       currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
     }
-   // console.log('------', c_view['layoutName'], currentView);
+    // console.log('------', c_view['layoutName'], currentView);
     setTimeout(() => {
       this.view = currentView['layoutJson'];
-      this._initValue_new = {...this.initValue};
-      this._tempValue_new = {...this.tempValue};
+      this._initValue_new = { ...this.initValue };
+      this._tempValue_new = { ...this.tempValue };
       this.showLayout = true;
     });
 
-    console.log('=========================',this._linkViews);
+    console.log('=========================', this._linkViews);
   }
 
 
@@ -133,29 +133,29 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
   switchContaineload(option?) {
 
     // 静态切换，需要告知 当前消息是是否重新加载
-    let isLoad= true;
-    if(option.hasOwnProperty('isLoad')){
+    let isLoad = true;
+    if (option.hasOwnProperty('isLoad')) {
       isLoad = option['isLoad'];
     }
     let v = this.viewChange();
-    this.switchContaine_cache(v,isLoad);
+    this.switchContaine_cache(v, isLoad);
     console.log('容器组件load==>', this.tempValue, v);
 
   }
   //  容器数组内存在的子页面，则自由切换，不存在的子页面，加载出数据切换
-  async switchContaine_cache(c_viewId?,isLoad?) {
+  async switchContaine_cache(c_viewId?, isLoad?) {
 
     this._linkViews.forEach(element => {
-      if(element.id ===c_viewId){
-        if(isLoad){
-         element['showLayout'] = false;
-        }     
+      if (element.id === c_viewId) {
+        if (isLoad) {
+          element['showLayout'] = false;
+        }
       }
-      else{
+      else {
         element['showLayout'] = true;
       }
       // "lbj_002"
-   });
+    });
     this.showLayout = false;
     this.view = null;
     // viewId 
@@ -179,27 +179,27 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
       await this.getCustomConfig(c_view['layoutName']);
       currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
     }
-   // console.log('------', c_view['layoutName'], currentView);
+    // console.log('------', c_view['layoutName'], currentView);
     setTimeout(() => {
       this.view = currentView['layoutJson'];
       this._linkViews.forEach(element => {
-         if(element.id ===c_viewId){
-          if(isLoad){
+        if (element.id === c_viewId) {
+          if (isLoad) {
             element['showLayout'] = true;
-          }   
+          }
           element['viewConfig'] = currentView['layoutJson'];
           element['hidden'] = false;
-         }else {
+        } else {
           element['hidden'] = true;
-         }
-         // "lbj_002"
+        }
+        // "lbj_002"
       });
-      this._initValue_new = {...this.initValue};
-      this._tempValue_new = {...this.tempValue};
+      this._initValue_new = { ...this.initValue };
+      this._tempValue_new = { ...this.tempValue };
       // this.showLayout = true;
     });
 
-    console.log('=========================',this._linkViews);
+    console.log('=========================', this._linkViews);
   }
 
   // 计算出满足当前条件的视图
@@ -402,6 +402,10 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
       }
 
     }
+  }
+
+  public transferValue(option?) {
+    console.log('将接受传递的值', this.tempValue);
   }
 
 

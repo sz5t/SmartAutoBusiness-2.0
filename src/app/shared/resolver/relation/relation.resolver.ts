@@ -725,7 +725,8 @@ export class ReceiverResolver {
                             }
                         }
                     }
-                    console.log('receiver data:', data);
+                    console.log('receiver data:', data, this._componentInstance['config']['id']);
+                    console.log('receiver component===================');
                     new TriggerResolver(data, this._componentInstance).resolve();
                 }
             }

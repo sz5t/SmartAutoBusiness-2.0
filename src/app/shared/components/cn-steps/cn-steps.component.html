@@ -34,9 +34,29 @@
   <ng-container cnLayoutResolverDirective [config]="view" *ngFor="let view of currentViews" [initData]="initValue"
     [tempData]="tempValue">
   </ng-container>
-</div>
+</div>   
 <ng-template #progressTemplate let-dot let-status="status" let-index="index">
   <span nz-popover nzContent="步骤: {{ index }} 状态: {{ status }}" style="margin-left: -100%;">
     <ng-template [ngTemplateOutlet]="dot"></ng-template>
   </span>
 </ng-template>
+
+<div *ngIf="config.mode === 'step'"
+  [ngClass]="{float_left: config.direction === 'vertical',float_none: config.direction === 'vertical'}">
+  <div *ngIf="config.clickable">
+    <nz-steps [nzSize]="config.size" [nzCurrent]="current" (nzIndexChange)="onlyStepOnIndexChange($event)" 
+    [nzDirection]="config.direction">
+    <nz-step *ngFor="let item of stepItems" [nzTitle]="item.title" [nzSubtitle]="item.subTitle"
+      [nzDescription]="item.desc">
+    </nz-step>
+  </nz-steps>
+  </div>
+  <div *ngIf="!config.clickable">
+    <nz-steps [nzSize]="config.size" [nzCurrent]="current" (nzIndexChange)="onlyStepOnIndexChange($event)" 
+    [nzDirection]="config.direction">
+    <nz-step *ngFor="let item of stepItems" [nzTitle]="item.title" [nzSubtitle]="item.subTitle" [nzDisabled]="true"
+      [nzDescription]="item.desc">
+    </nz-step>
+  </nz-steps>
+  </div>
+</div>

@@ -66,6 +66,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
     public ITEMS_CHECKED: any[];
     public ITEM_SELECTED: any;
     public COMPONENT_VALUE: any;
+    public BUTTON_SELECTED: any;
 
     public descriptionItems: {
         title: string,
@@ -140,6 +141,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
 
     public btnClick(btn, item) {
         this.ITEM_SELECTED = item ? item : null;
+        this.BUTTON_SELECTED = btn['execute'][0];
         const btnResolver = new ButtonOperationResolver(this.componentService, this.config);
         btnResolver.toolbarAction(btn, this.config.id);
     }
@@ -525,6 +527,18 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
             }, error => {
                 console.log(error);
             });
+        } else if (option && !Array.isArray(option)) {
+            const refreshParam = {[this.KEY_ID]: option[this.KEY_ID]}
+            this.componentService.apiService.getRequest(url, method, refreshParam ).subscribe(response => {
+                if (response && response.data && response.data) {
+                    this.refreshData(response.data)
+                    // this.isLoading = false;
+                } else {
+                    // this.isLoading = false;
+                }
+            }, error => {
+                console.log(error);
+            });
         }
     }
 
@@ -781,7 +795,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                             // customAction
                             let customAction;
                             if (dialogCfg.customAction && dialogCfg.customAction.length > 0) {
-                                let customActionList = dialogCfg.customAction.filter(item => item.id === _button.customActionId);
+                                const customActionList = dialogCfg.customAction.filter(item => item.id === _button.customActionId);
                                 if (customActionList && customActionList.length > 0) {
                                     customAction = customActionList[0];
                                 }
@@ -873,7 +887,11 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
 
 
     public showConfirm(option) {
-        this.confirm(option.dialog, () => { this.execute(this.ITEM_SELECTED) });
+        const InnerOperateParams = {};
+        InnerOperateParams['ajaxConfig'] = this.config.ajaxConfig.find(e =>e['id'] === this.BUTTON_SELECTED['ajaxId']);
+        InnerOperateParams['data'] = {'data':{}};
+        InnerOperateParams['data']['data'] = this.ITEM_SELECTED
+        this.confirm(option.dialog, () => { this.execute(InnerOperateParams) });
     }
 
     public async execute(option) {

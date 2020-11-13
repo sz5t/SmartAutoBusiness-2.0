@@ -97,6 +97,11 @@ export class CnStepsComponent extends CnComponentBase implements OnInit, OnDestr
     public current = 0;
     public currentViews;
 
+    public CLICKABLE_STEP:{
+        index?: number,
+        status?: string
+    }[];
+
     private _sender_source$: Subject<any>;
     private _trigger_source$: Subject<any>;
 
@@ -179,6 +184,9 @@ export class CnStepsComponent extends CnComponentBase implements OnInit, OnDestr
 
     public onIndexChange(index) {
         this.current = index;
+        if (!this.config.loadingOnInit) {
+            this.CURRENT_DATA_SET = this.stepItems;
+        }
         this.CURRENT_DATA = this.CURRENT_DATA_SET[index];
         if (this.config.stepMapping) {
 
@@ -187,11 +195,18 @@ export class CnStepsComponent extends CnComponentBase implements OnInit, OnDestr
             if (!this.currentViews || this.currentViews.length > 0) {
                 const step = this.config.stepViews[index] ? this.config.stepViews[index] : this.config.stepViews[0];
 
-                this.showAlert = !this.showAlert;
+                // this.showAlert = !this.showAlert;
                 this.currentViews = this.config.stepViews.filter(v => v.id === step.id);
             }
         }
         this.innerParamsResolve(this.config.innerParams);
+    }
+
+    public nextStep() {
+        if(this.current + 1 < this.config.stepViews.length) {
+            const nextStep = this.current + 1;
+            this.onIndexChange (nextStep);
+        }
     }
 
     public getCurrentComponentId() {
@@ -380,5 +395,122 @@ export class CnStepsComponent extends CnComponentBase implements OnInit, OnDestr
 
     private _processStatus() {
 
+    }
+
+    /**
+     * onlyStepOnIndexChange 只有step步骤条的点击事件
+     */
+    public onlyStepOnIndexChange(index) {
+        this.pushClickedStep(this.current);
+        if (this.config.disorder) {
+            this.current = index;
+            this.tempValue['CURRENT_STEP'] = this.current
+            this.assignCurrentStepStatus(this.current);
+            return true;
+        } else if (!this.config.disorder) {
+            if (this.CLICKABLE_STEP.findIndex(e => e['index'] === index) > -1) {
+                this.current = index;
+                this.tempValue['CURRENT_STEP'] = this.current
+                this.assignCurrentStepStatus(this.current);
+                return true;
+            }
+        }
+    }
+
+    /**
+     * onlyNextStep
+     */
+    public onlyNextStep() {
+        if (!this.current) {
+            this.current = 0;
+        }
+        this.pushClickedStep(this.current);
+        if(this.current + 1 < this.config.stepItems.length) {
+            const nextStep = this.current + 1;
+            this.onlyStepOnIndexChange (nextStep);
+        }
+    }
+
+    /**
+     * pushClickedStep 记录已经点击过的节点序号
+     */
+    public pushClickedStep(index) {
+        if (this.CLICKABLE_STEP) {
+            if (this.CLICKABLE_STEP.findIndex(e => e['index'] === index) === -1) {
+                this.CLICKABLE_STEP.push({'index': index, 'status': 'edit'})
+            }
+        } else {
+            this.CLICKABLE_STEP = [];
+            this.CLICKABLE_STEP.push({'index': index, 'status': 'edit'})
+        }
+    }
+
+    /**
+     * assignCurrentStepStatus 给当前步骤赋状态值 new第一次编辑和edit修改状态
+     */
+    public assignCurrentStepStatus(index) {
+        if (this.CLICKABLE_STEP) {
+            if (this.CLICKABLE_STEP.findIndex(e => e['index'] === index) === -1) {
+                this.tempValue['CURRENT_STEP_STATUS'] = 'new'
+            } else {
+                this.tempValue['CURRENT_STEP_STATUS'] = 'edit'
+            }
+        }
+    }
+
+    /**
+     * buildParameters 构建参数
+     */
+    public buildParameters(paramsCfg, data?, isArray = false) {
+        let parameterResult: any | any[];
+        if (!isArray && !data) {
+            parameterResult = ParameterResolver.resolve({
+                params: paramsCfg,
+                tempValue: this.tempValue,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue,
+                outputValue: data,
+                returnValue: data
+
+            });
+        } else if (!isArray && data) {
+            if (data['_procedure_resultset_1']) {
+                data ={...data['_procedure_resultset_1'][0],...data};
+            }
+            parameterResult = ParameterResolver.resolve({
+                params: paramsCfg,
+                tempValue: this.tempValue,
+                item: data,
+                initValue: this.initValue,
+                cacheValue: this.cacheValue,
+                router: this.routerValue,
+                addedRows: data,
+                editedRows: data,
+                validation: data,
+                returnValue: data,
+                outputValue: data,
+            });
+        } else if (isArray && data && Array.isArray(data)) {
+            parameterResult = [];
+            data.map(d => {
+                const param = ParameterResolver.resolve({
+                    params: paramsCfg,
+                    tempValue: this.tempValue,
+                    componentValue: d,
+                    item: d,
+                    initValue: this.initValue,
+                    cacheValue: this.cacheValue,
+                    router: this.routerValue,
+                    addedRows: d,
+                    editedRows: d,
+                    validation: d,
+                    returnValue: d,
+                    outputValue: data
+                });
+                parameterResult.push(param);
+            })
+        }
+        return parameterResult;
     }
 }

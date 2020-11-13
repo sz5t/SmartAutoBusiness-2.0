@@ -488,7 +488,6 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public loadRefreshData(option) {
-        debugger;
         this.isLoading = true;
         const url = this.config.loadingConfig.url;
         const method = this.config.loadingConfig.method;
