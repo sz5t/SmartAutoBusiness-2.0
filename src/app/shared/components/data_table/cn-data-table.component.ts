@@ -780,7 +780,7 @@ export class CnDataTableComponent extends CnComponentBase
     public addRow(r?) {
         // debugger;
         // 创建空数据对象
-        const newId = CommonUtils.uuID(32);
+        const newId = CommonUtils.uuID(36);
         let newData = this.createNewRowData();
         newData[this.KEY_ID] = newId;
         if (r) {

@@ -644,7 +644,7 @@ export class CnTreeComponent extends CnComponentBase
 
     public addRow() {
         // 创建空数据对象
-        const newId = CommonUtils.uuID(32);
+        const newId = CommonUtils.uuID(36);
         const newData = this.createNewRowData();
         newData[this.KEY_ID] = newId;
 
