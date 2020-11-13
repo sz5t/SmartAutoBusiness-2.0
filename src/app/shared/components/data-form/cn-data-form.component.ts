@@ -1403,6 +1403,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       nzTitle: dialogCfg.title ? dialogCfg.title : '',
       nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
       nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+      nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
       nzContent: CnPageComponent,
       nzComponentParams: {
         config: {},

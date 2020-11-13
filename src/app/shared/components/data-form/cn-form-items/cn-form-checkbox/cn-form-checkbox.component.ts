@@ -20,10 +20,10 @@ export class CnFormCheckboxComponent extends CnComponentBase implements OnInit {
   value = null;
   selectItems;
   checkOptions = [
-    { label: 'Apple', value: 'A', checked: false },
-    { label: 'Pear', value: 'P', checked: false },
-    { label: 'Orange', value: 'O', checked: false },
-    { label: 'Brange', value: 'B', checked: false }
+    // { label: 'Apple', value: 'A', checked: false },
+    // { label: 'Pear', value: 'P', checked: false },
+    // { label: 'Orange', value: 'O', checked: false },
+    // { label: 'Brange', value: 'B', checked: false }
   ];
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {

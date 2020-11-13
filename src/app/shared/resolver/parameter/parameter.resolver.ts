@@ -524,9 +524,9 @@ class GUIDParameter extends BaseParameter implements IParameter {
   }
   public buildParameter() {
     if (this._param.conditionType) {
-      this._result = this.getParameter(this._param.conditionType, CommonUtils.uuID(32));
+      this._result = this.getParameter(this._param.conditionType, CommonUtils.uuID(36));
     } else {
-      this._result = CommonUtils.uuID(32);
+      this._result = CommonUtils.uuID(36);
     }
     return this._result;
   }

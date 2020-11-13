@@ -49,11 +49,14 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
 
       this.tableConfig={};
       if (this.config.layoutName) {
-        _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+        // liu 20.11.12
+        //_tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+        _tableConfig =this.getMenuComponentConfigById(this.config.layoutName);
       }
       if (!_tableConfig) {
         await this.getCustomConfig(this.config.layoutName);
-        _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+        _tableConfig =this.getMenuComponentConfigById(this.config.layoutName);
+        //_tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
       }
 
       // 静态数据，动态数据

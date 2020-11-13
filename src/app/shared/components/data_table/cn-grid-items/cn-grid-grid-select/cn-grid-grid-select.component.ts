@@ -41,11 +41,14 @@ export class CnGridGridSelectComponent extends CnComponentBase implements OnInit
     let _tableConfig;
 
     if(this.config.layoutName){
-     _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+      // 20.11.12
+      _tableConfig =this.getMenuComponentConfigById(this.config.layoutName);
+      //_tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
    }
    if( !_tableConfig){
      await  this.getCustomConfig(this.config.layoutName);
-     _tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+     _tableConfig =this.getMenuComponentConfigById(this.config.layoutName);
+     //_tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
     }
     // 静态数据，动态数据
     if (Object.prototype.toString.call(_tableConfig['component']) === '[object Object]') {

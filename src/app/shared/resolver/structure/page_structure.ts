@@ -115,15 +115,30 @@ export class PageStructure {
                 _base_button['text'] = '操作';
                 _base_button['type'] = 'option';
                 _base_button['parentId'] = componentconfig['id'];
-
+               
+               
                 _toolbar = this.analysisToolbar(componentconfig, _base_button['id']);
                 _toolbar = [...[_base_button], ..._toolbar];
+
+                _toolbar.forEach(item=>{
+                    item['componentId'] = componentconfig['id'];
+                    item['componentDataType'] = 'toolbar';
+                });
             }
             if (componentconfig['component'] === 'cnDataTable' || componentconfig['component'] === 'cnTreeTable' ) {
 
                 _columns = this.analysisTable(componentconfig, componentconfig['id']);
                 _rowActions = this.analysisRowActions(componentconfig, componentconfig['id']);
-                console.log('行内操作', _rowActions);
+
+                _columns.forEach(item=>{
+                    item['componentId'] = componentconfig['id'];
+                    item['componentDataType'] = 'columns';
+                });
+                _rowActions.forEach(item=>{
+                    item['componentId'] = componentconfig['id'];
+                    item['componentDataType'] = 'rowActions';
+                });
+               // console.log('行内操作', _rowActions);
 
             }
             this.tsc_new.push({ id: componentconfig['id'], type: 'component', title: componentconfig['title'], parentId: null, container: componentconfig['component'], toolbar: _toolbar, columns: _columns, rowActions: _rowActions });

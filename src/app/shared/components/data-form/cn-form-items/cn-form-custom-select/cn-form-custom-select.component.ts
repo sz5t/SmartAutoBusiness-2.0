@@ -53,11 +53,15 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     // }
     // debugger;
     if(this.config.layoutName){
-      this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+      //liu 20.11.12
+      this.tableConfig =this.getMenuComponentConfigById("PAGE_"+this.config.layoutName);
+     // this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
     }
     if( !this.tableConfig){
         await this.getCustomConfig(this.config.layoutName);
-        this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+        // liu 20.11.12
+        //this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+        this.tableConfig =this.getMenuComponentConfigById("PAGE_"+this.config.layoutName);
      }
 
     
@@ -182,6 +186,7 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
       nzWidth: this.config.customWidth? this.config.customWidth: '85%',
       nzBodyStyle: this.config.customBodyStyle?this.config.customBodyStyle:{ overflow: 'auto' },
       nzTitle:this.config.customTitle?this.config.customTitle:'',
+      nzMaskClosable: this.config.hasOwnProperty('customMaskClosable')?this.config.customMaskClosable : false,
       //  nzContent: '可实现树+表等多种组件组合',
       nzContent: CnPageComponent,
       nzComponentParams: {

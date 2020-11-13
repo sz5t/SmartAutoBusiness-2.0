@@ -639,7 +639,7 @@ export class CnStaticTableComponent extends CnComponentBase
         // 将数据处理合并为当前新增行数据,并选中当前数据
 
         // 创建空数据对象
-        let newId = CommonUtils.uuID(32);
+        let newId = CommonUtils.uuID(36);
 
         // 存在主键，则
         if (row_data[this.KEY_ID]) {
@@ -718,7 +718,7 @@ export class CnStaticTableComponent extends CnComponentBase
         // 将数据处理合并为当前新增行数据,并选中当前数据
 
         // 创建空数据对象
-        let newId = CommonUtils.uuID(32);
+        let newId = CommonUtils.uuID(36);
         let newData = {};
 
         if (backData && addRowMapping) {
@@ -1116,7 +1116,7 @@ export class CnStaticTableComponent extends CnComponentBase
 
     public addRow() {
         // 创建空数据对象
-        const newId = CommonUtils.uuID(32);
+        const newId = CommonUtils.uuID(36);
         const newData = this.createNewRowData();
         newData[this.KEY_ID] = newId;
 
@@ -1858,6 +1858,7 @@ export class CnStaticTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: components[dialogCfg.form.type],
             nzComponentParams: {
                 config: dialogCfg.form,

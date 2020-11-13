@@ -780,7 +780,7 @@ export class CnDataTableComponent extends CnComponentBase
     public addRow(r?) {
         // debugger;
         // 创建空数据对象
-        const newId = CommonUtils.uuID(32);
+        const newId = CommonUtils.uuID(36);
         let newData = this.createNewRowData();
         newData[this.KEY_ID] = newId;
         if (r) {
@@ -1714,6 +1714,7 @@ export class CnDataTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: components[dialogCfg.form.type],
             nzComponentParams: {
                 config: dialogCfg.form,
@@ -1793,6 +1794,7 @@ export class CnDataTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: CnPageComponent,
             nzComponentParams: {
                 config: {},
