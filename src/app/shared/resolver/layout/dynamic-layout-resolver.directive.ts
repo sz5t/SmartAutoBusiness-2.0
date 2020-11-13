@@ -325,14 +325,18 @@ export class CnDynamicLayoutResolverDirective extends CnComponentBase implements
     }
 
     private findComponentById(id) {
-        return this.componentService.cacheService.getNone(id);
+        // liu 20.11.12
+       // return this.componentService.cacheService.getNone(id);
+        return this.getMenuComponentConfigById(id);
         // return this.config.componentsJson.find(id);
     }
 
     private setHeader(headerCfg) {
         const header: any = headerCfg;
         if (headerCfg.id) {
-            header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
+           // header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
+
+            header['toolbar'] = this.getMenuComponentConfigById(headerCfg.id);
         }
 
         return header;

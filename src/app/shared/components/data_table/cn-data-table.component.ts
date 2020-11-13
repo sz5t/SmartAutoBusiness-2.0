@@ -29,6 +29,7 @@ import { IDataGridProperty } from '@core/relations/bsn-property/data-grid.proper
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
 import { environment } from '@env/environment';
+import { PageStructure } from '@shared/resolver/structure/page_Structure';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -1032,7 +1033,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 tempValue: this.tempValue,
                 initValue: this.initValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                currentRow:this.ROW_CURRENT
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);
@@ -1410,7 +1412,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
                 returnValue: data,
-                selectedRow: this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED,
+                currentRow:this.ROW_CURRENT
 
             });
         } else if (!isArray && data) {
@@ -1431,7 +1434,8 @@ export class CnDataTableComponent extends CnComponentBase
                 returnValue: data,
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
-                selectedRow: this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED,
+                currentRow:this.ROW_CURRENT
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1449,7 +1453,8 @@ export class CnDataTableComponent extends CnComponentBase
                     validation: d,
                     returnValue: d,
                     checkedRow: this.ROWS_CHECKED,
-                    outputValue: data
+                    outputValue: data,
+                    currentRow:this.ROW_CURRENT
                 });
                 parameterResult.push(param);
             })
@@ -1710,6 +1715,7 @@ export class CnDataTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: components[dialogCfg.form.type],
             nzComponentParams: {
                 config: dialogCfg.form,
@@ -1789,6 +1795,7 @@ export class CnDataTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: CnPageComponent,
             nzComponentParams: {
                 config: {},
@@ -2832,5 +2839,45 @@ export class CnDataTableComponent extends CnComponentBase
        
 
     }
+
+
+    //=========================测试解析页面结构============================
+    nodes=[];
+    public executeAnalysisLayout(option?){
+
+        let pageJson:any;
+        let page_id:any;
+        // PAGE_JSON
+        if(this.ROW_SELECTED){
+            if(this.ROW_SELECTED['PAGE_JSON']){
+                pageJson=JSON.parse(this.ROW_SELECTED['PAGE_JSON']);
+                page_id = this.ROW_SELECTED['ID']
+            }
+        }
+    
+        console.log('当前选中行',this.ROW_SELECTED);
+        if(pageJson){
+            let f = new PageStructure();
+            f.page_id=page_id;
+            f.page_config = pageJson;
+            f.getPageStructure();
+            this.nodes = f.nodes;
+            this.ROW_SELECTED['analysisLayout'] = JSON.stringify (f.ts_new);
+        } else {
+            this.nodes=[];
+        }
+
+        if(option){
+            this.executeCurrentRow(option);
+        }
+        return true;
+
+    }
+
+
+
+  
+
+
 
 }

@@ -65,11 +65,15 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
    
     let _page_config=null;
      if(this.customPageId){
-      _page_config = this.componentService.cacheService.getNone(this.customPageId);
+     // _page_config = this.componentService.cacheService.getNone(this.customPageId);
+     // liu 20.11.12
+      _page_config =this.getMenuComponentConfigById(this.customPageId);
     }
     if( !_page_config){
       await  this.getCustomConfig(this.customPageId);
-      _page_config = this.componentService.cacheService.getNone(this.customPageId);
+      // _page_config = this.componentService.cacheService.getNone(this.customPageId);
+      // liu 20.11.12
+      _page_config =this.getMenuComponentConfigById(this.customPageId);
      }
      this.page_config =_page_config;
      console.log('222222', this.page_config,this.initData);

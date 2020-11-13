@@ -50,11 +50,14 @@ export class CnFormCustomInputComponent extends CnComponentBase implements OnIni
     //   this.config.valueName="value";
     // }
     if(this.config.layoutName){
-      this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+      // liu 20.11.12
+      //this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+      this.tableConfig =this.getMenuComponentConfigById("PAGE_"+this.config.layoutName);
     }
     if( !this.tableConfig){
       await  this.getCustomConfig(this.config.layoutName);
-      this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+      //this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+      this.tableConfig =this.getMenuComponentConfigById("PAGE_"+this.config.layoutName);
      }
     // if(this.config.model ==='multiple') {
     //   this.value ="9F2D4A2D-5C57-44AA-8F06-B8F5D0B96AAE,93F1C6C9-140D-42A5-9379-FE47EDA2DEEB";
@@ -150,6 +153,7 @@ createCustomModal(){
     nzBodyStyle: this.config.customBodyStyle?this.config.customBodyStyle:{ overflow: 'auto' },
     nzTitle:this.config.customTitle?this.config.customTitle:'',
     //  nzContent: '可实现树+表等多种组件组合',
+    nzMaskClosable: this.config.hasOwnProperty('customMaskClosable')?this.config.customMaskClosable : false,
     nzContent: CnPageComponent,
     nzComponentParams: {
       config:this. tableConfig,

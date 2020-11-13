@@ -300,7 +300,9 @@ export class CnLayoutResolverDirective extends CnComponentBase implements OnInit
     private setHeader(headerCfg) {
         const header: any = headerCfg;
         if (headerCfg.id) {
-            header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
+            //liu 20.11.12
+            header['toolbar'] = this.getMenuComponentConfigById(headerCfg.id);
+           // header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
         }
 
         return header;

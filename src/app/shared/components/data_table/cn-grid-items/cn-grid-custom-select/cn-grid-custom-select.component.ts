@@ -50,11 +50,14 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
     // 加载页面配置
 
     if(this.config.layoutName){
-      this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+      // 20.11.12
+      this.tableConfig =this.getMenuComponentConfigById("PAGE_"+this.config.layoutName);
+     // this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
     }
     if( !this.tableConfig){
       await  this.getCustomConfig(this.config.layoutName);
-      this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+      //this.tableConfig = this.componentService.cacheService.getNone("PAGE_"+this.config.layoutName);
+      this.tableConfig =this.getMenuComponentConfigById("PAGE_"+this.config.layoutName);
      }
 
     // if(!this.valueConfig){
@@ -228,6 +231,7 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
       nzWidth: this.config.customWidth? this.config.customWidth: '85%',
       nzBodyStyle: this.config.customBodyStyle?this.config.customBodyStyle:{ overflow: 'auto' },
       nzTitle:this.config.customTitle?this.config.customTitle:'',// '自定义组件',
+      nzMaskClosable: this.config.hasOwnProperty('customMaskClosable')?this.config.customMaskClosable : false,
       //  nzContent: '可实现树+表等多种组件组合',
       nzContent: CnPageComponent,
       nzComponentParams: {

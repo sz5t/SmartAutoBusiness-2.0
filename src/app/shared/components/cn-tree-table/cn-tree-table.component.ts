@@ -541,15 +541,18 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public loadRefreshChildrenData(option) {
-        if (this.config.loadingItemConfig) {
-            this.loadItem(option, (data) => {
-                this.refreshChildrenData(data);
-            })
-        } else {
-            this._buildReloadAjax(option, (data) => {
-                this.refreshChildrenData(data);
-            })
-        }
+
+        // 20201105 修改树表
+        this.expandRow(option,true);
+        // if (this.config.loadingItemConfig) {
+        //     this.loadItem(option, (data) => {
+        //         this.refreshChildrenData(data);
+        //     })
+        // } else {
+        //     this._buildReloadAjax(option, (data) => {
+        //         this.refreshChildrenData(data);
+        //     })
+        // }
 
     }
 
@@ -598,6 +601,8 @@ export class CnTreeTableComponent extends CnComponentBase
         //     console.log(error);
         // });
     }
+
+ 
 
     /**
      * 构建查询过滤参数
@@ -1403,7 +1408,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 router: this.routerValue,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
-                selectedRow: this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED,
+                currentRow:this.ROW_CURRENT
 
             });
         } else if (!isArray && data) {
@@ -1422,7 +1428,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 editedRows: data,
                 validation: data,
                 returnValue: data,
-                selectedRow: this.ROW_SELECTED
+                selectedRow: this.ROW_SELECTED,
+                currentRow:this.ROW_CURRENT
 
             });
         } else if (isArray && data && Array.isArray(data)) {
@@ -1439,7 +1446,8 @@ export class CnTreeTableComponent extends CnComponentBase
                     addedRows: d,
                     editedRows: d,
                     validation: d,
-                    returnValue: d
+                    returnValue: d,
+                    currentRow:this.ROW_CURRENT
                 });
                 parameterResult.push(param);
             })
@@ -1627,7 +1635,8 @@ export class CnTreeTableComponent extends CnComponentBase
             });
         }
 
-        const subPageConfig = this.componentService.cacheService.getNone(dialogCfg.layoutName);
+        const subPageConfig = this.getMenuComponentConfigById(dialogCfg.layoutName);
+        //const subPageConfig = this.componentService.cacheService.getNone(dialogCfg.layoutName);
 
         const dialogOptional = {
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
@@ -1718,6 +1727,7 @@ export class CnTreeTableComponent extends CnComponentBase
             nzContent: CnDataFormComponent,
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzComponentParams: {
                 config: dialogCfg.form,
                 changeValue: option.changeValue ? option.changeValue.params : []
@@ -1789,6 +1799,7 @@ export class CnTreeTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: CnPageComponent,
             nzComponentParams: {
                 // config:this. tableConfig,

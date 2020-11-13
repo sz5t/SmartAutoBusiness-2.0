@@ -61,7 +61,8 @@ export const CN_DATA_GRID_METHOD: IDataGridTrigger = {
     EXECUTE_CHECKED_ROWS: 'executeCheckedRows',
     EXECUTE_CHECKED_ROWS_IDS: 'executeCheckedRowsIds',
     EXECUTE_POPUP_CLOSE:'executePopupClose',
-    EXECUTE_DOWN_FILE:'downFile'  
+    EXECUTE_DOWN_FILE:'downFile',
+    EXECUTE_ANALYSIS_LAYOUT:'executeAnalysisLayout'  
 }
 
 export const CN_TOOLBAR_METHOD: IToolbarTrigger = {

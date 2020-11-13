@@ -4,6 +4,7 @@ import { ComponentServiceProvider } from '@core/services/component/component-ser
 import { LayoutBase, LayoutSize } from '@shared/resolver/layout/layout.base';
 import { LayoutColumn } from '@shared/resolver/layout/layout.column';
 import { LayoutRow } from '@shared/resolver/layout/layout.row';
+import { CnComponentBase } from '../cn-component.base';
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -26,14 +27,14 @@ import { LayoutRow } from '@shared/resolver/layout/layout.row';
         `
     ]
 })
-export class CnDynamicLayoutComponent  implements OnInit {
+export class CnDynamicLayoutComponent extends CnComponentBase  implements OnInit {
     @Input() public layoutObj;
     @Input() public initData;
     @Input() public tempData;
     @Input() public dataServe;
     constructor(  @Inject(BSN_COMPONENT_SERVICES)
     public componentService: ComponentServiceProvider,) {
-
+        super(componentService);
     }
 
     public ngOnInit() {
@@ -115,7 +116,9 @@ export class CnDynamicLayoutComponent  implements OnInit {
     private setHeader(headerCfg) {
         const header: any = headerCfg;
         if (headerCfg.id) {
-            header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
+            header['toolbar'] = this.getMenuComponentConfigById(headerCfg.id);
+            // liu 20.11.12
+           // header['toolbar'] = this.componentService.cacheService.getNone(headerCfg.id);
         }
 
         return header;

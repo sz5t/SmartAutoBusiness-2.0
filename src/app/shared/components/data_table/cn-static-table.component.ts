@@ -1657,7 +1657,8 @@ export class CnStaticTableComponent extends CnComponentBase
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
                 addedRows: this.ROWS_ADDED,
-                editedRows: this.ROWS_EDITED
+                editedRows: this.ROWS_EDITED,
+                currentRow:this.ROW_CURRENT
 
             });
         } else if (!isArray && data) {
@@ -1672,7 +1673,8 @@ export class CnStaticTableComponent extends CnComponentBase
                 addedRows: data,
                 editedRows: data,
                 validation: data,
-                returnValue: data
+                returnValue: data,
+                currentRow:this.ROW_CURRENT
 
             });
         } else if (isArray && data && Array.isArray(data)) {
@@ -1689,7 +1691,8 @@ export class CnStaticTableComponent extends CnComponentBase
                     addedRows: d,
                     editedRows: d,
                     validation: d,
-                    returnValue: d
+                    returnValue: d,
+                    currentRow:this.ROW_CURRENT
                 });
                 parameterResult.push(param);
             })
@@ -1855,6 +1858,7 @@ export class CnStaticTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: components[dialogCfg.form.type],
             nzComponentParams: {
                 config: dialogCfg.form,
