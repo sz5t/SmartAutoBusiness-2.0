@@ -272,7 +272,12 @@ export class CnComponentBase {
         let page_config_data={};
         let page_permission_data={};
       
-        page_config_data[layoutId] = configData['layoutJson'];
+        if(configData['layoutJson']){
+            page_config_data[layoutId] = configData['layoutJson'];
+        } else {
+            page_config_data[layoutId] = configData;
+        }
+
         const componentJson = configData['componentsJson']
         if (Array.isArray(componentJson) && componentJson.length > 0) {
           componentJson.forEach(json => {

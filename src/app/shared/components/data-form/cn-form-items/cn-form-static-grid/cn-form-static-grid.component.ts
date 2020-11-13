@@ -36,10 +36,10 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   _changeValue: any;
   private _componentRef: ComponentRef<any>;
   // @ViewChild('table', { static: true }) public table: CnStaticTableComponent;
-  table :CnStaticTableComponent;
-  @ViewChild('virtualContainer', {static: true, read: ViewContainerRef }) virtualContainer: ViewContainerRef;
+  table: CnStaticTableComponent;
+  @ViewChild('virtualContainer', { static: true, read: ViewContainerRef }) virtualContainer: ViewContainerRef;
   constructor(@Inject(BSN_COMPONENT_SERVICES)
-  public componentService: ComponentServiceProvider,     private _resolver: ComponentFactoryResolver) {
+  public componentService: ComponentServiceProvider, private _resolver: ComponentFactoryResolver) {
     super(componentService);
   }
 
@@ -49,7 +49,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     // await this.getJson();
     // 静态数据，动态数据
     setTimeout(() => {
-    
+
     });
 
   }
@@ -60,30 +60,33 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
 
       if (this.config.layoutName) {
         // liu 20.11.12
-        this.tableConfig =this.getMenuComponentConfigById(this.config.layoutName);
+        this.tableConfig = this.getMenuComponentConfigById(this.config.layoutName);
         //this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
       }
       if (!this.tableConfig) {
         await this.getCustomConfig(this.config.layoutName);
 
-        this.tableConfig =this.getMenuComponentConfigById(this.config.layoutName);
-       // this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+        this.tableConfig = this.getMenuComponentConfigById(this.config.layoutName);
+        // this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
 
 
       }
-      this.loading =false;
+      this.loading = false;
       this._buildComponent();
-      
-    } else{
+
+    } else {
       this.buildChangeValue(this.config);
     }
 
   }
 
   private _buildComponent(componentObj?) {
-   // console.log('=+++++=====++++++======+++')
+    // console.log('=+++++=====++++++======+++',this.tableConfig,this.config.layoutName)
+    if (!this.tableConfig) {
+      return false;
+    }
     const comp = this._resolver.resolveComponentFactory<any>(
-        components['cnStaticTable']
+      components['cnStaticTable']
     );
     this.virtualContainer.clear();
     this._componentRef = this.virtualContainer.createComponent(comp);
@@ -92,11 +95,11 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     this._componentRef.instance.updateValue.subscribe(event => {
       this.valueChangeTable(event);
     });
-    this.table =  this._componentRef.instance;
+    this.table = this._componentRef.instance;
     this.table.readonly = this.config.readonly ? this.config.readonly : false;
     this.buildChangeValue(this.config);
-   
-}
+
+  }
 
 
 
@@ -232,7 +235,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
   public async valueChange(v?) {
     console.log('表单静态表格数据：', v);
     await this.getJson();
-   
+
     if (v) {
       this.count++;
     }
@@ -360,7 +363,7 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     this._changeValue = option.changeValue ? option.changeValue.params : []
     if (!this._changeValue) { this._changeValue = [] };
     //setTimeout(() => {
-      this.table && this.table.setChangeValue(this._changeValue);
+    this.table && this.table.setChangeValue(this._changeValue);
     //  console.log(this.table.initData);
     //});
 
