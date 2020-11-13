@@ -1635,7 +1635,8 @@ export class CnTreeTableComponent extends CnComponentBase
             });
         }
 
-        const subPageConfig = this.componentService.cacheService.getNone(dialogCfg.layoutName);
+        const subPageConfig = this.getMenuComponentConfigById(dialogCfg.layoutName);
+        //const subPageConfig = this.componentService.cacheService.getNone(dialogCfg.layoutName);
 
         const dialogOptional = {
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
@@ -1726,6 +1727,7 @@ export class CnTreeTableComponent extends CnComponentBase
             nzContent: CnDataFormComponent,
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzComponentParams: {
                 config: dialogCfg.form,
                 changeValue: option.changeValue ? option.changeValue.params : []
@@ -1797,6 +1799,7 @@ export class CnTreeTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: CnPageComponent,
             nzComponentParams: {
                 // config:this. tableConfig,

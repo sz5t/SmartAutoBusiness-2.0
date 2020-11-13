@@ -438,7 +438,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             });
         }
         this.button_list = _button_list;
-        console.log('按钮统计', _button_list);
+       // console.log('按钮统计', _button_list);
     }
 
 

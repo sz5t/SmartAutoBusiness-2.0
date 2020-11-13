@@ -1523,7 +1523,27 @@ export class CnUploadComponent extends CnComponentBase implements OnInit, OnDest
         item['name'] = `${item['name']}.${index}`;
       });
      // console.log(_paramsCfg);
-      let componentValue = { file: file, index: index.toString(), ...this.fileform.validateForm.value };
+     let form_value = this.fileform.validateForm.value;
+     if(this.fileform.validateForm.value){
+      for (const key in form_value) {
+
+        this.config.customStructure.fileParams.forEach(item=>{
+          if(item['type'] ==='componentValue'){
+
+            if(item['valueName']!=='index'){
+              if(!form_value[item['valueName']]){
+                form_value[item['valueName']] = item['value'];
+              }
+            }
+
+          }
+        })
+
+      }
+     } 
+
+
+      let componentValue = { file: file, index: index.toString(), ...form_value };
     
       let back = this.buildParameters(_paramsCfg, {}, componentValue);
       //let f_obj={`files.${index}`:file}

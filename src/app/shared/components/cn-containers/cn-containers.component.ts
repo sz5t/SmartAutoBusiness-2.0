@@ -111,15 +111,19 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
     // 3.切换容器组件为当前内容
     // 当前配置缓存没有，则自动加载
     if (c_view) {
-      currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
+      // liu 2020.11.12
+      currentView = this.getMenuComponentConfigById(c_view['layoutName']);
+     // currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
     }
     if (!currentView) {
       await this.getCustomConfig(c_view['layoutName']);
-      currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
+      currentView = this.getMenuComponentConfigById(c_view['layoutName']);
+      // liu 2020.11.12
+      //currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
     }
    // console.log('------', c_view['layoutName'], currentView);
     setTimeout(() => {
-      this.view = currentView['layoutJson'];
+      this.view = currentView;
       this._initValue_new = {...this.initValue};
       this._tempValue_new = {...this.tempValue};
       this.showLayout = true;
@@ -173,21 +177,25 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
     // 3.切换容器组件为当前内容
     // 当前配置缓存没有，则自动加载
     if (c_view) {
-      currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
+     
+      currentView = this.getMenuComponentConfigById(c_view['layoutName']);
+     // currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
     }
     if (!currentView) {
       await this.getCustomConfig(c_view['layoutName']);
-      currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
+      // 20.11.12
+      currentView = this.getMenuComponentConfigById(c_view['layoutName']);
+      //currentView = this.componentService.cacheService.getNone(c_view['layoutName']);
     }
    // console.log('------', c_view['layoutName'], currentView);
     setTimeout(() => {
-      this.view = currentView['layoutJson'];
+      this.view = currentView;
       this._linkViews.forEach(element => {
          if(element.id ===c_viewId){
           if(isLoad){
             element['showLayout'] = true;
           }   
-          element['viewConfig'] = currentView['layoutJson'];
+          element['viewConfig'] = currentView;
           element['hidden'] = false;
          }else {
           element['hidden'] = true;
@@ -363,7 +371,7 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
 
 
   // 取出当前配置 参数：页面id
-  public async getCustomConfig(customConfigId?) {
+  public async getCustomConfig1(customConfigId?) {
     const response = await this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { "PageId": customConfigId }).toPromise();
 
     if (response['data']) {

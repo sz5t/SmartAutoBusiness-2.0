@@ -583,7 +583,9 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
             });
         }
 
-        const subPageConfig = this.componentService.cacheService.getNone(dialogCfg.layoutName);
+        // 20.11.21
+        const subPageConfig =this.getMenuComponentConfigById(dialogCfg.layoutName);
+        //const subPageConfig = this.componentService.cacheService.getNone(dialogCfg.layoutName);
 
         const dialogOptional = {
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
@@ -671,6 +673,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
             nzContent: CnDataFormComponent,
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzComponentParams: {
                 config: dialogCfg.form,
                 changeValue: option.changeValue ? option.changeValue.params : []
@@ -736,6 +739,7 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: CnPageComponent,
             nzComponentParams: {
                 config: {},

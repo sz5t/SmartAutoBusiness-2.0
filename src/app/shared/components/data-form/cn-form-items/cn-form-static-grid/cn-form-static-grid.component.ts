@@ -59,12 +59,15 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
     if (!this.tableConfig) {
 
       if (this.config.layoutName) {
-        this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+        // liu 20.11.12
+        this.tableConfig =this.getMenuComponentConfigById(this.config.layoutName);
+        //this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
       }
       if (!this.tableConfig) {
         await this.getCustomConfig(this.config.layoutName);
 
-        this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
+        this.tableConfig =this.getMenuComponentConfigById(this.config.layoutName);
+       // this.tableConfig = this.componentService.cacheService.getNone(this.config.layoutName);
 
 
       }

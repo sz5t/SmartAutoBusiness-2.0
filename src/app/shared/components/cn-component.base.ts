@@ -7,6 +7,7 @@ import { ApiService } from '@core/services/api/api-service';
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { Inject, Optional, Type } from '@angular/core';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { pageConfigCache } from '@env/page-config-cache';
 
 export interface InnerValue {
     tempValue: any;
@@ -219,6 +220,7 @@ export class CnComponentBase {
     }
 
 
+    // 获取配置
     public  async getCustomConfig(customConfigId?){
         const response = await  this._componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { "PageId": customConfigId }).toPromise();
       
@@ -233,24 +235,27 @@ export class CnComponentBase {
                // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
                if (key === customConfigId) {
                //  this.config = pageJson[customConfigId]['layoutJson'];
-                 const componentJson = pageJson[customConfigId]['componentsJson']
-                 if (Array.isArray(componentJson) && componentJson.length > 0) {
-                   componentJson.forEach(json => {
-                     this._componentService.cacheService.set(json['id'], json);
-                   });
-                 }
-   
-                 this._componentService.cacheService.set(key, pageJson[customConfigId]);
+               // liu 20.11.12
+                //  const componentJson = pageJson[customConfigId]['componentsJson']
+                //  if (Array.isArray(componentJson) && componentJson.length > 0) {
+                //    componentJson.forEach(json => {
+                //      this._componentService.cacheService.set(json['id'], json);
+                //    });
+                //  }
+                //  this._componentService.cacheService.set(key, pageJson[customConfigId]);
+                 this.setCache(key,'childPage',pageJson[customConfigId],null);
                  
                } else {
                  // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
-                 this._componentService.cacheService.set(key, pageJson[key]);
-                 const componentJson = pageJson[key]['componentsJson']
-                 if (Array.isArray(componentJson) && componentJson.length > 0) {
-                   componentJson.forEach(json => {
-                     this._componentService.cacheService.set(json['id'], json);
-                   });
-                 }
+
+                 this.setCache(key,'childPage', pageJson[key],null);
+                //  this._componentService.cacheService.set(key, pageJson[key]);
+                //  const componentJson = pageJson[key]['componentsJson']
+                //  if (Array.isArray(componentJson) && componentJson.length > 0) {
+                //    componentJson.forEach(json => {
+                //      this._componentService.cacheService.set(json['id'], json);
+                //    });
+                //  }
    
                }
              }
@@ -259,6 +264,69 @@ export class CnComponentBase {
        
         }
      }
+
+
+     // 写入缓存
+     public setCache(layoutId?,type?,configData?,permissionData?):any{
+
+        let page_config_data={};
+        let page_permission_data={};
+      
+        page_config_data[layoutId] = configData['layoutJson'];
+        const componentJson = configData['componentsJson']
+        if (Array.isArray(componentJson) && componentJson.length > 0) {
+          componentJson.forEach(json => {
+            // 组件信息
+            page_config_data[json['id']]= json;
+          });
+        }
+        
+        const activeMenu = this._componentService.cacheService.getNone('activeMenu');
+        // 2.从当前缓存下查找当前menu的配置集合
+        let menuId = activeMenu['id'];
+        let activeConfig = this._componentService.cacheService.getNone('menuId');
+        // 3.层级是否控制在布局页面结构
+        if(!activeConfig){
+          activeConfig= {pageConfig:{},permissionConfig:{}};
+        }
+        if(!activeConfig['pageConfig']){
+          activeConfig['pageConfig']={};
+        }
+        if(!activeConfig['permissionConfig']){
+          activeConfig['permissionConfig']={};
+        }
+      
+        if(activeConfig['pageConfig']){
+          activeConfig['pageConfig']={...activeConfig['pageConfig'],...page_config_data}
+        }
+        if(activeConfig['permissionConfig']){
+          activeConfig['permissionConfig']={...activeConfig['permissionConfig'],...page_permission_data}
+        }
+      
+        // 将缓存数据写入
+        pageConfigCache[menuId]['pageConfig'] = {...pageConfigCache[menuId]['pageConfig'], ...page_config_data};
+       // this._componentService.cacheService.set(menuId,activeConfig);
+        return true;
+      
+     }
+
+     // 获取当前组件配置（从缓存读取组件信息）
+    public getMenuComponentConfigById(id):any {
+        // 1.加载当前menu下的缓存信息
+        const activeMenu = this._componentService.cacheService.getNone('activeMenu');
+        // 2.从当前缓存下查找当前menu的配置集合
+        let menuId = activeMenu['id'];
+       // const activeConfig = this._componentService.cacheService.getNone(menuId);
+        // 3.层级是否控制在布局页面结构
+        // this.layoutId  布局页面id 也就是子页标识
+        // activeConfig= {pageConfig:{},permissionConfig:{}};
+        // 4.从当前menu配置集合中查找相应组件的详细配置信息
+        let componentConfig =null;
+        if( pageConfigCache[menuId]['pageConfig'][id]) {
+            componentConfig =  pageConfigCache[menuId]['pageConfig'][id];
+        }
+        return componentConfig;
+    }
 
 
 }

@@ -1715,6 +1715,7 @@ export class CnDataTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: components[dialogCfg.form.type],
             nzComponentParams: {
                 config: dialogCfg.form,
@@ -1794,6 +1795,7 @@ export class CnDataTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
             nzContent: CnPageComponent,
             nzComponentParams: {
                 config: {},

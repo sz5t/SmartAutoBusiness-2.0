@@ -19,6 +19,7 @@ import { CnUploadComponent } from '@shared/components/cn-upload/cn-upload.compon
 import { CnContainersComponent } from '@shared/components/cn-containers/cn-containers.component';
 import { CnCarouseComponent } from '@shared/components/cn-carouse/cn-carouse.component';
 import { CnDataStepsComponent } from '@shared/components/cn-data-steps/cn-data-steps.component';
+import { pageConfigCache } from '@env/page-config-cache';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -50,6 +51,7 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
     @Input() initData;
     @Input() tempData;
     @Input() dataServe;
+    @Input() layoutId;
 
     private _componentRef: ComponentRef<any>;
     constructor(
@@ -78,7 +80,11 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
             if (this.config.component && components[this.config.component]) {
                 this._buildComponent(this.config);
             } else {
-                const cmptObj: any = this._getComponentObjectById(this.config.id);
+                //const cmptObj: any = this._getComponentObjectById(this.config.id);
+
+                // 2020.11.21
+                const cmptObj: any = this._getMenuComponentObjectById(this.config.id);
+                
                 cmptObj['component'] = this.config.container;
                 console.log(cmptObj);
                 if (!components[cmptObj.component]) {
@@ -137,7 +143,24 @@ export class CnComponentResolverDirective implements OnInit, OnDestroy {
         return this.componentService.cacheService.getNone(id);
     }
 
-
+    // 获取当前组件配置（从缓存读取组件信息）
+    private _getMenuComponentObjectById(id):any {
+        // 1.加载当前menu下的缓存信息
+        const activeMenu = this.componentService.cacheService.getNone('activeMenu');
+        // 2.从当前缓存下查找当前menu的配置集合
+        let menuId = activeMenu['id'];
+       // const activeConfig = this.componentService.cacheService.getNone(menuId);
+        // 3.层级是否控制在布局页面结构
+        // this.layoutId  布局页面id 也就是子页标识
+        // activeConfig= {pageConfig:{},permissionConfig:{}};
+        // 4.从当前menu配置集合中查找相应组件的详细配置信息
+       // let componentConfig = activeConfig['pageConfig'][id];
+        let componentConfig =null;
+        if( pageConfigCache[menuId]['pageConfig'][id]) {
+            componentConfig =  pageConfigCache[menuId]['pageConfig'][id];
+        }
+        return componentConfig;
+    }
 
 
 }

@@ -4,6 +4,9 @@ import { Router, NavigationEnd } from '@angular/router';
 import { LocationStrategy, DOCUMENT } from '@angular/common';
 import { EventEmitter } from 'events';
 import { filter } from 'rxjs/operators';
+import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { pageConfigCache } from '@env/page-config-cache';
 
 @Component({
   selector: 'layout-nav',
@@ -22,6 +25,8 @@ export class NavComponent implements OnInit, OnDestroy {
   public list: Menu[];
   public rootEl;
   public bodyEl;
+
+  public menuList=[];
   route$;
   change$;
 
@@ -583,7 +588,9 @@ export class NavComponent implements OnInit, OnDestroy {
     private _cd: ChangeDetectorRef,
     @Inject(DOCUMENT)
     private _doc,
-    private _el: ElementRef
+    private _el: ElementRef,
+    @Inject(BSN_COMPONENT_SERVICES)
+    public componentService: ComponentServiceProvider
   ) {
     this.list = [];
     this.autoCloseUnderPad = true;
@@ -713,6 +720,30 @@ export class NavComponent implements OnInit, OnDestroy {
   // }
 
   onClick(menu) {
+    console.log('====menu=====', menu);
+    let activeMenu = {
+      id: menu.id,
+      jsonId: menu.jsonId,
+      text:menu.text
+    }
+    this.componentService.cacheService.set('activeMenu', activeMenu);
+
+    // liu 20.11.12 只缓存5个页面数据
+    let index = this.menuList.findIndex(item=>item.id=== menu.id);
+    if(index<0){
+      this.menuList=[activeMenu, ...this.menuList];
+    }
+    if(this.menuList.length>5){
+      this.menuList  = this.menuList.slice(0,5);
+    }
+    for (const key in pageConfigCache) {
+      let index = this.menuList.findIndex(item=>item.id=== key);
+      if(index<0){
+        pageConfigCache[key]={pageConfig:{},permissionConfig:{}};
+      }
+    }
+    //console.log('缓存信息',this.menuList);
+    pageConfigCache[menu.id]={pageConfig:{},permissionConfig:{}};
     this._router.navigateByUrl(menu.link);
     // this.hideAll();
   }
