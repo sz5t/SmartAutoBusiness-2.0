@@ -11,6 +11,7 @@ import { NzIconService } from 'ng-zorro-antd';
 import { ICONS_AUTO } from '../../../style-icons-auto';
 import { ICONS } from '../../../style-icons';
 import { environment } from '@env/environment';
+import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 
 /**
  * 用于应用启动时
@@ -27,6 +28,7 @@ export class StartupService {
     private aclService: ACLService,
     private titleService: TitleService,
     private httpClient: HttpClient,
+    @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
   ) {
     iconSrv.addIcon(...ICONS_AUTO, ...ICONS);
   }
@@ -47,7 +49,7 @@ export class StartupService {
        environment['SYSTEM_CONFIG'] = data['SYSTEM_CONFIG'];
       }
    }
-
+   this.tokenService.set({ key: `123`, token: '123' });
    // const data1 = await this.httpClient.get(`http://192.168.1.111:8401/page/struct/parse?pageId=m2lSKOiIgmNR5R3JStQg0CYPNzdSd4Fd`).toPromise();
     console.log('+++++++++加载后台服务访问地址++++++++++++',data);
   }
