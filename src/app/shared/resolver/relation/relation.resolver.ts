@@ -142,11 +142,30 @@ export class RelationResolver {
                                                         return true;
                                                     }
                                                 } else if (item.caseValue['hasProperty'] === true) {
-                                                    if (regularData) {
-                                                        _sendData.push(sender_element);
-                                                        return true;
+                                                    if (item.caseValue.hasOwnProperty('matchValue')) {
+                                                        const condition = item.caseValue['condition']
+                                                        if (condition === 'eq') {
+                                                            if (regularData && regularData === item.caseValue['matchValue']) {
+                                                                _sendData.push(sender_element);
+                                                                return true;
+                                                            } else {
+                                                                return false;
+                                                            }
+                                                        } else if (condition === 'neq'){
+                                                            if (regularData && regularData !== item.caseValue['matchValue']) {
+                                                                _sendData.push(sender_element);
+                                                                return true;
+                                                            } else {
+                                                                return false;
+                                                            }
+                                                        }
                                                     } else {
-                                                        return false;
+                                                        if (regularData) {
+                                                            _sendData.push(sender_element);
+                                                            return true;
+                                                        } else {
+                                                            return false;
+                                                        }
                                                     }
                                                 }
                                             }
