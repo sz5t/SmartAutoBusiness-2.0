@@ -43,7 +43,6 @@ export class RelationResolver {
 
                         if (sender.hasOwnProperty('preCondition')) {
                             if (sender['preCondition'].hasOwnProperty('caseValue')) {
-
                                 let item = sender['preCondition'];
                                 let regularflag = true;
                                 if (item.caseValue) {
@@ -74,7 +73,6 @@ export class RelationResolver {
                                 } else {
                                     return false;
                                 }
-
                             } else {
                                 return true;
                             }
@@ -84,38 +82,76 @@ export class RelationResolver {
                             sender.sendData.forEach(sender_element => {
                                 if (sender_element.hasOwnProperty('preCondition')) {
                                     if (sender_element['preCondition'].hasOwnProperty('caseValue')) {
-
                                         let item = sender_element['preCondition'];
-                                        let regularflag = true;
-                                        if (item.caseValue) {
-                                            const reg1 = new RegExp(item.caseValue.regular);
-                                            let regularData;
-                                            if (item.caseValue.type) {
-                                                if (item.caseValue.regularType === 'value') {
-                                                    regularData = item.caseValue['value'];
-                                                }
-                                                if (item.caseValue.type === 'successData') {
-                                                    // 选中行数据[这个是单值]
-                                                    regularData = successData[item.caseValue['valueName']];
-                                                }
-                                                if (item.caseValue['type'] === 'temValue') {
-                                                    regularData = this._componentInstance.tempValue[item.caseValue['valueName']];
-                                                }
-                                                if (item.caseValue['type'] === 'initValue') {
-                                                    regularData = this._componentInstance.initValue[item.caseValue['valueName']];
-                                                }
+                                        if (item.caseValue.hasOwnProperty('regular')) {
+                                            let regularflag = true;
+                                            if (item.caseValue) {
+                                                const reg1 = new RegExp(item.caseValue.regular);
+                                                let regularData;
+                                                if (item.caseValue.type) {
+                                                    if (item.caseValue.regularType === 'value') {
+                                                        regularData = item.caseValue['value'];
+                                                    }
+                                                    if (item.caseValue.type === 'successData') {
+                                                        // 选中行数据[这个是单值]
+                                                        regularData = successData[item.caseValue['valueName']];
+                                                    }
+                                                    if (item.caseValue['type'] === 'temValue') {
+                                                        regularData = this._componentInstance.tempValue[item.caseValue['valueName']];
+                                                    }
+                                                    if (item.caseValue['type'] === 'initValue') {
+                                                        regularData = this._componentInstance.initValue[item.caseValue['valueName']];
+                                                    }
 
+                                                }
+                                                regularflag = reg1.test(regularData);
                                             }
-                                            regularflag = reg1.test(regularData);
+
+                                            // 正则校验
+                                            if (regularflag) {
+                                                _sendData.push(sender_element);
+                                                return true;
+                                            } else {
+                                                return false;
+                                            }
+                                        } else if (item.caseValue.hasOwnProperty('hasProperty')) {
+                                            if (item.caseValue) {
+                                                let regularData;
+                                                if (item.caseValue.type) {
+                                                    if (item.caseValue.regularType === 'value') {
+                                                        regularData = item.caseValue['value'];
+                                                    }
+                                                    if (item.caseValue.type === 'successData') {
+                                                        // 选中行数据[这个是单值]
+                                                        regularData = successData[item.caseValue['valueName']];
+                                                    }
+                                                    if (item.caseValue['type'] === 'temValue') {
+                                                        regularData = this._componentInstance.tempValue[item.caseValue['valueName']];
+                                                    }
+                                                    if (item.caseValue['type'] === 'initValue') {
+                                                        regularData = this._componentInstance.initValue[item.caseValue['valueName']];
+                                                    }
+
+                                                }
+                                                // 存在校验
+                                                if (item.caseValue['hasProperty'] === false) {
+                                                    if (regularData) {
+                                                        return false;
+                                                    } else {
+                                                        _sendData.push(sender_element);
+                                                        return true;
+                                                    }
+                                                } else if (item.caseValue['hasProperty'] === true) {
+                                                    if (regularData) {
+                                                        _sendData.push(sender_element);
+                                                        return true;
+                                                    } else {
+                                                        return false;
+                                                    }
+                                                }
+                                            }
                                         }
 
-                                        // 正则校验
-                                        if (regularflag) {
-                                            _sendData.push(sender_element);
-                                            return true;
-                                        } else {
-                                            return false;
-                                        }
 
                                     } else {
                                         _sendData.push(sender_element);
@@ -466,12 +502,61 @@ export class ComponentSenderResolver {
                 return false;
             }
 
+            // 前置发消息判断
+            let _sendData = [];
+            cfg.sendData.forEach(sender_element => {
+                if (sender_element.hasOwnProperty('preCondition')) {
+                    if (sender_element['preCondition'].hasOwnProperty('caseValue')) {
+
+                        let item = sender_element['preCondition'];
+                        let regularflag = true;
+                        if (item.caseValue) {
+                            const reg1 = new RegExp(item.caseValue.regular);
+                            let regularData;
+                            if (item.caseValue.type) {
+                                if (item.caseValue.regularType === 'value') {
+                                    regularData = item.caseValue['value'];
+                                }
+                                if (item.caseValue.type === 'successData') {
+                                    // 选中行数据[这个是单值]
+                                    regularData = data[item.caseValue['valueName']];
+                                }
+                                if (item.caseValue['type'] === 'tempValue') {
+                                    regularData = this._componentInstance.tempValue[item.caseValue['valueName']];
+                                }
+                                if (item.caseValue['type'] === 'initValue') {
+                                    regularData = this._componentInstance.initValue[item.caseValue['valueName']];
+                                }
+
+                            }
+                            regularflag = reg1.test(regularData);
+                        }
+
+                        // 正则校验
+                        if (regularflag) {
+                            _sendData.push(sender_element);
+                            return true;
+                        } else {
+                            return false;
+                        }
+
+                    } else {
+                        _sendData.push(sender_element);
+                        return true;
+                    }
+
+                } else {
+                    _sendData.push(sender_element);
+                }
+            });
+            cfg.sendData = _sendData;
+
             const options = this.getOptionParamsObj(c.params, data, isArray);
             if (c.builtinId) {
                 const _builtinConfig = this.findbuiltinConfig(c.builtinId);
                 _builtinConfig && (options['builtinConfig'] = _builtinConfig);
             }
-            console.log('send message', cfg.senderId, options);
+            console.log('send message', cfg.senderId, options, "_sendData:", _sendData);
             this._componentInstance.componentService.commonRelationSubject.next(
                 new BsnRelativesMessageModel(
                     {
