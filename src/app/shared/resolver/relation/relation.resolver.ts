@@ -145,14 +145,14 @@ export class RelationResolver {
                                                     if (item.caseValue.hasOwnProperty('matchValue')) {
                                                         const condition = item.caseValue['condition']
                                                         if (condition === 'eq') {
-                                                            if (regularData && regularData === item.caseValue['matchValue']) {
+                                                            if (regularData === item.caseValue['matchValue']) {
                                                                 _sendData.push(sender_element);
                                                                 return true;
                                                             } else {
                                                                 return false;
                                                             }
                                                         } else if (condition === 'neq'){
-                                                            if (regularData && regularData !== item.caseValue['matchValue']) {
+                                                            if (regularData !== item.caseValue['matchValue']) {
                                                                 _sendData.push(sender_element);
                                                                 return true;
                                                             } else {
