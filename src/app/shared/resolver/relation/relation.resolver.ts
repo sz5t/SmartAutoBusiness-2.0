@@ -133,6 +133,9 @@ export class RelationResolver {
                                                     }
 
                                                 }
+                                                if (regularData === undefined) {
+                                                    regularData === null
+                                                }
                                                 // 存在校验
                                                 if (item.caseValue['hasProperty'] === false) {
                                                     if (regularData) {
