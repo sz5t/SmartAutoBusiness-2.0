@@ -1,1 +1,4 @@
-<p>cn-custom-group-state works!</p>
+<ng-template ngFor let-stateIcon [ngForOf]="stateConfig">
+    <cn-custom-icon-state [config] = "stateIcon['iconConfig']" [(currentValue)]= "currentValue['origin']['ICON_STATE']" (updateValue)="iconStateValueChange($event)" ></cn-custom-icon-state>
+
+</ng-template>

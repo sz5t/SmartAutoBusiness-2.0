@@ -30,6 +30,9 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     UPDATE_SELECTED_NODE: 'updateSelectedNode',
     DELETE_SELECTED_NODE: 'deleteSelectedNode',
     DELETE_CHECKED_NODES: 'deleteCheckedNodes',
+    ANALYSIS_BUILTIN:'analysisBuiltin',
+    CHANGE_CHECKED_NODE_DATA:'changeCheckedNodeData',
+
 
     // behavior
     REFRESH: 'load',
@@ -61,5 +64,7 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     EXECUTE_CHECKED_NODES: 'executeCheckedNodes',
     EXECUTE_CHECKED_NODES_BY_ID: 'executeCheckedNodesByID',       
     EXECUTE_DELETE_CHECKED_NODES_BY_ID: 'executeDeleteCheckedNodesByID',
-    EXECUTE_POPUP_CLOSE: 'executePopupClose'
+    EXECUTE_POPUP_CLOSE: 'executePopupClose',
+    EXECUTE_CHECKED_TREEDATA_BY_STRING:'executeCheckedTreeDataByString',
+    EXECUTE_TREEDATA_BY_STRING:'executeTreeDataByString'
 }

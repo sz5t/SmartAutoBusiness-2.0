@@ -224,7 +224,9 @@ class BaseParameter {
     }
 
     if (!value) {
-      strQ = null;
+      if( value !==0){
+        strQ = null;
+      }
     }
     return strQ;
   }

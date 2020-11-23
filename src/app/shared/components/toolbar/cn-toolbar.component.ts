@@ -94,6 +94,14 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         }
         this.getBttonList();
 
+        const componentPermission =  this.getMenuComponentPermissionConfigById(this.config.id);
+        console.log('当前权限',componentPermission);
+
+        // 解析
+        // componentPermission['permission']
+        // id: "qbh1yxWLSP0BpJ3BLFBrMMDKQMeCJLeBGDP3"
+        // type: " toolbar"
+
     }
 
     private _initInnerValue() {
@@ -102,6 +110,9 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     }
 
     public getPermissions() {
+
+        const componentPermission =  this.getMenuComponentPermissionConfigById(this.config.id);
+        console.log('当前权限',componentPermission);
         const permissionMap = new Map();
         this.permissions.forEach(item => {
             permissionMap.set(item.code, item);

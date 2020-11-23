@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy, Input, OnDestroy, AfterViewInit, OnChanges, SimpleChanges, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors, ValidatorFn, AbstractControl } from '@angular/forms';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
@@ -189,13 +189,13 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
       if (Control.text && Control.editor) {
         if (Control.text.field === Control.editor.field) {
-          f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
+          f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations), this.getValidations1(Control.editor.validations)));
           this.formValue[Control.field] = null;
         }
         else {
           f.addControl(`${Control.text.field}`, new FormControl());
           this.formValue[Control.text.field] = null;
-          f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
+          f.addControl(`${Control.field}`, new FormControl(null, this.getValidations(Control.editor.validations), this.getValidations1(Control.editor.validations)));
           this.formValue[Control.editor.field] = null;
         }
       }
@@ -215,12 +215,12 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         if (Control.editor) {
           // f.addControl(`${Control.editor.field}`, new FormControl());
           if (Control.editor.field === Control.field) {
-            f.addControl(`${Control.editor.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
+            f.addControl(`${Control.editor.field}`, new FormControl(null, this.getValidations(Control.editor.validations), this.getValidations1(Control.editor.validations)));
             this.formValue[Control.editor.field] = null;
           } else {
             f.addControl(`${Control.field}`, new FormControl());
             this.formValue[Control.field] = null;
-            f.addControl(`${Control.editor.field}`, new FormControl(null, this.getValidations(Control.editor.validations)));
+            f.addControl(`${Control.editor.field}`, new FormControl(null, this.getValidations(Control.editor.validations), this.getValidations1(Control.editor.validations)));
             this.formValue[Control.editor.field] = null;
           }
         }
@@ -239,8 +239,15 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       validations.forEach(valid => {
         if (valid.type && valid.type === 'custom') {
           if (valid.type === 'custom') {
-            //  validation.push(CustomValidator[valid.validator](valid));
-            validation.push(this[valid.validator]);
+
+            if (valid.validator === 'remote') {
+
+              // validation.push(CustomValidator[valid.validator](valid, this));
+              //validation.push(this[valid.validator]);
+            } else {
+              validation.push(CustomValidator[valid.validator](valid));
+            }
+
           } else {
             validation.push(Validators[valid.validator]);
           }
@@ -254,6 +261,31 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
             validation.push(Validators[valid.validator](valid.length));
           } else if (valid.validator === 'pattern') {
             validation.push(Validators[valid.validator](valid.pattern));
+          } else if (
+            valid.validator === 'min' ||
+            valid.validator === 'max'
+          ) {
+            validation.push(Validators[valid.validator](valid['value']));
+          }
+        }
+
+      });
+    return validation;
+  }
+
+  public getValidations1(validations) {
+    const validation = [];
+    validations &&
+      validations.forEach(valid => {
+        if (valid.type && valid.type === 'custom') {
+          if (valid.type === 'custom') {
+
+            if (valid.validator === 'remote') {
+
+              // validation.push(CustomValidator[valid.validator](valid, this));
+              validation.push(CustomValidator[valid.validator](valid, this));
+            }
+
           }
         }
 
@@ -357,7 +389,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     console.log('提交表单', this.validateForm.valid, this.validateForm.value);
   }
 
-  public buildParameters(paramsCfg, returnData?) {
+  public buildParameters(paramsCfg, returnData?, itemData?) {
     return ParameterResolver.resolve({
       params: paramsCfg,
       tempValue: this.tempValue,
@@ -365,7 +397,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      returnValue: returnData ? returnData : {}
+      returnValue: returnData ? returnData : {},
+      item: itemData ? itemData : {}
     });
   }
 
@@ -1105,6 +1138,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * @param Config 
    */
   public async execute(execConfig) {
+    // debugger;
     const valid = this.validate(); // 这个方法通过配置来调用
     console.log('  this.FORM_VALID', this.FORM_VALID);
     console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);
@@ -1226,8 +1260,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    */
 
 
-  repeat = (control: FormControl): { [s: string]: boolean } => {
-    // console.log('repeat==>', control);
+  repeat33 = (control: FormControl, data: any): { [s: string]: boolean } => {
+    console.log('repeat==>', control, data);
     if (!control.value) {
       return { error: true, required: true };
     } else if (control.value === '中国香港') {
@@ -1249,6 +1283,21 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
 
     return dd;
   };
+
+  repeat = (targetField: any): { [s: string]: boolean } => {
+    let dd = {};
+    console.log('参数=======repeat========>', targetField);
+    //   return (self:AbstractControl):{[key:string]:any}=>{    //这里严格按照ValidatorFn的声明来
+    //     let _form=self.parent;
+    //     if(_form){
+    //        let targetControl:AbstractControl=_form.controls[targetField];
+    //        if(targetControl.value && self.value!=targetControl.value){   //如果两个值不一致
+    //              return {repeat:''}
+    //        }
+    //     }
+    //  }
+    return dd;
+  }
 
 
   validating1 = (control: FormControl) =>
@@ -1399,7 +1448,7 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       nzTitle: dialogCfg.title ? dialogCfg.title : '',
       nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
       nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
-      nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
+      nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable') ? dialogCfg.maskClosable : false,
       nzContent: CnPageComponent,
       nzComponentParams: {
         config: {},
@@ -1470,5 +1519,56 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   // 根据属性生成-》折叠+表格+扩展页面=>组合属性
   // 【分组】? 
   // tab页签下：折叠面板+Descriptions描述列表 ==构成属性编辑器
+
+
+  // 远程校验(也可通过校验做后续结果操作)
+  public async remoteExecute(remoteAjaxConfig, itemData?) {
+    const ajaxConfigId = remoteAjaxConfig['id'];
+    const resultData = remoteAjaxConfig['resultData'];
+    let execConfig = {};
+    execConfig['ajaxConfig'] = this.ajaxConfigObj[ajaxConfigId];
+    if (!execConfig['ajaxConfig']) {
+      return false;
+    }
+    const url = execConfig['ajaxConfig']['url'];
+    const params = this.buildParameters(execConfig['ajaxConfig']['params'], {}, itemData);
+    console.log(this.config.id + '-------远程------执行sql params:', params);
+    const response = await this.componentService.apiService[execConfig['ajaxConfig']['ajaxType']](url, params).toPromise();
+
+    let backData = {};
+    if (isArray(response.data)) {
+      if (response.data.length > 0)
+        backData = { ...response.data[0] };
+      backData = { ...backData, ...{ "resultDatasLength": response.data.length } };
+    } else {
+      backData = { ...response.data };
+      if (response.data.hasOwnProperty('_procedure_resultset_1')) {
+        backData = { ...backData, ...response.data['_procedure_resultset_1'][0], ...{ "_procedure_resultset_1Length": response.data['_procedure_resultset_1'].length } };
+      }
+      if (response.data.hasOwnProperty('resultDatas')) {
+        backData = { ...backData, ...response.data['resultDatas'][0], ...{ "resultDatasLength": response.data['resultDatas'].length } };
+      }
+
+    }
+
+    if (execConfig['ajaxConfig']['result']) {
+      // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+      this._sendDataSuccessMessage(response, execConfig['ajaxConfig']['result']);
+      // 处理validation结果
+      const validationResult = this._sendDataValidationMessage(response, execConfig['ajaxConfig']['result']);
+      // 处理error结果
+      const errorResult = this._sendDataErrorMessage(response, execConfig['ajaxConfig']['result']);
+
+    }
+    if (backData[resultData['valueName']] === resultData['passValue']) {
+      return true;
+    } else {
+      return false;
+    }
+
+
+
+  }
+
 
 }

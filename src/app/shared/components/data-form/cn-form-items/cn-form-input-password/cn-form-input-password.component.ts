@@ -1,15 +1,15 @@
-import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
+import { Component, OnInit, Input, Output, Inject, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { CnComponentBase } from '@shared/components/cn-component.base';
-import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
+import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
+import { CnComponentBase } from '@shared/components/cn-component.base';
 
 @Component({
-  selector: 'app-cn-form-input',
-  templateUrl: './cn-form-input.component.html',
-  styleUrls: ['./cn-form-input.component.less']
+  selector: 'app-cn-form-input-password',
+  templateUrl: './cn-form-input-password.component.html',
+  styleUrls: ['./cn-form-input-password.component.less']
 })
-export class CnFormInputComponent extends CnComponentBase implements OnInit {
+export class CnFormInputPasswordComponent extends CnComponentBase implements OnInit {
   @Input() public config;
   @Input() formGroup: FormGroup;
   @Output() public updateValue = new EventEmitter();
@@ -20,6 +20,8 @@ export class CnFormInputComponent extends CnComponentBase implements OnInit {
     this.tempValue = {};
   }
   value;
+
+  private passwordVisible = true;
   ngOnInit() {
     // console.log('input=>:', this.config,this.formGroup);
   }
@@ -33,8 +35,8 @@ export class CnFormInputComponent extends CnComponentBase implements OnInit {
     // tslint:disable-next-line:forin
     for (const key in this.formGroup.controls) {
       if(key===this.config.field){
-       this.formGroup.controls[key].markAsPristine();
-       this.formGroup.controls[key].updateValueAndValidity();
+        this.formGroup.controls[key].markAsPristine();
+        this.formGroup.controls[key].updateValueAndValidity();
       }
       if(this.config.hasOwnProperty('validationControls')){
         const index = this.config.validationControls.findIndex(item=>item['controlName']===key);
@@ -83,6 +85,16 @@ export class CnFormInputComponent extends CnComponentBase implements OnInit {
   public onblur(e?, type?) {
     console.log('input_onblur',this.value)
     this.valueChangeBack(this.value);
+  }
+
+  private passwordVisibleClick(){
+    this.passwordVisible = !this.passwordVisible;
+    if(this.passwordVisible){
+      this.config.displayType ="password";
+    } else{
+      this.config.displayType ="text";
+    }
+
   }
 
 

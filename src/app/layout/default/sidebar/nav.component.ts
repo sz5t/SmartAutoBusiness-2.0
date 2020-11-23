@@ -744,6 +744,11 @@ export class NavComponent implements OnInit, OnDestroy {
     }
     //console.log('缓存信息',this.menuList);
     pageConfigCache[menu.id]={pageConfig:{},permissionConfig:{}};
+    if(!menu.link){
+      if(menu.jsonId){
+        menu['link']="/template/dynamic/"+menu.jsonId;
+      }
+    }
     this._router.navigateByUrl(menu.link);
     // this.hideAll();
   }
