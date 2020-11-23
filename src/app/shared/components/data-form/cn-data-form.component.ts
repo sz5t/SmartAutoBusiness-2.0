@@ -531,7 +531,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     if (this.config.cascadeLayout && this.config.cascadeLayout.length > 0) {
       this.config.cascadeLayout.forEach(cascade => {
         if (cascade.field === v.name) {
-          // debugger;
           cascade.mapping.forEach(m => {
             if (m.value === v.value) {
               // const oldRows = this.config.formLayout.rows;
@@ -882,7 +881,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     // if (msgCfg) {
     //   const sender = msgCfg.find(m => m.trigger === 'VALUE_CHANGE');
     //   if (sender) {
-    //     debugger;
     //     new RelationResolver(this)
     //       .resolveInnerSender(
     //         sender.sendData,
@@ -899,7 +897,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
     if (this.config.cascadeLayout && this.config.cascadeLayout.length > 0) {
       this.config.cascadeLayout.forEach(cascade => {
         if (cascade.field === v.name) {
-          // debugger;
           cascade.mapping.forEach(m => {
             if (m.type === 'default') {
               this.config.formLayout.rows.forEach(r => {
@@ -1108,7 +1105,6 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * @param Config 
    */
   public async execute(execConfig) {
-    debugger;
     const valid = this.validate(); // 这个方法通过配置来调用
     console.log('  this.FORM_VALID', this.FORM_VALID);
     console.log(this.config.id + '-------------执行sql', execConfig, this.validateForm.value, this.validateForm.valid);

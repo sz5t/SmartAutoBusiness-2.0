@@ -55,7 +55,6 @@ export class StartupService {
   }
 
   async load(): Promise<any> {
-    // debugger;
     await this.getWebConfig();
     // const data = await this.httpClient.get(`resource/SMT_SETTING_LAYOUT_BASE/query?_mapToObject=true`).toPromise();
     // console.log('======测试发布地址======',data);

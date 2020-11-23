@@ -27,7 +27,6 @@ export class RelationResolver {
      */
     public resolveInnerSender(resultCfg: any, successData, isArrayResult = false) {
         // 查找消息配置
-        // debugger;
         if (resultCfg['senderId']) {
             // const senderCfg = this._componentInstance
             //     .config
@@ -134,7 +133,7 @@ export class RelationResolver {
 
                                                 }
                                                 if (regularData === undefined) {
-                                                    regularData === null
+                                                    regularData = null;
                                                 }
                                                 // 存在校验
                                                 if (item.caseValue['hasProperty'] === false) {
@@ -435,7 +434,6 @@ export class ComponentSenderResolver {
         // 前置条件判断
         // 该功能不由组件实现
         // this.sendMessage(cfg);
-        // debugger;
         if (!this.conditionValidator(cfg.condition)) {
             return false;
         }
@@ -617,7 +615,6 @@ export class ComponentSenderResolver {
      * @param condCfg 条件配置
      */
     private conditionValidator(condCfg): boolean {
-        // debugger;
         if (!condCfg) {
             return true;
         }

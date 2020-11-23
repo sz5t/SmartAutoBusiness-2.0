@@ -38,8 +38,6 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
   }
 
   async ngOnInit() {
-    // debugger;
-
   }
 
   async getJson() {
@@ -272,8 +270,6 @@ export class CnFormGridSelectComponent extends CnComponentBase implements OnInit
       if (c[this.config.field].hasOwnProperty('exec')) {
         if (c[this.config.field].exec === 'ajax') {
           this.load();
-          // debugger;
-         
             this.table.setInitValue(this.cascadeValue);
             this.table.load();
           

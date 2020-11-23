@@ -201,7 +201,6 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         }
         // 判断当前按钮操作,是否需要提前准备操作数据
         // isHandleData属性标识当前按钮是否协同数据一起操作
-        // debugger;
         // if (btn.isHandleData && Array.isArray(btn.execute.params) && btn.execute.params.length > 0) {
 
         //     // 获取initValue或者tempValue内的数据,判断是否存在可编辑的数据对象或者集合

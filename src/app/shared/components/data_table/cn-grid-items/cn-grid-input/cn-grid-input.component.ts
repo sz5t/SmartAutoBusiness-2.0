@@ -15,7 +15,6 @@ export class CnGridInputComponent implements OnInit {
   value = null;
   count = 0;
   ngOnInit() {
-    // debugger;
     // console.log('input=>:', this.config,this.formGroup);
     let v_value;
     if (this.valueConfig) {

@@ -13,10 +13,15 @@
     [nzSearchValue]="searchValue" (nzSearchValueChange)="nzEvent($event)"  [nzSelectedKeys]="defaultSelectedKeys">
   </nz-tree>
   <!--  -->
-
    <ng-template #nzTreeTemplate let-node>
-    <span class="custom-node" [class.active]="ACTIVED_NODE?.key === node.key">
-      <span *ngIf="!node.isLeaf">
+    <span   class="custom-node" [class.active]="ACTIVED_NODE?.key === node.key">
+      <span 
+      (cdkDragStarted)="dragStarted($event)"
+      (cdkDragEnded)="dragEnded($event)"
+      (cdkDragMoved)="dragMoved($event)" 
+      cdkDrag [cdkDragData]="node"
+      (cdkDragEntered)="dragEntered($event)" (cdkDragExited)="dragExited($event)" 
+      *ngIf="!node.isLeaf">
         <i nz-icon [nzType]="node.isExpanded ? 'folder-open' : 'folder'" (click)="openFolder(node)"></i>
         <ng-container *ngIf="node.isMatched">
           <span class="file-name"> {{searchTargetString(node.title)[0]}}</span>
@@ -28,7 +33,9 @@
         </ng-container>
         <span class="folder-desc" *ngIf="config.desc">{{ node?.origin[config.desc] }}</span>
       </span>
-      <span *ngIf="node.isLeaf">
+      <span cdkDrag (cdkDragStarted)="dragStarted($event)"
+      (cdkDragEnded)="dragEnded($event)"
+      (cdkDragMoved)="dragMoved($event)" [cdkDragData]="node" *ngIf="node.isLeaf">
         <i nz-icon nzType="file"></i>
         <ng-container *ngIf="node.isMatched">
          
@@ -45,5 +52,6 @@
       </span>
     </span>
   </ng-template> 
+
 </nz-spin>
 

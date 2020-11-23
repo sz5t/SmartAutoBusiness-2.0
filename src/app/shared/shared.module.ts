@@ -137,6 +137,8 @@ import { CnFormCheckboxGroupComponent } from './components/data-form/cn-form-ite
 import { CnFormSpanComponent } from './components/data-form/cn-form-items/cn-form-span/cn-form-span.component';
 import { CnCustomIconStateComponent } from './components/cn-custom-items/cn-custom-icon-state/cn-custom-icon-state.component';
 import { CnCustomGroupStateComponent } from './components/cn-custom-items/cn-custom-group-state/cn-custom-group-state.component';
+import { CnTreeTransferComponent } from './components/cn-tree-transfer/cn-tree-transfer.component';
+
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -304,11 +306,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
-
-
-
-
-
+    CnTreeTransferComponent
   ],
   exports: [
     CommonModule,
@@ -330,6 +328,8 @@ const DIRECTIVES = [
   ],
   entryComponents: [
     ...COMPONENTS
+  ],
+  providers:[
   ]
 })
 export class SharedModule { }

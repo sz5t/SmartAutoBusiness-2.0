@@ -201,7 +201,6 @@ export class TriggerResolver {
     }
 
     private conditionValidator(condCfg): boolean {
-       // debugger;
         if (!condCfg) {
             return true;
         }
