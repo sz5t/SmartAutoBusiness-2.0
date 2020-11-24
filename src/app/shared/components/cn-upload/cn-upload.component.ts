@@ -158,8 +158,6 @@ export class CnUploadComponent extends CnComponentBase implements OnInit, OnDest
 
     console.log('.>>>>>>>>>', this.initData, this.initValue);
     const fileform_value = this.fileform.validateForm.value;
-
-    debugger;
     const formData = new FormData();
     // tslint:disable-next-line:no-any
     this.fileList.forEach((file: any, index) => {

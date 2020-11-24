@@ -30,6 +30,7 @@ import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 import { CnPageComponent } from '@shared/components/cn-page/cn-page.component';
 import { environment } from '@env/environment';
 import { PageStructure } from '@shared/resolver/structure/page_Structure';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -525,7 +526,6 @@ export class CnDataTableComponent extends CnComponentBase
 
     public ajaxColumns; // 动态列
     public async loadDynamicColumns() {
-        // debugger;
         const url = this.config.columnsAjax.url;
         const method = this.config.columnsAjax.method ? this.config.columnsAjax.method : this.config.columnsAjax.ajaxType;
 
@@ -778,7 +778,6 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public addRow(r?) {
-        // debugger;
         // 创建空数据对象
         const newId = CommonUtils.uuID(36);
         let newData = this.createNewRowData();
@@ -1591,7 +1590,6 @@ export class CnDataTableComponent extends CnComponentBase
      * @param option option.linkConfig -> {id: '', link: '', params:[{name: '', type:'', valueName: ''}]}
      */
     public link(option) {
-        // debugger;
         let url;
         let params;
         if (option && option.linkConfig) {
@@ -2783,7 +2781,7 @@ export class CnDataTableComponent extends CnComponentBase
                 break;
             }
 
-        }
+        } 
 
         if (isSingleEdit) {
             if (OwnArr[0]['__state__'] === 'new' || OwnArr[0]['__state__'] === 'edit') {
@@ -2874,7 +2872,9 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
 
-
+    public dropRow(event: CdkDragDrop<any>): void {
+        console.log(event);
+    }
   
 
 

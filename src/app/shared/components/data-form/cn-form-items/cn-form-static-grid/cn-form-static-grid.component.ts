@@ -245,8 +245,6 @@ export class CnFormStaticGridComponent extends CnComponentBase implements OnInit
       });
     }
 
-
-
     // this.addedRowsData = v;
     // this.value = v;
   }

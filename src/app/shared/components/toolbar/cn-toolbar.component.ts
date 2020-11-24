@@ -94,6 +94,14 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         }
         this.getBttonList();
 
+        const componentPermission =  this.getMenuComponentPermissionConfigById(this.config.id);
+        console.log('当前权限',componentPermission);
+
+        // 解析
+        // componentPermission['permission']
+        // id: "qbh1yxWLSP0BpJ3BLFBrMMDKQMeCJLeBGDP3"
+        // type: " toolbar"
+
     }
 
     private _initInnerValue() {
@@ -102,6 +110,9 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
     }
 
     public getPermissions() {
+
+        const componentPermission =  this.getMenuComponentPermissionConfigById(this.config.id);
+        console.log('当前权限',componentPermission);
         const permissionMap = new Map();
         this.permissions.forEach(item => {
             permissionMap.set(item.code, item);
@@ -201,7 +212,6 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         }
         // 判断当前按钮操作,是否需要提前准备操作数据
         // isHandleData属性标识当前按钮是否协同数据一起操作
-        // debugger;
         // if (btn.isHandleData && Array.isArray(btn.execute.params) && btn.execute.params.length > 0) {
 
         //     // 获取initValue或者tempValue内的数据,判断是否存在可编辑的数据对象或者集合

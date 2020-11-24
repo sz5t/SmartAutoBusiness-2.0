@@ -1,7 +1,5 @@
-<p>cn-custom-icon-state works!</p>
 
-
-<ng-container>
+<!-- <ng-container>
     <button nz-button [nzType]="switchValue?'primary':'default'" (click)="buttonSwitchClick(switchValue)">
         <i *ngIf="switchValue" nz-icon nzType="eye"></i>
         <i *ngIf="!switchValue" nz-icon nzType="eye-invisible"></i>
@@ -19,15 +17,32 @@
 </nz-tag>
 
 <hr>
-[环状状态图标]
-<!-- <input nz-input placeholder="Basic usage" [(ngModel)]="currentValue" />
-<nz-tag [nzColor]="currentColor" (click)="currentSwitchClick(switchValue)"> 
-    <i nz-icon [nzType]="currentIcon" ></i>
-</nz-tag>
+[环状状态图标] -->                                                                        
+ <input nz-input type="hidden" placeholder="Basic usage" style="width: 20px;" [(ngModel)]="currentStateValue" (ngModelChange)="valueChange($event)" />
 
-<span nz-tooltip nzTooltipTitle="prompt text">ddd</span> -->
+ <ng-container *ngIf="config.showTheme==='tag'" >
+    <nz-tag nz-tooltip [nzTooltipTitle]="currentTooltipTitle" [nzColor]="currentColor" (click)="currentSwitchClick(switchValue,$event)"> 
+        
+        <ng-container *ngIf="config.enableLabel" >
+            {{currentLabel}}
+        </ng-container>
+        <ng-container *ngIf="config.enableIcon" >
+            <i nz-icon [nzType]="currentIcon" ></i>
+        </ng-container>
+        
+    </nz-tag> 
+ </ng-container>
+ <ng-container *ngIf="config.showTheme==='icon'" >
+    <i nz-icon nz-tooltip [nzTooltipTitle]="currentTooltipTitle" [nzType]="currentIcon" [nzTheme]="'twotone'"  [nzTwotoneColor]="currentColor" (click)="currentSwitchClick(switchValue,$event)"></i>
+ </ng-container>
 
-<hr>
+
+
+ <!-- <button nzTooltipTitle="prompt text" nzTooltipPlacement="top" nz-button nz-tooltip>Top</button> -->
+
+<!--<span nz-tooltip nzTooltipTitle="prompt text">ddd</span> -->
+
+<!-- <hr>
 颜色参考
 <nz-tag [nzColor]="'magenta'">magenta</nz-tag>
 <nz-tag [nzColor]="'red'">red</nz-tag>
@@ -39,4 +54,4 @@
 <nz-tag [nzColor]="'cyan'">cyan</nz-tag>
 <nz-tag [nzColor]="'blue'">blue</nz-tag>
 <nz-tag [nzColor]="'geekblue'">geekblue</nz-tag>
-<nz-tag [nzColor]="'purple'">purple</nz-tag>
+<nz-tag [nzColor]="'purple'">purple</nz-tag> -->

@@ -31,6 +31,7 @@ import { arraysEqual } from 'ng-zorro-antd';
 import { ITreeGridProperty, CN_TREE_GRID_PROPERTY } from '@core/relations/bsn-property/tree-grid.property.interface';
 import { CN_TREE_GRID_METHOD } from '@core/relations/bsn-methods/bsn-tree-grid-method';
 import { isArray } from 'util';
+import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -541,7 +542,6 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public loadRefreshChildrenData(option) {
-
         // 20201105 修改树表
         this.expandRow(option,true);
         // if (this.config.loadingItemConfig) {
@@ -557,7 +557,6 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public loadRefreshData(option) {
-        debugger;
         if (this.config.loadingItemConfig) {
             this.loadItem(option, (data) => {
                 this.refreshData(data);
@@ -1432,7 +1431,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 currentRow:this.ROW_CURRENT
 
             });
-        } else if (isArray && data && Array.isArray(data)) {
+        } else if (isArray && Array.isArray(data)) {
             parameterResult = [];
             data.map(d => {
                 const param = ParameterResolver.resolve({
@@ -1762,7 +1761,6 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public showWindow(option: any) {
-        debugger;
         let dialog;
         // 根据按钮类型初始化表单状态
         const dialogCfg = option.window;
@@ -1867,9 +1865,6 @@ export class CnTreeTableComponent extends CnComponentBase
 
     // 执行弹出页的按钮事件
     public execCustomAction(customAction?, dialog?, componentInstance?) {
-
-        debugger;
-
         const customAction1 = [
             {
                 id: "001",
@@ -2260,9 +2255,5 @@ export class CnTreeTableComponent extends CnComponentBase
     public transferValue(option?) {
         console.log('将接受传递的值');
     }
-
-
-
-
 
 }

@@ -142,7 +142,7 @@ export class CnFormTreeSelectComponent extends CnComponentBase implements OnInit
 
   ngOnInit(): void {
     this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
-    this.tempValue = this.tempValue;
+    this.tempValue = this.tempData;
     this.initValue = this.initData;
     // this.value = 'A2a1BqdtCsLfoLB23YwJpkrRSvTrdHdc';
   }

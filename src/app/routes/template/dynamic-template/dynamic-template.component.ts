@@ -8,6 +8,7 @@ import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { CnLayoutComponent } from '@shared/components/layout/cn-layout.component';
 import { CnDynamicLayoutComponent } from '@shared/components/layout/cn-dynamic-layout.component';
 import { pageConfigCache } from '@env/page-config-cache';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'cn-dynamic-template,[cn-dynamic-template]',
@@ -42,58 +43,97 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
     this._route.params.subscribe((params: any) => {
       // console.log('params=========>',params);
       if (params.name) {
-        this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { "PageId": params.name }).subscribe(response => {
-          if (response.data._procedure_resultset_1[0]['W'] === "") {
-            this.config = null;
-          }
-          else {
-            const pageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
-            // console.log('=====当前页加载数据=====',pageJson);
-            for (const key in pageJson) {
-              if (pageJson.hasOwnProperty(key)) {
-                // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
-                if (key === params.name) {
-                  this.config = pageJson[params.name]['layoutJson'];
-                  // const componentJson = pageJson[params.name]['componentsJson']
-                  // if (Array.isArray(componentJson) && componentJson.length > 0) {
-                  //   componentJson.forEach(json => {
-                  //     this.componentService.cacheService.set(json['id'], json);
-                  //   });
-                  // }
 
-                  // liu 2020.11.12
-                  this.setCache(key, 'mainPage', pageJson[params.name], null);
-                  this._route.queryParams.subscribe(queryParam => {
-                    this.buildLayout({ ...params, ...queryParam });
-                  })
 
-                  // this.componentService.cacheService.set(key, pageJson[params.name]);
+        console.log('当前系统配置', environment)
 
-                } else {
-                  // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
 
-                  // 2020.11.12
-                  this.setCache(key, 'childPage', pageJson[key], null);
-                  // this.componentService.cacheService.set(key, pageJson[key]);
-                  // const componentJson = pageJson[key]['componentsJson']
-                  // if (Array.isArray(componentJson) && componentJson.length > 0) {
-                  //   componentJson.forEach(json => {
-                  //     this.componentService.cacheService.set(json['id'], json);
-                  //   });
-                  // }
 
+        if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
+          this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate', { "PageId": params.name }).subscribe(response => {
+            if (response.data._procedure_resultset_1[0]['W'] === "") {
+              this.config = null;
+            }
+            else {
+              const pageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+              console.log('=====当前页加载数据=====', pageJson);
+              for (const key in pageJson) {
+                if (pageJson.hasOwnProperty(key)) {
+                  // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
+                  if (key === params.name) {
+                    this.config = pageJson[params.name]['config']['layoutJson'];
+                    // liu 2020.11.12
+                    this.setCache(key, 'mainPage', pageJson[params.name]['config'], pageJson[params.name]['permission']);
+                    this._route.queryParams.subscribe(queryParam => {
+                      this.buildLayout({ ...params, ...queryParam });
+                    })
+
+                  } else {
+                    // 2020.11.12
+                    this.setCache(key, 'childPage', pageJson[key]['config'], pageJson[key]['permission']);
+
+                  }
                 }
               }
             }
+          })
+        }
+        else {
+          this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { "PageId": params.name }).subscribe(response => {
+            if (response.data._procedure_resultset_1[0]['W'] === "") {
+              this.config = null;
+            }
+            else {
+              const pageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+              // console.log('=====当前页加载数据=====',pageJson);
+              for (const key in pageJson) {
+                if (pageJson.hasOwnProperty(key)) {
+                  // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
+                  if (key === params.name) {
+                    this.config = pageJson[params.name]['layoutJson'];
+                    // const componentJson = pageJson[params.name]['componentsJson']
+                    // if (Array.isArray(componentJson) && componentJson.length > 0) {
+                    //   componentJson.forEach(json => {
+                    //     this.componentService.cacheService.set(json['id'], json);
+                    //   });
+                    // }
 
-            // console.log(this.config);
+                    // liu 2020.11.12
+                    this.setCache(key, 'mainPage', pageJson[params.name], null);
+                    this._route.queryParams.subscribe(queryParam => {
+                      this.buildLayout({ ...params, ...queryParam });
+                    })
 
-            // this.PageJson = response.data._procedure_resultset_1[0]['W'];
-            //  this.PageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
-            //   this.PageJson =this.formatJson(JSON.parse(response.data._procedure_resultset_1[0]['W']),{})
+                    // this.componentService.cacheService.set(key, pageJson[params.name]);
 
-          }
-        })
+                  } else {
+                    // 将子页面的配置加入缓存, 后期使用子页面数据时直接从缓存中获取
+
+                    // 2020.11.12
+                    this.setCache(key, 'childPage', pageJson[key], null);
+                    // this.componentService.cacheService.set(key, pageJson[key]);
+                    // const componentJson = pageJson[key]['componentsJson']
+                    // if (Array.isArray(componentJson) && componentJson.length > 0) {
+                    //   componentJson.forEach(json => {
+                    //     this.componentService.cacheService.set(json['id'], json);
+                    //   });
+                    // }
+
+                  }
+                }
+              }
+
+              // console.log(this.config);
+
+              // this.PageJson = response.data._procedure_resultset_1[0]['W'];
+              //  this.PageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+              //   this.PageJson =this.formatJson(JSON.parse(response.data._procedure_resultset_1[0]['W']),{})
+
+            }
+          })
+        }
+
+
         // this.componentService.apiService.getLocalData(params.name).subscribe(localJson => {
         //   if (localJson) {
         //     this.config = localJson;
@@ -227,6 +267,14 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
       });
     }
 
+    const componentsPermissionJson = permissionData;
+    if (Array.isArray(componentsPermissionJson) && componentsPermissionJson.length > 0) {
+      componentsPermissionJson.forEach(json => {
+        // 组件信息
+        page_permission_data[json['id']] = json;
+      });
+    }
+
     const activeMenu = this.componentService.cacheService.getNone('activeMenu');
     // 2.从当前缓存下查找当前menu的配置集合
     let menuId = activeMenu['id'];
@@ -239,6 +287,9 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
       pageConfigCache[menuId] = { pageConfig: {}, permissionConfig: {} };
     }
     pageConfigCache[menuId]['pageConfig'] = { ...pageConfigCache[menuId]['pageConfig'], ...page_config_data };
+
+    pageConfigCache[menuId]['permissionConfig'] = { ...pageConfigCache[menuId]['permissionConfig'], ...page_permission_data };
+
 
   }
 

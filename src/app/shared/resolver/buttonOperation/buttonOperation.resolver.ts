@@ -344,7 +344,6 @@ export class ButtonOperationResolver {
         return builtinConfig;
     }
 
-
     private findBeforeOperationConfig(stateId) {
         let beforeConfig;
         if (this.beforeTriggerCfg && Array.isArray(this.beforeTriggerCfg) && this.beforeTriggerCfg.length > 0) {

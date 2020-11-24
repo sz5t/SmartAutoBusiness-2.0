@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'cn-custom-icon-state',
   templateUrl: './cn-custom-icon-state.component.html',
   styleUrls: ['./cn-custom-icon-state.component.less']
 })
-export class CnCustomIconStateComponent implements OnInit {
+export class CnCustomIconStateComponent implements OnInit,OnChanges {
   @Input() public config; //配置参数
   @Input() initData;
   @Input() tempData;
@@ -20,27 +20,62 @@ export class CnCustomIconStateComponent implements OnInit {
   public value='';
   public currentColor='';
   public currentIcon='';
+  public currentTooltipTitle='';
+  public currentLabel='';
+  public currentStateValue;
 
   constructor() { }
 
   ngOnInit() {
-    this.currentValue='001';
-    this.getShowObject(this.currentValue);
+
+    this._dataList = this.config['options'];
+    if(!this.currentStateValue){
+      this.currentStateValue='001';
+    }
+
+    if(this.config['enableDefaultValue']){
+      this.currentStateValue=this.config.defaultValue;
+    }
+    
+    this.getShowObject(this.currentStateValue);
+  
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // console.log('****ngOnChanges******', changes, this.formGroup)
+    // ngOnChanges只有在输入值改变的时候才会触发，
+    // 如果输入值(@Input)是一个对象，改变对象内的属性的话是不会触发ngOnChanges的。
+    // 部分级联需要此处中转，主要是参数等，取值赋值，隐藏显示等功能需要form表单处理。
+    if (changes.hasOwnProperty('currentValue')) {
+      if (!changes['currentValue'].firstChange) { // 处理后续变化，初始变化不处理
+            
+         console.log('监听值变化',this.currentValue);
+         this.currentStateValue = this.currentValue;
+         this.getShowObject(this.currentStateValue);
+      }
+    }
+ 
 
   }
 
 
   _config={
-    "isLabel":"", // 是否显示文本 默认不显示
-    "isTooltip":"", // 是否显示提示 默认不显示
-    "isDefaultValue":"", // 是否启用默认值 默认不显示
-    "initObject":{
+    "enableLabel":true, // 是否显示文本 默认不显示
+    "enableTooltip":"", // 是否显示提示 默认不显示
+    "enableIcon":true,
+    "enableDefaultValue":"", // 是否启用默认值 默认不显示
+    "enableSwitch":true,  // 是否启用切换状态
+    "showTheme":"icon", // tag icon
+    "enableColor":"", // 是否启用颜色
+    "enableSelected":false,  // 是否启用选中
+    "enable":true, // 是否启用前置拦截，满足当前状态，显示图标状态
+    "initObject":{ // 默认展示
       label:'',color:'magenta',value:'001',icon:'eye'
     },
     "options":[  // 静态数据
-      {label:'',color:'magenta',value:'001',icon:'eye'},
-      {label:'',color:'lime',value:'002',icon:'eye-invisible'},
-      {label:'',color:'geekblue',value:'003',icon:'question'}
+      {label:'',color:'magenta',value:'001',icon:'eye',tooltipTitle:"[状态]可见"},
+      {label:'',color:'lime',value:'002',icon:'eye-invisible',tooltipTitle:"[状态]不可见"},
+      {label:'',color:'geekblue',value:'003',icon:'question',tooltipTitle:"[状态]"}
     ],
 
     "loadingConfig": {                   // 远程加载数据
@@ -70,9 +105,9 @@ export class CnCustomIconStateComponent implements OnInit {
     ]
   }
   _dataList=[
-    {label:'',color:'magenta',value:'001',icon:'eye'},
-    {label:'',color:'lime',value:'002',icon:'eye-invisible'},
-    {label:'',color:'geekblue',value:'003',icon:'question'}
+    {label:'',color:'magenta',value:'001',icon:'eye',tooltipTitle:"[状态]可见"},
+    {label:'',color:'lime',value:'002',icon:'eye-invisible',tooltipTitle:"[状态]不可见"},
+    {label:'',color:'geekblue',value:'003',icon:'question-circle',tooltipTitle:"[状态]"}
   ];
 
 
@@ -87,22 +122,32 @@ export class CnCustomIconStateComponent implements OnInit {
     const index= this._dataList.findIndex(item=>item.value===v);
     if(index>-1){
       const obj = this._dataList[index];
-      this.currentValue=obj['value'];
+      this.currentStateValue=obj['value'];
       this.currentColor=obj["color"];
       this.currentIcon=obj['icon'];
+      this.currentTooltipTitle =obj['tooltipTitle'];
+      this.currentLabel =obj['label'];
      // return this._dataList[index];
     } else{
-      this.currentValue='';
+      this.currentStateValue='';
       this.currentColor='';
       this.currentIcon='';
+      this.currentTooltipTitle ='';
+      this.currentLabel='';
     // return null;
     }
   }
 
-  public currentSwitchClick():void{
-    const new_value= this.switchState(this.currentValue);
-    this.getShowObject(new_value);
-   
+  public currentSwitchClick(v?,$event?):void{
+    if(this._config.enableSwitch) {
+      const new_value= this.switchState(this.currentStateValue);
+      console.log('xin zhi',new_value);
+      this.iconStateValueChange(new_value);
+      this.getShowObject(new_value);
+    }
+
+    $event.stopPropagation();
+    $event.preventDefault();
   }
 
 
@@ -154,6 +199,15 @@ export class CnCustomIconStateComponent implements OnInit {
 
     };
 
+  }
+
+
+  public iconStateValueChange(data?){
+    this.updateValue.emit(data);
+  }
+
+  public valueChange(v?){
+    console.log('icon_valuechange',v);
   }
 
 

@@ -37,25 +37,29 @@ export class StartupService {
     const timestamp = new Date().getTime();
     const data = await this.httpClient.get(`assets/tmp/webConfig.json?${timestamp}`).toPromise();
 
-    
-    if(data && data.hasOwnProperty('SERVER_URL')){
-       if(data['SERVER_URL']){
-        environment.SERVER_URL = data['SERVER_URL'];
-       }
+    if(data){
+      for (const key in data) {
+        environment[key] = data[key];
+      }
     }
 
-    if(data && data.hasOwnProperty('SYSTEM_CONFIG')){
-      if(data['SYSTEM_CONFIG']){
-       environment['SYSTEM_CONFIG'] = data['SYSTEM_CONFIG'];
-      }
-   }
+  //   if(data && data.hasOwnProperty('SERVER_URL')){
+  //      if(data['SERVER_URL']){
+  //       environment.SERVER_URL = data['SERVER_URL'];
+  //      }
+  //   }
+
+  //   if(data && data.hasOwnProperty('SYSTEM_CONFIG')){
+  //     if(data['SYSTEM_CONFIG']){
+  //      environment['SYSTEM_CONFIG'] = data['SYSTEM_CONFIG'];
+  //     }
+  //  }
    this.tokenService.set({ key: `123`, token: '123' });
    // const data1 = await this.httpClient.get(`http://192.168.1.111:8401/page/struct/parse?pageId=m2lSKOiIgmNR5R3JStQg0CYPNzdSd4Fd`).toPromise();
-    console.log('+++++++++加载后台服务访问地址++++++++++++',data);
+    console.log('+++++++++加载后台服务访问地址++++++++++++',data,environment);
   }
 
   async load(): Promise<any> {
-    // debugger;
     await this.getWebConfig();
     // const data = await this.httpClient.get(`resource/SMT_SETTING_LAYOUT_BASE/query?_mapToObject=true`).toPromise();
     // console.log('======测试发布地址======',data);
@@ -106,7 +110,7 @@ export class StartupService {
             // ACL：设置权限为全量
             this.aclService.setFull(true);
             // 初始化菜单
-             this.menuService.add(res.menu);
+            // this.menuService.add(res.menu);
             // 设置页面标题的后缀
             this.titleService.default = '';
             this.titleService.suffix = res.app.name;

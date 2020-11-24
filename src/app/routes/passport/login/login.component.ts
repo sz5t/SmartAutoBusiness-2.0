@@ -139,6 +139,7 @@ export class UserLoginComponent implements OnDestroy {
     let moduleList: any
     let userModule: any
     this.tokenService.set({ key: `123`, token: '123' });
+    
     if (environment['SYSTEM_CONFIG']) {
       if (environment['SYSTEM_CONFIG']['login']['login_enabled']) {
         userLogin = environment['SYSTEM_CONFIG']['login']['login_url']

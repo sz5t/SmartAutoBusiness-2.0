@@ -6396,7 +6396,6 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
    * addSelected
    */
   public addSelected(v?) {
-    // debugger;
     console.log('执行addSelected', this.tempValue, v);
       this.SELECTED_VALUE = v['value'];
     // const ev = this.config.eventConfig['ADD_SELECTED'];

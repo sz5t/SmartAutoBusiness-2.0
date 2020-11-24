@@ -137,6 +137,9 @@ import { CnFormCheckboxGroupComponent } from './components/data-form/cn-form-ite
 import { CnFormSpanComponent } from './components/data-form/cn-form-items/cn-form-span/cn-form-span.component';
 import { CnCustomIconStateComponent } from './components/cn-custom-items/cn-custom-icon-state/cn-custom-icon-state.component';
 import { CnCustomGroupStateComponent } from './components/cn-custom-items/cn-custom-group-state/cn-custom-group-state.component';
+import { CnTreeTransferComponent } from './components/cn-tree-transfer/cn-tree-transfer.component';
+
+import { CnFormInputPasswordComponent } from './components/data-form/cn-form-items/cn-form-input-password/cn-form-input-password.component';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -269,7 +272,9 @@ const COMPONENTS = [
   CnFormSpanComponent,
   CnFormCheckboxGroupComponent,
   CnCustomIconStateComponent,
-  CnCustomGroupStateComponent
+  CnCustomGroupStateComponent,
+  CnFormInputPasswordComponent,
+
   // ------设计组件-----
 ];
 const DIRECTIVES = [
@@ -304,7 +309,7 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
-
+    CnTreeTransferComponent
 
 
 
@@ -330,6 +335,8 @@ const DIRECTIVES = [
   ],
   entryComponents: [
     ...COMPONENTS
+  ],
+  providers:[
   ]
 })
 export class SharedModule { }

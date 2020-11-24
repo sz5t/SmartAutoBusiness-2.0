@@ -51,7 +51,6 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
     //   this.config.model ="multiple";
     //   this.config.valueName="value";
     // }
-    // debugger;
     if(this.config.layoutName){
       //liu 20.11.12
       this.tableConfig =this.getMenuComponentConfigById("PAGE_"+this.config.layoutName);
