@@ -114,9 +114,9 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   public NODES_CHECKED: any[] = [];
   public COMPONENT_VALUE: any[] = [];
   public ACTIVED_NODE: any;
-  public leftIconState:any[]=[];
-  public rightIconState:any[]=[];
-  
+  public leftIconState: any[] = [];
+  public rightIconState: any[] = [];
+
 
   private _columnFilterList;
 
@@ -158,6 +158,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
 
   public async ngOnInit() {
     this._initInnerValue();
+    this.buildIconState();
     // 设置数据操作主键
     this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
 
@@ -216,8 +217,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         this.defaultSelectedKeys = this.defaultSelectedKeys.filter(r => r !== '');
       }
     }
-  
-    
+
+
 
     setTimeout(() => {
       if (this.defaultSelectedKeys.length > 0) {
@@ -234,12 +235,12 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     });
   }
 
-  public buildIconState(){  
-    if(this.config.enableState && this.config.IconState){
-        this.leftIconState=  this.config.IconState.filter(item=>item['position']==='left');
-        this.rightIconState = this.config.IconState.filter(item=>item['position']==='right');
+  public buildIconState() {
+    if (this.config.enableState && this.config.iconState) {
+      this.leftIconState = this.config.iconState.filter(item => item['position'] === 'left');
+      this.rightIconState = this.config.iconState.filter(item => item['position'] === 'right');
     }
-}
+  }
 
   public getSeletedkeys(_con?, _nodelist?, _hierarchy?) {
     console.log('计算选中节点', _con, _nodelist);
@@ -259,7 +260,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     return back_key;
   }
 
-  public ngAfterViewInit() {}
+  public ngAfterViewInit() { }
 
   public ngOnDestroy() {
     // 释放级联对象
@@ -621,7 +622,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   /**
    * 构建查询参数
    */
-  public _buildSearch() {}
+  public _buildSearch() { }
   // #endregion
 
   // #region state 状态切换
@@ -1109,7 +1110,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     return validationResult && errorResult;
   }
 
-  public setSelectedNode() {}
+  public setSelectedNode() { }
 
   public setSelectRow(rowData?, $event?) {
     if (!rowData) {
@@ -1462,11 +1463,11 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   //     console.log(this.config.id + '-------------cancelSearchRow');
   // }
 
-  public export() {}
+  public export() { }
 
-  public import() {}
+  public import() { }
 
-  public download() {}
+  public download() { }
 
   /**
    * 显示确认对话框
@@ -1683,556 +1684,556 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     return true;
   }
 
-  public showUpload() {}
+  public showUpload() { }
 
-  public showBatchDialog() {}
+  public showBatchDialog() { }
 
- 
-    /**
-     * 显示消息框
-     */
-    public showMessage(option) {
-        const message: { type: string, message: string, field: string } = { type: '', message: '', field: '' };
-        if (option && Array.isArray(option)) {
-            message.message = option[0].code;
-            message.type = option[0].type;
-            message.field = option[0].field;
-        } else if (option) {
-            message.message = option.code ? option.code : (option.message ? option.message : '');
-            message.type = option.type;
-            message.field = option.field ? option.field : '';
-        }
 
-        option && this.componentService.msgService.create(message.type, `${message.field}: ${message.message}`);
+  /**
+   * 显示消息框
+   */
+  public showMessage(option) {
+    const message: { type: string, message: string, field: string } = { type: '', message: '', field: '' };
+    if (option && Array.isArray(option)) {
+      message.message = option[0].code;
+      message.type = option[0].type;
+      message.field = option[0].field;
+    } else if (option) {
+      message.message = option.code ? option.code : (option.message ? option.message : '');
+      message.type = option.type;
+      message.field = option.field ? option.field : '';
     }
 
+    option && this.componentService.msgService.create(message.type, `${message.field}: ${message.message}`);
+  }
 
-    /**
-     * 全选
-     */
-    public checkAll($value: boolean): void {
-        //
-        this.nodes
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .map(item =>
-                this.mapOfDataState[item[this.KEY_ID]]['checked'] = $value
-            );
-        this.dataCheckedStatusChange();
 
+  /**
+   * 全选
+   */
+  public checkAll($value: boolean): void {
+    //
+    this.nodes
+      .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+      .map(item =>
+        this.mapOfDataState[item[this.KEY_ID]]['checked'] = $value
+      );
+    this.dataCheckedStatusChange();
+
+  }
+
+  /**
+   * 更新数据选中状态的CheckBox
+   */
+  public dataCheckedStatusChange() {
+    this.isAllChecked = this.nodes
+      .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+      .every(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
+
+    this.indeterminate = this.nodes
+      .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+      .some(item => this.mapOfDataState[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
+
+    this.checkedNumber = this.nodes.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
+
+    // 更新当前选中数据集合
+    this.NODES_CHECKED = this.nodes
+      .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
+      .filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
+  }
+
+  /**
+   * 列排序
+   * @param $sort {key:string, value: string} 
+   */
+  sort($sort: { key: string, value: string }): void {
+    this._sortName = $sort.key;
+    this._sortValue = $sort.value;
+    this.load();
+  }
+
+  searchData(reset: boolean = false) {
+    if (reset) {
+      this.pageIndex = 1;
+    }
+    this.isAllChecked = false;
+    this.indeterminate = false;
+    this.load();
+  }
+
+
+  //#endregion
+
+  /**
+   * 
+   * @param actionCfg 当前操作按钮的配置
+   * @param rowData 当前数据行
+   * @param $event 
+   */
+  rowAction(actionCfg, rowData, $event?) {
+    const dataOfState = this.mapOfDataState[rowData[this.KEY_ID]];
+    $event && $event.stopPropagation();
+    const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
+    trigger.toolbarAction(actionCfg, this.config.id);
+    $event && $event.preventDefault();
+  }
+
+  getRowActions(state): any[] {
+    const orginAction = this.tableColumns.find(c => c.type === 'action');
+    const copyAction = [];
+    if (orginAction) {
+      const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => c.state === state)));
+      copyAction.push(...actions);
+    }
+    return copyAction;
+  }
+
+  nzEvent(event: NzFormatEmitEvent): void {
+    console.log(event);
+  }
+  public searchTargetString(objtext) { // 查找处理
+    const searchtext = this.searchValue;
+    const reg = new RegExp(searchtext, 'g');
+    const back = ['', '', ''];
+    if (!reg.test(objtext)) {// 没找到
+      return back;
+    } else {// 找到
+      const index = objtext.indexOf(searchtext);
+      if (index > 0) {
+        back[0] = objtext.substring(0, index);
+      }
+      back[1] = searchtext;
+      const indexEnd = index + searchtext.length;
+      back[2] = objtext.substring(indexEnd);
+      return back;
     }
 
-    /**
-     * 更新数据选中状态的CheckBox
-     */
-    public dataCheckedStatusChange() {
-        this.isAllChecked = this.nodes
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .every(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
-
-        this.indeterminate = this.nodes
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .some(item => this.mapOfDataState[item[this.KEY_ID]]['checked']) && !this.isAllChecked;
-
-        this.checkedNumber = this.nodes.filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']).length;
-
-        // 更新当前选中数据集合
-        this.NODES_CHECKED = this.nodes
-            .filter(item => !this.mapOfDataState[item[this.KEY_ID]]['dislabled'])
-            .filter(item => this.mapOfDataState[item[this.KEY_ID]]['checked']);
-    }
-
-    /**
-     * 列排序
-     * @param $sort {key:string, value: string} 
-     */
-    sort($sort: { key: string, value: string }): void {
-        this._sortName = $sort.key;
-        this._sortValue = $sort.value;
-        this.load();
-    }
-
-    searchData(reset: boolean = false) {
-        if (reset) {
-            this.pageIndex = 1;
-        }
-        this.isAllChecked = false;
-        this.indeterminate = false;
-        this.load();
-    }
+  }
+  public transferValue(option?) {
+    console.log('将接受传递的值');
+  }
 
 
-    //#endregion
+  _config = {
+    "enableLabel": false, // 是否显示文本 默认不显示
+    "enableTooltip": "", // 是否显示提示 默认不显示
+    "enableIcon": true,
+    "enableDefaultValue": "", // 是否启用默认值 默认不显示
+    "enableSwitch": true,  // 是否启用切换状态
+    "showTheme": "icon", // tag icon
+    "enableColor": "", // 是否启用颜色
+    "enableSelected": false,  // 是否启用选中
+    "enable": true, // 是否启用前置拦截，满足当前状态，显示图标状态
+    "initObject": { // 默认展示
+      label: '', color: 'magenta', value: '001', icon: 'eye'
+    },
+    "options": [  // 静态数据
+      { label: '', color: 'magenta', value: '001', icon: 'eye', tooltipTitle: "[状态]可见" },
+      { label: '', color: 'lime', value: '002', icon: 'eye-invisible', tooltipTitle: "[状态]不可见" },
+      { label: '', color: 'cyan', value: '003', icon: 'setting', tooltipTitle: "[状态]" }
+    ],
 
-    /**
-     * 
-     * @param actionCfg 当前操作按钮的配置
-     * @param rowData 当前数据行
-     * @param $event 
-     */
-    rowAction(actionCfg, rowData, $event?) {
-        const dataOfState = this.mapOfDataState[rowData[this.KEY_ID]];
-        $event && $event.stopPropagation();
-        const trigger = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
-        trigger.toolbarAction(actionCfg, this.config.id);
-        $event && $event.preventDefault();
-    }
-
-    getRowActions(state): any[] {
-        const orginAction = this.tableColumns.find(c => c.type === 'action');
-        const copyAction = [];
-        if (orginAction) {
-            const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => c.state === state)));
-            copyAction.push(...actions);
-        }
-        return copyAction;
-    }
-
-    nzEvent(event: NzFormatEmitEvent): void {
-        console.log(event);
-    }
-    public searchTargetString(objtext) { // 查找处理
-        const searchtext = this.searchValue;
-        const reg = new RegExp(searchtext, 'g');
-        const back = ['', '', ''];
-        if (!reg.test(objtext)) {// 没找到
-            return back;
-        } else {// 找到
-            const index = objtext.indexOf(searchtext);
-            if (index > 0) {
-                back[0] = objtext.substring(0, index);
-            }
-            back[1] = searchtext;
-            const indexEnd = index + searchtext.length;
-            back[2] = objtext.substring(indexEnd);
-            return back;
-        }
-
-    }
-    public transferValue(option?) {
-        console.log('将接受传递的值');
-    }
-
-
-    _config = {
-        "enableLabel": false, // 是否显示文本 默认不显示
-        "enableTooltip": "", // 是否显示提示 默认不显示
-        "enableIcon": true,
-        "enableDefaultValue": "", // 是否启用默认值 默认不显示
-        "enableSwitch": true,  // 是否启用切换状态
-        "showTheme": "icon", // tag icon
-        "enableColor": "", // 是否启用颜色
-        "enableSelected": false,  // 是否启用选中
-        "enable": true, // 是否启用前置拦截，满足当前状态，显示图标状态
-        "initObject": { // 默认展示
-            label: '', color: 'magenta', value: '001', icon: 'eye'
-        },
-        "options": [  // 静态数据
-            { label: '', color: 'magenta', value: '001', icon: 'eye', tooltipTitle: "[状态]可见" },
-            { label: '', color: 'lime', value: '002', icon: 'eye-invisible', tooltipTitle: "[状态]不可见" },
-            { label: '', color: 'cyan', value: '003', icon: 'setting', tooltipTitle: "[状态]" }
-        ],
-
-        "loadingConfig": {                   // 远程加载数据
-            "id": "loadformselect1"
-        },
-        "columns": [                   // 配置图标状态映射
-            {
-                "title": "值",             // 映射id
-                "type": "value",
-                "field": "ID"
-            },
-            {
-                "title": "图标",            // 映射父id
-                "type": "icon",
-                "field": "PID"
-            },
-            {
-                "title": "颜色",     // 显示内容
-                "type": "color",
-                "field": "OFFICENAME"
-            },
-            {
-                "title": "文本",     // 显示内容
-                "type": "label",
-                "field": "OFFICENAME"
-            }
-        ]
-    }
-
-    _config1 = {
-        "enableLabel": false, // 是否显示文本 默认不显示
-        "enableTooltip": "", // 是否显示提示 默认不显示
-        "enableIcon": true,
-        "enableDefaultValue": "", // 是否启用默认值 默认不显示
-        "enableSwitch": true,  // 是否启用切换状态
-        "showTheme": "icon", // tag icon
-        "enableColor": "", // 是否启用颜色
-        "enableSelected": false,  // 是否启用选中
-        "enable": true, // 是否启用前置拦截，满足当前状态，显示图标状态
-        "initObject": { // 默认展示
-            label: '', color: 'magenta', value: '001', icon: 'eye'
-        },
-        "options": [  // 静态数据
-            { label: '', color: 'magenta', value: '001', icon: 'unlock', tooltipTitle: "[授权]可" },
-            { label: '', color: 'lime', value: '002', icon: 'lock', tooltipTitle: "[授权]不可" },
-            { label: '', color: 'cyan', value: '003', icon: 'setting', tooltipTitle: "[授权]" }
-        ],
-        "loadingConfig": {                   // 远程加载数据
-            "id": "loadformselect1"
-        },
-        "columns": [                   // 配置图标状态映射
-            {
-                "title": "值",             // 映射id
-                "type": "value",
-                "field": "ID"
-            },
-            {
-                "title": "图标",            // 映射父id
-                "type": "icon",
-                "field": "PID"
-            },
-            {
-                "title": "颜色",     // 显示内容
-                "type": "color",
-                "field": "OFFICENAME"
-            },
-            {
-                "title": "文本",     // 显示内容
-                "type": "label",
-                "field": "OFFICENAME"
-            }
-        ]
-    }
-
-    _config2 = {
-        "enableLabel": true, // 是否显示文本 默认不显示
-        "enableTooltip": "", // 是否显示提示 默认不显示
-        "enableIcon": false,
-        "enableDefaultValue": "", // 是否启用默认值 默认不显示
-        "enableSwitch": true,  // 是否启用切换状态
-        "showTheme": "tag", // tag icon
-        "enableColor": "", // 是否启用颜色
-        "enableSelected": false,  // 是否启用选中
-        "enable": true, // 是否启用前置拦截，满足当前状态，显示图标状态
-        "initObject": { // 默认展示,也可以是唯一展示，根据传入值，展示当前信息
-            label: '', color: 'magenta', value: '001', icon: 'eye'
-        },
-        "options": [  // 静态数据
-            { label: '1', color: 'magenta', value: '001', icon: '', tooltipTitle: "[优先级]1" },
-            { label: '2', color: 'red', value: '002', icon: '', tooltipTitle: "[优先级]2" },
-            { label: '3', color: 'volcano', value: '003', icon: '', tooltipTitle: "[优先级]3" },
-            { label: '4', color: 'orange', value: '004', icon: '', tooltipTitle: "[优先级]4" },
-            { label: '5', color: 'gold', value: '005', icon: '', tooltipTitle: "[优先级]5" },
-            { label: '6', color: 'lime', value: '006', icon: '', tooltipTitle: "[优先级]6" },
-            { label: '7', color: 'green', value: '007', icon: '', tooltipTitle: "[优先级]7" },
-            { label: '8', color: 'cyan', value: '008', icon: '', tooltipTitle: "[优先级]8" },
-            { label: '9', color: 'blue', value: '009', icon: '', tooltipTitle: "[优先级]9" },
-            { label: '0', color: 'purple', value: '000', icon: 'setting', tooltipTitle: "[优先级]" }
-        ],
-        "loadingConfig": {                   // 远程加载数据
-            "id": "loadformselect1"
-        },
-        "columns": [                   // 配置图标状态映射
-            {
-                "title": "值",             // 映射id
-                "type": "value",
-                "field": "ID"
-            },
-            {
-                "title": "图标",            // 映射父id
-                "type": "icon",
-                "field": "PID"
-            },
-            {
-                "title": "颜色",     // 显示内容
-                "type": "color",
-                "field": "OFFICENAME"
-            },
-            {
-                "title": "文本",     // 显示内容
-                "type": "label",
-                "field": "OFFICENAME"
-            }
-        ]
-    }
-
-
-    _config3 = [
-        {
-            id: '001',
-            field: "ICON_STATE", // 对应字段
-            position: "left", // 位置 left  right  默认left
-            iconConfig: {
-                pre: {
-                    "type": "default", //default 
-                    "caseValue": {
-                        "type": "tempValue",
-                        "valueName": "NODE_TYPE",
-                        "regular": "^1$",
-                        "value": ""
-                    }
-                },
-                "enableLabel": false, // 是否显示文本 默认不显示
-                "enableTooltip": true, // 是否显示提示 默认不显示
-                "enableIcon": true,
-                "enableDefaultValue": true, // 是否启用默认值 默认不显示
-                "enableSwitch": true,  // 是否启用切换状态
-                "showTheme": "icon", // tag icon
-                "enableColor": "", // 是否启用颜色
-                "enableSelected": false,  // 是否启用选中
-                "enable": true, // 是否启用前置拦截，满足当前状态，显示图标状态
-                "defaultValue": '003',
-                "initObject": { // 默认展示,也可以是唯一展示，根据传入值，展示当前信息
-                    label: '', color: 'magenta', value: '001', icon: 'eye'
-                },
-                "options": [  // 静态数据
-                    { label: '', color: 'magenta', value: '001', icon: 'eye', tooltipTitle: "[状态]可见" },
-                    { label: '', color: 'lime', value: '002', icon: 'eye-invisible', tooltipTitle: "[状态]不可见" },
-                    { label: '', color: 'red', value: '003', icon: 'file-unknown', tooltipTitle: "[状态]未设置" }
-
-                ]
-
-            }
-        }
+    "loadingConfig": {                   // 远程加载数据
+      "id": "loadformselect1"
+    },
+    "columns": [                   // 配置图标状态映射
+      {
+        "title": "值",             // 映射id
+        "type": "value",
+        "field": "ID"
+      },
+      {
+        "title": "图标",            // 映射父id
+        "type": "icon",
+        "field": "PID"
+      },
+      {
+        "title": "颜色",     // 显示内容
+        "type": "color",
+        "field": "OFFICENAME"
+      },
+      {
+        "title": "文本",     // 显示内容
+        "type": "label",
+        "field": "OFFICENAME"
+      }
     ]
+  }
+
+  _config1 = {
+    "enableLabel": false, // 是否显示文本 默认不显示
+    "enableTooltip": "", // 是否显示提示 默认不显示
+    "enableIcon": true,
+    "enableDefaultValue": "", // 是否启用默认值 默认不显示
+    "enableSwitch": true,  // 是否启用切换状态
+    "showTheme": "icon", // tag icon
+    "enableColor": "", // 是否启用颜色
+    "enableSelected": false,  // 是否启用选中
+    "enable": true, // 是否启用前置拦截，满足当前状态，显示图标状态
+    "initObject": { // 默认展示
+      label: '', color: 'magenta', value: '001', icon: 'eye'
+    },
+    "options": [  // 静态数据
+      { label: '', color: 'magenta', value: '001', icon: 'unlock', tooltipTitle: "[授权]可" },
+      { label: '', color: 'lime', value: '002', icon: 'lock', tooltipTitle: "[授权]不可" },
+      { label: '', color: 'cyan', value: '003', icon: 'setting', tooltipTitle: "[授权]" }
+    ],
+    "loadingConfig": {                   // 远程加载数据
+      "id": "loadformselect1"
+    },
+    "columns": [                   // 配置图标状态映射
+      {
+        "title": "值",             // 映射id
+        "type": "value",
+        "field": "ID"
+      },
+      {
+        "title": "图标",            // 映射父id
+        "type": "icon",
+        "field": "PID"
+      },
+      {
+        "title": "颜色",     // 显示内容
+        "type": "color",
+        "field": "OFFICENAME"
+      },
+      {
+        "title": "文本",     // 显示内容
+        "type": "label",
+        "field": "OFFICENAME"
+      }
+    ]
+  }
+
+  _config2 = {
+    "enableLabel": true, // 是否显示文本 默认不显示
+    "enableTooltip": "", // 是否显示提示 默认不显示
+    "enableIcon": false,
+    "enableDefaultValue": "", // 是否启用默认值 默认不显示
+    "enableSwitch": true,  // 是否启用切换状态
+    "showTheme": "tag", // tag icon
+    "enableColor": "", // 是否启用颜色
+    "enableSelected": false,  // 是否启用选中
+    "enable": true, // 是否启用前置拦截，满足当前状态，显示图标状态
+    "initObject": { // 默认展示,也可以是唯一展示，根据传入值，展示当前信息
+      label: '', color: 'magenta', value: '001', icon: 'eye'
+    },
+    "options": [  // 静态数据
+      { label: '1', color: 'magenta', value: '001', icon: '', tooltipTitle: "[优先级]1" },
+      { label: '2', color: 'red', value: '002', icon: '', tooltipTitle: "[优先级]2" },
+      { label: '3', color: 'volcano', value: '003', icon: '', tooltipTitle: "[优先级]3" },
+      { label: '4', color: 'orange', value: '004', icon: '', tooltipTitle: "[优先级]4" },
+      { label: '5', color: 'gold', value: '005', icon: '', tooltipTitle: "[优先级]5" },
+      { label: '6', color: 'lime', value: '006', icon: '', tooltipTitle: "[优先级]6" },
+      { label: '7', color: 'green', value: '007', icon: '', tooltipTitle: "[优先级]7" },
+      { label: '8', color: 'cyan', value: '008', icon: '', tooltipTitle: "[优先级]8" },
+      { label: '9', color: 'blue', value: '009', icon: '', tooltipTitle: "[优先级]9" },
+      { label: '0', color: 'purple', value: '000', icon: 'setting', tooltipTitle: "[优先级]" }
+    ],
+    "loadingConfig": {                   // 远程加载数据
+      "id": "loadformselect1"
+    },
+    "columns": [                   // 配置图标状态映射
+      {
+        "title": "值",             // 映射id
+        "type": "value",
+        "field": "ID"
+      },
+      {
+        "title": "图标",            // 映射父id
+        "type": "icon",
+        "field": "PID"
+      },
+      {
+        "title": "颜色",     // 显示内容
+        "type": "color",
+        "field": "OFFICENAME"
+      },
+      {
+        "title": "文本",     // 显示内容
+        "type": "label",
+        "field": "OFFICENAME"
+      }
+    ]
+  }
 
 
-    // 1. 记录树加载刷新后，操作节点变化，记录每次变化的值
-    // 2. 每次状态更改，则走库完善
-    // 3. 点击按钮时，读取当前页面设置新状态（同步树）
+  _config3 = [
+    {
+      id: '001',
+      field: "ICON_STATE", // 对应字段
+      position: "left", // 位置 left  right  默认left
+      iconConfig: {
+        pre: {
+          "type": "default", //default 
+          "caseValue": {
+            "type": "tempValue",
+            "valueName": "NODE_TYPE",
+            "regular": "^1$",
+            "value": ""
+          }
+        },
+        "enableLabel": false, // 是否显示文本 默认不显示
+        "enableTooltip": true, // 是否显示提示 默认不显示
+        "enableIcon": true,
+        "enableDefaultValue": true, // 是否启用默认值 默认不显示
+        "enableSwitch": true,  // 是否启用切换状态
+        "showTheme": "icon", // tag icon
+        "enableColor": "", // 是否启用颜色
+        "enableSelected": false,  // 是否启用选中
+        "enable": true, // 是否启用前置拦截，满足当前状态，显示图标状态
+        "defaultValue": '003',
+        "initObject": { // 默认展示,也可以是唯一展示，根据传入值，展示当前信息
+          label: '', color: 'magenta', value: '001', icon: 'eye'
+        },
+        "options": [  // 静态数据
+          { label: '', color: 'magenta', value: '001', icon: 'eye', tooltipTitle: "[状态]可见" },
+          { label: '', color: 'lime', value: '002', icon: 'eye-invisible', tooltipTitle: "[状态]不可见" },
+          { label: '', color: 'red', value: '003', icon: 'file-unknown', tooltipTitle: "[状态]未设置" }
+
+        ]
+
+      }
+    }
+  ]
 
 
-    public iconStateValueChange(data?) {
+  // 1. 记录树加载刷新后，操作节点变化，记录每次变化的值
+  // 2. 每次状态更改，则走库完善
+  // 3. 点击按钮时，读取当前页面设置新状态（同步树）
 
-        console.log('IconStateValueChange', data);
+
+  public iconStateValueChange(data?) {
+
+    console.log('IconStateValueChange', data);
 
 
+
+  }
+
+  public applicationNode(v?) {
+    if (this.config.checkStrictly) {
+      const arr = this.treeObj.getCheckedNodeList();
+      console.log('****勾选节点信息*****', arr);
+      arr.forEach(item => {
+        // item['_title'] =item['_title']+'_[设置]';
+        item['origin']['ICON_STATE'] = v;
+      })
+    } else {
+
+
+      console.log('****勾选节点信息ban*****', this.treeObj.getHalfCheckedNodeList())
+      console.log('****勾选节点信息que*****', this.treeObj.getCheckedNodeList())
+
+      const dataCheck = this.getCheckedNodeListByCustom(this.treeObj.getCheckedNodeList());
+      const datahalfCheck = this.treeObj.getHalfCheckedNodeList();
+      const data = [...dataCheck, ...datahalfCheck];
+      console.log('****勾选节点信息que*****', data);
+      data.forEach(item => {
+        // item['_title'] =item['_title']+'_[设置]';
+        item['origin']['ICON_STATE'] = v;
+      })
 
     }
 
-    public applicationNode(v?) {
-        if (this.config.checkStrictly) {
-            const arr = this.treeObj.getCheckedNodeList();
-            console.log('****勾选节点信息*****', arr);
-            arr.forEach(item => {
-                // item['_title'] =item['_title']+'_[设置]';
-                item['origin']['ICON_STATE'] = v;
-            })
-        } else {
 
+  }
 
-            console.log('****勾选节点信息ban*****', this.treeObj.getHalfCheckedNodeList())
-            console.log('****勾选节点信息que*****', this.treeObj.getCheckedNodeList())
-
-            const dataCheck = this.getCheckedNodeListByCustom(this.treeObj.getCheckedNodeList());
-            const datahalfCheck = this.treeObj.getHalfCheckedNodeList();
-            const data = [...dataCheck, ...datahalfCheck];
-            console.log('****勾选节点信息que*****', data);
-            data.forEach(item => {
-                // item['_title'] =item['_title']+'_[设置]';
-                item['origin']['ICON_STATE'] = v;
-            })
-
+  /**
+   * 更改节点状态数据
+   * @param option 
+   */
+  public changeCheckedNodeData(option?) {
+    if (!option) {
+      return true;
+    }
+    if (this.config.checkStrictly) {
+      const arr = this.treeObj.getCheckedNodeList();
+      console.log('****勾选节点信息*****', arr);
+      arr.forEach(item => {
+        // item['_title'] =item['_title']+'_[设置]';
+        for (const key in option) {
+          item['origin'][key] = option[key];
         }
-
+      })
+    } else {
+      const dataCheck = this.getCheckedNodeListByCustom(this.treeObj.getCheckedNodeList());
+      const datahalfCheck = this.treeObj.getHalfCheckedNodeList();
+      const data = [...dataCheck, ...datahalfCheck];
+      console.log('****勾选节点信息que*****', data);
+      data.forEach(item => {
+        // item['_title'] =item['_title']+'_[设置]';
+        for (const key in option) {
+          item['origin'][key] = option[key];
+        }
+      })
 
     }
+    return true;
 
-    /**
-     * 更改节点状态数据
-     * @param option 
-     */
-    public changeCheckedNodeData(option?) {
-        if(!option){
-            return true;
-        }
-        if (this.config.checkStrictly) {
-            const arr = this.treeObj.getCheckedNodeList();
-            console.log('****勾选节点信息*****', arr);
-            arr.forEach(item => {
-                // item['_title'] =item['_title']+'_[设置]';
-                for (const key in option) {
-                   item['origin'][key] = option[key];
-                }
-            })
-        } else {
-            const dataCheck = this.getCheckedNodeListByCustom(this.treeObj.getCheckedNodeList());
-            const datahalfCheck = this.treeObj.getHalfCheckedNodeList();
-            const data = [...dataCheck, ...datahalfCheck];
-            console.log('****勾选节点信息que*****', data);
-            data.forEach(item => {
-                // item['_title'] =item['_title']+'_[设置]';
-                for (const key in option) {
-                    item['origin'][key] = option[key];
-                 }
-            })
+  }
 
-        }
-        return true;
+  /**
+   * 获取当前勾选节点信息
+   * @param NODE 
+   */
+  public getCheckedNodeListByCustom(NODE?) {
+    let arr = [];
+    NODE.forEach(element => {
+      arr.push(element);
+      if (element['_children'] && element['_children'].length > 0) {
+        let arrchild = this.getCheckedNodeListByCustom(element['_children']);
+        arr.push(...arrchild);
+      }
+    });
+    return arr;
+  }
 
+
+  public treeMode() {
+    this.config.checkStrictly = !this.config.checkStrictly;
+  }
+
+
+  /**
+   * 获取当前树节点所有数据
+   * @param option 
+   * @param checked 
+   */
+  public getDataByFilter(option?, checked?) {
+    // option=[
+    //     {
+    //         name:'id',
+    //         type:'node',
+    //         valueName:'ID'
+    //     }
+    // ];
+    let arrall = [];
+    if (checked) {
+      arrall = this.getData();
+    } else {
+      const arr = this.treeObj.getTreeNodes();
+      arrall = this.getCheckedNodeListByCustom(arr);
     }
 
-    /**
-     * 获取当前勾选节点信息
-     * @param NODE 
-     */
-    public getCheckedNodeListByCustom(NODE?) {
-        let arr = [];
-        NODE.forEach(element => {
-            arr.push(element);
-            if (element['_children'] && element['_children'].length > 0) {
-                let arrchild = this.getCheckedNodeListByCustom(element['_children']);
-                arr.push(...arrchild);
-            }
+
+    let arrback = [];
+
+    arrall.forEach(item => {
+      let node_obj = {};
+      if (option) {
+        option.forEach(element => {
+          node_obj[element['name']] = item['origin'][element['valueName']];
         });
-        return arr;
+      } else {
+        node_obj = item['origin'];
+      }
+
+      arrback.push(node_obj);
+    })
+
+    console.log('获取当前树节点数据', arrback);
+    return arrback;
+
+  }
+
+
+
+  // 获取当前勾选属性
+  public getData(): any {
+    let treeNodeList = [];
+    if (this.config.checkStrictly) {
+      treeNodeList = this.treeObj.getCheckedNodeList();
+    } else {
+      const dataCheck = this.getCheckedNodeListByCustom(this.treeObj.getCheckedNodeList());
+      const datahalfCheck = this.treeObj.getHalfCheckedNodeList();
+      const treeNodeList = [...dataCheck, ...datahalfCheck];
     }
+    console.log('获取当前树节点数据', treeNodeList);
+    return treeNodeList;
+  }
 
 
-    public treeMode() {
-        this.config.checkStrictly = !this.config.checkStrictly;
-    }
+  // 将当前树数据转为 大数组
+  public async executeTreeDataByString(option) {
+    console.log('execute checked nodes', option);
+    const url = option.ajaxConfig.url;
+    const method = option.ajaxConfig.ajaxType;
+    const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
+    const parameterResult = [];
+
+    const FilterData = this.getDataByFilter();
+    let paramData;
+    paramData = ParameterResolver.resolve({
+      params: ajaxParams,
+      item: { treeData: JSON.stringify(FilterData) },
+      checkedItem: { treeData: JSON.stringify(FilterData) },
+      tempValue: this.tempValue,
+      initValue: this.initValue,
+      cacheValue: this.cacheValue
+    });
+    const response = await this.executeHttpRequest(url, method, paramData);
+    // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+    this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+    // 处理validation结果
+    const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+    // 处理error结果
+    const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+    return validationResult && errorResult;
+  }
+
+  // 将当前树数据转为 大数组
+  public async executeCheckedTreeDataByString(option) {
+    console.log('execute checked nodes', option);
+    const url = option.ajaxConfig.url;
+    const method = option.ajaxConfig.ajaxType;
+    const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
+    const parameterResult = [];
+
+    const FilterData = this.getDataByFilter();
+    let paramData;
+    paramData = ParameterResolver.resolve({
+      params: ajaxParams,
+      item: { treeData: JSON.stringify(FilterData) },
+      checkedItem: { treeData: JSON.stringify(FilterData) },
+      tempValue: this.tempValue,
+      initValue: this.initValue,
+      cacheValue: this.cacheValue
+    });
+    const response = await this.executeHttpRequest(url, method, paramData);
+    // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
+    this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+
+    // 处理validation结果
+    const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
+
+    // 处理error结果
+    const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
+
+    return validationResult && errorResult;
+  }
 
 
-    /**
-     * 获取当前树节点所有数据
-     * @param option 
-     * @param checked 
-     */
-    public getDataByFilter(option?,checked?) {
-        // option=[
-        //     {
-        //         name:'id',
-        //         type:'node',
-        //         valueName:'ID'
-        //     }
-        // ];
-        let  arrall =[];
-        if(checked){
-            arrall = this.getData();
-        } else{
-            const arr = this.treeObj.getTreeNodes();
-            arrall = this.getCheckedNodeListByCustom(arr);
-        }
+  // 解析内置事件
+  public analysisBuiltin(v?) {
+    if (v.hasOwnProperty('builtinConfig')) {
+      if (v['builtinConfig'].event) {
 
+        if (v['builtinConfig']['content'] && v['builtinConfig']['content']['enableParams']) {
+          const params = {
+            ...this.buildParameters(v['builtinConfig']['content']['Params'])
+          }
+          this[v['builtinConfig'].event](params);
 
-        let arrback = [];
-
-        arrall.forEach(item => {
-            let node_obj = {};
-            if (option) {
-                option.forEach(element => {
-                    node_obj[element['name']] = item['origin'][element['valueName']];
-                });
-            } else {
-                node_obj = item['origin'];
-            }
-
-            arrback.push(node_obj);
-        })
-
-        console.log('获取当前树节点数据', arrback);
-        return arrback;
-
-    }
-
-
-
-    // 获取当前勾选属性
-    public getData(): any {
-        let treeNodeList = [];
-        if (this.config.checkStrictly) {
-            treeNodeList = this.treeObj.getCheckedNodeList();
         } else {
-            const dataCheck = this.getCheckedNodeListByCustom(this.treeObj.getCheckedNodeList());
-            const datahalfCheck = this.treeObj.getHalfCheckedNodeList();
-            const treeNodeList = [...dataCheck, ...datahalfCheck];
+          this[v['builtinConfig'].event]();
         }
-        console.log('获取当前树节点数据', treeNodeList);
-        return treeNodeList;
+      }
     }
-
-
-    // 将当前树数据转为 大数组
-    public async executeTreeDataByString(option) {
-        console.log('execute checked nodes', option);
-        const url = option.ajaxConfig.url;
-        const method = option.ajaxConfig.ajaxType;
-        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
-        const parameterResult = [];
-
-        const FilterData = this.getDataByFilter();
-        let paramData;
-        paramData = ParameterResolver.resolve({
-            params: ajaxParams,
-            item: { treeData: JSON.stringify(FilterData) },
-            checkedItem: { treeData: JSON.stringify(FilterData) },
-            tempValue: this.tempValue,
-            initValue: this.initValue,
-            cacheValue: this.cacheValue
-        });
-        const response = await this.executeHttpRequest(url, method, paramData);
-        // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
-        this._sendDataSuccessMessage(response, option.ajaxConfig.result);
-
-        // 处理validation结果
-        const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
-
-        // 处理error结果
-        const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
-
-        return validationResult && errorResult;
-    }
-
-    // 将当前树数据转为 大数组
-    public async executeCheckedTreeDataByString(option) {
-        console.log('execute checked nodes', option);
-        const url = option.ajaxConfig.url;
-        const method = option.ajaxConfig.ajaxType;
-        const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : [];
-        const parameterResult = [];
-
-        const FilterData = this.getDataByFilter();
-        let paramData;
-        paramData = ParameterResolver.resolve({
-            params: ajaxParams,
-            item: { treeData: JSON.stringify(FilterData) },
-            checkedItem: { treeData: JSON.stringify(FilterData)},
-            tempValue: this.tempValue,
-            initValue: this.initValue,
-            cacheValue: this.cacheValue
-        });
-        const response = await this.executeHttpRequest(url, method, paramData);
-        // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
-        this._sendDataSuccessMessage(response, option.ajaxConfig.result);
-
-        // 处理validation结果
-        const validationResult = this._sendDataValidationMessage(response, option.ajaxConfig.result);
-
-        // 处理error结果
-        const errorResult = this._sendDataErrorMessage(response, option.ajaxConfig.result);
-
-        return validationResult && errorResult;
-    }
-
-
-    // 解析内置事件
-    public analysisBuiltin(v?){
-        if (v.hasOwnProperty('builtinConfig')) {
-            if (v['builtinConfig'].event) {
-
-                if(v['builtinConfig']['content'] && v['builtinConfig']['content']['enableParams'] ){
-                    const params = {
-                        ...this.buildParameters( v['builtinConfig']['content']['Params'])
-                    }
-                    this[v['builtinConfig'].event](params);
-
-                } else{
-                    this[v['builtinConfig'].event]();
-                }
-            }
-        } 
-    }
+  }
 
 
 
