@@ -95,7 +95,8 @@ export class CnAttributeFormComponent extends CnComponentBase implements OnInit,
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      cascadeValue: this.cascadeValue
+      cascadeValue: this.cascadeValue,
+      userValue:this.userValue
     });
   }
 

@@ -233,7 +233,8 @@ export class CnUploadComponent extends CnComponentBase implements OnInit, OnDest
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      returnValue: returnData ? returnData : {}
+      returnValue: returnData ? returnData : {},
+      userValue:this.userValue
     });
   }
 

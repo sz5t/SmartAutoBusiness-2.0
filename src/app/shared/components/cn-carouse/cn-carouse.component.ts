@@ -84,7 +84,8 @@ export class CnCarouseComponent extends CnComponentBase implements OnInit, OnDes
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      returnValue: returnData ? returnData : {}
+      returnValue: returnData ? returnData : {},
+      userValue:this.userValue
     });
   }
 

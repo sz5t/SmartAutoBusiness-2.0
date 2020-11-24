@@ -163,7 +163,8 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      cascadeValue: this.cascadeValue
+      cascadeValue: this.cascadeValue,
+      userValue:this.userValue
     });
   }
 
@@ -329,7 +330,8 @@ export class CnGridCustomSelectComponent extends CnComponentBase implements OnIn
           item:  this.selectedRowItem,
           initValue: this.initValue,
           cacheValue: this.cacheValue,
-          router: this.routerValue
+          router: this.routerValue,
+          userValue:this.userValue
       });
       option.changeValue.params.map(param => {
           if (param.type === 'value') {

@@ -78,7 +78,8 @@ export class CfgAttributeFormComponent  extends CnComponentBase implements OnIni
         initValue: this.initValue,
         cacheValue: this.cacheValue,
         router: this.routerValue,
-        cascadeValue: this.cascadeValue
+        cascadeValue: this.cascadeValue,
+        userValue:this.userValue
       });
     }
   

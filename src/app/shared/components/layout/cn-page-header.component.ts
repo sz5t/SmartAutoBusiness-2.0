@@ -144,7 +144,8 @@ export class CnPageHeaderComponent extends CnComponentBase implements OnInit {
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             item: this.CURRENT_ITEM,
-            router: this.routerValue
+            router: this.routerValue,
+            userValue:this.userValue
         })
     }
 

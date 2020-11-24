@@ -991,7 +991,8 @@ export class CnStaticTableComponent extends CnComponentBase
             filter = ParameterResolver.resolve({
                 params: filterConfig,
                 tempValue: this.tempValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                userValue:this.userValue
             });
         }
         return filter;
@@ -1386,7 +1387,8 @@ export class CnStaticTableComponent extends CnComponentBase
                 item: option.data.data,
                 tempValue: this.tempValue,
                 initValue: this.initValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                userValue:this.userValue
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);
@@ -1471,7 +1473,8 @@ export class CnStaticTableComponent extends CnComponentBase
             item: this.ROW_SELECTED,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            router: this.routerValue
+            router: this.routerValue,
+            userValue:this.userValue
         });
 
         const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).toPromise();
@@ -1658,7 +1661,8 @@ export class CnStaticTableComponent extends CnComponentBase
                 router: this.routerValue,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
-                currentRow:this.ROW_CURRENT
+                currentRow:this.ROW_CURRENT,
+                userValue:this.userValue
 
             });
         } else if (!isArray && data) {
@@ -1674,7 +1678,8 @@ export class CnStaticTableComponent extends CnComponentBase
                 editedRows: data,
                 validation: data,
                 returnValue: data,
-                currentRow:this.ROW_CURRENT
+                currentRow:this.ROW_CURRENT,
+                userValue:this.userValue
 
             });
         } else if (isArray && data && Array.isArray(data)) {
@@ -1692,7 +1697,8 @@ export class CnStaticTableComponent extends CnComponentBase
                     editedRows: d,
                     validation: d,
                     returnValue: d,
-                    currentRow:this.ROW_CURRENT
+                    currentRow:this.ROW_CURRENT,
+                    userValue:this.userValue
                 });
                 parameterResult.push(param);
             })
@@ -1735,7 +1741,8 @@ export class CnStaticTableComponent extends CnComponentBase
             item: this.ROW_SELECTED,
             tempValue: this.tempValue,
             initValue: this.initValue,
-            cacheValue: this.cacheValue
+            cacheValue: this.cacheValue,
+            userValue:this.userValue
         });
     }
 
@@ -1762,7 +1769,8 @@ export class CnStaticTableComponent extends CnComponentBase
                     checkedItem: cr,
                     tempValue: this.tempValue,
                     initValue: this.initValue,
-                    cacheValue: this.cacheValue
+                    cacheValue: this.cacheValue,
+                    userValue:this.userValue
                 });
                 params.push(p[this.KEY_ID]);
             });
@@ -1841,7 +1849,8 @@ export class CnStaticTableComponent extends CnComponentBase
                 item: this.ROW_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {

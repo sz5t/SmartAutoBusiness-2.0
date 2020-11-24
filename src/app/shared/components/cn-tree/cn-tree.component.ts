@@ -370,6 +370,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       item: nodeValue,
+      userValue:this.userValue
     });
     const ajaxData = await this.componentService.apiService.getRequest(ajaxConfig.url, 'get', { params }).toPromise();
     return ajaxData;
@@ -545,6 +546,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         params: filterConfig,
         tempValue: this.tempValue,
         cacheValue: this.cacheValue,
+        userValue:this.userValue
       });
     }
     return filter;
@@ -872,6 +874,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         tempValue: this.tempValue,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
+        userValue:this.userValue
       });
     }
     const response = await this.executeHttpRequest(url, method, paramData);
@@ -899,6 +902,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         tempValue: this.tempValue,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
+        userValue:this.userValue
       });
     }
     const response = await this.executeHttpRequest(url, method, paramData);
@@ -933,6 +937,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         checkedItem: d.origin,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
+        userValue:this.userValue
       });
       parameterResult.push(param);
     });
@@ -975,6 +980,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         item: d.origin,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
+        userValue:this.userValue
       });
       parameterResult.push(param);
     });
@@ -992,6 +998,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         tempValue: this.tempValue,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
+        userValue:this.userValue
       });
       const response = await this.executeHttpRequest(url, method, paramData);
       // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
@@ -1068,6 +1075,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
+      userValue:this.userValue
     });
 
     const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).toPromise();
@@ -1300,6 +1308,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       cacheValue: this.cacheValue,
       router: this.routerValue,
       cascadeValue: this.cascadeValue,
+      userValue:this.userValue
     });
   }
 
@@ -1398,6 +1407,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         router: this.routerValue,
         addedRows: this.NODES_ADDED,
         editedRows: this.NODES_EDITED,
+        userValue:this.userValue
       });
     } else if (!isArray && data) {
       // liu 2020 0521 存储过程返回
@@ -1416,6 +1426,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         editedRows: data,
         validation: data,
         returnValue: data,
+        userValue:this.userValue
       });
     } else if (isArray && data && Array.isArray(data)) {
       parameterResult = [];
@@ -1432,6 +1443,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
           addedRows: d,
           editedRows: d,
           validation: d,
+          userValue:this.userValue
         });
         parameterResult.push(param);
       });
@@ -1505,6 +1517,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         initValue: this.initValue,
         cacheValue: this.cacheValue,
         router: this.routerValue,
+        userValue:this.userValue
       });
       option.changeValue.params.map(param => {
         if (param.type === 'value') {
@@ -1574,6 +1587,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         initValue: this.initValue,
         cacheValue: this.cacheValue,
         router: this.routerValue,
+        userValue:this.userValue
       });
       option.changeValue.params.map(param => {
         if (param.type === 'value') {
@@ -2170,7 +2184,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       checkedItem: { treeData: JSON.stringify(FilterData) },
       tempValue: this.tempValue,
       initValue: this.initValue,
-      cacheValue: this.cacheValue
+      cacheValue: this.cacheValue,
+      userValue:this.userValue
     });
     const response = await this.executeHttpRequest(url, method, paramData);
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
@@ -2201,7 +2216,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       checkedItem: { treeData: JSON.stringify(FilterData) },
       tempValue: this.tempValue,
       initValue: this.initValue,
-      cacheValue: this.cacheValue
+      cacheValue: this.cacheValue,
+      userValue:this.userValue
     });
     const response = await this.executeHttpRequest(url, method, paramData);
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}

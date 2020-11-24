@@ -8,6 +8,7 @@ import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
 import { StartupService } from '@core';
 import { HttpClient } from '@angular/common/http';
+import { CacheService } from '@delon/cache';
 
 @Component({
   selector: 'passport-login',
@@ -28,6 +29,7 @@ export class UserLoginComponent implements OnDestroy {
     private socialService: SocialService,
     private menuService: MenuService,
     public httpClient: HttpClient,
+    private _cacheService: CacheService,
     @Optional()
     @Inject(ReuseTabService)
     private reuseTabService: ReuseTabService,
@@ -89,7 +91,7 @@ export class UserLoginComponent implements OnDestroy {
 
   // #endregion
 
-  async submit(): Promise<any> {
+  async submit_bf(): Promise<any> {
     this.error = '';
     if (this.type === 0) {
       this.userName.markAsDirty();
@@ -139,7 +141,7 @@ export class UserLoginComponent implements OnDestroy {
     let moduleList: any
     let userModule: any
     this.tokenService.set({ key: `123`, token: '123' });
-    
+
     if (environment['SYSTEM_CONFIG']) {
       if (environment['SYSTEM_CONFIG']['login']['login_enabled']) {
         userLogin = environment['SYSTEM_CONFIG']['login']['login_url']
@@ -153,14 +155,14 @@ export class UserLoginComponent implements OnDestroy {
       userModule = 'GET_USER_MODULE'
       moduleList = 'GET_MODULE_LIST'
     }
-    const result = await this.http.get(`resource/`+ userLogin + `/query?_mapToObject=true&login_name=` + this.userName.value + `&login_pwd=` + this.password.value).toPromise();
+    const result = await this.http.get(`resource/` + userLogin + `/query?_mapToObject=true&login_name=` + this.userName.value + `&login_pwd=` + this.password.value).toPromise();
     let menu: any
-    menu = await this.http.get(`resource/`+ moduleList +`/query?_mapToObject=true&_sort=sortcode asc`).toPromise();
+    menu = await this.http.get(`resource/` + moduleList + `/query?_mapToObject=true&_sort=sortcode asc`).toPromise();
     if (this.userName.value === 'admin') {
       const currentMenu = this.buildServerRes(menu)
       this.menuService.add(currentMenu['menu']);
     } else if (result['data'].length > 0 && this.userName.value !== 'admin') {
-      const permissionMenu:any = await this.http.get(`resource/`+ userModule +`/query?_mapToObject=true&login_name=` + this.userName.value).toPromise();
+      const permissionMenu: any = await this.http.get(`resource/` + userModule + `/query?_mapToObject=true&login_name=` + this.userName.value).toPromise();
       if (permissionMenu['data'].length > 0) {
         menu['data'] = menu.data.filter(e => permissionMenu.data.findIndex(p => p.moduleId === e.id) > -1)
       }
@@ -183,8 +185,171 @@ export class UserLoginComponent implements OnDestroy {
     // this.router.navigateByUrl('/');
   }
 
+
+  async submit(): Promise<any> {
+    this.error = '';
+    if (this.type === 0) {
+      this.userName.markAsDirty();
+      this.userName.updateValueAndValidity();
+      this.password.markAsDirty();
+      this.password.updateValueAndValidity();
+      if (this.userName.invalid || this.password.invalid) {
+        return;
+      }
+    } else {
+      this.mobile.markAsDirty();
+      this.mobile.updateValueAndValidity();
+      this.captcha.markAsDirty();
+      this.captcha.updateValueAndValidity();
+      if (this.mobile.invalid || this.captcha.invalid) {
+        return;
+      }
+    }
+
+    this.tokenService.set({ key: `123`, token: '123' });
+
+    if (environment['systemSettings'] && environment['systemSettings']['enableLogin']) {
+      // 启用登录
+      // 判断是否启用例外登录
+      if (environment['systemSettings']['enableExceptionLogin']) {
+        // 启用例外用户，例外用户可登录当前系统
+        const exceptionUserList = environment['systemSettings']['exceptionLoginInfo']['userList'];
+        const userIndex = exceptionUserList.findIndex(item => item['userName'] === this.userName.value);
+        if (userIndex > -1) {
+          const exceptionUser = exceptionUserList[userIndex];
+          if (exceptionUser['passWord'] === this.password.value || !environment['systemSettings']['exceptionLoginInfo']['enablepassword']) {
+            this._cacheService.set('userInfo', exceptionUser);
+            this.reuseTabService.clear();
+            this.startupSrv.load().then(() => {
+              let url = this.tokenService.referrer!.url || '/';
+              if (url.includes('/passport')) {
+                url = '/';
+              }
+              this.router.navigateByUrl(url);
+            });
+            return;
+          }else{
+            this.error = '密码错误';
+            return;
+          }
+        }
+
+      }
+
+      if (environment['systemSettings']['loginInfo']) {
+        // 用户信息，将解析登录信息
+        // 解析登录信息
+        const loginAjaxConfig = environment['systemSettings']['loginInfo']['loginAjaxConfig']
+        const url = loginAjaxConfig['url'];
+        const params = this.buildParametersByLogin(loginAjaxConfig['params']);
+        const r_data = await this.http[loginAjaxConfig.ajaxType](url, params).toPromise();
+
+
+        const _userInfo = environment['systemSettings']['loginInfo']['userInfo'];
+        let userInfo = this.buildUserInfo(r_data, _userInfo);
+
+        console.log('登录返回', userInfo);
+        // 将当前用户信息写入缓存
+        if (userInfo['result'] === "success") {
+          this._cacheService.set('userInfo', userInfo);
+          this.reuseTabService.clear();
+          this.startupSrv.load().then(() => {
+            let url = this.tokenService.referrer!.url || '/';
+            if (url.includes('/passport')) {
+              url = '/';
+            }
+            this.router.navigateByUrl(url);
+          });
+
+        } else {
+          this.error = userInfo['validationMessage'];
+        }
+      }
+
+    } else { // 不启用登录  直接进系统
+      this.reuseTabService.clear();
+      this.startupSrv.load().then(() => {
+        let url = this.tokenService.referrer!.url || '/';
+        if (url.includes('/passport')) {
+          url = '/';
+        }
+        this.router.navigateByUrl(url);
+      });
+    }
+
+
+  }
+
+
+  public buildUserInfo(data?, userConfig?) {
+    let userInfo = {};
+    userConfig.forEach(item => {
+      let valueItem: any;
+      if (item['type'] === 'returnValue') {
+
+        // str=”jpg|bmp|gif|ico|png”; arr=str.split(”|”);
+        let strs: any[]; //定义一数组
+        let _data: any = data;
+        let _isPass = true;
+        strs = item['path'].split("\\");
+        for (let _index = 0; _index < strs.length; _index++) {
+          if (_isPass) {
+            let _indexStr = strs[_index];
+            if (_indexStr.indexOf('$') > -1) {
+              const arry_index = _indexStr.split("$");
+              if (arry_index.length < 2) {
+                _isPass = false;
+              }
+              const _arr_index = parseInt(arry_index[1]);
+              if (_data[arry_index[0]] && _data[arry_index[0]].length > _arr_index) {
+                _data = _data[arry_index[0]][_arr_index];
+              } else {
+                _isPass = false;
+              }
+
+            } else {
+              // 对象
+              if (_indexStr === 'root') {
+                _data = _data;
+              } else {
+                _data = _data[_indexStr];
+              }
+            }
+          }
+        }
+        if (_isPass) {
+          valueItem = _data[item['valueName']];
+        } else {
+          valueItem = null;
+        }
+      } else {
+        valueItem = item['value'];
+
+      }
+      userInfo[item['name']] = valueItem;
+    });
+
+    return userInfo;
+
+  }
+
+  public buildParametersByLogin(params?) {
+    let paramsData = {};
+    params.forEach(element => {
+      let valueItem: any;
+      if (element['type'] === 'componentValue') {
+        valueItem = this.form.value[element['valueName']];
+      } else {
+        valueItem = element['value'];
+      }
+      paramsData[element['name']] = valueItem;
+    });
+    return paramsData;
+  }
+
+
   private buildServerRes(serverData) {
-    const data:any = {};
+    const data: any = {};
     if (serverData.data) {
       const s = this.buildServerMenu(serverData);
       data['menu'] = [...s]

@@ -398,7 +398,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
       cacheValue: this.cacheValue,
       router: this.routerValue,
       returnValue: returnData ? returnData : {},
-      item: itemData ? itemData : {}
+      item: itemData ? itemData : {},
+      userValue:this.userValue
     });
   }
 
@@ -1431,7 +1432,8 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         item: this.FORM_VALUE,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
-        router: this.routerValue
+        router: this.routerValue,
+        userValue:this.userValue
       });
       option.changeValue.params.map(param => {
         if (param.type === 'value') {

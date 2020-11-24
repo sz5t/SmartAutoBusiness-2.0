@@ -146,7 +146,8 @@ export class CnDynamicPageHeaderComponent extends CnComponentBase implements OnI
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             item: this.CURRENT_ITEM,
-            router: this.routerValue
+            router: this.routerValue,
+            userValue:this.userValue
         })
     }
 

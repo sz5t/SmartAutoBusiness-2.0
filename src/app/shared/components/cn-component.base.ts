@@ -69,6 +69,14 @@ export class CnComponentBase {
         this._staticComponentValue = value;
     }
 
+    private _userValue: any;
+    public get userValue(): any {
+        return this._userValue ? this._userValue : {};
+    }
+    public set userValue(value: any) {
+        this._userValue = value;
+    }
+
 
     private _subscription$: Subscription;
     public get subscription$(): Subscription {
@@ -86,7 +94,13 @@ export class CnComponentBase {
         this._trigger_subscription$ = value;
     }
 
-    constructor(private _componentService: ComponentServiceProvider) { }
+    constructor(private _componentService: ComponentServiceProvider) { 
+
+        this.userValue= _componentService.cacheService.getNone('userInfo')
+        ? _componentService.cacheService.getNone('userInfo')
+        : {};
+
+    }
 
     // #region 消息定义
     // private _commonRelationSender: Subject<BsnRelativesMessageModel>;

@@ -273,7 +273,8 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
         tempValue: this.tempValue,
         initValue: this.initData,
         cacheValue: this.cacheValue,
-        cascadeValue: this.cascadeValue
+        cascadeValue: this.cascadeValue,
+        userValue:this.userValue
       });
     }
     return params;
@@ -290,7 +291,8 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
       filter = ParameterResolver.resolve({
         params: filterConfig,
         tempValue: this.tempValue,
-        cacheValue: this.cacheValue
+        cacheValue: this.cacheValue,
+        userValue:this.userValue
       });
     }
     return filter;
@@ -1069,12 +1071,14 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
         params: paramsCfg,
         tempValue: this.tempValue,
         item: this.NODE_SELECTED,
+        userValue:this.userValue
       });
     } else if (!isArray && data) {
       parameterResult = ParameterResolver.resolve({
         params: paramsCfg,
         tempValue: this.tempValue,
         item: this.NODE_SELECTED,
+        userValue:this.userValue
       });
     } else if (isArray && data && Array.isArray(data)) {
       parameterResult = [];
@@ -1083,6 +1087,7 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
           params: paramsCfg,
           tempValue: this.tempValue,
           item: this.NODE_SELECTED,
+          userValue:this.userValue
         });
         parameterResult.push(param);
       });

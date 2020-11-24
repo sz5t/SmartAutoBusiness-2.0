@@ -409,7 +409,8 @@ export class CnTreeTableComponent extends CnComponentBase
             tempValue: this.tempValue,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            item: nodeValue
+            item: nodeValue,
+            userValue:this.userValue
         });
 
         if (isPaging) {
@@ -537,7 +538,8 @@ export class CnTreeTableComponent extends CnComponentBase
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             router: this.routerValue,
-            cascadeValue: this.cascadeValue
+            cascadeValue: this.cascadeValue,
+            userValue:this.userValue
         });
     }
 
@@ -615,7 +617,8 @@ export class CnTreeTableComponent extends CnComponentBase
             filter = ParameterResolver.resolve({
                 params: filterConfig,
                 tempValue: this.tempValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                userValue:this.userValue
             });
         }
         return filter;
@@ -1099,7 +1102,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 item: option.data.data ? option.data.data : option.data,
                 tempValue: this.tempValue,
                 initValue: this.initValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                userValue:this.userValue
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);
@@ -1184,7 +1188,8 @@ export class CnTreeTableComponent extends CnComponentBase
             item: this.ROW_SELECTED,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            router: this.routerValue
+            router: this.routerValue,
+            userValue:this.userValue
         });
 
         const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).toPromise();
@@ -1408,7 +1413,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
                 selectedRow: this.ROW_SELECTED,
-                currentRow:this.ROW_CURRENT
+                currentRow:this.ROW_CURRENT,
+                userValue:this.userValue
 
             });
         } else if (!isArray && data) {
@@ -1428,7 +1434,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 validation: data,
                 returnValue: data,
                 selectedRow: this.ROW_SELECTED,
-                currentRow:this.ROW_CURRENT
+                currentRow:this.ROW_CURRENT,
+                userValue:this.userValue
 
             });
         } else if (isArray && Array.isArray(data)) {
@@ -1446,7 +1453,8 @@ export class CnTreeTableComponent extends CnComponentBase
                     editedRows: d,
                     validation: d,
                     returnValue: d,
-                    currentRow:this.ROW_CURRENT
+                    currentRow:this.ROW_CURRENT,
+                    userValue:this.userValue
                 });
                 parameterResult.push(param);
             })
@@ -1476,7 +1484,8 @@ export class CnTreeTableComponent extends CnComponentBase
                     item: d.data,
                     tempValue: this.tempValue,
                     initValue: this.initValue,
-                    cacheValue: this.cacheValue
+                    cacheValue: this.cacheValue,
+                    userValue:this.userValue
                 });
                 parameterResult.push(p);
             });
@@ -1517,7 +1526,8 @@ export class CnTreeTableComponent extends CnComponentBase
             checkedItem: paramDataids,
             tempValue: this.tempValue,
             initValue: this.initValue,
-            cacheValue: this.cacheValue
+            cacheValue: this.cacheValue,
+            userValue:this.userValue
         });
 
         // if (data && data.length > 0) {
@@ -1566,7 +1576,8 @@ export class CnTreeTableComponent extends CnComponentBase
                     item: cr['originData'] ? cr['originData'] : cr,
                     tempValue: this.tempValue,
                     initValue: this.initValue,
-                    cacheValue: this.cacheValue
+                    cacheValue: this.cacheValue,
+                    userValue:this.userValue
                 });
                 params.push(p[this.KEY_ID]);
             });
@@ -1621,7 +1632,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 item: this.ROW_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1708,7 +1720,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 router: this.routerValue,
                 selectedRow: this.ROW_SELECTED,
                 addedRows: this.ROWS_ADDED,
-                editedRows: this.ROWS_EDITED
+                editedRows: this.ROWS_EDITED,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1780,7 +1793,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 router: this.routerValue,
                 selectedRow: this.ROW_SELECTED,
                 addedRows: this.ROWS_ADDED,
-                editedRows: this.ROWS_EDITED
+                editedRows: this.ROWS_EDITED,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1967,7 +1981,8 @@ export class CnTreeTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {

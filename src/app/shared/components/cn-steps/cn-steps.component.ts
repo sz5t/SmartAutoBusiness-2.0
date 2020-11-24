@@ -273,7 +273,8 @@ export class CnStepsComponent extends CnComponentBase implements OnInit, OnDestr
             tempValue: this.tempValue,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            item: this.CURRENT_DATA
+            item: this.CURRENT_DATA,
+            userValue:this.userValue
         })
     }
 
@@ -471,7 +472,8 @@ export class CnStepsComponent extends CnComponentBase implements OnInit, OnDestr
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
                 outputValue: data,
-                returnValue: data
+                returnValue: data,
+                userValue:this.userValue
 
             });
         } else if (!isArray && data) {
@@ -490,6 +492,7 @@ export class CnStepsComponent extends CnComponentBase implements OnInit, OnDestr
                 validation: data,
                 returnValue: data,
                 outputValue: data,
+                userValue:this.userValue
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -506,7 +509,8 @@ export class CnStepsComponent extends CnComponentBase implements OnInit, OnDestr
                     editedRows: d,
                     validation: d,
                     returnValue: d,
-                    outputValue: data
+                    outputValue: data,
+                    userValue:this.userValue
                 });
                 parameterResult.push(param);
             })

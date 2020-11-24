@@ -10,12 +10,14 @@ import { fromPromise } from 'rxjs/internal/observable/fromPromise';
 import { every } from 'rxjs/internal/operators/every';
 import { concatMap } from 'rxjs/internal/operators/concatMap';
 import { concat } from 'rxjs/internal/operators/concat';
+import { CacheService } from '@delon/cache';
 
 export class BeforeOperationResolver implements InnerValue {
     tempValue: any;
     initValue: any;
     cacheValue: any;
     beforeOperationCfg: any;
+    private _cacheService: CacheService;
     constructor(
         private _config: any,
         private _initValue: any,
@@ -23,7 +25,7 @@ export class BeforeOperationResolver implements InnerValue {
         private _tempValue: any,
         private _apiService?: ApiService,
         private _modal?: NzModalService,
-        private _message?: NzMessageService
+        private _message?: NzMessageService,
     ) {
         this.tempValue = _tempValue;
         this.initValue = _initValue;
@@ -61,7 +63,9 @@ export class BeforeOperationResolver implements InnerValue {
             componentValue: value,
             tempValue: this.tempValue,
             initValue: this.initValue,
-            cacheValue: this.cacheValue
+            cacheValue: this.cacheValue,
+            userValue:this._cacheService.getNone('userInfo')
+            ? this._cacheService.getNone('userInfo'): {}
         });
         return params;
     }
@@ -75,7 +79,9 @@ export class BeforeOperationResolver implements InnerValue {
                 params: urlConfig.params,
                 tempValue: this.tempValue,
                 initValue: this.initValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                userValue:this._cacheService.getNone('userInfo')
+                ? this._cacheService.getNone('userInfo'): {}
             });
             url = `${urlConfig.url.parent}/${pc}/${urlConfig.url.child}`;
         }

@@ -205,7 +205,8 @@ console.log('新增行', this.arrData['keyId'],this.dataList, this.config);
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      cascadeValue: this.cascadeValue
+      cascadeValue: this.cascadeValue,
+      userValue:this.userValue
     });
   }
 

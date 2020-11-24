@@ -3423,7 +3423,8 @@ export class CnAttributeComponent extends CnComponentBase implements OnInit, OnD
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      cascadeValue: this.cascadeValue
+      cascadeValue: this.cascadeValue,
+      userValue:this.userValue
     });
   }
 

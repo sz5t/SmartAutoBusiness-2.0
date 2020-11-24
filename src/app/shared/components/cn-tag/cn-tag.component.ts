@@ -482,7 +482,8 @@ export class CnTagComponent extends CnComponentBase implements OnInit,OnDestroy 
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      returnValue: returnData ? returnData : {}
+      returnValue: returnData ? returnData : {},
+      userValue:this.userValue
     });
   }
    /**

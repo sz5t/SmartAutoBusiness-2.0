@@ -6426,7 +6426,8 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
         //           addedRows: this.ROWS_ADDED,
         //           editedRows: this.ROWS_EDITED,
         //          checkedRow: this.ROWS_CHECKED,
-        outputValue: data
+        outputValue: data,
+        userValue:this.userValue
 
       });
     } else if (!isArray && data) {
@@ -6443,7 +6444,8 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
         validation: data,
         returnValue: data,
         //           checkedRow: this.ROWS_CHECKED,
-        outputValue: data
+        outputValue: data,
+        userValue:this.userValue
       });
     } else if (isArray && data && Array.isArray(data)) {
       parameterResult = [];
@@ -6461,7 +6463,8 @@ export class CnPageComponent extends CnComponentBase implements OnInit, OnDestro
           validation: d,
           returnValue: d,
           //               checkedRow: this.ROWS_CHECKED,
-          outputValue: data
+          outputValue: data,
+          userValue:this.userValue
         });
         parameterResult.push(param);
       })

@@ -2,16 +2,148 @@
     "SERVER_URL": "http://192.168.1.111:8401/",
     "SERVER_URL_3": "http://192.168.1.103:8401/",
     "SERVER_URL_1": "http://192.168.1.111:8402/",
-    "SERVER_URL_2": "http://39.101.168.200:8304/",
-    "SYSTEM_CONFIG" :{
-        "login":{
-            "login_enabled": true,
+    "SERVER_URL3": "http://39.101.168.200:8304/",
+    "SYSTEM_CONFIG": {
+        "login": {
+            "login_enabled": false,
             "login_url": "GET_LOGIN_RESULT",
-            "login_premission_url":"GET_USER_MODULE"
+            "login_premission_url": "GET_USER_MODULE"
         },
-        "module_list":{
+        "module_list": {
             "module_list_enabled": true,
-            "module_list_url": "GET_MODULE_LIST"
+            "module_list_url": "GET_MODULE_LIST_WORK"
+        }
+    },
+    "systemSettings": {
+        "systemMode": "dev", 
+        "enablePermission": false,
+        "enableLogin": true, 
+        "enableExceptionLogin": true, 
+        "systemInfo": { 
+            
+        },
+        "permissionInfo": { 
+            "enableMenuPermission":true,
+            "enableToolbarPermission":false,
+            "enableRowActionPermission":false,
+            "enableColumnPermission":false
+        },
+        "loginInfo": { 
+            "loginAjaxConfig":{
+                "url":"resource/B_P_LOGIN/operate",
+                "ajaxType":"post",
+                "params": [
+                    {
+                        "name": "userName",
+                        "type": "componentValue",    
+                        "valueName": "userName"
+                    },
+                    {
+                        "name": "passWord",
+                        "type": "componentValue",    
+                        "valueName": "password"
+                    },
+                    {
+                        "name": "attribute",
+                        "type": "value",    
+                        "valueName": "a"
+                    }
+                 ]
+            },
+            "resultData":{ 
+
+            },
+            "userInfo":[
+                {
+                    "name":"userId",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_USERID"
+
+                },
+                {
+                    "name":"userName",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_USERNAME"
+
+                },
+                {
+                    "name":"realName",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_REALNAME"
+
+                },
+                {
+                    "name":"departmentName",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_DEPARTMENTNAME"
+
+                },
+                {
+                    "name":"departmentId",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_DEPARTMENTID"
+
+                },
+                {
+                    "name":"parentDepartmentId",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_PARENTDEPARTMENTID"
+
+                },
+                {
+                    "name":"departmentIds",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_DEPARTMENTIDS"
+
+                },
+                {
+                    "name":"roleCodes",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_ROLECODES"
+
+                },
+                {
+                    "name":"validationMessage",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_VALIDATIONMESSAGE"
+
+                },
+                {
+                    "name":"result",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_RESULT"
+
+                }
+            ]
+        },
+        "exceptionLoginInfo": {
+            "enablepassword":true, 
+            "enablePermission":false, 
+            "userList": [
+                {
+                    "userName": "admin",  
+                    "passWord":"1",
+                    "realName":"开发账号"  
+                }
+            ]
+        },
+        "menuInfo":{
+            "workMenuInfo":{
+
+            },
+            "devMenuInfo":{
+
+            }
         }
     }
 }

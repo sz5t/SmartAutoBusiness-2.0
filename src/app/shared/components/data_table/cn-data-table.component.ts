@@ -662,7 +662,8 @@ export class CnDataTableComponent extends CnComponentBase
                 params: filterConfig,
                 tempValue: this.tempValue,
                 cacheValue: this.cacheValue,
-                initValue: this.initValue
+                initValue: this.initValue,
+                userValue:this.userValue
             });
         }
         return filter;
@@ -1032,7 +1033,8 @@ export class CnDataTableComponent extends CnComponentBase
                 tempValue: this.tempValue,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                currentRow:this.ROW_CURRENT
+                currentRow:this.ROW_CURRENT,
+                userValue:this.userValue
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);
@@ -1122,6 +1124,7 @@ export class CnDataTableComponent extends CnComponentBase
             addedRows: this.ROWS_ADDED,
             editedRows: this.ROWS_EDITED,
             checkedRow: this.ROWS_CHECKED,
+            userValue:this.userValue
         });
 
         const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).toPromise();
@@ -1411,7 +1414,8 @@ export class CnDataTableComponent extends CnComponentBase
                 outputValue: data,
                 returnValue: data,
                 selectedRow: this.ROW_SELECTED,
-                currentRow:this.ROW_CURRENT
+                currentRow:this.ROW_CURRENT,
+                userValue:this.userValue
 
             });
         } else if (!isArray && data) {
@@ -1433,7 +1437,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
                 selectedRow: this.ROW_SELECTED,
-                currentRow:this.ROW_CURRENT
+                currentRow:this.ROW_CURRENT,
+                userValue:this.userValue
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1452,7 +1457,8 @@ export class CnDataTableComponent extends CnComponentBase
                     returnValue: d,
                     checkedRow: this.ROWS_CHECKED,
                     outputValue: data,
-                    currentRow:this.ROW_CURRENT
+                    currentRow:this.ROW_CURRENT,
+                    userValue:this.userValue
                 });
                 parameterResult.push(param);
             })
@@ -1496,7 +1502,8 @@ export class CnDataTableComponent extends CnComponentBase
             tempValue: this.tempValue,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            selectedRow: this.ROW_SELECTED
+            selectedRow: this.ROW_SELECTED,
+            userValue:this.userValue
         });
     }
 
@@ -1521,7 +1528,8 @@ export class CnDataTableComponent extends CnComponentBase
                     checkedItem: cr,
                     tempValue: this.tempValue,
                     initValue: this.initValue,
-                    cacheValue: this.cacheValue
+                    cacheValue: this.cacheValue,
+                    userValue:this.userValue
                 });
                 params.push(p);
             });
@@ -1541,7 +1549,8 @@ export class CnDataTableComponent extends CnComponentBase
             checkedItem: paramDataids,
             tempValue: this.tempValue,
             initValue: this.initValue,
-            cacheValue: this.cacheValue
+            cacheValue: this.cacheValue,
+            userValue:this.userValue
         });
         const result = await this._executeAjax(option, paramData);
         return result;
@@ -1557,7 +1566,8 @@ export class CnDataTableComponent extends CnComponentBase
                     item: cr,
                     tempValue: this.tempValue,
                     initValue: this.initValue,
-                    cacheValue: this.cacheValue
+                    cacheValue: this.cacheValue,
+                    userValue:this.userValue
                 });
                 params.push(p[this.KEY_ID]);
             });
@@ -1695,7 +1705,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1775,7 +1786,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1927,7 +1939,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {

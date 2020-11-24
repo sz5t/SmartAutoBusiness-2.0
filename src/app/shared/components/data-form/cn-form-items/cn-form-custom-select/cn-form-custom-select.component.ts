@@ -84,7 +84,8 @@ export class CnFormCustomSelectComponent extends CnComponentBase implements OnIn
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      cascadeValue: this.cascadeValue
+      cascadeValue: this.cascadeValue,
+      userValue:this.userValue
     });
   }
 
@@ -371,7 +372,8 @@ public buildChangeValue(option:any){
         item:  this.selectedRowItem,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
-        router: this.routerValue
+        router: this.routerValue,
+        userValue:this.userValue
     });
     option.changeValue.params.map(param => {
         if (param.type === 'value') {

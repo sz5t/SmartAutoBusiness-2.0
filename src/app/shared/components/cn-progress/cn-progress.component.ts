@@ -179,7 +179,8 @@ export class CnProgressComponent extends CnComponentBase implements OnInit, OnDe
             tempValue: this.tempValue,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            item: this.CURRENT_DATA
+            item: this.CURRENT_DATA,
+            userValue:this.userValue
         })
     }
 

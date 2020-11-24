@@ -156,7 +156,8 @@ export class CnDescriptionsComponent extends CnComponentBase implements OnInit, 
             tempValue: this.tempValue,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            item: this.CURRENT_DATA
+            item: this.CURRENT_DATA,
+            userValue:this.userValue
         })
     }
 

@@ -253,7 +253,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                 tempValue: this.tempValue,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                item: this.CURRENT_DATA
+                item: this.CURRENT_DATA,
+                userValue:this.userValue
             });
         } else if (!isArray && data) {
             parameterResult = ParameterResolver.resolve({
@@ -262,7 +263,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 item: this.CURRENT_DATA,
-                returnValue: data
+                returnValue: data,
+                userValue:this.userValue
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -276,7 +278,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                     cacheValue: this.cacheValue,
                     router: this.routerValue,
                     validation: d,
-                    returnValue: d
+                    returnValue: d,
+                    userValue:this.userValue
                 });
                 parameterResult.push(param);
             })
@@ -584,7 +587,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                 item: this.ITEM_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -669,7 +673,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                 item: this.ITEM_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -736,7 +741,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                 item: this.ITEM_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                router: this.routerValue
+                router: this.routerValue,
+                userValue:this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -909,7 +915,8 @@ export class CnCardListComponent extends CnComponentBase implements OnInit, OnDe
                 item: option.data.data,
                 tempValue: this.tempValue,
                 initValue: this.initValue,
-                cacheValue: this.cacheValue
+                cacheValue: this.cacheValue,
+                userValue:this.userValue
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);

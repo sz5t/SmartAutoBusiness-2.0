@@ -116,7 +116,8 @@ export class CnFormSearchSelectComponent extends CnComponentBase implements OnIn
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      cascadeValue: this.cascadeValue
+      cascadeValue: this.cascadeValue,
+      userValue:this.userValue
     });
   }
 

@@ -157,7 +157,8 @@ export class CnStatisticComponent extends CnComponentBase implements OnInit, OnD
             tempValue: this.tempValue,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            item: this.CURRENT_DATA
+            item: this.CURRENT_DATA,
+            userValue:this.userValue
         })
     }
 
