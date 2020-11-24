@@ -153,6 +153,8 @@ export class CnContainersComponent extends CnComponentBase implements OnInit, On
       if (element.id === c_viewId) {
         if (isLoad) {
           element['showLayout'] = false;
+        } else {
+          element['showLayout'] = true;
         }
       }
       else {
