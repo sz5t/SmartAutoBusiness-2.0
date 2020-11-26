@@ -50,11 +50,6 @@ export class HeaderUserComponent {
     private _cacheService: CacheService,
   ) { 
 
-    this.userInfo = _cacheService.getNone('userInfo');
-    if( this.userInfo){
-      this.settings.user.name = this.userInfo['userName'];
-    }
-
   }
 
   logout() {

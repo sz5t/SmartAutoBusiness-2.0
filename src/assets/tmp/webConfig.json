@@ -3,17 +3,6 @@
     "SERVER_URL_3": "http://192.168.1.103:8401/",
     "SERVER_URL_1": "http://192.168.1.111:8402/",
     "SERVER_URL3": "http://39.101.168.200:8304/",
-    "SYSTEM_CONFIG": {
-        "login": {
-            "login_enabled": false,
-            "login_url": "GET_LOGIN_RESULT",
-            "login_premission_url": "GET_USER_MODULE"
-        },
-        "module_list": {
-            "module_list_enabled": true,
-            "module_list_url": "GET_MODULE_LIST_WORK"
-        }
-    },
     "systemSettings": {
         "systemMode": "dev", 
         "enablePermission": false,
@@ -68,6 +57,25 @@
                     "type":"returnValue",  
                     "valueName":"R_USERID"
 
+                },
+                {
+                    "name":"name",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"returnValue",  
+                    "valueName":"R_USERNAME"
+
+                },
+                {
+                    "name":"email",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"value",  
+                    "value":""
+                },
+                {
+                    "name":"avatar",
+                    "path":"data\\_procedure_resultset_1$0", 
+                    "type":"value",  
+                    "value":"./assets/tmp/img/avatar.jpg"
                 },
                 {
                     "name":"userName",
@@ -139,6 +147,10 @@
             "enablePermission":false, 
             "userList": [
                 {
+                    "name":"admin",
+                    "email":"",
+                    "avatar": "./assets/tmp/img/avatar.jpg",
+                    "userId": "_001",  
                     "userName": "admin",  
                     "passWord":"1",
                     "realName":"开发账号"  
@@ -148,23 +160,26 @@
         "menuInfo":{
             "workMenuInfo":{
                 "menuAjaxConfig":{
-                    "url":"resource/B_P_LOGIN/operate",
+                    "url":"resource/B_P_MENU/operate",
                     "ajaxType":"post",
                     "params": [
                         {
-                            "name": "userName",
-                            "type": "componentValue",    
-                            "valueName": "userName"
-                        },
-                        {
-                            "name": "passWord",
-                            "type": "componentValue",    
-                            "valueName": "password"
+                            "name": "userId",
+                            "type": "userValue",    
+                            "valueName": "userId"
                         },
                         {
                             "name": "attribute",
                             "type": "value",    
-                            "valueName": "a"
+                            "valueName": "attribute",
+                            "value": "pt"
+
+                        },
+                        {
+                            "name": "enablePermission",
+                            "type": "value",    
+                            "valueName": "enable",
+                            "value": "enable"
                         }
                      ]
                 },
@@ -173,110 +188,68 @@
                 },
                 "menuInfo":[
                     {
-                        "name":"userId",
-                        "path":"data\\_procedure_resultset_1$0", 
+                        "name":"menuData",
+                        "path":"data", 
                         "type":"returnValue",  
-                        "valueName":"R_USERID"
-    
-                    },
-                    {
-                        "name":"userName",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_USERNAME"
-    
-                    },
-                    {
-                        "name":"realName",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_REALNAME"
-    
-                    },
-                    {
-                        "name":"departmentName",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_DEPARTMENTNAME"
-    
-                    },
-                    {
-                        "name":"departmentId",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_DEPARTMENTID"
-    
-                    },
-                    {
-                        "name":"parentDepartmentId",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_PARENTDEPARTMENTID"
-    
-                    },
-                    {
-                        "name":"departmentIds",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_DEPARTMENTIDS"
-    
-                    },
-                    {
-                        "name":"roleCodes",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_ROLECODES"
-    
-                    },
-                    {
-                        "name":"validationMessage",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_VALIDATIONMESSAGE"
-    
-                    },
-                    {
-                        "name":"result",
-                        "path":"data\\_procedure_resultset_1$0", 
-                        "type":"returnValue",  
-                        "valueName":"R_RESULT"
-    
+                        "valueName":"_procedure_resultset_1"
                     }
                 ],
                 "enableMenuMapping":true,
                 "menuMapping":[
                     {
-                        "name":"i18n"
+                        "name":"i18n",
+                        "type":"returnValue",
+                        "valueName":"I18N"
                     },
                     {
-                        "name":"icon"
+                        "name":"icon",
+                        "type":"returnValue",
+                        "valueName":"ICON"
                     },
                     {
-                        "name":"id"
+                        "name":"id",
+                        "type":"returnValue",
+                        "valueName":"ID"
                     },
                     {
-                        "name":"jsonId"
+                        "name":"jsonId",
+                        "type":"returnValue",
+                        "valueName":"JSON_ID"
                     },
                     {
-                        "name":"level"
+                        "name":"level",
+                        "type":"returnValue",
+                        "valueName":"LEVEL"
                     },
                     {
-                        "name":"link"
+                        "name":"link",
+                        "type":"returnValue",
+                        "valueName":"LINK"
                     },
                     {
-                        "name":"nodetype"
+                        "name":"nodetype",
+                        "type":"returnValue",
+                        "valueName":"NODETYPE"
                     },
                     {
-                        "name":"parentId"
+                        "name":"parentId",
+                        "type":"returnValue",
+                        "valueName":"PARENT_ID"
                     },
                     {
-                        "name":"sortcode"
+                        "name":"sortcode",
+                        "type":"returnValue",
+                        "valueName":"SORTCODE"
                     },
                     {
-                        "name":"status"
+                        "name":"status",
+                        "type":"returnValue",
+                        "valueName":"STATUS"
                     },
                     {
-                        "name":"text"
+                        "name":"text",
+                        "type":"returnValue",
+                        "valueName":"TEXT"
                     }
                 ]
 
