@@ -20,6 +20,14 @@
         "enableLogin": true, 
         "enableExceptionLogin": true, 
         "systemInfo": { 
+            "title":"管理系统",
+            "subtitle":"生产管理系统",
+            "logo":"./assets/logo-color.svg",
+            "logoFull":"./assets/logo-full.svg",
+            "copyrightTime":"2020",
+            "copyright":"博道工业科技有限公司",
+            "backgroundStyle":{"background-image":"url('./assets/logo-full.svg')"},
+            "backgroundStyle1":{"background-image":"url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg')"}
             
         },
         "permissionInfo": { 
@@ -139,6 +147,138 @@
         },
         "menuInfo":{
             "workMenuInfo":{
+                "menuAjaxConfig":{
+                    "url":"resource/B_P_LOGIN/operate",
+                    "ajaxType":"post",
+                    "params": [
+                        {
+                            "name": "userName",
+                            "type": "componentValue",    
+                            "valueName": "userName"
+                        },
+                        {
+                            "name": "passWord",
+                            "type": "componentValue",    
+                            "valueName": "password"
+                        },
+                        {
+                            "name": "attribute",
+                            "type": "value",    
+                            "valueName": "a"
+                        }
+                     ]
+                },
+                "resultData":{ 
+    
+                },
+                "menuInfo":[
+                    {
+                        "name":"userId",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_USERID"
+    
+                    },
+                    {
+                        "name":"userName",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_USERNAME"
+    
+                    },
+                    {
+                        "name":"realName",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_REALNAME"
+    
+                    },
+                    {
+                        "name":"departmentName",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_DEPARTMENTNAME"
+    
+                    },
+                    {
+                        "name":"departmentId",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_DEPARTMENTID"
+    
+                    },
+                    {
+                        "name":"parentDepartmentId",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_PARENTDEPARTMENTID"
+    
+                    },
+                    {
+                        "name":"departmentIds",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_DEPARTMENTIDS"
+    
+                    },
+                    {
+                        "name":"roleCodes",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_ROLECODES"
+    
+                    },
+                    {
+                        "name":"validationMessage",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_VALIDATIONMESSAGE"
+    
+                    },
+                    {
+                        "name":"result",
+                        "path":"data\\_procedure_resultset_1$0", 
+                        "type":"returnValue",  
+                        "valueName":"R_RESULT"
+    
+                    }
+                ],
+                "enableMenuMapping":true,
+                "menuMapping":[
+                    {
+                        "name":"i18n"
+                    },
+                    {
+                        "name":"icon"
+                    },
+                    {
+                        "name":"id"
+                    },
+                    {
+                        "name":"jsonId"
+                    },
+                    {
+                        "name":"level"
+                    },
+                    {
+                        "name":"link"
+                    },
+                    {
+                        "name":"nodetype"
+                    },
+                    {
+                        "name":"parentId"
+                    },
+                    {
+                        "name":"sortcode"
+                    },
+                    {
+                        "name":"status"
+                    },
+                    {
+                        "name":"text"
+                    }
+                ]
 
             },
             "devMenuInfo":{

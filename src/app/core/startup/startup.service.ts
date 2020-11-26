@@ -68,9 +68,16 @@ export class StartupService {
     // only works with promises
     // https://github.com/angular/angular/issues/15088
 
+    let userInfo = this._cacheService.getNone('userInfo');
     let menu_url ='GET_MODULE_LIST_WORK';
     if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
         menu_url ='GET_MODULE_LIST_WORK';
+      //  const loginAjaxConfig = environment['systemSettings']['loginInfo']['loginAjaxConfig']
+      //  const url = loginAjaxConfig['url'];
+      //  const params = this.buildParametersByLogin(loginAjaxConfig['params']);
+      //  const r_data = await this.http[loginAjaxConfig.ajaxType](url, params).toPromise();
+
+
     }
     else{
         menu_url ='GET_MODULE_LIST';
@@ -135,6 +142,20 @@ export class StartupService {
 
   private buildLocalRes(data) {
     return data;
+  }
+
+  public buildParametersByLogin(params?) {
+    let paramsData = {};
+    params.forEach(element => {
+      let valueItem: any;
+      if (element['type'] === 'componentValue') {
+      //  valueItem = this.form.value[element['valueName']];
+      } else {
+        valueItem = element['value'];
+      }
+      paramsData[element['name']] = valueItem;
+    });
+    return paramsData;
   }
 
   private buildI18NServerRes(data, serverData) {

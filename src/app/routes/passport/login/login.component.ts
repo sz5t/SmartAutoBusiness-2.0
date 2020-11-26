@@ -219,6 +219,8 @@ export class UserLoginComponent implements OnDestroy {
           const exceptionUser = exceptionUserList[userIndex];
           if (exceptionUser['passWord'] === this.password.value || !environment['systemSettings']['exceptionLoginInfo']['enablepassword']) {
             this._cacheService.set('userInfo', exceptionUser);
+
+            this.settingsService.user.name =exceptionUser['userName'];
             this.reuseTabService.clear();
             this.startupSrv.load().then(() => {
               let url = this.tokenService.referrer!.url || '/';
@@ -252,6 +254,7 @@ export class UserLoginComponent implements OnDestroy {
         // 将当前用户信息写入缓存
         if (userInfo['result'] === "success") {
           this._cacheService.set('userInfo', userInfo);
+       
           this.reuseTabService.clear();
           this.startupSrv.load().then(() => {
             let url = this.tokenService.referrer!.url || '/';

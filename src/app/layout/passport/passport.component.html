@@ -1,17 +1,16 @@
-<div class="container">
+<div class="container" [ngStyle]="systemInfo['backgroundStyle']">
   <header-i18n showLangText="false" class="langs"></header-i18n>
   <div class="wrap">
     <div class="top">
       <div class="head">
-        <img class="logo" src="./assets/logo-color.svg" />
-        <span class="title">ng-alain</span>
+        <img class="logo" [src]="systemInfo['logo']" />
+        <span class="title">{{systemInfo['title']}}</span>
       </div>
-      <div class="desc">内部测试系统</div>
+      <div class="desc">{{systemInfo['subtitle']}}</div>
     </div>
     <router-outlet></router-outlet>
     <global-footer [links]="links">
-      Copyright
-      <i nz-icon nzType="copyright"></i> 2017 <a href="//github.com/cipchk" target="_blank">卡色</a>出品
+      <i nz-icon nzType="copyright"></i> {{systemInfo['copyrightTime']}} <a href="" target="_blank">{{systemInfo['copyright']}}</a>出品
     </global-footer>
   </div>
 </div>

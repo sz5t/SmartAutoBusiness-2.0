@@ -1407,7 +1407,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         router: this.routerValue,
         addedRows: this.NODES_ADDED,
         editedRows: this.NODES_EDITED,
-        userValue:this.userValue
+        userValue:this.userValue,
+        returnValue: data,
       });
     } else if (!isArray && data) {
       // liu 2020 0521 存储过程返回
@@ -1443,7 +1444,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
           addedRows: d,
           editedRows: d,
           validation: d,
-          userValue:this.userValue
+          userValue:this.userValue,
+          returnValue: data
         });
         parameterResult.push(param);
       });
@@ -2160,8 +2162,16 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       treeNodeList = this.treeObj.getCheckedNodeList();
     } else {
       const dataCheck = this.getCheckedNodeListByCustom(this.treeObj.getCheckedNodeList());
-      const datahalfCheck = this.treeObj.getHalfCheckedNodeList();
-      const treeNodeList = [...dataCheck, ...datahalfCheck];
+      let datahalfCheck = this.treeObj.getHalfCheckedNodeList();
+      if(!datahalfCheck){
+        datahalfCheck=[];
+      }
+      if(datahalfCheck.length>0){
+         treeNodeList = [ ...datahalfCheck,...dataCheck];
+      } else{
+         treeNodeList = [ ...dataCheck];
+      }
+     
     }
     console.log('获取当前树节点数据', treeNodeList);
     return treeNodeList;

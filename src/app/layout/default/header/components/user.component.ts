@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SettingsService } from '@delon/theme';
 import { DA_SERVICE_TOKEN, ITokenService } from '@delon/auth';
 import { CacheService } from '@delon/cache';
+import { userInfo } from 'os';
 
 @Component({
   selector: 'header-user',
@@ -41,15 +42,24 @@ import { CacheService } from '@delon/cache';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderUserComponent {
+  userInfo:any;
   constructor(
     public settings: SettingsService,
     private router: Router,
     @Inject(DA_SERVICE_TOKEN) private tokenService: ITokenService,
     private _cacheService: CacheService,
-  ) { }
+  ) { 
+
+    this.userInfo = _cacheService.getNone('userInfo');
+    if( this.userInfo){
+      this.settings.user.name = this.userInfo['userName'];
+    }
+
+  }
 
   logout() {
- 
+
+
     const pageList = this._cacheService.getMeta();
     pageList.forEach(item=>{
       this._cacheService.remove(item);

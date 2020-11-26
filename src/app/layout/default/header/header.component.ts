@@ -1,5 +1,7 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { SettingsService } from '@delon/theme';
+import { CacheService } from '@delon/cache';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'layout-header',
@@ -8,8 +10,12 @@ import { SettingsService } from '@delon/theme';
 })
 export class HeaderComponent {
   searchToggleStatus: boolean;
-
-  constructor(public settings: SettingsService) {}
+  systemInfo:any;
+  constructor(public settings: SettingsService,
+     private _cacheService: CacheService
+    ) {
+      this.systemInfo = environment['systemSettings']['systemInfo'];
+    }
 
   toggleCollapsedSidebar() {
     this.settings.setLayout('collapsed', !this.settings.layout.collapsed);

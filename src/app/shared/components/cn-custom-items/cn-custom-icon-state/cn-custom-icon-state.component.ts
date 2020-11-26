@@ -29,13 +29,16 @@ export class CnCustomIconStateComponent implements OnInit,OnChanges {
   ngOnInit() {
 
     this._dataList = this.config['options'];
-    if(!this.currentStateValue){
-      this.currentStateValue='001';
+
+
+    if(this.currentValue || this.currentValue===0){
+      this.currentStateValue= this.currentValue;
+    }else{
+      if(this.config['enableDefaultValue']){
+        this.currentStateValue=this.config.defaultValue;
+      }
     }
 
-    if(this.config['enableDefaultValue']){
-      this.currentStateValue=this.config.defaultValue;
-    }
     
     this.getShowObject(this.currentStateValue);
   
