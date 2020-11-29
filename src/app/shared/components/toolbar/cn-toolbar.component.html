@@ -3,7 +3,7 @@
   <span class="toolbarGroup" *ngIf="toolbar.group">
     <!-- <nz-button-group> -->
     <ng-template ngFor let-btn [ngForOf]="toolbar.group">
-      <button *ngIf="!btn.hidden" [nzSize]="btn.size ? btn.size : 'default'"
+      <button *ngIf="!btn.hidden && btn.permission" [nzSize]="btn.size ? btn.size : 'default'"
         [nzType]="btn.color ? btn.color : 'default'" nz-button type="button" (click)="action(btn, toolbar.targetViewId)">
         <i nz-icon style="font-weight: 600" *ngIf="btn.icon" [type]="btn.icon"
           [theme]="btn.theme ? btn.theme : 'outline'"></i>
@@ -13,7 +13,7 @@
 
     <!-- </nz-button-group> -->
   </span>
-  <span class="toolbarGroup" *ngIf="toolbar.dropdown">
+  <span class="toolbarGroup" *ngIf="toolbar.dropdown &&  toolbar.permission">
     <button nz-button nz-dropdown [nzDropdownMenu]="menu">
       <strong>
         <i nz-icon [nzType]="toolbar.icon ? toolbar.icon :'setting'" theme="outline"></i> {{toolbar.text}}
@@ -23,7 +23,7 @@
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
           <ng-template ngFor let-btn [ngForOf]="toolbar.dropdown">
-            <li *ngIf="!btn.hidden" nz-menu-item (click)="action(btn, toolbar.targetViewId)">
+            <li *ngIf="!btn.hidden  &&  btn.permission" nz-menu-item (click)="action(btn, toolbar.targetViewId)">
               <i nz-icon [nzType]="btn.icon" [theme]="btn.theme ? btn.theme : 'outline'"></i> {{btn.text}}
             </li>
           </ng-template>

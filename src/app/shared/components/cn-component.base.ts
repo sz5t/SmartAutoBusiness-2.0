@@ -240,7 +240,20 @@ export class CnComponentBase {
     public  async getCustomConfig(customConfigId?){
 
           if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
-            const response = await  this._componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate', { "PageId": customConfigId }).toPromise();
+            let page_url ='resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate';
+            let page_params = { "PageId": customConfigId };
+              if (environment['systemSettings'] && environment['systemSettings']['permissionInfo']['enableOperatePermission']) {
+                const work_Page = environment['systemSettings']['pageInfo']['workPageInfo']['pageAjaxConfig'];
+                page_url = work_Page['url'];
+                let d_params={ "PageId": customConfigId };
+                page_params = this.buildParametersByPage(work_Page['params'],d_params);
+              }
+              else{
+                 page_url ='resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate';
+                 page_params = { "PageId":customConfigId };
+              }
+
+            const response = await  this._componentService.apiService.post(page_url, page_params).toPromise();
       
             if(response && response['data']){
              if (response['data']._procedure_resultset_1[0]['W'] === "") {
@@ -302,6 +315,33 @@ export class CnComponentBase {
 
      }
 
+     public buildParametersByPage(params?,data?):any {
+        let userInfo = this._componentService.cacheService.getNone('userInfo');
+        let activeMenu =this._componentService.cacheService.getNone('activeMenu');
+        let paramsData = {};
+        params.forEach(element => {
+          let valueItem: any;
+          if (element['type'] === 'userValue') {
+            valueItem = userInfo[element['valueName']];
+          }if (element['type'] === 'item') {
+            valueItem = data[element['valueName']];
+          } 
+          if (element['type'] === 'activeMenu') {
+            valueItem = activeMenu[element['valueName']];
+          } 
+          if(element['type'] === 'value'){
+            valueItem = element['value'];
+          }
+    
+          if(!valueItem && valueItem!==0){
+            valueItem = element['value'];
+          }
+         
+          paramsData[element['name']] = valueItem;
+        });
+        return paramsData;
+      }
+
 
      // 写入缓存
      public setCache(layoutId?,type?,configData?,permissionData?):any{
@@ -355,6 +395,7 @@ export class CnComponentBase {
       
         // 将缓存数据写入
         pageConfigCache[menuId]['pageConfig'] = {...pageConfigCache[menuId]['pageConfig'], ...page_config_data};
+        pageConfigCache[menuId]['permissionConfig'] = { ...pageConfigCache[menuId]['permissionConfig'], ...page_permission_data };
        // this._componentService.cacheService.set(menuId,activeConfig);
         return true;
       

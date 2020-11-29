@@ -18,6 +18,7 @@ import { ComponentServiceProvider } from '@core/services/component/component-ser
 import { from, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
+import { environment } from '@env/environment';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -84,6 +85,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
 
         this.toolbarConfig = this.config.toolbar;
         // 权限计算后，将操作按钮组，赋值给this.toolbarConfig 
+      
         this._initInnerValue();
 
         if (this.config.cascade && this.config.cascade.messageReceiver) {
@@ -92,10 +94,11 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             // this._receiver_source$.subscribe();
             new RelationResolver(this).resolveReceiver(this.config);
         }
-        this.getBttonList();
+       // this.getBttonList();
+        this.getPermissions();
 
-        const componentPermission =  this.getMenuComponentPermissionConfigById(this.config.id);
-        console.log('当前权限',componentPermission);
+        // const componentPermission =  this.getMenuComponentPermissionConfigById(this.config.id);
+        // console.log('当前权限',componentPermission);
 
         // 解析
         // componentPermission['permission']
@@ -109,64 +112,83 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         this.initValue = {};
     }
 
-    public getPermissions() {
 
-        const componentPermission =  this.getMenuComponentPermissionConfigById(this.config.id);
+    public getPermissions() {
+        let componentPermission:any; 
+        if(this.config.id){
+            componentPermission =this.getMenuComponentPermissionConfigById(this.config.id);
+        }
+        let enableToolbarPermission = false;
+        if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
+
+            if (environment['systemSettings'] && environment['systemSettings']['permissionInfo']) {
+                if (environment['systemSettings']['enablePermission']) {
+                    enableToolbarPermission = environment['systemSettings']['permissionInfo']['enableToolbarPermission'];
+                }
+            }
+        }
+        if(this.config['exceptionPermission']){
+              enableToolbarPermission = false;
+        }
+
         console.log('当前权限',componentPermission);
         const permissionMap = new Map();
-        this.permissions.forEach(item => {
-            permissionMap.set(item.code, item);
-        });
-        if (this.toolbars && Array.isArray(this.toolbars)) {
-            this.toolbars.forEach(item => {
-                if (item.group) {
-                    const groups = [];
-                    item.group.forEach(g => {
-                        const Loading = {};
-                        Loading[g.name] = false;
-                        this.toolbarsIsLoading.push(Loading);
-                        if (permissionMap.has(g.name)) {
-                            groups.push({ ...g });
-                        } else if (g.cancelPermission) {
-                            groups.push({ ...g });
-                        }
-                    });
+        if(componentPermission && componentPermission['permission']){
+            componentPermission && componentPermission['permission'].forEach(item => {
+                permissionMap.set(item.id, item);
+            });
+        }
+ 
 
-                    this.toolbarConfig.push({ group: groups });
-                } else if (item.dropdown) {
-                    const dropdown = [];
-                    item.dropdown.forEach(b => {
-                        let is_dropdown = true;
-                        if (permissionMap.has(b.name)) {
-                            is_dropdown = false;
-                        } else if (b.cancelPermission) {
-                            is_dropdown = false;
+        // try {
+
+        //     throw new Error()
+        // } catch (e) {
+        //     // console.log(e)
+        // }
+        // "targetViewId": "tree_page",
+        let _button_list = [];
+        if (this.toolbarConfig && Array.isArray(this.toolbarConfig)) {
+            this.toolbarConfig.forEach(item => {
+                if (item.group) {
+                    if (!enableToolbarPermission||(!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))){
+                        item['permission'] =true;
+                    } 
+                    let targetViewId = item['targetViewId'];
+                    item.group.forEach(g => {
+                        if (g.dropdown) {
+                            g.dropdown.forEach(b => {
+                                b['targetViewId'] = targetViewId;
+                                if (!enableToolbarPermission||(!b.hasOwnProperty('id')) || (enableToolbarPermission && b.id && permissionMap.has(b.id))){
+                                    b['permission'] =true;
+                                } 
+                                _button_list.push(b);
+                            });
+                        } else {
+                            g['targetViewId'] = targetViewId;
+                            if (!enableToolbarPermission||((!g.hasOwnProperty('id')) ||enableToolbarPermission && g.id && permissionMap.has(g.id))){
+                                g['permission'] =true;
+                            } 
+                            _button_list.push(g);
                         }
-                        if (is_dropdown) {
-                            return true;
-                        }
-                        const down: any = {};
-                        const { name, text, icon } = b;
-                        down.name = name;
-                        down.text = text;
-                        down.icon = icon;
-                        down.buttons = [];
-                        b.buttons.forEach(btn => {
-                            //  const Loading = {};
-                            //  Loading[btn.name] = false;
-                            //  this.toolbarsisLoading.push(Loading);
-                            if (permissionMap.has(btn.name)) {
-                                down.buttons.push({ ...btn });
-                            } else if (btn.cancelPermission) {
-                                down.buttons.push({ ...btn });
-                            }
-                        });
-                        dropdown.push(down);
                     });
-                    this.toolbarConfig.push({ dropdown });
+                } else if (item.dropdown) {
+                    if (!enableToolbarPermission||(!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))){
+                        item['permission'] =true;
+                    } 
+                    let targetViewId = item['targetViewId'];
+                    item.dropdown.forEach(b => {
+                        b['targetViewId'] = targetViewId;
+                        if (!enableToolbarPermission||(!b.hasOwnProperty('id')) ||(enableToolbarPermission && b.id && permissionMap.has(b.id))){
+                            b['permission'] =true;
+                        } 
+                        _button_list.push(b);
+                    });
                 }
             });
         }
+        this.button_list = _button_list;
+       // console.log('按钮统计', _button_list);
     }
 
 

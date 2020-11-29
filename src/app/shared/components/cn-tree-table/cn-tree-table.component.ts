@@ -32,6 +32,7 @@ import { ITreeGridProperty, CN_TREE_GRID_PROPERTY } from '@core/relations/bsn-pr
 import { CN_TREE_GRID_METHOD } from '@core/relations/bsn-methods/bsn-tree-grid-method';
 import { isArray } from 'util';
 import { CdkDragDrop, CdkDragEnter, CdkDragExit, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { environment } from '@env/environment';
 // const component: { [type: string]: Type<any> } = {
 //     layout: LayoutResolverComponent,
 //     form: CnFormWindowResolverComponent,
@@ -134,6 +135,7 @@ export class CnTreeTableComponent extends CnComponentBase
     private _sender_subscription$: Subscription;
     private _trigger_receiver_subscription$: Subscription;
 
+    public RowActions:any[]=[];
     // 前置条件集合
     public beforeOperation;
     constructor(
@@ -157,6 +159,7 @@ export class CnTreeTableComponent extends CnComponentBase
         // 初始化默认分页大小
         this.config.pageSize && (this.pageSize = this.config.pageSize);
 
+        this.getPermissionRowActions();
         // 构建表格列及列标题
         this._buildColumns(this.config.columns);
 
@@ -253,7 +256,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 actionCfgs.map(cfg => {
                     const colActions = [];
                     cfg.actionIds.map(actionId => {
-                        const act = this.config.rowActions.find(action => actionId === action.id);
+                        const act = this.RowActions.find(action => actionId === action.id);
                         if (act) {
                             colActions.push(act);
                         }
@@ -273,6 +276,51 @@ export class CnTreeTableComponent extends CnComponentBase
             }
         }
 
+    }
+
+    public getPermissionRowActions(){
+        let componentPermission:any; 
+        let colActions=[];
+        if(this.config.id){
+            componentPermission =this.getMenuComponentPermissionConfigById(this.config.id);
+        }
+        let enableToolbarPermission = false;
+        if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
+
+            if (environment['systemSettings'] && environment['systemSettings']['permissionInfo']) {
+                if (environment['systemSettings']['enablePermission']) {
+                    enableToolbarPermission = environment['systemSettings']['permissionInfo']['enableRowActionPermission'];
+                }
+            }
+        }
+        if(this.config['exceptionPermission']){
+              enableToolbarPermission = false;
+        }
+        const permissionMap = new Map();
+        if(componentPermission && componentPermission['permission']){
+            componentPermission && componentPermission['permission'].forEach(item => {
+                if(item['type']==='rowActions'){
+                    permissionMap.set(item.id, item);
+                }
+            });
+        }
+
+        if(this.config['rowActions']){
+            this.config['rowActions'].forEach(item => {
+                 
+                if (!enableToolbarPermission||(!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))){
+                    item['permission'] =true;
+                } 
+
+                if( item['permission'] ){
+                    colActions.push(item);
+                }
+             
+
+            });
+        }
+
+        this.RowActions = colActions;
     }
 
     private _convertTreeToList(_root: any, _level = 0): any[] {

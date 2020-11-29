@@ -1,11 +1,12 @@
 {
-    "SERVER_URL": "http://192.168.1.111:8401/",
+    "SERVER_URL": "http://192.168.1.252:8401/",
+    "SERVER_URL5": "http://192.168.1.111:8401/",
     "SERVER_URL_3": "http://192.168.1.103:8401/",
     "SERVER_URL_1": "http://192.168.1.111:8402/",
     "SERVER_URL3": "http://39.101.168.200:8304/",
     "systemSettings": {
-        "systemMode": "dev", 
-        "enablePermission": false,
+        "systemMode": "work", 
+        "enablePermission": true,
         "enableLogin": true, 
         "enableExceptionLogin": true, 
         "systemInfo": { 
@@ -21,7 +22,8 @@
         },
         "permissionInfo": { 
             "enableMenuPermission":true,
-            "enableToolbarPermission":false,
+            "enableOperatePermission":true,
+            "enableToolbarPermission":true,
             "enableRowActionPermission":false,
             "enableColumnPermission":false
         },
@@ -217,6 +219,11 @@
                         "valueName":"JSON_ID"
                     },
                     {
+                        "name":"mainPageId",
+                        "type":"returnValue",
+                        "valueName":"MAIN_PAGE_ID"
+                    },
+                    {
                         "name":"level",
                         "type":"returnValue",
                         "valueName":"LEVEL"
@@ -257,6 +264,55 @@
             "devMenuInfo":{
 
             }
+        },
+        "pageInfo":{
+            "workPageInfo":{
+                "pageAjaxConfig":{
+                    "url":"resource/B_P_PERMISION_PAGE_ALL/operate",
+                    "ajaxType":"post",
+                    "params": [
+                        {
+                            "name": "PageId",
+                            "type": "item",    
+                            "valueName": "PageId"
+                        },
+                        {
+                            "name": "userId",
+                            "type": "userValue",    
+                            "valueName": "userId"
+                        },
+                        {
+                            "name": "menuId",
+                            "type": "activeMenu",    
+                            "valueName": "id",
+                            "value": ""
+
+                        },
+                        {
+                            "name": "mainPageId",
+                            "type": "activeMenu",    
+                            "valueName": "mainPageId",
+                            "value": ""
+
+                        },
+                        {
+                            "name": "enablePermission",
+                            "type": "value",    
+                            "valueName": "enable",
+                            "value": "enable"
+                        }
+                     ]
+                },
+                "pageInfo":[
+                    {
+                        "name":"pageData",
+                        "path":"data", 
+                        "type":"returnValue",  
+                        "valueName":"_procedure_resultset_1"
+                    }
+                ]
+            }
+
         }
     }
 }

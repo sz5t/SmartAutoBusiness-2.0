@@ -50,33 +50,48 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
 
 
         if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
-          this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate', { "PageId": params.name }).subscribe(response => {
-            if (response.data._procedure_resultset_1[0]['W'] === "") {
-              this.config = null;
+
+          let page_url ='resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate';
+          let page_params = { "PageId": params.name };
+            if (environment['systemSettings'] && environment['systemSettings']['permissionInfo']['enableOperatePermission']) {
+              const work_Page = environment['systemSettings']['pageInfo']['workPageInfo']['pageAjaxConfig'];
+              page_url = work_Page['url'];
+              let d_params={ "PageId": params.name };
+              page_params = this.buildParametersByPage(work_Page['params'],d_params);
             }
-            else {
-              const pageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
-              console.log('=====当前页加载数据=====', pageJson);
-              for (const key in pageJson) {
-                if (pageJson.hasOwnProperty(key)) {
-                  // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
-                  if (key === params.name) {
-                    this.config = pageJson[params.name]['config']['layoutJson'];
-                    // liu 2020.11.12
-                    this.setCache(key, 'mainPage', pageJson[params.name]['config'], pageJson[params.name]['permission']);
-                    this._route.queryParams.subscribe(queryParam => {
-                      this.buildLayout({ ...params, ...queryParam });
-                    })
+            else{
+               page_url ='resource/B_P_C_CONFIG_PAGE_ALL_NEW/operate';
+               page_params = { "PageId": params.name };
+            }
 
-                  } else {
-                    // 2020.11.12
-                    this.setCache(key, 'childPage', pageJson[key]['config'], pageJson[key]['permission']);
-
+            this.componentService.apiService.post(page_url, page_params).subscribe(response => {
+              if (response.data._procedure_resultset_1[0]['W'] === "") {
+                this.config = null;
+              }
+              else {
+                const pageJson = JSON.parse(response.data._procedure_resultset_1[0]['W']);
+                console.log('=====当前页加载数据=====', pageJson);
+                for (const key in pageJson) {
+                  if (pageJson.hasOwnProperty(key)) {
+                    // 判断是否时主页面配置,如果是主页面配置,则直接进行页面解析
+                    if (key === params.name) {
+                      this.config = pageJson[params.name]['config']['layoutJson'];
+                      // liu 2020.11.12
+                      this.setCache(key, 'mainPage', pageJson[params.name]['config'], pageJson[params.name]['permission']);
+                      this._route.queryParams.subscribe(queryParam => {
+                        this.buildLayout({ ...params, ...queryParam });
+                      })
+  
+                    } else {
+                      // 2020.11.12
+                      this.setCache(key, 'childPage', pageJson[key]['config'], pageJson[key]['permission']);
+  
+                    }
                   }
                 }
               }
-            }
-          })
+            })
+
         }
         else {
           this.componentService.apiService.post('resource/B_P_C_CONFIG_PAGE_ALL/operate', { "PageId": params.name }).subscribe(response => {
@@ -186,7 +201,32 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
     }
   }
 
+ public buildParametersByPage(params?,data?):any {
+    let userInfo = this.componentService.cacheService.getNone('userInfo');
+    let activeMenu =this.componentService.cacheService.getNone('activeMenu');
+    let paramsData = {};
+    params.forEach(element => {
+      let valueItem: any;
+      if (element['type'] === 'userValue') {
+        valueItem = userInfo[element['valueName']];
+      }if (element['type'] === 'item') {
+        valueItem = data[element['valueName']];
+      } 
+      if (element['type'] === 'activeMenu') {
+        valueItem = activeMenu[element['valueName']];
+      } 
+      if(element['type'] === 'value'){
+        valueItem = element['value'];
+      }
 
+      if(!valueItem && valueItem!==0){
+        valueItem = element['value'];
+      }
+     
+      paramsData[element['name']] = valueItem;
+    });
+    return paramsData;
+  }
 
 
   /*

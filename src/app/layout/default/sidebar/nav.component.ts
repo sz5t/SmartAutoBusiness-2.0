@@ -724,7 +724,8 @@ export class NavComponent implements OnInit, OnDestroy {
     let activeMenu = {
       id: menu.id,
       jsonId: menu.jsonId,
-      text:menu.text
+      text:menu.text,
+      mainPageId:menu['mainPageId']
     }
     this.componentService.cacheService.set('activeMenu', activeMenu);
 

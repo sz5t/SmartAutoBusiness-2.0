@@ -388,8 +388,8 @@
 
 
 <ng-container *ngIf="config.hasOwnProperty('analysisLayout')">
-  <button  (click)="executeAnalysisLayout()">分析页面结构</button>
-  <nz-tree [nzData]="nodes" nzShowIcon nzShowLine [nzExpandedIcon]="mutiExpandedIconTpl">
+  <button  (click)="executeAnalysisLayout_test()">页面结构预览</button>
+  <nz-tree *ngIf="showTree"showTree [nzData]="nodes" nzShowIcon nzShowLine [nzExpandedIcon]="mutiExpandedIconTpl">
     <ng-template #mutiExpandedIconTpl let-node>
       <i
         *ngIf="!node.origin.isLeaf"

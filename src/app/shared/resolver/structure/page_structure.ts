@@ -164,12 +164,18 @@ export class PageStructure {
                         let targetViewId = item['targetViewId'];
                         item.group.forEach(g => {
                             if (g.dropdown) {
+                                let hasId:any;
                                 if (!g['id']) {
                                     g['id'] = CommonUtils.uuID(36);
+                                    hasId ='[未标明id]';
                                 }
                                 const dropdown_button = {};
                                 dropdown_button['id'] = g['id'];
-                                dropdown_button['text'] = g['text'];
+                                if(hasId){
+                                    dropdown_button['text'] = g['text']+hasId;
+                                }else{
+                                    dropdown_button['text'] = g['text'];
+                                }
                                 dropdown_button['targetViewId'] = targetViewId;
                                 dropdown_button['parentId'] = parent_id;
                                 dropdown_button['type'] = 'dropdown';
@@ -196,12 +202,18 @@ export class PageStructure {
                         });
                     } else if (item.dropdown) {
                         let targetViewId = item['targetViewId'];
+                        let hasId:any;
                         if (!item['id']) {
                             item['id'] = CommonUtils.uuID(36);
-                        }
+                            hasId ='[未标明id]';
+                        }               
                         const dropdown_button = {};
                         dropdown_button['id'] = item['id'];
-                        dropdown_button['text'] = item['text'];
+                        if(hasId){
+                            dropdown_button['text'] = item['text']+hasId;
+                        }else{
+                            dropdown_button['text'] = item['text'];
+                        }
                         dropdown_button['targetViewId'] = targetViewId;
                         dropdown_button['parentId'] = parent_id;
                         dropdown_button['type'] = 'dropdown';

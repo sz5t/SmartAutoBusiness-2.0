@@ -156,8 +156,9 @@ export class CnDataTableComponent extends CnComponentBase
     // 前置条件集合
     public beforeOperation;
     private _ajaxConfigObj: any = {};
-    
+
     public _url = environment.SERVER_URL;
+    public RowActions: any;
 
     constructor(
         @Inject(BSN_COMPONENT_SERVICES)
@@ -185,6 +186,7 @@ export class CnDataTableComponent extends CnComponentBase
             await this.loadDynamicColumns();
             console.log('动态++++》', this.config.columns);
         }
+        this.getPermissionRowActions();
         this._buildColumns(this.config.columns);
 
         this._initInnerValue();
@@ -197,7 +199,7 @@ export class CnDataTableComponent extends CnComponentBase
 
         // 是否需要进行初始化数据加载
         if (this.config.loadingOnInit) {
-            this.load();
+            await this.load();
         }
     }
 
@@ -293,14 +295,14 @@ export class CnDataTableComponent extends CnComponentBase
                     }
                     if (col.editor.hasOwnProperty('changeValueId')) {
                         col.editor['changeValue'] = this.findChangeValueConfig(col.editor.changeValueId);
-                      }
+                    }
                 }
             });
             if (actionCfgs && actionCfgs.length > 0) {
                 actionCfgs.map(cfg => {
                     const colActions = [];
                     cfg.actionIds.map(actionId => {
-                        const act = this.config.rowActions.find(action => actionId === action.id);
+                        const act = this.RowActions.find(action => actionId === action.id);
                         if (act) {
                             colActions.push(act);
                         }
@@ -324,16 +326,62 @@ export class CnDataTableComponent extends CnComponentBase
 
     }
 
+    public getPermissionRowActions() {
+        let componentPermission: any;
+        let colActions = [];
+        if (this.config.id) {
+            componentPermission = this.getMenuComponentPermissionConfigById(this.config.id);
+        }
+        let enableToolbarPermission = false;
+        if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
+
+            if (environment['systemSettings'] && environment['systemSettings']['permissionInfo']) {
+                if (environment['systemSettings']['enablePermission']) {
+                    enableToolbarPermission = environment['systemSettings']['permissionInfo']['enableRowActionPermission'];
+                }
+            }
+        }
+        if (this.config['exceptionPermission']) {
+            enableToolbarPermission = false;
+        }
+        const permissionMap = new Map();
+        if (componentPermission && componentPermission['permission']) {
+            componentPermission && componentPermission['permission'].forEach(item => {
+                if (item['type'] === 'rowActions') {
+                    permissionMap.set(item.id, item);
+                }
+            });
+        }
+
+        if (this.config['rowActions']) {
+            this.config['rowActions'].forEach(item => {
+
+                if (!enableToolbarPermission || (!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))) {
+                    item['permission'] = true;
+                }
+
+                if (item['permission']) {
+                    colActions.push(item);
+                }
+
+
+            });
+        }
+
+        this.RowActions = colActions;
+    }
+
+
     private findChangeValueConfig(changeValueId) {
         let changeValueConfig;
         if (this.config.changeValue && Array.isArray(this.config.changeValue) && this.config.changeValue.length > 0) {
-          const c = this.config.changeValue.find(cfg => cfg.id === changeValueId);
-          if (c) {
-            changeValueConfig = c;
-          }
+            const c = this.config.changeValue.find(cfg => cfg.id === changeValueId);
+            if (c) {
+                changeValueConfig = c;
+            }
         }
         return changeValueConfig;
-      }
+    }
     private _initComponentData() {
         this.mapOfDataState = {};
         this.ROWS_ADDED = [];
@@ -411,7 +459,7 @@ export class CnDataTableComponent extends CnComponentBase
         });
     }
 
-    public load() {
+    public async load() {
         this.isLoading = true;
         if (!this.config.loadingConfig) {
             return;
@@ -429,63 +477,119 @@ export class CnDataTableComponent extends CnComponentBase
             // ...this._buildSearch()
         };
 
-        this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
-            if (response && response.data && response.data.resultDatas) {
-                this._initComponentData();
-                let _index = 0;
-                if (this.pageIndex === 1) {
-                    _index = _index;
-                } else {
-                    _index = (this.pageIndex - 1) * this.pageSize;
-                }
-                response.data.resultDatas.map((d, index) => {
+        const response:any = await this.componentService.apiService.getRequest(url, method, { params }).toPromise();
 
-                    _index = _index + 1;
-                    d['_index'] = _index;
-                    this.mapOfDataState[d[this.KEY_ID]] = {
-                        disabled: false,
-                        checked: false, // index === 0 ? true : false,
-                        selected: false, // index === 0 ? true : false,
-                        state: 'text',
-                        data: d,
-                        originData: { ...d },
-                        validation: true,
-                        actions: this.getRowActions('text'),
-                        mergeData: {}
-                    };
-                    if (!this.config.isSelected) {
-                        index === 0 && (this.ROW_SELECTED = d);
-                    } else {
-                        if (d[this.KEY_ID] === this.selectedRowValue) {
-                            this.ROW_SELECTED = d
-                        }
-                    }
-
-                });
-
-                this.dataList = response.data.resultDatas;
-                this.total = response.data.count;
-                // 更新
-                // this.dataCheckedStatusChange();
-                // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
-                // this.dataList.length > 0 && this.setSelectRow(this.ROW_SELECTED);
-
-                this.setSelectRow(this.ROW_SELECTED);
-                this.isLoading = false;
-                // 2020.7.27 计算合并列
-                if (this.config.mergeconfig)
-                    this._createMapd_new(this.config.mergeconfig, this.dataList);
+        if (response && response.data && response.data.resultDatas) {
+            this._initComponentData();
+            let _index = 0;
+            if (this.pageIndex === 1) {
+                _index = _index;
             } else {
-                this.isLoading = false;
-                this._initComponentData();
-                this.dataList = [];
-                this.total = 0;
+                _index = (this.pageIndex - 1) * this.pageSize;
             }
+            response.data.resultDatas.map((d, index) => {
 
-            this.dataServe && this.dataServe.setComponentValue(this.config.id, this.dataList);
-        }, error => {
-            console.log(error);
-        });
+                _index = _index + 1;
+                d['_index'] = _index;
+                this.mapOfDataState[d[this.KEY_ID]] = {
+                    disabled: false,
+                    checked: false, // index === 0 ? true : false,
+                    selected: false, // index === 0 ? true : false,
+                    state: 'text',
+                    data: d,
+                    originData: { ...d },
+                    validation: true,
+                    actions: this.getRowActions('text'),
+                    mergeData: {}
+                };
+                if (!this.config.isSelected) {
+                    index === 0 && (this.ROW_SELECTED = d);
+                } else {
+                    if (d[this.KEY_ID] === this.selectedRowValue) {
+                        this.ROW_SELECTED = d
+                    }
+                }
+
+            });
+
+            this.dataList = response.data.resultDatas;
+            this.total = response.data.count;
+            // 更新
+            // this.dataCheckedStatusChange();
+            // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
+            // this.dataList.length > 0 && this.setSelectRow(this.ROW_SELECTED);
+
+            this.setSelectRow(this.ROW_SELECTED);
+            this.isLoading = false;
+            // 2020.7.27 计算合并列
+            if (this.config.mergeconfig)
+                this._createMapd_new(this.config.mergeconfig, this.dataList);
+        } else {
+            this.isLoading = false;
+            this._initComponentData();
+            this.dataList = [];
+            this.total = 0;
+        }
+
+        this.dataServe && this.dataServe.setComponentValue(this.config.id, this.dataList);
+
+        // this.componentService.apiService.getRequest(url, method, { params }).subscribe(response => {
+        //     if (response && response.data && response.data.resultDatas) {
+        //         this._initComponentData();
+        //         let _index = 0;
+        //         if (this.pageIndex === 1) {
+        //             _index = _index;
+        //         } else {
+        //             _index = (this.pageIndex - 1) * this.pageSize;
+        //         }
+        //         response.data.resultDatas.map((d, index) => {
+
+        //             _index = _index + 1;
+        //             d['_index'] = _index;
+        //             this.mapOfDataState[d[this.KEY_ID]] = {
+        //                 disabled: false,
+        //                 checked: false, // index === 0 ? true : false,
+        //                 selected: false, // index === 0 ? true : false,
+        //                 state: 'text',
+        //                 data: d,
+        //                 originData: { ...d },
+        //                 validation: true,
+        //                 actions: this.getRowActions('text'),
+        //                 mergeData: {}
+        //             };
+        //             if (!this.config.isSelected) {
+        //                 index === 0 && (this.ROW_SELECTED = d);
+        //             } else {
+        //                 if (d[this.KEY_ID] === this.selectedRowValue) {
+        //                     this.ROW_SELECTED = d
+        //                 }
+        //             }
+
+        //         });
+
+        //         this.dataList = response.data.resultDatas;
+        //         this.total = response.data.count;
+        //         // 更新
+        //         // this.dataCheckedStatusChange();
+        //         // 默认设置选中第一行, 初始数据的选中状态和选中数据,均通过setSelectRow方法内实现
+        //         // this.dataList.length > 0 && this.setSelectRow(this.ROW_SELECTED);
+
+        //         this.setSelectRow(this.ROW_SELECTED);
+        //         this.isLoading = false;
+        //         // 2020.7.27 计算合并列
+        //         if (this.config.mergeconfig)
+        //             this._createMapd_new(this.config.mergeconfig, this.dataList);
+        //     } else {
+        //         this.isLoading = false;
+        //         this._initComponentData();
+        //         this.dataList = [];
+        //         this.total = 0;
+        //     }
+
+        //     this.dataServe && this.dataServe.setComponentValue(this.config.id, this.dataList);
+        // }, error => {
+        //     console.log(error);
+        // });
     }
 
     public loadRefreshData(option) {
@@ -663,7 +767,7 @@ export class CnDataTableComponent extends CnComponentBase
                 tempValue: this.tempValue,
                 cacheValue: this.cacheValue,
                 initValue: this.initValue,
-                userValue:this.userValue
+                userValue: this.userValue
             });
         }
         return filter;
@@ -1033,8 +1137,8 @@ export class CnDataTableComponent extends CnComponentBase
                 tempValue: this.tempValue,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                currentRow:this.ROW_CURRENT,
-                userValue:this.userValue
+                currentRow: this.ROW_CURRENT,
+                userValue: this.userValue
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);
@@ -1124,7 +1228,7 @@ export class CnDataTableComponent extends CnComponentBase
             addedRows: this.ROWS_ADDED,
             editedRows: this.ROWS_EDITED,
             checkedRow: this.ROWS_CHECKED,
-            userValue:this.userValue
+            userValue: this.userValue
         });
 
         const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).toPromise();
@@ -1414,13 +1518,13 @@ export class CnDataTableComponent extends CnComponentBase
                 outputValue: data,
                 returnValue: data,
                 selectedRow: this.ROW_SELECTED,
-                currentRow:this.ROW_CURRENT,
-                userValue:this.userValue
+                currentRow: this.ROW_CURRENT,
+                userValue: this.userValue
 
             });
         } else if (!isArray && data) {
             if (data['_procedure_resultset_1']) {
-                data ={...data['_procedure_resultset_1'][0],...data};
+                data = { ...data['_procedure_resultset_1'][0], ...data };
             }
             parameterResult = ParameterResolver.resolve({
                 params: paramsCfg,
@@ -1437,8 +1541,8 @@ export class CnDataTableComponent extends CnComponentBase
                 checkedRow: this.ROWS_CHECKED,
                 outputValue: data,
                 selectedRow: this.ROW_SELECTED,
-                currentRow:this.ROW_CURRENT,
-                userValue:this.userValue
+                currentRow: this.ROW_CURRENT,
+                userValue: this.userValue
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1457,8 +1561,8 @@ export class CnDataTableComponent extends CnComponentBase
                     returnValue: d,
                     checkedRow: this.ROWS_CHECKED,
                     outputValue: data,
-                    currentRow:this.ROW_CURRENT,
-                    userValue:this.userValue
+                    currentRow: this.ROW_CURRENT,
+                    userValue: this.userValue
                 });
                 parameterResult.push(param);
             })
@@ -1503,7 +1607,7 @@ export class CnDataTableComponent extends CnComponentBase
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             selectedRow: this.ROW_SELECTED,
-            userValue:this.userValue
+            userValue: this.userValue
         });
     }
 
@@ -1529,7 +1633,7 @@ export class CnDataTableComponent extends CnComponentBase
                     tempValue: this.tempValue,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
-                    userValue:this.userValue
+                    userValue: this.userValue
                 });
                 params.push(p);
             });
@@ -1550,7 +1654,7 @@ export class CnDataTableComponent extends CnComponentBase
             tempValue: this.tempValue,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            userValue:this.userValue
+            userValue: this.userValue
         });
         const result = await this._executeAjax(option, paramData);
         return result;
@@ -1567,7 +1671,7 @@ export class CnDataTableComponent extends CnComponentBase
                     tempValue: this.tempValue,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
-                    userValue:this.userValue
+                    userValue: this.userValue
                 });
                 params.push(p[this.KEY_ID]);
             });
@@ -1633,7 +1737,7 @@ export class CnDataTableComponent extends CnComponentBase
      * 内部子页面跳转【问题，参数传递、覆盖 changValue 和 普通参数传递】
      * @param option 
      */
-    public linkToSub(option?){
+    public linkToSub(option?) {
 
         // let params = this.buildParameters(option.linkConfig.params, option.data.originData ? option.data.originData : option.data);
         // let item;
@@ -1691,7 +1795,7 @@ export class CnDataTableComponent extends CnComponentBase
 
         const ajaxParams_1 = [{ name: this.KEY_ID, type: "item", valueName: this.KEY_ID }];
         const paramDataids = this._createCheckedRowsIdParameter(ajaxParams_1);
-   
+
         if (option.changeValue) {
             const d = ParameterResolver.resolve({
                 params: option.changeValue.params,
@@ -1706,7 +1810,7 @@ export class CnDataTableComponent extends CnComponentBase
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
-                userValue:this.userValue
+                userValue: this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1723,7 +1827,7 @@ export class CnDataTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
-            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable') ? dialogCfg.maskClosable : false,
             nzContent: components[dialogCfg.form.type],
             nzComponentParams: {
                 config: dialogCfg.form,
@@ -1741,7 +1845,7 @@ export class CnDataTableComponent extends CnComponentBase
                     onClick: componentInstance => {
                         (async () => {
                             const response = await componentInstance.executeModal(option);
-                            if(response){
+                            if (response) {
                                 this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
                                 // 处理validation结果
@@ -1772,7 +1876,7 @@ export class CnDataTableComponent extends CnComponentBase
 
         const ajaxParams_1 = [{ name: this.KEY_ID, type: "item", valueName: this.KEY_ID }];
         const paramDataids = this._createCheckedRowsIdParameter(ajaxParams_1);
-   
+
         if (option.changeValue) {
             const d = ParameterResolver.resolve({
                 params: option.changeValue.params,
@@ -1787,7 +1891,7 @@ export class CnDataTableComponent extends CnComponentBase
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
-                userValue:this.userValue
+                userValue: this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1804,7 +1908,7 @@ export class CnDataTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
-            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable') ? dialogCfg.maskClosable : false,
             nzContent: CnPageComponent,
             nzComponentParams: {
                 config: {},
@@ -1868,50 +1972,50 @@ export class CnDataTableComponent extends CnComponentBase
         this.windowDialog = dialog;
 
     }
-        // 执行弹出页的按钮事件
-        public execCustomAction(customAction?, dialog?, componentInstance?) {
-            console.log('execCustomAction');
-    
-            customAction.execute.forEach(item => {
-                if (item.type === 'relation') {
-                    new RelationResolver(this)
-                        .resolveInnerSender(
-                            item.sender,
-                            {},
-                            Array.isArray({})
-                        );
-                } else if (item.type === 'action') {
-                    this.windowDialog.close();
-                }
-    
-            });
-    
-            // new RelationResolver(this). resolveSender();
-    
-    
-    
-            return true;
-        }
-    
-    
-        windowDialog;
-    
-        /**
-         * 执行关闭，通过消息等将当前弹出关闭
-         * @param option 
-         */
-        executePopupClose(option?) {
-    
-            console.log('关闭弹出executeShowClose', option)
-            // 参数传递 更加传递类型关闭，若传递类型不配置，则将当前存在的示例关闭 popup
-    
-            if (this.windowDialog) {
-                this.windowDialog.close(); // 关闭弹出
-                this.windowDialog = null;
+    // 执行弹出页的按钮事件
+    public execCustomAction(customAction?, dialog?, componentInstance?) {
+        console.log('execCustomAction');
+
+        customAction.execute.forEach(item => {
+            if (item.type === 'relation') {
+                new RelationResolver(this)
+                    .resolveInnerSender(
+                        item.sender,
+                        {},
+                        Array.isArray({})
+                    );
+            } else if (item.type === 'action') {
+                this.windowDialog.close();
             }
-    
-            return true;
+
+        });
+
+        // new RelationResolver(this). resolveSender();
+
+
+
+        return true;
+    }
+
+
+    windowDialog;
+
+    /**
+     * 执行关闭，通过消息等将当前弹出关闭
+     * @param option 
+     */
+    executePopupClose(option?) {
+
+        console.log('关闭弹出executeShowClose', option)
+        // 参数传递 更加传递类型关闭，若传递类型不配置，则将当前存在的示例关闭 popup
+
+        if (this.windowDialog) {
+            this.windowDialog.close(); // 关闭弹出
+            this.windowDialog = null;
         }
+
+        return true;
+    }
 
 
     public showUpload(option: any) {
@@ -1940,7 +2044,7 @@ export class CnDataTableComponent extends CnComponentBase
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
-                userValue:this.userValue
+                userValue: this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -2122,8 +2226,11 @@ export class CnDataTableComponent extends CnComponentBase
         const orginAction = this.tableColumns.find(c => c.type === 'action');
         const copyAction = [];
         if (orginAction) {
-            const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => c.state === state)));
-            copyAction.push(...actions);
+            if(this.tableColumns.find(c => c.type === 'action').action){
+                const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => c.state === state)));
+                copyAction.push(...actions);
+            }
+
         }
         return copyAction;
     }
@@ -2794,7 +2901,7 @@ export class CnDataTableComponent extends CnComponentBase
                 break;
             }
 
-        } 
+        }
 
         if (isSingleEdit) {
             if (OwnArr[0]['__state__'] === 'new' || OwnArr[0]['__state__'] === 'edit') {
@@ -2819,14 +2926,14 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
 
-    is_hidden=false;
-    hiddentrue(){
-        this.is_hidden =!this.is_hidden;
+    is_hidden = false;
+    hiddentrue() {
+        this.is_hidden = !this.is_hidden;
     }
 
-    public downFile(option?){
+    public downFile(option?) {
 
-        if(!option || !option.ajaxConfig){
+        if (!option || !option.ajaxConfig) {
             return true;
         }
 
@@ -2835,50 +2942,78 @@ export class CnDataTableComponent extends CnComponentBase
         const ajaxParams = option.ajaxConfig.params ? option.ajaxConfig.params : []
         params = this.buildParameters(ajaxParams, option.data.originData ? option.data.originData : option.data);
 
-        let url_content ='';
+        let url_content = '';
 
-        for(let _params in params){
-            url_content=url_content+  _params+'='+params[_params]+'&&';
+        for (let _params in params) {
+            url_content = url_content + _params + '=' + params[_params] + '&&';
         }
-        if(url_content.length>0){
-            url_content =url_content.substr(0, url_content.length - 2);
+        if (url_content.length > 0) {
+            url_content = url_content.substr(0, url_content.length - 2);
         }
 
-        let downUrl=`${this._url}${url}?${url_content}`
+        let downUrl = `${this._url}${url}?${url_content}`
         window.open(`${downUrl}`);
-       
+
 
     }
 
 
     //=========================测试解析页面结构============================
-    nodes=[];
-    public executeAnalysisLayout(option?){
+    nodes = [];
+    public executeAnalysisLayout(option?) {
 
-        let pageJson:any;
-        let page_id:any;
+        let pageJson: any;
+        let page_id: any;
         // PAGE_JSON
-        if(this.ROW_SELECTED){
-            if(this.ROW_SELECTED['PAGE_JSON']){
-                pageJson=JSON.parse(this.ROW_SELECTED['PAGE_JSON']);
+        if (this.ROW_SELECTED) {
+            if (this.ROW_SELECTED['PAGE_JSON']) {
+                pageJson = JSON.parse(this.ROW_SELECTED['PAGE_JSON']);
                 page_id = this.ROW_SELECTED['ID']
             }
         }
-    
-        console.log('当前选中行',this.ROW_SELECTED);
-        if(pageJson){
+
+        console.log('当前选中行', this.ROW_SELECTED);
+        if (pageJson) {
             let f = new PageStructure();
-            f.page_id=page_id;
+            f.page_id = page_id;
             f.page_config = pageJson;
             f.getPageStructure();
             this.nodes = f.nodes;
-            this.ROW_SELECTED['analysisLayout'] = JSON.stringify (f.ts_new);
+            this.ROW_SELECTED['analysisLayout'] = JSON.stringify(f.ts_new);
         } else {
-            this.nodes=[];
+            this.nodes = [];
         }
 
-        if(option){
+        if (option) {
             this.executeCurrentRow(option);
+        }
+        return true;
+
+    }
+
+    public showTree = false;
+    public executeAnalysisLayout_test(option?) {
+        this.showTree = true;
+        let pageJson: any;
+        let page_id: any;
+        // PAGE_JSON
+        if (this.ROW_SELECTED) {
+            if (this.ROW_SELECTED['PAGE_JSON']) {
+                pageJson = JSON.parse(this.ROW_SELECTED['PAGE_JSON']);
+                page_id = this.ROW_SELECTED['ID']
+            }
+        }
+
+        console.log('当前选中行', this.ROW_SELECTED);
+        if (pageJson) {
+            let f = new PageStructure();
+            f.page_id = page_id;
+            f.page_config = pageJson;
+            f.getPageStructure();
+            this.nodes = f.nodes;
+            // this.ROW_SELECTED['analysisLayout'] = JSON.stringify (f.ts_new);
+        } else {
+            this.nodes = [];
         }
         return true;
 
@@ -2888,7 +3023,7 @@ export class CnDataTableComponent extends CnComponentBase
     public dropRow(event: CdkDragDrop<any>): void {
         console.log(event);
     }
-  
+
 
 
 

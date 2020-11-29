@@ -945,7 +945,10 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       const ids = [];
       parameterResult.map(p => {
         const pData = p[this.KEY_ID];
-        pData && ids.push(pData);
+        if(pData && !ids.includes(pData)){
+           ids.push(pData);
+        }
+
       });
       const response = await this.executeHttpRequest(url, method, { ids: ids.join(',') });
       // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
@@ -988,7 +991,9 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       const ids = [];
       parameterResult.map(p => {
         const pData = p[this.KEY_ID];
-        pData && ids.push(pData);
+        if(pData && !ids.includes(pData)){
+          ids.push(pData);
+        }
       });
       let paramData;
       paramData = ParameterResolver.resolve({
@@ -2171,7 +2176,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       } else{
          treeNodeList = [ ...dataCheck];
       }
-     
+      
+     // treeNodeList = Array.from(new Set(treeNodeList)); 
     }
     console.log('获取当前树节点数据', treeNodeList);
     return treeNodeList;

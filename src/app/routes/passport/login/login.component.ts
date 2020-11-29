@@ -9,7 +9,6 @@ import { environment } from '@env/environment';
 import { StartupService } from '@core';
 import { HttpClient } from '@angular/common/http';
 import { CacheService } from '@delon/cache';
-
 @Component({
   selector: 'passport-login',
   templateUrl: './login.component.html',
@@ -249,7 +248,7 @@ export class UserLoginComponent implements OnDestroy {
 
         const _userInfo = environment['systemSettings']['loginInfo']['userInfo'];
         let userInfo = this.buildUserInfo(r_data, _userInfo);
-
+     
         console.log('登录返回', userInfo);
         // 将当前用户信息写入缓存
         if (userInfo['result'] === "success") {

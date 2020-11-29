@@ -142,7 +142,7 @@ export class CnCustomIconStateComponent implements OnInit,OnChanges {
   }
 
   public currentSwitchClick(v?,$event?):void{
-    if(this._config.enableSwitch) {
+    if(this.config.enableSwitch) {
       const new_value= this.switchState(this.currentStateValue);
       console.log('xin zhi',new_value);
       this.iconStateValueChange(new_value);
