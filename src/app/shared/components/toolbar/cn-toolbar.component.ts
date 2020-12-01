@@ -272,12 +272,23 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                             valueObj && (btn[btn.toggle.toggleProperty] = valueObj.value);
                         }
                         if (actions) {
-                            actions.group.forEach(element => {
-                                if (element.toggle && element.toggle.values) {
-                                    const _valueObj = element.toggle.values.find(val => val.name === stateValue);
-                                    _valueObj && (element[element.toggle.toggleProperty] = _valueObj.value);
-                                }
-                            });
+                            if(actions.group){
+                                actions.group.forEach(element => {
+                                    if (element.toggle && element.toggle.values) {
+                                        const _valueObj = element.toggle.values.find(val => val.name === stateValue);
+                                        _valueObj && (element[element.toggle.toggleProperty] = _valueObj.value);
+                                    }
+                                });
+                            }
+                            if(actions.dropdown){
+                                actions.dropdown.forEach(element => {
+                                    if (element.toggle && element.toggle.values) {
+                                        const _valueObj = element.toggle.values.find(val => val.name === stateValue);
+                                        _valueObj && (element[element.toggle.toggleProperty] = _valueObj.value);
+                                    }
+                                });
+                            }
+
                         }
 
                         break;

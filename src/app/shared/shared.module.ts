@@ -140,6 +140,8 @@ import { CnCustomGroupStateComponent } from './components/cn-custom-items/cn-cus
 import { CnTreeTransferComponent } from './components/cn-tree-transfer/cn-tree-transfer.component';
 
 import { CnFormInputPasswordComponent } from './components/data-form/cn-form-items/cn-form-input-password/cn-form-input-password.component';
+import { CnReportGridComponent } from './components/cn-report-grid/cn-report-grid.component';
+import { SafeUrlPipe } from '@core/pipe/safe-url.pipe';
 
 const THIRDMODULES = [NgZorroAntdModule, CountdownModule, UEditorModule, NgxTinymceModule];
 // #endregion
@@ -274,6 +276,7 @@ const COMPONENTS = [
   CnCustomIconStateComponent,
   CnCustomGroupStateComponent,
   CnFormInputPasswordComponent,
+  CnReportGridComponent
 
   // ------设计组件-----
 ];
@@ -309,7 +312,8 @@ const DIRECTIVES = [
     // your components
     ...COMPONENTS,
     ...DIRECTIVES,
-    CnTreeTransferComponent
+    CnTreeTransferComponent,
+    SafeUrlPipe,
 
 
 

@@ -21,6 +21,7 @@ import { CnCarouseComponent } from '@shared/components/cn-carouse/cn-carouse.com
 import { CnDataStepsComponent } from '@shared/components/cn-data-steps/cn-data-steps.component';
 import { pageConfigCache } from '@env/page-config-cache';
 import { CommonUtils } from '@core/utils/common-utils';
+import { CnReportGridComponent } from '@shared/components/cn-report-grid/cn-report-grid.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -40,7 +41,8 @@ const components: { [type: string]: Type<any> } = {
     cnUpload:CnUploadComponent,
     cnContainers:CnContainersComponent,
     CnCarouse:CnCarouseComponent,
-    cnDataStep: CnDataStepsComponent
+    cnDataStep: CnDataStepsComponent,
+    CnReportGrid:CnReportGridComponent
 };
 
 @Directive({
