@@ -162,6 +162,10 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     // 设置数据操作主键
     this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
 
+    if(!this.config.hasOwnProperty('checkStrictly')){
+      this.config['checkStrictly'] =false;
+    }
+
     // 初始化默认分页大小
 
     // 构建表格列及列标题
@@ -2123,8 +2127,16 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   }
 
 
-  public treeMode() {
-    this.config.checkStrictly = !this.config.checkStrictly;
+  /**
+   * 默认 false 
+   */
+  public treeMode(option?) {
+    if(option){
+
+    }else{
+      this.config.checkStrictly = !this.config.checkStrictly;
+    }
+
   }
 
 
