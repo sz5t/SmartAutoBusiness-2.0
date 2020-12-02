@@ -1,5 +1,12 @@
 <nz-spin nzTip="loading..." [nzSpinning]="isLoading">
 
+
+  <form *ngIf="config.checkStrictlyShow" checkStrictly nz-form nzLayout="inline">
+    <nz-form-item>
+      <nz-form-label><label>独立勾选</label></nz-form-label>
+      <nz-form-control><nz-switch [(ngModel)]="this.config['checkStrictly']" name="checkStrictly"></nz-switch></nz-form-control>
+    </nz-form-item>
+  </form>
   <nz-input-group *ngIf="config.showSearch" [nzSuffix]="suffixIcon" style="width: 100%;">
     <input type="text" nz-input placeholder="查询" [(ngModel)]="searchValue" />
   </nz-input-group>
