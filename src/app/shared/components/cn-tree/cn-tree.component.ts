@@ -222,10 +222,10 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
 
     setTimeout(() => {
       if (this.defaultSelectedKeys.length > 0) {
-        let select_node = this.treeObj.getTreeNodeByKey(this.defaultSelectedKeys[0]);
+        const select_node = this.treeObj.getTreeNodeByKey(this.defaultSelectedKeys[0]);
         // console.log('树节点选中', this.defaultSelectedKeys, select_node)
         if (select_node) {
-          let clickNode = {
+          const clickNode = {
             eventName: 'click',
             node: select_node,
           };
@@ -233,6 +233,18 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         }
       }
     });
+  }
+
+  public reSelectNode(option?) {
+    if (option) {
+      const cNode =  this.treeObj.getTreeNodeByKey(option[this.KEY_ID]);
+          const clickNode = {
+            eventName: 'click',
+            node: cNode
+          };
+          this.clickNode(clickNode);
+    }
+    return true;
   }
 
   public buildIconState() {

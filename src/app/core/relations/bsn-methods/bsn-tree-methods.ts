@@ -47,6 +47,7 @@ export const CN_TREE_METHOD: ITreeTrigger = {
     REFRESH_AS_CHILD: 'load',
     CLICK_NODE: 'clickNode',
     TRANSFER_VALUE:'transferValue',
+    RESELECT_NODE: 'reSelectNode',
 
     // link
     LINK: 'link',
