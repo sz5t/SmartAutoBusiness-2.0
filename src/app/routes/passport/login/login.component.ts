@@ -9,6 +9,7 @@ import { environment } from '@env/environment';
 import { StartupService } from '@core';
 import { HttpClient } from '@angular/common/http';
 import { CacheService } from '@delon/cache';
+import {Md5} from 'ts-md5/dist/md5';
 @Component({
   selector: 'passport-login',
   templateUrl: './login.component.html',
@@ -343,6 +344,12 @@ export class UserLoginComponent implements OnDestroy {
         valueItem = this.form.value[element['valueName']];
       } else {
         valueItem = element['value'];
+      }
+
+      if(element['transform']){
+        if(element['transform']==='MD5'){
+          valueItem = Md5.hashStr(valueItem);
+        }
       }
       paramsData[element['name']] = valueItem;
     });
