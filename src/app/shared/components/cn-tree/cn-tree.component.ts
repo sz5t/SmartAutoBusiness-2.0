@@ -162,8 +162,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     // 设置数据操作主键
     this.KEY_ID = this.config.keyId ? this.config.keyId : 'ID';
 
-    if(!this.config.hasOwnProperty('checkStrictly')){
-      this.config['checkStrictly'] =false;
+    if (!this.config.hasOwnProperty('checkStrictly')) {
+      this.config['checkStrictly'] = false;
     }
 
     // 初始化默认分页大小
@@ -241,12 +241,12 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
 
   public reSelectNode(option?) {
     if (option) {
-      const cNode =  this.treeObj.getTreeNodeByKey(option[this.KEY_ID]);
-          const clickNode = {
-            eventName: 'click',
-            node: cNode
-          };
-          this.clickNode(clickNode);
+      const cNode = this.treeObj.getTreeNodeByKey(option[this.KEY_ID]);
+      const clickNode = {
+        eventName: 'click',
+        node: cNode
+      };
+      this.clickNode(clickNode);
     }
     return true;
   }
@@ -386,7 +386,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       item: nodeValue,
-      userValue:this.userValue
+      userValue: this.userValue
     });
     const ajaxData = await this.componentService.apiService.getRequest(ajaxConfig.url, 'get', { params }).toPromise();
     return ajaxData;
@@ -562,7 +562,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         params: filterConfig,
         tempValue: this.tempValue,
         cacheValue: this.cacheValue,
-        userValue:this.userValue
+        userValue: this.userValue
       });
     }
     return filter;
@@ -890,7 +890,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         tempValue: this.tempValue,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
-        userValue:this.userValue
+        userValue: this.userValue
       });
     }
     const response = await this.executeHttpRequest(url, method, paramData);
@@ -918,7 +918,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         tempValue: this.tempValue,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
-        userValue:this.userValue
+        userValue: this.userValue
       });
     }
     const response = await this.executeHttpRequest(url, method, paramData);
@@ -953,7 +953,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         checkedItem: d.origin,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
-        userValue:this.userValue
+        userValue: this.userValue
       });
       parameterResult.push(param);
     });
@@ -961,8 +961,8 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       const ids = [];
       parameterResult.map(p => {
         const pData = p[this.KEY_ID];
-        if(pData && !ids.includes(pData)){
-           ids.push(pData);
+        if (pData && !ids.includes(pData)) {
+          ids.push(pData);
         }
 
       });
@@ -999,7 +999,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         item: d.origin,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
-        userValue:this.userValue
+        userValue: this.userValue
       });
       parameterResult.push(param);
     });
@@ -1007,7 +1007,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       const ids = [];
       parameterResult.map(p => {
         const pData = p[this.KEY_ID];
-        if(pData && !ids.includes(pData)){
+        if (pData && !ids.includes(pData)) {
           ids.push(pData);
         }
       });
@@ -1019,7 +1019,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         tempValue: this.tempValue,
         initValue: this.initValue,
         cacheValue: this.cacheValue,
-        userValue:this.userValue
+        userValue: this.userValue
       });
       const response = await this.executeHttpRequest(url, method, paramData);
       // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
@@ -1096,7 +1096,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       initValue: this.initValue,
       cacheValue: this.cacheValue,
       router: this.routerValue,
-      userValue:this.userValue
+      userValue: this.userValue
     });
 
     const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).toPromise();
@@ -1329,7 +1329,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       cacheValue: this.cacheValue,
       router: this.routerValue,
       cascadeValue: this.cascadeValue,
-      userValue:this.userValue
+      userValue: this.userValue
     });
   }
 
@@ -1428,7 +1428,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         router: this.routerValue,
         addedRows: this.NODES_ADDED,
         editedRows: this.NODES_EDITED,
-        userValue:this.userValue,
+        userValue: this.userValue,
         returnValue: data,
       });
     } else if (!isArray && data) {
@@ -1448,7 +1448,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         editedRows: data,
         validation: data,
         returnValue: data,
-        userValue:this.userValue
+        userValue: this.userValue
       });
     } else if (isArray && data && Array.isArray(data)) {
       parameterResult = [];
@@ -1465,7 +1465,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
           addedRows: d,
           editedRows: d,
           validation: d,
-          userValue:this.userValue,
+          userValue: this.userValue,
           returnValue: data
         });
         parameterResult.push(param);
@@ -1540,7 +1540,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         initValue: this.initValue,
         cacheValue: this.cacheValue,
         router: this.routerValue,
-        userValue:this.userValue
+        userValue: this.userValue
       });
       option.changeValue.params.map(param => {
         if (param.type === 'value') {
@@ -1610,7 +1610,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
         initValue: this.initValue,
         cacheValue: this.cacheValue,
         router: this.routerValue,
-        userValue:this.userValue
+        userValue: this.userValue
       });
       option.changeValue.params.map(param => {
         if (param.type === 'value') {
@@ -2117,10 +2117,12 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
   public getCheckedNodeListByCustom(NODE?) {
     let arr = [];
     NODE.forEach(element => {
-      arr.push(element);
-      if (element['_children'] && element['_children'].length > 0) {
-        let arrchild = this.getCheckedNodeListByCustom(element['_children']);
-        arr.push(...arrchild);
+      if (element['_isChecked']) {       // 当前为选中状态有效
+        arr.push(element);
+        if (element['_children'] && element['_children'].length > 0) {
+          let arrchild = this.getCheckedNodeListByCustom(element['_children']);
+          arr.push(...arrchild);
+        }
       }
     });
     return arr;
@@ -2131,9 +2133,9 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
    * 默认 false 
    */
   public treeMode(option?) {
-    if(option){
+    if (option) {
 
-    }else{
+    } else {
       this.config.checkStrictly = !this.config.checkStrictly;
     }
 
@@ -2192,16 +2194,16 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     } else {
       const dataCheck = this.getCheckedNodeListByCustom(this.treeObj.getCheckedNodeList());
       let datahalfCheck = this.treeObj.getHalfCheckedNodeList();
-      if(!datahalfCheck){
-        datahalfCheck=[];
+      if (!datahalfCheck) {
+        datahalfCheck = [];
       }
-      if(datahalfCheck.length>0){
-         treeNodeList = [ ...datahalfCheck,...dataCheck];
-      } else{
-         treeNodeList = [ ...dataCheck];
+      if (datahalfCheck.length > 0) {
+        treeNodeList = [...datahalfCheck, ...dataCheck];
+      } else {
+        treeNodeList = [...dataCheck];
       }
-      
-     // treeNodeList = Array.from(new Set(treeNodeList)); 
+
+      // treeNodeList = Array.from(new Set(treeNodeList)); 
     }
     console.log('获取当前树节点数据', treeNodeList);
     return treeNodeList;
@@ -2225,7 +2227,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       tempValue: this.tempValue,
       initValue: this.initValue,
       cacheValue: this.cacheValue,
-      userValue:this.userValue
+      userValue: this.userValue
     });
     const response = await this.executeHttpRequest(url, method, paramData);
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}
@@ -2257,7 +2259,7 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
       tempValue: this.tempValue,
       initValue: this.initValue,
       cacheValue: this.cacheValue,
-      userValue:this.userValue
+      userValue: this.userValue
     });
     const response = await this.executeHttpRequest(url, method, paramData);
     // 批量对象数据,返回结果都将以对象的形式返回,如果对应结果没有值则返回 {}

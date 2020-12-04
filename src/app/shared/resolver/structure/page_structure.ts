@@ -188,6 +188,9 @@ export class PageStructure {
                                     if (b['execute']) {
                                         delete b['execute'];
                                     }
+                                    if (b['toggle']) {
+                                        delete b['toggle'];
+                                    }
                                     _button_list.push(b);
                                 });
                             } else {
@@ -196,6 +199,9 @@ export class PageStructure {
                                 g['type'] = 'button';
                                 if (g['execute']) {
                                     delete g['execute'];
+                                }
+                                if (g['toggle']) {
+                                    delete g['toggle'];
                                 }
                                 _button_list.push(g);
                             }
@@ -224,6 +230,9 @@ export class PageStructure {
                             b['type'] = 'button';
                             if (b['execute']) {
                                 delete b['execute'];
+                            }
+                            if (b['toggle']) {
+                                delete b['toggle'];
                             }
                             _button_list.push(b);
                         });
@@ -313,10 +322,16 @@ export class PageStructure {
         rowactionconfig['rowActions'].forEach(element => {
 
             let _action_button = {}
-            _action_button['id'] = _actionsId + '_rowActions';
+            _action_button['id'] = element['id'] + '_rowActions';
             _action_button['text'] = element['text'];
             _action_button['parentId'] = _actionsId;
             _action_button['type'] = 'button';
+            if (_action_button['execute']) {
+                delete _action_button['execute'];
+            }
+            if (_action_button['toggle']) {
+                delete _action_button['toggle'];
+            }
             _row_button_list.push(_action_button);
         });
         return _row_button_list;

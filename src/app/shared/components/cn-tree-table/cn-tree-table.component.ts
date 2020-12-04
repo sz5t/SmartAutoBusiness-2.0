@@ -308,7 +308,7 @@ export class CnTreeTableComponent extends CnComponentBase
         if(this.config['rowActions']){
             this.config['rowActions'].forEach(item => {
                  
-                if (!enableToolbarPermission||(!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))){
+                if (!enableToolbarPermission||(!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id+'_rowActions'))){
                     item['permission'] =true;
                 } 
 
@@ -2191,7 +2191,7 @@ export class CnTreeTableComponent extends CnComponentBase
         $event && $event.preventDefault();
     }
 
-    getRowActions(state): any[] {
+    getRowActions1(state): any[] {
         const orginAction = this.tableColumns.find(c => c.type === 'action');
         const copyAction = [];
         if (orginAction) {
@@ -2200,6 +2200,19 @@ export class CnTreeTableComponent extends CnComponentBase
         }
         return copyAction;
     }
+
+    getRowActions(state): any[] {
+        const orginAction = this.tableColumns.find(c => c.type === 'action');
+        const copyAction = [];
+        if (orginAction) {
+            if(this.tableColumns.find(c => c.type === 'action').action){
+                const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => c.state === state)));
+                copyAction.push(...actions);
+            }
+        }
+        return copyAction;
+    }
+
 
 
     formCascade = {};

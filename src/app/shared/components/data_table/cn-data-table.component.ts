@@ -186,7 +186,7 @@ export class CnDataTableComponent extends CnComponentBase
             await this.loadDynamicColumns();
             console.log('动态++++》', this.config.columns);
         }
-        this.getPermissionRowActions();
+        await this.getPermissionRowActions();
         this._buildColumns(this.config.columns);
 
         this._initInnerValue();
@@ -356,7 +356,7 @@ export class CnDataTableComponent extends CnComponentBase
         if (this.config['rowActions']) {
             this.config['rowActions'].forEach(item => {
 
-                if (!enableToolbarPermission || (!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))) {
+                if (!enableToolbarPermission || (!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id+'_rowActions'))) {
                     item['permission'] = true;
                 }
 
@@ -369,6 +369,7 @@ export class CnDataTableComponent extends CnComponentBase
         }
 
         this.RowActions = colActions;
+        console.log('行内按钮', this.RowActions,componentPermission );
     }
 
 
