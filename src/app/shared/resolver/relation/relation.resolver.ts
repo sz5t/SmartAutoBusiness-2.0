@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { BsnRelativesMessageModel } from '@core/relations/bsn-relatives';
 import { BSN_TRIGGER_TYPE } from '@core/relations/bsn-status';
 import { CommonUtils } from '@core/utils/common-utils';
+import { deepCopy } from '@delon/util';
 /**
  * 关系消息解析器类
  * 所有组件关系解析的统一入口
@@ -516,15 +517,17 @@ export class ComponentSenderResolver {
      * @param cfg 消息配置 
      */
     sendMessage(cfg, isArray = false, data?) {
+        debugger;
         for (const c of cfg.sendData) {
             // 根据前置条件判断,是否能够发送消息
             if (!this.conditionValidator(c.condition)) {
                 return false;
             }
-
+            const options = this.getOptionParamsObj(c.params, data, isArray);
             // 前置发消息判断
             let _sendData = [];
-            cfg.sendData.forEach(sender_element => {
+            let sendNewData = deepCopy( cfg.sendData);
+            sendNewData.forEach(sender_element => {
                 if (sender_element.hasOwnProperty('preCondition')) {
                     if (sender_element['preCondition'].hasOwnProperty('caseValue')) {
 
@@ -534,11 +537,18 @@ export class ComponentSenderResolver {
                             const reg1 = new RegExp(item.caseValue.regular);
                             let regularData;
                             if (item.caseValue.type) {
+                                
                                 if (item.caseValue.regularType === 'value') {
                                     regularData = item.caseValue['value'];
                                 }
+                                if (item.caseValue.type === 'item') {
+                                    // 构建消息参数
+                                    console.log('111111111111111111', options);
+                                    regularData = options[item.caseValue['valueName']];
+                                }
                                 if (item.caseValue.type === 'successData') {
                                     // 选中行数据[这个是单值]
+                                    console.log('111111111111111111', data);
                                     regularData = data[item.caseValue['valueName']];
                                 }
                                 if (item.caseValue['type'] === 'tempValue') {
@@ -569,24 +579,27 @@ export class ComponentSenderResolver {
                     _sendData.push(sender_element);
                 }
             });
-            cfg.sendData = _sendData;
+            sendNewData = _sendData;
 
-            const options = this.getOptionParamsObj(c.params, data, isArray);
+            
             if (c.builtinId) {
                 const _builtinConfig = this.findbuiltinConfig(c.builtinId);
                 _builtinConfig && (options['builtinConfig'] = _builtinConfig);
             }
-            console.log('send message', cfg.senderId, options, "_sendData:", _sendData);
-            this._componentInstance.componentService.commonRelationSubject.next(
-                new BsnRelativesMessageModel(
-                    {
-                        triggerType: c.receiverTriggerType,
-                        trigger: c.receiverTrigger
-                    },
-                    cfg.senderId,
-                    options
+            console.log('send message', cfg.senderId, options, "_sendData:", sendNewData);
+            if(sendNewData && sendNewData.length > 0) {
+                this._componentInstance.componentService.commonRelationSubject.next(
+                    new BsnRelativesMessageModel(
+                        {
+                            triggerType: c.receiverTriggerType,
+                            trigger: c.receiverTrigger
+                        },
+                        cfg.senderId,
+                        options
+                    )
                 )
-            )
+            }
+            
         }
     }
 
