@@ -69,6 +69,7 @@
     "rxjs": "^6.5.3",
     "screenfull": "^4.2.0",
     "simple-line-icons": "^2.4.1",
+    "ts-md5": "^1.2.7",
     "tslib": "^1.10.0",
     "zone.js": "^0.10.2"
   },
