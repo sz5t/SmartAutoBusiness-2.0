@@ -351,6 +351,11 @@ export class UserLoginComponent implements OnDestroy {
           valueItem = Md5.hashStr(valueItem);
         }
       }
+      if(element['dataType']){
+        if(element['dataType']==='MD5'){
+          valueItem = Md5.hashStr(valueItem);
+        }
+      }
       paramsData[element['name']] = valueItem;
     });
     return paramsData;

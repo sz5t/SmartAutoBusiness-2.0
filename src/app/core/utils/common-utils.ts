@@ -1,4 +1,5 @@
 import { deepCopy } from '@delon/util';
+import {Md5} from 'ts-md5/dist/md5';
 export class CommonUtils {
   public static uuID(w) {
     let s = '';
@@ -38,6 +39,8 @@ export class CommonUtils {
           return new Date(value).toDateString();
         case 'datetime':
           return new Date(value).toTimeString();
+        case 'MD5':
+            return  Md5.hashStr(value);
         case 'nullable':
           return null;
       }

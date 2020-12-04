@@ -374,6 +374,7 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public expandRow(item, $event: boolean) {
+        console.log('expandRow',item);
         if ($event) {
             (async () => {
                 const response = await this._getAsyncData(this.config.expandConfig, item.data, false);
@@ -592,8 +593,13 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public loadRefreshChildrenData(option) {
-        // 20201105 修改树表
-        this.expandRow(option,true);
+        // 20201105 修改树表 1204 完善
+
+        if(this.mapOfDataExpanded[option[this.KEY_ID]] && this.mapOfDataExpanded[option[this.KEY_ID]][0]){
+            this.expandRow(this.mapOfDataExpanded[option[this.KEY_ID]][0],true);
+        }else{
+            this.loadRefreshData(option);
+        }
         // if (this.config.loadingItemConfig) {
         //     this.loadItem(option, (data) => {
         //         this.refreshChildrenData(data);
