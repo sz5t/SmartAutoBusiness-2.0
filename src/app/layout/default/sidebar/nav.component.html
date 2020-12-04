@@ -82,50 +82,55 @@
     </ul>
   </li>
 </ul> -->
-<!-- <ul nz-menu nzMode="inline" [nzInlineCollapsed]="layoutCollapsed">
+<ul *ngIf="setting === 'normal'; else cardMenu" nz-menu nzMode="inline" [nzInlineCollapsed]="layoutCollapsed">
+  
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: list }"></ng-container>
   <ng-template #menuTpl let-menus>
     <ng-container *ngFor="let menu of menus">
-      <li nz-submenu [nzPaddingLeft]="menu.level * 16"
-        *ngIf="menu.children && menu.children.length > 0; else menuItemTpl">
-        <span title>
-          <i nz-icon [nzType]="menu.icon.value" *ngIf="menu.icon"></i>
-          <span>{{ menu.text }}</span>
-        </span>
-        <ul>
-          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"></ng-container>
-        </ul>
-      </li>
-      <ng-template #menuItemTpl>
-        <li nz-menu-item [nzPaddingLeft]="menu.level > 3 ? menu.level * 18 : (menu.level * 18 ) + 12"
-          (click)="onClick(menu)">
-          <span title>
-            <i nz-icon [nzType]="menu.icon.value" *ngIf="menu.icon" [theme]="'outline'"></i>
-            <span>{{ menu.text }}</span>
-          </span>
-        </li>
-      </ng-template>
+          <li
+            *ngIf="menu.children && menu.children.length > 0; else tmplLeafMenu"
+            nz-submenu
+            [nzPaddingLeft]="menu.level * 24"
+            [nzTitle]="menu.text"
+            [nzIcon]="menu.icon ? menu.icon.value : ''"
+
+          >
+          <!-- <i nz-icon [nzType]="menu.icon" *ngIf="menu.icon"></i> -->
+            <ul>
+              <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: menu.children }"></ng-container>
+            </ul>
+          </li>
+
+
+          <ng-template #tmplLeafMenu>
+            <li nz-menu-item [nzPaddingLeft]="menu.level ? menu.level * 24 : 48"
+                (click)="onClick(menu)">
+                <span title>
+                  <i nz-icon [nzType]="menu.icon.value" *ngIf="menu.icon" [theme]="'outline'"></i>
+                  <span>{{ menu.text }}</span>
+                </span>
+              </li>
+          </ng-template>
     </ng-container>
   </ng-template>
-</ul> -->
+</ul>
 
-
+<ng-template #cardMenu>
 <ul nz-menu nzMode="vertical" [nzInlineCollapsed]="layoutCollapsed">
   <ng-container *ngTemplateOutlet="menuTemplate; context: { $implicit: list }"></ng-container>
   <ng-template #menuTemplate let-menus>
     <ng-container *ngFor="let menu of menus">
       <li nz-submenu nz-popover *ngIf="menu.status === 2" [nzPopoverContent]="contentTemplate"
-        nzPopoverPlacement="right" [nzTitle]="titleTemplate" [nzPopoverTitle]="titleTemplate2" [nzIcon]="menu.icon.value">
+         [nzTitle]="titleTemplate" [nzPopoverTitle]="titleTemplate2" [nzIcon]="menu.icon.value">
         <ng-template #titleTemplate>
           <span style="font-size:14px;">{{menu.text}}</span>
         </ng-template>
         <ng-template #titleTemplate2>
-          <span style="font-size:14px;"></span>
         </ng-template>
         <ng-template #contentTemplate>
           <div nz-row [nzGutter]="16">
             <div *ngFor="let group of menu.children" nz-col [nzSpan]="menu.children.length > 1 ? 12 : 24">
-              <nz-card *ngIf="group.status === 2" [nzBodyStyle]="{'width': '200px' }" [nzTitle]="ctitle"
+              <nz-card *ngIf="group.status === 2" [nzTitle]="ctitle"
                 nzBordered="false">
                 <!-- <article nz-typography>
                   <ul>
@@ -133,7 +138,8 @@
                       <a style="display: block"><span nz-text nzType="secondary">{{link.text}}</span></a>
                     </li>
                   </ul>
-                </article> -->
+                </article> 
+                -->
                 <nz-list [nzDataSource]="group.children" [nzRenderItem]="renderItemTpl" nzSize="small" nzSplit="false">
                   <ng-template #renderItemTpl let-item>
                     <nz-list-item *ngIf="item.status === 2" (click)="onClick(item)">
@@ -154,6 +160,10 @@
     </ng-container>
   </ng-template>
 </ul>
+</ng-template>
+
+
+
 
 <!-- <ul nz-menu nzMode="inline" style="width: 240px">
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: list }"></ng-container>

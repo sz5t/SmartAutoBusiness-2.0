@@ -7,6 +7,7 @@ import { filter } from 'rxjs/operators';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { pageConfigCache } from '@env/page-config-cache';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'layout-nav',
@@ -27,6 +28,7 @@ export class NavComponent implements OnInit, OnDestroy {
   public bodyEl;
 
   public menuList=[];
+  public menuMode= "normal";
   route$;
   change$;
 
@@ -600,12 +602,16 @@ export class NavComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    const setting = environment['systemSettings']['menuInfo']['menuMode'];
+    if(setting) {
+      this.menuMode = setting;
+    }
     // this.bodyEl = this._doc.querySelector('body');
     this._menuService.openedByUrl(this._router.url);
     // this.genFloatingContainer();
     this.change$ = this._menuService.change.subscribe(res => {
       this.list = res;
-      // this._cd.detectChanges();
+      this._cd.detectChanges();
     });
     this.installUnderPad();
   }

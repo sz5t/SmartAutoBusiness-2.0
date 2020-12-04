@@ -472,8 +472,81 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     }
   }
 
+  private nodeSelectionConfig: any = [ // 或关系
+    {
+      "id": "selNode1",
+      "compare": [ // 并且关系
+        {
+          "type": "clickNode",
+          "valueName": "NODE_TYPE",
+          "method": "value",
+          "value": "data",
+          "compare": "eq",
+          "prevent": false
+        }
+      ]
+    }
+  ]
+
+  public preventClickNode($event){
+    const finalResults = []; // 最外部“或”结果
+    // 判断是否存在可被选中节点判断配置
+    if(this.config.hasOwnProperty('nodeSelectionConfig') && Array.isArray(this.config.nodeSelectionConfig)) {
+      if($event.node.origin) {
+        this.config.nodeSelectionConfig.forEach((cpm: any) => {
+          if(cpm.compare && Array.isArray(cpm.compare)) {
+            const results = []; // 内部“并”结果
+            cpm.compare.forEach(ele => {
+              switch(ele.type) {
+                case 'clickNode':
+                  const sNodeValue = $event.node.origin[ele.valueName];
+                  const cValue = ele.value;
+                  const r = this._compare(sNodeValue, cValue, ele.compare, ele.method, ele.prevent)
+                  results.push(r);
+                  break;
+              }
+            });
+            // 计算并且关系
+            const innerResult = results.findIndex((r: boolean) => r === true) >= 0 
+            finalResults.push(innerResult);
+          }
+        });
+      }
+    }
+    // 计算或的关系
+    if(finalResults.length > 0) {
+      return finalResults.findIndex((r: boolean) => r) >= 0;
+    } else {
+      return true;
+    }
+  }
+
+  private _compare(nodeValue,cValue, compare ,method, prevent) {
+    let result;
+    let mr;
+    switch(method) {
+      case 'value':
+        mr = CommonUtils.compareValueByMethod(nodeValue,cValue, compare);
+        result = CommonUtils.checkCompareResult(mr, prevent);
+        break;
+      case 'regular':
+        mr = CommonUtils.compareValueByRegular(nodeValue, cValue);
+        result = CommonUtils.checkCompareResult(mr, prevent);
+        break;
+    }
+    return result;
+  }
+
+
+  
+
   public clickNode($event?: NzFormatEmitEvent) {
+    
     console.log('选节点', $event);
+    const prevent = this.preventClickNode($event);
+    if(!prevent) {
+      return;
+    }
     if (this.ACTIVED_NODE) {
       this.ACTIVED_NODE['isSelected'] = false;
       this.ACTIVED_NODE['selected'] && (this.ACTIVED_NODE['selected'] = false);

@@ -20,8 +20,8 @@ export class CommonUtils {
 
   /**
    * 数据类型转换
-   * @param value 
-   * @param dataType 
+   * @param value
+   * @param dataType
    */
   public static getResultByDataType(value, dataType): any {
     if (value) {
@@ -33,7 +33,7 @@ export class CommonUtils {
         case 'float':
           return Number.parseFloat(value);
         case 'number':
-            return Number.parseFloat(value);
+          return Number.parseFloat(value);
         case 'date':
           return new Date(value).toDateString();
         case 'datetime':
@@ -42,8 +42,76 @@ export class CommonUtils {
           return null;
       }
     } else {
-        return value;
+      return value;
+    }
+  }
+
+  public static compareValueByRegular(nValue, regStr): boolean {
+    const reg = new RegExp(regStr);
+    return reg.test(nValue);
+  }
+
+  // 构建匹配参数
+  public static compareValueByMethod(nValue, cValue, method) {
+    let result;
+    if (!method) {
+      return true;
+    }
+    switch (method) {
+      case 'eq': // =
+        result = nValue === cValue;
+        break;
+      case 'neq': // !==
+        result = nValue !== cValue;
+        break;
+      case 'ctn': // like
+        // result = nValue.test(\^cValue$\);
+        break;
+      case 'nctn': // not like
+        //  strQ = `${strQ}!ctn(%${value}%)`;
+        break;
+      case 'in': // in  如果是input 是这样取值，其他则是多选取值
+        // strQ = strQ + 'in( + value + )';
+        //  strQ = `${strQ}in(${value})`;
+        break;
+      case 'nin': // not in  如果是input 是这样取值，其他则是多选取值
+        // strQ = strQ + '!in( + value + )';
+        //  strQ = `${strQ}!in(${value})`;
+        break;
+      case 'btn': // between
+        //  strQ = strQ + 'btn( + value + )';
+        //  strQ = `${strQ}btn(${value})`;
+        break;
+      case 'ge': // >=
+        // strQ = strQ + 'ge(' + value + ')';
+        //   strQ = `${strQ}ge(${value})`;
+        break;
+      case 'gt': // >
+        // strQ = strQ + 'gt(' + value + ')';
+        //  strQ = `${strQ}gt(${value})`;
+        break;
+      case 'le': // <=
+        // strQ = strQ + 'le(' + value + ')';
+        //  strQ = `${strQ}le(${value})`;
+        break;
+      case 'lt': // <
+        // strQ = strQ + 'lt(' + value + ')';
+        //  strQ = `${strQ}lt(${value})`;
+        break;
+      default:
+        //  strQ = value;
+        return true;
     }
 
+    return result;
+  }
+
+  public static checkCompareResult(result, prevent): boolean {
+    if(prevent) { // 阻止
+     return !result; 
+    }
+    else { // 通过
+      return result;
+    }
   }
 }
