@@ -1,10 +1,10 @@
 {
-    "SERVER_URL77": "http://192.168.1.111:8201/",
-    "SERVER_URL54": "http://192.168.1.252:8401/",
+    "SERVER_URL": "http://192.168.1.111:8401/",
+    "SERVER_URL222": "http://192.168.1.252:8401/",
     "SERVER_URL5": "http://192.168.1.111:8401/",
     "SERVER_URL_3": "http://192.168.1.103:8401/",
     "SERVER_URL_1": "http://192.168.1.111:8402/",
-    "SERVER_URL": "http://39.101.168.200:8304/",
+    "SERVER_URL544": "http://39.101.168.200:8304/",
     "REPORT_SERVER_URL":"",
     "systemSettings": {
         "systemMode": "dev", 
@@ -265,7 +265,8 @@
             },
             "devMenuInfo":{
 
-            }
+            },
+            "menuMode": "card"
         },
         "pageInfo":{
             "workPageInfo":{
