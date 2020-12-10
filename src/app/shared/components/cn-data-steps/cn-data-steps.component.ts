@@ -352,6 +352,12 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
    */
   public setStepParentNode() {
     if (this.direction === 'vertical') {
+      if (this.pNode.length > 0) {
+        this.pNode = [];
+      }
+      if (this.formatNode.length > 0) {
+        this.formatNode = [];
+      }
       for (let i = 0; i < this.pDatalist.length; i++) {
         const hasChildren = this.nodeParentField === '' ? false : (this.cDatalist.findIndex(e => e[this.nodeParentField] === this.pDatalist[i][this.KEY_ID]) > -1 ? true : false)
         this.pNode.push({
@@ -380,6 +386,12 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
         }
       }
     } else if (this.direction === 'horizontal') {
+      if (this.pNode.length > 0) {
+        this.pNode = [];
+      }
+      if (this.formatNode.length > 0) {
+        this.formatNode = [];
+      }
       for (let i = 0; i < this.pDatalist.length; i++) {
         const hasChildren = this.nodeParentField === '' ? false : (this.cDatalist.findIndex(e => e[this.nodeParentField] === this.pDatalist[i][this.KEY_ID]) > -1 ? true : false)
         this.pNode.push({
@@ -419,6 +431,9 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
    * setStepParentLine 组装父节点间的连线
    */
   public setStepParentLine() {
+    if (this.edge.length > 0) {
+      this.edge = [];
+    }
     for (let i = 0; i < this.pDatalist.length - 1; i++) {
       this.edge.push({
         id: 'node' + i + '-' + (i + 1),
@@ -437,6 +452,10 @@ export class CnDataStepsComponent extends CnComponentBase implements OnInit, OnD
     const that = this;
     this.isLoading = true;
     const data = { nodes: this.pNode, edges: this.edge }
+    if (this.graph) {
+      this.graph.clear();
+      this.graph.destroy();
+    }
     this.graph = new G6.Graph({
       container: this.dataSteps.nativeElement,
       width: that.graphWidth,
