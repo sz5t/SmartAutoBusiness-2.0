@@ -128,6 +128,7 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
 
   // 组件将值写回、级联数据-》回写 
   public setValue(data?) {
+    console.log('<><><>',data);
     this.updateValue.emit(data);
   }
 

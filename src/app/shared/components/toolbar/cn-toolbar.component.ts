@@ -19,6 +19,7 @@ import { from, Subject, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RelationResolver } from '@shared/resolver/relation/relation.resolver';
 import { environment } from '@env/environment';
+import { ParameterResolver } from '@shared/resolver/parameter/parameter.resolver';
 
 @Component({
     // tslint:disable-next-line: component-selector
@@ -85,7 +86,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
 
         this.toolbarConfig = this.config.toolbar;
         // 权限计算后，将操作按钮组，赋值给this.toolbarConfig 
-      
+
         this._initInnerValue();
 
         if (this.config.cascade && this.config.cascade.messageReceiver) {
@@ -94,7 +95,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             // this._receiver_source$.subscribe();
             new RelationResolver(this).resolveReceiver(this.config);
         }
-       // this.getBttonList();
+        // this.getBttonList();
         this.getPermissions();
 
         // const componentPermission =  this.getMenuComponentPermissionConfigById(this.config.id);
@@ -104,6 +105,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         // componentPermission['permission']
         // id: "qbh1yxWLSP0BpJ3BLFBrMMDKQMeCJLeBGDP3"
         // type: " toolbar"
+        this.initLog();
 
     }
 
@@ -114,9 +116,9 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
 
 
     public getPermissions() {
-        let componentPermission:any; 
-        if(this.config.id){
-            componentPermission =this.getMenuComponentPermissionConfigById(this.config.id);
+        let componentPermission: any;
+        if (this.config.id) {
+            componentPermission = this.getMenuComponentPermissionConfigById(this.config.id);
         }
         let enableToolbarPermission = false;
         if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
@@ -127,18 +129,18 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                 }
             }
         }
-        if(this.config['exceptionPermission']){
-              enableToolbarPermission = false;
+        if (this.config['exceptionPermission']) {
+            enableToolbarPermission = false;
         }
 
-        console.log('当前权限',componentPermission);
+        console.log('当前权限', componentPermission);
         const permissionMap = new Map();
-        if(componentPermission && componentPermission['permission']){
+        if (componentPermission && componentPermission['permission']) {
             componentPermission && componentPermission['permission'].forEach(item => {
                 permissionMap.set(item.id, item);
             });
         }
- 
+
 
         // try {
 
@@ -151,44 +153,44 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         if (this.toolbarConfig && Array.isArray(this.toolbarConfig)) {
             this.toolbarConfig.forEach(item => {
                 if (item.group) {
-                    if (!enableToolbarPermission||(!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))){
-                        item['permission'] =true;
-                    } 
+                    if (!enableToolbarPermission || (!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))) {
+                        item['permission'] = true;
+                    }
                     let targetViewId = item['targetViewId'];
                     item.group.forEach(g => {
                         if (g.dropdown) {
                             g.dropdown.forEach(b => {
                                 b['targetViewId'] = targetViewId;
-                                if (!enableToolbarPermission||(!b.hasOwnProperty('id')) || (enableToolbarPermission && b.id && permissionMap.has(b.id))){
-                                    b['permission'] =true;
-                                } 
+                                if (!enableToolbarPermission || (!b.hasOwnProperty('id')) || (enableToolbarPermission && b.id && permissionMap.has(b.id))) {
+                                    b['permission'] = true;
+                                }
                                 _button_list.push(b);
                             });
                         } else {
                             g['targetViewId'] = targetViewId;
-                            if (!enableToolbarPermission||((!g.hasOwnProperty('id')) ||enableToolbarPermission && g.id && permissionMap.has(g.id))){
-                                g['permission'] =true;
-                            } 
+                            if (!enableToolbarPermission || ((!g.hasOwnProperty('id')) || enableToolbarPermission && g.id && permissionMap.has(g.id))) {
+                                g['permission'] = true;
+                            }
                             _button_list.push(g);
                         }
                     });
                 } else if (item.dropdown) {
-                    if (!enableToolbarPermission||(!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))){
-                        item['permission'] =true;
-                    } 
+                    if (!enableToolbarPermission || (!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id))) {
+                        item['permission'] = true;
+                    }
                     let targetViewId = item['targetViewId'];
                     item.dropdown.forEach(b => {
                         b['targetViewId'] = targetViewId;
-                        if (!enableToolbarPermission||(!b.hasOwnProperty('id')) ||(enableToolbarPermission && b.id && permissionMap.has(b.id))){
-                            b['permission'] =true;
-                        } 
+                        if (!enableToolbarPermission || (!b.hasOwnProperty('id')) || (enableToolbarPermission && b.id && permissionMap.has(b.id))) {
+                            b['permission'] = true;
+                        }
                         _button_list.push(b);
                     });
                 }
             });
         }
         this.button_list = _button_list;
-       // console.log('按钮统计', _button_list);
+        // console.log('按钮统计', _button_list);
     }
 
 
@@ -272,7 +274,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                             valueObj && (btn[btn.toggle.toggleProperty] = valueObj.value);
                         }
                         if (actions) {
-                            if(actions.group){
+                            if (actions.group) {
                                 actions.group.forEach(element => {
                                     if (element.toggle && element.toggle.values) {
                                         const _valueObj = element.toggle.values.find(val => val.name === stateValue);
@@ -280,7 +282,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                                     }
                                 });
                             }
-                            if(actions.dropdown){
+                            if (actions.dropdown) {
                                 actions.dropdown.forEach(element => {
                                     if (element.toggle && element.toggle.values) {
                                         const _valueObj = element.toggle.values.find(val => val.name === stateValue);
@@ -297,8 +299,8 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
                 }
             }
             const state = '';
-            if(!_toggleType){
-                dataOfState['state']="";
+            if (!_toggleType) {
+                dataOfState['state'] = "";
             }
             const btnResolver = new ButtonOperationResolver(this.componentService, this.config, dataOfState);
             btnResolver.toolbarAction(btn, targetViewId);
@@ -481,7 +483,7 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
             });
         }
         this.button_list = _button_list;
-       // console.log('按钮统计', _button_list);
+        // console.log('按钮统计', _button_list);
     }
 
 
@@ -540,5 +542,103 @@ export class CnToolbarComponent extends CnComponentBase implements OnInit, OnDes
         }
 
     }
+
+
+
+    public buildParameters(paramsCfg, returnData?, itemData?) {
+        return ParameterResolver.resolve({
+            params: paramsCfg,
+            tempValue: this.tempValue,
+            initValue: this.initValue,
+            cacheValue: this.cacheValue,
+            router: this.routerValue,
+            returnValue: returnData ? returnData : {},
+            item: itemData ? itemData : {},
+            userValue: this.userValue,
+            menuValue: this.componentService.cacheService.getNone('activeMenu') ?
+                this.componentService.cacheService.getNone('activeMenu') : {}
+        });
+    }
+
+    /**
+     * 写日志
+     * @param Description 操作描述
+     * @param itemData 操作涉及数据
+     */
+    public async writeLog(Description?, itemData?, btnOption?) {
+
+        const text = btnOption['btnCfg']['text'];
+        let componentId;
+        if (btnOption['btnCfg']['targetViewId']) {
+            componentId = btnOption['btnCfg']['targetViewId'];
+        } else {
+            componentId = this.config['id'];
+        }
+        console.log('操作按钮', text, '操作组件', componentId);
+        // 所属组件 targetViewId ，无 targetViewId 则是当前组件行内操作
+        console.log('记录操作日志', Description, itemData, btnOption);
+        // 构建参数
+        // 根据执行情况，写入日志信息
+
+        //【菜单】【主页】【页】【组件】【按钮标识】【按钮名称】【业务描述】【业务数据】【执行结果】【执行人】【执行时间】
+        // 通过toolbar 基本描述清楚当前按钮上面时候点击，子表描述，点击按钮后执行什么内容（可以将一个按钮下的多个执行记录）
+        // 日志，可以记录 谁，在什么时间，打开什么页面，操作什么数据，执行结果如何
+        // 当前结构，不太满足aop 
+        // 逻辑执行的取值，在参数传递的时候未知，需要公用方法解析后，调用统一的执行
+    }
+
+
+
+
+    async writeLogInfo(that?, arguments1?) {
+
+        console.log('ap===>', arguments1);
+        let btnOption = arguments1[0];
+        const text = btnOption['text'];
+        let componentId;
+        if (btnOption['targetViewId']) {
+            componentId = btnOption['targetViewId'];
+        } else {
+            componentId = that.config['id'];
+        }
+
+        // 记录 按钮、按钮组件标识、作用组件
+        let logConfig;
+        let btnData;
+        btnData = {
+            componentId: that.config['id'], //当前组件
+            targetViewId: componentId,     // 目标作用组件
+            btnId: btnOption['id'],
+            btnText: btnOption['text'],
+            description:'[按钮 ]：'+ (btnOption['description'] ? btnOption['description'] : btnOption['text'])
+        };
+
+        console.log('操作按钮', text, '操作组件', componentId, btnData);
+        if (environment['systemSettings']['enableLog']) {
+            if (environment['systemSettings'] && environment['systemSettings']['logInfo']) {
+                logConfig = environment['systemSettings']['logInfo']['logAjaxConfig'];
+            }
+        }
+        if (logConfig) {
+            const url = logConfig.url;
+            const method = logConfig.ajaxType;
+            const params = that.buildParameters(logConfig['params'], null, btnData);
+            const response = await that.componentService.apiService[method](url, params).toPromise();
+            console.log('写日志返回', response);
+        }
+
+        return true;
+
+    }
+
+    public initLog() {
+        if (environment['systemSettings']['enableLog']) {
+            this.beforeLog(this, 'action', this.writeLogInfo);
+        }
+         //this.before(this, 'action', this.writeLogInfo);
+
+    }
+
+
 
 }

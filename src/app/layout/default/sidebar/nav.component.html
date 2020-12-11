@@ -82,7 +82,7 @@
     </ul>
   </li>
 </ul> -->
-<ul *ngIf="setting === 'normal'; else cardMenu" nz-menu nzMode="inline" [nzInlineCollapsed]="layoutCollapsed">
+<ul *ngIf="menuMode === 'normal'; else cardMenu" nz-menu nzMode="inline" [nzInlineCollapsed]="layoutCollapsed">
   
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: list }"></ng-container>
   <ng-template #menuTpl let-menus>

@@ -4,13 +4,14 @@
     "SERVER_URL5": "http://192.168.1.111:8401/",
     "SERVER_URL_3": "http://192.168.1.103:8401/",
     "SERVER_URL_1": "http://192.168.1.111:8402/",
-    "SERVER_URL544": "http://39.101.168.200:8304/",
+    "SERVER_URL33": "http://39.101.168.200:8304/",
     "REPORT_SERVER_URL":"",
     "systemSettings": {
         "systemMode": "dev", 
-        "enablePermission": true,
+        "enablePermission": false,
         "enableLogin": true, 
         "enableExceptionLogin": true, 
+        "enableLog": true, 
         "systemInfo": { 
             "title":"管理系统",
             "subtitle":"生产管理系统",
@@ -26,7 +27,7 @@
             "enableMenuPermission":true,
             "enableOperatePermission":true,
             "enableToolbarPermission":true,
-            "enableRowActionPermission":false,
+            "enableRowActionPermission":true,
             "enableColumnPermission":false
         },
         "loginInfo": { 
@@ -42,12 +43,14 @@
                     {
                         "name": "passWord",
                         "type": "componentValue",    
-                        "valueName": "password"
+                        "valueName": "password",
+                        "dataType":"MD5"
                     },
                     {
                         "name": "attribute",
                         "type": "value",    
-                        "valueName": "a"
+                        "valueName": "a",
+                        "value":"enable"
                     }
                  ]
             },
@@ -314,6 +317,78 @@
                         "valueName":"_procedure_resultset_1"
                     }
                 ]
+            }
+
+        },
+        "logInfo":{
+           
+            "enableToolbarLog": true, 
+            "enableRowActionLog": true,
+            "logAjaxConfig":{
+                "url":"resource/LOG_OPERATION_1/insert",
+                "ajaxType":"post",
+                "params": [
+                    {
+                        "name": "USER_NAME",
+                        "type": "userValue",    
+                        "valueName": "userName"
+                    },
+                    {
+                        "name": "USER_ID",
+                        "type": "userValue",    
+                        "valueName": "userId"
+                    },
+                    {
+                        "name": "MODULE_NAME",
+                        "type": "menuValue",    
+                        "valueName": "text"
+                    },
+                    {
+                        "name": "MODULE_ID",
+                        "type": "menuValue",    
+                        "valueName": "id"
+                    },
+                    {
+                        "name": "FUNC_NAME",
+                        "type": "item",    
+                        "valueName": "btnText"
+                    },
+                    {
+                        "name": "FUNC_ID",
+                        "type": "item",    
+                        "valueName": "btnId"
+                    },
+                    {
+                        "name": "COMPONENT_ID",
+                        "type": "item",    
+                        "valueName": "targetViewId"
+                    },
+                    {
+                        "name": "DESCRIPTION",
+                        "type": "item",    
+                        "valueName": "description"
+                    },
+            
+                    {
+                        "name": "LEVEL",
+                        "type": "value",    
+                        "value": 1
+                    },
+                    {
+                        "name": "LANGUAGE",
+                        "type": "value",    
+                        "value": "ZH"
+                    },
+                    {
+                        "name": "OPER_DATE",
+                        "type": "value", 
+                        "dataType":"datetime",
+                        "defaultDate": "defaultDate"   
+                    }
+
+                    
+                    
+                 ]
             }
 
         }

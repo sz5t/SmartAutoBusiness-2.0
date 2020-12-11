@@ -135,7 +135,7 @@ export class CnTreeTableComponent extends CnComponentBase
     private _sender_subscription$: Subscription;
     private _trigger_receiver_subscription$: Subscription;
 
-    public RowActions:any[]=[];
+    public RowActions: any[] = [];
     // 前置条件集合
     public beforeOperation;
     constructor(
@@ -144,7 +144,7 @@ export class CnTreeTableComponent extends CnComponentBase
     ) {
         super(componentService);
         this.cacheValue = this.componentService.cacheService;
-        this.cacheValue.set('userInfo', { _createUserId: '张三丰' });
+        //this.cacheValue.set('userInfo', { _createUserId: '张三丰' });
         this.tempValue = {};
         this.initValue = {};
         // init cacheValue
@@ -158,7 +158,8 @@ export class CnTreeTableComponent extends CnComponentBase
 
         // 初始化默认分页大小
         this.config.pageSize && (this.pageSize = this.config.pageSize);
-
+        // 日志
+        this.initLog();
         this.getPermissionRowActions();
         // 构建表格列及列标题
         this._buildColumns(this.config.columns);
@@ -278,11 +279,11 @@ export class CnTreeTableComponent extends CnComponentBase
 
     }
 
-    public getPermissionRowActions(){
-        let componentPermission:any; 
-        let colActions=[];
-        if(this.config.id){
-            componentPermission =this.getMenuComponentPermissionConfigById(this.config.id);
+    public getPermissionRowActions() {
+        let componentPermission: any;
+        let colActions = [];
+        if (this.config.id) {
+            componentPermission = this.getMenuComponentPermissionConfigById(this.config.id);
         }
         let enableToolbarPermission = false;
         if (environment['systemSettings'] && environment['systemSettings']['systemMode'] === 'work') {
@@ -293,29 +294,29 @@ export class CnTreeTableComponent extends CnComponentBase
                 }
             }
         }
-        if(this.config['exceptionPermission']){
-              enableToolbarPermission = false;
+        if (this.config['exceptionPermission']) {
+            enableToolbarPermission = false;
         }
         const permissionMap = new Map();
-        if(componentPermission && componentPermission['permission']){
+        if (componentPermission && componentPermission['permission']) {
             componentPermission && componentPermission['permission'].forEach(item => {
-                if(item['type']==='rowActions'){
+                if (item['type'] === 'rowActions') {
                     permissionMap.set(item.id, item);
                 }
             });
         }
 
-        if(this.config['rowActions']){
+        if (this.config['rowActions']) {
             this.config['rowActions'].forEach(item => {
-                 
-                if (!enableToolbarPermission||(!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id+'_rowActions'))){
-                    item['permission'] =true;
-                } 
 
-                if( item['permission'] ){
+                if (!enableToolbarPermission || (!item.hasOwnProperty('id')) || (enableToolbarPermission && item.id && permissionMap.has(item.id + '_rowActions'))) {
+                    item['permission'] = true;
+                }
+
+                if (item['permission']) {
                     colActions.push(item);
                 }
-             
+
 
             });
         }
@@ -374,7 +375,7 @@ export class CnTreeTableComponent extends CnComponentBase
     }
 
     public expandRow(item, $event: boolean) {
-        console.log('expandRow',item);
+        console.log('expandRow', item);
         if ($event) {
             (async () => {
                 const response = await this._getAsyncData(this.config.expandConfig, item.data, false);
@@ -459,7 +460,7 @@ export class CnTreeTableComponent extends CnComponentBase
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             item: nodeValue,
-            userValue:this.userValue
+            userValue: this.userValue
         });
 
         if (isPaging) {
@@ -588,16 +589,16 @@ export class CnTreeTableComponent extends CnComponentBase
             cacheValue: this.cacheValue,
             router: this.routerValue,
             cascadeValue: this.cascadeValue,
-            userValue:this.userValue
+            userValue: this.userValue
         });
     }
 
     public loadRefreshChildrenData(option) {
         // 20201105 修改树表 1204 完善
 
-        if(this.mapOfDataExpanded[option[this.KEY_ID]] && this.mapOfDataExpanded[option[this.KEY_ID]][0]){
-            this.expandRow(this.mapOfDataExpanded[option[this.KEY_ID]][0],true);
-        }else{
+        if (this.mapOfDataExpanded[option[this.KEY_ID]] && this.mapOfDataExpanded[option[this.KEY_ID]][0]) {
+            this.expandRow(this.mapOfDataExpanded[option[this.KEY_ID]][0], true);
+        } else {
             this.loadRefreshData(option);
         }
         // if (this.config.loadingItemConfig) {
@@ -657,7 +658,7 @@ export class CnTreeTableComponent extends CnComponentBase
         // });
     }
 
- 
+
 
     /**
      * 构建查询过滤参数
@@ -672,7 +673,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 params: filterConfig,
                 tempValue: this.tempValue,
                 cacheValue: this.cacheValue,
-                userValue:this.userValue
+                userValue: this.userValue
             });
         }
         return filter;
@@ -1157,7 +1158,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 tempValue: this.tempValue,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
-                userValue:this.userValue
+                userValue: this.userValue
             });
         }
         const response = await this.executeHttpRequest(url, method, paramData);
@@ -1243,7 +1244,7 @@ export class CnTreeTableComponent extends CnComponentBase
             initValue: this.initValue,
             cacheValue: this.cacheValue,
             router: this.routerValue,
-            userValue:this.userValue
+            userValue: this.userValue
         });
 
         const response = await this.componentService.apiService[ajaxConfig.ajaxType](url, paramData).toPromise();
@@ -1467,8 +1468,10 @@ export class CnTreeTableComponent extends CnComponentBase
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
                 selectedRow: this.ROW_SELECTED,
-                currentRow:this.ROW_CURRENT,
-                userValue:this.userValue
+                currentRow: this.ROW_CURRENT,
+                userValue: this.userValue,
+                menuValue: this.componentService.cacheService.getNone('activeMenu') ?
+                this.componentService.cacheService.getNone('activeMenu') : {}
 
             });
         } else if (!isArray && data) {
@@ -1479,7 +1482,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 params: paramsCfg,
                 tempValue: this.tempValue,
                 componentValue: this.COMPONENT_VALUE,
-                item: this.ROW_SELECTED,
+                item: data?data:this.ROW_SELECTED,
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
@@ -1488,8 +1491,10 @@ export class CnTreeTableComponent extends CnComponentBase
                 validation: data,
                 returnValue: data,
                 selectedRow: this.ROW_SELECTED,
-                currentRow:this.ROW_CURRENT,
-                userValue:this.userValue
+                currentRow: this.ROW_CURRENT,
+                userValue: this.userValue,
+                menuValue: this.componentService.cacheService.getNone('activeMenu') ?
+                this.componentService.cacheService.getNone('activeMenu') : {}
 
             });
         } else if (isArray && Array.isArray(data)) {
@@ -1507,8 +1512,10 @@ export class CnTreeTableComponent extends CnComponentBase
                     editedRows: d,
                     validation: d,
                     returnValue: d,
-                    currentRow:this.ROW_CURRENT,
-                    userValue:this.userValue
+                    currentRow: this.ROW_CURRENT,
+                    userValue: this.userValue,
+                    menuValue: this.componentService.cacheService.getNone('activeMenu') ?
+                    this.componentService.cacheService.getNone('activeMenu') : {}
                 });
                 parameterResult.push(param);
             })
@@ -1539,7 +1546,7 @@ export class CnTreeTableComponent extends CnComponentBase
                     tempValue: this.tempValue,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
-                    userValue:this.userValue
+                    userValue: this.userValue
                 });
                 parameterResult.push(p);
             });
@@ -1581,7 +1588,7 @@ export class CnTreeTableComponent extends CnComponentBase
             tempValue: this.tempValue,
             initValue: this.initValue,
             cacheValue: this.cacheValue,
-            userValue:this.userValue
+            userValue: this.userValue
         });
 
         // if (data && data.length > 0) {
@@ -1631,7 +1638,7 @@ export class CnTreeTableComponent extends CnComponentBase
                     tempValue: this.tempValue,
                     initValue: this.initValue,
                     cacheValue: this.cacheValue,
-                    userValue:this.userValue
+                    userValue: this.userValue
                 });
                 params.push(p[this.KEY_ID]);
             });
@@ -1687,7 +1694,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
-                userValue:this.userValue
+                userValue: this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1775,7 +1782,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 selectedRow: this.ROW_SELECTED,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
-                userValue:this.userValue
+                userValue: this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1793,7 +1800,7 @@ export class CnTreeTableComponent extends CnComponentBase
             nzContent: CnDataFormComponent,
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
-            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable') ? dialogCfg.maskClosable : false,
             nzComponentParams: {
                 config: dialogCfg.form,
                 changeValue: option.changeValue ? option.changeValue.params : []
@@ -1810,14 +1817,14 @@ export class CnTreeTableComponent extends CnComponentBase
                     onClick: componentInstance => {
                         (async () => {
                             const response = await componentInstance.executeModal(option);
-                            if(response){
-                            this._sendDataSuccessMessage(response, option.ajaxConfig.result);
+                            if (response) {
+                                this._sendDataSuccessMessage(response, option.ajaxConfig.result);
 
-                            // 处理validation结果
-                            this._sendDataValidationMessage(response, option.ajaxConfig.result)
-                                &&
-                                this._sendDataErrorMessage(response, option.ajaxConfig.result)
-                                && dialog.close();
+                                // 处理validation结果
+                                this._sendDataValidationMessage(response, option.ajaxConfig.result)
+                                    &&
+                                    this._sendDataErrorMessage(response, option.ajaxConfig.result)
+                                    && dialog.close();
                             }
                         })();
                     }
@@ -1848,7 +1855,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 selectedRow: this.ROW_SELECTED,
                 addedRows: this.ROWS_ADDED,
                 editedRows: this.ROWS_EDITED,
-                userValue:this.userValue
+                userValue: this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -1865,7 +1872,7 @@ export class CnTreeTableComponent extends CnComponentBase
             nzTitle: dialogCfg.title ? dialogCfg.title : '',
             nzWidth: dialogCfg.width ? dialogCfg.width : '600px',
             nzStyle: dialogCfg.style ? dialogCfg.style : null, // style{top:'1px'},
-            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable')?dialogCfg.maskClosable : false,
+            nzMaskClosable: dialogCfg.hasOwnProperty('maskClosable') ? dialogCfg.maskClosable : false,
             nzContent: CnPageComponent,
             nzComponentParams: {
                 // config:this. tableConfig,
@@ -2036,7 +2043,7 @@ export class CnTreeTableComponent extends CnComponentBase
                 initValue: this.initValue,
                 cacheValue: this.cacheValue,
                 router: this.routerValue,
-                userValue:this.userValue
+                userValue: this.userValue
             });
             option.changeValue.params.map(param => {
                 if (param.type === 'value') {
@@ -2211,7 +2218,7 @@ export class CnTreeTableComponent extends CnComponentBase
         const orginAction = this.tableColumns.find(c => c.type === 'action');
         const copyAction = [];
         if (orginAction) {
-            if(this.tableColumns.find(c => c.type === 'action').action){
+            if (this.tableColumns.find(c => c.type === 'action').action) {
                 const actions = JSON.parse(JSON.stringify(this.tableColumns.find(c => c.type === 'action').action.filter(c => c.state === state)));
                 copyAction.push(...actions);
             }
@@ -2337,5 +2344,61 @@ export class CnTreeTableComponent extends CnComponentBase
     public transferValue(option?) {
         console.log('将接受传递的值');
     }
+
+
+
+    async writeLogInfo(that?, arguments1?) {
+
+        console.log('ap===>', arguments1);
+        let btnOption = arguments1[0];
+        const text = btnOption['text'];
+        let componentId;
+        if (btnOption['targetViewId']) {
+            componentId = btnOption['targetViewId'];
+        } else {
+            componentId = that.config['id'];
+        }
+
+        // 记录 按钮、按钮组件标识、作用组件
+        let logConfig;
+        let btnData;
+        btnData = {
+            componentId: that.config['id'], //当前组件
+            targetViewId: componentId,     // 目标作用组件
+            btnId: btnOption['id'],
+            btnText: btnOption['text'],
+            description: '[行内]：' + (btnOption['description'] ? btnOption['description'] : btnOption['text'])
+        };
+
+        console.log('操作按钮', text, '操作组件', componentId, btnData);
+        if (environment['systemSettings']['enableLog']) {
+            if (environment['systemSettings'] && environment['systemSettings']['logInfo']) {
+                logConfig = environment['systemSettings']['logInfo']['logAjaxConfig'];
+            }
+        }
+
+        if (logConfig) {
+            const url = logConfig.url;
+            const method = logConfig.ajaxType;
+            const params = that.buildParameters(logConfig['params'], btnData, false);
+            const response = await that.componentService.apiService[method](url, params).toPromise();
+            console.log('写日志返回', response);
+        }
+
+        return true;
+
+    }
+
+    public initLog() {
+        if (environment['systemSettings']['enableLog']) {
+            this.beforeLog(this, 'rowAction', this.writeLogInfo);
+        }
+        //this.before(this, 'action', this.writeLogInfo);
+
+    }
+
+
+
+
 
 }

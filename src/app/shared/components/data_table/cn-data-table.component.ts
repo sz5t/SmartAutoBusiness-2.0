@@ -171,6 +171,7 @@ export class CnDataTableComponent extends CnComponentBase
     }
 
     public async ngOnInit() {
+        this.initLog();
         this.setChangeValue(this.changeValue);
         // 设置数据操作主键
         this.KEY_ID = this.config.keyId ? this.config.keyId : 'id';
@@ -1520,7 +1521,9 @@ export class CnDataTableComponent extends CnComponentBase
                 returnValue: data,
                 selectedRow: this.ROW_SELECTED,
                 currentRow: this.ROW_CURRENT,
-                userValue: this.userValue
+                userValue: this.userValue,
+                menuValue: this.componentService.cacheService.getNone('activeMenu') ?
+                this.componentService.cacheService.getNone('activeMenu') : {}
 
             });
         } else if (!isArray && data) {
@@ -1543,7 +1546,9 @@ export class CnDataTableComponent extends CnComponentBase
                 outputValue: data,
                 selectedRow: this.ROW_SELECTED,
                 currentRow: this.ROW_CURRENT,
-                userValue: this.userValue
+                userValue: this.userValue,
+                menuValue: this.componentService.cacheService.getNone('activeMenu') ?
+                this.componentService.cacheService.getNone('activeMenu') : {}
             });
         } else if (isArray && data && Array.isArray(data)) {
             parameterResult = [];
@@ -1563,7 +1568,9 @@ export class CnDataTableComponent extends CnComponentBase
                     checkedRow: this.ROWS_CHECKED,
                     outputValue: data,
                     currentRow: this.ROW_CURRENT,
-                    userValue: this.userValue
+                    userValue: this.userValue,
+                    menuValue: this.componentService.cacheService.getNone('activeMenu') ?
+                    this.componentService.cacheService.getNone('activeMenu') : {}
                 });
                 parameterResult.push(param);
             })
@@ -3025,6 +3032,58 @@ export class CnDataTableComponent extends CnComponentBase
         console.log(event);
     }
 
+
+    
+    async writeLogInfo(that?, arguments1?) {
+
+        console.log('ap===>', arguments1);
+        let btnOption = arguments1[0];
+        const text = btnOption['text'];
+        let componentId;
+        if (btnOption['targetViewId']) {
+            componentId = btnOption['targetViewId'];
+        } else {
+            componentId = that.config['id'];
+        }
+
+        // 记录 按钮、按钮组件标识、作用组件
+        let logConfig;
+        let btnData;
+        btnData = {
+            componentId: that.config['id'], //当前组件
+            targetViewId: componentId,     // 目标作用组件
+            btnId: btnOption['id'],
+            btnText: btnOption['text'],
+            description:'[行内]：'+ (btnOption['description'] ? btnOption['description'] : btnOption['text'])
+        };
+
+        console.log('操作按钮', text, '操作组件', componentId, btnData);
+        if (environment['systemSettings']['enableLog']) {
+            if (environment['systemSettings'] && environment['systemSettings']['logInfo']) {
+                logConfig = environment['systemSettings']['logInfo']['logAjaxConfig'];
+            }
+        }
+        if (logConfig) {
+            const url = logConfig.url;
+            const method = logConfig.ajaxType;
+            const params = that.buildParameters(logConfig['params'], btnData, false);
+            const response = await that.componentService.apiService[method](url, params).toPromise();
+            console.log('写日志返回', response);
+        }
+
+        return true;
+
+    }
+
+    public initLog() {
+        if (environment['systemSettings']['enableLog']) {
+            this.beforeLog(this, 'rowAction', this.writeLogInfo);
+        }
+         //this.before(this, 'action', this.writeLogInfo);
+
+    }
+
+    
 
 
 

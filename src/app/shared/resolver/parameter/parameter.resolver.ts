@@ -20,7 +20,8 @@ export interface ParametersResolverModel {
   selectedRow?: any,
   outputValue?: any,
   currentRow?:any,
-  userValue?:any
+  userValue?:any,
+  menuValue?:any
 }
 
 export interface IParameter {
@@ -92,6 +93,11 @@ export class ParameterResolver {
   private static userValue(param, model) {
     // tslint:disable-next-line: no-use-before-declare
     return new UserValueParameter(param, model).buildParameter();
+  }
+
+  private static menuValue(param, model) {
+    // tslint:disable-next-line: no-use-before-declare
+    return new MenuValueParameter(param, model).buildParameter();
   }
 
   private static checked(param, model) {
@@ -808,6 +814,59 @@ class UserValueParameter extends BaseParameter implements IParameter {
   public buildParameter() {
     const cmpVal = this._model['userValue'];
     if(this._param.valueName==='userValue'){
+      this._result = JSON.stringify(cmpVal);
+    }
+    else if (!this._param.valueName) {
+      this._result =cmpVal;  // 不配valueName，则将当前属性给他 object
+    }
+    // 判断组件取值是否为null
+    if (
+      cmpVal[this._param.valueName] === null ||
+      cmpVal[this._param.valueName] === undefined ||
+      cmpVal[this._param.valueName] === ""
+    ) {
+      if (this._param.value !== undefined) {
+        if (this._param.conditionType) {
+          this._result = this.getParameter(this._param.conditionType, this._param.value);
+        } else if (this._param.defaultDate) {
+          const dataType = this._param.defaultDate;
+          this._result = this.getDefaultDate(dataType);
+        } else {
+          this._result = this._param.value;
+        }
+      }
+
+    } else if (cmpVal === 0) {
+
+    }
+    else {
+      if (this._param.conditionType) {
+        this._result = this.getParameter(
+          this._param.conditionType,
+          cmpVal[this._param.valueName],
+        );
+      } else {
+        this._result = cmpVal[this._param.valueName];
+      }
+
+    }
+
+    return this._result;
+  }
+}
+
+
+/**
+ * 构建用户值参数
+ */
+class MenuValueParameter extends BaseParameter implements IParameter {
+  private _result: any;
+  constructor(private _param, private _model) {
+    super();
+  }
+  public buildParameter() {
+    const cmpVal = this._model['menuValue'];
+    if(this._param.valueName==='menuValue'){
       this._result = JSON.stringify(cmpVal);
     }
     else if (!this._param.valueName) {

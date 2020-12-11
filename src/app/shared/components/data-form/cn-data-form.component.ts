@@ -1573,4 +1573,33 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
   }
 
 
+  /**
+   * 写日志
+   * @param Description 操作描述
+   * @param itemData 操作涉及数据
+   */
+  public async writeLog(Description?,itemData?,btnOption?){
+    //       this.writeLog('测试执行按钮',params,execConfig);
+     const text = btnOption['btnCfg']['text'];
+     let componentId;
+     if( btnOption['btnCfg']['targetViewId']){
+      componentId=btnOption['btnCfg']['targetViewId'];
+     } else{
+      componentId= this.config['id'];
+     }
+     console.log('操作按钮',text,'操作组件',componentId);
+     // 所属组件 targetViewId ，无 targetViewId 则是当前组件行内操作
+     console.log('记录操作日志',Description,itemData,btnOption);
+        // 构建参数
+        // 根据执行情况，写入日志信息
+
+        //【菜单】【主页】【页】【组件】【按钮标识】【按钮名称】【业务描述】【业务数据】【执行结果】【执行人】【执行时间】
+        // 通过toolbar 基本描述清楚当前按钮上面时候点击，子表描述，点击按钮后执行什么内容（可以将一个按钮下的多个执行记录）
+        // 日志，可以记录 谁，在什么时间，打开什么页面，操作什么数据，执行结果如何
+        // 当前结构，不太满足aop 
+        // 逻辑执行的取值，在参数传递的时候未知，需要公用方法解析后，调用统一的执行
+  }
+
+
+
 }

@@ -76,6 +76,13 @@ export class CnComponentBase {
     public set userValue(value: any) {
         this._userValue = value;
     }
+    private _menuValue: any;
+    public get menuValue(): any {
+        return this._menuValue ? this._menuValue : {};
+    }
+    public set menuValue(value: any) {
+        this._menuValue = value;
+    }
 
 
     private _subscription$: Subscription;
@@ -208,6 +215,28 @@ export class CnComponentBase {
         };
         return target;
     }
+
+
+    
+    public asyncBeforeLog(target, method, advice) {
+      const original = target[method];
+      target[method] = (async (...args) => {
+          const result = await advice(target, args);
+          if (result) {
+              original.apply(target, args);
+          }
+      });
+      return target;
+  }
+
+  public beforeLog(target, method, advice) {
+      const original = target[method];
+      target[method] = (...args) => {
+          const result = advice(target, args);
+          original.apply(target, args);
+      };
+      return target;
+  }
 
     public confirm(confirmCfg, callback) {
         const confirmOptional = {
