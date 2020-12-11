@@ -517,7 +517,6 @@ export class ComponentSenderResolver {
      * @param cfg 消息配置 
      */
     sendMessage(cfg, isArray = false, data?) {
-        debugger;
         for (const c of cfg.sendData) {
             // 根据前置条件判断,是否能够发送消息
             if (!this.conditionValidator(c.condition)) {

@@ -27,13 +27,13 @@
             {{currentLabel}}
         </ng-container>
         <ng-container *ngIf="config.enableIcon" >
-            <i nz-icon [nzType]="currentIcon" ></i>
+            <i nz-icon [nzType]="currentIcon" [nzTheme]="config.iconTheme?config.iconTheme:'twotone'"></i>
         </ng-container>
         
     </nz-tag> 
  </ng-container>
  <ng-container *ngIf="config.showTheme==='icon'" >
-    <i nz-icon nz-tooltip [nzTooltipTitle]="currentTooltipTitle" [nzType]="currentIcon" [nzTheme]="'twotone'"  [nzTwotoneColor]="currentColor" (click)="currentSwitchClick(switchValue,$event)"></i>
+    <i nz-icon nz-tooltip [nzTooltipTitle]="currentTooltipTitle" [nzType]="currentIcon" [nzTheme]="config.iconTheme?config.iconTheme:'twotone'"  [nzTwotoneColor]="currentColor" (click)="currentSwitchClick(switchValue,$event)"></i>
  </ng-container>
 
 

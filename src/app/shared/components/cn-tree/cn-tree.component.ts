@@ -178,65 +178,6 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     if (this.config.loadingOnInit) {
       await this.load();
     }
-    if (!this.config.isSelected && this.config.defaultSelectedKeys) {
-      this.defaultSelectedKeys = [];
-      this.defaultSelectedKeys.push(this.config.defaultSelectedKeys);
-      this.defaultSelectedKeys = this.defaultSelectedKeys.filter(r => r !== '');
-    }
-    if (!this.config.isSelected && this.config.defaultSelectedConfig) {
-      /*     let dd = {  // 指定层级定位
-                    location: {
-                        locationContent: {
-                            hierarchy: 0, // 层索引
-                            index: 0,  // 位置索引
-                            isLeaf: false,
-                            locationContent: {
-                                hierarchy: 1, // 层索引
-                                index: 0,  // 位置索引
-                                isLeaf: true
-                            }
-                        }
-                    },
-                    default: {
-                        locationContent: {
-                            hierarchy: 0, // 层索引
-                            index: 0,  // 位置索引
-                            isLeaf: true
-                        }
-                    }
-                } */
-
-      let location_id;
-      if (this.config.defaultSelectedConfig.location) {
-        location_id = this.getSeletedkeys(this.config.defaultSelectedConfig.location.locationContent, this.nodes);
-      }
-      if (!location_id) {
-        if (this.config.defaultSelectedConfig.default) {
-          location_id = this.getSeletedkeys(this.config.defaultSelectedConfig.default.locationContent, this.nodes);
-        }
-      }
-      if (location_id) {
-        this.defaultSelectedKeys = [];
-        this.defaultSelectedKeys.push(location_id);
-        this.defaultSelectedKeys = this.defaultSelectedKeys.filter(r => r !== '');
-      }
-    }
-
-
-
-    setTimeout(() => {
-      if (this.defaultSelectedKeys.length > 0) {
-        const select_node = this.treeObj.getTreeNodeByKey(this.defaultSelectedKeys[0]);
-        // console.log('树节点选中', this.defaultSelectedKeys, select_node)
-        if (select_node) {
-          const clickNode = {
-            eventName: 'click',
-            node: select_node,
-          };
-          this.clickNode(clickNode);
-        }
-      }
-    });
   }
 
   public reSelectNode(option?) {
@@ -358,7 +299,9 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
 
   public async load() {
     this.isLoading = true;
+    this.nodes = [];
     const response = await this._getAsyncTreeData(this.config.loadingConfig);
+    debugger;
     if (response && response.data) {
       response.data.map((d, index) => {
         // 默认选中第一个节点
@@ -374,9 +317,73 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     } else {
       this.isLoading = false;
     }
+    if(this.nodes.length <=0) {
+      this.emptyLoad();
+    }
 
+    if (!this.config.isSelected && this.config.defaultSelectedKeys) {
+      this.defaultSelectedKeys = [];
+      this.defaultSelectedKeys.push(this.config.defaultSelectedKeys);
+      this.defaultSelectedKeys = this.defaultSelectedKeys.filter(r => r !== '');
+    }
+    if (!this.config.isSelected && this.config.defaultSelectedConfig) {
+      /*     let dd = {  // 指定层级定位
+                    location: {
+                        locationContent: {
+                            hierarchy: 0, // 层索引
+                            index: 0,  // 位置索引
+                            isLeaf: false,
+                            locationContent: {
+                                hierarchy: 1, // 层索引
+                                index: 0,  // 位置索引
+                                isLeaf: true
+                            }
+                        }
+                    },
+                    default: {
+                        locationContent: {
+                            hierarchy: 0, // 层索引
+                            index: 0,  // 位置索引
+                            isLeaf: true
+                        }
+                    }
+                } */
+
+      let location_id;
+      if (this.config.defaultSelectedConfig.location) {
+        location_id = this.getSeletedkeys(this.config.defaultSelectedConfig.location.locationContent, this.nodes);
+      }
+      if (!location_id) {
+        if (this.config.defaultSelectedConfig.default) {
+          location_id = this.getSeletedkeys(this.config.defaultSelectedConfig.default.locationContent, this.nodes);
+        }
+      }
+      if (location_id) {
+        this.defaultSelectedKeys = [];
+        this.defaultSelectedKeys.push(location_id);
+        this.defaultSelectedKeys = this.defaultSelectedKeys.filter(r => r !== '');
+      }
+    }
+
+    setTimeout(() => {
+      if (this.defaultSelectedKeys.length > 0) {
+        const select_node = this.treeObj.getTreeNodeByKey(this.defaultSelectedKeys[0]);
+        // console.log('树节点选中', this.defaultSelectedKeys, select_node)
+        if (select_node) {
+          const clickNode = {
+            eventName: 'click',
+            node: select_node,
+          };
+          this.clickNode(clickNode);
+        }
+      }
+    });
     console.log('+++++树++++++++++', this.dataServe);
-    this.dataServe && this.dataServe.setComponentValue(this.config.id, this.nodes);
+    //this.dataServe && this.dataServe.setComponentValue(this.config.id, this.nodes);
+  }
+
+  private emptyLoad(option?) {
+    return true;
   }
 
   private async _getAsyncTreeData(ajaxConfig = null, nodeValue = null) {

@@ -42,6 +42,7 @@ export interface ITreeTrigger {
     CLICK_NODE:string,
     TRANSFER_VALUE:string,
     RESELECT_NODE: string,
+    EMPTY_LOAD:string,
 
     LINK: string,
     LINK_TO: string,
@@ -114,6 +115,7 @@ export const BSN_TREE_TRIGGER: ITreeTrigger = {
     CLICK_NODE: 'CLICK_NODE',
     TRANSFER_VALUE:'TRANSFER_VALUE',
     RESELECT_NODE: 'RESELECT_NODE',
+    EMPTY_LOAD: 'EMPTY_LOAD',
 
     LINK: 'LINK',
     LINK_TO: 'LINK_TO',
