@@ -821,7 +821,14 @@ export class CnDataTableComponent extends CnComponentBase
         const sortObj = {};
         // if (this._sortName && this._sortType) {
         if (this._sortName && this._sortValue) {
-            sortObj['_sort'] = this._sortName + this._sortValue;
+            let sortValue="";
+            if(this._sortValue ==='ascend'){
+                sortValue = 'asc';
+            }
+            if(this._sortValue ==='descend'){
+                sortValue = 'desc';
+            }
+            sortObj['_sort'] = this._sortName +' '+ sortValue;
             // sortObj['_order'] = sortObj['_order'] ? 'DESC' : 'ASC';
         }
         return sortObj;

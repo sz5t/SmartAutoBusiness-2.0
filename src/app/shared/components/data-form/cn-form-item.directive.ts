@@ -128,7 +128,6 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
 
   // 组件将值写回、级联数据-》回写 
   public setValue(data?) {
-    console.log('<><><>',data);
     this.updateValue.emit(data);
   }
 
@@ -140,7 +139,7 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
     if (changes.hasOwnProperty('formCascade')) {
       if (!changes['formCascade'].firstChange) { // 处理后续变化，初始变化不处理
         if (this.formCascade) {
-          console.log('触发级联', this.formCascade, this.componentConfig);
+          // console.log('触发级联', this.formCascade, this.componentConfig);
 
         }
         //  console.log('****formCascade******', this.formCascade, this.config.field);
@@ -153,7 +152,7 @@ export class CnFormItemDirective implements OnInit, OnChanges, OnDestroy {
     }
     if (changes.hasOwnProperty('formState')) {
       if (!changes['formState'].firstChange) {
-        console.log('****formState******', this.config.field, this.formState);
+        // console.log('****formState******', this.config.field, this.formState);
         // console.log('****formState******',this.config.field, this.value,this.formState, this.config, JSON.stringify(this.formGroup.value));
         let _config
         if (this.config.state === 'text' && this.config.text) {

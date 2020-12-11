@@ -767,6 +767,10 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
                       __setValue = this.validateForm.value[ajaxItem['valueName']];
                     }
                   }
+                   if (ajaxItem['type'] === 'uuID') {
+                    // 随机值
+                      __setValue = CommonUtils.uuID(36);
+                  }
                   if (ajaxItem['type'] === 'formValue') {
                     // 选中行对象数据
                     if (this.FORM_VALUE) {
@@ -896,6 +900,10 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
               if (item.content.type === 'updateValue') {
                 cascadeResult[cascadeObj.cascadeName]['exec'] = 'updateValue';
               }
+              if (item.content.type === 'resetForm') {
+                this.resetForm();
+              }
+              
             }
           });
           this.formCascade[cascadeObj.controlId] = JSON.parse(JSON.stringify(this.formCascade[cascadeObj.controlId]));
@@ -1598,6 +1606,20 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
         // 日志，可以记录 谁，在什么时间，打开什么页面，操作什么数据，执行结果如何
         // 当前结构，不太满足aop 
         // 逻辑执行的取值，在参数传递的时候未知，需要公用方法解析后，调用统一的执行
+  }
+
+  /**
+   * 清空表单
+   * @param option 
+   */
+  resetForm(option?) {
+    this.validateForm.reset();
+    for (const item in this.validateForm.value) {
+      if ( this.FORM_VALUE.hasOwnProperty(item)) {
+        this.FORM_VALUE[item] = this.validateForm.value[item];
+      }
+    }
+    return true;
   }
 
 

@@ -26,8 +26,16 @@
       [nzMd]="config.config.controlSize.nzMd" [nzLg]="config.config.controlSize.nzLg" [nzXl]="config.config.controlSize.nzXl"
       [formGroup]="formGroup"   nzValidatingTip="Validating...">
 
-      <input nz-input [placeholder] = "config.placeholder"  hidden="hidden" [(ngModel)]="value" [formControlName]="config.field" (ngModelChange)="valueChange($event)" />
-      <button nz-button type="button" nzType="primary"  (click)="btn_click()"><i nz-icon nzType="search"></i>Search</button>
-      <button nz-button type="button" (click)="resetForm()">Clear</button>
+      <input nz-input [placeholder] = "config.placeholder"  hidden="hidden" [(ngModel)]="value" [formControlName]="config.field" (ngModelChange)="hiddenValueChange($event)" />
+
+      <ng-template ngFor let-btn [ngForOf]="config.group">
+        <button *ngIf="!btn.hidden" [nzSize]="btn.size ? btn.size : 'default'"
+          [nzType]="btn.color ? btn.color : 'default'" nz-button type="button" (click)="action(btn)">
+          <i nz-icon style="font-weight: 600" *ngIf="btn.icon" [type]="btn.icon"
+            [theme]="btn.theme ? btn.theme : 'outline'"></i>
+          {{btn.text}}
+        </button>
+      </ng-template>
+
   </nz-form-control>
 </nz-form-item>
