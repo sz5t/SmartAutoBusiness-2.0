@@ -1,6 +1,6 @@
 import { CommonUtils } from '../../../core/utils/common-utils';
 import { ActivatedRoute } from '@angular/router';
-import { getISOYear, getISOWeek, getMonth, getDate } from 'date-fns';
+import { getYear, getISOWeek, getMonth, getDate } from 'date-fns';
 
 export interface ParametersResolverModel {
   params: any[];
@@ -246,16 +246,16 @@ class BaseParameter {
     let dValue;
     switch (dataType) {
       case 'defaultWeek':
-        dValue = `${getISOYear(Date.now())}-${getISOWeek(Date.now())}`;
+        dValue = `${getYear(Date.now())}-${getISOWeek(Date.now())}`;
         break;
       case 'defaultDate':
-        dValue = `${getISOYear(Date.now())}-${getMonth(Date.now()) + 1}-${getDate(Date.now())}`;
+        dValue = `${getYear(Date.now())}-${getMonth(Date.now()) + 1}-${getDate(Date.now())}`;
         break;
       case 'defaultMonth':
-        dValue = `${getISOYear(Date.now())}-${getMonth(Date.now()) + 1}`;
+        dValue = `${getYear(Date.now())}-${getMonth(Date.now()) + 1}`;
         break;
       case 'defaultYear':
-        dValue = `${getISOYear(Date.now())}`;
+        dValue = `${getYear(Date.now())}`;
         break;
     }
     return dValue;

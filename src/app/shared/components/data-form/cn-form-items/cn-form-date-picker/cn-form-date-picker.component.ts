@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { getMonth, getHours, getDate, getMinutes, getSeconds, getMilliseconds, getISOYear, getISOWeek, getISOWeeksInYear, getQuarter } from 'date-fns';
+import { getMonth, getHours, getDate, getMinutes, getSeconds, getMilliseconds, getYear, getISOWeek, getISOWeeksInYear, getQuarter } from 'date-fns';
 
 @Component({
   selector: 'app-cn-form-date-picker',
@@ -64,7 +64,7 @@ export class CnFormDatePickerComponent implements OnInit {
     } else {
       this.date = null;
     }
-    const year = getISOYear(this.date);
+    const year = getYear(this.date);
     const week = getISOWeek(this.date);
     const weeks = getISOWeeksInYear(this.date);
     const month = getMonth(this.date)+1;

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { getISOYear, getMonth } from 'date-fns';
+import { getYear, getMonth } from 'date-fns';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -28,7 +28,7 @@ export class CnFormMonthPickerComponent implements OnInit {
        if(typeof(result) ==='string'){
         sj   = this.parserDate(result);
        }
-       const year = getISOYear(this.date);
+       const year = getYear(this.date);
        const month = this.getNewMonth(getMonth(this.date)+1) ;
        const ym= `${year}-${month}`;
       if (this.value !== ym) {
@@ -51,7 +51,7 @@ export class CnFormMonthPickerComponent implements OnInit {
     } else {
       this.date = null;
     }
-    const year = getISOYear(this.date);
+    const year = getYear(this.date);
     const month = this.getNewMonth(getMonth(this.date)+1) ;
     const monthvalue = getMonth(this.date)+1;
     const item = { "year": year, "month": monthvalue, "monthString":`${year}-${month}` };

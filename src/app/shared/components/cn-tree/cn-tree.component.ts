@@ -301,7 +301,6 @@ export class CnTreeComponent extends CnComponentBase implements OnInit, AfterVie
     this.isLoading = true;
     this.nodes = [];
     const response = await this._getAsyncTreeData(this.config.loadingConfig);
-    debugger;
     if (response && response.data) {
       response.data.map((d, index) => {
         // 默认选中第一个节点

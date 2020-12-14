@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { getISOYear, getISOWeek, getISOWeeksInYear, getMonth, getQuarter, getDate, getHours, getMinutes, getSeconds, getMilliseconds } from 'date-fns';
+import { getYear, getISOWeek, getISOWeeksInYear, getMonth, getQuarter, getDate, getHours, getMinutes, getSeconds, getMilliseconds } from 'date-fns';
 
 @Component({
   selector: 'app-cn-grid-date-picker',
@@ -78,7 +78,7 @@ export class CnGridDatePickerComponent implements OnInit {
     } else {
       this.date = null;
     }
-    const year = getISOYear(this.date);
+    const year = getYear(this.date);
     const week = getISOWeek(this.date);
     const weeks = getISOWeeksInYear(this.date);
     const month = getMonth(this.date)+1;

@@ -1,11 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { CnComponentBase } from './../../../shared/components/cn-component.base';
-import { Component, OnInit, ViewChild, Inject, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from '@angular/core';
-import { CfgLayoutComponent } from '@shared/config-components/config-layout/cfg-layout/cfg-layout.component';
-import { constructor } from 'date-fns/is_before/index.js';
+import { Component, OnInit, Inject, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from '@angular/core';
 import { ComponentServiceProvider } from '@core/services/component/component-service.provider';
 import { BSN_COMPONENT_SERVICES } from '@core/relations/bsn-relatives';
-import { CnLayoutComponent } from '@shared/components/layout/cn-layout.component';
 import { CnDynamicLayoutComponent } from '@shared/components/layout/cn-dynamic-layout.component';
 import { pageConfigCache } from '@env/page-config-cache';
 import { environment } from '@env/environment';
@@ -36,7 +33,6 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
 
   ngOnInit() {
     //console.log('this._route.params=========>',this._route.params);
-    const activeMenu = this.componentService.cacheService.getNone('activeMenu');
     //console.log('activeMenu=========>',activeMenu);
     // 如果 activeMenu 为空，则是默认当前按页加载数据
 
@@ -395,27 +391,6 @@ export class CnDynamicTemplateComponent extends CnComponentBase implements OnIni
   }
 
 
-  /*
-  
-    # 根节点 开始
-    /区分层级 分隔符
-    .描述当前分割内容  从当前如何取值
-    #menu.menuData/
-  
-  
-  */
-  // 路径描述 定义一组规则标识
-
-  private getJSONNodeByPath(data, path) {
-
-
-    path = path.startsWith("#") ? path.replaceFirst("#", "") : path;
-    path = path.startsWith("/") ? path.replaceFirst("/", "") : path;
-
-
-
-    return null;
-  }
 
 
 

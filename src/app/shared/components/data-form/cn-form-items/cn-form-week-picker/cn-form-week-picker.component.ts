@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { getISOWeek, getISOYear, setISOWeek, addWeeks } from 'date-fns';
+import { getISOWeek, getYear, setISOWeek, addWeeks } from 'date-fns';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -22,7 +22,7 @@ export class CnFormWeekPickerComponent implements OnInit {
   }
   getWeek(result: Date): void {
     if (result) {
-      const year = getISOYear(result);
+      const year = getYear(result);
       const week = this.getNewWeek(getISOWeek(result));
       const yw = `${year}-${week}`;
       if (this.value !== yw) {
@@ -43,10 +43,10 @@ export class CnFormWeekPickerComponent implements OnInit {
         const _year = YearAndWeek[0];
         const _week = YearAndWeek[1]-1;
         const datenew = addWeeks(_year, _week);
-        const yearold = getISOYear(this.date);
+        const yearold = getYear(this.date);
         const weekold = this.getNewWeek(getISOWeek(this.date));
         const ywold = `${yearold}-${weekold}`;
-        const yearnew = getISOYear(datenew);
+        const yearnew = getYear(datenew);
         const weeknew = this.getNewWeek(getISOWeek(datenew));
         const ywnew = `${yearnew}-${weeknew}`;
         if (ywold !== ywnew) {
@@ -54,7 +54,7 @@ export class CnFormWeekPickerComponent implements OnInit {
         }
         console.log('==年周计算出时间==', datenew);
       }
-      const year = getISOYear(this.date);
+      const year = getYear(this.date);
       const week = this.getNewWeek(getISOWeek(this.date));
       const weekValue = getISOWeek(this.date);
       const item = { "year": year, "week": weekValue, "weekString": `${year}-${week}` };
