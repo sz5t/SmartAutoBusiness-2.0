@@ -1,0 +1,201 @@
+
+<nz-table #dataTable [nzLoading]="false" [nzShowSizeChanger]="config.isShowSizeChanger"
+  [nzFrontPagination]="config.isFrontPagination" [nzShowPagination]="config.isPagination" [nzTotal]="total"
+  [(nzPageIndex)]="pageIndex" [(nzPageSize)]="pageSize" (nzPageIndexChange)="searchData()"
+  (nzPageSizeChange)="searchData(true)" [nzPageSizeOptions]="config.pageSizeOptions" [nzData]="dataList"
+  [nzShowTotal]="showTotal" [nzBordered]="config.isBordered" [nzSize]="config.size"
+  [nzTitle]="config.title ? title : null" [nzScroll]="config.scroll ? config.scroll : null"
+  [nzWidthConfig]="config.spanWidthConfig ? config.spanWidthConfig : null">
+  <thead (nzSortChange)="sort($event)" nzSingleSort="true">
+    <!-- 跨列表头 -->
+    <ng-template ngFor let-spans let-i="index" [ngForOf]="config.spanHeader"
+      *ngIf="config.spanHeader; else normalHeader">
+      <tr>
+        <th *ngIf="i === 0" attr.rowspan="{{ config.spanHeader.length }}" [nzWidth]="'50px'" [nzShowCheckbox]="true"
+          [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate" (nzCheckedChange)="checkAll($event)"></th>
+        <ng-template ngFor let-span [ngForOf]="spans">
+          <ng-container [ngSwitch]="span.spanType">
+            <th *ngSwitchCase="'row'" attr.rowspan="{{ span.span }}">{{ span.title }}</th>
+            <th *ngSwitchCase="'col'" attr.colspan="{{ span.span }}">{{ span.title }}</th>
+            <th *ngSwitchDefault>{{ span.title }}</th>
+          </ng-container>
+        </ng-template>
+      </tr>
+    </ng-template>
+    <!-- 跨列表头 -->
+
+    <!-- 常规表头 -->
+    <ng-template #normalHeader>
+      <tr>
+        <th nzWidth="50px" nzShowCheckbox="true" [(nzChecked)]="isAllChecked" [nzIndeterminate]="indeterminate"
+          (nzCheckedChange)="checkAll($event)"></th>
+        <ng-template ngFor let-header [ngForOf]="tableColumns">
+          <th [nzWidth]="header.width" [nzShowSort]="header.showSort" [nzSortKey]="header.field"
+            [nzAlign]="header.titleAlign?header.titleAlign:'left'"
+            [nzLeft]="header.hasOwnProperty('offsetLeft')?header.offsetLeft:null"
+            [nzRight]="header.hasOwnProperty('offsetRight')?header.offsetRight:null" [nzWidth]="header.width"
+            *ngIf="header.hasOwnProperty('titleHidden')? !header.titleHidden :!header.hidden">
+            {{ header.title }}
+          </th>
+        </ng-template>
+      </tr>
+    </ng-template>
+    <!-- 常规表头 -->
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let rowData of dataTable.data">
+      <ng-container *ngFor="let item of mapOfDataExpanded[rowData[KEY_ID]]">
+        <tr *ngIf="(item.parent && item.parent.expand) || !item.parent" (click)="setSelectRow(item.data, $event)"
+          [ngClass]="{ selectedRow: item['selected'], validationError:  !item['validation'], newRowStyle: item.isNewRow}">
+          <td nzShowCheckbox="true" [(nzChecked)]="item['checked']" (nzCheckedChange)="dataCheckedStatusChange()">
+          </td>
+          <ng-template ngFor let-col [ngForOf]="tableColumns">
+            <ng-container [ngSwitch]="col.type" *ngIf="!col.hidden">
+              <ng-container *ngSwitchCase="'field'">
+                <ng-container [ngSwitch]="item['state']">
+
+                  <ng-container *ngIf="col.expand">
+                    <td *ngSwitchCase="'new'" [nzIndentSize]="item.level * 20 "
+                      [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
+                      (nzExpandChange)="expandRow(item, $event)"
+                      [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
+                      <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'new'"
+                        [config]="col.editor"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                        (updateValue)="valueChange($event)"
+                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                      </ng-container>
+
+                    </td>
+                    <td *ngSwitchCase="'edit'" [nzIndentSize]="item.level * 20 "
+                      [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
+                      (nzExpandChange)="expandRow(item, $event)"
+                      [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
+
+                      <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'edit'"
+                        [config]="col.editor"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                        (updateValue)="valueChange($event)"
+                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                      </ng-container>
+
+                    </td>
+                    <td *ngSwitchDefault [nzIndentSize]="item['level'] ?(item.level * 20):0"
+                      [nzShowExpand]="!!item.children && col.expand" [(nzExpand)]="item.expand"
+                      (nzExpandChange)="expandRow(item, $event)"
+                      [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
+                      {{ item['originData'][col.field] }} </td>
+                  </ng-container>
+
+                  <ng-container *ngIf="!col.expand">
+                    <td *ngSwitchCase="'new'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
+                      <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'new'"
+                        [config]="col.editor"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                        (updateValue)="valueChange($event)"
+                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                      </ng-container>
+
+                    </td>
+                    <td *ngSwitchCase="'edit'" [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
+                      <ng-container CnGridItemDirective *ngIf="col.editor ; else text" [state]="'edit'"
+                        [config]="col.editor"
+                        [valueConfig]="{'id':rowData[KEY_ID],'value':mapOfDataState[rowData[KEY_ID]]['data'][col.editor.field]}"
+                        (updateValue)="valueChange($event)"
+                        [formCascade]="formCascade[rowData[KEY_ID]]?formCascade[rowData[KEY_ID]][col.editor.field]:null">
+                      </ng-container>
+
+                    </td>
+                    <td *ngSwitchDefault [nzAlign]="col.align?col.align:'left'"
+                      [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
+                      [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
+
+                      <ng-container CnGridItemDirective *ngIf="col.custom" [state]="'edit'" [config]="col.custom"
+                        [rowData]="item['originData']" [initData]="initData" [tempData]="tempData"
+                        [valueConfig]="{'id':item['originData'][KEY_ID],'value':item['originData']}"
+                        (updateValue)="valueChange($event)"
+                        [formCascade]="formCascade[item['originData'][KEY_ID]]?formCascade[item['originData'][KEY_ID]][col.custom.field]:null">
+                      </ng-container>
+                      <ng-container *ngIf="!col.custom">
+                        {{ item['originData'][col.field] }}
+                      </ng-container>
+                    </td>
+                  </ng-container>
+
+                </ng-container>
+
+
+              </ng-container>
+              <ng-template #text>
+                <ng-container CnGridItemDirective *ngIf="col.custom" [state]="'edit'" [config]="col.custom"
+                  [rowData]="item['originData']" [initData]="initData" [tempData]="tempData"
+                  [valueConfig]="{'id':item['originData'][KEY_ID],'value':item['originData']}"
+                  (updateValue)="valueChange($event)"
+                  [formCascade]="formCascade[item['originData'][KEY_ID]]?formCascade[item['originData'][KEY_ID]][col.custom.field]:null">
+                </ng-container>
+                <ng-container *ngIf="!col.custom">
+                  {{ item['originData'][col.field] }}
+                </ng-container>
+
+              </ng-template>
+              <ng-container *ngSwitchCase="'action'">
+                <td [nzAlign]="col.align?col.align:'left'"
+                  [nzLeft]="col.hasOwnProperty('offsetLeft')?col.offsetLeft:null"
+                  [nzRight]="col.hasOwnProperty('offsetRight')?col.offsetRight:null">
+
+                  <ng-container *ngIf="item['actions'].length>1">
+                    <nz-button-group>
+                      <button nzSize="default" nzType="primary" nz-button nz-dropdown [nzDropdownMenu]="menu"
+                        nzPlacement="bottomLeft">
+                        <i nz-icon nzType="ellipsis" class="text-lg green"></i>
+                      </button>
+                    </nz-button-group>
+                    <nz-dropdown-menu #menu="nzDropdownMenu">
+                      <ul nz-menu nzSelectable>
+                        <li (click)="rowAction(act, item, $event)" nz-menu-item *ngFor="let act of item['actions']">
+                          <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                        </li>
+                      </ul>
+                    </nz-dropdown-menu>
+                  </ng-container>
+                  <ng-container *ngIf="item['actions'].length===1">
+                    <ng-template ngFor let-act [ngForOf]="item['actions']">
+                      <button (click)="rowAction(act, item, $event)" nz-button nzSize="act.size"
+                        [nzType]="act.color ? act.color : 'default'">
+                        <i nz-icon [nzType]="act.icon" nzTheme="outline"></i> {{ act.text }}
+                      </button>
+                    </ng-template>
+                  </ng-container>
+
+                </td>
+              </ng-container>
+            </ng-container>
+          </ng-template>
+        </tr>
+      </ng-container>
+    </ng-container>
+
+  </tbody>
+  <tfoot>
+    <ng-template #showTotal style="text-align: left">
+      <span>
+        已选中
+        <span class="count" nz-text>
+          <code>{{ checkedNumber }}</code>
+        </span>
+        条记录
+      </span>
+      共
+      <span class="count" nz-text>
+        <code>{{ total }}</code>
+      </span>
+      条记录
+    </ng-template>
+  </tfoot>
+</nz-table>
+<ng-template #title> <i nz-icon [nzType]="config.titleIcon" nzTheme="outline"></i> {{ config.title }} </ng-template>

@@ -36,7 +36,7 @@ export interface IDataListTrigger {
     LOAD_BY_FILTER: string,
     SET_SELECT_ROW: string,
     ADD_LIST_ITEM: string,
-    EDIT_LIST_ITEM: string,
+    EDIT_LIST_ITEM: string
 
     LINK: string,
     LINK_TO: string,

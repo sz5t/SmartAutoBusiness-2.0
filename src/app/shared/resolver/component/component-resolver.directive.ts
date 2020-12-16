@@ -22,6 +22,7 @@ import { CnDataStepsComponent } from '@shared/components/cn-data-steps/cn-data-s
 import { pageConfigCache } from '@env/page-config-cache';
 import { CommonUtils } from '@core/utils/common-utils';
 import { CnReportGridComponent } from '@shared/components/cn-report-grid/cn-report-grid.component';
+import { CnStaticTreeTableComponent } from '@shared/components/cn-tree-table/cn-static-tree-table/cn-static-tree-table.component';
 
 const components: { [type: string]: Type<any> } = {
     cnDataTable: CnDataTableComponent,
@@ -42,7 +43,8 @@ const components: { [type: string]: Type<any> } = {
     cnContainers:CnContainersComponent,
     CnCarouse:CnCarouseComponent,
     cnDataStep: CnDataStepsComponent,
-    CnReportGrid:CnReportGridComponent
+    CnReportGrid:CnReportGridComponent,
+    cnStaticTreeTable:CnStaticTreeTableComponent
 };
 
 @Directive({

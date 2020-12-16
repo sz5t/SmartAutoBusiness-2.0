@@ -7,6 +7,7 @@
 
     
     <ng-container *ngIf="_view['viewConfig'] && _view['showLayout']">
+        <!-- <div> -->
         <div [ngStyle]="_view['hidden']? {'display': 'none','width':'100%','height':'100%'} : {}">
             <div CnDynamicLayoutResolverDirective  [hidden]="_view['hidden']"    [config]="_view['viewConfig']"   [dataServe]="dataServe"  [tempData]="_tempValue_new"   [initData]="_initValue_new"></div> 
         </div> 
