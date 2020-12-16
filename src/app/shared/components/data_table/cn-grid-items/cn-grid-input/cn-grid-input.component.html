@@ -1,4 +1,5 @@
 <input nz-input [placeholder] = "config.placeholder?config.placeholder:''"  [type]="config.displayType?config.displayType:'text'"
+  [disabled] = "config.disabled?config.disabled:'false'"
   [(ngModel)]="value" 
 (blur)="onblur($event,'end')" (keyup)="onKeyPress($event,'end')"
 />
