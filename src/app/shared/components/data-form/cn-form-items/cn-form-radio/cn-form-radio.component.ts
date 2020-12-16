@@ -18,12 +18,9 @@ export class CnFormRadioComponent extends CnComponentBase  implements OnInit {
   public cascadeOptions: any;
   selectOptions = [];
   selectItems = [];
-  radioValue = 'A';
+  radioValue:any;
   radioValues = {
-    "A": false,
-    "B": false,
-    "C": false,
-    "D": false,
+   
   };
   constructor(@Inject(BSN_COMPONENT_SERVICES)
   public componentService: ComponentServiceProvider) {

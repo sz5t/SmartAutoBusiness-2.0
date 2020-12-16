@@ -51,6 +51,10 @@ export class CnFormButtonComponent  extends CnComponentBase  implements OnInit {
 
   public hiddenValueChange(v?) {
     this.value = v;
+     if(this.config.group && this.config.group.length===1){
+       this.action(this.config.group[0]);
+     } 
+    console.log('hiddenvalue===>',v);
   }
 
   public cascadeAnalysis(c?) {

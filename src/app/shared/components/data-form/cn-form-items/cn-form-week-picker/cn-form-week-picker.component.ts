@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { getISOWeek, getYear, setISOWeek, addWeeks } from 'date-fns';
+import { getISOWeek, getYear, setISOWeek, addWeeks, addISOWeekYears, getMonth } from 'date-fns';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -22,13 +22,19 @@ export class CnFormWeekPickerComponent implements OnInit {
   }
   getWeek(result: Date): void {
     if (result) {
-      const year = getYear(result);
+      let year = getYear(result);
       const week = this.getNewWeek(getISOWeek(result));
+      const month = getMonth(result);
+      if(month===0){
+        if(week>40){
+          year =year-1;
+        }
+      }
       const yw = `${year}-${week}`;
       if (this.value !== yw) {
         this.value = yw
       }
-      console.log('周变化week: ', yw);
+      console.log('周变化week: ', yw,result);
     } else {
       this.value = null;
     }
@@ -42,7 +48,9 @@ export class CnFormWeekPickerComponent implements OnInit {
       if (YearAndWeek.length > 1) {
         const _year = YearAndWeek[0];
         const _week = YearAndWeek[1]-1;
-        const datenew = addWeeks(_year, _week);
+       // const datenew:Date = addWeeks(new Date(Number(_year)-1, 1, 1), _week);
+
+        const datenew:Date =  addWeeks(new Date(_year, 0, 1),_week);
         const yearold = getYear(this.date);
         const weekold = this.getNewWeek(getISOWeek(this.date));
         const ywold = `${yearold}-${weekold}`;
@@ -79,4 +87,14 @@ export class CnFormWeekPickerComponent implements OnInit {
   }
 
   public cascadeAnalysis(c?) { }
+
+
+  public computeWeek(){
+
+     // 1.计算出当前年+周的日期
+     // 2.当前日期周几   周天属于下一周  周天内属于上一周
+
+  }
+
+
 }

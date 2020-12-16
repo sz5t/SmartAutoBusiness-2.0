@@ -431,18 +431,25 @@ export class CnDataFormComponent extends CnComponentBase implements OnInit, OnDe
    * load 自加载
    */
   public async load() {
-    if (!this.config.loadingConfig.ajaxConfig) {
-      return;
-    }
-    const url = this.config.loadingConfig['ajaxConfig'].url;
-    const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
-    const params = {
-      ...this.buildParameters(this.config.loadingConfig['ajaxConfig'].params)
-    };
-    // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
-    let data_form;
 
-    const response = await this.componentService.apiService[method](url, params).toPromise();
+    let response;
+    let data_form;
+    if(this.config.enableLoadStaticData){
+      response = this.buildParameters(this.config.staticDataConfig);
+    }
+    else{
+      if (!this.config.loadingConfig.ajaxConfig) {
+        return;
+      }
+      const url = this.config.loadingConfig['ajaxConfig'].url;
+      const method = this.config.loadingConfig['ajaxConfig'].ajaxType;
+      const params = {
+        ...this.buildParameters(this.config.loadingConfig['ajaxConfig'].params)
+      };
+      // 考虑满足 get 对象，集合，存储过程【指定dataset 来接收数据】，加载错误的信息提示
+      response = await this.componentService.apiService[method](url, params).toPromise();
+    }
+   
     if (response) {
       if (isArray(response.data)) {
         if (response.data && response.data.length > 0) {
