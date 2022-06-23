@@ -88,7 +88,7 @@
     "@types/mockjs": "^1.0.2",
     "@types/node": "~8.9.4",
     "antd-theme-generator": "^1.1.6",
-    "codecov": "^3.2.0",
+    "codecov": "^3.8.3",
     "codelyzer": "^5.0.1",
     "editorconfig-tools": "^0.1.1",
     "gh-pages": "^2.0.1",
